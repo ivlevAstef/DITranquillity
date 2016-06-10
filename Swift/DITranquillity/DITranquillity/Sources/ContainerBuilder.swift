@@ -14,15 +14,15 @@ public class ContainerBuilder {
   }
   
   public func register<T: AnyObject>(rClass: T.Type) -> RegistrationBuilderProtocol {
-    return RegistrationBuilder<T>(self.container, rClass)
+    return RegistrationBuilder<T>(self.rTypeContainer, rClass)
   }
   
-  public func build() throws -> Container {
+  public func build() throws -> ScopeProtocol {
     var errors: [Error] = []
     
-    for meta in container.list() {
-      if !meta.valid {
-        errors.append(meta.constructorError!)
+    for rType in rTypeContainer.list() {
+      if !rType.valid {
+        errors.append(rType.constructorError!)
       }
     }
     
@@ -30,8 +30,8 @@ public class ContainerBuilder {
       throw Error.Build(errors: errors)
     }
     
-    return container
+    return Scope(registeredTypes: rTypeContainer)
   }
   
-  private let container = Container()
+  private let rTypeContainer = RTypeContainer()
 }

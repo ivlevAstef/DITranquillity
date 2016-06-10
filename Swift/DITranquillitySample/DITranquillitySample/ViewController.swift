@@ -21,6 +21,10 @@ class ViewController: UIViewController {
            .asSelf()
            .asType(UIAppearance)
            .asType(UIResponder)
+           .instanceSingle()
+           .instancePerMatchingScope("ScopeName")
+           .instancePerScope()
+           .instancePerDependency()
            //.constructor(UIButton)
            //.constructor({ _ in UISwitch() })
     
