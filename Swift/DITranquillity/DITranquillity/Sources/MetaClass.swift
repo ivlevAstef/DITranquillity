@@ -19,7 +19,11 @@ internal class MetaClass : Hashable {
     constructor = MetaClass.createConstructorByType(implClass)
   }
   
-  internal func equally<EquallyObj: AnyObject>(equallyType: EquallyObj.Type) {
+  internal func asSelf() {
+    self.container[implClass] = self
+  }
+  
+  internal func asType<EquallyObj: AnyObject>(equallyType: EquallyObj.Type) {
     self.container[equallyType] = self
   }
   

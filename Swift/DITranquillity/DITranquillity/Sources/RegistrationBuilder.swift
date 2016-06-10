@@ -9,7 +9,8 @@
 import Foundation
 
 public protocol RegistrationBuilderProtocol {
-  func equally<EquallyObj: AnyObject>(equallyType: EquallyObj.Type) -> Self
+  func asSelf() -> Self
+  func asType<EquallyObj: AnyObject>(equallyType: EquallyObj.Type) -> Self
 
   func constructor<T: AnyObject>(constructorMethod: (container: Container) -> T) -> Self
   func constructor<T: AnyObject>(constructorType: T.Type) -> Self
@@ -22,11 +23,15 @@ internal class RegistrationBuilder<ImplObj: AnyObject> : RegistrationBuilderProt
   
   internal init(_ container: Container, _ implClass: ImplObj.Type) {
     meta = MetaClass(container, implClass)
-    meta.equally(implClass)
   }
   
-  func equally<EquallyObj: AnyObject>(equallyType: EquallyObj.Type) -> Self {
-    meta.equally(equallyType)
+  func asSelf() -> Self {
+    meta.asSelf()
+    return self
+  }
+  
+  func asType<EquallyObj: AnyObject>(equallyType: EquallyObj.Type) -> Self {
+    meta.asType(equallyType)
     return self
   }
   

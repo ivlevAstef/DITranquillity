@@ -17,16 +17,17 @@ class ViewController: UIViewController {
     
     let builder = ContainerBuilder()
     
-    builder.register(UIAppearance)
-           .equally(UIAppearance)
-           .equally(UIResponder)
+    builder.register(UIView)
+           .asSelf()
+           .asType(UIAppearance)
+           .asType(UIResponder)
            //.constructor(UIButton)
            //.constructor({ _ in UISwitch() })
     
     do {
       let container = try builder.build()
       
-      let vc = try! container.resolve(UIResponder)
+      let vc = try! container.resolve(UIView)
       print("Create VC: \(vc)")
       
     } catch {

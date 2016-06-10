@@ -56,9 +56,9 @@
 		A5AE2B4D1D0AD76600FF3E40 /* DITranquillity */ = {
 			isa = PBXGroup;
 			children = (
+				A5AE2B501D0AD76600FF3E40 /* Sources */,
 				A5AE2B4E1D0AD76600FF3E40 /* DITranquillity.h */,
 				A5AE2B4F1D0AD76600FF3E40 /* Info.plist */,
-				A5AE2B501D0AD76600FF3E40 /* Sources */,
 			);
 			path = DITranquillity;
 			sourceTree = "<group>";
