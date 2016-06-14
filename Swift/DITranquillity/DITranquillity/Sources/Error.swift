@@ -15,4 +15,6 @@ public enum Error : ErrorType {
   case TypeIncorrect(askableType: String, realType: String)
   
   case Build(errors: [Error])
+  
+  case ScopeNotFound(scopeName: String)
 }

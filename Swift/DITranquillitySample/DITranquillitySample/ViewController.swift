@@ -21,18 +21,28 @@ class ViewController: UIViewController {
            .asSelf()
            .asType(UIAppearance)
            .asType(UIResponder)
-           .instanceSingle()
+           //.instanceSingle()
            .instancePerMatchingScope("ScopeName")
-           .instancePerScope()
-           .instancePerDependency()
+           //.instancePerScope()
+           //.instancePerDependency()
            //.constructor(UIButton)
            //.constructor({ _ in UISwitch() })
     
     do {
-      let container = try builder.build()
+      let scope1 = try builder.build()
+      let scope2 = try scope1.newLifeTimeScope().setName("ScopeName")
       
-      let vc = try! container.resolve(UIView)
-      print("Create VC: \(vc)")
+      let vc1_1 = try! scope1.resolve(UIView)
+      print("Create VC1_1: \(vc1_1)")
+      
+      let vc1_2 = try! scope1.resolve(UIView)
+      print("Create VC1_2: \(vc1_2)")
+      
+      let vc2_1 = try! scope2.resolve(UIView)
+      print("Create VC2_1: \(vc2_1)")
+      
+      let vc2_2 = try! scope2.resolve(UIView)
+      print("Create VC2_2: \(vc2_2)")
       
     } catch {
       print("Can't create container with error: \(error)")

@@ -19,6 +19,7 @@ internal enum RTypeLifeTime {
 
 internal protocol RTypeReader {
   func execConstructor(scope: ScopeProtocol) -> AnyObject
+  var lifeTime: RTypeLifeTime { get }
 }
 
 //registration type
@@ -39,6 +40,8 @@ internal class RType : RTypeReader, Hashable {
     return constructor(scope: scope)
   }
   
+  internal var lifeTime: RTypeLifeTime = RTypeLifeTime.Default
+  
   //Constructor
   var implementedType: AnyClass { return implType }
   
@@ -49,8 +52,6 @@ internal class RType : RTypeReader, Hashable {
   internal func setConstructor<T: AnyObject>(constructorType: T.Type) {
     setConstructor(RType.createConstructorByType(constructorType))
   }
-  
-  internal var lifeTime: RTypeLifeTime = RTypeLifeTime.Default
   
   internal var valid: Bool { return nil == constructorError }
   internal var constructorError: Error? { return constructorErrorValue }
