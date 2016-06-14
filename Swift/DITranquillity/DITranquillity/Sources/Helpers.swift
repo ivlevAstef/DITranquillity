@@ -8,17 +8,10 @@
 
 import Foundation
 
-internal class Helpers {
-  internal static func initializerByType<T: AnyObject>(type: T.Type) throws -> (scope: ScopeProtocol) -> AnyObject {
-    try isClass(type)
-    return { (_) in
-      let nsObjType = type as! NSObject.Type
-      return nsObjType.init()
-    }
-  }
-  
-  internal static func isClass<T: AnyObject>(checkType: T.Type) throws {
-    guard checkType is NSObject.Type else {
+internal class Helpers {  
+  internal static func isClass<T>(checkType: T.Type) throws {
+    //Please ignore warning because: isClass(UIAppearance) return false. It's worked for all obj-c protocols
+    guard checkType is AnyClass else {
       throw Error.TypeNoClass(typeName: String(checkType))
     }
   }

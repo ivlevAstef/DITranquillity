@@ -10,17 +10,22 @@ public class ContainerBuilder {
   public init() {
   }
   
-  public func register<T: AnyObject>(rClass: T.Type) throws -> RegistrationBuilderProtocol {
-    return try RegistrationBuilder<T>(self.rTypeContainer, rClass)
+  public func register<T>(rClass: T.Type) -> RegistrationBuilderProtocol {
+    return RegistrationBuilder<T>(self.rTypeContainer, rClass)
   }
   
   public func build() throws -> ScopeProtocol {
-//    var errors: [Error] = []
-//    
-//    
-//    if !errors.isEmpty {
-//      throw Error.Build(errors: errors)
-//    }
+    var errors: [Error] = []
+    
+    for rType in rTypeContainer.list() {
+      if !rType.hasInitializer {
+        errors.append(Error.NotSetInitializer(typeName: String(rType.implementedType)))
+      }
+    }
+    
+    if !errors.isEmpty {
+      throw Error.Build(errors: errors)
+    }
     
     return Scope(registeredTypes: rTypeContainer)
   }

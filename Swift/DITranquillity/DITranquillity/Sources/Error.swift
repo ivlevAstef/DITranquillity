@@ -9,6 +9,7 @@
 public enum Error : ErrorType {
   case TypeNoClass(typeName: String)
   case TypeNoRegister(typeName: String)
+  case NotSetInitializer(typeName: String)
   
   case TypeIncorrect(askableType: String, realType: String)
   

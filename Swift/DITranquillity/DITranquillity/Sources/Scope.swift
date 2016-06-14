@@ -9,9 +9,20 @@
 public protocol ScopeProtocol {
   func setName(name: String) -> Self
   
-  func resolve<T: AnyObject>(rClass: T.Type) throws -> T
+  func resolve<T>() throws -> T
+  func resolve<T>(_: T.Type) throws -> T
   
   func newLifeTimeScope() throws -> ScopeProtocol
+}
+
+prefix operator *!{}
+public prefix func *!<T>(scope: ScopeProtocol) -> T {
+  return try! scope.resolve()
+}
+
+prefix operator *{}
+public prefix func *<T>(scope: ScopeProtocol) throws -> T {
+  return try scope.resolve()
 }
 
 internal class Scope : ScopeProtocol {
@@ -19,23 +30,17 @@ internal class Scope : ScopeProtocol {
     self.registeredTypes = registeredTypes
   }
   
-  internal func resolve<T: AnyObject>(resolveType: T.Type) throws -> T {
-    guard let rType = registeredTypes[resolveType] else {
-      throw Error.TypeNoRegister(typeName: String(resolveType))
+  func resolve<T>() throws -> T {
+    guard let rType = registeredTypes[T.self] else {
+      throw Error.TypeNoRegister(typeName: String(T.self))
     }
     
-    switch rType.lifeTime {
-    case .Single:
-      return try resolveSingle(rType)
-    case let .PerMatchingScope(name):
-      return try resolvePerMatchingScope(rType, name)
-    case .PerScope:
-      return try resolvePerScope(rType)
-    case .PerDependency:
-      return try resolvePerDependency(rType)
-    }
+    return try resolveUseRType(rType)
   }
   
+  internal func resolve<T>(_: T.Type) throws -> T {
+    return try resolve()
+  }
   
   internal func newLifeTimeScope() throws -> ScopeProtocol {
     return Scope(registeredTypes: registeredTypes)
@@ -53,7 +58,20 @@ internal class Scope : ScopeProtocol {
   }
   
   //Private
-  internal func resolveSingle<T: AnyObject>(rType: RTypeReader) throws -> T {
+  internal func resolveUseRType<T>(rType: RTypeReader) throws -> T {
+    switch rType.lifeTime {
+    case .Single:
+      return try resolveSingle(rType)
+    case let .PerMatchingScope(name):
+      return try resolvePerMatchingScope(rType, name)
+    case .PerScope:
+      return try resolvePerScope(rType)
+    case .PerDependency:
+      return try resolvePerDependency(rType)
+    }
+  }
+  
+  internal func resolveSingle<T>(rType: RTypeReader) throws -> T {
     let key = String(T.self)
     
     if let obj = Scope.singleObjects[key] {
@@ -65,7 +83,7 @@ internal class Scope : ScopeProtocol {
     return obj
   }
   
-  internal func resolvePerMatchingScope<T: AnyObject>(rType: RTypeReader, _ name: String) throws -> T {
+  internal func resolvePerMatchingScope<T>(rType: RTypeReader, _ name: String) throws -> T {
     if name == self.scopeName {
       return try resolvePerScope(rType)
     }
@@ -73,7 +91,7 @@ internal class Scope : ScopeProtocol {
     return try ScopeContainer.getScope(name).resolve(T.self)
   }
   
-  internal func resolvePerScope<T: AnyObject>(rType: RTypeReader) throws -> T {
+  internal func resolvePerScope<T>(rType: RTypeReader) throws -> T {
     let key = String(T.self)
     
     if let obj = objects[key] {
@@ -85,7 +103,7 @@ internal class Scope : ScopeProtocol {
     return obj
   }
   
-  internal func resolvePerDependency<T: AnyObject>(rType: RTypeReader) throws -> T {
+  internal func resolvePerDependency<T>(rType: RTypeReader) throws -> T {
     let obj = rType.initType(self)
     guard let result = obj as? T else {
       throw Error.TypeIncorrect(askableType: String(T.self), realType: String(obj.self))
@@ -94,9 +112,9 @@ internal class Scope : ScopeProtocol {
     return result
   }
   
-  private static var singleObjects: [String: AnyObject] = [:]
+  private static var singleObjects: [String: Any] = [:]
   
-  private var objects: [String: AnyObject] = [:]
+  private var objects: [String: Any] = [:]
   private var scopeName: String = ""
   private let registeredTypes: RTypeContainerReadonly
 }

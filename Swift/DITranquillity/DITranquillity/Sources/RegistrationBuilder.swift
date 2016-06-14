@@ -8,10 +8,10 @@
 
 public protocol RegistrationBuilderProtocol {
   func asSelf() -> Self
-  func asType<EquallyObj: AnyObject>(equallyType: EquallyObj.Type) -> Self
+  func asType<EquallyObj>(equallyType: EquallyObj.Type) -> Self
+  func asType(equallyType: protocol<>) -> Self
 
-  func initializer<T: AnyObject>(method: (scope: ScopeProtocol) -> T) throws -> Self
-  func initializer<T: AnyObject>(type: T.Type) throws -> Self
+  func initializer<T>(method: (scope: ScopeProtocol) -> T) -> Self
   
   func instanceSingle() -> Self
   func instancePerMatchingScope(scopeName: String) -> Self
@@ -19,13 +19,13 @@ public protocol RegistrationBuilderProtocol {
   func instancePerDependency() -> Self
 }
 
-internal class RegistrationBuilder<ImplObj: AnyObject> : RegistrationBuilderProtocol {
+internal class RegistrationBuilder<ImplObj> : RegistrationBuilderProtocol {
   private let rType: RType
   private let container : RTypeContainer
   
-  internal init(_ container: RTypeContainer, _ implType: ImplObj.Type) throws {
+  internal init(_ container: RTypeContainer, _ implType: ImplObj.Type) {
     self.container = container
-    self.rType = try RType(implType)
+    self.rType = RType(implType)
   }
   
   //As
@@ -34,19 +34,18 @@ internal class RegistrationBuilder<ImplObj: AnyObject> : RegistrationBuilderProt
     return self
   }
   
-  func asType<EquallyObj: AnyObject>(equallyType: EquallyObj.Type) -> Self {
+  func asType<EquallyObj>(equallyType: EquallyObj.Type) -> Self {
+    container[equallyType] = rType
+    return self
+  }
+  func asType(equallyType: protocol<>) -> Self {
     container[equallyType] = rType
     return self
   }
   
   //Initializer
-  func initializer<T: AnyObject>(method: (scope: ScopeProtocol) -> T) throws -> Self {
-    try rType.setInitializer(method)
-    return self
-  }
-  
-  func initializer<T: AnyObject>(type: T.Type) throws -> Self {
-    try rType.setInitializer(type)
+  func initializer<T>(method: (scope: ScopeProtocol) -> T) -> Self {
+    rType.setInitializer(method)
     return self
   }
   

@@ -16,24 +16,23 @@ internal enum RTypeLifeTime {
 }
 
 internal protocol RTypeReader {
-  func initType(scope: ScopeProtocol) -> AnyObject?
+  func initType(scope: ScopeProtocol) -> Any
   var lifeTime: RTypeLifeTime { get }
 }
 
 //registration type
 internal class RType : RTypeReader, Hashable {
-  internal init<ImplObj: AnyObject>(_ implType: ImplObj.Type) throws {
-    self.implType = implType
-    
-    self.initializer = try Helpers.initializerByType(implType)
+  internal init<ImplObj>(_ implType: ImplObj.Type) {
+    //initializerByType checked 'isClass'
+    self.implType = implType as! AnyClass
   }
   
   //Hashable
   internal var hashValue: Int { return String(implType).hash }
   
   //Reader
-  internal func initType(scope: ScopeProtocol) -> AnyObject? {
-    return initializer(scope: scope)
+  internal func initType(scope: ScopeProtocol) -> Any {
+    return initializer!(scope: scope)
   }
   
   internal var lifeTime: RTypeLifeTime = RTypeLifeTime.Default
@@ -41,18 +40,15 @@ internal class RType : RTypeReader, Hashable {
   //Initializer
   var implementedType: AnyClass { return implType }
   
-  internal func setInitializer<T: AnyObject>(method: (scope: ScopeProtocol) -> T) throws {
-    try Helpers.isClass(T.self)
+  internal func setInitializer<T>(method: (scope: ScopeProtocol) -> T) {
     initializer = method
   }
   
-  internal func setInitializer<T: AnyObject>(type: T.Type) throws {
-    initializer = try Helpers.initializerByType(type)
-  }
+  var hasInitializer : Bool { return nil != initializer }
   
   //Private
   private let implType : AnyClass
-  private var initializer : (scope: ScopeProtocol) -> AnyObject
+  private var initializer : ((scope: ScopeProtocol) -> Any)? = nil
 }
 
 internal func ==(lhs: RType, rhs: RType) -> Bool {

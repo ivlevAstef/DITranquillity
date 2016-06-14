@@ -16,15 +16,32 @@ class ViewController: UIViewController {
     
     let builder = ContainerBuilder()
     
-    try! builder.register(UIView)
+    builder.register(Service)
+      .asType(ServiceProtocol)
+      .instancePerDependency()
+      .initializer { _ in Service() }
+    
+    builder.register(Logger)
+      .asType(LoggerProtocol)
+      .instanceSingle()
+      .initializer { _ in Logger() }
+    
+    builder.register(Inject)
+      .asSelf()
+      .instancePerDependency()
+      .initializer { (scope) -> Inject in
+        Inject(service: *!scope, logger: *!scope)
+      }
+      
+    
+    builder.register(UIView)
            .asSelf()
            .asType(UIAppearance)
-           .asType(UIResponder)
            //.instanceSingle()
            //.instancePerMatchingScope("ScopeName")
            //.instancePerScope()
            .instancePerDependency()
-           //.initializer(UIButton)
+           .initializer({ (scope) -> UIButton in UIButton()})
            //.initializer({ _ in UISwitch() })
     
     do {
@@ -34,14 +51,21 @@ class ViewController: UIViewController {
       let vc1_1 = try! scope1.resolve(UIView)
       print("Create VC1_1: \(vc1_1)")
       
-      let vc1_2 = try! scope1.resolve(UIView)
+      let vc1_2: UIView = try! *scope1
       print("Create VC1_2: \(vc1_2)")
       
-      let vc2_1 = try! scope2.resolve(UIView)
+      let vc2_1: UIView  = *!scope2
       print("Create VC2_1: \(vc2_1)")
       
-      let vc2_2 = try! scope2.resolve(UIView)
+      let vc2_2: UIAppearance = try! scope2.resolve()
       print("Create VC2_2: \(vc2_2)")
+      
+      
+      let inject1: Inject = *!scope1
+      print("Create Inject1: \(inject1.description)")
+      
+      let inject2: Inject = *!scope2
+      print("Create Inject2: \(inject2.description)")
       
     } catch {
       print("Can't create container with error: \(error)")

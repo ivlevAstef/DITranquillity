@@ -8,6 +8,7 @@
 
 internal protocol RTypeContainerReadonly {
   subscript(key: AnyClass) -> RTypeReader? { get }
+  subscript(key: protocol<>) -> RTypeReader? { get }
 }
 
 internal class RTypeContainer : RTypeContainerReadonly {
@@ -19,7 +20,18 @@ internal class RTypeContainer : RTypeContainerReadonly {
       values[hash(key)] = newValue
     }
   }
+  
+  internal subscript(key: protocol<>) -> RType? {
+    get {
+      return values[hash(key)]
+    }
+    set {
+      values[hash(key)] = newValue
+    }
+  }
+  
   internal subscript(key: AnyClass) -> RTypeReader? { return values[hash(key)] }
+  subscript(key: protocol<>) -> RTypeReader? { return values[hash(key)] }
   
   internal func list() -> Set<RType> {
     return Set<RType>(values.values)
@@ -27,6 +39,10 @@ internal class RTypeContainer : RTypeContainerReadonly {
   
   private func hash(mClass: AnyClass) -> String {
     return String(mClass)
+  }
+  
+  private func hash(mProtocol: protocol<>) -> String {
+    return String(mProtocol)
   }
   
   private var values : [String: RType] = [:]
