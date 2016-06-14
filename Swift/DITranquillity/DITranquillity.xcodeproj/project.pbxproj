@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A51657A41D0FD467004A34F5 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51657A31D0FD467004A34F5 /* Helpers.swift */; };
+		A51657A61D0FD519004A34F5 /* ScopeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51657A51D0FD519004A34F5 /* ScopeContainer.swift */; };
 		A549953D1D0B014800CCFD85 /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549953C1D0B014800CCFD85 /* Scope.swift */; };
 		A5AE2B561D0AD76600FF3E40 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = A5AE2B4E1D0AD76600FF3E40 /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A5AE2B581D0AD76600FF3E40 /* RTypeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AE2B511D0AD76600FF3E40 /* RTypeContainer.swift */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A51657A31D0FD467004A34F5 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		A51657A51D0FD519004A34F5 /* ScopeContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScopeContainer.swift; sourceTree = "<group>"; };
 		A549953C1D0B014800CCFD85 /* Scope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scope.swift; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5AE2B4E1D0AD76600FF3E40 /* DITranquillity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DITranquillity.h; sourceTree = "<group>"; };
@@ -72,8 +76,10 @@
 				A5AE2B521D0AD76600FF3E40 /* ContainerBuilder.swift */,
 				A5AE2B551D0AD76600FF3E40 /* RegistrationBuilder.swift */,
 				A549953C1D0B014800CCFD85 /* Scope.swift */,
+				A51657A51D0FD519004A34F5 /* ScopeContainer.swift */,
 				A5AE2B511D0AD76600FF3E40 /* RTypeContainer.swift */,
 				A5AE2B541D0AD76600FF3E40 /* RType.swift */,
+				A51657A31D0FD467004A34F5 /* Helpers.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -157,8 +163,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5AE2B581D0AD76600FF3E40 /* RTypeContainer.swift in Sources */,
+				A51657A41D0FD467004A34F5 /* Helpers.swift in Sources */,
 				A5AE2B5C1D0AD76600FF3E40 /* RegistrationBuilder.swift in Sources */,
 				A5AE2B5A1D0AD76600FF3E40 /* Error.swift in Sources */,
+				A51657A61D0FD519004A34F5 /* ScopeContainer.swift in Sources */,
 				A5AE2B591D0AD76600FF3E40 /* ContainerBuilder.swift in Sources */,
 				A549953D1D0B014800CCFD85 /* Scope.swift in Sources */,
 				A5AE2B5B1D0AD76600FF3E40 /* RType.swift in Sources */,

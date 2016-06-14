@@ -11,22 +11,21 @@ import DITranquillity
 
 class ViewController: UIViewController {
   
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     
     let builder = ContainerBuilder()
     
-    builder.register(UIView)
+    try! builder.register(UIView)
            .asSelf()
            .asType(UIAppearance)
            .asType(UIResponder)
            //.instanceSingle()
-           .instancePerMatchingScope("ScopeName")
+           //.instancePerMatchingScope("ScopeName")
            //.instancePerScope()
-           //.instancePerDependency()
-           //.constructor(UIButton)
-           //.constructor({ _ in UISwitch() })
+           .instancePerDependency()
+           //.initializer(UIButton)
+           //.initializer({ _ in UISwitch() })
     
     do {
       let scope1 = try builder.build()

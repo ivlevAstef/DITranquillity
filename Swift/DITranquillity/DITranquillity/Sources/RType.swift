@@ -6,11 +6,9 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-import Foundation
-
 internal enum RTypeLifeTime {
   case Single
-  case PerMatchingScope(name : String)
+  case PerMatchingScope(name: String)
   case PerScope
   case PerDependency
   
@@ -18,63 +16,43 @@ internal enum RTypeLifeTime {
 }
 
 internal protocol RTypeReader {
-  func execConstructor(scope: ScopeProtocol) -> AnyObject
+  func initType(scope: ScopeProtocol) -> AnyObject?
   var lifeTime: RTypeLifeTime { get }
 }
 
 //registration type
 internal class RType : RTypeReader, Hashable {
-  internal init<ImplObj: AnyObject>(_ implType: ImplObj.Type) {
+  internal init<ImplObj: AnyObject>(_ implType: ImplObj.Type) throws {
     self.implType = implType
     
-    constructorErrorValue = RType.checkIsClass(implType)
-    constructor = RType.createConstructorByType(implType)
+    self.initializer = try Helpers.initializerByType(implType)
   }
   
   //Hashable
   internal var hashValue: Int { return String(implType).hash }
   
   //Reader
-  internal func execConstructor(scope: ScopeProtocol) -> AnyObject {
-    assert(valid)
-    return constructor(scope: scope)
+  internal func initType(scope: ScopeProtocol) -> AnyObject? {
+    return initializer(scope: scope)
   }
   
   internal var lifeTime: RTypeLifeTime = RTypeLifeTime.Default
   
-  //Constructor
+  //Initializer
   var implementedType: AnyClass { return implType }
   
-  internal func setConstructor<T: AnyObject>(constructorMethod: (scope: ScopeProtocol) -> T) {
-    constructorErrorValue = RType.checkIsClass(T.self)
-    constructor = constructorMethod
-  }
-  internal func setConstructor<T: AnyObject>(constructorType: T.Type) {
-    setConstructor(RType.createConstructorByType(constructorType))
+  internal func setInitializer<T: AnyObject>(method: (scope: ScopeProtocol) -> T) throws {
+    try Helpers.isClass(T.self)
+    initializer = method
   }
   
-  internal var valid: Bool { return nil == constructorError }
-  internal var constructorError: Error? { return constructorErrorValue }
+  internal func setInitializer<T: AnyObject>(type: T.Type) throws {
+    initializer = try Helpers.initializerByType(type)
+  }
   
   //Private
-  private static func createConstructorByType<T: AnyObject>(constructorType: T.Type) -> (scope: ScopeProtocol) -> AnyObject {
-    return { (_) in
-      let nsObjType = constructorType as! NSObject.Type
-      return nsObjType.init()
-    }
-  }
-  
-  private static func checkIsClass<T: AnyObject>(checkType: T.Type) -> Error? {
-    if let _ = checkType as? NSObject.Type {
-      return nil
-    }
-    
-    return Error.TypeNoClass(typeName: String(checkType))
-  }
-  
   private let implType : AnyClass
-  private var constructor : (scope: ScopeProtocol) -> AnyObject
-  private var constructorErrorValue: Error?
+  private var initializer : (scope: ScopeProtocol) -> AnyObject
 }
 
 internal func ==(lhs: RType, rhs: RType) -> Bool {

@@ -6,8 +6,6 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-import Foundation
-
 internal protocol RTypeContainerReadonly {
   subscript(key: AnyClass) -> RTypeReader? { get }
 }

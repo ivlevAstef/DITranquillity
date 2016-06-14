@@ -6,8 +6,6 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-import Foundation
-
 public enum Error : ErrorType {
   case TypeNoClass(typeName: String)
   case TypeNoRegister(typeName: String)

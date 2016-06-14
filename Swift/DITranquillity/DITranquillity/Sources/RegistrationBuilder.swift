@@ -6,30 +6,26 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-import Foundation
-
 public protocol RegistrationBuilderProtocol {
   func asSelf() -> Self
   func asType<EquallyObj: AnyObject>(equallyType: EquallyObj.Type) -> Self
 
-  func constructor<T: AnyObject>(constructorMethod: (scope: ScopeProtocol) -> T) -> Self
-  func constructor<T: AnyObject>(constructorType: T.Type) -> Self
+  func initializer<T: AnyObject>(method: (scope: ScopeProtocol) -> T) throws -> Self
+  func initializer<T: AnyObject>(type: T.Type) throws -> Self
   
   func instanceSingle() -> Self
   func instancePerMatchingScope(scopeName: String) -> Self
   func instancePerScope() -> Self
   func instancePerDependency() -> Self
-  
-  var valid: Bool { get }
 }
 
 internal class RegistrationBuilder<ImplObj: AnyObject> : RegistrationBuilderProtocol {
   private let rType: RType
   private let container : RTypeContainer
   
-  internal init(_ container: RTypeContainer, _ implType: ImplObj.Type) {
+  internal init(_ container: RTypeContainer, _ implType: ImplObj.Type) throws {
     self.container = container
-    self.rType = RType(implType)
+    self.rType = try RType(implType)
   }
   
   //As
@@ -43,14 +39,14 @@ internal class RegistrationBuilder<ImplObj: AnyObject> : RegistrationBuilderProt
     return self
   }
   
-  //Constructor
-  func constructor<T: AnyObject>(constructorMethod: (scope: ScopeProtocol) -> T) -> Self {
-    rType.setConstructor(constructorMethod)
+  //Initializer
+  func initializer<T: AnyObject>(method: (scope: ScopeProtocol) -> T) throws -> Self {
+    try rType.setInitializer(method)
     return self
   }
   
-  func constructor<T: AnyObject>(constructorType: T.Type) -> Self {
-    rType.setConstructor(constructorType)
+  func initializer<T: AnyObject>(type: T.Type) throws -> Self {
+    try rType.setInitializer(type)
     return self
   }
   
@@ -74,6 +70,4 @@ internal class RegistrationBuilder<ImplObj: AnyObject> : RegistrationBuilderProt
     rType.lifeTime = RTypeLifeTime.PerDependency
     return self
   }
-  
-  var valid: Bool { return rType.valid }
 }

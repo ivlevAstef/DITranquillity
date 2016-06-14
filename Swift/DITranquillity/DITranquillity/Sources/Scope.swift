@@ -6,8 +6,6 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-import Foundation
-
 public protocol ScopeProtocol {
   func setName(name: String) -> Self
   
@@ -88,7 +86,7 @@ internal class Scope : ScopeProtocol {
   }
   
   internal func resolvePerDependency<T: AnyObject>(rType: RTypeReader) throws -> T {
-    let obj = rType.execConstructor(self)
+    let obj = rType.initType(self)
     guard let result = obj as? T else {
       throw Error.TypeIncorrect(askableType: String(T.self), realType: String(obj.self))
     }
@@ -101,28 +99,4 @@ internal class Scope : ScopeProtocol {
   private var objects: [String: AnyObject] = [:]
   private var scopeName: String = ""
   private let registeredTypes: RTypeContainerReadonly
-}
-
-internal class ScopeContainer {
-  internal static func registerScope(scope: ScopeProtocol, name: String) {
-    scopes[name] = scope
-  }
-  
-  internal static func getScope(name: String) throws -> ScopeProtocol {
-    guard let scope = scopes[name] else {
-      throw Error.ScopeNotFound(scopeName: name)
-    }
-    
-    return scope
-  }
-  
-  internal static func removeScope(name: String) -> Bool {
-    if name.isEmpty {
-      return false
-    }
-    
-    return nil != scopes.removeValueForKey(name)
-  }
-  
-  private static var scopes: [String: ScopeProtocol] = [:]
 }
