@@ -15,26 +15,9 @@ class ViewController: UIViewController {
     super.viewDidLoad()
     
     let builder = ContainerBuilder()
+    builder.registerModule(SampleModule(useBarService: true))
     
-    builder.register(Int).asSelf().instanceSingle().initializer {_ in 10}
-    
-    builder.register(Service)
-      .asType(ServiceProtocol)
-      .instancePerDependency()
-      .initializer { _ in Service() }
-    
-    builder.register(Logger)
-      .asType(LoggerProtocol)
-      .instanceSingle()
-      .initializer { _ in Logger() }
-    
-    builder.register(Inject)
-      .asSelf()
-      .instancePerDependency()
-      .initializer { (scope) in Inject(service: *!scope, logger: *!scope, test: *!scope) }
-      
-    
-    builder.register(UIView)
+    try! builder.register(UIView)
            .asSelf()
            .asType(UIAppearance)
            //.instanceSingle()

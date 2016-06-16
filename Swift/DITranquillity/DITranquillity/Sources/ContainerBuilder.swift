@@ -10,10 +10,6 @@ public class ContainerBuilder {
   public init() {
   }
   
-  public func register<T>(rClass: T.Type) -> RegistrationBuilderProtocol {
-    return RegistrationBuilder<T>(self.rTypeContainer, rClass)
-  }
-  
   public func build() throws -> ScopeProtocol {
     var errors: [Error] = []
     
@@ -30,5 +26,5 @@ public class ContainerBuilder {
     return Scope(registeredTypes: rTypeContainer)
   }
   
-  private let rTypeContainer = RTypeContainer()
+  internal let rTypeContainer = RTypeContainer()
 }

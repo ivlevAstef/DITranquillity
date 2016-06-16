@@ -6,15 +6,21 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-import Foundation
+import DITranquillity
 
 protocol ServiceProtocol {
   func foo()
 }
 
-class Service: ServiceProtocol {
+class FooService: ServiceProtocol {
   func foo() {
     print("foo")
+  }
+}
+
+class BarService: ServiceProtocol {
+  func foo() {
+    print("bar")
   }
 }
 
@@ -40,4 +46,36 @@ class Inject {
   var description: String {
     return "<Inject: \(unsafeAddressOf(self)) service:\(unsafeAddressOf(service as! AnyObject)) logger:\(unsafeAddressOf(logger as! AnyObject)) >"
   }
+}
+
+class SampleModule : ModuleProtocol {
+  init(useBarService: Bool) {
+    self.useBarService = useBarService
+  }
+  
+  func load(builder: ContainerBuilder) {
+    builder.register(Int).asSelf().instanceSingle().initializer {_ in 10}
+    
+    builder.register(ServiceProtocol)
+      .asSelf()
+      .instancePerDependency()
+      .initializer { _ in
+        if self.useBarService {
+          return BarService()
+        }
+        return FooService()
+    }
+    
+    try! builder.register(Logger)
+      .asType(LoggerProtocol)
+      .instanceSingle()
+      .initializer { _ in Logger() }
+    
+    builder.register(Inject)
+      .asSelf()
+      .instancePerDependency()
+      .initializer { (scope) in Inject(service: *!scope, logger: *!scope, test: *!scope) }
+  }
+  
+  private let useBarService: Bool
 }
