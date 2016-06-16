@@ -32,7 +32,7 @@ class Inject {
   private let service: ServiceProtocol
   private let logger: LoggerProtocol
   
-  init(service: ServiceProtocol, logger: LoggerProtocol) {
+  init(service: ServiceProtocol, logger: LoggerProtocol, test: Int) {
     self.service = service
     self.logger = logger
   }

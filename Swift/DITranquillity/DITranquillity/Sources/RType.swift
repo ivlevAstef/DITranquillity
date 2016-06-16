@@ -23,8 +23,7 @@ internal protocol RTypeReader {
 //registration type
 internal class RType : RTypeReader, Hashable {
   internal init<ImplObj>(_ implType: ImplObj.Type) {
-    //initializerByType checked 'isClass'
-    self.implType = implType as! AnyClass
+    self.implType = implType
   }
   
   //Hashable
@@ -38,7 +37,7 @@ internal class RType : RTypeReader, Hashable {
   internal var lifeTime: RTypeLifeTime = RTypeLifeTime.Default
   
   //Initializer
-  var implementedType: AnyClass { return implType }
+  var implementedType: Any { return implType }
   
   internal func setInitializer<T>(method: (scope: ScopeProtocol) -> T) {
     initializer = method
@@ -47,10 +46,10 @@ internal class RType : RTypeReader, Hashable {
   var hasInitializer : Bool { return nil != initializer }
   
   //Private
-  private let implType : AnyClass
+  private let implType : Any
   private var initializer : ((scope: ScopeProtocol) -> Any)? = nil
 }
 
 internal func ==(lhs: RType, rhs: RType) -> Bool {
-  return lhs.implType == rhs.implType
+  return String(lhs.implType) == String(rhs.implType)
 }

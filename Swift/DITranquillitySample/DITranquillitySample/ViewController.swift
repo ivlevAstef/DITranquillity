@@ -16,6 +16,8 @@ class ViewController: UIViewController {
     
     let builder = ContainerBuilder()
     
+    builder.register(Int).asSelf().instanceSingle().initializer {_ in 10}
+    
     builder.register(Service)
       .asType(ServiceProtocol)
       .instancePerDependency()
@@ -29,7 +31,7 @@ class ViewController: UIViewController {
     builder.register(Inject)
       .asSelf()
       .instancePerDependency()
-      .initializer { (scope) in Inject(service: *!scope, logger: *!scope) }
+      .initializer { (scope) in Inject(service: *!scope, logger: *!scope, test: *!scope) }
       
     
     builder.register(UIView)
