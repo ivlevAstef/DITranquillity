@@ -16,4 +16,6 @@ public enum Error : ErrorType {
   case Build(errors: [Error])
   
   case ScopeNotFound(scopeName: String)
+  
+  case NotFoundStartupModule()
 }

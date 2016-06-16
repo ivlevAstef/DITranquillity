@@ -10,8 +10,8 @@ public protocol ScopeProtocol {
   func resolve<T>() throws -> T
   func resolve<T>(_: T.Type) throws -> T
   
-  func newLifeTimeScope() throws -> ScopeProtocol
-  func newLifeTimeScope(name: String) throws -> ScopeProtocol
+  func newLifeTimeScope() -> ScopeProtocol
+  func newLifeTimeScope(name: String) -> ScopeProtocol
 }
 
 prefix operator *!{}
@@ -43,11 +43,11 @@ internal class Scope : ScopeProtocol {
     return try resolve()
   }
   
-  internal func newLifeTimeScope() throws -> ScopeProtocol {
+  internal func newLifeTimeScope() -> ScopeProtocol {
     return Scope(registeredTypes: registeredTypes, parent: self)
   }
   
-  internal func newLifeTimeScope(name: String = "") throws -> ScopeProtocol {
+  internal func newLifeTimeScope(name: String = "") -> ScopeProtocol {
     return Scope(registeredTypes: registeredTypes, parent: self, name: name)
   }
   

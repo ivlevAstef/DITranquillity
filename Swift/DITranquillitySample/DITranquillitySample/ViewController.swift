@@ -13,24 +13,11 @@ class ViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    let builder = ContainerBuilder()
-    builder.registerModule(SampleModule(useBarService: true))
-    
-    try! builder.register(UIView)
-           .asSelf()
-           .asType(UIAppearance)
-           //.instanceSingle()
-           //.instancePerMatchingScope("ScopeName")
-           //.instancePerScope()
-           .instancePerDependency()
-           .initializer({ (scope) -> UIButton in UIButton()})
-           //.initializer({ _ in UISwitch() })
-    
+
     do {
-      let scope1 = try builder.build()
-      let scope2 = try scope1.newLifeTimeScope("ScopeName")
-      let scope3 = try scope2.newLifeTimeScope()
+      let scope1 = try Main.autoRegistrate()
+      let scope2 = scope1.newLifeTimeScope("ScopeName")
+      let scope3 = scope2.newLifeTimeScope()
       
       let vc1_1 = try! scope2.resolve(UIView)
       print("Create VC1_1: \(vc1_1)")

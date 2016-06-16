@@ -16,6 +16,7 @@
 		A5AE2B5A1D0AD76600FF3E40 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AE2B531D0AD76600FF3E40 /* Error.swift */; };
 		A5AE2B5B1D0AD76600FF3E40 /* RType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AE2B541D0AD76600FF3E40 /* RType.swift */; };
 		A5AE2B5C1D0AD76600FF3E40 /* RegistrationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AE2B551D0AD76600FF3E40 /* RegistrationBuilder.swift */; };
+		A5BF34FE1D12D797003DCB51 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF34FD1D12D797003DCB51 /* Main.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		A5AE2B531D0AD76600FF3E40 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		A5AE2B541D0AD76600FF3E40 /* RType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RType.swift; sourceTree = "<group>"; };
 		A5AE2B551D0AD76600FF3E40 /* RegistrationBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationBuilder.swift; sourceTree = "<group>"; };
+		A5BF34FD1D12D797003DCB51 /* Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				A5AE2B541D0AD76600FF3E40 /* RType.swift */,
 				A51657A31D0FD467004A34F5 /* Helpers.swift */,
 				A52BEF6C1D12C1E5008FCAD1 /* Module.swift */,
+				A5BF34FD1D12D797003DCB51 /* Main.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -162,6 +165,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5BF34FE1D12D797003DCB51 /* Main.swift in Sources */,
 				A5AE2B581D0AD76600FF3E40 /* RTypeContainer.swift in Sources */,
 				A51657A41D0FD467004A34F5 /* Helpers.swift in Sources */,
 				A5AE2B5C1D0AD76600FF3E40 /* RegistrationBuilder.swift in Sources */,

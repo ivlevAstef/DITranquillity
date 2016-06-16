@@ -6,6 +6,7 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
+import UIKit
 import DITranquillity
 
 protocol ServiceProtocol {
@@ -78,4 +79,20 @@ class SampleModule : ModuleProtocol {
   }
   
   private let useBarService: Bool
+}
+
+class SampleStartupModule : DIStartupModule {
+  override func load(builder: ContainerBuilder) {
+    builder.registerModule(SampleModule(useBarService: true))
+    
+    try! builder.register(UIView)
+      .asSelf()
+      .asType(UIAppearance)
+      //.instanceSingle()
+      //.instancePerMatchingScope("ScopeName")
+      //.instancePerScope()
+      .instancePerDependency()
+      .initializer({ (scope) -> UIButton in UIButton()})
+    //.initializer({ _ in UISwitch() })
+  }
 }

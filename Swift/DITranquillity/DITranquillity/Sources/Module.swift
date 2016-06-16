@@ -12,13 +12,11 @@ public protocol ModuleProtocol {
   func load(builder: ContainerBuilder)
 }
 
-public protocol StartupModuleProtocol: ModuleProtocol {
+@objc public class DIStartupModule: NSObject, ModuleProtocol {
+  public required override init() {
+  }
   
-}
-
-private class ModuleLoader {
-  static func initialize() {
-    print("test")
+  public func load(builder: ContainerBuilder) {
   }
 }
 
