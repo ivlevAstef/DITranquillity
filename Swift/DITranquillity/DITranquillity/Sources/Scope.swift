@@ -7,12 +7,11 @@
 //
 
 public protocol ScopeProtocol {
-  func setName(name: String) -> Self
-  
   func resolve<T>() throws -> T
   func resolve<T>(_: T.Type) throws -> T
   
   func newLifeTimeScope() throws -> ScopeProtocol
+  func newLifeTimeScope(name: String) throws -> ScopeProtocol
 }
 
 prefix operator *!{}
@@ -26,8 +25,10 @@ public prefix func *<T>(scope: ScopeProtocol) throws -> T {
 }
 
 internal class Scope : ScopeProtocol {
-  internal init(registeredTypes: RTypeContainerReadonly) {
+  internal init(registeredTypes: RTypeContainerReadonly, parent: ScopeProtocol? = nil, name: String = "") {
     self.registeredTypes = registeredTypes
+    self.parent = parent
+    self.name = name
   }
   
   func resolve<T>() throws -> T {
@@ -43,18 +44,11 @@ internal class Scope : ScopeProtocol {
   }
   
   internal func newLifeTimeScope() throws -> ScopeProtocol {
-    return Scope(registeredTypes: registeredTypes)
+    return Scope(registeredTypes: registeredTypes, parent: self)
   }
   
-  internal func setName(name: String) -> Self {
-    if name.isEmpty {
-      ScopeContainer.removeScope(scopeName)
-    } else {
-      ScopeContainer.registerScope(self as! ScopeProtocol, name: name)
-    }
-    scopeName = name
-    
-    return self
+  internal func newLifeTimeScope(name: String = "") throws -> ScopeProtocol {
+    return Scope(registeredTypes: registeredTypes, parent: self, name: name)
   }
   
   //Private
@@ -84,11 +78,15 @@ internal class Scope : ScopeProtocol {
   }
   
   internal func resolvePerMatchingScope<T>(rType: RTypeReader, _ name: String) throws -> T {
-    if name == self.scopeName {
+    if name == self.name {
       return try resolvePerScope(rType)
     }
     
-    return try ScopeContainer.getScope(name).resolve(T.self)
+    guard let scopeParent = parent else {
+      throw Error.ScopeNotFound(scopeName: name)
+    }
+    
+    return try scopeParent.resolve()
   }
   
   internal func resolvePerScope<T>(rType: RTypeReader) throws -> T {
@@ -115,6 +113,7 @@ internal class Scope : ScopeProtocol {
   private static var singleObjects: [String: Any] = [:]
   
   private var objects: [String: Any] = [:]
-  private var scopeName: String = ""
+  private let name: String
   private let registeredTypes: RTypeContainerReadonly
+  private let parent: ScopeProtocol?
 }

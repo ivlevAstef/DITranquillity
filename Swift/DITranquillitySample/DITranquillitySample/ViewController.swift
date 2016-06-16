@@ -44,18 +44,19 @@ class ViewController: UIViewController {
     
     do {
       let scope1 = try builder.build()
-      let scope2 = try scope1.newLifeTimeScope().setName("ScopeName")
+      let scope2 = try scope1.newLifeTimeScope("ScopeName")
+      let scope3 = try scope2.newLifeTimeScope()
       
-      let vc1_1 = try! scope1.resolve(UIView)
+      let vc1_1 = try! scope2.resolve(UIView)
       print("Create VC1_1: \(vc1_1)")
       
-      let vc1_2: UIView = try! *scope1
+      let vc1_2: UIView = try! *scope3
       print("Create VC1_2: \(vc1_2)")
       
       let vc2_1: UIView  = *!scope2
       print("Create VC2_1: \(vc2_1)")
       
-      let vc2_2: UIAppearance = try! scope2.resolve()
+      let vc2_2: UIAppearance = try! scope1.resolve()
       print("Create VC2_2: \(vc2_2)")
       
       
