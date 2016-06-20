@@ -1,5 +1,5 @@
 //
-//  RegistrationBuilderProtocol.swift
+//  DIRegistrationBuilderProtocol.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 10/06/16.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-public protocol RegistrationBuilderProtocol {
+public protocol DIRegistrationBuilderProtocol {
   associatedtype ImplementedObj
   
   func asSelf() -> Self
   func asType<EquallyObj>(equallyType: EquallyObj.Type) throws -> Self
 
-  func initializer(method: (scope: ScopeProtocol) -> ImplementedObj) -> Self
+  func initializer(method: (scope: DIScopeProtocol) -> ImplementedObj) -> Self
   
   func instanceSingle() -> Self
   func instancePerMatchingScope(scopeName: String) -> Self
@@ -22,7 +22,7 @@ public protocol RegistrationBuilderProtocol {
   func instancePerDependency() -> Self
 }
 
-public class RegistrationBuilder<ImplObj> : RegistrationBuilderProtocol {
+public class DIRegistrationBuilder<ImplObj> : DIRegistrationBuilderProtocol {
   public typealias ImplementedObj = ImplObj
   
   //As
@@ -37,7 +37,7 @@ public class RegistrationBuilder<ImplObj> : RegistrationBuilderProtocol {
   }
   
   //Initializer
-  public func initializer(method: (scope: ScopeProtocol) -> ImplObj) -> Self {
+  public func initializer(method: (scope: DIScopeProtocol) -> ImplObj) -> Self {
     rType.setInitializer(method)
     return self
   }
@@ -72,8 +72,8 @@ public class RegistrationBuilder<ImplObj> : RegistrationBuilderProtocol {
   private let container : RTypeContainer
 }
 
-extension ContainerBuilder {
-  public func register<T>(rClass: T.Type) -> RegistrationBuilder<T> {
-    return RegistrationBuilder<T>(self.rTypeContainer, rClass)
+extension DIContainerBuilder {
+  public func register<T>(rClass: T.Type) -> DIRegistrationBuilder<T> {
+    return DIRegistrationBuilder<T>(self.rTypeContainer, rClass)
   }
 }

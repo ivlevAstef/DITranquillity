@@ -8,17 +8,17 @@
 
 import Foundation
 
-public class Main {
-  public static var container: ScopeProtocol? = nil
+public class DIMain {
+  public static var container: DIScopeProtocol? = nil
   
-  public static func autoRegistrate() throws -> ScopeProtocol {
+  public static func autoRegistrate() throws -> DIScopeProtocol {
     let startupModuleClasses = getStartupModules()
     
     if startupModuleClasses.isEmpty {
-      throw Error.NotFoundStartupModule()
+      throw DIError.NotFoundStartupModule()
     }
     
-    let builder = ContainerBuilder()
+    let builder = DIContainerBuilder()
     
     for cls in startupModuleClasses {
       builder.registerModule(cls.init())
@@ -41,7 +41,7 @@ public class Main {
         continue
       }
       
-      if class_getSuperclass(cls) == DIStartupModule.self {
+      if checkClassOnStartupModule(cls) {
         result.append(cls as! DIStartupModule.Type)
       }
     }
@@ -49,5 +49,9 @@ public class Main {
     allClasses.dealloc(Int(expectedClassCount))
     
     return result
+  }
+  
+  private static func checkClassOnStartupModule(cls: AnyClass) -> Bool {
+    return class_getSuperclass(cls) == DIStartupModule.self
   }
 }

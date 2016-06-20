@@ -16,7 +16,7 @@ internal enum RTypeLifeTime {
 }
 
 internal protocol RTypeReader {
-  func initType(scope: ScopeProtocol) -> Any
+  func initType(scope: DIScopeProtocol) -> Any
   var lifeTime: RTypeLifeTime { get }
 }
 
@@ -30,7 +30,7 @@ internal class RType : RTypeReader, Hashable {
   internal var hashValue: Int { return String(implType).hash }
   
   //Reader
-  internal func initType(scope: ScopeProtocol) -> Any {
+  internal func initType(scope: DIScopeProtocol) -> Any {
     return initializer!(scope: scope)
   }
   
@@ -39,7 +39,7 @@ internal class RType : RTypeReader, Hashable {
   //Initializer
   var implementedType: Any { return implType }
   
-  internal func setInitializer<T>(method: (scope: ScopeProtocol) -> T) {
+  internal func setInitializer<T>(method: (scope: DIScopeProtocol) -> T) {
     initializer = method
   }
   
@@ -47,7 +47,7 @@ internal class RType : RTypeReader, Hashable {
   
   //Private
   private let implType : Any
-  private var initializer : ((scope: ScopeProtocol) -> Any)? = nil
+  private var initializer : ((scope: DIScopeProtocol) -> Any)? = nil
 }
 
 internal func ==(lhs: RType, rhs: RType) -> Bool {

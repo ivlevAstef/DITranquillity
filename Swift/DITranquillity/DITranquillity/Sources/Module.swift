@@ -8,24 +8,20 @@
 
 import Foundation
 
-public protocol ModuleProtocol {
-  func load(builder: ContainerBuilder)
+public protocol DIModuleProtocol {
+  func load(builder: DIContainerBuilder)
 }
 
-@objc public class DIStartupModule: NSObject, ModuleProtocol {
+@objc public class DIStartupModule: NSObject, DIModuleProtocol {
   public required override init() {
   }
   
-  public func load(builder: ContainerBuilder) {
+  public func load(builder: DIContainerBuilder) {
   }
 }
 
-public protocol RegistrationModuleProtocol {
-  func registerModule(module: ModuleProtocol) -> Self
-}
-
-extension ContainerBuilder {
-  public func registerModule(module: ModuleProtocol) -> Self {
+extension DIContainerBuilder {
+  public func registerModule(module: DIModuleProtocol) -> Self {
     module.load(self)
     return self
   }

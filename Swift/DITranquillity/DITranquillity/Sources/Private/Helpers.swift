@@ -12,7 +12,7 @@ internal class Helpers {
   internal static func isClass<T>(checkType: T.Type) throws {
     //Please ignore warning because: isClass(UIAppearance) return false. It's worked for all obj-c protocols
     guard checkType is AnyClass else {
-      throw Error.TypeNoClass(typeName: String(checkType))
+      throw DIError.TypeNoClass(typeName: String(checkType))
     }
   }
   

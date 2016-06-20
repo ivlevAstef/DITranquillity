@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     super.viewDidLoad()
 
     do {
-      let scope1 = try Main.autoRegistrate()
+      let scope1 = try DIMain.autoRegistrate()
       let scope2 = scope1.newLifeTimeScope("ScopeName")
       let scope3 = scope2.newLifeTimeScope()
       

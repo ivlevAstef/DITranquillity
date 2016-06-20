@@ -49,12 +49,12 @@ class Inject {
   }
 }
 
-class SampleModule : ModuleProtocol {
+class SampleModule : DIModuleProtocol {
   init(useBarService: Bool) {
     self.useBarService = useBarService
   }
   
-  func load(builder: ContainerBuilder) {
+  func load(builder: DIContainerBuilder) {
     builder.register(Int).asSelf().instanceSingle().initializer {_ in 10}
     
     builder.register(ServiceProtocol)
@@ -82,7 +82,7 @@ class SampleModule : ModuleProtocol {
 }
 
 class SampleStartupModule : DIStartupModule {
-  override func load(builder: ContainerBuilder) {
+  override func load(builder: DIContainerBuilder) {
     builder.registerModule(SampleModule(useBarService: true))
     
     try! builder.register(UIView)

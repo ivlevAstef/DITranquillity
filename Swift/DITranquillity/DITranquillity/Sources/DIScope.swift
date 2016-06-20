@@ -1,31 +1,31 @@
 //
-//  Scope.swift
+//  DIScope.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 10/06/16.
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public protocol ScopeProtocol {
+public protocol DIScopeProtocol {
   func resolve<T>() throws -> T
   func resolve<T>(_: T.Type) throws -> T
   
-  func newLifeTimeScope() -> ScopeProtocol
-  func newLifeTimeScope(name: String) -> ScopeProtocol
+  func newLifeTimeScope() -> DIScopeProtocol
+  func newLifeTimeScope(name: String) -> DIScopeProtocol
 }
 
 prefix operator *!{}
-public prefix func *!<T>(scope: ScopeProtocol) -> T {
+public prefix func *!<T>(scope: DIScopeProtocol) -> T {
   return try! scope.resolve()
 }
 
 prefix operator *{}
-public prefix func *<T>(scope: ScopeProtocol) throws -> T {
+public prefix func *<T>(scope: DIScopeProtocol) throws -> T {
   return try scope.resolve()
 }
 
-internal class Scope : ScopeProtocol {
-  internal init(registeredTypes: RTypeContainerReadonly, parent: ScopeProtocol? = nil, name: String = "") {
+internal class DIScope : DIScopeProtocol {
+  internal init(registeredTypes: RTypeContainerReadonly, parent: DIScopeProtocol? = nil, name: String = "") {
     self.registeredTypes = registeredTypes
     self.parent = parent
     self.name = name
@@ -33,7 +33,7 @@ internal class Scope : ScopeProtocol {
   
   func resolve<T>() throws -> T {
     guard let rType = registeredTypes[T.self] else {
-      throw Error.TypeNoRegister(typeName: String(T.self))
+      throw DIError.TypeNoRegister(typeName: String(T.self))
     }
     
     return try resolveUseRType(rType)
@@ -43,12 +43,12 @@ internal class Scope : ScopeProtocol {
     return try resolve()
   }
   
-  internal func newLifeTimeScope() -> ScopeProtocol {
-    return Scope(registeredTypes: registeredTypes, parent: self)
+  internal func newLifeTimeScope() -> DIScopeProtocol {
+    return DIScope(registeredTypes: registeredTypes, parent: self)
   }
   
-  internal func newLifeTimeScope(name: String = "") -> ScopeProtocol {
-    return Scope(registeredTypes: registeredTypes, parent: self, name: name)
+  internal func newLifeTimeScope(name: String = "") -> DIScopeProtocol {
+    return DIScope(registeredTypes: registeredTypes, parent: self, name: name)
   }
   
   //Private
@@ -68,12 +68,12 @@ internal class Scope : ScopeProtocol {
   internal func resolveSingle<T>(rType: RTypeReader) throws -> T {
     let key = String(T.self)
     
-    if let obj = Scope.singleObjects[key] {
+    if let obj = DIScope.singleObjects[key] {
       return obj as! T
     }
     
     let obj: T = try resolvePerDependency(rType)
-    Scope.singleObjects[key] = obj
+    DIScope.singleObjects[key] = obj
     return obj
   }
   
@@ -83,7 +83,7 @@ internal class Scope : ScopeProtocol {
     }
     
     guard let scopeParent = parent else {
-      throw Error.ScopeNotFound(scopeName: name)
+      throw DIError.ScopeNotFound(scopeName: name)
     }
     
     return try scopeParent.resolve()
@@ -104,7 +104,7 @@ internal class Scope : ScopeProtocol {
   internal func resolvePerDependency<T>(rType: RTypeReader) throws -> T {
     let obj = rType.initType(self)
     guard let result = obj as? T else {
-      throw Error.TypeIncorrect(askableType: String(T.self), realType: String(obj.self))
+      throw DIError.TypeIncorrect(askableType: String(T.self), realType: String(obj.self))
     }
     
     return result
@@ -115,5 +115,5 @@ internal class Scope : ScopeProtocol {
   private var objects: [String: Any] = [:]
   private let name: String
   private let registeredTypes: RTypeContainerReadonly
-  private let parent: ScopeProtocol?
+  private let parent: DIScopeProtocol?
 }
