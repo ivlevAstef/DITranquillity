@@ -7,28 +7,34 @@
 //
 
 internal protocol RTypeContainerReadonly {
-  subscript(key: Any) -> RTypeReader? { get }
+  subscript(key: Any) -> [RTypeReader]? { get }
 }
 
 internal class RTypeContainer : RTypeContainerReadonly {
-  internal subscript(key: Any) -> RType? {
-    get {
-      return values[hash(key)]
+  internal func append(key: Any, value: RType) {
+    if nil == values[hash(key)] {
+      values[hash(key)] = []
     }
-    set {
-      values[hash(key)] = newValue
-    }
+    
+    values[hash(key)]?.append(value)
   }
   
-  internal subscript(key: Any) -> RTypeReader? { return values[hash(key)] }
+  internal subscript(key: Any) -> [RType]? { return values[hash(key)] }
   
-  internal func list() -> Set<RType> {
-    return Set<RType>(values.values)
+  internal subscript(key: Any) -> [RTypeReader]? {
+    guard let values = values[hash(key)] else {
+      return nil
+    }
+    return values.map { (rType) -> RTypeReader in return rType }
+  }
+  
+  internal func data() -> [String: [RType]] {
+    return values
   }
   
   private func hash(type: Any) -> String {
     return String(type)
   }
   
-  private var values : [String: RType] = [:]
+  private var values : [String: [RType]] = [:]
 }

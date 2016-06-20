@@ -9,7 +9,12 @@
 public enum DIError : ErrorType {
   case TypeNoClass(typeName: String)
   case TypeNoRegister(typeName: String)
+  case MultyRegisterType(typeName: String)
+  case TypeNoRegisterByName(typeName: String, name: String)
   case NotSetInitializer(typeName: String)
+  
+  case MultyRegisterDefault(typeNames: [String], forType: String)
+  case NotSetDefaultForMultyRegisterType(typeNames: [String], forType: String)
   
   case TypeIncorrect(askableType: String, realType: String)
   

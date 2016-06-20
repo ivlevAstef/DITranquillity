@@ -18,6 +18,10 @@ internal enum RTypeLifeTime {
 internal protocol RTypeReader {
   func initType(scope: DIScopeProtocol) -> Any
   var lifeTime: RTypeLifeTime { get }
+  func hasName(name: String) -> Bool
+  var isDefault: Bool { get }
+  var name: String { get }
+  
 }
 
 //registration type
@@ -36,6 +40,12 @@ internal class RType : RTypeReader, Hashable {
   
   internal var lifeTime: RTypeLifeTime = RTypeLifeTime.Default
   
+  func hasName(name: String) -> Bool {
+    return names.contains(name)
+  }
+  
+  internal var name: String { return String(implType) }
+  
   //Initializer
   var implementedType: Any { return implType }
   
@@ -48,6 +58,8 @@ internal class RType : RTypeReader, Hashable {
   //Private
   private let implType : Any
   private var initializer : ((scope: DIScopeProtocol) -> Any)? = nil
+  internal var names : [String] = []
+  internal var isDefault: Bool = false
 }
 
 internal func ==(lhs: RType, rhs: RType) -> Bool {

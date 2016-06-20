@@ -35,6 +35,13 @@ class Logger: LoggerProtocol {
   }
 }
 
+class Logger2: LoggerProtocol {
+  func log(msg: String) {
+    print("log2: \(msg)")
+  }
+}
+
+
 class Inject {
   private let service: ServiceProtocol
   private let logger: LoggerProtocol
@@ -46,6 +53,14 @@ class Inject {
   
   var description: String {
     return "<Inject: \(unsafeAddressOf(self)) service:\(unsafeAddressOf(service as! AnyObject)) logger:\(unsafeAddressOf(logger as! AnyObject)) >"
+  }
+}
+
+class InjectMany {
+  private let loggers: [LoggerProtocol]
+  
+  init(loggers: [LoggerProtocol]) {
+    self.loggers = loggers
   }
 }
 
@@ -70,12 +85,24 @@ class SampleModule : DIModuleProtocol {
     try! builder.register(Logger)
       .asType(LoggerProtocol)
       .instanceSingle()
+      .asDefault()
       .initializer { _ in Logger() }
+    
+    try! builder.register(Logger2)
+      .asType(LoggerProtocol)
+      .instanceSingle()
+      //.asDefault()
+      .initializer { _ in Logger2() }
     
     builder.register(Inject)
       .asSelf()
       .instancePerDependency()
       .initializer { (scope) in Inject(service: *!scope, logger: *!scope, test: *!scope) }
+    
+    builder.register(InjectMany)
+      .asSelf()
+      .instancePerDependency()
+      .initializer { (scope) in InjectMany(loggers: **!scope) }
   }
   
   private let useBarService: Bool

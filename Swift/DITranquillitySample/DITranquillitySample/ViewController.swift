@@ -38,6 +38,9 @@ class ViewController: UIViewController {
       let inject2: Inject = *!scope2
       print("Create Inject2: \(inject2.description)")
       
+      let injectMany: InjectMany = *!scope1
+      print("Create injectMany: \(injectMany)")
+      
     } catch {
       print("Can't create container with error: \(error)")
     }

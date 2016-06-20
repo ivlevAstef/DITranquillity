@@ -10,6 +10,12 @@ public protocol DIScopeProtocol {
   func resolve<T>() throws -> T
   func resolve<T>(_: T.Type) throws -> T
   
+  func resolveMany<T>() throws -> [T]
+  func resolveMany<T>(_: T.Type) throws -> [T]
+  
+  func resolve<T>(name: String) throws -> T
+  func resolve<T>(_: T.Type, name: String) throws -> T
+  
   func newLifeTimeScope() -> DIScopeProtocol
   func newLifeTimeScope(name: String) -> DIScopeProtocol
 }
@@ -19,9 +25,19 @@ public prefix func *!<T>(scope: DIScopeProtocol) -> T {
   return try! scope.resolve()
 }
 
+prefix operator **!{}
+public prefix func **!<T>(scope: DIScopeProtocol) -> [T] {
+  return try! scope.resolveMany()
+}
+
 prefix operator *{}
 public prefix func *<T>(scope: DIScopeProtocol) throws -> T {
   return try scope.resolve()
+}
+
+prefix operator **{}
+public prefix func **<T>(scope: DIScopeProtocol) throws -> [T] {
+  return try scope.resolveMany()
 }
 
 internal class DIScope : DIScopeProtocol {
@@ -32,15 +48,67 @@ internal class DIScope : DIScopeProtocol {
   }
   
   func resolve<T>() throws -> T {
-    guard let rType = registeredTypes[T.self] else {
+    guard let rTypes = registeredTypes[T.self] else {
+      throw DIError.TypeNoRegister(typeName: String(T.self))
+    }
+    guard !rTypes.isEmpty else {
       throw DIError.TypeNoRegister(typeName: String(T.self))
     }
     
-    return try resolveUseRType(rType)
+    if rTypes.count > 1 {
+      guard let typeIndex = rTypes.indexOf({ (rType) -> Bool in rType.isDefault }) else {
+        throw DIError.MultyRegisterType(typeName: String(T.self))
+      }
+      
+      return try resolveUseRType(rTypes[typeIndex])
+    }
+    
+    return try resolveUseRType(rTypes[0])
   }
   
   internal func resolve<T>(_: T.Type) throws -> T {
     return try resolve()
+  }
+  
+  func resolveMany<T>() throws -> [T] {
+    guard let rTypes = registeredTypes[T.self] else {
+      throw DIError.TypeNoRegister(typeName: String(T.self))
+    }
+    guard !rTypes.isEmpty else {
+      throw DIError.TypeNoRegister(typeName: String(T.self))
+    }
+    
+    var result: [T] = []
+    for rType in rTypes {
+      try result.append(resolveUseRType(rType))
+    }
+    
+    return result
+  }
+  
+  internal func resolveMany<T>(_: T.Type) throws -> [T] {
+    return try resolveMany()
+  }
+  
+  func resolve<T>(name: String) throws -> T {
+    guard let rTypes = registeredTypes[T.self] else {
+      throw DIError.TypeNoRegister(typeName: String(T.self))
+    }
+    guard !rTypes.isEmpty else {
+      throw DIError.TypeNoRegister(typeName: String(T.self))
+    }
+    
+    for rType in rTypes {
+      if rType.hasName(name) {
+        return try resolveUseRType(rType)
+      }
+    }
+    
+    throw DIError.TypeNoRegisterByName(typeName: String(T.self), name: name)
+  }
+  
+  func resolve<T>(_: T.Type, name: String) throws -> T {
+    return try resolve(name)
   }
   
   internal func newLifeTimeScope() -> DIScopeProtocol {
@@ -66,7 +134,7 @@ internal class DIScope : DIScopeProtocol {
   }
   
   internal func resolveSingle<T>(rType: RTypeReader) throws -> T {
-    let key = String(T.self)
+    let key = rType.name
     
     if let obj = DIScope.singleObjects[key] {
       return obj as! T
@@ -90,7 +158,7 @@ internal class DIScope : DIScopeProtocol {
   }
   
   internal func resolvePerScope<T>(rType: RTypeReader) throws -> T {
-    let key = String(T.self)
+    let key = rType.name
     
     if let obj = objects[key] {
       return obj as! T
