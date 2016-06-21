@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A50053011D19299700DFD9CF /* DIScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50053001D19299700DFD9CF /* DIScope.swift */; };
 		A505999B1D17FCB100A8D42C /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50599981D17FCB100A8D42C /* Helpers.swift */; };
 		A505999C1D17FCB100A8D42C /* RType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50599991D17FCB100A8D42C /* RType.swift */; };
 		A505999D1D17FCB100A8D42C /* RTypeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A505999A1D17FCB100A8D42C /* RTypeContainer.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A50053001D19299700DFD9CF /* DIScope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScope.swift; sourceTree = "<group>"; };
 		A50599981D17FCB100A8D42C /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		A50599991D17FCB100A8D42C /* RType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RType.swift; sourceTree = "<group>"; };
 		A505999A1D17FCB100A8D42C /* RTypeContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTypeContainer.swift; sourceTree = "<group>"; };
@@ -51,6 +53,7 @@
 				A50599981D17FCB100A8D42C /* Helpers.swift */,
 				A50599991D17FCB100A8D42C /* RType.swift */,
 				A505999A1D17FCB100A8D42C /* RTypeContainer.swift */,
+				A50053001D19299700DFD9CF /* DIScope.swift */,
 			);
 			path = Private;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 				A5BF34FE1D12D797003DCB51 /* Main.swift in Sources */,
 				A505999B1D17FCB100A8D42C /* Helpers.swift in Sources */,
 				A505999C1D17FCB100A8D42C /* RType.swift in Sources */,
+				A50053011D19299700DFD9CF /* DIScope.swift in Sources */,
 				A5AE2B5C1D0AD76600FF3E40 /* DIRegistrationBuilder.swift in Sources */,
 				A505999D1D17FCB100A8D42C /* RTypeContainer.swift in Sources */,
 				A5AE2B5A1D0AD76600FF3E40 /* DIError.swift in Sources */,

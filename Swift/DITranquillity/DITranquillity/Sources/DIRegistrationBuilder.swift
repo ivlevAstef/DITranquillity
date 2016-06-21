@@ -25,6 +25,12 @@ public protocol DIRegistrationBuilderProtocol {
   func instancePerDependency() -> Self
 }
 
+extension DIContainerBuilder {
+  public func register<T>(rClass: T.Type) -> DIRegistrationBuilder<T> {
+    return DIRegistrationBuilder<T>(self.rTypeContainer, rClass)
+  }
+}
+
 public class DIRegistrationBuilder<ImplObj> : DIRegistrationBuilderProtocol {
   public typealias ImplementedObj = ImplObj
   
@@ -83,10 +89,4 @@ public class DIRegistrationBuilder<ImplObj> : DIRegistrationBuilderProtocol {
   
   private let rType: RType
   private let container : RTypeContainer
-}
-
-extension DIContainerBuilder {
-  public func register<T>(rClass: T.Type) -> DIRegistrationBuilder<T> {
-    return DIRegistrationBuilder<T>(self.rTypeContainer, rClass)
-  }
 }
