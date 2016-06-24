@@ -1,5 +1,5 @@
 //
-//  DIScope.swift
+//  DIScopeImpl.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 21/06/16.
