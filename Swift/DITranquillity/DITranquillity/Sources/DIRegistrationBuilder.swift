@@ -18,6 +18,7 @@ public protocol DIRegistrationBuilderProtocol {
   func asDefault() -> Self
 
   func initializer(method: (scope: DIScopeProtocol) -> ImplementedObj) -> Self
+  func dependency(method: (scope: DIScopeProtocol, obj: ImplementedObj) -> ()) -> Self
   
   func instanceSingle() -> Self
   func instancePerMatchingScope(scopeName: String) -> Self
@@ -36,12 +37,14 @@ public class DIRegistrationBuilder<ImplObj> : DIRegistrationBuilderProtocol {
   
   //As
   public func asSelf() -> Self {
-    container.append(rType.implementedType, value: rType)
+    container.append(ImplObj.self, value: rType)
+    container.append(Optional<ImplObj>.self, value: rType)
     return self
   }
   
   public func asType<EquallyObj>(equallyType: EquallyObj.Type) throws -> Self {
     container.append(equallyType, value: rType)
+    container.append(Optional<EquallyObj>.self, value: rType)
     return self
   }
   
@@ -58,6 +61,12 @@ public class DIRegistrationBuilder<ImplObj> : DIRegistrationBuilderProtocol {
   //Initializer
   public func initializer(method: (scope: DIScopeProtocol) -> ImplObj) -> Self {
     rType.setInitializer(method)
+    return self
+  }
+  
+  //Dependency
+  public func dependency(method: (scope: DIScopeProtocol, obj: ImplementedObj) -> ()) -> Self {
+    rType.appendDependency(method)
     return self
   }
   

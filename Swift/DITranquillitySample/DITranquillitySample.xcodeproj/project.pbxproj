@@ -51,6 +51,7 @@
 /* Begin PBXFileReference section */
 		A51657A71D0FD6B0004A34F5 /* SampleClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleClasses.swift; sourceTree = "<group>"; };
 		A58875681D0944FE00D6DE92 /* DITranquillitySample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DITranquillitySample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A591F44E1D2116E60030E4CB /* DITranquillitySample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DITranquillitySample-Bridging-Header.h"; sourceTree = "<group>"; };
 		A5AE2B381D0AD74800FF3E40 /* DITranquillity.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DITranquillity.xcodeproj; path = ../DITranquillity/DITranquillity.xcodeproj; sourceTree = "<group>"; };
 		A5AE2B3F1D0AD75300FF3E40 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A5AE2B401D0AD75300FF3E40 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -78,6 +79,7 @@
 				A5AE2B381D0AD74800FF3E40 /* DITranquillity.xcodeproj */,
 				A5AE2B3E1D0AD75300FF3E40 /* DITranquillitySample */,
 				A58875691D0944FE00D6DE92 /* Products */,
+				A591F44E1D2116E60030E4CB /* DITranquillitySample-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -325,11 +327,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/DITranquillitySample/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillitySample;
 				PRODUCT_NAME = DITranquillitySample;
+				SWIFT_OBJC_BRIDGING_HEADER = "DITranquillitySample-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -337,11 +342,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/DITranquillitySample/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillitySample;
 				PRODUCT_NAME = DITranquillitySample;
+				SWIFT_OBJC_BRIDGING_HEADER = "DITranquillitySample-Bridging-Header.h";
 			};
 			name = Release;
 		};

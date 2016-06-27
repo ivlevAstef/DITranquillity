@@ -35,7 +35,11 @@ internal class RType : RTypeReader, Hashable {
   
   //Reader
   internal func initType(scope: DIScopeProtocol) -> Any {
-    return initializer!(scope: scope)
+    let result = initializer!(scope: scope)
+    for dependency in dependencies {
+      dependency(scope: scope, obj: result)
+    }
+    return result
   }
   
   internal var lifeTime: RTypeLifeTime = RTypeLifeTime.Default
@@ -55,9 +59,19 @@ internal class RType : RTypeReader, Hashable {
   
   var hasInitializer : Bool { return nil != initializer }
   
+  //Deoendency
+  internal func appendDependency<T>(method: (scope: DIScopeProtocol, obj: T) -> ()) {
+    dependencies.append { scope, obj in
+      let objT = obj as? T
+      assert(nil != objT)
+      method(scope: scope, obj: objT!)
+    }
+  }
+  
   //Private
   private let implType : Any
   private var initializer : ((scope: DIScopeProtocol) -> Any)? = nil
+  private var dependencies: [(scope: DIScopeProtocol, obj: Any) -> ()] = []
   internal var names : [String] = []
   internal var isDefault: Bool = false
 }
