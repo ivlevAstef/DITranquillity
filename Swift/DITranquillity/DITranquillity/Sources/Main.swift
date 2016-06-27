@@ -11,7 +11,7 @@ import Foundation
 public class DIMain {
   public static var container: DIScopeProtocol? = nil
   
-  public static func autoRegistrate() throws -> DIScopeProtocol {
+  public static func autoRegistration() throws -> DIScopeProtocol {
     let startupModuleClasses = getStartupModules()
     
     if startupModuleClasses.isEmpty {
