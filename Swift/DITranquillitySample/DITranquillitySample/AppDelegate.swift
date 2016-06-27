@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   override init() {
     try! DIMain.autoRegistration()
+    
     super.init()
   }
 

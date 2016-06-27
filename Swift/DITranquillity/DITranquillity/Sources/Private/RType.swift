@@ -6,17 +6,30 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-internal enum RTypeLifeTime {
+internal enum RTypeLifeTime: Equatable {
   case Single
   case PerMatchingScope(name: String)
   case PerScope
   case PerDependency
+  case PerRequest
   
   static var Default: RTypeLifeTime { return PerScope }
 }
 
+func ==(a: RTypeLifeTime, b: RTypeLifeTime) -> Bool {
+  switch (a, b) {
+    case (.Single, .Single): return true
+    case (.PerMatchingScope(let a), .PerMatchingScope(let b))   where a == b: return true
+    case (.PerScope, .PerScope): return true
+    case (.PerDependency, .PerDependency): return true
+    case (.PerRequest, .PerRequest): return true
+    default: return false
+  }
+}
+
 internal protocol RTypeReader {
   func initType(scope: DIScopeProtocol) -> Any
+  func setupDependency(scope: DIScopeProtocol, obj: Any)
   var lifeTime: RTypeLifeTime { get }
   func hasName(name: String) -> Bool
   var isDefault: Bool { get }
@@ -36,10 +49,13 @@ internal class RType : RTypeReader, Hashable {
   //Reader
   internal func initType(scope: DIScopeProtocol) -> Any {
     let result = initializer!(scope: scope)
-    for dependency in dependencies {
-      dependency(scope: scope, obj: result)
-    }
     return result
+  }
+  
+  internal func setupDependency(scope: DIScopeProtocol, obj: Any) {
+    for dependency in dependencies {
+      dependency(scope: scope, obj: obj)
+    }
   }
   
   internal var lifeTime: RTypeLifeTime = RTypeLifeTime.Default

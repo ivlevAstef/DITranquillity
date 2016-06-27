@@ -85,6 +85,25 @@ internal class DIScope : DIScopeProtocol {
     return DIScope(registeredTypes: registeredTypes, parent: self, name: name)
   }
   
+  internal func resolve<T>(object: T) throws {
+    guard let rTypes = registeredTypes[T.self] else {
+      throw DIError.TypeNoRegister(typeName: String(T.self))
+    }
+    guard !rTypes.isEmpty else {
+      throw DIError.TypeNoRegister(typeName: String(T.self))
+    }
+    
+    if rTypes.count > 1 {
+      guard let typeIndex = rTypes.indexOf({ (rType) -> Bool in rType.isDefault }) else {
+        throw DIError.MultyRegisterType(typeName: String(T.self))
+      }
+      
+      rTypes[typeIndex].setupDependency(self, obj: object)
+    } else {
+      rTypes[0].setupDependency(self, obj: object)
+    }
+  }
+  
   //Private
   internal func resolveUseRType<T>(rType: RTypeReader) throws -> T {
     switch rType.lifeTime {
@@ -95,6 +114,8 @@ internal class DIScope : DIScopeProtocol {
     case .PerScope:
       return try resolvePerScope(rType)
     case .PerDependency:
+      return try resolvePerDependency(rType)
+    case .PerRequest:
       return try resolvePerDependency(rType)
     }
   }
@@ -141,6 +162,7 @@ internal class DIScope : DIScopeProtocol {
       throw DIError.TypeIncorrect(askableType: String(T.self), realType: String(obj.self))
     }
     
+    rType.setupDependency(self, obj: obj)
     return result
   }
   

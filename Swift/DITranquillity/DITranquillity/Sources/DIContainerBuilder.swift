@@ -35,7 +35,8 @@ public class DIContainerBuilder {
     }
     
     for rType in allTypes {
-      if !rType.hasInitializer {
+      
+      if !(rType.hasInitializer || rType.lifeTime == RTypeLifeTime.PerRequest) {
         errors.append(DIError.NotSetInitializer(typeName: String(rType.implementedType)))
       }
     }

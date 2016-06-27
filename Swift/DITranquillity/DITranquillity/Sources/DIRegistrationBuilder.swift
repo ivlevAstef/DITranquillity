@@ -24,6 +24,7 @@ public protocol DIRegistrationBuilderProtocol {
   func instancePerMatchingScope(scopeName: String) -> Self
   func instancePerScope() -> Self
   func instancePerDependency() -> Self
+  func instancePerRequest() -> Self
 }
 
 extension DIContainerBuilder {
@@ -88,6 +89,11 @@ public class DIRegistrationBuilder<ImplObj> : DIRegistrationBuilderProtocol {
   
   public func instancePerDependency() -> Self {
     rType.lifeTime = RTypeLifeTime.PerDependency
+    return self
+  }
+  
+  public func instancePerRequest() -> Self {
+    rType.lifeTime = RTypeLifeTime.PerRequest
     return self
   }
   

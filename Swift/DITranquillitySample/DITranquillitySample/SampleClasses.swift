@@ -117,6 +117,11 @@ class SampleStartupModule : DIStartupModule {
   override func load(builder: DIContainerBuilder) {
     builder.registerModule(SampleModule(useBarService: true))
     
+    builder.register(ViewController)
+      .asSelf()
+      .instancePerRequest()
+      .dependency { (scope, obj) in obj.injectGlobal = *!scope }
+    
     try! builder.register(UIView)
       .asSelf()
       .asType(UIAppearance)

@@ -16,6 +16,8 @@ public protocol DIScopeProtocol {
   func resolve<T>(name: String) throws -> T
   func resolve<T>(_: T.Type, name: String) throws -> T
   
+  func resolve<T>(object: T) throws
+  
   func newLifeTimeScope() -> DIScopeProtocol
   func newLifeTimeScope(name: String) -> DIScopeProtocol
 }
@@ -23,6 +25,9 @@ public protocol DIScopeProtocol {
 prefix operator *!{}
 public prefix func *!<T>(scope: DIScopeProtocol) -> T {
   return try! scope.resolve()
+}
+public prefix func *!<T>(object: T) {
+  try! DIMain.container!.resolve(object)
 }
 
 prefix operator **!{}
@@ -34,6 +39,10 @@ prefix operator *{}
 public prefix func *<T>(scope: DIScopeProtocol) throws -> T {
   return try scope.resolve()
 }
+public prefix func *<T>(object: T) throws {
+  try DIMain.container!.resolve(object)
+}
+
 
 prefix operator **{}
 public prefix func **<T>(scope: DIScopeProtocol) throws -> [T] {

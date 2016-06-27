@@ -11,7 +11,10 @@ import DITranquillity
 
 class ViewController: UIViewController {
   
+  internal var injectGlobal: Inject? = nil
+  
   override func viewDidLoad() {
+    *!self
     super.viewDidLoad()
 
     let scope1 = DIMain.container!
@@ -39,8 +42,10 @@ class ViewController: UIViewController {
     
     let injectMany: InjectMany = *!scope1
     print("Create injectMany: \(injectMany)")
+    
+    
+    print("Create injectGlobal: \(injectGlobal)")
     // Do any additional setup after loading the view, typically from a nib.
   }
-
 }
 
