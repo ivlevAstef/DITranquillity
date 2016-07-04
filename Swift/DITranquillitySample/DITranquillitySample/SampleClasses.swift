@@ -45,6 +45,8 @@ class Logger2: LoggerProtocol {
 class Inject {
   private let service: ServiceProtocol
   private let logger: LoggerProtocol
+  internal var logger2: LoggerProtocol? = nil
+  internal var service2: ServiceProtocol? = nil
   
   init(service: ServiceProtocol, logger: LoggerProtocol, test: Int) {
     self.service = service
@@ -52,7 +54,7 @@ class Inject {
   }
   
   var description: String {
-    return "<Inject: \(unsafeAddressOf(self)) service:\(unsafeAddressOf(service as! AnyObject)) logger:\(unsafeAddressOf(logger as! AnyObject)) >"
+    return "<Inject: \(unsafeAddressOf(self)) service:\(unsafeAddressOf(service as! AnyObject)) logger:\(unsafeAddressOf(logger as! AnyObject)) logger2:\(unsafeAddressOf(logger2 as! AnyObject)) service2:\(unsafeAddressOf(service2 as! AnyObject))>"
   }
 }
 
@@ -89,6 +91,7 @@ class SampleModule : DIModuleProtocol {
       .initializer { _ in Logger() }
     
     try! builder.register(Logger2)
+      .asSelf()
       .asType(LoggerProtocol)
       .instanceSingle()
       //.asDefault()
@@ -98,6 +101,8 @@ class SampleModule : DIModuleProtocol {
       .asSelf()
       .instancePerDependency()
       .initializer { (scope) in Inject(service: *!scope, logger: *!scope, test: *!scope) }
+      .dependency { (scope, obj) in obj.logger2 = try! scope.resolve(Logger2) }
+      .dependency { (scope, obj) in obj.service2 = *!scope }
     
     builder.register(InjectMany)
       .asSelf()
@@ -111,6 +116,11 @@ class SampleModule : DIModuleProtocol {
 class SampleStartupModule : DIStartupModule {
   override func load(builder: DIContainerBuilder) {
     builder.registerModule(SampleModule(useBarService: true))
+    
+    builder.register(ViewController)
+      .asSelf()
+      .instancePerRequest()
+      .dependency { (scope, obj) in obj.injectGlobal = *!scope }
     
     try! builder.register(UIView)
       .asSelf()

@@ -22,7 +22,6 @@ public enum DIError : ErrorType, Equatable {
   
   case ScopeNotFound(scopeName: String)
   
-  case NotFoundStartupModule()
 }
 
 public func ==(a: DIError, b: DIError) -> Bool {
@@ -38,7 +37,6 @@ public func ==(a: DIError, b: DIError) -> Bool {
   case (.TypeIncorrect(let at1, let rt1), .TypeIncorrect(let at2, let rt2)) where at1 == at2 && rt1 == rt2: return true
   case (.Build(let errs1), .Build(let errs2)) where errs1 == errs2: return true
   case (.ScopeNotFound(let s1), .ScopeNotFound(let s2)) where s1 == s2: return true
-  case (.NotFoundStartupModule(), .NotFoundStartupModule()): return true
     
   default: return false
   }
