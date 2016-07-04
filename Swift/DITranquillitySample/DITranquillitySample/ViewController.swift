@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     *!self
     super.viewDidLoad()
 
-    let scope1 = DIMain.container!
+    let scope1 = DIScopeMain
     let scope2 = scope1.newLifeTimeScope("ScopeName")
     let scope3 = scope2.newLifeTimeScope()
     

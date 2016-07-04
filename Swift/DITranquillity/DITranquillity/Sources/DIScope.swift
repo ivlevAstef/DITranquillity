@@ -6,7 +6,7 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public protocol DIScopeProtocol {
+public protocol DIScope {
   func resolve<T>() throws -> T
   func resolve<T>(_: T.Type) throws -> T
   
@@ -18,33 +18,37 @@ public protocol DIScopeProtocol {
   
   func resolve<T>(object: T) throws
   
-  func newLifeTimeScope() -> DIScopeProtocol
-  func newLifeTimeScope(name: String) -> DIScopeProtocol
+  func newLifeTimeScope() -> DIScope
+  func newLifeTimeScope(name: String) -> DIScope
+}
+
+public var DIScopeMain: DIScope {
+  return DIMain.single.container
 }
 
 prefix operator *!{}
-public prefix func *!<T>(scope: DIScopeProtocol) -> T {
+public prefix func *!<T>(scope: DIScope) -> T {
   return try! scope.resolve()
 }
 public prefix func *!<T>(object: T) {
-  try! DIMain.container!.resolve(object)
+  try! DIScopeMain.resolve(object)
 }
 
 prefix operator **!{}
-public prefix func **!<T>(scope: DIScopeProtocol) -> [T] {
+public prefix func **!<T>(scope: DIScope) -> [T] {
   return try! scope.resolveMany()
 }
 
 prefix operator *{}
-public prefix func *<T>(scope: DIScopeProtocol) throws -> T {
+public prefix func *<T>(scope: DIScope) throws -> T {
   return try scope.resolve()
 }
 public prefix func *<T>(object: T) throws {
-  try DIMain.container!.resolve(object)
+  try DIScopeMain.resolve(object)
 }
 
 
 prefix operator **{}
-public prefix func **<T>(scope: DIScopeProtocol) throws -> [T] {
+public prefix func **<T>(scope: DIScope) throws -> [T] {
   return try scope.resolveMany()
 }

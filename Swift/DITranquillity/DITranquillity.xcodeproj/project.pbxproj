@@ -13,11 +13,12 @@
 		A505999D1D17FCB100A8D42C /* RTypeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A505999A1D17FCB100A8D42C /* RTypeContainer.swift */; };
 		A52BEF6D1D12C1E5008FCAD1 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52BEF6C1D12C1E5008FCAD1 /* Module.swift */; };
 		A549953D1D0B014800CCFD85 /* DIScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549953C1D0B014800CCFD85 /* DIScope.swift */; };
+		A59FF8621D2A781A008160CF /* DIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59FF8611D2A781A008160CF /* DIViewController.swift */; };
+		A59FF8641D2A7E8F008160CF /* DIMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59FF8631D2A7E8F008160CF /* DIMain.swift */; };
 		A5AE2B561D0AD76600FF3E40 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = A5AE2B4E1D0AD76600FF3E40 /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A5AE2B591D0AD76600FF3E40 /* DIContainerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AE2B521D0AD76600FF3E40 /* DIContainerBuilder.swift */; };
 		A5AE2B5A1D0AD76600FF3E40 /* DIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AE2B531D0AD76600FF3E40 /* DIError.swift */; };
 		A5AE2B5C1D0AD76600FF3E40 /* DIRegistrationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AE2B551D0AD76600FF3E40 /* DIRegistrationBuilder.swift */; };
-		A5BF34FE1D12D797003DCB51 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF34FD1D12D797003DCB51 /* Main.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,12 +29,13 @@
 		A52BEF6C1D12C1E5008FCAD1 /* Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		A549953C1D0B014800CCFD85 /* DIScope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScope.swift; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A59FF8611D2A781A008160CF /* DIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIViewController.swift; sourceTree = "<group>"; };
+		A59FF8631D2A7E8F008160CF /* DIMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIMain.swift; sourceTree = "<group>"; };
 		A5AE2B4E1D0AD76600FF3E40 /* DITranquillity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DITranquillity.h; sourceTree = "<group>"; };
 		A5AE2B4F1D0AD76600FF3E40 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5AE2B521D0AD76600FF3E40 /* DIContainerBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainerBuilder.swift; sourceTree = "<group>"; };
 		A5AE2B531D0AD76600FF3E40 /* DIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIError.swift; sourceTree = "<group>"; };
 		A5AE2B551D0AD76600FF3E40 /* DIRegistrationBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIRegistrationBuilder.swift; sourceTree = "<group>"; };
-		A5BF34FD1D12D797003DCB51 /* Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +52,7 @@
 		A50599971D17FCB100A8D42C /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				A59FF8631D2A7E8F008160CF /* DIMain.swift */,
 				A50599981D17FCB100A8D42C /* Helpers.swift */,
 				A50599991D17FCB100A8D42C /* RType.swift */,
 				A505999A1D17FCB100A8D42C /* RTypeContainer.swift */,
@@ -74,6 +77,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		A59FF8601D2A781A008160CF /* iOSLifeCycle */ = {
+			isa = PBXGroup;
+			children = (
+				A59FF8611D2A781A008160CF /* DIViewController.swift */,
+			);
+			path = iOSLifeCycle;
+			sourceTree = "<group>";
+		};
 		A5AE2B4D1D0AD76600FF3E40 /* DITranquillity */ = {
 			isa = PBXGroup;
 			children = (
@@ -87,13 +98,13 @@
 		A5AE2B501D0AD76600FF3E40 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				A59FF8601D2A781A008160CF /* iOSLifeCycle */,
 				A50599971D17FCB100A8D42C /* Private */,
 				A5AE2B531D0AD76600FF3E40 /* DIError.swift */,
 				A5AE2B521D0AD76600FF3E40 /* DIContainerBuilder.swift */,
 				A5AE2B551D0AD76600FF3E40 /* DIRegistrationBuilder.swift */,
 				A549953C1D0B014800CCFD85 /* DIScope.swift */,
 				A52BEF6C1D12C1E5008FCAD1 /* Module.swift */,
-				A5BF34FD1D12D797003DCB51 /* Main.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -176,15 +187,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5BF34FE1D12D797003DCB51 /* Main.swift in Sources */,
 				A505999B1D17FCB100A8D42C /* Helpers.swift in Sources */,
 				A505999C1D17FCB100A8D42C /* RType.swift in Sources */,
 				A50053011D19299700DFD9CF /* DIScopeImpl.swift in Sources */,
 				A5AE2B5C1D0AD76600FF3E40 /* DIRegistrationBuilder.swift in Sources */,
 				A505999D1D17FCB100A8D42C /* RTypeContainer.swift in Sources */,
+				A59FF8641D2A7E8F008160CF /* DIMain.swift in Sources */,
 				A5AE2B5A1D0AD76600FF3E40 /* DIError.swift in Sources */,
 				A5AE2B591D0AD76600FF3E40 /* DIContainerBuilder.swift in Sources */,
 				A549953D1D0B014800CCFD85 /* DIScope.swift in Sources */,
+				A59FF8621D2A781A008160CF /* DIViewController.swift in Sources */,
 				A52BEF6D1D12C1E5008FCAD1 /* Module.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

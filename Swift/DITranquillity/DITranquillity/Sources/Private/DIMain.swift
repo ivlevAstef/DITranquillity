@@ -1,5 +1,5 @@
 //
-//  Main.swift
+//  DIMain.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 16/06/16.
@@ -8,15 +8,15 @@
 
 import Foundation
 
-public class DIMain {
-  public static var container: DIScopeProtocol? = nil
+internal class DIMain {
+  internal static let single: DIMain = DIMain()
   
-  public static func autoRegistration() throws -> DIScopeProtocol {
-    let startupModuleClasses = getStartupModules()
+  internal var container: DIScope
+  
+  private init() {
+    let startupModuleClasses = DIMain.getStartupModules()
     
-    if startupModuleClasses.isEmpty {
-      throw DIError.NotFoundStartupModule()
-    }
+    assert(!startupModuleClasses.isEmpty, "Not found startup module")
     
     let builder = DIContainerBuilder()
     
@@ -24,10 +24,13 @@ public class DIMain {
       builder.registerModule(cls.init())
     }
     
-    self.container = try builder.build()
-    
-    return self.container!
+    do {
+      self.container = try builder.build()
+    } catch {
+      fatalError("Can't build with error: \(error)")
+    }
   }
+  
   
   private static func getStartupModules() -> [DIStartupModule.Type] {
     let expectedClassCount = objc_getClassList(nil, 0)

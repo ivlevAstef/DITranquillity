@@ -6,8 +6,8 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-internal class DIScope : DIScopeProtocol {
-  internal init(registeredTypes: RTypeContainerReadonly, parent: DIScopeProtocol? = nil, name: String = "") {
+internal class DIScopeImpl : DIScope {
+  internal init(registeredTypes: RTypeContainerReadonly, parent: DIScope? = nil, name: String = "") {
     self.registeredTypes = registeredTypes
     self.parent = parent
     self.name = name
@@ -77,12 +77,12 @@ internal class DIScope : DIScopeProtocol {
     return try resolve(name)
   }
   
-  internal func newLifeTimeScope() -> DIScopeProtocol {
-    return DIScope(registeredTypes: registeredTypes, parent: self)
+  internal func newLifeTimeScope() -> DIScope {
+    return DIScopeImpl(registeredTypes: registeredTypes, parent: self)
   }
   
-  internal func newLifeTimeScope(name: String = "") -> DIScopeProtocol {
-    return DIScope(registeredTypes: registeredTypes, parent: self, name: name)
+  internal func newLifeTimeScope(name: String = "") -> DIScope {
+    return DIScopeImpl(registeredTypes: registeredTypes, parent: self, name: name)
   }
   
   internal func resolve<T>(object: T) throws {
@@ -123,12 +123,12 @@ internal class DIScope : DIScopeProtocol {
   internal func resolveSingle<T>(rType: RTypeReader) throws -> T {
     let key = rType.name
     
-    if let obj = DIScope.singleObjects[key] {
+    if let obj = DIScopeImpl.singleObjects[key] {
       return obj as! T
     }
     
     let obj: T = try resolvePerDependency(rType)
-    DIScope.singleObjects[key] = obj
+    DIScopeImpl.singleObjects[key] = obj
     return obj
   }
   
@@ -171,5 +171,5 @@ internal class DIScope : DIScopeProtocol {
   private var objects: [String: Any] = [:]
   private let name: String
   private let registeredTypes: RTypeContainerReadonly
-  private let parent: DIScopeProtocol?
+  private let parent: DIScope?
 }

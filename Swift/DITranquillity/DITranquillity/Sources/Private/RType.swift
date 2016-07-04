@@ -28,8 +28,8 @@ func ==(a: RTypeLifeTime, b: RTypeLifeTime) -> Bool {
 }
 
 internal protocol RTypeReader {
-  func initType(scope: DIScopeProtocol) -> Any
-  func setupDependency(scope: DIScopeProtocol, obj: Any)
+  func initType(scope: DIScope) -> Any
+  func setupDependency(scope: DIScope, obj: Any)
   var lifeTime: RTypeLifeTime { get }
   func hasName(name: String) -> Bool
   var isDefault: Bool { get }
@@ -47,12 +47,12 @@ internal class RType : RTypeReader, Hashable {
   internal var hashValue: Int { return String(implType).hash }
   
   //Reader
-  internal func initType(scope: DIScopeProtocol) -> Any {
+  internal func initType(scope: DIScope) -> Any {
     let result = initializer!(scope: scope)
     return result
   }
   
-  internal func setupDependency(scope: DIScopeProtocol, obj: Any) {
+  internal func setupDependency(scope: DIScope, obj: Any) {
     for dependency in dependencies {
       dependency(scope: scope, obj: obj)
     }
@@ -69,14 +69,14 @@ internal class RType : RTypeReader, Hashable {
   //Initializer
   var implementedType: Any { return implType }
   
-  internal func setInitializer<T>(method: (scope: DIScopeProtocol) -> T) {
+  internal func setInitializer<T>(method: (scope: DIScope) -> T) {
     initializer = method
   }
   
   var hasInitializer : Bool { return nil != initializer }
   
   //Deoendency
-  internal func appendDependency<T>(method: (scope: DIScopeProtocol, obj: T) -> ()) {
+  internal func appendDependency<T>(method: (scope: DIScope, obj: T) -> ()) {
     dependencies.append { scope, obj in
       let objT = obj as? T
       assert(nil != objT)
@@ -86,8 +86,8 @@ internal class RType : RTypeReader, Hashable {
   
   //Private
   private let implType : Any
-  private var initializer : ((scope: DIScopeProtocol) -> Any)? = nil
-  private var dependencies: [(scope: DIScopeProtocol, obj: Any) -> ()] = []
+  private var initializer : ((scope: DIScope) -> Any)? = nil
+  private var dependencies: [(scope: DIScope, obj: Any) -> ()] = []
   internal var names : [String] = []
   internal var isDefault: Bool = false
 }

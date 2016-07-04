@@ -17,8 +17,8 @@ public protocol DIRegistrationBuilderProtocol {
   
   func asDefault() -> Self
 
-  func initializer(method: (scope: DIScopeProtocol) -> ImplementedObj) -> Self
-  func dependency(method: (scope: DIScopeProtocol, obj: ImplementedObj) -> ()) -> Self
+  func initializer(method: (scope: DIScope) -> ImplementedObj) -> Self
+  func dependency(method: (scope: DIScope, obj: ImplementedObj) -> ()) -> Self
   
   func instanceSingle() -> Self
   func instancePerMatchingScope(scopeName: String) -> Self
@@ -60,13 +60,13 @@ public class DIRegistrationBuilder<ImplObj> : DIRegistrationBuilderProtocol {
   }
   
   //Initializer
-  public func initializer(method: (scope: DIScopeProtocol) -> ImplObj) -> Self {
+  public func initializer(method: (scope: DIScope) -> ImplObj) -> Self {
     rType.setInitializer(method)
     return self
   }
   
   //Dependency
-  public func dependency(method: (scope: DIScopeProtocol, obj: ImplementedObj) -> ()) -> Self {
+  public func dependency(method: (scope: DIScope, obj: ImplementedObj) -> ()) -> Self {
     rType.appendDependency(method)
     return self
   }
