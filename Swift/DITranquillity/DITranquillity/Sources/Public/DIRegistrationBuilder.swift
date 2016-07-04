@@ -17,12 +17,14 @@ public protocol DIRegistrationBuilderProtocol {
   
   func asDefault() -> Self
 
-  func initializer(method: (scope: DIScopeProtocol) -> ImplementedObj) -> Self
+  func initializer(method: (scope: DIScope) -> ImplementedObj) -> Self
+  func dependency(method: (scope: DIScope, obj: ImplementedObj) -> ()) -> Self
   
   func instanceSingle() -> Self
   func instancePerMatchingScope(scopeName: String) -> Self
   func instancePerScope() -> Self
   func instancePerDependency() -> Self
+  func instancePerRequest() -> Self
 }
 
 extension DIContainerBuilder {
@@ -36,12 +38,14 @@ public class DIRegistrationBuilder<ImplObj> : DIRegistrationBuilderProtocol {
   
   //As
   public func asSelf() -> Self {
-    container.append(rType.implementedType, value: rType)
+    container.append(ImplObj.self, value: rType)
+    container.append(Optional<ImplObj>.self, value: rType)
     return self
   }
   
   public func asType<EquallyObj>(equallyType: EquallyObj.Type) throws -> Self {
     container.append(equallyType, value: rType)
+    container.append(Optional<EquallyObj>.self, value: rType)
     return self
   }
   
@@ -56,8 +60,14 @@ public class DIRegistrationBuilder<ImplObj> : DIRegistrationBuilderProtocol {
   }
   
   //Initializer
-  public func initializer(method: (scope: DIScopeProtocol) -> ImplObj) -> Self {
+  public func initializer(method: (scope: DIScope) -> ImplObj) -> Self {
     rType.setInitializer(method)
+    return self
+  }
+  
+  //Dependency
+  public func dependency(method: (scope: DIScope, obj: ImplementedObj) -> ()) -> Self {
+    rType.appendDependency(method)
     return self
   }
   
@@ -79,6 +89,11 @@ public class DIRegistrationBuilder<ImplObj> : DIRegistrationBuilderProtocol {
   
   public func instancePerDependency() -> Self {
     rType.lifeTime = RTypeLifeTime.PerDependency
+    return self
+  }
+  
+  public func instancePerRequest() -> Self {
+    rType.lifeTime = RTypeLifeTime.PerRequest
     return self
   }
   

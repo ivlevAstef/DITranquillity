@@ -10,7 +10,7 @@ public class DIContainerBuilder {
   public init() {
   }
   
-  public func build() throws -> DIScopeProtocol {
+  public func build() throws -> DIScope {
     var errors: [DIError] = []
     
     var allTypes: Set<RType> = []
@@ -35,7 +35,8 @@ public class DIContainerBuilder {
     }
     
     for rType in allTypes {
-      if !rType.hasInitializer {
+      
+      if !(rType.hasInitializer || rType.lifeTime == RTypeLifeTime.PerRequest) {
         errors.append(DIError.NotSetInitializer(typeName: String(rType.implementedType)))
       }
     }
@@ -44,7 +45,7 @@ public class DIContainerBuilder {
       throw DIError.Build(errors: errors)
     }
     
-    return DIScope(registeredTypes: rTypeContainer)
+    return DIScopeImpl(registeredTypes: rTypeContainer)
   }
   
   internal let rTypeContainer = RTypeContainer()
