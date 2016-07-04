@@ -15,6 +15,14 @@
 		A549953D1D0B014800CCFD85 /* DIScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = A549953C1D0B014800CCFD85 /* DIScope.swift */; };
 		A59FF8621D2A781A008160CF /* DIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59FF8611D2A781A008160CF /* DIViewController.swift */; };
 		A59FF8641D2A7E8F008160CF /* DIMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59FF8631D2A7E8F008160CF /* DIMain.swift */; };
+		A59FF8661D2A89CC008160CF /* DINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59FF8651D2A89CC008160CF /* DINavigationController.swift */; };
+		A59FF8681D2A8AF0008160CF /* DITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59FF8671D2A8AF0008160CF /* DITableViewController.swift */; };
+		A59FF86A1D2A8BCE008160CF /* DISplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59FF8691D2A8BCE008160CF /* DISplitViewController.swift */; };
+		A59FF86C1D2A8BDE008160CF /* DITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59FF86B1D2A8BDE008160CF /* DITabBarController.swift */; };
+		A59FF86E1D2A8C13008160CF /* DICollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59FF86D1D2A8C13008160CF /* DICollectionViewController.swift */; };
+		A59FF8701D2A8C29008160CF /* DIPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59FF86F1D2A8C29008160CF /* DIPageViewController.swift */; };
+		A59FF8721D2A8C4F008160CF /* DIGLKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59FF8711D2A8C4F008160CF /* DIGLKViewController.swift */; };
+		A59FF8741D2A8C6E008160CF /* DIAVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59FF8731D2A8C6E008160CF /* DIAVPlayerViewController.swift */; };
 		A5AE2B561D0AD76600FF3E40 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = A5AE2B4E1D0AD76600FF3E40 /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A5AE2B591D0AD76600FF3E40 /* DIContainerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AE2B521D0AD76600FF3E40 /* DIContainerBuilder.swift */; };
 		A5AE2B5A1D0AD76600FF3E40 /* DIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AE2B531D0AD76600FF3E40 /* DIError.swift */; };
@@ -31,6 +39,14 @@
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A59FF8611D2A781A008160CF /* DIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIViewController.swift; sourceTree = "<group>"; };
 		A59FF8631D2A7E8F008160CF /* DIMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIMain.swift; sourceTree = "<group>"; };
+		A59FF8651D2A89CC008160CF /* DINavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DINavigationController.swift; sourceTree = "<group>"; };
+		A59FF8671D2A8AF0008160CF /* DITableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITableViewController.swift; sourceTree = "<group>"; };
+		A59FF8691D2A8BCE008160CF /* DISplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DISplitViewController.swift; sourceTree = "<group>"; };
+		A59FF86B1D2A8BDE008160CF /* DITabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITabBarController.swift; sourceTree = "<group>"; };
+		A59FF86D1D2A8C13008160CF /* DICollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DICollectionViewController.swift; sourceTree = "<group>"; };
+		A59FF86F1D2A8C29008160CF /* DIPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIPageViewController.swift; sourceTree = "<group>"; };
+		A59FF8711D2A8C4F008160CF /* DIGLKViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIGLKViewController.swift; sourceTree = "<group>"; };
+		A59FF8731D2A8C6E008160CF /* DIAVPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIAVPlayerViewController.swift; sourceTree = "<group>"; };
 		A5AE2B4E1D0AD76600FF3E40 /* DITranquillity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DITranquillity.h; sourceTree = "<group>"; };
 		A5AE2B4F1D0AD76600FF3E40 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5AE2B521D0AD76600FF3E40 /* DIContainerBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainerBuilder.swift; sourceTree = "<group>"; };
@@ -81,6 +97,14 @@
 			isa = PBXGroup;
 			children = (
 				A59FF8611D2A781A008160CF /* DIViewController.swift */,
+				A59FF8651D2A89CC008160CF /* DINavigationController.swift */,
+				A59FF8671D2A8AF0008160CF /* DITableViewController.swift */,
+				A59FF8691D2A8BCE008160CF /* DISplitViewController.swift */,
+				A59FF86B1D2A8BDE008160CF /* DITabBarController.swift */,
+				A59FF86D1D2A8C13008160CF /* DICollectionViewController.swift */,
+				A59FF86F1D2A8C29008160CF /* DIPageViewController.swift */,
+				A59FF8711D2A8C4F008160CF /* DIGLKViewController.swift */,
+				A59FF8731D2A8C6E008160CF /* DIAVPlayerViewController.swift */,
 			);
 			path = iOSLifeCycle;
 			sourceTree = "<group>";
@@ -190,13 +214,21 @@
 				A505999B1D17FCB100A8D42C /* Helpers.swift in Sources */,
 				A505999C1D17FCB100A8D42C /* RType.swift in Sources */,
 				A50053011D19299700DFD9CF /* DIScopeImpl.swift in Sources */,
+				A59FF8701D2A8C29008160CF /* DIPageViewController.swift in Sources */,
 				A5AE2B5C1D0AD76600FF3E40 /* DIRegistrationBuilder.swift in Sources */,
+				A59FF8741D2A8C6E008160CF /* DIAVPlayerViewController.swift in Sources */,
+				A59FF8661D2A89CC008160CF /* DINavigationController.swift in Sources */,
 				A505999D1D17FCB100A8D42C /* RTypeContainer.swift in Sources */,
+				A59FF86E1D2A8C13008160CF /* DICollectionViewController.swift in Sources */,
+				A59FF86A1D2A8BCE008160CF /* DISplitViewController.swift in Sources */,
+				A59FF86C1D2A8BDE008160CF /* DITabBarController.swift in Sources */,
 				A59FF8641D2A7E8F008160CF /* DIMain.swift in Sources */,
 				A5AE2B5A1D0AD76600FF3E40 /* DIError.swift in Sources */,
+				A59FF8721D2A8C4F008160CF /* DIGLKViewController.swift in Sources */,
 				A5AE2B591D0AD76600FF3E40 /* DIContainerBuilder.swift in Sources */,
 				A549953D1D0B014800CCFD85 /* DIScope.swift in Sources */,
 				A59FF8621D2A781A008160CF /* DIViewController.swift in Sources */,
+				A59FF8681D2A8AF0008160CF /* DITableViewController.swift in Sources */,
 				A52BEF6D1D12C1E5008FCAD1 /* Module.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

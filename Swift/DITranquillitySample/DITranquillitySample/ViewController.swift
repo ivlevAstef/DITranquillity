@@ -9,16 +9,15 @@
 import UIKit
 import DITranquillity
 
-class ViewController: UIViewController {
+class ViewController: DIViewController {
+  internal let scope = DIScopeMain
   
-  internal var injectGlobal: Inject? = nil
+  internal var injectGlobal: Inject?
   
   override func viewDidLoad() {
-    *!self
     super.viewDidLoad()
 
-    let scope1 = DIScopeMain
-    let scope2 = scope1.newLifeTimeScope("ScopeName")
+    let scope2 = scope.newLifeTimeScope("ScopeName")
     let scope3 = scope2.newLifeTimeScope()
     
     let vc1_1 = try! scope2.resolve(UIView)
@@ -30,17 +29,17 @@ class ViewController: UIViewController {
     let vc2_1: UIView  = *!scope2
     print("Create VC2_1: \(vc2_1)")
     
-    let vc2_2: UIAppearance = try! scope1.resolve()
+    let vc2_2: UIAppearance = try! scope.resolve()
     print("Create VC2_2: \(vc2_2)")
     
     
-    let inject1: Inject = *!scope1
+    let inject1: Inject = *!scope
     print("Create Inject1: \(inject1.description)")
     
     let inject2: Inject = *!scope2
     print("Create Inject2: \(inject2.description)")
     
-    let injectMany: InjectMany = *!scope1
+    let injectMany: InjectMany = *!scope
     print("Create injectMany: \(injectMany)")
     
     

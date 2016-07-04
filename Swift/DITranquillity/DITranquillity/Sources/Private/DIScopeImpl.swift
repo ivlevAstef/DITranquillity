@@ -86,16 +86,16 @@ internal class DIScopeImpl : DIScope {
   }
   
   internal func resolve<T>(object: T) throws {
-    guard let rTypes = registeredTypes[T.self] else {
-      throw DIError.TypeNoRegister(typeName: String(T.self))
+    guard let rTypes = registeredTypes[object.dynamicType] else {
+      throw DIError.TypeNoRegister(typeName: String(object.dynamicType))
     }
     guard !rTypes.isEmpty else {
-      throw DIError.TypeNoRegister(typeName: String(T.self))
+      throw DIError.TypeNoRegister(typeName: String(object.dynamicType))
     }
     
     if rTypes.count > 1 {
       guard let typeIndex = rTypes.indexOf({ (rType) -> Bool in rType.isDefault }) else {
-        throw DIError.MultyRegisterType(typeName: String(T.self))
+        throw DIError.MultyRegisterType(typeName: String(object.dynamicType))
       }
       
       rTypes[typeIndex].setupDependency(self, obj: object)
