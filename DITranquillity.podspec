@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.summary      = 'DITranquillity - Dependency injection for iOS (Swift) '
 
   s.description  = <<-DESC
-  					Prototype Dependency injection for iOS (Swift). 
+  					DITranquillity - Prototype Dependency injection for iOS (Swift). 
             DESC
 
   s.homepage     = 'https://github.com/ivlevAstef/DITranquillity'
