@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
 
   s.name         = 'DITranquillity'
-  s.version      = '0.0.2'
+  s.version      = '0.1.0'
   s.summary      = 'DITranquillity - Dependency injection for iOS (Swift) '
 
   s.description  = <<-DESC
   					Prototype Dependency injection for iOS (Swift). 
-            	DESC
+            DESC
 
   s.homepage     = 'https://github.com/ivlevAstef/DITranquillity'
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
@@ -19,7 +19,11 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
 
   s.subspec 'Core' do |core|
-    core.source_files = 'Swift/DITranquillity/DITranquillity/Sources/**/*.swift'
+    core.source_files = 'Swift/DITranquillity/DITranquillity/Sources/Public/**/*.swift' + 'Swift/DITranquillity/DITranquillity/Sources/Private/**/*.swift'
+  end
+
+  s.subspec 'UIViewControllers' do |core|
+    core.source_files = 'Swift/DITranquillity/DITranquillity/Sources/UIViewControllers/**/*.swift'
   end
 
   s.default_subspec = 'Core'
