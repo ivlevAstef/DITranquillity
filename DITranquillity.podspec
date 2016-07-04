@@ -19,11 +19,11 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
 
   s.subspec 'Core' do |core|
-    core.source_files = 'Swift/DITranquillity/DITranquillity/Sources/Public/**/*.swift' + 'Swift/DITranquillity/DITranquillity/Sources/Private/**/*.swift'
+    core.source_files = 'Swift/DITranquillity/DITranquillity/Sources/{Public,Private}/*.swift'
   end
 
   s.subspec 'UIViewControllers' do |core|
-    core.source_files = 'Swift/DITranquillity/DITranquillity/Sources/UIViewControllers/**/*.swift'
+    core.source_files = 'Swift/DITranquillity/DITranquillity/Sources/UIViewControllers/*.swift'
   end
 
   s.default_subspec = 'Core'
