@@ -18,9 +18,8 @@
 
 + (nonnull instancetype)create:(nonnull NSString*)name bundle:(nullable NSBundle*)storyboardBundleOrNil;
 
-@property (nonatomic, weak, nullable) id<_DIStoryboardBaseResolver> resolver;
+@property (nonatomic, strong, nullable) id<_DIStoryboardBaseResolver> resolver;
 
-- (nullable __kindof UIViewController*)instantiateInitialViewController;
 - (nonnull __kindof UIViewController*)instantiateViewControllerWithIdentifier:(nonnull NSString*)identifier;
 
 @end

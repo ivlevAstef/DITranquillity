@@ -15,6 +15,7 @@
 		A5AE2B4C1D0AD75300FF3E40 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AE2B461D0AD75300FF3E40 /* ViewController.swift */; };
 		A5AE2B5D1D0AD81C00FF3E40 /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5AE2B3D1D0AD74800FF3E40 /* DITranquillity.framework */; };
 		A5AE2B5E1D0AD81C00FF3E40 /* DITranquillity.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A5AE2B3D1D0AD74800FF3E40 /* DITranquillity.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A5F73F631D2B7EB300D44746 /* ViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F73F621D2B7EB300D44746 /* ViewController2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		A5AE2B441D0AD75300FF3E40 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A5AE2B451D0AD75300FF3E40 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5AE2B461D0AD75300FF3E40 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A5F73F621D2B7EB300D44746 /* ViewController2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				A5AE2B451D0AD75300FF3E40 /* Info.plist */,
 				A5AE2B461D0AD75300FF3E40 /* ViewController.swift */,
 				A51657A71D0FD6B0004A34F5 /* SampleClasses.swift */,
+				A5F73F621D2B7EB300D44746 /* ViewController2.swift */,
 			);
 			path = DITranquillitySample;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5AE2B4C1D0AD75300FF3E40 /* ViewController.swift in Sources */,
+				A5F73F631D2B7EB300D44746 /* ViewController2.swift in Sources */,
 				A51657A81D0FD6B0004A34F5 /* SampleClasses.swift in Sources */,
 				A5AE2B471D0AD75300FF3E40 /* AppDelegate.swift in Sources */,
 			);

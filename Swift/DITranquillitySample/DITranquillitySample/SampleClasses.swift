@@ -122,6 +122,14 @@ class SampleStartupModule : DIStartupModule {
       .instancePerRequest()
       .dependency { (scope, obj) in obj.injectGlobal = *!scope }
     
+    builder.register(ViewController2)
+      .asSelf()
+      .instancePerRequest()
+      .dependency { (scope, obj) in
+        obj.inject = *!scope
+        obj.logger = *!scope
+    }
+    
     try! builder.register(UIView)
       .asSelf()
       .asType(UIAppearance)
