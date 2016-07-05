@@ -30,8 +30,36 @@ Via CocoaPods.
 ###### Storyboard
 `pod 'DITranquillity/Storyboard'`
 
+## Usage
+#### Simple
+```Swift
+protocol Animal {
+  var name: String { get }
+}
 
-## Basic Usage
+class Cat: Animal {
+    init() { }
+    var name: String { return "Cat" }
+}
+```
+```Swift
+let builder = DIContainerBuilder()
+
+builder.register(Animal)
+  .asSelf()
+  .initializer { _ in return Cat() }
+  
+let scope = try! builder.build() //validate
+```
+```Swift
+let cat: Cat = try! scope.resolve()
+let animal: Animal = try! scope.resolve()
+
+print(cat.name) //Cat
+print(animal.name) //Cat
+```
+
+#### Basic 
 ```Swift
 protocol Animal {
   var name: String { get }
