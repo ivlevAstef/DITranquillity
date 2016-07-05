@@ -9,7 +9,7 @@
 import UIKit
 import DITranquillity
 
-class ViewController: DIViewController {
+class ViewController: UIViewController {
   internal let scope = DIScopeMain
   
   internal var injectGlobal: Inject?
