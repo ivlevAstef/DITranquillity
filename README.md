@@ -142,6 +142,43 @@ let cat2: Cat = *!scope //cat2 !=== cat
 let home2: Home = *!scope //home2 === home
 ```
 
+#### Storyboard
+Create Your ViewController:
+```Swift
+class ViewController: UIViewController {
+  internal var inject: Inject?
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    print("Inject: \(inject)")
+  }
+}
+```
+Create Your Startup Module:
+```Swift
+class SampleStartupModule : DIStartupModule {
+  override func load(builder: DIContainerBuilder) {
+    builder.register(ViewController)
+      .asSelf()
+      .instancePerRequest()
+      .dependency { (scope, obj) in obj.inject = *!scope }
+  }
+}
+```
+Registrate Storyboard:
+```Swift
+func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+  window = UIWindow(frame: UIScreen.mainScreen().bounds)
+    
+  let storyboard = DIStoryboard(name: "Main", bundle: nil)
+  window!.rootViewController = storyboard.instantiateInitialViewController()
+  window!.makeKeyAndVisible()
+    
+  return true
+}
+```
+
 ## Documentation
 
 ## Requirements
