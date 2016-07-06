@@ -32,6 +32,12 @@ internal class RTypeContainer : RTypeContainerReadonly {
     return values
   }
   
+  internal func copy() -> RTypeContainerReadonly {
+    let copyObj = RTypeContainer()
+    copyObj.values = self.values
+    return copyObj
+  }
+  
   private func hash(type: Any) -> String {
     return String(type)
   }

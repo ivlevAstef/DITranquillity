@@ -103,5 +103,5 @@ public class DIRegistrationBuilder<ImplObj> : DIRegistrationBuilderProtocol {
   }
   
   private let rType: RType
-  private let container : RTypeContainer
+  private let container: RTypeContainer
 }

@@ -45,7 +45,7 @@ public class DIContainerBuilder {
       throw DIError.Build(errors: errors)
     }
     
-    return DIScopeImpl(registeredTypes: rTypeContainer)
+    return DIScopeImpl(registeredTypes: rTypeContainer.copy())
   }
   
   internal let rTypeContainer = RTypeContainer()
