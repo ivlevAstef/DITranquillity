@@ -66,6 +66,14 @@ class InjectMany {
   }
 }
 
+class Animal {
+  internal let name: String
+  
+  init(name: String) {
+    self.name = name
+  }
+}
+
 class SampleModule : DIModuleProtocol {
   init(useBarService: Bool) {
     self.useBarService = useBarService
@@ -108,6 +116,23 @@ class SampleModule : DIModuleProtocol {
       .asSelf()
       .instancePerDependency()
       .initializer { (scope) in InjectMany(loggers: **!scope) }
+    
+    //Animals
+    builder.register(Animal)
+      .asSelf()
+      .asName("Cat")
+      .initializer { _ in Animal(name: "Cat") }
+    
+    builder.register(Animal)
+      .asSelf()
+      .asName("Dog")
+      .asDefault()
+      .initializer { _ in Animal(name: "Dog") }
+    
+    builder.register(Animal)
+      .asSelf()
+      .asName("Bear")
+      .initializer { _ in Animal(name: "Bear") }    
   }
   
   private let useBarService: Bool

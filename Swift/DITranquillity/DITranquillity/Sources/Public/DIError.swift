@@ -16,6 +16,8 @@ public enum DIError : ErrorType, Equatable {
   case MultyRegisterDefault(typeNames: [String], forType: String)
   case NotSetDefaultForMultyRegisterType(typeNames: [String], forType: String)
   
+  case MultyRegisterNamesForType(names: Set<String>, forType: String)
+  
   case TypeIncorrect(askableType: String, realType: String)
   
   case Build(errors: [DIError])

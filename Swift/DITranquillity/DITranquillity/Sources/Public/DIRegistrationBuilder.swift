@@ -39,18 +39,16 @@ public class DIRegistrationBuilder<ImplObj> : DIRegistrationBuilderProtocol {
   //As
   public func asSelf() -> Self {
     container.append(ImplObj.self, value: rType)
-    container.append(Optional<ImplObj>.self, value: rType)
     return self
   }
   
   public func asType<EquallyObj>(equallyType: EquallyObj.Type) throws -> Self {
     container.append(equallyType, value: rType)
-    container.append(Optional<EquallyObj>.self, value: rType)
     return self
   }
   
   public func asName(name: String) -> Self {
-    rType.names.append(name)
+    rType.names.insert(name)
     return self
   }
   
@@ -103,5 +101,5 @@ public class DIRegistrationBuilder<ImplObj> : DIRegistrationBuilderProtocol {
   }
   
   private let rType: RType
-  private let container : RTypeContainer
+  private let container: RTypeContainer
 }

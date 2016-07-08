@@ -33,7 +33,7 @@ internal protocol RTypeReader {
   var lifeTime: RTypeLifeTime { get }
   func hasName(name: String) -> Bool
   var isDefault: Bool { get }
-  var name: String { get }
+  var uniqueKey: String { get }
   
 }
 
@@ -64,7 +64,7 @@ internal class RType : RTypeReader, Hashable {
     return names.contains(name)
   }
   
-  internal var name: String { return String(implType) }
+  internal var uniqueKey: String { return String(implType) + String(unsafeAddressOf(self)) }
   
   //Initializer
   var implementedType: Any { return implType }
@@ -88,7 +88,7 @@ internal class RType : RTypeReader, Hashable {
   private let implType : Any
   private var initializer : ((scope: DIScope) -> Any)? = nil
   private var dependencies: [(scope: DIScope, obj: Any) -> ()] = []
-  internal var names : [String] = []
+  internal var names : Set<String> = []
   internal var isDefault: Bool = false
 }
 

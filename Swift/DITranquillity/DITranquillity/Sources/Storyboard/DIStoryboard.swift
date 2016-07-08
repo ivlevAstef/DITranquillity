@@ -33,5 +33,5 @@ public class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
     return viewController
   }
   
-  private let storyboard: _DIStoryboardBase
+  private unowned let storyboard: _DIStoryboardBase
 }

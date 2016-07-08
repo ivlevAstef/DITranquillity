@@ -44,7 +44,16 @@ class ViewController: UIViewController {
     
     
     print("Create injectGlobal: \(injectGlobal)")
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    //Animals
+    
+    let cat: Animal = try! scope.resolve("Cat")
+    let dog: Animal = try! scope.resolve("Dog")
+    let bear: Animal = try! scope.resolve("Bear")
+    
+    let defaultAnimal: Animal = try! scope.resolve()
+    
+    print("Cat: \(cat.name) Dog: \(dog.name) Bear: \(bear.name) Default(Dog): \(defaultAnimal.name)")
   }
 }
 
