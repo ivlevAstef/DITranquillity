@@ -48,7 +48,7 @@ public class DIRegistrationBuilder<ImplObj> : DIRegistrationBuilderProtocol {
   }
   
   public func asName(name: String) -> Self {
-    rType.names.append(name)
+    rType.names.insert(name)
     return self
   }
   

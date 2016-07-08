@@ -127,7 +127,7 @@ internal class DIScopeImpl : DIScope {
   }
   
   internal func resolveSingle<T>(rType: RTypeReader) throws -> T {
-    let key = rType.name
+    let key = rType.uniqueKey
     
     if let obj = DIScopeImpl.singleObjects[key] {
       return obj as! T
@@ -151,7 +151,7 @@ internal class DIScopeImpl : DIScope {
   }
   
   internal func resolvePerScope<T>(rType: RTypeReader) throws -> T {
-    let key = rType.name
+    let key = rType.uniqueKey
     
     if let obj = objects[key] {
       return obj as! T
