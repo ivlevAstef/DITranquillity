@@ -9,8 +9,8 @@
 import UIKit
 
 class ViewController2: UIViewController {
-  internal var inject: Inject?
-  internal var logger: LoggerProtocol?
+  internal var inject: Inject!
+  internal var logger: LoggerProtocol!
   
   override func viewDidLoad() {
     super.viewDidLoad()

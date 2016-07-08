@@ -14,16 +14,18 @@ internal class DIScopeImpl : DIScope {
   }
   
   func resolve<T>() throws -> T {
-    guard let rTypes = registeredTypes[T.self] else {
-      throw DIError.TypeNoRegister(typeName: String(T.self))
+    let type = Helpers.removedTypeWrappers(T.self)
+    
+    guard let rTypes = registeredTypes[type] else {
+      throw DIError.TypeNoRegister(typeName: String(type))
     }
     guard !rTypes.isEmpty else {
-      throw DIError.TypeNoRegister(typeName: String(T.self))
+      throw DIError.TypeNoRegister(typeName: String(type))
     }
     
     if rTypes.count > 1 {
       guard let typeIndex = rTypes.indexOf({ (rType) -> Bool in rType.isDefault }) else {
-        throw DIError.MultyRegisterType(typeName: String(T.self))
+        throw DIError.MultyRegisterType(typeName: String(type))
       }
       
       return try resolveUseRType(rTypes[typeIndex])
@@ -37,11 +39,13 @@ internal class DIScopeImpl : DIScope {
   }
   
   func resolveMany<T>() throws -> [T] {
-    guard let rTypes = registeredTypes[T.self] else {
-      throw DIError.TypeNoRegister(typeName: String(T.self))
+    let type = Helpers.removedTypeWrappers(T.self)
+    
+    guard let rTypes = registeredTypes[type] else {
+      throw DIError.TypeNoRegister(typeName: String(type))
     }
     guard !rTypes.isEmpty else {
-      throw DIError.TypeNoRegister(typeName: String(T.self))
+      throw DIError.TypeNoRegister(typeName: String(type))
     }
     
     var result: [T] = []
@@ -57,11 +61,13 @@ internal class DIScopeImpl : DIScope {
   }
   
   func resolve<T>(name: String) throws -> T {
-    guard let rTypes = registeredTypes[T.self] else {
-      throw DIError.TypeNoRegister(typeName: String(T.self))
+    let type = Helpers.removedTypeWrappers(T.self)
+    
+    guard let rTypes = registeredTypes[type] else {
+      throw DIError.TypeNoRegister(typeName: String(type))
     }
     guard !rTypes.isEmpty else {
-      throw DIError.TypeNoRegister(typeName: String(T.self))
+      throw DIError.TypeNoRegister(typeName: String(type))
     }
     
     for rType in rTypes {
@@ -165,6 +171,8 @@ internal class DIScopeImpl : DIScope {
     rType.setupDependency(self, obj: obj)
     return result
   }
+  
+
   
   private static var singleObjects: [String: Any] = [:]
   

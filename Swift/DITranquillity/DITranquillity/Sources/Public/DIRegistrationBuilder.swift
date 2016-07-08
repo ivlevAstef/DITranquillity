@@ -39,13 +39,11 @@ public class DIRegistrationBuilder<ImplObj> : DIRegistrationBuilderProtocol {
   //As
   public func asSelf() -> Self {
     container.append(ImplObj.self, value: rType)
-    container.append(Optional<ImplObj>.self, value: rType)
     return self
   }
   
   public func asType<EquallyObj>(equallyType: EquallyObj.Type) throws -> Self {
     container.append(equallyType, value: rType)
-    container.append(Optional<EquallyObj>.self, value: rType)
     return self
   }
   

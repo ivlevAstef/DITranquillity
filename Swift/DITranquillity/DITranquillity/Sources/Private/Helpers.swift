@@ -10,10 +10,31 @@ import Foundation
 
 internal class Helpers {  
   internal static func isClass<T>(checkType: T.Type) throws {
-    //Please ignore warning because: isClass(UIAppearance) return false. It's worked for all obj-c protocols
     guard checkType is AnyClass else {
       throw DIError.TypeNoClass(typeName: String(checkType))
     }
+  }
+  
+  
+  private static let wrappers = [
+    "Optional",
+    "ImplicitlyUnwrappedOptional"
+  ]
+  //It's worked but it's no good
+  internal static func removedTypeWrappers<T>(type: T.Type) -> Any {
+    var text = String(type)
+    
+    for wrapper in wrappers {
+      if text.hasPrefix(wrapper) {
+        //removed wrapper with symbols: '<' '>'
+        text.removeRange(text.startIndex...text.startIndex.advancedBy(wrapper.characters.count))
+        text.removeRange(text.endIndex.predecessor()..<text.endIndex)
+        
+        return text
+      }
+    }
+    
+    return type
   }
   
 }
