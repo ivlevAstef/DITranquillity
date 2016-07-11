@@ -74,6 +74,25 @@ class Animal {
   }
 }
 
+class Params {
+  internal let param1: String
+  internal let param2: Int
+  internal let param3: Int?
+  
+  init(p1: String, p2: Int) {
+    self.param1 = p1
+    self.param2 = p2
+    self.param3 = nil
+  }
+  
+  init(p1: String, p2: Int, p3: Int) {
+    self.param1 = p1
+    self.param2 = p2
+    self.param3 = p3
+  }
+}
+
+
 class SampleModule : DIModuleProtocol {
   init(useBarService: Bool) {
     self.useBarService = useBarService
@@ -132,7 +151,20 @@ class SampleModule : DIModuleProtocol {
     builder.register(Animal)
       .asSelf()
       .asName("Bear")
-      .initializer { _ in Animal(name: "Bear") }    
+      .initializer { _ in Animal(name: "Bear") }
+    
+    
+    builder.register(Animal)
+      .asSelf()
+      .asName("Custom")
+      .initializer { (s, arg1) in Animal(name: arg1) }
+    
+    builder.register(Params)
+      .asSelf()
+      .instancePerDependency()
+      .initializer { (s, arg1, arg2) in Params(p1: arg1, p2: arg2) }
+      .initializer { (s, arg1, arg2, arg3) in Params(p1: arg1, p2: arg2, p3: arg3) }
+    
   }
   
   private let useBarService: Bool
@@ -151,7 +183,7 @@ class SampleStartupModule : DIStartupModule {
       .asSelf()
       .instancePerRequest()
       .dependency { (scope, obj) in
-        obj.inject = *!scope
+        obj.inject = try! scope.resolve(Inject)
         obj.logger = *!scope
     }
     

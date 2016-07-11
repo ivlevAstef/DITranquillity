@@ -30,7 +30,7 @@ public class DIContainerBuilder {
       throw DIError.Build(errors: errors)
     }
     
-    return DIScopeImpl(registeredTypes: rTypeContainer.copy())
+    return DIScope(registeredTypes: rTypeContainer.copy())
   }
   
   private func checkRTypes(superType: String, rTypes: [RType]) -> [DIError] {

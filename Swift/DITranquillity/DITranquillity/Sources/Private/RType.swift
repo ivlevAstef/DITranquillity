@@ -28,7 +28,7 @@ func ==(a: RTypeLifeTime, b: RTypeLifeTime) -> Bool {
 }
 
 internal protocol RTypeReader {
-  func initType(scope: DIScope) -> Any
+  func initType<Method, T>(argCount: UInt, method: Method throws -> T) throws -> T
   func setupDependency(scope: DIScope, obj: Any)
   var lifeTime: RTypeLifeTime { get }
   func hasName(name: String) -> Bool
@@ -47,9 +47,12 @@ internal class RType : RTypeReader, Hashable {
   internal var hashValue: Int { return String(implType).hash }
   
   //Reader
-  internal func initType(scope: DIScope) -> Any {
-    let result = initializer!(scope: scope)
-    return result
+  func initType<Method, T>(argCount: UInt, method: Method throws -> T) throws -> T {
+    guard let initMethod = initializer[argCount] as? Method else {
+      throw DIError.InitializerWithSignatureNotFound(typeName: String(implType), signature: String(Method))
+    }
+    
+    return try method(initMethod)
   }
   
   internal func setupDependency(scope: DIScope, obj: Any) {
@@ -69,11 +72,11 @@ internal class RType : RTypeReader, Hashable {
   //Initializer
   var implementedType: Any { return implType }
   
-  internal func setInitializer<T>(method: (scope: DIScope) -> T) {
-    initializer = method
+  internal func setInitializer<Method>(argCount: UInt, method: Method) {
+    initializer[argCount] = method
   }
   
-  var hasInitializer : Bool { return nil != initializer }
+  var hasInitializer : Bool { return !initializer.isEmpty }
   
   //Deoendency
   internal func appendDependency<T>(method: (scope: DIScope, obj: T) -> ()) {
@@ -85,10 +88,10 @@ internal class RType : RTypeReader, Hashable {
   }
   
   //Private
-  private let implType : Any
-  private var initializer : ((scope: DIScope) -> Any)? = nil
+  private let implType: Any
+  private var initializer: [UInt: Any] = [:]//arguments count to method
   private var dependencies: [(scope: DIScope, obj: Any) -> ()] = []
-  internal var names : Set<String> = []
+  internal var names: Set<String> = []
   internal var isDefault: Bool = false
 }
 

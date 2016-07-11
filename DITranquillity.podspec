@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'DITranquillity'
-  s.version      = '0.3.0'
+  s.version      = '0.4.0'
   s.summary      = 'DITranquillity - Dependency injection for iOS (Swift) '
 
   s.description  = <<-DESC
@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.source_files = 'Swift/DITranquillity/DITranquillity/DITranquillity.h'
 
   s.subspec 'Core' do |core|
-    core.source_files = 'Swift/DITranquillity/DITranquillity/Sources/{Public,Private}/*.swift'
+    core.source_files = 'Swift/DITranquillity/DITranquillity/Sources/{Public,Private}/**/*.swift'
   end
 
   s.subspec 'ViewControllers' do |viewControllers|

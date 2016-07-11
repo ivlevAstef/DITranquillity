@@ -8,34 +8,13 @@
 
 import Foundation
 
-public protocol DIRegistrationBuilderProtocol {
-  associatedtype ImplementedObj
-  
-  func asSelf() -> Self
-  func asType<EquallyObj>(equallyType: EquallyObj.Type) throws -> Self
-  func asName(name: String) -> Self
-  
-  func asDefault() -> Self
-
-  func initializer(method: (scope: DIScope) -> ImplementedObj) -> Self
-  func dependency(method: (scope: DIScope, obj: ImplementedObj) -> ()) -> Self
-  
-  func instanceSingle() -> Self
-  func instancePerMatchingScope(scopeName: String) -> Self
-  func instancePerScope() -> Self
-  func instancePerDependency() -> Self
-  func instancePerRequest() -> Self
-}
-
-extension DIContainerBuilder {
+public extension DIContainerBuilder {
   public func register<T>(rClass: T.Type) -> DIRegistrationBuilder<T> {
     return DIRegistrationBuilder<T>(self.rTypeContainer, rClass)
   }
 }
 
-public class DIRegistrationBuilder<ImplObj> : DIRegistrationBuilderProtocol {
-  public typealias ImplementedObj = ImplObj
-  
+public class DIRegistrationBuilder<ImplObj> {
   //As
   public func asSelf() -> Self {
     container.append(ImplObj.self, value: rType)
@@ -59,12 +38,12 @@ public class DIRegistrationBuilder<ImplObj> : DIRegistrationBuilderProtocol {
   
   //Initializer
   public func initializer(method: (scope: DIScope) -> ImplObj) -> Self {
-    rType.setInitializer(method)
+    rType.setInitializer(0) { (s) -> Any in return method(scope: s) }
     return self
   }
   
   //Dependency
-  public func dependency(method: (scope: DIScope, obj: ImplementedObj) -> ()) -> Self {
+  public func dependency(method: (scope: DIScope, obj: ImplObj) -> ()) -> Self {
     rType.appendDependency(method)
     return self
   }
@@ -100,6 +79,6 @@ public class DIRegistrationBuilder<ImplObj> : DIRegistrationBuilderProtocol {
     self.rType = RType(implType)
   }
   
-  private let rType: RType
-  private let container: RTypeContainer
+  internal let rType: RType
+  internal let container: RTypeContainer
 }
