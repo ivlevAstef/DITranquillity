@@ -6,49 +6,52 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public protocol DIScope {
-  func resolve<T>() throws -> T
-  func resolve<T>(_: T.Type) throws -> T
+public class DIScope {
+  typealias Method = (scope: DIScope) -> Any
   
-  func resolveMany<T>() throws -> [T]
-  func resolveMany<T>(_: T.Type) throws -> [T]
+  public func resolve<T>() throws -> T {
+    return try impl.resolve(self, argCount: 0) { (initializer: Method) in return initializer(scope: self) }
+  }
   
-  func resolve<T>(name: String) throws -> T
-  func resolve<T>(_: T.Type, name: String) throws -> T
+  public func resolveMany<T>() throws -> [T] {
+    return try impl.resolveMany(self, argCount: 0) { (initializer: Method) in return initializer(scope: self) }
+  }
   
-  func resolve<T>(object: T) throws
+  public func resolve<T>(name: String) throws -> T {
+    return try impl.resolve(self, name: name, argCount: 0) { (initializer: Method) in return initializer(scope: self) }
+  }
   
-  func newLifeTimeScope() -> DIScope
-  func newLifeTimeScope(name: String) -> DIScope
+  public func resolve<T>(object: T) throws {
+    return try impl.resolve(self, object: object)
+  }
+  
+  public func newLifeTimeScope() -> DIScope {
+    return impl.newLifeTimeScope(self)
+  }
+  public func newLifeTimeScope(name: String) -> DIScope {
+    return impl.newLifeTimeScope(self, name: name)
+  }
+  
+  internal init(registeredTypes: RTypeContainerReadonly, parent: DIScope? = nil, name: String = "") {
+    impl = DIScopeImpl(registeredTypes: registeredTypes, parent: parent, name: name)
+  }
+  internal let impl: DIScopeImpl
+}
+
+public extension DIScope {
+  func resolve<T>(_: T.Type) throws -> T {
+    return try resolve()
+  }
+  
+  func resolveMany<T>(_: T.Type) throws -> [T] {
+    return try resolveMany()
+  }
+  
+  func resolve<T>(_: T.Type, name: String) throws -> T {
+    return try resolve(name)
+  }
 }
 
 public var DIScopeMain: DIScope {
   return DIMain.single.container
-}
-
-prefix operator *!{}
-public prefix func *!<T>(scope: DIScope) -> T {
-  return try! scope.resolve()
-}
-public prefix func *!<T>(object: T) {
-  try! DIScopeMain.resolve(object)
-}
-
-prefix operator **!{}
-public prefix func **!<T>(scope: DIScope) -> [T] {
-  return try! scope.resolveMany()
-}
-
-prefix operator *{}
-public prefix func *<T>(scope: DIScope) throws -> T {
-  return try scope.resolve()
-}
-public prefix func *<T>(object: T) throws {
-  try DIScopeMain.resolve(object)
-}
-
-
-prefix operator **{}
-public prefix func **<T>(scope: DIScope) throws -> [T] {
-  return try scope.resolveMany()
 }

@@ -13,6 +13,8 @@ public enum DIError : ErrorType, Equatable {
   case TypeNoRegisterByName(typeName: String, name: String)
   case NotSetInitializer(typeName: String)
   
+  case InitializerWithSignatureNotFound(typeName: String, signature: String)
+  
   case MultyRegisterDefault(typeNames: [String], forType: String)
   case NotSetDefaultForMultyRegisterType(typeNames: [String], forType: String)
   
