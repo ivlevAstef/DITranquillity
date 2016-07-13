@@ -7,10 +7,8 @@
 //
 
 internal class DIScopeImpl {
-  internal init(registeredTypes: RTypeContainerReadonly, parent: DIScope? = nil, name: String = "") {
+  internal init(registeredTypes: RTypeContainerReadonly) {
     self.registeredTypes = registeredTypes
-    self.parent = parent
-    self.name = name
   }
   
   internal func resolve<T, Method>(scope: DIScope, method: Method -> Any) throws -> T {
@@ -72,11 +70,7 @@ internal class DIScopeImpl {
   }
   
   internal func newLifeTimeScope(scope: DIScope) -> DIScope {
-    return DIScope(registeredTypes: registeredTypes, parent: scope)
-  }
-  
-  internal func newLifeTimeScope(scope: DIScope, name: String = "") -> DIScope {
-    return DIScope(registeredTypes: registeredTypes, parent: scope, name: name)
+    return DIScope(registeredTypes: registeredTypes)
   }
   
   internal func resolve<T>(scope: DIScope, object: T) throws {
@@ -102,8 +96,6 @@ internal class DIScopeImpl {
     switch rType.lifeTime {
     case .Single:
       return try resolveSingle(scope, rType: rType, method: method)
-    case let .PerMatchingScope(name):
-      return try resolvePerMatchingScope(scope, rType: rType, name, method: method)
     case .PerScope:
       return try resolvePerScope(scope, rType: rType, method: method)
     case .PerDependency:
@@ -123,18 +115,6 @@ internal class DIScopeImpl {
     let obj: T = try resolvePerDependency(scope, rType: rType, method: method)
     DIScopeImpl.singleObjects[key] = obj
     return obj
-  }
-  
-  private func resolvePerMatchingScope<T, Method>(scope: DIScope, rType: RTypeReader, _ name: String, method: Method -> Any) throws -> T {
-    if name == self.name {
-      return try resolvePerScope(scope, rType: rType, method: method)
-    }
-    
-    guard let scopeParent = parent else {
-      throw DIError.ScopeNotFound(scopeName: name)
-    }
-    
-    return try scopeParent.resolve(T)
   }
   
   private func resolvePerScope<T, Method>(scope: DIScope, rType: RTypeReader, method: Method -> Any) throws -> T {
@@ -163,7 +143,5 @@ internal class DIScopeImpl {
   private static var singleObjects: [String: Any] = [:]
   
   private var objects: [String: Any] = [:]
-  private let name: String
   private let registeredTypes: RTypeContainerReadonly
-  private let parent: DIScope?
 }

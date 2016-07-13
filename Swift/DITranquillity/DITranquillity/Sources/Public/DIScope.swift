@@ -28,12 +28,9 @@ public class DIScope {
   public func newLifeTimeScope() -> DIScope {
     return impl.newLifeTimeScope(self)
   }
-  public func newLifeTimeScope(name: String) -> DIScope {
-    return impl.newLifeTimeScope(self, name: name)
-  }
   
-  internal init(registeredTypes: RTypeContainerReadonly, parent: DIScope? = nil, name: String = "") {
-    impl = DIScopeImpl(registeredTypes: registeredTypes, parent: parent, name: name)
+  internal init(registeredTypes: RTypeContainerReadonly, name: String = "") {
+    impl = DIScopeImpl(registeredTypes: registeredTypes)
   }
   internal let impl: DIScopeImpl
 }

@@ -17,7 +17,7 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let scope2 = scope.newLifeTimeScope("ScopeName")
+    let scope2 = scope.newLifeTimeScope()
     let scope3 = scope2.newLifeTimeScope()
     
     let vc1_1 = try! scope2.resolve(UIView)

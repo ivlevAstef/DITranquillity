@@ -54,11 +54,6 @@ public class DIRegistrationBuilder<ImplObj> {
     return self
   }
   
-  public func instancePerMatchingScope(scopeName: String) -> Self {
-    rType.lifeTime = RTypeLifeTime.PerMatchingScope(name: scopeName)
-    return self
-  }
-  
   public func instancePerScope() -> Self {
     rType.lifeTime = RTypeLifeTime.PerScope
     return self

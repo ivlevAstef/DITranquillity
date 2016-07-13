@@ -8,7 +8,6 @@
 
 internal enum RTypeLifeTime: Equatable {
   case Single
-  case PerMatchingScope(name: String)
   case PerScope
   case PerDependency
   case PerRequest
@@ -19,7 +18,6 @@ internal enum RTypeLifeTime: Equatable {
 func ==(a: RTypeLifeTime, b: RTypeLifeTime) -> Bool {
   switch (a, b) {
     case (.Single, .Single): return true
-    case (.PerMatchingScope(let a), .PerMatchingScope(let b))   where a == b: return true
     case (.PerScope, .PerScope): return true
     case (.PerDependency, .PerDependency): return true
     case (.PerRequest, .PerRequest): return true
