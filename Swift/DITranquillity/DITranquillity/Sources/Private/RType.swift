@@ -28,7 +28,7 @@ func ==(a: RTypeLifeTime, b: RTypeLifeTime) -> Bool {
 }
 
 internal protocol RTypeReader {
-  func initType<Method, T>(argCount: UInt, method: Method throws -> T) throws -> T
+  func initType<Method, T>(method: Method throws -> T) throws -> T
   func setupDependency(scope: DIScope, obj: Any)
   var lifeTime: RTypeLifeTime { get }
   func hasName(name: String) -> Bool
@@ -47,8 +47,8 @@ internal class RType : RTypeReader, Hashable {
   internal var hashValue: Int { return String(implType).hash }
   
   //Reader
-  func initType<Method, T>(argCount: UInt, method: Method throws -> T) throws -> T {
-    guard let initMethod = initializer[argCount] as? Method else {
+  func initType<Method, T>(method: Method throws -> T) throws -> T {
+    guard let initMethod = initializer[String(Method)] as? Method else {
       throw DIError.InitializerWithSignatureNotFound(typeName: String(implType), signature: String(Method))
     }
     
@@ -72,8 +72,8 @@ internal class RType : RTypeReader, Hashable {
   //Initializer
   var implementedType: Any { return implType }
   
-  internal func setInitializer<Method>(argCount: UInt, method: Method) {
-    initializer[argCount] = method
+  internal func setInitializer<Method>(method: Method) {
+    initializer[String(Method.self)] = method
   }
   
   var hasInitializer : Bool { return !initializer.isEmpty }
@@ -89,7 +89,7 @@ internal class RType : RTypeReader, Hashable {
   
   //Private
   private let implType: Any
-  private var initializer: [UInt: Any] = [:]//arguments count to method
+  private var initializer: [String: Any] = [:]//method type to method
   private var dependencies: [(scope: DIScope, obj: Any) -> ()] = []
   internal var names: Set<String> = []
   internal var isDefault: Bool = false

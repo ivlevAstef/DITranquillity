@@ -10,15 +10,15 @@ public class DIScope {
   typealias Method = (scope: DIScope) -> Any
   
   public func resolve<T>() throws -> T {
-    return try impl.resolve(self, argCount: 0) { (initializer: Method) in return initializer(scope: self) }
+    return try impl.resolve(self) { (initializer: Method) in return initializer(scope: self) }
   }
   
   public func resolveMany<T>() throws -> [T] {
-    return try impl.resolveMany(self, argCount: 0) { (initializer: Method) in return initializer(scope: self) }
+    return try impl.resolveMany(self) { (initializer: Method) in return initializer(scope: self) }
   }
   
   public func resolve<T>(name: String) throws -> T {
-    return try impl.resolve(self, name: name, argCount: 0) { (initializer: Method) in return initializer(scope: self) }
+    return try impl.resolve(self, name: name) { (initializer: Method) in return initializer(scope: self) }
   }
   
   public func resolve<T>(object: T) throws {

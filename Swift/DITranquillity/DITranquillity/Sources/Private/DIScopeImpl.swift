@@ -13,7 +13,7 @@ internal class DIScopeImpl {
     self.name = name
   }
   
-  internal func resolve<T, Method>(scope: DIScope, argCount: UInt, method: Method -> Any) throws -> T {
+  internal func resolve<T, Method>(scope: DIScope, method: Method -> Any) throws -> T {
     let type = Helpers.removedTypeWrappers(T.self)
     
     guard let rTypes = registeredTypes[type] else {
@@ -28,13 +28,13 @@ internal class DIScopeImpl {
         throw DIError.MultyRegisterType(typeName: String(type))
       }
       
-      return try resolveUseRType(scope, rType: rTypes[typeIndex], argCount: argCount, method: method)
+      return try resolveUseRType(scope, rType: rTypes[typeIndex], method: method)
     }
     
-    return try resolveUseRType(scope, rType: rTypes[0], argCount: argCount, method: method)
+    return try resolveUseRType(scope, rType: rTypes[0], method: method)
   }
   
-  internal func resolveMany<T, Method>(scope: DIScope, argCount: UInt, method: Method -> Any) throws -> [T] {
+  internal func resolveMany<T, Method>(scope: DIScope, method: Method -> Any) throws -> [T] {
     let type = Helpers.removedTypeWrappers(T.self)
     
     guard let rTypes = registeredTypes[type] else {
@@ -46,13 +46,13 @@ internal class DIScopeImpl {
     
     var result: [T] = []
     for rType in rTypes {
-      try result.append(resolveUseRType(scope, rType: rType, argCount: argCount, method: method))
+      try result.append(resolveUseRType(scope, rType: rType, method: method))
     }
     
     return result
   }
   
-  internal func resolve<T, Method>(scope: DIScope, name: String, argCount: UInt, method: Method -> Any) throws -> T {
+  internal func resolve<T, Method>(scope: DIScope, name: String, method: Method -> Any) throws -> T {
     let type = Helpers.removedTypeWrappers(T.self)
     
     guard let rTypes = registeredTypes[type] else {
@@ -64,7 +64,7 @@ internal class DIScopeImpl {
     
     for rType in rTypes {
       if rType.hasName(name) {
-        return try resolveUseRType(scope, rType: rType, argCount: argCount, method: method)
+        return try resolveUseRType(scope, rType: rType, method: method)
       }
     }
     
@@ -98,36 +98,36 @@ internal class DIScopeImpl {
     }
   }
   
-  private func resolveUseRType<T, Method>(scope: DIScope, rType: RTypeReader, argCount: UInt, method: Method -> Any) throws -> T {
+  private func resolveUseRType<T, Method>(scope: DIScope, rType: RTypeReader, method: Method -> Any) throws -> T {
     switch rType.lifeTime {
     case .Single:
-      return try resolveSingle(scope, rType: rType, argCount: argCount, method: method)
+      return try resolveSingle(scope, rType: rType, method: method)
     case let .PerMatchingScope(name):
-      return try resolvePerMatchingScope(scope, rType: rType, name, argCount: argCount, method: method)
+      return try resolvePerMatchingScope(scope, rType: rType, name, method: method)
     case .PerScope:
-      return try resolvePerScope(scope, rType: rType, argCount: argCount, method: method)
+      return try resolvePerScope(scope, rType: rType, method: method)
     case .PerDependency:
-      return try resolvePerDependency(scope, rType: rType, argCount: argCount, method: method)
+      return try resolvePerDependency(scope, rType: rType, method: method)
     case .PerRequest:
-      return try resolvePerDependency(scope, rType: rType, argCount: argCount, method: method)
+      return try resolvePerDependency(scope, rType: rType, method: method)
     }
   }
   
-  private func resolveSingle<T, Method>(scope: DIScope, rType: RTypeReader, argCount: UInt, method: Method -> Any) throws -> T {
+  private func resolveSingle<T, Method>(scope: DIScope, rType: RTypeReader, method: Method -> Any) throws -> T {
     let key = rType.uniqueKey
     
     if let obj = DIScopeImpl.singleObjects[key] {
       return obj as! T
     }
     
-    let obj: T = try resolvePerDependency(scope, rType: rType, argCount: argCount, method: method)
+    let obj: T = try resolvePerDependency(scope, rType: rType, method: method)
     DIScopeImpl.singleObjects[key] = obj
     return obj
   }
   
-  private func resolvePerMatchingScope<T, Method>(scope: DIScope, rType: RTypeReader, _ name: String, argCount: UInt, method: Method -> Any) throws -> T {
+  private func resolvePerMatchingScope<T, Method>(scope: DIScope, rType: RTypeReader, _ name: String, method: Method -> Any) throws -> T {
     if name == self.name {
-      return try resolvePerScope(scope, rType: rType, argCount: argCount, method: method)
+      return try resolvePerScope(scope, rType: rType, method: method)
     }
     
     guard let scopeParent = parent else {
@@ -137,20 +137,20 @@ internal class DIScopeImpl {
     return try scopeParent.resolve(T)
   }
   
-  private func resolvePerScope<T, Method>(scope: DIScope, rType: RTypeReader, argCount: UInt, method: Method -> Any) throws -> T {
+  private func resolvePerScope<T, Method>(scope: DIScope, rType: RTypeReader, method: Method -> Any) throws -> T {
     let key = rType.uniqueKey
     
     if let obj = objects[key] {
       return obj as! T
     }
     
-    let obj: T = try resolvePerDependency(scope, rType: rType, argCount: argCount, method: method)
+    let obj: T = try resolvePerDependency(scope, rType: rType, method: method)
     objects[key] = obj
     return obj
   }
   
-  private func resolvePerDependency<T, Method>(scope: DIScope, rType: RTypeReader, argCount: UInt, method: Method -> Any) throws -> T {
-    let objAny = try rType.initType(argCount, method: method)
+  private func resolvePerDependency<T, Method>(scope: DIScope, rType: RTypeReader, method: Method -> Any) throws -> T {
+    let objAny = try rType.initType(method)
     
     guard let obj = objAny as? T else {
       throw DIError.TypeIncorrect(askableType: String(T.self), realType: String(objAny.dynamicType))

@@ -22,7 +22,7 @@ registrationFunction() { #argcount file
   local ArgParam=$(join ', ' $(replaceToArg numbers[@] "arg;I:_arg;I")); ArgParam=${ArgParam//_/ }
 
   echo "  public func initializer<$ArgType>(method: (scope: DIScope, $ArgumentsType) -> ImplObj) -> Self {
-    rType.setInitializer($1) { (s, $Arguments) -> Any in return method(scope: s, $ArgParam) }
+    rType.setInitializer { (s, $Arguments) -> Any in return method(scope: s, $ArgParam) }
     return self
   }
   " >> $2
@@ -55,7 +55,7 @@ resolveFunctions() { #argcount prefix file
 
   echo "  public func resolve<T, $ArgType>($prefix$ArgumentsType) throws -> T {
     typealias Method = (scope: DIScope, $ArgumentsType) -> Any
-    return try impl.resolve(self, argCount: $1) { (initializer: Method) in return initializer(scope: self, $ArgParam) }
+    return try impl.resolve(self) { (initializer: Method) in return initializer(scope: self, $ArgParam) }
   }
   " >> $3
 }
@@ -70,7 +70,7 @@ resolveManyFunctions() { #argcount prefix file
 
   echo "  public func resolveMany<T, $ArgType>($prefix$ArgumentsType) throws -> [T] {
     typealias Method = (scope: DIScope, $ArgumentsType) -> Any
-    return try impl.resolveMany(self, argCount: $1) { (initializer: Method) in return initializer(scope: self, $ArgParam) }
+    return try impl.resolveMany(self) { (initializer: Method) in return initializer(scope: self, $ArgParam) }
   }
   " >> $3
 }
@@ -87,7 +87,7 @@ resolveNameFunctions() { #argcount prefix file
   local name="name"
   echo "  public func resolve<T, $ArgType>($prefix$name: String, $ArgumentsType) throws -> T {
     typealias Method = (scope: DIScope, $ArgumentsType) -> Any
-    return try impl.resolve(self, name: name, argCount: $1) { (initializer: Method) -> Any in return initializer(scope: self, $ArgParam) }
+    return try impl.resolve(self, name: name) { (initializer: Method) -> Any in return initializer(scope: self, $ArgParam) }
   }
   " >> $3
 }
