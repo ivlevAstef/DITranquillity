@@ -162,8 +162,8 @@ class SampleModule : DIModuleProtocol {
     builder.register(Params)
       .asSelf()
       .instancePerDependency()
-      .initializer { (s, arg1, arg2) in Params(p1: arg1, p2: arg2) }
-      .initializer { (s, arg1, arg2, arg3) in Params(p1: arg1, p2: arg2, p3: arg3) }
+      .initializer { (s, p1, p2) in Params(p1: p1, p2: p2) }
+      .initializer { (s, p1, p2, p3) in Params(p1: p1, p2: p2, p3: p3) }
     
   }
   
