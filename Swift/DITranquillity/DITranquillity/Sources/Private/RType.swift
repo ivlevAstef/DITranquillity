@@ -8,7 +8,6 @@
 
 internal enum RTypeLifeTime: Equatable {
   case Single
-  case PerMatchingScope(name: String)
   case PerScope
   case PerDependency
   case PerRequest
@@ -19,7 +18,6 @@ internal enum RTypeLifeTime: Equatable {
 func ==(a: RTypeLifeTime, b: RTypeLifeTime) -> Bool {
   switch (a, b) {
     case (.Single, .Single): return true
-    case (.PerMatchingScope(let a), .PerMatchingScope(let b))   where a == b: return true
     case (.PerScope, .PerScope): return true
     case (.PerDependency, .PerDependency): return true
     case (.PerRequest, .PerRequest): return true
@@ -27,16 +25,16 @@ func ==(a: RTypeLifeTime, b: RTypeLifeTime) -> Bool {
   }
 }
 
+typealias RTypeUniqueKey = String
 internal protocol RTypeReader {
-  func initType<Method, T>(argCount: UInt, method: Method throws -> T) throws -> T
+  func initType<Method, T>(method: Method throws -> T) throws -> T
   func setupDependency(scope: DIScope, obj: Any)
   var lifeTime: RTypeLifeTime { get }
   func hasName(name: String) -> Bool
   var isDefault: Bool { get }
-  var uniqueKey: String { get }
+  var uniqueKey: RTypeUniqueKey { get }
   
 }
-
 //registration type
 internal class RType : RTypeReader, Hashable {
   internal init<ImplObj>(_ implType: ImplObj.Type) {
@@ -47,8 +45,8 @@ internal class RType : RTypeReader, Hashable {
   internal var hashValue: Int { return String(implType).hash }
   
   //Reader
-  func initType<Method, T>(argCount: UInt, method: Method throws -> T) throws -> T {
-    guard let initMethod = initializer[argCount] as? Method else {
+  func initType<Method, T>(method: Method throws -> T) throws -> T {
+    guard let initMethod = initializer[String(Method)] as? Method else {
       throw DIError.InitializerWithSignatureNotFound(typeName: String(implType), signature: String(Method))
     }
     
@@ -67,13 +65,13 @@ internal class RType : RTypeReader, Hashable {
     return names.contains(name)
   }
   
-  internal var uniqueKey: String { return String(implType) + String(unsafeAddressOf(self)) }
+  internal var uniqueKey: RTypeUniqueKey { return String(implType) + String(unsafeAddressOf(self)) }
   
   //Initializer
   var implementedType: Any { return implType }
   
-  internal func setInitializer<Method>(argCount: UInt, method: Method) {
-    initializer[argCount] = method
+  internal func setInitializer<Method>(method: Method) {
+    initializer[String(Method.self)] = method
   }
   
   var hasInitializer : Bool { return !initializer.isEmpty }
@@ -89,7 +87,7 @@ internal class RType : RTypeReader, Hashable {
   
   //Private
   private let implType: Any
-  private var initializer: [UInt: Any] = [:]//arguments count to method
+  private var initializer: [String: Any] = [:]//method type to method
   private var dependencies: [(scope: DIScope, obj: Any) -> ()] = []
   internal var names: Set<String> = []
   internal var isDefault: Bool = false

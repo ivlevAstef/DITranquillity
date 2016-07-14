@@ -92,6 +92,26 @@ class Params {
   }
 }
 
+class Circular1 {
+  let ref: Circular2
+  
+  init(ref: Circular2) {
+    self.ref = ref
+  }
+  
+  var description: String {
+    return "<Circular1: \(unsafeAddressOf(self)) Circular2:\(unsafeAddressOf(ref))>"
+  }
+}
+
+class Circular2 {
+  var ref: Circular1!
+  
+  var description: String {
+    return "<Circular2: \(unsafeAddressOf(self)) Circular1:\(unsafeAddressOf(ref))>"
+  }
+}
+
 
 class SampleModule : DIModuleProtocol {
   init(useBarService: Bool) {
@@ -162,9 +182,21 @@ class SampleModule : DIModuleProtocol {
     builder.register(Params)
       .asSelf()
       .instancePerDependency()
-      .initializer { (s, arg1, arg2) in Params(p1: arg1, p2: arg2) }
-      .initializer { (s, arg1, arg2, arg3) in Params(p1: arg1, p2: arg2, p3: arg3) }
+      .initializer { (s, p1, p2) in Params(p1: p1, p2: p2) }
+      .initializer { (s, p1, p2, p3) in Params(p1: p1, p2: p2, p3: p3) }
     
+    //circular
+    
+    builder.register(Circular1)
+      .asSelf()
+      .instancePerDependency()
+      .initializer { (s) in Circular1(ref: *!s) }
+    
+    builder.register(Circular2)
+      .asSelf()
+      .instancePerDependency()
+      .initializer { _ in Circular2() }
+      .dependency { (s, obj) in obj.ref = *!s }
   }
   
   private let useBarService: Bool

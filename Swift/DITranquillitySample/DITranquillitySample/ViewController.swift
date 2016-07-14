@@ -17,7 +17,7 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let scope2 = scope.newLifeTimeScope("ScopeName")
+    let scope2 = scope.newLifeTimeScope()
     let scope3 = scope2.newLifeTimeScope()
     
     let vc1_1 = try! scope2.resolve(UIView)
@@ -56,14 +56,21 @@ class ViewController: UIViewController {
     print("Cat: \(cat.name) Dog: \(dog.name) Bear: \(bear.name) Default(Dog): \(defaultAnimal.name)")
     
     //Params
-    let animal: Animal = try! DIScopeMain.resolve("Custom", arg1: "my animal")
+    let animal: Animal = try! DIScopeMain.resolve("Custom", arg: "my animal")
     print("Animal: \(animal.name)")
     
-    let params2: Params = try! DIScopeMain.resolve(arg1: "param1", arg2: 10)
+    let params2: Params = try! DIScopeMain.resolve(arg: "param1", 10)
     print("Params p1:\(params2.param1) p2:\(params2.param2) p3:\(params2.param3)")
     
-    let params3: Params = try! DIScopeMain.resolve(arg1: "param1", arg2: 10, arg3: 15)
+    let params3: Params = try! DIScopeMain.resolve(arg: "param1", 10, 15)
     print("Params p1:\(params3.param1) p2:\(params3.param2) p3:\(params3.param3)")
+    
+    //Circular
+    let circularT1: Circular1 = *!scope
+    let circularT2: Circular2 = *!scope
+    
+    print("Circular test 1: \(circularT1.description) + \(circularT1.ref.description)")
+    print("Circular test 2: \(circularT2.description) + \(circularT2.ref.description)")
     
   }
 }

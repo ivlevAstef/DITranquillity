@@ -7,13 +7,11 @@
 //
 
 internal class DIScopeImpl {
-  internal init(registeredTypes: RTypeContainerReadonly, parent: DIScope? = nil, name: String = "") {
+  internal init(registeredTypes: RTypeContainerReadonly) {
     self.registeredTypes = registeredTypes
-    self.parent = parent
-    self.name = name
   }
   
-  internal func resolve<T, Method>(scope: DIScope, argCount: UInt, method: Method -> Any) throws -> T {
+  internal func resolve<T, Method>(scope: DIScope, circular: Bool = false, method: Method -> Any) throws -> T {
     let type = Helpers.removedTypeWrappers(T.self)
     
     guard let rTypes = registeredTypes[type] else {
@@ -28,13 +26,13 @@ internal class DIScopeImpl {
         throw DIError.MultyRegisterType(typeName: String(type))
       }
       
-      return try resolveUseRType(scope, rType: rTypes[typeIndex], argCount: argCount, method: method)
+      return try resolveUseRType(scope, rType: rTypes[typeIndex], method: method)
     }
     
-    return try resolveUseRType(scope, rType: rTypes[0], argCount: argCount, method: method)
+    return try resolveUseRType(scope, rType: rTypes[0], method: method)
   }
   
-  internal func resolveMany<T, Method>(scope: DIScope, argCount: UInt, method: Method -> Any) throws -> [T] {
+  internal func resolveMany<T, Method>(scope: DIScope, circular: Bool = false, method: Method -> Any) throws -> [T] {
     let type = Helpers.removedTypeWrappers(T.self)
     
     guard let rTypes = registeredTypes[type] else {
@@ -46,13 +44,13 @@ internal class DIScopeImpl {
     
     var result: [T] = []
     for rType in rTypes {
-      try result.append(resolveUseRType(scope, rType: rType, argCount: argCount, method: method))
+      try result.append(resolveUseRType(scope, rType: rType, method: method))
     }
     
     return result
   }
   
-  internal func resolve<T, Method>(scope: DIScope, name: String, argCount: UInt, method: Method -> Any) throws -> T {
+  internal func resolve<T, Method>(scope: DIScope, name: String, circular: Bool = false, method: Method -> Any) throws -> T {
     let type = Helpers.removedTypeWrappers(T.self)
     
     guard let rTypes = registeredTypes[type] else {
@@ -64,7 +62,7 @@ internal class DIScopeImpl {
     
     for rType in rTypes {
       if rType.hasName(name) {
-        return try resolveUseRType(scope, rType: rType, argCount: argCount, method: method)
+        return try resolveUseRType(scope, rType: rType, method: method)
       }
     }
     
@@ -72,11 +70,7 @@ internal class DIScopeImpl {
   }
   
   internal func newLifeTimeScope(scope: DIScope) -> DIScope {
-    return DIScope(registeredTypes: registeredTypes, parent: scope)
-  }
-  
-  internal func newLifeTimeScope(scope: DIScope, name: String = "") -> DIScope {
-    return DIScope(registeredTypes: registeredTypes, parent: scope, name: name)
+    return DIScope(registeredTypes: registeredTypes)
   }
   
   internal func resolve<T>(scope: DIScope, object: T) throws {
@@ -92,78 +86,128 @@ internal class DIScopeImpl {
         throw DIError.MultyRegisterType(typeName: String(object.dynamicType))
       }
       
-      rTypes[typeIndex].setupDependency(scope, obj: object)
+      setupDependencyWithAddedCache(scope, rType: rTypes[typeIndex], obj: object)
     } else {
-      rTypes[0].setupDependency(scope, obj: object)
+      setupDependencyWithAddedCache(scope, rType: rTypes[0], obj: object)
     }
   }
   
-  private func resolveUseRType<T, Method>(scope: DIScope, rType: RTypeReader, argCount: UInt, method: Method -> Any) throws -> T {
+  private func resolveUseRType<T, Method>(scope: DIScope, rType: RTypeReader, method: Method -> Any) throws -> T {
     switch rType.lifeTime {
     case .Single:
-      return try resolveSingle(scope, rType: rType, argCount: argCount, method: method)
-    case let .PerMatchingScope(name):
-      return try resolvePerMatchingScope(scope, rType: rType, name, argCount: argCount, method: method)
+      return try resolveSingle(scope, rType: rType, method: method)
     case .PerScope:
-      return try resolvePerScope(scope, rType: rType, argCount: argCount, method: method)
+      return try resolvePerScope(scope, rType: rType, method: method)
     case .PerDependency:
-      return try resolvePerDependency(scope, rType: rType, argCount: argCount, method: method)
+      return try resolvePerDependency(scope, rType: rType, method: method)
     case .PerRequest:
-      return try resolvePerDependency(scope, rType: rType, argCount: argCount, method: method)
+      return try resolvePerDependency(scope, rType: rType, method: method)
     }
   }
   
-  private func resolveSingle<T, Method>(scope: DIScope, rType: RTypeReader, argCount: UInt, method: Method -> Any) throws -> T {
+  private func resolveSingle<T, Method>(scope: DIScope, rType: RTypeReader, method: Method -> Any) throws -> T {
     let key = rType.uniqueKey
     
     if let obj = DIScopeImpl.singleObjects[key] {
       return obj as! T
     }
     
-    let obj: T = try resolvePerDependency(scope, rType: rType, argCount: argCount, method: method)
+    let obj: T = try resolvePerDependency(scope, rType: rType, method: method)
     DIScopeImpl.singleObjects[key] = obj
     return obj
   }
   
-  private func resolvePerMatchingScope<T, Method>(scope: DIScope, rType: RTypeReader, _ name: String, argCount: UInt, method: Method -> Any) throws -> T {
-    if name == self.name {
-      return try resolvePerScope(scope, rType: rType, argCount: argCount, method: method)
-    }
-    
-    guard let scopeParent = parent else {
-      throw DIError.ScopeNotFound(scopeName: name)
-    }
-    
-    return try scopeParent.resolve(T)
-  }
-  
-  private func resolvePerScope<T, Method>(scope: DIScope, rType: RTypeReader, argCount: UInt, method: Method -> Any) throws -> T {
+  private func resolvePerScope<T, Method>(scope: DIScope, rType: RTypeReader, method: Method -> Any) throws -> T {
     let key = rType.uniqueKey
     
     if let obj = objects[key] {
       return obj as! T
     }
     
-    let obj: T = try resolvePerDependency(scope, rType: rType, argCount: argCount, method: method)
+    let obj: T = try resolvePerDependency(scope, rType: rType, method: method)
     objects[key] = obj
     return obj
   }
   
-  private func resolvePerDependency<T, Method>(scope: DIScope, rType: RTypeReader, argCount: UInt, method: Method -> Any) throws -> T {
-    let objAny = try rType.initType(argCount, method: method)
+  private func resolvePerDependency<T, Method>(scope: DIScope, rType: RTypeReader, method: Method -> Any) throws -> T {
+    allTypes.append(rType)
+    
+    for recursiveTypeKey in recursive {
+      dependencies[rType.uniqueKey] = recursiveTypeKey
+    }
+    
+    recursive.append(rType.uniqueKey)
+    let obj: T = try getObject(scope, rType: rType, circular: isCircular(rType), method: method)
+    recursive.removeLast()
+    
+    if recursive.isEmpty {
+      setupAllDependency(scope)
+    }
+    
+    return obj
+  }
+  
+  private func isCircular(rType: RTypeReader) -> Bool {
+    for recursiveTypeKey in recursive {
+      if let rDepType = dependencies[recursiveTypeKey] where rDepType == rType.uniqueKey {
+        return true
+      }
+    }
+    return false
+  }
+  
+  private func setupDependencyWithAddedCache(scope: DIScope, rType: RTypeReader, obj: Any) {
+    allTypes.append(rType)
+    objCache[rType.uniqueKey] = obj
+    
+    setupDependency(scope, rType: rType, obj: obj)
+    
+    cleanCircularDependencyData()
+  }
+  
+  private func setupDependency(scope: DIScope, rType: RTypeReader, obj: Any) {
+    recursive.append(rType.uniqueKey)
+    rType.setupDependency(scope, obj: obj)
+    recursive.removeLast()
+  }
+  
+  private func setupAllDependency(scope: DIScope) {
+    for rType in allTypes {
+      setupDependency(scope, rType: rType, obj: objCache[rType.uniqueKey]!)
+    }
+    
+    cleanCircularDependencyData()
+  }
+  
+  private func cleanCircularDependencyData() {
+    self.allTypes.removeAll()
+    self.dependencies.removeAll()
+    self.objCache.removeAll()
+  }
+  
+  private func getObject<T, Method>(scope: DIScope, rType: RTypeReader, circular: Bool, method: Method -> Any) throws -> T {
+    if circular, let obj = objCache[rType.uniqueKey] {
+      return obj as! T
+    }
+    
+    let objAny = try rType.initType(method)
     
     guard let obj = objAny as? T else {
       throw DIError.TypeIncorrect(askableType: String(T.self), realType: String(objAny.dynamicType))
     }
     
-    rType.setupDependency(scope, obj: obj)
+    objCache[rType.uniqueKey] = obj
+    
     return obj
   }
   
-  private static var singleObjects: [String: Any] = [:]
+  private var allTypes: [RTypeReader] = []//needed for circular
+  private var recursive: [RTypeUniqueKey] = []//needed for circular
+  private var dependencies: [RTypeUniqueKey : RTypeUniqueKey] = [:]//needed for circular
+  private var objCache: [RTypeUniqueKey: Any] = [:] //needed for circular
   
-  private var objects: [String: Any] = [:]
-  private let name: String
+  private static var singleObjects: [RTypeUniqueKey: Any] = [:]
+  
+  private var objects: [RTypeUniqueKey: Any] = [:]
   private let registeredTypes: RTypeContainerReadonly
-  private let parent: DIScope?
 }

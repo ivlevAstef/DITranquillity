@@ -38,7 +38,7 @@ public class DIRegistrationBuilder<ImplObj> {
   
   //Initializer
   public func initializer(method: (scope: DIScope) -> ImplObj) -> Self {
-    rType.setInitializer(0) { (s) -> Any in return method(scope: s) }
+    rType.setInitializer { (s) -> Any in return method(scope: s) }
     return self
   }
   
@@ -51,11 +51,6 @@ public class DIRegistrationBuilder<ImplObj> {
   //LifeTime
   public func instanceSingle() -> Self {
     rType.lifeTime = RTypeLifeTime.Single
-    return self
-  }
-  
-  public func instancePerMatchingScope(scopeName: String) -> Self {
-    rType.lifeTime = RTypeLifeTime.PerMatchingScope(name: scopeName)
     return self
   }
   

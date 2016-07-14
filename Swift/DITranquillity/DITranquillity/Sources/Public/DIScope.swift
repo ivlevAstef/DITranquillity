@@ -10,15 +10,15 @@ public class DIScope {
   typealias Method = (scope: DIScope) -> Any
   
   public func resolve<T>() throws -> T {
-    return try impl.resolve(self, argCount: 0) { (initializer: Method) in return initializer(scope: self) }
+    return try impl.resolve(self) { (initializer: Method) in return initializer(scope: self) }
   }
   
   public func resolveMany<T>() throws -> [T] {
-    return try impl.resolveMany(self, argCount: 0) { (initializer: Method) in return initializer(scope: self) }
+    return try impl.resolveMany(self) { (initializer: Method) in return initializer(scope: self) }
   }
   
   public func resolve<T>(name: String) throws -> T {
-    return try impl.resolve(self, name: name, argCount: 0) { (initializer: Method) in return initializer(scope: self) }
+    return try impl.resolve(self, name: name) { (initializer: Method) in return initializer(scope: self) }
   }
   
   public func resolve<T>(object: T) throws {
@@ -28,12 +28,9 @@ public class DIScope {
   public func newLifeTimeScope() -> DIScope {
     return impl.newLifeTimeScope(self)
   }
-  public func newLifeTimeScope(name: String) -> DIScope {
-    return impl.newLifeTimeScope(self, name: name)
-  }
   
-  internal init(registeredTypes: RTypeContainerReadonly, parent: DIScope? = nil, name: String = "") {
-    impl = DIScopeImpl(registeredTypes: registeredTypes, parent: parent, name: name)
+  internal init(registeredTypes: RTypeContainerReadonly, name: String = "") {
+    impl = DIScopeImpl(registeredTypes: registeredTypes)
   }
   internal let impl: DIScopeImpl
 }
