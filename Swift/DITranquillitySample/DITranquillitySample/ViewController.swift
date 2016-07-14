@@ -65,6 +65,13 @@ class ViewController: UIViewController {
     let params3: Params = try! DIScopeMain.resolve(arg: "param1", 10, 15)
     print("Params p1:\(params3.param1) p2:\(params3.param2) p3:\(params3.param3)")
     
+    //Circular
+    let circularT1: Circular1 = *!scope
+    let circularT2: Circular2 = *!scope
+    
+    print("Circular test 1: \(circularT1.description) + \(circularT1.ref.description)")
+    print("Circular test 2: \(circularT2.description) + \(circularT2.ref.description)")
+    
   }
 }
 
