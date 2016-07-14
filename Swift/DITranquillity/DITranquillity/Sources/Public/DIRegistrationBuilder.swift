@@ -22,7 +22,7 @@ public class DIRegistrationBuilder<ImplObj> {
     return self
   }
   
-  public func asType<EquallyObj>(equallyType: EquallyObj.Type) throws -> Self {
+  public func asType<EquallyObj>(equallyType: EquallyObj.Type) -> Self {
     typeSet = true
     container.append(equallyType, value: rType)
     return self
