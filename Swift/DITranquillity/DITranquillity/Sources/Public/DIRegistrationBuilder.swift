@@ -17,11 +17,13 @@ public extension DIContainerBuilder {
 public class DIRegistrationBuilder<ImplObj> {
   //As
   public func asSelf() -> Self {
+    typeSet = true
     container.append(ImplObj.self, value: rType)
     return self
   }
   
   public func asType<EquallyObj>(equallyType: EquallyObj.Type) throws -> Self {
+    typeSet = true
     container.append(equallyType, value: rType)
     return self
   }
@@ -74,6 +76,13 @@ public class DIRegistrationBuilder<ImplObj> {
     self.rType = RType(implType)
   }
   
+  deinit {
+    if !typeSet {
+      asSelf()
+    }
+  }
+  
+  internal var typeSet: Bool = false
   internal let rType: RType
   internal let container: RTypeContainer
 }
