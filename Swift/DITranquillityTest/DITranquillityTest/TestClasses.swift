@@ -81,13 +81,13 @@ class Module : DIModuleProtocol {
         return FooService()
     }
     
-    try! builder.register(Logger)
+    builder.register(Logger)
       .asType(LoggerProtocol)
       .instanceSingle()
       .asDefault()
       .initializer { _ in Logger() }
     
-    try! builder.register(Logger2)
+    builder.register(Logger2)
       .asType(LoggerProtocol)
       .instanceSingle()
       //.asDefault()

@@ -131,13 +131,13 @@ class SampleModule : DIModuleProtocol {
         return FooService()
     }
     
-    try! builder.register(Logger)
+    builder.register(Logger)
       .asType(LoggerProtocol)
       .instanceSingle()
       .asDefault()
       .initializer { _ in Logger() }
     
-    try! builder.register(Logger2)
+    builder.register(Logger2)
       .asSelf()
       .asType(LoggerProtocol)
       .instanceSingle()
@@ -219,7 +219,7 @@ class SampleStartupModule : DIStartupModule {
         obj.logger = *!scope
     }
     
-    try! builder.register(UIView)
+    builder.register(UIView)
       .asSelf()
       .asType(UIAppearance)
       //.instanceSingle()
