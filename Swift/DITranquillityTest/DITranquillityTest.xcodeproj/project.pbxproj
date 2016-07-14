@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A50053391D19324900DFD9CF /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A50053361D19323B00DFD9CF /* DITranquillity.framework */; };
-		A5D918C21D1939A70009F9D4 /* DITranquillityBuildTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D918BF1D1939A70009F9D4 /* DITranquillityBuildTests.swift */; };
+		A5D918C21D1939A70009F9D4 /* DITranquillityTests_Build.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D918BF1D1939A70009F9D4 /* DITranquillityTests_Build.swift */; };
 		A5D918C41D1939A70009F9D4 /* TestClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D918C11D1939A70009F9D4 /* TestClasses.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,7 +32,7 @@
 /* Begin PBXFileReference section */
 		A50053221D1931FE00DFD9CF /* DITranquillityTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DITranquillityTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A50053311D19323B00DFD9CF /* DITranquillity.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DITranquillity.xcodeproj; path = ../DITranquillity/DITranquillity.xcodeproj; sourceTree = "<group>"; };
-		A5D918BF1D1939A70009F9D4 /* DITranquillityBuildTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityBuildTests.swift; sourceTree = "<group>"; };
+		A5D918BF1D1939A70009F9D4 /* DITranquillityTests_Build.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Build.swift; sourceTree = "<group>"; };
 		A5D918C01D1939A70009F9D4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5D918C11D1939A70009F9D4 /* TestClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestClasses.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,7 +77,7 @@
 		A5D918BE1D1939A70009F9D4 /* DITranquillityTest */ = {
 			isa = PBXGroup;
 			children = (
-				A5D918BF1D1939A70009F9D4 /* DITranquillityBuildTests.swift */,
+				A5D918BF1D1939A70009F9D4 /* DITranquillityTests_Build.swift */,
 				A5D918C01D1939A70009F9D4 /* Info.plist */,
 				A5D918C11D1939A70009F9D4 /* TestClasses.swift */,
 			);
@@ -170,7 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5D918C41D1939A70009F9D4 /* TestClasses.swift in Sources */,
-				A5D918C21D1939A70009F9D4 /* DITranquillityBuildTests.swift in Sources */,
+				A5D918C21D1939A70009F9D4 /* DITranquillityTests_Build.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +273,10 @@
 		A500532F1D1931FE00DFD9CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					__DITRANQUILLITY_STORYBOARD__,
+					"DEBUG=1",
+				);
 				INFOPLIST_FILE = DITranquillityTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillityTestTests;
@@ -283,6 +287,7 @@
 		A50053301D1931FE00DFD9CF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = __DITRANQUILLITY_STORYBOARD__;
 				INFOPLIST_FILE = DITranquillityTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillityTestTests;
