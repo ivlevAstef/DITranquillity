@@ -9,6 +9,13 @@
 import XCTest
 import DITranquillity
 
+protocol TestProtocol { }
+class TestClass1: TestProtocol { }
+class TestClass2: TestProtocol { }
+
+protocol Test2Protocol { }
+
+
 class DITranquillityTests_Build: XCTestCase {
   override func setUp() {
     super.setUp()
@@ -17,13 +24,13 @@ class DITranquillityTests_Build: XCTestCase {
   func test01_NotSetInitializer() {
     let builder = DIContainerBuilder()
     
-    builder.register(ServiceProtocol)
+    builder.register(TestProtocol)
     
     do {
       try builder.build()
     } catch DIError.Build(let errors) {
       XCTAssertEqual(errors, [
-        DIError.NotSetInitializer(typeName: String(ServiceProtocol))
+        DIError.NotSetInitializer(typeName: String(TestProtocol))
       ])
       return
     } catch {
@@ -35,7 +42,7 @@ class DITranquillityTests_Build: XCTestCase {
   func test02_NotInitializerForPerRequest() {
     let builder = DIContainerBuilder()
     
-    builder.register(ServiceProtocol)
+    builder.register(TestProtocol)
       .instancePerRequest()
     
     do {
@@ -48,19 +55,19 @@ class DITranquillityTests_Build: XCTestCase {
   func test03_MultiplyRegistrateTypeWithoutDefault() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
-      .initializer { _ in FooService() }
+    builder.register(TestClass1)
+      .asType(TestProtocol)
+      .initializer { _ in TestClass1() }
     
-    builder.register(BarService)
-      .asType(ServiceProtocol)
-      .initializer { _ in BarService() }
+    builder.register(TestClass2)
+      .asType(TestProtocol)
+      .initializer { _ in TestClass2() }
     
     do {
       try builder.build()
     } catch DIError.Build(let errors) {
       XCTAssertEqual(errors, [
-        DIError.NotSetDefaultForMultyRegisterType(typeNames: [String(FooService), String(BarService)], forType: String(ServiceProtocol))
+        DIError.NotSetDefaultForMultyRegisterType(typeNames: [String(TestClass1), String(TestClass2)], forType: String(TestProtocol))
       ])
       return
     } catch {
@@ -72,21 +79,21 @@ class DITranquillityTests_Build: XCTestCase {
   func test04_MultiplyRegistrateTypeWithMultyDefault() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
+    builder.register(TestClass1)
+      .asType(TestProtocol)
       .asDefault()
-      .initializer { _ in FooService() }
+      .initializer { _ in TestClass1() }
     
-    builder.register(BarService)
-      .asType(ServiceProtocol)
+    builder.register(TestClass2)
+      .asType(TestProtocol)
       .asDefault()
-      .initializer { _ in BarService() }
+      .initializer { _ in TestClass2() }
     
     do {
       try builder.build()
     } catch DIError.Build(let errors) {
       XCTAssertEqual(errors, [
-        DIError.MultyRegisterDefault(typeNames: [String(FooService), String(BarService)], forType: String(ServiceProtocol))
+        DIError.MultyRegisterDefault(typeNames: [String(TestClass1), String(TestClass2)], forType: String(TestProtocol))
       ])
       return
     } catch {
@@ -98,14 +105,14 @@ class DITranquillityTests_Build: XCTestCase {
   func test05_MultiplyRegistrateTypeWithOneDefault() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
+    builder.register(TestClass1)
+      .asType(TestProtocol)
       .asDefault()
-      .initializer { _ in FooService() }
+      .initializer { _ in TestClass1() }
     
-    builder.register(BarService)
-      .asType(ServiceProtocol)
-      .initializer { _ in BarService() }
+    builder.register(TestClass2)
+      .asType(TestProtocol)
+      .initializer { _ in TestClass2() }
     
     do {
       try builder.build()
@@ -117,15 +124,15 @@ class DITranquillityTests_Build: XCTestCase {
   func test06_MultiplyRegistrateTypeWithNames() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
+    builder.register(TestClass1)
+      .asType(TestProtocol)
       .asName("foo")
-      .initializer { _ in FooService() }
+      .initializer { _ in TestClass1() }
     
-    builder.register(BarService)
-      .asType(ServiceProtocol)
+    builder.register(TestClass2)
+      .asType(TestProtocol)
       .asName("bar")
-      .initializer { _ in BarService() }
+      .initializer { _ in TestClass2() }
     
     do {
       try builder.build()
@@ -137,19 +144,19 @@ class DITranquillityTests_Build: XCTestCase {
   func test07_IncorrectRegistrateType() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(LoggerProtocol) //<---- Swift not supported static check
-      .initializer { _ in FooService() }
+    builder.register(TestClass1)
+      .asType(Test2Protocol) //<---- Swift not supported static check
+      .initializer { _ in TestClass1() }
     
     do {
       let container = try builder.build()
      
       do {
-        let type: LoggerProtocol = try container.resolve()
+        let type: Test2Protocol = try container.resolve()
         print("\(type)")
       } catch DIError.TypeIncorrect(let askableType, let realType) {
-        XCTAssertEqual(askableType, String(LoggerProtocol))
-        XCTAssertEqual(realType, String(FooService))
+        XCTAssertEqual(askableType, String(Test2Protocol))
+        XCTAssertEqual(realType, String(TestClass1))
         return
       } catch {
         XCTFail("Catched error: \(error)")
