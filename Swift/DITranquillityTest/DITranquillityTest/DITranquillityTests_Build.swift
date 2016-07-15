@@ -76,6 +76,28 @@ class DITranquillityTests_Build: XCTestCase {
     XCTFail("No try exceptions")
   }
   
+  func test03_MultiplyRegistrateTypeWithoutDefault_AsSelf() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(TestClass1)
+      .initializer { _ in TestClass1() }
+    
+    builder.register(TestClass1)
+      .initializer { _ in TestClass1() }
+    
+    do {
+      try builder.build()
+    } catch DIError.Build(let errors) {
+      XCTAssertEqual(errors, [
+        DIError.NotSetDefaultForMultyRegisterType(typeNames: [String(TestClass1), String(TestClass1)], forType: String(TestClass1))
+        ])
+      return
+    } catch {
+      XCTFail("Catched error: \(error)")
+    }
+    XCTFail("No try exceptions")
+  }
+  
   func test04_MultiplyRegistrateTypeWithMultyDefault() {
     let builder = DIContainerBuilder()
     

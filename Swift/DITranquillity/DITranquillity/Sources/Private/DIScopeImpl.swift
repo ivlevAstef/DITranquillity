@@ -12,18 +12,11 @@ internal class DIScopeImpl {
   }
   
   internal func resolve<T, Method>(scope: DIScope, circular: Bool = false, method: Method -> Any) throws -> T {
-    let type = Helpers.removedTypeWrappers(T.self)
-    
-    guard let rTypes = registeredTypes[type] else {
-      throw DIError.TypeNoRegister(typeName: String(type))
-    }
-    guard !rTypes.isEmpty else {
-      throw DIError.TypeNoRegister(typeName: String(type))
-    }
+    let rTypes = try getTypes(T.self)
     
     if rTypes.count > 1 {
       guard let typeIndex = rTypes.indexOf({ (rType) -> Bool in rType.isDefault }) else {
-        throw DIError.MultyRegisterType(typeName: String(type))
+        throw DIError.NotSetDefaultForMultyRegisterType(typeNames: rTypes.map{String($0.implementedType)}, forType: String(T.self))
       }
       
       return try resolveUseRType(scope, rType: rTypes[typeIndex], method: method)
@@ -33,14 +26,7 @@ internal class DIScopeImpl {
   }
   
   internal func resolveMany<T, Method>(scope: DIScope, circular: Bool = false, method: Method -> Any) throws -> [T] {
-    let type = Helpers.removedTypeWrappers(T.self)
-    
-    guard let rTypes = registeredTypes[type] else {
-      throw DIError.TypeNoRegister(typeName: String(type))
-    }
-    guard !rTypes.isEmpty else {
-      throw DIError.TypeNoRegister(typeName: String(type))
-    }
+    let rTypes = try getTypes(T.self)
     
     var result: [T] = []
     for rType in rTypes {
@@ -51,14 +37,7 @@ internal class DIScopeImpl {
   }
   
   internal func resolve<T, Method>(scope: DIScope, name: String, circular: Bool = false, method: Method -> Any) throws -> T {
-    let type = Helpers.removedTypeWrappers(T.self)
-    
-    guard let rTypes = registeredTypes[type] else {
-      throw DIError.TypeNoRegister(typeName: String(type))
-    }
-    guard !rTypes.isEmpty else {
-      throw DIError.TypeNoRegister(typeName: String(type))
-    }
+    let rTypes = try getTypes(T.self)
     
     for rType in rTypes {
       if rType.hasName(name) {
@@ -69,27 +48,34 @@ internal class DIScopeImpl {
     throw DIError.TypeNoRegisterByName(typeName: String(T.self), name: name)
   }
   
-  internal func newLifeTimeScope(scope: DIScope) -> DIScope {
-    return DIScope(registeredTypes: registeredTypes)
-  }
-  
   internal func resolve<T>(scope: DIScope, object: T) throws {
-    guard let rTypes = registeredTypes[object.dynamicType] else {
-      throw DIError.TypeNoRegister(typeName: String(object.dynamicType))
-    }
-    guard !rTypes.isEmpty else {
-      throw DIError.TypeNoRegister(typeName: String(object.dynamicType))
-    }
+    let rTypes = try getTypes(object.dynamicType)
     
     if rTypes.count > 1 {
       guard let typeIndex = rTypes.indexOf({ (rType) -> Bool in rType.isDefault }) else {
-        throw DIError.MultyRegisterType(typeName: String(object.dynamicType))
+        throw DIError.NotSetDefaultForMultyRegisterType(typeNames: rTypes.map{String($0.implementedType)}, forType: String(object.dynamicType))
       }
       
       setupDependencyWithAddedCache(scope, rType: rTypes[typeIndex], obj: object)
     } else {
       setupDependencyWithAddedCache(scope, rType: rTypes[0], obj: object)
     }
+  }
+  
+  internal func newLifeTimeScope(scope: DIScope) -> DIScope {
+    return DIScope(registeredTypes: registeredTypes)
+  }
+  
+  private func getTypes<T>(inputType : T.Type) throws -> [RTypeReader] {
+    let type = Helpers.removedTypeWrappers(inputType)
+    
+    guard let rTypes = registeredTypes[type] else {
+      throw DIError.TypeNoRegister(typeName: String(inputType))
+    }
+    guard !rTypes.isEmpty else {
+      throw DIError.TypeNoRegister(typeName: String(inputType))
+    }
+    return rTypes
   }
   
   private func resolveUseRType<T, Method>(scope: DIScope, rType: RTypeReader, method: Method -> Any) throws -> T {

@@ -33,7 +33,7 @@ internal protocol RTypeReader {
   func hasName(name: String) -> Bool
   var isDefault: Bool { get }
   var uniqueKey: RTypeUniqueKey { get }
-  
+  var implementedType: Any { get }
 }
 //registration type
 internal class RType : RTypeReader, Hashable {
