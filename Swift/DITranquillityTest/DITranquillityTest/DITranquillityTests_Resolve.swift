@@ -88,7 +88,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssertEqual(service_class.foo(), "foo")
   }
   
-  func test05_ResolveWithResolve() {
+  func test05_ResolveWithInitializerResolve() {
     let builder = DIContainerBuilder()
     
     builder.register(FooService)
@@ -104,6 +104,185 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssertEqual(inject.service.foo(), "foo")
   }
 
+  func test05_ResolveWithDependencyResolveOpt() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(FooService)
+      .asType(ServiceProtocol)
+      .initializer { _ in FooService() }
+    
+    builder.register(InjectOpt)
+      .initializer { s in InjectOpt() }
+      .dependency { (s, obj) in obj.service = *!s }
+    
+    let container = try! builder.build()
+    
+    let inject: InjectOpt = *!container
+    XCTAssertEqual(inject.service!.foo(), "foo")
+  }
+  
+  func test05_ResolveWithDependencyResolveImplicitly() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(FooService)
+      .asType(ServiceProtocol)
+      .initializer { _ in FooService() }
+    
+    builder.register(InjectImplicitly)
+      .initializer { s in InjectImplicitly() }
+      .dependency { (s, obj) in obj.service = *!s }
+    
+    let container = try! builder.build()
+    
+    let inject: InjectImplicitly = *!container
+    XCTAssertEqual(inject.service.foo(), "foo")
+  }
+  
+  func test06_ResolveMultiplyWithDefault() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(FooService)
+      .asType(ServiceProtocol)
+      .asDefault()
+      .initializer { _ in FooService() }
+    
+    builder.register(BarService)
+      .asType(ServiceProtocol)
+      .initializer { _ in BarService() }
+    
+    let container = try! builder.build()
+    
+    let service: ServiceProtocol = *!container
+    XCTAssertEqual(service.foo(), "foo")
+  }
+  
+  func test06_ResolveMultiplyWithDefault_Reverse() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(FooService)
+      .asType(ServiceProtocol)
+      .initializer { _ in FooService() }
+    
+    builder.register(BarService)
+      .asType(ServiceProtocol)
+      .asDefault()
+      .initializer { _ in BarService() }
+    
+    let container = try! builder.build()
+    
+    let service: ServiceProtocol = *!container
+    XCTAssertEqual(service.foo(), "bar")
+  }
+  
+  func test06_ResolveMultiplyByName() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(FooService)
+      .asType(ServiceProtocol)
+      .asName("foo")
+      .initializer { _ in FooService() }
+    
+    builder.register(BarService)
+      .asType(ServiceProtocol)
+      .asName("bar")
+      .initializer { _ in BarService() }
+    
+    let container = try! builder.build()
+    
+    let serviceFoo: ServiceProtocol = try! container.resolve("foo")
+    XCTAssertEqual(serviceFoo.foo(), "foo")
+    
+    let serviceBar: ServiceProtocol = try! container.resolve("bar")
+    XCTAssertEqual(serviceBar.foo(), "bar")
+  }
+  
+  func test06_ResolveMultiplyMany() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(FooService)
+      .asType(ServiceProtocol)
+      .asDefault()
+      .initializer { _ in FooService() }
+    
+    builder.register(BarService)
+      .asType(ServiceProtocol)
+      .initializer { _ in BarService() }
+    
+    let container = try! builder.build()
+    
+    let services: [ServiceProtocol] = try! container.resolveMany()
+    XCTAssertEqual(services.count, 2)
+    XCTAssertNotEqual(services[0].foo(), services[1].foo())
+  }
+  
+  func test07_ResolveCircular2() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(Circular2A)
+      .instancePerDependency()
+      .initializer { s in Circular2A(b: *!s) }
+    
+    builder.register(Circular2B)
+      .instancePerDependency()
+      .initializer { _ in Circular2B() }
+      .dependency { (s, b) in b.a = *!s }
+    
+    let container = try! builder.build()
+    
+    let a: Circular2A = *!container
+    XCTAssert(a === a.b.a)
+    XCTAssert(a.b === a.b.a.b)
+    
+    let b: Circular2B = *!container
+    XCTAssert(b === b.a.b)
+    XCTAssert(b.a === b.a.b.a)
+    
+    XCTAssert(a !== b.a)
+    XCTAssert(a.b !== b)
+  }
+  
+  func test07_ResolveCircular3() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(Circular3A)
+      .instancePerDependency()
+      .initializer { s in Circular3A(b: *!s) }
+    
+    builder.register(Circular3B)
+      .instancePerDependency()
+      .initializer { s in Circular3B(c: *!s) }
+    
+    builder.register(Circular3C)
+      .instancePerDependency()
+      .initializer { _ in Circular3C() }
+      .dependency { (s, c) in c.a = *!s }
+    
+    let container = try! builder.build()
+    
+    let a: Circular3A = *!container
+    XCTAssert(a === a.b.c.a)
+    XCTAssert(a.b === a.b.c.a.b)
+    XCTAssert(a.b.c === a.b.c.a.b.c)
+    
+    let b: Circular3B = *!container
+    XCTAssert(b === b.c.a.b)
+    XCTAssert(b.c === b.c.a.b.c)
+    XCTAssert(b.c.a === b.c.a.b.c.a)
+    
+    let c: Circular3C = *!container
+    XCTAssert(c === c.a.b.c)
+    XCTAssert(c.a === c.a.b.c.a)
+    XCTAssert(c.a.b === c.a.b.c.a.b)
+    
+    XCTAssert(a.b !== b)
+    XCTAssert(a.b.c !== c)
+    
+    XCTAssert(b.c !== c)
+    XCTAssert(b.c.a !== a)
+    
+    XCTAssert(c.a !== a)
+    XCTAssert(c.a.b !== b)
+  }
   
   
 }

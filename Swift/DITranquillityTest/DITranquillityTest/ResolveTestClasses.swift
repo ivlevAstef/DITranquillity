@@ -24,23 +24,6 @@ class BarService: ServiceProtocol {
   }
 }
 
-protocol LoggerProtocol {
-  func log(msg: String)
-}
-
-class Logger: LoggerProtocol {
-  func log(msg: String) {
-    print("log: \(msg)")
-  }
-}
-
-class Logger2: LoggerProtocol {
-  func log(msg: String) {
-    print("log2: \(msg)")
-  }
-}
-
-
 class Inject {
   let service: ServiceProtocol
   
@@ -50,54 +33,43 @@ class Inject {
   
 }
 
-class InjectMany {
-  let loggers: [LoggerProtocol]
+class InjectImplicitly {
+  var service: ServiceProtocol!
+}
+
+class InjectOpt {
+  var service: ServiceProtocol?
+}
+
+class Circular2A {
+  let b: Circular2B
   
-  init(loggers: [LoggerProtocol]) {
-    self.loggers = loggers
+  init(b: Circular2B) {
+    self.b = b
   }
 }
 
-class Module : DIModuleProtocol {
-  init(useBarService: Bool) {
-    self.useBarService = useBarService
-  }
-  
-  func load(builder: DIContainerBuilder) {
-    builder.register(Int).asSelf().instanceSingle().initializer {_ in 10}
-    
-    builder.register(ServiceProtocol)
-      .asSelf()
-      .instancePerDependency()
-      .initializer { _ in
-        if self.useBarService {
-          return BarService()
-        }
-        return FooService()
-    }
-    
-    builder.register(Logger)
-      .asType(LoggerProtocol)
-      .instanceSingle()
-      .asDefault()
-      .initializer { _ in Logger() }
-    
-    builder.register(Logger2)
-      .asType(LoggerProtocol)
-      .instanceSingle()
-      //.asDefault()
-      .initializer { _ in Logger2() }
-    
-    builder.register(Inject)
-      .asSelf()
-      .instancePerDependency()
-      .initializer { (scope) in Inject(service: *!scope) }
-    
-    builder.register(InjectMany)
-      .asSelf()
-      .instancePerDependency()
-      .initializer { (scope) in InjectMany(loggers: **!scope) }
-  }
-  
-  private let useBarService: Bool
+class Circular2B {
+  var a: Circular2A!
 }
+
+class Circular3A {
+  let b: Circular3B
+  
+  init(b: Circular3B) {
+    self.b = b
+  }
+}
+
+class Circular3B {
+  var c: Circular3C!
+  
+  init(c: Circular3C) {
+    self.c = c
+  }
+}
+
+class Circular3C {
+  var a: Circular3A!
+}
+

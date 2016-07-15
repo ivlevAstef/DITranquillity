@@ -133,7 +133,7 @@ internal class DIScopeImpl {
     allTypes.append(rType)
     
     for recursiveTypeKey in recursive {
-      dependencies[rType.uniqueKey] = recursiveTypeKey
+      dependencies.append(rType.uniqueKey, value: recursiveTypeKey)
     }
     
     recursive.append(rType.uniqueKey)
@@ -149,7 +149,7 @@ internal class DIScopeImpl {
   
   private func isCircular(rType: RTypeReader) -> Bool {
     for recursiveTypeKey in recursive {
-      if let rDepType = dependencies[recursiveTypeKey] where rDepType == rType.uniqueKey {
+      if dependencies[recursiveTypeKey].contains(rType.uniqueKey) {
         return true
       }
     }
@@ -203,7 +203,7 @@ internal class DIScopeImpl {
   
   private var allTypes: [RTypeReader] = []//needed for circular
   private var recursive: [RTypeUniqueKey] = []//needed for circular
-  private var dependencies: [RTypeUniqueKey : RTypeUniqueKey] = [:]//needed for circular
+  private var dependencies = DIMultimap<RTypeUniqueKey, RTypeUniqueKey>() //needed for circular
   private var objCache: [RTypeUniqueKey: Any] = [:] //needed for circular
   
   private static var singleObjects: [RTypeUniqueKey: Any] = [:]

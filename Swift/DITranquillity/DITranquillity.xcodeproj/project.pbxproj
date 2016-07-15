@@ -11,6 +11,7 @@
 		A505999B1D17FCB100A8D42C /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50599981D17FCB100A8D42C /* Helpers.swift */; };
 		A505999C1D17FCB100A8D42C /* RType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50599991D17FCB100A8D42C /* RType.swift */; };
 		A505999D1D17FCB100A8D42C /* RTypeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A505999A1D17FCB100A8D42C /* RTypeContainer.swift */; };
+		A51CEC521D38DD7900C5B60A /* DIMultyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51CEC511D38DD7900C5B60A /* DIMultyMap.swift */; };
 		A550710F1D33B46900809CB9 /* DIScope.FasterSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = A550710E1D33B46900809CB9 /* DIScope.FasterSyntax.swift */; };
 		A55071171D33B65D00809CB9 /* DIRegistrationBuilder.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55071151D33B65D00809CB9 /* DIRegistrationBuilder.Arg.swift */; };
 		A55071181D33B65D00809CB9 /* DIScope.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55071161D33B65D00809CB9 /* DIScope.Arg.swift */; };
@@ -41,6 +42,7 @@
 		A50599981D17FCB100A8D42C /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		A50599991D17FCB100A8D42C /* RType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RType.swift; sourceTree = "<group>"; };
 		A505999A1D17FCB100A8D42C /* RTypeContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTypeContainer.swift; sourceTree = "<group>"; };
+		A51CEC511D38DD7900C5B60A /* DIMultyMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIMultyMap.swift; sourceTree = "<group>"; };
 		A550710E1D33B46900809CB9 /* DIScope.FasterSyntax.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScope.FasterSyntax.swift; sourceTree = "<group>"; };
 		A55071151D33B65D00809CB9 /* DIRegistrationBuilder.Arg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIRegistrationBuilder.Arg.swift; sourceTree = "<group>"; };
 		A55071161D33B65D00809CB9 /* DIScope.Arg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScope.Arg.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				A50599991D17FCB100A8D42C /* RType.swift */,
 				A505999A1D17FCB100A8D42C /* RTypeContainer.swift */,
 				A50053001D19299700DFD9CF /* DIScopeImpl.swift */,
+				A51CEC511D38DD7900C5B60A /* DIMultyMap.swift */,
 			);
 			path = Private;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				A5F1581D1D2A91930051BF0D /* DIScope.swift in Sources */,
 				A505999B1D17FCB100A8D42C /* Helpers.swift in Sources */,
 				A505999C1D17FCB100A8D42C /* RType.swift in Sources */,
+				A51CEC521D38DD7900C5B60A /* DIMultyMap.swift in Sources */,
 				A5F158231D2A91930051BF0D /* DIPageViewController.swift in Sources */,
 				A5F1581E1D2A91930051BF0D /* Module.swift in Sources */,
 				A5F158221D2A91930051BF0D /* DINavigationController.swift in Sources */,
