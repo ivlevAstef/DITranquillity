@@ -167,4 +167,31 @@ class DITranquillityTests_Build: XCTestCase {
     }
   }
   
+  func test07_RegistrationByProtocolAndGetByClass() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(TestClass1)
+      .asType(TestProtocol)
+      .initializer { _ in TestClass1() }
+    
+    do {
+      let container = try builder.build()
+      
+      
+      do {
+        let type: TestClass1 = try container.resolve()
+        print("\(type)")
+      } catch DIError.TypeNoRegister(let typeName) {
+        XCTAssertEqual(typeName, String(TestClass1))
+        return
+      } catch {
+        XCTFail("Catched error: \(error)")
+      }
+      XCTFail("No try exceptions")
+    } catch {
+      XCTFail("Catched error: \(error)")
+    }
+  }
+
+  
 }

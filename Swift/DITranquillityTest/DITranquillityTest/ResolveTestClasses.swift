@@ -9,18 +9,18 @@
 import DITranquillity
 
 protocol ServiceProtocol {
-  func foo()
+  func foo() -> String
 }
 
 class FooService: ServiceProtocol {
-  func foo() {
-    print("foo")
+  func foo() -> String {
+    return "foo"
   }
 }
 
 class BarService: ServiceProtocol {
-  func foo() {
-    print("bar")
+  func foo() -> String { 
+    return "bar"
   }
 }
 
@@ -42,21 +42,16 @@ class Logger2: LoggerProtocol {
 
 
 class Inject {
-  private let service: ServiceProtocol
-  private let logger: LoggerProtocol
+  let service: ServiceProtocol
   
-  init(service: ServiceProtocol, logger: LoggerProtocol, test: Int) {
+  init(service: ServiceProtocol) {
     self.service = service
-    self.logger = logger
   }
   
-  var description: String {
-    return "<Inject: \(unsafeAddressOf(self)) service:\(unsafeAddressOf(service as! AnyObject)) logger:\(unsafeAddressOf(logger as! AnyObject)) >"
-  }
 }
 
 class InjectMany {
-  private let loggers: [LoggerProtocol]
+  let loggers: [LoggerProtocol]
   
   init(loggers: [LoggerProtocol]) {
     self.loggers = loggers
@@ -96,7 +91,7 @@ class Module : DIModuleProtocol {
     builder.register(Inject)
       .asSelf()
       .instancePerDependency()
-      .initializer { (scope) in Inject(service: *!scope, logger: *!scope, test: *!scope) }
+      .initializer { (scope) in Inject(service: *!scope) }
     
     builder.register(InjectMany)
       .asSelf()
