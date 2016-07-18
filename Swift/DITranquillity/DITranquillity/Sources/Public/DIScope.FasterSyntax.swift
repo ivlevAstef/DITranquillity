@@ -10,9 +10,6 @@ prefix operator *!{}
 public prefix func *!<T>(scope: DIScope) -> T {
   return try! scope.resolve()
 }
-public prefix func *!<T>(object: T) {
-  try! DIScopeMain.resolve(object)
-}
 
 prefix operator **!{}
 public prefix func **!<T>(scope: DIScope) -> [T] {
@@ -22,9 +19,6 @@ public prefix func **!<T>(scope: DIScope) -> [T] {
 prefix operator *{}
 public prefix func *<T>(scope: DIScope) throws -> T {
   return try scope.resolve()
-}
-public prefix func *<T>(object: T) throws {
-  try DIScopeMain.resolve(object)
 }
 
 prefix operator **{}

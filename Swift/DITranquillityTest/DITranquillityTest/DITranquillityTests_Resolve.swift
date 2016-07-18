@@ -354,5 +354,27 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(a.b2 !== b)
   }
   
+  func test08_DependencyIntoDependency() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(DependencyA)
+      .initializer { _ in DependencyA() }
+    
+    builder.register(DependencyB)
+      .initializer { _ in DependencyB() }
+    .dependency { (s, b) in b.a = *!s }
+    
+    builder.register(DependencyC)
+      .initializer { _ in DependencyC() }
+      .dependency { (s, c) in c.b = *!s }
+    
+    let container = try! builder.build()
+    
+    let c: DependencyC = *!container
+    
+    XCTAssert(c.b != nil)
+    XCTAssert(c.b.a != nil)
+  }
+  
   
 }

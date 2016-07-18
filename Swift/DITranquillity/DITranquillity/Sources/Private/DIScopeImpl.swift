@@ -116,15 +116,20 @@ internal class DIScopeImpl {
   }
   
   private func resolvePerDependency<T, Method>(scope: DIScope, rType: RTypeReader, method: Method -> Any) throws -> T {
-    allTypes.append(rType)
-    
     for recursiveTypeKey in recursive {
       dependencies.append(rType.uniqueKey, value: recursiveTypeKey)
     }
     
+    let insertIndex = allTypes.endIndex
+    
     recursive.append(rType.uniqueKey)
     let obj: T = try getObject(scope, rType: rType, circular: isCircular(rType), method: method)
     recursive.removeLast()
+    
+    
+    if !allTypes.contains({ (iter) in return iter.1 as? AnyObject === obj as? AnyObject }) {
+      allTypes.insert((rType, obj), atIndex: insertIndex)
+    }
     
     if recursive.isEmpty {
       setupAllDependency(scope)
@@ -143,12 +148,10 @@ internal class DIScopeImpl {
   }
   
   private func setupDependencyWithAddedCache(scope: DIScope, rType: RTypeReader, obj: Any) {
-    allTypes.append(rType)
+    allTypes.append((rType, obj))
     objCache[rType.uniqueKey] = obj
     
-    setupDependency(scope, rType: rType, obj: obj)
-    
-    cleanCircularDependencyData()
+    setupAllDependency(scope)
   }
   
   private func setupDependency(scope: DIScope, rType: RTypeReader, obj: Any) {
@@ -163,9 +166,12 @@ internal class DIScopeImpl {
   }
   
   private func setupAllDependency(scope: DIScope) {
-    for rType in allTypes {
-      setupDependency(scope, rType: rType, obj: objCache[rType.uniqueKey]!)
-    }
+    repeat {
+      for (rType, obj) in allTypes {
+        setupDependency(scope, rType: rType, obj: obj)
+        allTypes.removeFirst()
+      }
+    } while(!allTypes.isEmpty)
     
     cleanCircularDependencyData()
   }
@@ -192,7 +198,7 @@ internal class DIScopeImpl {
     return obj
   }
   
-  private var allTypes: [RTypeReader] = []//needed for circular
+  private var allTypes: [(RTypeReader, Any)] = []//needed for circular
   private var recursive: [RTypeUniqueKey] = []//needed for circular
   private var dependencies = DIMultimap<RTypeUniqueKey, RTypeUniqueKey>() //needed for circular
   private var objCache: [RTypeUniqueKey: Any] = [:] //needed for circular

@@ -113,7 +113,7 @@ class Circular2 {
 }
 
 
-class SampleModule : DIModuleProtocol {
+class SampleModule : DIModule {
   init(useBarService: Bool) {
     self.useBarService = useBarService
   }
@@ -202,14 +202,15 @@ class SampleModule : DIModuleProtocol {
   private let useBarService: Bool
 }
 
-class SampleStartupModule : DIStartupModule {
-  override func load(builder: DIContainerBuilder) {
+class SampleStartupModule : DIModule {
+  func load(builder: DIContainerBuilder) {
     builder.registerModule(SampleModule(useBarService: true))
     
     builder.register(ViewController)
       .asSelf()
       .instancePerRequest()
       .dependency { (scope, obj) in obj.injectGlobal = *!scope }
+      .dependency { (scope, obj) in obj.scope = scope }
     
     builder.register(ViewController2)
       .asSelf()

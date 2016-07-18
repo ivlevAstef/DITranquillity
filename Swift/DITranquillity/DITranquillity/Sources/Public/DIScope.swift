@@ -48,7 +48,3 @@ public extension DIScope {
     return try resolve(name)
   }
 }
-
-public var DIScopeMain: DIScope {
-  return DIMain.single.container
-}

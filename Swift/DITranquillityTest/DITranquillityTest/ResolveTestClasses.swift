@@ -85,3 +85,15 @@ class CircularDouble2B {
     self.a = a
   }
 }
+
+class DependencyA {
+  
+}
+
+class DependencyB {
+  var a: DependencyA!
+}
+
+class DependencyC {
+  var b: DependencyB!
+}

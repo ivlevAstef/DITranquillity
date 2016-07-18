@@ -9,10 +9,38 @@
 import UIKit
 
 public class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
-  public init(name: String, bundle storyboardBundleOrNil: NSBundle?) {
+  public convenience init(name: String, bundle storyboardBundleOrNil: NSBundle?, builder: DIContainerBuilder) {
+    do {
+      let container = try builder.build()
+      self.init(name: name, bundle: storyboardBundleOrNil, container: container)
+    } catch {
+      fatalError("Can't build with error: \(error)")
+    }
+  }
+  
+  public convenience init(name: String, bundle storyboardBundleOrNil: NSBundle?, module: DIModule) {
+    self.init(name: name, bundle: storyboardBundleOrNil, modules: [module])
+  }
+  
+  public convenience init(name: String, bundle storyboardBundleOrNil: NSBundle?, modules: [DIModule]) {
+    let builder = DIContainerBuilder()
+    
+    for module in modules {
+      builder.registerModule(module)
+    }
+    
+    do {
+      let container = try builder.build()
+      self.init(name: name, bundle: storyboardBundleOrNil, container: container)
+    } catch {
+      fatalError("Can't build with error: \(error)")
+    }
+  }
+  
+  private init(name: String, bundle storyboardBundleOrNil: NSBundle?, container: DIScope) {
+    self.container = container
     storyboard = _DIStoryboardBase.create(name, bundle: storyboardBundleOrNil)
     super.init()
-    
     storyboard.resolver = self
   }
   
@@ -26,12 +54,12 @@ public class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
   
   @objc public func resolve(viewController: UIViewController) -> UIViewController {
     do {
-      try DIScopeMain.resolve(viewController)
+      try container.resolve(viewController)
     } catch {
-      
     }
     return viewController
   }
   
+  private var container: DIScope
   private unowned let storyboard: _DIStoryboardBase
 }
