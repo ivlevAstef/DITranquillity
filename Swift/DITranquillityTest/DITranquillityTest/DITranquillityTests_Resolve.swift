@@ -299,6 +299,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     let container = try! builder.build()
     
+    //b1 !== b2
     let a: CircularDouble2A = *!container
     XCTAssert(a.b1 !== a.b2)
     XCTAssert(a === a.b1.a)
@@ -306,7 +307,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(a === a.b2.a)
     XCTAssert(a.b2 === a.b2.a.b2)
     
-    //!!! is not symmetric
+    //!!! is not symmetric, b1 === b2 === b
     let b: CircularDouble2B = *!container
     XCTAssert(b === b.a.b1)
     XCTAssert(b === b.a.b2)
