@@ -22,7 +22,7 @@ public class DIContainerBuilder {
     
     for rType in allTypes {
       if !(rType.hasInitializer || rType.lifeTime == RTypeLifeTime.PerRequest) {
-        errors.append(DIError.NotSetInitializer(typeName: String(rType.implementedType)))
+        errors.append(DIError.NotSetInitializer(typeName: String(rType.implType)))
       }
     }
     
@@ -30,7 +30,7 @@ public class DIContainerBuilder {
       throw DIError.Build(errors: errors)
     }
     
-    return DIScope(registeredTypes: rTypeContainer.copy())
+    return DIScope(registeredTypes: rTypeContainer.copyFinal())
   }
   
   private func checkRTypes(superType: String, rTypes: [RType]) -> [DIError] {
@@ -46,10 +46,10 @@ public class DIContainerBuilder {
     let allHasName = rTypes.filter{ $0.names.isEmpty }.isEmpty
     
     if defaultTypes.count > 1 {
-      errors.append(DIError.MultyRegisterDefault( typeNames: defaultTypes.map{ String($0.implementedType) }, forType: superType ))
+      errors.append(DIError.MultyRegisterDefault( typeNames: defaultTypes.map{ String($0.implType) }, forType: superType ))
       
     } else if defaultTypes.isEmpty && !allHasName {
-      errors.append(DIError.NotSetDefaultForMultyRegisterType( typeNames: rTypes.map{ String($0.implementedType) }, forType: superType ))
+      errors.append(DIError.NotSetDefaultForMultyRegisterType( typeNames: rTypes.map{ String($0.implType) }, forType: superType ))
     }
     
     return errors

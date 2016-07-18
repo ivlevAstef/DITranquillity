@@ -29,7 +29,7 @@ public class DIScope {
     return impl.newLifeTimeScope(self)
   }
   
-  internal init(registeredTypes: RTypeContainerReadonly, name: String = "") {
+  internal init(registeredTypes: RTypeContainerFinal, name: String = "") {
     impl = DIScopeImpl(registeredTypes: registeredTypes)
   }
   internal let impl: DIScopeImpl

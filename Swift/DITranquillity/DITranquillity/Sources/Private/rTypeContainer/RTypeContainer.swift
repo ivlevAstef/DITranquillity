@@ -6,11 +6,7 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-internal protocol RTypeContainerReadonly {
-  subscript(key: Any) -> [RTypeReader]? { get }
-}
-
-internal class RTypeContainer : RTypeContainerReadonly {
+internal class RTypeContainer {
   internal func append(key: Any, value: RType) {
     if nil == values[hash(key)] {
       values[hash(key)] = []
@@ -21,21 +17,16 @@ internal class RTypeContainer : RTypeContainerReadonly {
   
   internal subscript(key: Any) -> [RType]? { return values[hash(key)] }
   
-  internal subscript(key: Any) -> [RTypeReader]? {
-    guard let values = values[hash(key)] else {
-      return nil
-    }
-    return values.map { (rType) -> RTypeReader in return rType }
-  }
-  
   internal func data() -> [String: [RType]] {
     return values
   }
   
-  internal func copy() -> RTypeContainerReadonly {
-    let copyObj = RTypeContainer()
-    copyObj.values = self.values
-    return copyObj
+  internal func copyFinal() -> RTypeContainerFinal {
+    var data: [String: [RTypeFinal]] = [:]
+    for value in self.values {
+      data[value.0] = value.1.map { (rType) in return rType.copyFinal() }
+    }
+    return RTypeContainerFinal(values: data)
   }
   
   private func hash(type: Any) -> String {

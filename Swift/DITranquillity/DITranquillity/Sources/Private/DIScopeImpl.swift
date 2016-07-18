@@ -7,7 +7,7 @@
 //
 
 internal class DIScopeImpl {
-  internal init(registeredTypes: RTypeContainerReadonly) {
+  internal init(registeredTypes: RTypeContainerFinal) {
     self.registeredTypes = registeredTypes
   }
   
@@ -16,7 +16,7 @@ internal class DIScopeImpl {
     
     if rTypes.count > 1 {
       guard let typeIndex = rTypes.indexOf({ (rType) -> Bool in rType.isDefault }) else {
-        throw DIError.NotSetDefaultForMultyRegisterType(typeNames: rTypes.map{String($0.implementedType)}, forType: String(T.self))
+        throw DIError.NotSetDefaultForMultyRegisterType(typeNames: rTypes.map{String($0.implType)}, forType: String(T.self))
       }
       
       return try resolveUseRType(scope, rType: rTypes[typeIndex], method: method)
@@ -53,12 +53,12 @@ internal class DIScopeImpl {
     
     if rTypes.count > 1 {
       guard let typeIndex = rTypes.indexOf({ (rType) -> Bool in rType.isDefault }) else {
-        throw DIError.NotSetDefaultForMultyRegisterType(typeNames: rTypes.map{String($0.implementedType)}, forType: String(object.dynamicType))
+        throw DIError.NotSetDefaultForMultyRegisterType(typeNames: rTypes.map{String($0.implType)}, forType: String(object.dynamicType))
       }
       
-      setupDependencyWithAddedCache(scope, rType: rTypes[typeIndex], obj: object)
+      resolveUseRTypeAndObject(scope, rType: rTypes[typeIndex], obj: object)
     } else {
-      setupDependencyWithAddedCache(scope, rType: rTypes[0], obj: object)
+      resolveUseRTypeAndObject(scope, rType: rTypes[0], obj: object)
     }
   }
   
@@ -66,7 +66,7 @@ internal class DIScopeImpl {
     return DIScope(registeredTypes: registeredTypes)
   }
   
-  private func getTypes<T>(inputType : T.Type) throws -> [RTypeReader] {
+  private func getTypes<T>(inputType : T.Type) throws -> [RTypeFinal] {
     let type = Helpers.removedTypeWrappers(inputType)
     
     guard let rTypes = registeredTypes[type] else {
@@ -78,7 +78,20 @@ internal class DIScopeImpl {
     return rTypes
   }
   
-  private func resolveUseRType<T, Method>(scope: DIScope, rType: RTypeReader, method: Method -> Any) throws -> T {
+  private func resolveUseRTypeAndObject(scope: DIScope, rType: RTypeFinal, obj: Any) {
+    objc_sync_enter(DIScopeImpl.singleMonitor)
+    defer { objc_sync_exit(DIScopeImpl.singleMonitor) }
+    
+    allTypes.append((rType, obj))
+    objCache[rType.uniqueKey] = obj
+    
+    setupAllDependency(scope)
+  }
+  
+  private func resolveUseRType<T, Method>(scope: DIScope, rType: RTypeFinal, method: Method -> Any) throws -> T {
+    objc_sync_enter(DIScopeImpl.singleMonitor)
+    defer { objc_sync_exit(DIScopeImpl.singleMonitor) }
+    
     switch rType.lifeTime {
     case .Single:
       return try resolveSingle(scope, rType: rType, method: method)
@@ -91,7 +104,7 @@ internal class DIScopeImpl {
     }
   }
   
-  private func resolveSingle<T, Method>(scope: DIScope, rType: RTypeReader, method: Method -> Any) throws -> T {
+  private func resolveSingle<T, Method>(scope: DIScope, rType: RTypeFinal, method: Method -> Any) throws -> T {
     let key = rType.uniqueKey
     
     if let obj = DIScopeImpl.singleObjects[key] {
@@ -103,7 +116,7 @@ internal class DIScopeImpl {
     return obj
   }
   
-  private func resolvePerScope<T, Method>(scope: DIScope, rType: RTypeReader, method: Method -> Any) throws -> T {
+  private func resolvePerScope<T, Method>(scope: DIScope, rType: RTypeFinal, method: Method -> Any) throws -> T {
     let key = rType.uniqueKey
     
     if let obj = objects[key] {
@@ -115,7 +128,7 @@ internal class DIScopeImpl {
     return obj
   }
   
-  private func resolvePerDependency<T, Method>(scope: DIScope, rType: RTypeReader, method: Method -> Any) throws -> T {
+  private func resolvePerDependency<T, Method>(scope: DIScope, rType: RTypeFinal, method: Method -> Any) throws -> T {
     for recursiveTypeKey in recursive {
       dependencies.append(rType.uniqueKey, value: recursiveTypeKey)
     }
@@ -138,7 +151,7 @@ internal class DIScopeImpl {
     return obj
   }
   
-  private func isCircular(rType: RTypeReader) -> Bool {
+  private func isCircular(rType: RTypeFinal) -> Bool {
     for recursiveTypeKey in recursive {
       if dependencies[recursiveTypeKey].contains(rType.uniqueKey) {
         return true
@@ -147,20 +160,13 @@ internal class DIScopeImpl {
     return false
   }
   
-  private func setupDependencyWithAddedCache(scope: DIScope, rType: RTypeReader, obj: Any) {
-    allTypes.append((rType, obj))
-    objCache[rType.uniqueKey] = obj
-    
-    setupAllDependency(scope)
-  }
-  
-  private func setupDependency(scope: DIScope, rType: RTypeReader, obj: Any) {
+  private func setupDependency(scope: DIScope, rType: RTypeFinal, obj: Any) {
     let cacheSave = objCache
     
     recursive.append(rType.uniqueKey)
-    for index in 0..<rType.dependencyCount {
+    for index in 0..<rType.dependencies.count {
       objCache = cacheSave
-      rType.setupDependency(scope, obj: obj, index: index)
+      rType.dependencies[index](scope: scope, obj: obj)
     }
     recursive.removeLast()
   }
@@ -182,7 +188,7 @@ internal class DIScopeImpl {
     self.objCache.removeAll()
   }
   
-  private func getObject<T, Method>(scope: DIScope, rType: RTypeReader, circular: Bool, method: Method -> Any) throws -> T {
+  private func getObject<T, Method>(scope: DIScope, rType: RTypeFinal, circular: Bool, method: Method -> Any) throws -> T {
     if circular, let obj = objCache[rType.uniqueKey] {
       return obj as! T
     }
@@ -198,13 +204,14 @@ internal class DIScopeImpl {
     return obj
   }
   
-  private var allTypes: [(RTypeReader, Any)] = []//needed for circular
-  private var recursive: [RTypeUniqueKey] = []//needed for circular
-  private var dependencies = DIMultimap<RTypeUniqueKey, RTypeUniqueKey>() //needed for circular
-  private var objCache: [RTypeUniqueKey: Any] = [:] //needed for circular
+  private var allTypes: [(RTypeFinal, Any)] = []//needed for circular
+  private var recursive: [RTypeFinal.UniqueKey] = []//needed for circular
+  private var dependencies = DIMultimap<RTypeFinal.UniqueKey, RTypeFinal.UniqueKey>() //needed for circular
+  private var objCache: [RTypeFinal.UniqueKey: Any] = [:] //needed for circular
   
-  private static var singleObjects: [RTypeUniqueKey: Any] = [:]
+  private static var singleObjects: [RTypeFinal.UniqueKey: Any] = [:]
+  private static let singleMonitor = []
   
-  private var objects: [RTypeUniqueKey: Any] = [:]
-  private let registeredTypes: RTypeContainerReadonly
+  private var objects: [RTypeFinal.UniqueKey: Any] = [:]
+  private let registeredTypes: RTypeContainerFinal
 }
