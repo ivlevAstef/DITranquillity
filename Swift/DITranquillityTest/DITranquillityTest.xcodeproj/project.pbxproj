@@ -11,6 +11,7 @@
 		A51CEC541D3CA0EA00C5B60A /* DITranquillityTests_Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51CEC531D3CA0EA00C5B60A /* DITranquillityTests_Scope.swift */; };
 		A51CEC561D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51CEC551D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift */; };
 		A52CE30D1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52CE30C1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift */; };
+		A5AD4EEA1D3CB55900A6882C /* TestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5AD4EEC1D3CB55900A6882C /* TestStoryboard.storyboard */; };
 		A5D918C21D1939A70009F9D4 /* DITranquillityTests_Build.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D918BF1D1939A70009F9D4 /* DITranquillityTests_Build.swift */; };
 		A5D918C41D1939A70009F9D4 /* ResolveTestClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D918C11D1939A70009F9D4 /* ResolveTestClasses.swift */; };
 /* End PBXBuildFile section */
@@ -38,6 +39,7 @@
 		A51CEC531D3CA0EA00C5B60A /* DITranquillityTests_Scope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Scope.swift; sourceTree = "<group>"; };
 		A51CEC551D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Storyboard.swift; sourceTree = "<group>"; };
 		A52CE30C1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Resolve.swift; sourceTree = "<group>"; };
+		A5AD4EEB1D3CB55900A6882C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TestStoryboard.storyboard; sourceTree = "<group>"; };
 		A5D918BF1D1939A70009F9D4 /* DITranquillityTests_Build.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Build.swift; sourceTree = "<group>"; };
 		A5D918C01D1939A70009F9D4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5D918C11D1939A70009F9D4 /* ResolveTestClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolveTestClasses.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				A52CE30C1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift */,
 				A51CEC531D3CA0EA00C5B60A /* DITranquillityTests_Scope.swift */,
 				A51CEC551D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift */,
+				A5AD4EEC1D3CB55900A6882C /* TestStoryboard.storyboard */,
 			);
 			path = DITranquillityTest;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5AD4EEA1D3CB55900A6882C /* TestStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,6 +199,17 @@
 			targetProxy = A50053371D19324500DFD9CF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A5AD4EEC1D3CB55900A6882C /* TestStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A5AD4EEB1D3CB55900A6882C /* Base */,
+			);
+			name = TestStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		A50053291D1931FE00DFD9CF /* Debug */ = {
