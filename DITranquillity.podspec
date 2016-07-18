@@ -23,12 +23,6 @@ Pod::Spec.new do |s|
     core.source_files = 'Swift/DITranquillity/DITranquillity/Sources/{Public,Private}/**/*.swift'
   end
 
-  s.subspec 'ViewControllers' do |viewControllers|
-    viewControllers.dependency 'DITranquillity/Core'
-
-    viewControllers.source_files = 'Swift/DITranquillity/DITranquillity/Sources/UIViewControllers/*.swift'
-  end
-
   s.subspec 'Storyboard' do |storyboard|
     storyboard.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -D__DITRANQUILLITY_STORYBOARD__' }
     storyboard.dependency 'DITranquillity/Core'

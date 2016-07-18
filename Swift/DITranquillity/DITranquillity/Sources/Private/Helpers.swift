@@ -8,14 +8,7 @@
 
 import Foundation
 
-internal class Helpers {  
-  internal static func isClass<T>(checkType: T.Type) throws {
-    guard checkType is AnyClass else {
-      throw DIError.TypeNoClass(typeName: String(checkType))
-    }
-  }
-  
-  
+internal class Helpers {
   private static let wrappers = [
     "Optional",
     "ImplicitlyUnwrappedOptional"

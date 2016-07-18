@@ -8,8 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		A50053391D19324900DFD9CF /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A50053361D19323B00DFD9CF /* DITranquillity.framework */; };
-		A5D918C21D1939A70009F9D4 /* DITranquillityBuildTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D918BF1D1939A70009F9D4 /* DITranquillityBuildTests.swift */; };
-		A5D918C41D1939A70009F9D4 /* TestClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D918C11D1939A70009F9D4 /* TestClasses.swift */; };
+		A51CEC541D3CA0EA00C5B60A /* DITranquillityTests_Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51CEC531D3CA0EA00C5B60A /* DITranquillityTests_Scope.swift */; };
+		A51CEC561D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51CEC551D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift */; };
+		A52CE30D1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52CE30C1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift */; };
+		A5AD4EEA1D3CB55900A6882C /* TestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5AD4EEC1D3CB55900A6882C /* TestStoryboard.storyboard */; };
+		A5AD4F041D3CD4CB00A6882C /* DITranquillityTests_Threads.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AD4F031D3CD4CB00A6882C /* DITranquillityTests_Threads.swift */; };
+		A5D918C21D1939A70009F9D4 /* DITranquillityTests_Build.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D918BF1D1939A70009F9D4 /* DITranquillityTests_Build.swift */; };
+		A5D918C41D1939A70009F9D4 /* ResolveTestClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D918C11D1939A70009F9D4 /* ResolveTestClasses.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,9 +37,14 @@
 /* Begin PBXFileReference section */
 		A50053221D1931FE00DFD9CF /* DITranquillityTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DITranquillityTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A50053311D19323B00DFD9CF /* DITranquillity.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DITranquillity.xcodeproj; path = ../DITranquillity/DITranquillity.xcodeproj; sourceTree = "<group>"; };
-		A5D918BF1D1939A70009F9D4 /* DITranquillityBuildTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityBuildTests.swift; sourceTree = "<group>"; };
+		A51CEC531D3CA0EA00C5B60A /* DITranquillityTests_Scope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Scope.swift; sourceTree = "<group>"; };
+		A51CEC551D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Storyboard.swift; sourceTree = "<group>"; };
+		A52CE30C1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Resolve.swift; sourceTree = "<group>"; };
+		A5AD4EEB1D3CB55900A6882C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TestStoryboard.storyboard; sourceTree = "<group>"; };
+		A5AD4F031D3CD4CB00A6882C /* DITranquillityTests_Threads.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Threads.swift; sourceTree = "<group>"; };
+		A5D918BF1D1939A70009F9D4 /* DITranquillityTests_Build.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Build.swift; sourceTree = "<group>"; };
 		A5D918C01D1939A70009F9D4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A5D918C11D1939A70009F9D4 /* TestClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestClasses.swift; sourceTree = "<group>"; };
+		A5D918C11D1939A70009F9D4 /* ResolveTestClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolveTestClasses.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,9 +87,14 @@
 		A5D918BE1D1939A70009F9D4 /* DITranquillityTest */ = {
 			isa = PBXGroup;
 			children = (
-				A5D918BF1D1939A70009F9D4 /* DITranquillityBuildTests.swift */,
+				A5D918BF1D1939A70009F9D4 /* DITranquillityTests_Build.swift */,
 				A5D918C01D1939A70009F9D4 /* Info.plist */,
-				A5D918C11D1939A70009F9D4 /* TestClasses.swift */,
+				A5D918C11D1939A70009F9D4 /* ResolveTestClasses.swift */,
+				A52CE30C1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift */,
+				A51CEC531D3CA0EA00C5B60A /* DITranquillityTests_Scope.swift */,
+				A51CEC551D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift */,
+				A5AD4EEC1D3CB55900A6882C /* TestStoryboard.storyboard */,
+				A5AD4F031D3CD4CB00A6882C /* DITranquillityTests_Threads.swift */,
 			);
 			path = DITranquillityTest;
 			sourceTree = "<group>";
@@ -159,6 +174,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5AD4EEA1D3CB55900A6882C /* TestStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,8 +185,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5D918C41D1939A70009F9D4 /* TestClasses.swift in Sources */,
-				A5D918C21D1939A70009F9D4 /* DITranquillityBuildTests.swift in Sources */,
+				A5AD4F041D3CD4CB00A6882C /* DITranquillityTests_Threads.swift in Sources */,
+				A51CEC561D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift in Sources */,
+				A5D918C41D1939A70009F9D4 /* ResolveTestClasses.swift in Sources */,
+				A51CEC541D3CA0EA00C5B60A /* DITranquillityTests_Scope.swift in Sources */,
+				A52CE30D1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift in Sources */,
+				A5D918C21D1939A70009F9D4 /* DITranquillityTests_Build.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,6 +203,17 @@
 			targetProxy = A50053371D19324500DFD9CF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A5AD4EEC1D3CB55900A6882C /* TestStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A5AD4EEB1D3CB55900A6882C /* Base */,
+			);
+			name = TestStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		A50053291D1931FE00DFD9CF /* Debug */ = {
@@ -273,6 +304,10 @@
 		A500532F1D1931FE00DFD9CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					__DITRANQUILLITY_STORYBOARD__,
+					"DEBUG=1",
+				);
 				INFOPLIST_FILE = DITranquillityTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillityTestTests;
@@ -283,6 +318,7 @@
 		A50053301D1931FE00DFD9CF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = __DITRANQUILLITY_STORYBOARD__;
 				INFOPLIST_FILE = DITranquillityTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillityTestTests;

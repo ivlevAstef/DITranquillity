@@ -113,7 +113,7 @@ class Circular2 {
 }
 
 
-class SampleModule : DIModuleProtocol {
+class SampleModule : DIModule {
   init(useBarService: Bool) {
     self.useBarService = useBarService
   }
@@ -131,13 +131,13 @@ class SampleModule : DIModuleProtocol {
         return FooService()
     }
     
-    try! builder.register(Logger)
+    builder.register(Logger)
       .asType(LoggerProtocol)
       .instanceSingle()
       .asDefault()
       .initializer { _ in Logger() }
     
-    try! builder.register(Logger2)
+    builder.register(Logger2)
       .asSelf()
       .asType(LoggerProtocol)
       .instanceSingle()
@@ -202,14 +202,15 @@ class SampleModule : DIModuleProtocol {
   private let useBarService: Bool
 }
 
-class SampleStartupModule : DIStartupModule {
-  override func load(builder: DIContainerBuilder) {
+class SampleStartupModule : DIModule {
+  func load(builder: DIContainerBuilder) {
     builder.registerModule(SampleModule(useBarService: true))
     
     builder.register(ViewController)
       .asSelf()
       .instancePerRequest()
       .dependency { (scope, obj) in obj.injectGlobal = *!scope }
+      .dependency { (scope, obj) in obj.scope = scope }
     
     builder.register(ViewController2)
       .asSelf()
@@ -219,7 +220,7 @@ class SampleStartupModule : DIStartupModule {
         obj.logger = *!scope
     }
     
-    try! builder.register(UIView)
+    builder.register(UIView)
       .asSelf()
       .asType(UIAppearance)
       //.instanceSingle()
