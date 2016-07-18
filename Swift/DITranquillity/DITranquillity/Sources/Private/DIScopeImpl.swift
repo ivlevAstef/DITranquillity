@@ -152,8 +152,13 @@ internal class DIScopeImpl {
   }
   
   private func setupDependency(scope: DIScope, rType: RTypeReader, obj: Any) {
+    let cacheSave = objCache
+    
     recursive.append(rType.uniqueKey)
-    rType.setupDependency(scope, obj: obj)
+    for index in 0..<rType.dependencyCount {
+      objCache = cacheSave
+      rType.setupDependency(scope, obj: obj, index: index)
+    }
     recursive.removeLast()
   }
   

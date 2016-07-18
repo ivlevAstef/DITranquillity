@@ -284,5 +284,74 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(c.a.b !== b)
   }
   
+  func test07_ResolveCircularDouble2() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(CircularDouble2A)
+      .instancePerDependency()
+      .initializer { _ in CircularDouble2A() }
+      .dependency { (s, a) in a.b1 = *!s }
+      .dependency { (s, a) in a.b2 = *!s }
+    
+    builder.register(CircularDouble2B)
+      .instancePerDependency()
+      .initializer { s in CircularDouble2B(a: *!s) }
+    
+    let container = try! builder.build()
+    
+    let a: CircularDouble2A = *!container
+    XCTAssert(a.b1 !== a.b2)
+    XCTAssert(a === a.b1.a)
+    XCTAssert(a.b1 === a.b1.a.b1)
+    XCTAssert(a === a.b2.a)
+    XCTAssert(a.b2 === a.b2.a.b2)
+    
+    //!!! is not symmetric
+    let b: CircularDouble2B = *!container
+    XCTAssert(b === b.a.b1)
+    XCTAssert(b === b.a.b2)
+    XCTAssert(b.a === b.a.b1.a)
+    XCTAssert(b.a === b.a.b2.a)
+    
+    XCTAssert(a !== b.a)
+    XCTAssert(a.b1 !== b)
+    XCTAssert(a.b2 !== b)
+  }
+  
+  func test07_ResolveCircularDoubleOneDependency2() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(CircularDouble2A)
+      .instancePerDependency()
+      .initializer { _ in CircularDouble2A() }
+      .dependency { (s, a) in
+        a.b1 = *!s
+        a.b2 = *!s
+      }
+    
+    builder.register(CircularDouble2B)
+      .instancePerDependency()
+      .initializer { s in CircularDouble2B(a: *!s) }
+    
+    let container = try! builder.build()
+    
+    let a: CircularDouble2A = *!container
+    XCTAssert(a.b1 === a.b2)
+    XCTAssert(a === a.b1.a)
+    XCTAssert(a.b1 === a.b1.a.b1)
+    XCTAssert(a === a.b2.a)
+    XCTAssert(a.b2 === a.b2.a.b2)
+    
+    let b: CircularDouble2B = *!container
+    XCTAssert(b === b.a.b1)
+    XCTAssert(b === b.a.b2)
+    XCTAssert(b.a === b.a.b1.a)
+    XCTAssert(b.a === b.a.b2.a)
+    
+    XCTAssert(a !== b.a)
+    XCTAssert(a.b1 !== b)
+    XCTAssert(a.b2 !== b)
+  }
+  
   
 }

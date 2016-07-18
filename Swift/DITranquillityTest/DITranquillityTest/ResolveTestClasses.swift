@@ -73,3 +73,15 @@ class Circular3C {
   var a: Circular3A!
 }
 
+class CircularDouble2A {
+  var b1: CircularDouble2B!
+  var b2: CircularDouble2B!
+}
+
+class CircularDouble2B {
+  let a: CircularDouble2A
+  
+  init(a: CircularDouble2A) {
+    self.a = a
+  }
+}

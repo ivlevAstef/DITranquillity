@@ -28,12 +28,14 @@ func ==(a: RTypeLifeTime, b: RTypeLifeTime) -> Bool {
 typealias RTypeUniqueKey = String
 internal protocol RTypeReader {
   func initType<Method, T>(method: Method throws -> T) throws -> T
-  func setupDependency(scope: DIScope, obj: Any)
   var lifeTime: RTypeLifeTime { get }
   func hasName(name: String) -> Bool
   var isDefault: Bool { get }
   var uniqueKey: RTypeUniqueKey { get }
   var implementedType: Any { get }
+  
+  var dependencyCount: Int { get }
+  func setupDependency(scope: DIScope, obj: Any, index: Int)
 }
 //registration type
 internal class RType : RTypeReader, Hashable {
@@ -53,12 +55,6 @@ internal class RType : RTypeReader, Hashable {
     return try method(initMethod)
   }
   
-  internal func setupDependency(scope: DIScope, obj: Any) {
-    for dependency in dependencies {
-      dependency(scope: scope, obj: obj)
-    }
-  }
-  
   internal var lifeTime: RTypeLifeTime = RTypeLifeTime.Default
   
   func hasName(name: String) -> Bool {
@@ -66,6 +62,12 @@ internal class RType : RTypeReader, Hashable {
   }
   
   internal var uniqueKey: RTypeUniqueKey { return String(implType) + String(unsafeAddressOf(self)) }
+  
+  var dependencyCount: Int { return dependencies.count }
+  
+  internal func setupDependency(scope: DIScope, obj: Any, index: Int) {
+    dependencies[index](scope: scope, obj: obj)
+  }
   
   //Initializer
   var implementedType: Any { return implType }
