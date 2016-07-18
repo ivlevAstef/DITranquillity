@@ -97,3 +97,33 @@ class DependencyB {
 class DependencyC {
   var b: DependencyB!
 }
+
+class Params {
+  let number: Int
+  let str: String
+  let bool: Bool
+  
+  init(number: Int) {
+    self.number = number
+    self.str = ""
+    self.bool = false
+  }
+  
+  init(number: Int, str: String, bool: Bool) {
+    self.number = number
+    self.str = str
+    self.bool = bool
+  }
+  
+  init(number: Int, bool: Bool) {
+    self.number = number
+    self.str = ""
+    self.bool = bool
+  }
+  
+  init(number: Int, str: String) {
+    self.number = number
+    self.str = str
+    self.bool = false
+  }
+}
