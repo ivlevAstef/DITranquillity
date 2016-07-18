@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
     
-    let storyboard = DIStoryboard(name: "Main", bundle: nil)
+    let storyboard = DIStoryboard(name: "Main", bundle: nil, module: SampleStartupModule())
     window!.rootViewController = storyboard.instantiateInitialViewController()
     
     window!.makeKeyAndVisible()

@@ -10,7 +10,7 @@ import UIKit
 import DITranquillity
 
 class ViewController: UIViewController {
-  internal let scope = DIScopeMain
+  internal var scope: DIScope!
   
   internal var injectGlobal: Inject?
   
@@ -56,13 +56,13 @@ class ViewController: UIViewController {
     print("Cat: \(cat.name) Dog: \(dog.name) Bear: \(bear.name) Default(Dog): \(defaultAnimal.name)")
     
     //Params
-    let animal: Animal = try! DIScopeMain.resolve("Custom", arg: "my animal")
+    let animal: Animal = try! scope.resolve("Custom", arg: "my animal")
     print("Animal: \(animal.name)")
     
-    let params2: Params = try! DIScopeMain.resolve(arg: "param1", 10)
+    let params2: Params = try! scope.resolve(arg: "param1", 10)
     print("Params p1:\(params2.param1) p2:\(params2.param2) p3:\(params2.param3)")
     
-    let params3: Params = try! DIScopeMain.resolve(arg: "param1", 10, 15)
+    let params3: Params = try! scope.resolve(arg: "param1", 10, 15)
     print("Params p1:\(params3.param1) p2:\(params3.param2) p3:\(params3.param3)")
     
     //Circular

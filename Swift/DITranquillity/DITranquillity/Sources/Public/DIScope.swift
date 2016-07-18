@@ -29,7 +29,7 @@ public class DIScope {
     return impl.newLifeTimeScope(self)
   }
   
-  internal init(registeredTypes: RTypeContainerReadonly, name: String = "") {
+  internal init(registeredTypes: RTypeContainerFinal, name: String = "") {
     impl = DIScopeImpl(registeredTypes: registeredTypes)
   }
   internal let impl: DIScopeImpl
@@ -47,8 +47,4 @@ public extension DIScope {
   func resolve<T>(_: T.Type, name: String) throws -> T {
     return try resolve(name)
   }
-}
-
-public var DIScopeMain: DIScope {
-  return DIMain.single.container
 }
