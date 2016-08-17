@@ -44,6 +44,11 @@ public class DIRegistrationBuilder<ImplObj> {
     return self
   }
   
+  public func initializer(method: () -> ImplObj) -> Self {
+    rType.setInitializer { (_) -> Any in return method() }
+    return self
+  }
+  
   //Dependency
   public func dependency(method: (scope: DIScope, obj: ImplObj) -> ()) -> Self {
     rType.appendDependency(method)
