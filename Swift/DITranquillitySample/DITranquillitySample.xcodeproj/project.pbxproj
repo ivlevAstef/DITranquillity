@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16E9CE321D64616500A9A83B /* SampleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E9CE311D64616500A9A83B /* SampleAssembly.swift */; };
 		A51657A81D0FD6B0004A34F5 /* SampleClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51657A71D0FD6B0004A34F5 /* SampleClasses.swift */; };
 		A5AE2B471D0AD75300FF3E40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AE2B3F1D0AD75300FF3E40 /* AppDelegate.swift */; };
 		A5AE2B481D0AD75300FF3E40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5AE2B401D0AD75300FF3E40 /* Assets.xcassets */; };
@@ -50,6 +51,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		16E9CE311D64616500A9A83B /* SampleAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleAssembly.swift; sourceTree = "<group>"; };
 		A51657A71D0FD6B0004A34F5 /* SampleClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleClasses.swift; sourceTree = "<group>"; };
 		A58875681D0944FE00D6DE92 /* DITranquillitySample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DITranquillitySample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5AE2B381D0AD74800FF3E40 /* DITranquillity.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DITranquillity.xcodeproj; path = ../DITranquillity/DITranquillity.xcodeproj; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				A5AE2B461D0AD75300FF3E40 /* ViewController.swift */,
 				A51657A71D0FD6B0004A34F5 /* SampleClasses.swift */,
 				A5F73F621D2B7EB300D44746 /* ViewController2.swift */,
+				16E9CE311D64616500A9A83B /* SampleAssembly.swift */,
 			);
 			path = DITranquillitySample;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 				A5F73F631D2B7EB300D44746 /* ViewController2.swift in Sources */,
 				A51657A81D0FD6B0004A34F5 /* SampleClasses.swift in Sources */,
 				A5AE2B471D0AD75300FF3E40 /* AppDelegate.swift in Sources */,
+				16E9CE321D64616500A9A83B /* SampleAssembly.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

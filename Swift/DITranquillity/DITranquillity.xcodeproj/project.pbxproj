@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16E9CE301D645BB100A9A83B /* DIAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E9CE2F1D645BB100A9A83B /* DIAssembly.swift */; };
 		A50053011D19299700DFD9CF /* DIScopeImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50053001D19299700DFD9CF /* DIScopeImpl.swift */; };
 		A505999B1D17FCB100A8D42C /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50599981D17FCB100A8D42C /* Helpers.swift */; };
 		A51CEC521D38DD7900C5B60A /* DIMultyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51CEC511D38DD7900C5B60A /* DIMultyMap.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		16E9CE2F1D645BB100A9A83B /* DIAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIAssembly.swift; sourceTree = "<group>"; };
 		A50053001D19299700DFD9CF /* DIScopeImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScopeImpl.swift; sourceTree = "<group>"; };
 		A50599981D17FCB100A8D42C /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		A51CEC511D38DD7900C5B60A /* DIMultyMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIMultyMap.swift; sourceTree = "<group>"; };
@@ -69,6 +71,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		16E9CE2E1D645BA700A9A83B /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				16E9CE2F1D645BB100A9A83B /* DIAssembly.swift */,
+			);
+			path = Assembly;
+			sourceTree = "<group>";
+		};
 		A50599971D17FCB100A8D42C /* Private */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +160,7 @@
 		A5AE2B501D0AD76600FF3E40 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				16E9CE2E1D645BA700A9A83B /* Assembly */,
 				A56984141D2B726000B25587 /* Storyboard */,
 				A5F1580A1D2A91930051BF0D /* Public */,
 				A50599971D17FCB100A8D42C /* Private */,
@@ -259,6 +270,7 @@
 				A569841B1D2B734D00B25587 /* DIStoryboardBase.m in Sources */,
 				A550710F1D33B46900809CB9 /* DIScope.FasterSyntax.swift in Sources */,
 				A5F1581A1D2A91930051BF0D /* DIContainerBuilder.swift in Sources */,
+				16E9CE301D645BB100A9A83B /* DIAssembly.swift in Sources */,
 				A5F1581B1D2A91930051BF0D /* DIError.swift in Sources */,
 				A5AD4EFE1D3CCC6D00A6882C /* RTypeFinal.swift in Sources */,
 				A55071181D33B65D00809CB9 /* DIScope.Arg.swift in Sources */,
