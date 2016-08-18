@@ -29,12 +29,13 @@ public class DIAssembly {
 		dependencies.append(assembly)
 	}
 	
-	public final func build() throws {
-		let builder = DIContainerBuilder()
+	public func build() throws {
+		assert(!builded)
 		
-		try load(builder)
+		try buildSelf()
+		builded = true
 		
-		setScope(try builder.build())
+		try recursiveBuild()
 	}
 	
 	//removed all PerScope object created in current assembly scope
@@ -51,13 +52,27 @@ public class DIAssembly {
 		}
 	}
 	
+	private func buildSelf() throws {
+		let builder = DIContainerBuilder()
+		try load(builder)
+		self.scope = try builder.build()
+	}
+	
+	private func recursiveBuild() throws {
+		for assembly in dependencies {
+			if !assembly.builded {
+				try assembly.build()
+			}
+		}
+	}
+	
 	public private(set) final var scope: DIScope!
 	
 	private final func load(builder: DIContainerBuilder) throws {
-		if isLoaded {
+		if loaded.contains({ $0 === builder }) {
 			return
 		}
-		isLoaded = true
+		loaded.append(builder)
 		
 		for module in modules {
 			module.load(builder)
@@ -68,22 +83,8 @@ public class DIAssembly {
 		}
 	}
 	
-	//create personal scope for all assembly
-	private final func setScope(scope: DIScope) {
-		if isSetScope {
-			return
-		}
-		isSetScope = true
-		
-		self.scope = scope
-		
-		for assembly in dependencies {
-			assembly.setScope(scope.newLifeTimeScope())
-		}
-	}
-	
-	private final var isLoaded = false
-	private final var isSetScope = false
+	private final var builded: Bool = false
+	private final var loaded: [DIContainerBuilder] = []
 	
 	private final var modules: [DIModule] = []
 	private final var dependencies: [DIAssembly] = []

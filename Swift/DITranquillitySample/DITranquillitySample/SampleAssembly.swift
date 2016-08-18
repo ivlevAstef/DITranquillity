@@ -19,6 +19,11 @@ class Assembly1: DIAssembly {
 		addDependency(Assembly2)
 		addDependency(Assembly3)
 	}
+	
+	override func build() throws {
+		print("build assembly 1")
+		try super.build()
+	}
 }
 
 class Module1_1: DIModule {
@@ -44,6 +49,11 @@ class Assembly2: DIAssembly {
 		addDependency(Assembly3)
 		addDependency(Assembly4)
 	}
+	
+	override func build() throws {
+		print("build assembly 2")
+		try super.build()
+	}
 }
 
 class Module2_1: DIModule {
@@ -67,6 +77,11 @@ class Assembly3: DIAssembly {
 		setModules(Module3_1())
 		addDependency(Assembly4)
 	}
+	
+	override func build() throws {
+		print("build assembly 3")
+		try super.build()
+	}
 }
 
 class Module3_1: DIModule {
@@ -82,6 +97,11 @@ class Assembly4: DIAssembly {
 		print("load assembly 4")
 		
 		setModules(Module4_1(), Module4_2())
+	}
+	
+	override func build() throws {
+		print("build assembly 4")
+		try super.build()
 	}
 }
 
