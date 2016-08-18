@@ -2,7 +2,7 @@
 //  DIAssembly.swift
 //  DITranquillity
 //
-//  Created by Ивлев А.Е. on 17.08.16.
+//  Created by Alexander Ivlev on 17/08/16.
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
@@ -90,13 +90,4 @@ public class DIAssembly {
 	private final var dependencies: [DIAssembly] = []
 	
 	private static var assemblies: [String: DIAssembly] = [:]
-}
-
-public extension DIAssembly {
-	public final func setModules(modules: DIModule...) {
-		self.modules.removeAll()
-		for module in modules {
-			addModule(module)
-		}
-	}
 }

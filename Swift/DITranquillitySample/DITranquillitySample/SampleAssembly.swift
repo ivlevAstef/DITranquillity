@@ -15,9 +15,8 @@ class Assembly1: DIAssembly {
 		super.init()
 		print("load assembly 1")
 		
-		setModules(Module1_1(), Module1_2())
-		addDependency(Assembly2)
-		addDependency(Assembly3)
+		addModules(Module1_1(), Module1_2())
+		addDependencies(Assembly2.self, Assembly3.self)
 	}
 	
 	override func build() throws {
@@ -45,9 +44,8 @@ class Assembly2: DIAssembly {
 		super.init()
 		print("load assembly 2")
 		
-		setModules(Module2_1(), Module2_2())
-		addDependency(Assembly3)
-		addDependency(Assembly4)
+		addModules(Module2_1(), Module2_2())
+		addDependencies(Assembly3.self, Assembly4.self)
 	}
 	
 	override func build() throws {
@@ -74,8 +72,8 @@ class Assembly3: DIAssembly {
 		super.init()
 		print("load assembly 3")
 		
-		setModules(Module3_1())
-		addDependency(Assembly4)
+		addModules(Module3_1())
+		addDependencies(Assembly4)
 	}
 	
 	override func build() throws {
@@ -96,7 +94,7 @@ class Assembly4: DIAssembly {
 		super.init()
 		print("load assembly 4")
 		
-		setModules(Module4_1(), Module4_2())
+		addModules(Module4_1(), Module4_2())
 	}
 	
 	override func build() throws {

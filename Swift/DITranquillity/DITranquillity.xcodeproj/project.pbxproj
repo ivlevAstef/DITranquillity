@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		162331131D656E6F002289D9 /* DIAssembly.Setters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162331121D656E6F002289D9 /* DIAssembly.Setters.swift */; };
 		16E9CE301D645BB100A9A83B /* DIAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E9CE2F1D645BB100A9A83B /* DIAssembly.swift */; };
 		A50053011D19299700DFD9CF /* DIScopeImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50053001D19299700DFD9CF /* DIScopeImpl.swift */; };
 		A505999B1D17FCB100A8D42C /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50599981D17FCB100A8D42C /* Helpers.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		162331121D656E6F002289D9 /* DIAssembly.Setters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIAssembly.Setters.swift; sourceTree = "<group>"; };
 		16E9CE2F1D645BB100A9A83B /* DIAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIAssembly.swift; sourceTree = "<group>"; };
 		A50053001D19299700DFD9CF /* DIScopeImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScopeImpl.swift; sourceTree = "<group>"; };
 		A50599981D17FCB100A8D42C /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				16E9CE2F1D645BB100A9A83B /* DIAssembly.swift */,
+				162331121D656E6F002289D9 /* DIAssembly.Setters.swift */,
 			);
 			path = Assembly;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 				A5AD4EFE1D3CCC6D00A6882C /* RTypeFinal.swift in Sources */,
 				A55071181D33B65D00809CB9 /* DIScope.Arg.swift in Sources */,
 				A5AD4EFC1D3CCC6D00A6882C /* BaseRTypeHashable.swift in Sources */,
+				162331131D656E6F002289D9 /* DIAssembly.Setters.swift in Sources */,
 				A50053011D19299700DFD9CF /* DIScopeImpl.swift in Sources */,
 				A5F1581C1D2A91930051BF0D /* DIRegistrationBuilder.swift in Sources */,
 				A5AD4EEE1D3CC87600A6882C /* RTypeLifeTime.swift in Sources */,
