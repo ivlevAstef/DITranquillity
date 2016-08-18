@@ -10,7 +10,7 @@
 
 @protocol _DIStoryboardBaseResolver <NSObject>
 
-- (nonnull __kindof UIViewController*)resolve:(nonnull __kindof UIViewController*)viewController;
+- (nonnull __kindof UIViewController*)resolve:(nonnull __kindof UIViewController*)viewController identifier:(nonnull NSString*)String;
 
 @end
 
