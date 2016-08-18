@@ -19,7 +19,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     builder.register(FooService)
       .asSelf()
-      .initializer { _ in FooService() }
+      .initializer { FooService() }
     
     let container = try! builder.build()
     
@@ -38,7 +38,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(FooService)
-      .initializer { _ in FooService() }
+      .initializer { FooService() }
     
     let container = try! builder.build()
     
@@ -57,7 +57,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     builder.register(FooService)
       .asType(ServiceProtocol)
-      .initializer { _ in FooService() }
+      .initializer { FooService() }
     
     let container = try! builder.build()
     
@@ -77,7 +77,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     builder.register(FooService)
       .asSelf()
       .asType(ServiceProtocol)
-      .initializer { _ in FooService() }
+      .initializer { FooService() }
     
     let container = try! builder.build()
     
@@ -93,7 +93,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     builder.register(FooService)
       .asType(ServiceProtocol)
-      .initializer { _ in FooService() }
+      .initializer { FooService() }
     
     builder.register(Inject)
       .initializer { s in Inject(service:*!s) }
@@ -109,10 +109,10 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     builder.register(FooService)
       .asType(ServiceProtocol)
-      .initializer { _ in FooService() }
+      .initializer { FooService() }
     
     builder.register(InjectOpt)
-      .initializer { s in InjectOpt() }
+      .initializer { InjectOpt() }
       .dependency { (s, obj) in obj.service = *!s }
     
     let container = try! builder.build()
@@ -126,10 +126,10 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     builder.register(FooService)
       .asType(ServiceProtocol)
-      .initializer { _ in FooService() }
+      .initializer { FooService() }
     
     builder.register(InjectImplicitly)
-      .initializer { s in InjectImplicitly() }
+      .initializer { InjectImplicitly() }
       .dependency { (s, obj) in obj.service = *!s }
     
     let container = try! builder.build()
@@ -144,11 +144,11 @@ class DITranquillityTests_Resolve: XCTestCase {
     builder.register(FooService)
       .asType(ServiceProtocol)
       .asDefault()
-      .initializer { _ in FooService() }
+      .initializer { FooService() }
     
     builder.register(BarService)
       .asType(ServiceProtocol)
-      .initializer { _ in BarService() }
+      .initializer { BarService() }
     
     let container = try! builder.build()
     
@@ -161,12 +161,12 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     builder.register(FooService)
       .asType(ServiceProtocol)
-      .initializer { _ in FooService() }
+      .initializer { FooService() }
     
     builder.register(BarService)
       .asType(ServiceProtocol)
       .asDefault()
-      .initializer { _ in BarService() }
+      .initializer { BarService() }
     
     let container = try! builder.build()
     
@@ -180,12 +180,12 @@ class DITranquillityTests_Resolve: XCTestCase {
     builder.register(FooService)
       .asType(ServiceProtocol)
       .asName("foo")
-      .initializer { _ in FooService() }
+      .initializer { FooService() }
     
     builder.register(BarService)
       .asType(ServiceProtocol)
       .asName("bar")
-      .initializer { _ in BarService() }
+      .initializer { BarService() }
     
     let container = try! builder.build()
     
@@ -202,11 +202,11 @@ class DITranquillityTests_Resolve: XCTestCase {
     builder.register(FooService)
       .asType(ServiceProtocol)
       .asDefault()
-      .initializer { _ in FooService() }
+      .initializer { FooService() }
     
     builder.register(BarService)
       .asType(ServiceProtocol)
-      .initializer { _ in BarService() }
+      .initializer { BarService() }
     
     let container = try! builder.build()
     
@@ -224,7 +224,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     builder.register(Circular2B)
       .instancePerDependency()
-      .initializer { _ in Circular2B() }
+      .initializer { Circular2B() }
       .dependency { (s, b) in b.a = *!s }
     
     let container = try! builder.build()
@@ -254,7 +254,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     builder.register(Circular3C)
       .instancePerDependency()
-      .initializer { _ in Circular3C() }
+      .initializer { Circular3C() }
       .dependency { (s, c) in c.a = *!s }
     
     let container = try! builder.build()
@@ -289,7 +289,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     builder.register(CircularDouble2A)
       .instancePerDependency()
-      .initializer { _ in CircularDouble2A() }
+      .initializer { CircularDouble2A() }
       .dependency { (s, a) in a.b1 = *!s }
       .dependency { (s, a) in a.b2 = *!s }
     
@@ -324,7 +324,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     builder.register(CircularDouble2A)
       .instancePerDependency()
-      .initializer { _ in CircularDouble2A() }
+      .initializer { CircularDouble2A() }
       .dependency { (s, a) in
         a.b1 = *!s
         a.b2 = *!s
@@ -358,14 +358,14 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(DependencyA)
-      .initializer { _ in DependencyA() }
+      .initializer { DependencyA() }
     
     builder.register(DependencyB)
-      .initializer { _ in DependencyB() }
+      .initializer { DependencyB() }
     .dependency { (s, b) in b.a = *!s }
     
     builder.register(DependencyC)
-      .initializer { _ in DependencyC() }
+      .initializer { DependencyC() }
       .dependency { (s, c) in c.b = *!s }
     
     let container = try! builder.build()
@@ -381,7 +381,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     builder.register(Params)
       .instancePerDependency()
-      .initializer{ _ in return Params(number:0) }
+      .initializer{ return Params(number:0) }
       .initializer{ _, number in return Params(number:number) }
       .initializer{ _, number, bool in return Params(number:number, bool: bool) }
       .initializer{ _, number, str in return Params(number:number, str: str) }

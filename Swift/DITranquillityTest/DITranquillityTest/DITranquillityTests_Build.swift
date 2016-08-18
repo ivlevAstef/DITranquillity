@@ -57,11 +57,11 @@ class DITranquillityTests_Build: XCTestCase {
     
     builder.register(TestClass1)
       .asType(TestProtocol)
-      .initializer { _ in TestClass1() }
+      .initializer { TestClass1() }
     
     builder.register(TestClass2)
       .asType(TestProtocol)
-      .initializer { _ in TestClass2() }
+      .initializer { TestClass2() }
     
     do {
       try builder.build()
@@ -80,10 +80,10 @@ class DITranquillityTests_Build: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(TestClass1)
-      .initializer { _ in TestClass1() }
+      .initializer { TestClass1() }
     
     builder.register(TestClass1)
-      .initializer { _ in TestClass1() }
+      .initializer { TestClass1() }
     
     do {
       try builder.build()
@@ -104,12 +104,12 @@ class DITranquillityTests_Build: XCTestCase {
     builder.register(TestClass1)
       .asType(TestProtocol)
       .asDefault()
-      .initializer { _ in TestClass1() }
+      .initializer { TestClass1() }
     
     builder.register(TestClass2)
       .asType(TestProtocol)
       .asDefault()
-      .initializer { _ in TestClass2() }
+      .initializer { TestClass2() }
     
     do {
       try builder.build()
@@ -130,11 +130,11 @@ class DITranquillityTests_Build: XCTestCase {
     builder.register(TestClass1)
       .asType(TestProtocol)
       .asDefault()
-      .initializer { _ in TestClass1() }
+      .initializer { TestClass1() }
     
     builder.register(TestClass2)
       .asType(TestProtocol)
-      .initializer { _ in TestClass2() }
+      .initializer { TestClass2() }
     
     do {
       try builder.build()
@@ -149,12 +149,12 @@ class DITranquillityTests_Build: XCTestCase {
     builder.register(TestClass1)
       .asType(TestProtocol)
       .asName("foo")
-      .initializer { _ in TestClass1() }
+      .initializer { TestClass1() }
     
     builder.register(TestClass2)
       .asType(TestProtocol)
       .asName("bar")
-      .initializer { _ in TestClass2() }
+      .initializer { TestClass2() }
     
     do {
       try builder.build()
@@ -168,7 +168,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     builder.register(TestClass1)
       .asType(Test2Protocol) //<---- Swift not supported static check
-      .initializer { _ in TestClass1() }
+      .initializer { TestClass1() }
     
     do {
       let container = try builder.build()
@@ -194,7 +194,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     builder.register(TestClass1)
       .asType(TestProtocol)
-      .initializer { _ in TestClass1() }
+      .initializer { TestClass1() }
     
     do {
       let container = try builder.build()
