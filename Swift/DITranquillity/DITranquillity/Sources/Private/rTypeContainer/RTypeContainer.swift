@@ -11,16 +11,16 @@ internal class RTypeContainer {
     if nil == values[hash(key)] {
       values[hash(key)] = []
     }
-    
+
     values[hash(key)]?.append(value)
   }
-  
+
   internal subscript(key: Any) -> [RType]? { return values[hash(key)] }
-  
+
   internal func data() -> [String: [RType]] {
     return values
   }
-  
+
   internal func copyFinal() -> RTypeContainerFinal {
     var data: [String: [RTypeFinal]] = [:]
     for value in self.values {
@@ -28,10 +28,10 @@ internal class RTypeContainer {
     }
     return RTypeContainerFinal(values: data)
   }
-  
+
   private func hash(type: Any) -> String {
     return String(type)
   }
-  
-  private var values : [String: [RType]] = [:]
+
+  private var values: [String: [RType]] = [:]
 }

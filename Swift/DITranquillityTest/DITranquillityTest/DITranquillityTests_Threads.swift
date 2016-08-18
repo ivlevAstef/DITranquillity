@@ -49,7 +49,7 @@ class DITranquillityTests_Threads: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(FooService)
-      .instanceSingle()
+      .instanceLazySingle()
       .initializer { _ in FooService() }
     
     let container = try! builder.build()

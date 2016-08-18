@@ -119,7 +119,7 @@ class SampleModule : DIModule {
   }
   
   func load(builder: DIContainerBuilder) {
-    builder.register(Int).asSelf().instanceSingle().initializer {_ in 10}
+    builder.register(Int).asSelf().instanceLazySingle().initializer {_ in 10}
     
     builder.register(ServiceProtocol)
       .asSelf()
@@ -135,12 +135,12 @@ class SampleModule : DIModule {
       .asType(LoggerProtocol)
       .instanceSingle()
       .asDefault()
-      .initializer { _ in Logger() }
+			.initializer { _ in Logger() }
     
     builder.register(Logger2)
       .asSelf()
       .asType(LoggerProtocol)
-      .instanceSingle()
+      .instanceLazySingle()
       //.asDefault()
       .initializer { _ in Logger2() }
     
@@ -223,7 +223,7 @@ class SampleStartupModule : DIModule {
     builder.register(UIView)
       .asSelf()
       .asType(UIAppearance)
-      //.instanceSingle()
+      //.instanceLazySingle()
       //.instancePerMatchingScope("ScopeName")
       //.instancePerScope()
       .instancePerDependency()

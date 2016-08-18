@@ -21,7 +21,7 @@ class DITranquillityTests_Scope: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(TestScopeClass)
-      .instanceSingle()
+      .instanceLazySingle()
       .initializer { _ in TestScopeClass() }
     
     let container = try! builder.build()
