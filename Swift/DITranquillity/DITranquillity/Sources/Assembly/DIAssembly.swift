@@ -89,5 +89,5 @@ public class DIAssembly {
   private final var modules: [DIModule] = []
   private final var dependencies: [DIAssembly] = []
 
-  private static var assemblies: [String: DIAssembly] = [:]
+  internal static var assemblies: [String: DIAssembly] = [:]
 }
