@@ -8,6 +8,7 @@
 
 import DITranquillity
 
+//project 1
 class Assembly1: DIAssembly {
 	static let shared = Assembly1()
 	
@@ -16,7 +17,7 @@ class Assembly1: DIAssembly {
 		print("load assembly 1")
 		
 		addModules(Module1_1(), Module1_2())
-		addDependencies(Assembly2.self, Assembly3.self)
+		addDependencies(Assembly2.self, Assembly3.self, DynamicAssembly.self)
 	}
 	
 	override func build() throws {
@@ -38,14 +39,15 @@ class Module1_2: DIModule {
 	}
 }
 
-
+//project 2
 class Assembly2: DIAssembly {
 	required init() {
 		super.init()
 		print("load assembly 2")
 		
 		addModules(Module2_1(), Module2_2())
-		addDependencies(Assembly3.self, Assembly4.self)
+		addDependencies(Assembly3.self, Assembly4.self, DynamicAssembly.self)
+		addModule(Module2_D(), Into: DynamicAssembly.self)
 	}
 	
 	override func build() throws {
@@ -67,6 +69,13 @@ class Module2_2: DIModule {
 	}
 }
 
+class Module2_D: DIModule {
+	func load(builder: DIContainerBuilder) {
+		print("load module 2_D")
+	}
+}
+
+//project 3
 class Assembly3: DIAssembly {
 	required init() {
 		super.init()
@@ -89,12 +98,15 @@ class Module3_1: DIModule {
 }
 
 
+//project 4
 class Assembly4: DIAssembly {
 	required init() {
 		super.init()
 		print("load assembly 4")
 		
 		addModules(Module4_1(), Module4_2())
+		addDependencies(DynamicAssembly.self)
+		addModule(Module4_D(), Into: DynamicAssembly.self)
 	}
 	
 	override func build() throws {
@@ -112,5 +124,25 @@ class Module4_1: DIModule {
 class Module4_2: DIModule {
 	func load(builder: DIContainerBuilder) {
 		print("load module 4_2")
+	}
+}
+
+class Module4_D: DIModule {
+	func load(builder: DIContainerBuilder) {
+		print("load module 4_D")
+	}
+}
+
+
+//project 5
+class DynamicAssembly: DIDynamicAssembly {
+	required init() {
+		super.init()
+		print("load dynamic assembly")
+	}
+	
+	override func build() throws {
+		print("build dynamic assembly")
+		try super.build()
 	}
 }
