@@ -53,13 +53,9 @@ public class DIContainerBuilder {
     errors.appendContentsOf(checkRTypesNames(superType, rTypes: rTypes))
 
     let defaultTypes = rTypes.filter { $0.isDefault }
-    let allHasName = rTypes.filter { $0.names.isEmpty }.isEmpty
 
     if defaultTypes.count > 1 {
       errors.append(DIError.MultyRegisterDefault(typeNames: defaultTypes.map { String($0.implType) }, forType: superType))
-
-    } else if defaultTypes.isEmpty && !allHasName {
-      errors.append(DIError.NotSetDefaultForMultyRegisterType(typeNames: rTypes.map { String($0.implType) }, forType: superType))
     }
 
     return errors
