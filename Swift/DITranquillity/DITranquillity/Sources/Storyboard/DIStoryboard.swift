@@ -37,7 +37,7 @@ public class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
     }
   }
   
-  private init(name: String, bundle storyboardBundleOrNil: NSBundle?, container: DIScope) {
+  public required init(name: String, bundle storyboardBundleOrNil: NSBundle?, container: DIScope) {
     self.container = container
     storyboard = _DIStoryboardBase.create(name, bundle: storyboardBundleOrNil)
     super.init()
