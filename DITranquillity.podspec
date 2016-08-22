@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'DITranquillity'
-  s.version      = '0.9.0'
+  s.version      = '0.9.1'
   s.summary      = 'DITranquillity - Dependency injection for iOS (Swift) '
 
   s.description  = <<-DESC
@@ -30,6 +30,12 @@ Pod::Spec.new do |s|
     storyboard.source_files = 'Swift/DITranquillity/DITranquillity/Sources/Storyboard/*.{h,m,swift}'
   end
 
-  s.default_subspec = 'Core'
+  s.subspec 'Assembly' do |assembly|
+    assembly.dependency 'DITranquillity/Core'
+
+    assembly.source_files = 'Swift/DITranquillity/DITranquillity/Sources/Assembly/*.swift'
+  end
+
+  s.default_subspec = 'Assembly'
 
 end
