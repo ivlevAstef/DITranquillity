@@ -49,17 +49,35 @@ public class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
   }
   
   public override func instantiateViewControllerWithIdentifier(identifier: String) -> UIViewController {
+		if let viewController = singleViewControllersMap[identifier] {
+			return viewController
+		}
+		
     return storyboard.instantiateViewControllerWithIdentifier(identifier)
   }
   
-  @objc public func resolve(viewController: UIViewController) -> UIViewController {
+  @objc public func resolve(viewController: UIViewController, identifier: String) -> UIViewController {
     do {
       try container.resolve(viewController)
     } catch {
     }
+		
+		if singleIndentifiers.contains(identifier) {
+			singleViewControllersMap[identifier] = viewController
+		}
+		
     return viewController
   }
-  
+	
+	private var singleIndentifiers: Set<String> = []
+	private var singleViewControllersMap: [String: UIViewController] = [:]
+	
   private var container: DIScope
   private unowned let storyboard: _DIStoryboardBase
+}
+
+public extension DIStoryboard {
+	public func single(identifiers: String...) {
+		singleIndentifiers.unionInPlace(identifiers)
+	}
 }

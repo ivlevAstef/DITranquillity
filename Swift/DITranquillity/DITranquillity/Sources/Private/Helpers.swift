@@ -13,21 +13,21 @@ internal class Helpers {
     "Optional",
     "ImplicitlyUnwrappedOptional"
   ]
-  //It's worked but it's no good
+  // It's worked but it's no good
   internal static func removedTypeWrappers<T>(type: T.Type) -> Any {
     var text = String(type)
-    
+
     for wrapper in wrappers {
       if text.hasPrefix(wrapper) {
-        //removed wrapper with symbols: '<' '>'
+        // removed wrapper with symbols: '<' '>'
         text.removeRange(text.startIndex...text.startIndex.advancedBy(wrapper.characters.count))
         text.removeRange(text.endIndex.predecessor()..<text.endIndex)
-        
+
         return text
       }
     }
-    
+
     return type
   }
-  
+
 }

@@ -8,30 +8,35 @@
 
 public class DIScope {
   typealias Method = (scope: DIScope) -> Any
-  
+
   public func resolve<T>() throws -> T {
     return try impl.resolve(self) { (initializer: Method) in return initializer(scope: self) }
   }
-  
+
   public func resolveMany<T>() throws -> [T] {
     return try impl.resolveMany(self) { (initializer: Method) in return initializer(scope: self) }
   }
-  
-  public func resolve<T>(name: String) throws -> T {
+
+  public func resolve<T>(Name name: String) throws -> T {
     return try impl.resolve(self, name: name) { (initializer: Method) in return initializer(scope: self) }
   }
-  
+
   public func resolve<T>(object: T) throws {
     return try impl.resolve(self, object: object)
   }
-  
+
   public func newLifeTimeScope() -> DIScope {
     return impl.newLifeTimeScope(self)
   }
-  
+
   internal init(registeredTypes: RTypeContainerFinal, name: String = "") {
     impl = DIScopeImpl(registeredTypes: registeredTypes)
   }
+
+  internal func resolve(RType rType: RTypeFinal) throws -> Any {
+    return try impl.resolve(self, rType: rType) { (initializer: Method) in return initializer(scope: self) }
+  }
+
   internal let impl: DIScopeImpl
 }
 
@@ -39,12 +44,12 @@ public extension DIScope {
   func resolve<T>(_: T.Type) throws -> T {
     return try resolve()
   }
-  
+
   func resolveMany<T>(_: T.Type) throws -> [T] {
     return try resolveMany()
   }
-  
-  func resolve<T>(_: T.Type, name: String) throws -> T {
-    return try resolve(name)
+
+  func resolve<T>(_: T.Type, Name name: String) throws -> T {
+		return try resolve(Name: name)
   }
 }

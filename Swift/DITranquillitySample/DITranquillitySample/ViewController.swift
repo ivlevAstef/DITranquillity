@@ -47,16 +47,16 @@ class ViewController: UIViewController {
     
     //Animals
     
-    let cat: Animal = try! scope.resolve("Cat")
-    let dog: Animal = try! scope.resolve(Animal.self, name: "Dog")
-    let bear: Animal = try! scope.resolve("Bear")
+    let cat: Animal = try! scope.resolve(Name: "Cat")
+    let dog: Animal = try! scope.resolve(Animal.self, Name: "Dog")
+    let bear: Animal = try! scope.resolve(Name: "Bear")
     
     let defaultAnimal: Animal = try! scope.resolve()
     
     print("Cat: \(cat.name) Dog: \(dog.name) Bear: \(bear.name) Default(Dog): \(defaultAnimal.name)")
     
     //Params
-    let animal: Animal = try! scope.resolve("Custom", arg: "my animal")
+    let animal: Animal = try! scope.resolve(Name: "Custom", arg: "my animal")
     print("Animal: \(animal.name)")
     
     let params2: Params = try! scope.resolve(arg: "param1", 10)

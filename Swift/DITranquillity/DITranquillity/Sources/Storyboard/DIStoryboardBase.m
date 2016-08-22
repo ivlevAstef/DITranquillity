@@ -23,7 +23,7 @@
     return viewController;
   }
   
-  return [sResolver resolve:viewController];
+  return [sResolver resolve:viewController identifier:identifier];
 }
 
 @end

@@ -15,78 +15,83 @@ public extension DIContainerBuilder {
 }
 
 public class DIRegistrationBuilder<ImplObj> {
-  //As
+  // As
   public func asSelf() -> Self {
     typeSet = true
     container.append(ImplObj.self, value: rType)
     return self
   }
-  
+
   public func asType<EquallyObj>(equallyType: EquallyObj.Type) -> Self {
     typeSet = true
     container.append(equallyType, value: rType)
     return self
   }
-  
+
   public func asName(name: String) -> Self {
     rType.names.insert(name)
     return self
   }
-  
+
   public func asDefault() -> Self {
     rType.isDefault = true
     return self
   }
-  
-  //Initializer
+
+  // Initializer
   public func initializer(method: (scope: DIScope) -> ImplObj) -> Self {
     rType.setInitializer { (s) -> Any in return method(scope: s) }
     return self
   }
-  
+
   public func initializer(method: () -> ImplObj) -> Self {
-    rType.setInitializer { (_) -> Any in return method() }
+    rType.setInitializer { (_: DIScope) -> Any in return method() }
     return self
   }
   
-  //Dependency
+  // Dependency
   public func dependency(method: (scope: DIScope, obj: ImplObj) -> ()) -> Self {
     rType.appendDependency(method)
     return self
   }
-  
-  //LifeTime
+
+  // LifeTime
   public func instanceSingle() -> Self {
     rType.lifeTime = RTypeLifeTime.Single
     return self
   }
-  
+
+  public func instanceLazySingle() -> Self {
+    rType.lifeTime = RTypeLifeTime.LazySingle
+    return self
+  }
+
   public func instancePerScope() -> Self {
     rType.lifeTime = RTypeLifeTime.PerScope
     return self
   }
-  
+
   public func instancePerDependency() -> Self {
     rType.lifeTime = RTypeLifeTime.PerDependency
     return self
   }
-  
+
   public func instancePerRequest() -> Self {
     rType.lifeTime = RTypeLifeTime.PerRequest
     return self
   }
-  
+
   internal init(_ container: RTypeContainer, _ implType: ImplObj.Type) {
     self.container = container
     self.rType = RType(implType)
   }
-  
+
   deinit {
     if !typeSet {
       asSelf()
     }
   }
-  
+
   internal var typeSet: Bool = false
   internal let rType: RType
   internal let container: RTypeContainer

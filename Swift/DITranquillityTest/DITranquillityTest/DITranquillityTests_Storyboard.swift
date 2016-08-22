@@ -26,7 +26,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     builder.register(FooService)
       .asType(ServiceProtocol)
-      .initializer { _ in FooService() }
+      .initializer { FooService() }
     
     builder.register(TestViewController)
       .instancePerRequest()
@@ -49,7 +49,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     builder.register(FooService)
       .asType(ServiceProtocol)
-      .initializer { _ in FooService() }
+      .initializer { FooService() }
     
     builder.register(TestViewController2)
       .instancePerRequest()
@@ -81,7 +81,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     builder.register(FooService)
       .asType(ServiceProtocol)
-      .initializer { _ in FooService() }
+      .initializer { FooService() }
     
     builder.register(TestViewController)
       .instancePerRequest()

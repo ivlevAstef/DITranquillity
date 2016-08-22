@@ -119,12 +119,12 @@ class SampleModule : DIModule {
   }
   
   func load(builder: DIContainerBuilder) {
-    builder.register(Int).asSelf().instanceSingle().initializer {_ in 10}
+    builder.register(Int).asSelf().instanceLazySingle().initializer { 10 }
     
     builder.register(ServiceProtocol)
       .asSelf()
       .instancePerDependency()
-      .initializer { _ in
+      .initializer {
         if self.useBarService {
           return BarService()
         }
@@ -135,14 +135,14 @@ class SampleModule : DIModule {
       .asType(LoggerProtocol)
       .instanceSingle()
       .asDefault()
-      .initializer { _ in Logger() }
+			.initializer { Logger() }
     
     builder.register(Logger2)
       .asSelf()
       .asType(LoggerProtocol)
-      .instanceSingle()
+      .instanceLazySingle()
       //.asDefault()
-      .initializer { _ in Logger2() }
+      .initializer { Logger2() }
     
     builder.register(Inject)
       .asSelf()
@@ -160,18 +160,18 @@ class SampleModule : DIModule {
     builder.register(Animal)
       .asSelf()
       .asName("Cat")
-      .initializer { _ in Animal(name: "Cat") }
+      .initializer { Animal(name: "Cat") }
     
     builder.register(Animal)
       .asSelf()
       .asName("Dog")
       .asDefault()
-      .initializer { _ in Animal(name: "Dog") }
+      .initializer { Animal(name: "Dog") }
     
     builder.register(Animal)
       .asSelf()
       .asName("Bear")
-      .initializer { _ in Animal(name: "Bear") }
+      .initializer { Animal(name: "Bear") }
     
     
     builder.register(Animal)
@@ -195,7 +195,7 @@ class SampleModule : DIModule {
     builder.register(Circular2)
       .asSelf()
       .instancePerDependency()
-      .initializer { _ in Circular2() }
+      .initializer { Circular2() }
       .dependency { (s, obj) in obj.ref = *!s }
   }
   
@@ -223,11 +223,11 @@ class SampleStartupModule : DIModule {
     builder.register(UIView)
       .asSelf()
       .asType(UIAppearance)
-      //.instanceSingle()
+      //.instanceLazySingle()
       //.instancePerMatchingScope("ScopeName")
       //.instancePerScope()
       .instancePerDependency()
-      .initializer({ (scope) -> UIButton in UIButton()})
-    //.initializer({ _ in UISwitch() })
+      .initializer { UIButton() }
+    //.initializer { UISwitch() }
   }
 }

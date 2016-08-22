@@ -21,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window!.rootViewController = storyboard.instantiateInitialViewController()
     
     window!.makeKeyAndVisible()
+		
+		let assembly = Assembly1()
+		try! assembly.build()
     
     // Override point for customization after application launch.
     return true

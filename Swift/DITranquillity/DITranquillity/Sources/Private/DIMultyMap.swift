@@ -9,28 +9,28 @@
 import Foundation
 
 internal struct DIMultimap<Key: Hashable, Value: Equatable> {
-  internal init() {}
-  
+  internal init() { }
+
   internal subscript(key: Key) -> [Value] {
     if let values = dictionary[key] {
       return values
     }
     return []
   }
-  
+
   internal mutating func append(key: Key, value: Value) {
     if nil == dictionary[key] {
       dictionary[key] = []
     }
-    
+
     if !dictionary[key]!.contains({ (iter) in iter == value }) {
       dictionary[key]!.append(value)
     }
   }
-  
+
   internal mutating func removeAll(keepCapacity keep: Bool = true) {
     dictionary.removeAll(keepCapacity: keep)
   }
-  
+
   private var dictionary = [Key: [Value]]()
 }
