@@ -41,7 +41,7 @@ internal class DIScopeImpl {
 
     for rType in rTypes {
       if rType.hasName(name) {
-				return try resolveUseRType(scope, pair: RTypeWithNamePair(rType, ""), method: method)
+				return try resolveUseRType(scope, pair: RTypeWithNamePair(rType, name), method: method)
       }
     }
 

@@ -195,7 +195,63 @@ class DITranquillityTests_Resolve: XCTestCase {
     let serviceBar: ServiceProtocol = try! container.resolve(Name: "bar")
     XCTAssertEqual(serviceBar.foo(), "bar")
   }
-  
+	
+	func test06_ResolveMultiplySingleByName() {
+		let builder = DIContainerBuilder()
+		
+		builder.register(FooService)
+			.asType(ServiceProtocol)
+			.asName("foo")
+			.asName("foo2")
+			.instanceSingle()
+			.initializer { FooService() }
+		
+		let container = try! builder.build()
+		
+		let serviceFoo: ServiceProtocol = try! container.resolve(Name: "foo")
+		XCTAssertEqual(serviceFoo.foo(), "foo")
+		
+		let serviceFoo2: ServiceProtocol = try! container.resolve(Name: "foo2")
+		XCTAssertEqual(serviceFoo2.foo(), "foo")
+		
+		XCTAssertNotEqual(unsafeAddressOf(serviceFoo as! AnyObject), unsafeAddressOf(serviceFoo2 as! AnyObject))
+	}
+	
+	func test06_ResolveMultiplyPerScopeByName() {
+		let builder = DIContainerBuilder()
+		
+		builder.register(BarService)
+			.asType(ServiceProtocol)
+			.asName("bar")
+			.asName("bar2")
+			.instancePerScope()
+			.initializer { BarService() }
+		
+		let container = try! builder.build()
+		
+		let serviceBar1_1: ServiceProtocol = try! container.resolve(Name: "bar")
+		XCTAssertEqual(serviceBar1_1.foo(), "bar")
+		
+		let serviceBar1_2: ServiceProtocol = try! container.resolve(Name: "bar2")
+		XCTAssertEqual(serviceBar1_2.foo(), "bar")
+		
+		XCTAssertNotEqual(unsafeAddressOf(serviceBar1_1 as! AnyObject), unsafeAddressOf(serviceBar1_2 as! AnyObject))
+		
+		
+		let container2 = container.newLifeTimeScope()
+		
+		let serviceBar2_1: ServiceProtocol = try! container2.resolve(Name: "bar")
+		XCTAssertEqual(serviceBar2_1.foo(), "bar")
+		
+		let serviceBar2_2: ServiceProtocol = try! container2.resolve(Name: "bar2")
+		XCTAssertEqual(serviceBar2_2.foo(), "bar")
+		
+		XCTAssertNotEqual(unsafeAddressOf(serviceBar2_1 as! AnyObject), unsafeAddressOf(serviceBar2_2 as! AnyObject))
+		
+		XCTAssertNotEqual(unsafeAddressOf(serviceBar1_1 as! AnyObject), unsafeAddressOf(serviceBar2_1 as! AnyObject))
+		XCTAssertNotEqual(unsafeAddressOf(serviceBar1_2 as! AnyObject), unsafeAddressOf(serviceBar2_2 as! AnyObject))
+	}
+	
   func test06_ResolveMultiplyMany() {
     let builder = DIContainerBuilder()
     
