@@ -91,7 +91,7 @@ resolveNameFunctions() { #argcount prefix file
   local ArgumentsMethodType=$(join ', ' $(replaceToArg numbers[@] "arg;I:±Arg;I")); ArgumentsMethodType=${ArgumentsMethodType//±/ }
   local ArgParam=$(join ', ' $(replaceToArg numbers[@] "arg;I:±arg;I")); ArgParam=${ArgParam//±/ }
 
-  local name="name"
+  local name="Name name"
   echo "  public func resolve<T, $ArgType>($prefix$name: String, $ArgumentsType) throws -> T {
     typealias Method = (scope: DIScope, $ArgumentsMethodType) -> Any
     return try impl.resolve(self, name: name) { (initializer: Method) -> Any in return initializer(scope: self, $ArgParam) }

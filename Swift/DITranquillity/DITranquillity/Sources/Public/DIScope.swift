@@ -17,7 +17,7 @@ public class DIScope {
     return try impl.resolveMany(self) { (initializer: Method) in return initializer(scope: self) }
   }
 
-  public func resolve<T>(name: String) throws -> T {
+  public func resolve<T>(Name name: String) throws -> T {
     return try impl.resolve(self, name: name) { (initializer: Method) in return initializer(scope: self) }
   }
 
@@ -49,7 +49,7 @@ public extension DIScope {
     return try resolveMany()
   }
 
-  func resolve<T>(_: T.Type, name: String) throws -> T {
-    return try resolve(name)
+  func resolve<T>(_: T.Type, Name name: String) throws -> T {
+		return try resolve(Name: name)
   }
 }

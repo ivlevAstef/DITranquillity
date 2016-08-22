@@ -189,10 +189,10 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     let container = try! builder.build()
     
-    let serviceFoo: ServiceProtocol = try! container.resolve("foo")
+    let serviceFoo: ServiceProtocol = try! container.resolve(Name: "foo")
     XCTAssertEqual(serviceFoo.foo(), "foo")
     
-    let serviceBar: ServiceProtocol = try! container.resolve("bar")
+    let serviceBar: ServiceProtocol = try! container.resolve(Name: "bar")
     XCTAssertEqual(serviceBar.foo(), "bar")
   }
   
