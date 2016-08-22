@@ -52,53 +52,7 @@ class DITranquillityTests_Build: XCTestCase {
     }
   }
   
-  func test03_MultiplyRegistrateTypeWithoutDefault() {
-    let builder = DIContainerBuilder()
-    
-    builder.register(TestClass1)
-      .asType(TestProtocol)
-      .initializer { TestClass1() }
-    
-    builder.register(TestClass2)
-      .asType(TestProtocol)
-      .initializer { TestClass2() }
-    
-    do {
-      try builder.build()
-    } catch DIError.Build(let errors) {
-      XCTAssertEqual(errors, [
-        DIError.NotSetDefaultForMultyRegisterType(typeNames: [String(TestClass1), String(TestClass2)], forType: String(TestProtocol))
-      ])
-      return
-    } catch {
-      XCTFail("Catched error: \(error)")
-    }
-    XCTFail("No try exceptions")
-  }
-  
-  func test03_MultiplyRegistrateTypeWithoutDefault_AsSelf() {
-    let builder = DIContainerBuilder()
-    
-    builder.register(TestClass1)
-      .initializer { TestClass1() }
-    
-    builder.register(TestClass1)
-      .initializer { TestClass1() }
-    
-    do {
-      try builder.build()
-    } catch DIError.Build(let errors) {
-      XCTAssertEqual(errors, [
-        DIError.NotSetDefaultForMultyRegisterType(typeNames: [String(TestClass1), String(TestClass1)], forType: String(TestClass1))
-        ])
-      return
-    } catch {
-      XCTFail("Catched error: \(error)")
-    }
-    XCTFail("No try exceptions")
-  }
-  
-  func test04_MultiplyRegistrateTypeWithMultyDefault() {
+  func test03_MultiplyRegistrateTypeWithMultyDefault() {
     let builder = DIContainerBuilder()
     
     builder.register(TestClass1)
@@ -124,7 +78,7 @@ class DITranquillityTests_Build: XCTestCase {
     XCTFail("No try exceptions")
   }
   
-  func test05_MultiplyRegistrateTypeWithOneDefault() {
+  func test04_MultiplyRegistrateTypeWithOneDefault() {
     let builder = DIContainerBuilder()
     
     builder.register(TestClass1)
@@ -143,7 +97,7 @@ class DITranquillityTests_Build: XCTestCase {
     }
   }
   
-  func test06_MultiplyRegistrateTypeWithNames() {
+  func test05_MultiplyRegistrateTypeWithNames() {
     let builder = DIContainerBuilder()
     
     builder.register(TestClass1)
@@ -163,7 +117,7 @@ class DITranquillityTests_Build: XCTestCase {
     }
   }
   
-  func test07_IncorrectRegistrateType() {
+  func test06_IncorrectRegistrateType() {
     let builder = DIContainerBuilder()
     
     builder.register(TestClass1)

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		162331131D656E6F002289D9 /* DIAssembly.Setters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162331121D656E6F002289D9 /* DIAssembly.Setters.swift */; };
+		168BDAA01D6ABE070054FE18 /* RTypeAndNamePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168BDA9F1D6ABE070054FE18 /* RTypeAndNamePair.swift */; };
 		16CF5EC71D66D25300A08B7B /* DIDynamicAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CF5EC61D66D25300A08B7B /* DIDynamicAssembly.swift */; };
 		16E9CE301D645BB100A9A83B /* DIAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E9CE2F1D645BB100A9A83B /* DIAssembly.swift */; };
 		A50053011D19299700DFD9CF /* DIScopeImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50053001D19299700DFD9CF /* DIScopeImpl.swift */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		162331121D656E6F002289D9 /* DIAssembly.Setters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIAssembly.Setters.swift; sourceTree = "<group>"; };
+		168BDA9F1D6ABE070054FE18 /* RTypeAndNamePair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTypeAndNamePair.swift; sourceTree = "<group>"; };
 		16CF5EC61D66D25300A08B7B /* DIDynamicAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIDynamicAssembly.swift; sourceTree = "<group>"; };
 		16E9CE2F1D645BB100A9A83B /* DIAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIAssembly.swift; sourceTree = "<group>"; };
 		A50053001D19299700DFD9CF /* DIScopeImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScopeImpl.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				A5AD4EF61D3CCC6D00A6882C /* BaseRTypeHashable.swift */,
 				A5AD4EF71D3CCC6D00A6882C /* RType.swift */,
 				A5AD4EF81D3CCC6D00A6882C /* RTypeFinal.swift */,
+				168BDA9F1D6ABE070054FE18 /* RTypeAndNamePair.swift */,
 			);
 			path = rType;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				A5AD4EEE1D3CC87600A6882C /* RTypeLifeTime.swift in Sources */,
 				A56984161D2B726B00B25587 /* DIStoryboard.swift in Sources */,
 				A55071171D33B65D00809CB9 /* DIRegistrationBuilder.Arg.swift in Sources */,
+				168BDAA01D6ABE070054FE18 /* RTypeAndNamePair.swift in Sources */,
 				A550711A1D33B7BD00809CB9 /* DIScope.TypeArg.swift in Sources */,
 				A5AD4EFF1D3CCC6D00A6882C /* RTypeContainer.swift in Sources */,
 			);

@@ -14,7 +14,7 @@ public enum DIError: ErrorType, Equatable {
   case InitializerWithSignatureNotFound(typeName: String, signature: String)
 
   case MultyRegisterDefault(typeNames: [String], forType: String)
-  case NotSetDefaultForMultyRegisterType(typeNames: [String], forType: String)
+  case NotFoundDefaultForMultyRegisterType(typeNames: [String], forType: String)
 
   case MultyRegisterNamesForType(names: Set<String>, forType: String)
 
@@ -30,7 +30,7 @@ public func == (a: DIError, b: DIError) -> Bool {
   case (.TypeNoRegisterByName(let t1, let n1), .TypeNoRegisterByName(let t2, let n2)) where t1 == t2 && n1 == n2: return true
   case (.NotSetInitializer(let t1), .NotSetInitializer(let t2)) where t1 == t2: return true
   case (.MultyRegisterDefault(let tA1, let t1), .MultyRegisterDefault(let tA2, let t2)) where tA1 == tA2 && t1 == t2: return true
-  case (.NotSetDefaultForMultyRegisterType(let tA1, let t1), .NotSetDefaultForMultyRegisterType(let tA2, let t2)) where tA1 == tA2 && t1 == t2: return true
+  case (.NotFoundDefaultForMultyRegisterType(let tA1, let t1), .NotFoundDefaultForMultyRegisterType(let tA2, let t2)) where tA1 == tA2 && t1 == t2: return true
   case (.TypeIncorrect(let at1, let rt1), .TypeIncorrect(let at2, let rt2)) where at1 == at2 && rt1 == rt2: return true
   case (.Build(let errs1), .Build(let errs2)) where errs1 == errs2: return true
 
