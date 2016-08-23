@@ -50,6 +50,6 @@ public extension DIScope {
   }
 
   func resolve<T>(_: T.Type, Name name: String) throws -> T {
-		return try resolve(Name: name)
+    return try resolve(Name: name)
   }
 }
