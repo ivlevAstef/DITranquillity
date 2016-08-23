@@ -11,6 +11,11 @@ public prefix func *!<T>(scope: DIScope) -> T {
   return try! scope.resolve()
 }
 
+prefix operator *?{}
+public prefix func *?<T>(scope: DIScope) -> T? {
+  return try? scope.resolve()
+}
+
 prefix operator **!{}
 public prefix func **!<T>(scope: DIScope) -> [T] {
   return try! scope.resolveMany()
