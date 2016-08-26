@@ -41,7 +41,7 @@ internal class DIScopeImpl {
 
     for rType in rTypes {
       if rType.hasName(name) {
-				return try resolveUseRType(scope, pair: RTypeWithNamePair(rType, name), method: method)
+        return try resolveUseRType(scope, pair: RTypeWithNamePair(rType, name), method: method)
       }
     }
 
@@ -63,7 +63,7 @@ internal class DIScopeImpl {
   }
 
   internal func resolve<Method>(scope: DIScope, rType: RTypeFinal, method: Method -> Any) throws -> Any {
-		return try resolveUseRType(scope, pair: RTypeWithNamePair(rType, ""), method: method)
+    return try resolveUseRType(scope, pair: RTypeWithNamePair(rType, ""), method: method)
   }
 
   internal func newLifeTimeScope(scope: DIScope) -> DIScope {
@@ -92,13 +92,13 @@ internal class DIScopeImpl {
     setupAllDependency(scope)
   }
 
-	private func resolveUseRType<T, Method>(scope: DIScope, pair: RTypeWithNamePair, method: Method -> Any) throws -> T {
+  private func resolveUseRType<T, Method>(scope: DIScope, pair: RTypeWithNamePair, method: Method -> Any) throws -> T {
     objc_sync_enter(DIScopeImpl.singleMonitor)
     defer { objc_sync_exit(DIScopeImpl.singleMonitor) }
 
     switch pair.rType.lifeTime {
     case .Single:
-			return try resolveSingle(scope, pair: pair, method: method)
+      return try resolveSingle(scope, pair: pair, method: method)
     case .LazySingle:
       return try resolveSingle(scope, pair: pair, method: method)
     case .PerScope:
@@ -117,7 +117,7 @@ internal class DIScopeImpl {
       return obj as! T
     }
 
-		let obj: T = try resolvePerDependency(scope, pair: pair, method: method)
+    let obj: T = try resolvePerDependency(scope, pair: pair, method: method)
     DIScopeImpl.singleObjects[key] = obj
     return obj
   }

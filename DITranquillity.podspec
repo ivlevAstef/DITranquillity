@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'DITranquillity'
-  s.version      = '0.9.0'
+  s.version      = '0.9.2'
   s.summary      = 'DITranquillity - Dependency injection for iOS (Swift) '
 
   s.description  = <<-DESC
@@ -14,22 +14,34 @@ Pod::Spec.new do |s|
 
   s.author       = { 'Alexander.Ivlev' => 'ivlev.stef@gmail.com' }
   s.source       = { :git => 'https://github.com/ivlevAstef/DITranquillity.git', :tag => "v#{s.version}" }
-  s.requires_arc = true
 
-  s.ios.deployment_target = '8.0'
-  s.source_files = 'Swift/DITranquillity/DITranquillity/DITranquillity.h'
+  s.platform     = :ios, '8.0'
+  s.requires_arc = true
+  
+  header_file = 'Swift/DITranquillity/DITranquillity/DITranquillity.h'
+  core_files = 'Swift/DITranquillity/DITranquillity/Sources/{Public,Private}/**/*.swift'
+  storyboard_files = 'Swift/DITranquillity/DITranquillity/Sources/Storyboard/*.{h,m,swift}'
+  assembly_files = 'Swift/DITranquillity/DITranquillity/Sources/Assembly/*.swift'
 
   s.subspec 'Core' do |core|
-    core.source_files = 'Swift/DITranquillity/DITranquillity/Sources/{Public,Private}/**/*.swift'
+    core.source_files = core_files, header_file
+  end
+
+  s.subspec 'Assembly' do |assembly|
+    assembly.dependency 'DITranquillity/Core'
+
+    assembly.source_files = assembly_files, core_files, header_file
   end
 
   s.subspec 'Storyboard' do |storyboard|
     storyboard.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -D__DITRANQUILLITY_STORYBOARD__' }
     storyboard.dependency 'DITranquillity/Core'
 
-    storyboard.source_files = 'Swift/DITranquillity/DITranquillity/Sources/Storyboard/*.{h,m,swift}'
+    storyboard.frameworks = 'UIKit'
+
+    storyboard.source_files = storyboard_files, core_files, header_file
   end
 
-  s.default_subspec = 'Core'
+  s.default_subspec = 'Assembly'
 
 end
