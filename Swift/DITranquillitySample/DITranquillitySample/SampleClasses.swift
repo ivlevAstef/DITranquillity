@@ -42,6 +42,25 @@ class Logger2: LoggerProtocol {
 }
 
 
+class LoggerAll: LoggerProtocol {
+	let loggers: [LoggerProtocol]
+	var loggersFull: [LoggerProtocol]! {
+		didSet {
+			print(loggersFull)
+		}
+	}
+	
+	init(loggers: [LoggerProtocol]) {
+		self.loggers = loggers
+	}
+	
+	func log(msg: String) {
+		for logger in loggers {
+			logger.log(msg)
+		}
+	}
+}
+
 class Inject {
   private let service: ServiceProtocol
   private let logger: LoggerProtocol
@@ -130,18 +149,23 @@ class SampleModule : DIModule {
         }
         return FooService()
     }
-    
+		
+		builder.register(LoggerAll)
+			.asDefault()
+			.asType(LoggerProtocol)
+			.instanceSingle()
+			.initializer { scope in LoggerAll(loggers: **!scope) }
+			.dependency { (scope, self) in self.loggersFull = **!scope }
+		
     builder.register(Logger)
       .asType(LoggerProtocol)
       .instanceSingle()
-      .asDefault()
 			.initializer { Logger() }
     
     builder.register(Logger2)
       .asSelf()
       .asType(LoggerProtocol)
       .instanceLazySingle()
-      //.asDefault()
       .initializer { Logger2() }
     
     builder.register(Inject)
