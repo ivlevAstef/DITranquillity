@@ -19,6 +19,8 @@ public enum DIError: ErrorType, Equatable {
   case MultyRegisterNamesForType(names: Set<String>, forType: String)
 
   case TypeIncorrect(askableType: String, realType: String)
+	
+	case RecursiveInitializer(type: String)
 
   case Build(errors: [DIError])
 }

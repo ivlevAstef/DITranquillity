@@ -12,7 +12,9 @@ public protocol DIModule: class {
 
 extension DIContainerBuilder {
   public func registerModule(module: DIModule) -> Self {
-    module.load(self)
+    if !ignore(uniqueKey: String(module.dynamicType)) {
+      module.load(self)
+    }
     return self
   }
 }

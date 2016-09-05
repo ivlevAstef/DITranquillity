@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		162331131D656E6F002289D9 /* DIAssembly.Setters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162331121D656E6F002289D9 /* DIAssembly.Setters.swift */; };
 		168BDAA01D6ABE070054FE18 /* RTypeAndNamePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168BDA9F1D6ABE070054FE18 /* RTypeAndNamePair.swift */; };
 		16CF5EC71D66D25300A08B7B /* DIDynamicAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CF5EC61D66D25300A08B7B /* DIDynamicAssembly.swift */; };
 		16E9CE301D645BB100A9A83B /* DIAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E9CE2F1D645BB100A9A83B /* DIAssembly.swift */; };
@@ -36,7 +35,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		162331121D656E6F002289D9 /* DIAssembly.Setters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIAssembly.Setters.swift; sourceTree = "<group>"; };
 		168BDA9F1D6ABE070054FE18 /* RTypeAndNamePair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTypeAndNamePair.swift; sourceTree = "<group>"; };
 		16CF5EC61D66D25300A08B7B /* DIDynamicAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIDynamicAssembly.swift; sourceTree = "<group>"; };
 		16E9CE2F1D645BB100A9A83B /* DIAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIAssembly.swift; sourceTree = "<group>"; };
@@ -82,7 +80,6 @@
 			children = (
 				16CF5EC61D66D25300A08B7B /* DIDynamicAssembly.swift */,
 				16E9CE2F1D645BB100A9A83B /* DIAssembly.swift */,
-				162331121D656E6F002289D9 /* DIAssembly.Setters.swift */,
 			);
 			path = Assembly;
 			sourceTree = "<group>";
@@ -284,7 +281,6 @@
 				A5AD4EFE1D3CCC6D00A6882C /* RTypeFinal.swift in Sources */,
 				A55071181D33B65D00809CB9 /* DIScope.Arg.swift in Sources */,
 				A5AD4EFC1D3CCC6D00A6882C /* BaseRTypeHashable.swift in Sources */,
-				162331131D656E6F002289D9 /* DIAssembly.Setters.swift in Sources */,
 				16CF5EC71D66D25300A08B7B /* DIDynamicAssembly.swift in Sources */,
 				A50053011D19299700DFD9CF /* DIScopeImpl.swift in Sources */,
 				A5F1581C1D2A91930051BF0D /* DIRegistrationBuilder.swift in Sources */,

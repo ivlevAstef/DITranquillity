@@ -12,7 +12,7 @@ builder.register(Cat)
 Метод инициализации это функция, которая возвращает тип указанный при регистрации. В этом месте присутствует статическая проверка типов, поэтому возвращаемое значение обязательно будет удовлятворять заданному типу. 
 В простейшем случае, регистрация класса 'Cat' с указанием метода инициализации, выглядит следующим образом:
 ```Swift
-builder.register(Cat).initializer { _ in return Cat() }
+builder.register(Cat).initializer { Cat() }
 ```
 
 ## Указание альтернативных типов
@@ -21,11 +21,11 @@ builder.register(Cat).initializer { _ in return Cat() }
 
 Если мы хотим чтобы наш класс 'Cat' был доступен по типу 'Animal', то мы можем написать следующий код:
 ```Swift
-builder.register(Cat).asType(Animal).initializer { _ in return Cat() }
+builder.register(Cat).asType(Animal).initializer { Cat() }
 ```
 Но такое написание, не позволит обращаться напрямую по типу 'Cat'. Если же мы хотим обращаться по обоим типа то, нужно написать:
 ```Swift
-builder.register(Cat).asSelf().asType(Animal).initializer { _ in return Cat() }
+builder.register(Cat).asSelf().asType(Animal).initializer { Cat() }
 ```
 
 ## Разрешение зависимостей при инициализации
@@ -52,7 +52,7 @@ class Home {
   var animals: [Animal] = []
 }
 
-builder.register(Home).initializer { s in return Home() }
+builder.register(Home).initializer { Home() }
   .dependency { s, home in home.animals.append(s.resolve(Cat)) }
   .dependency { s, home in home.animals.append(s.resolve(Dog)) }
   .dependency { s, home in home.animals.append(s.resolve(Hamster)) }
@@ -96,8 +96,8 @@ class Hamster {
 }
 ...
 builder.register(Hamster)
-  .initializer { s, name in return Hamster(name: name) }
-  .initializer { s, name, hamsterHome in return Hamster(name: name, hamsterHome: hamsterHome) }
+  .initializer { _, name in return Hamster(name: name) }
+  .initializer { _, name, hamsterHome in return Hamster(name: name, hamsterHome: hamsterHome) }
 ```
 Методов инициализации может быть много, но они не могут пересекаться - то есть не может быть два метода инициализации которые принимают одни и теже типы в одинаковой последовательности. то есть сигнатура вида `String, Int` не может повторятся дважды, но `Int, String` является другой сигнатурой, и может присутствовать вместе с первой.
 
