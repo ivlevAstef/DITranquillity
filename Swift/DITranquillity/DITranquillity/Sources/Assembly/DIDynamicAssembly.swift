@@ -7,18 +7,22 @@
 //
 
 public class DIDynamicAssembly: DIAssembly {
-  public required init() {
-    super.init()
+  public var modules: [DIModule] { return dynamicModules[uniqueKey]! }
+  public private(set) var dependencies: [DIAssembly] = []
+
+  public init() {
+    uniqueKey = String(self.dynamicType)
+
+    if nil == dynamicModules[uniqueKey] {
+      dynamicModules[uniqueKey] = []
+    }
   }
+
+  public final func addModule(module: DIModule) {
+    dynamicModules[uniqueKey]!.append(module)
+  }
+
+  private let uniqueKey: String
 }
 
-public extension DIAssembly {
-  public func addModule<T: DIDynamicAssembly>(module: DIModule, Into type: T.Type) {
-    let name = String(type)
-    
-    let assembly = DIAssembly.assemblies[name] ?? T()
-    DIAssembly.assemblies[name] = assembly
-    
-    assembly.addModule(module)
-  }
-}
+private var dynamicModules: [String: [DIModule]] = [:]

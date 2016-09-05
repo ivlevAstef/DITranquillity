@@ -79,4 +79,16 @@ public class DIContainerBuilder {
   }
 
   internal let rTypeContainer = RTypeContainer()
+
+  // auto ignore equally register
+  internal func ignore(uniqueKey key: String) -> Bool {
+    if ignoreArr.contains(key) {
+      return true
+    }
+
+    ignoreArr.insert(key)
+    return false
+  }
+
+  private var ignoreArr: Set<String> = []
 }
