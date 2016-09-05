@@ -7,7 +7,7 @@
 //
 
 public class DIDynamicAssembly: DIAssembly {
-  public var modules: [DIModule] { return dynamicModules[uniqueKey]! }
+  public var modules: [DIModuleWithScope] { return dynamicModules[uniqueKey]! }
   public private(set) var dependencies: [DIAssembly] = []
 
   public init() {
@@ -19,10 +19,10 @@ public class DIDynamicAssembly: DIAssembly {
   }
 
   public final func addModule(module: DIModule) {
-    dynamicModules[uniqueKey]!.append(module)
+    dynamicModules[uniqueKey]!.append((module, .Public))
   }
 
   private let uniqueKey: String
 }
 
-private var dynamicModules: [String: [DIModule]] = [:]
+private var dynamicModules: [String: [DIModuleWithScope]] = [:]

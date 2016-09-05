@@ -6,20 +6,29 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
+public enum DIModuleScope {
+  case Public
+  case Internal
+}
+
+public typealias DIModuleWithScope = (DIModule, DIModuleScope)
+
 public protocol DIAssembly {
-  var modules: [DIModule] { get }
+  var modules: [DIModuleWithScope] { get }
   var dependencies: [DIAssembly] { get }
 }
 
 public extension DIContainerBuilder {
-  public func registerAssembly(assembly: DIAssembly) -> Self {
+  public func registerAssembly(assembly: DIAssembly, scope: DIModuleScope = .Public) -> Self {
     if !ignore(uniqueKey: String(assembly.dynamicType)) {
       for module in assembly.modules {
-        registerModule(module)
+        if .Public == scope || .Public == module.1 {
+          registerModule(module.0)
+        }
       }
 
       for dependency in assembly.dependencies {
-        registerAssembly(dependency)
+        registerAssembly(dependency, scope: .Internal)
       }
     }
 
