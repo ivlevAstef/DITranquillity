@@ -17,6 +17,8 @@ public enum DIError: ErrorType, Equatable {
   case NotFoundDefaultForMultyRegisterType(typeNames: [String], forType: String)
 
   case MultyRegisterNamesForType(names: Set<String>, forType: String)
+	
+	case MultyPerRequestObjectsForType(objects: [Any], forType: String)
 
   case TypeIncorrect(askableType: String, realType: String)
 	

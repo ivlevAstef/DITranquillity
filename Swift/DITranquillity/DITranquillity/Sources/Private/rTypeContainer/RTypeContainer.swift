@@ -22,10 +22,29 @@ internal class RTypeContainer {
   }
 
   internal func copyFinal() -> RTypeContainerFinal {
-    var data: [String: [RTypeFinal]] = [:]
-    for value in self.values {
-      data[value.0] = value.1.map { (rType) in return rType.copyFinal() }
+		//Hard copy method, for save unique RType
+		
+		var reverseValues: [RType : [String]] = [:]
+    for valueData in self.values {
+			for value in valueData.1 {
+				if nil == reverseValues[value] {
+					reverseValues[value] = []
+				}
+				reverseValues[value]!.append(valueData.0)
+			}
     }
+		
+		var data: [String: [RTypeFinal]] = [:]
+		for value in reverseValues {
+			let final = value.0.copyFinal()
+			for type in value.1 {
+				if nil == data[type] {
+					data[type] = []
+				}
+				data[type]!.append(final)
+			}
+		}
+		
     return RTypeContainerFinal(values: data)
   }
 
