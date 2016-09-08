@@ -10,12 +10,16 @@
 internal class BaseRTypeHashable: Hashable {
   init(implType: Any) {
     self.implType = implType
+		self.address = String(unsafeAddressOf(self))
   }
 
   internal let implType: Any
-  internal var hashValue: Int { return String(implType).hash }
+  internal var hashValue: Int { return uniqueKey.hash }
+	internal var uniqueKey: String { return String(implType) + address }
+	
+	private var address: String!
 }
 
 internal func == (lhs: BaseRTypeHashable, rhs: BaseRTypeHashable) -> Bool {
-  return String(lhs.implType) == String(rhs.implType)
+  return lhs.uniqueKey == rhs.uniqueKey
 }

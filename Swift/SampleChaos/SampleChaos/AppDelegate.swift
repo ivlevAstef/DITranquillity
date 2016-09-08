@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let builder = DIContainerBuilder()
     builder.registerAssembly(Assembly1())
+		builder.registerModule(SampleStartupModule())
 
     try! builder.build()
 

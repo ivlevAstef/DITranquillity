@@ -10,6 +10,7 @@
 		168BDAA01D6ABE070054FE18 /* RTypeAndNamePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168BDA9F1D6ABE070054FE18 /* RTypeAndNamePair.swift */; };
 		16CF5EC71D66D25300A08B7B /* DIDynamicAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CF5EC61D66D25300A08B7B /* DIDynamicAssembly.swift */; };
 		16E9CE301D645BB100A9A83B /* DIAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E9CE2F1D645BB100A9A83B /* DIAssembly.swift */; };
+		16EE40B21D818E44009259A1 /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EE40B11D818E44009259A1 /* Weak.swift */; };
 		A50053011D19299700DFD9CF /* DIScopeImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50053001D19299700DFD9CF /* DIScopeImpl.swift */; };
 		A505999B1D17FCB100A8D42C /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50599981D17FCB100A8D42C /* Helpers.swift */; };
 		A51CEC521D38DD7900C5B60A /* DIMultyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51CEC511D38DD7900C5B60A /* DIMultyMap.swift */; };
@@ -38,6 +39,7 @@
 		168BDA9F1D6ABE070054FE18 /* RTypeAndNamePair.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTypeAndNamePair.swift; sourceTree = "<group>"; };
 		16CF5EC61D66D25300A08B7B /* DIDynamicAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIDynamicAssembly.swift; sourceTree = "<group>"; };
 		16E9CE2F1D645BB100A9A83B /* DIAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIAssembly.swift; sourceTree = "<group>"; };
+		16EE40B11D818E44009259A1 /* Weak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weak.swift; sourceTree = "<group>"; };
 		A50053001D19299700DFD9CF /* DIScopeImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScopeImpl.swift; sourceTree = "<group>"; };
 		A50599981D17FCB100A8D42C /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		A51CEC511D38DD7900C5B60A /* DIMultyMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIMultyMap.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				A50053001D19299700DFD9CF /* DIScopeImpl.swift */,
 				A51CEC511D38DD7900C5B60A /* DIMultyMap.swift */,
 				A5AD4EED1D3CC87600A6882C /* RTypeLifeTime.swift */,
+				16EE40B11D818E44009259A1 /* Weak.swift */,
 			);
 			path = Private;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				A51CEC521D38DD7900C5B60A /* DIMultyMap.swift in Sources */,
 				A5AD4EFD1D3CCC6D00A6882C /* RType.swift in Sources */,
 				A5F1581E1D2A91930051BF0D /* DIModule.swift in Sources */,
+				16EE40B21D818E44009259A1 /* Weak.swift in Sources */,
 				A5AD4F001D3CCC6D00A6882C /* RTypeContainerFinal.swift in Sources */,
 				A569841B1D2B734D00B25587 /* DIStoryboardBase.m in Sources */,
 				A550710F1D33B46900809CB9 /* DIScope.FasterSyntax.swift in Sources */,

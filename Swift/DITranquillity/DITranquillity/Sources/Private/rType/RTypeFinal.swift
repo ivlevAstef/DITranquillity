@@ -30,8 +30,6 @@ internal class RTypeFinal: BaseRTypeHashable {
     return names.contains(name)
   }
 
-  internal var uniqueKey: UniqueKey { return String(implType) + String(unsafeAddressOf(self)) }
-
   internal let isDefault: Bool
   internal let lifeTime: RTypeLifeTime
   internal let dependencies: [(scope: DIScope, obj: Any) -> ()]

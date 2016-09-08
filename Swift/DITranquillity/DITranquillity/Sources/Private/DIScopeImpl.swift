@@ -34,6 +34,8 @@ internal class DIScopeImpl {
 				try result.append(resolveUseRType(scope, pair: RTypeWithNamePair(rType, ""), method: method))
 			} catch DIError.RecursiveInitializer {
 				// Ignore recursive initializer object for many
+			} catch DIError.MultyPerRequestObjectsForType(let objects, _) {
+				result.appendContentsOf(objects)
 			} catch {
 				throw error
 			}
@@ -88,9 +90,28 @@ internal class DIScopeImpl {
     return rTypes
   }
 
-  private func resolveUseRTypeAndObject(scope: DIScope, pair: RTypeWithNamePair, obj: Any) {
+	private func savePerRequestObject<T>(obj: T, pair: RTypeWithNamePair) {
+		guard let anyObj = obj as? AnyObject else {
+			return //Ignore
+		}
+		
+		let key = pair.uniqueKey
+		
+		if var list = perRequestObjects[key] {
+			list.append(Weak(value: anyObj))
+			perRequestObjects[key] = list.filter{ nil != $0 } // removed old values
+		} else {
+			perRequestObjects[key] = [Weak(value: anyObj)]
+		}
+	}
+	
+  private func resolveUseRTypeAndObject<T>(scope: DIScope, pair: RTypeWithNamePair, obj: T) {
     objc_sync_enter(DIScopeImpl.singleMonitor)
     defer { objc_sync_exit(DIScopeImpl.singleMonitor) }
+		
+		if .PerRequest == pair.rType.lifeTime {
+			savePerRequestObject(obj, pair: pair)
+		}
 
     allTypes.append((pair, obj))
     objCache[pair.uniqueKey] = obj
@@ -112,7 +133,7 @@ internal class DIScopeImpl {
     case .PerDependency:
       return try resolvePerDependency(scope, pair: pair, method: method)
     case .PerRequest:
-      return try resolvePerDependency(scope, pair: pair, method: method)
+      return try resolvePerRequest(scope, pair: pair, method: method)
     }
   }
 
@@ -139,6 +160,37 @@ internal class DIScopeImpl {
     objects[key] = obj
     return obj
   }
+	
+	private func resolvePerRequest<T, Method>(scope: DIScope, pair: RTypeWithNamePair, method: Method -> Any) throws -> T {
+		let key = pair.uniqueKey
+		
+		var strongs: [T] = []
+		var finalError: ErrorType!
+		
+		do {
+			strongs.append(try resolvePerDependency(scope, pair: pair, method: method))
+		} catch {
+			finalError = error
+		}
+		
+		if let list = perRequestObjects[key] {
+			for weak in list {
+				if let obj = weak.value as? T {
+					strongs.append(obj)
+				}
+			}
+		}
+		
+		if strongs.count > 1 {
+			throw DIError.MultyPerRequestObjectsForType(objects: strongs.map{ $0 as Any }, forType: String(T.self))
+		}
+		
+		if let single = strongs.first {
+			return single
+		}
+		
+		throw finalError
+	}
 
   private func resolvePerDependency<T, Method>(scope: DIScope, pair: RTypeWithNamePair, method: Method -> Any) throws -> T {
 		if recursiveInitializer.contains(pair.uniqueKey) {
@@ -230,6 +282,8 @@ internal class DIScopeImpl {
 
   private static var singleObjects: [RTypeWithNamePair.UniqueKey: Any] = [:]
   private static let singleMonitor = []
+	
+	private var perRequestObjects: [RTypeWithNamePair.UniqueKey: [Weak]] = [:]
 
   private var objects: [RTypeWithNamePair.UniqueKey: Any] = [:]
   private let registeredTypes: RTypeContainerFinal
