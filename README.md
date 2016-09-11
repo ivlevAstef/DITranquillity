@@ -3,29 +3,23 @@ Dependency injection for iOS (Swift)
 
 ## Features
 * Pure Swift Type Support
+* Native
+* Static typing
+* Initializer/Property/Method Dependency Injections
+* Object scopes as Single, LazySingle, PerScope, PerDependency, PerRequest (for UIViewController)
 * Storyboard
-* Auto Load Startup Module
+* Registration/Resolve by type and name
+* Registration/Resolve with parameters
 * Enumeration registration and Default
-* Fast resolve syntax
-* Initializer/Property/Method Injections
-* Initialization Callbacks
-* Static/Build validate
 * Circular Dependencies
-* Object Scopes as Single, PerMatchingScope(name), PerScope, PerDependency, PerRequest (for UIViewController)
-* Support of both Reference and Value Types
-* Self-registration (Self-binding)
-* Scope Hierarchy
-* Modular Components
-
+* Registration by types, modules, assembly
+* Fast resolve syntax
 
 ## Install
 Via CocoaPods.
 
 ###### Core
 `pod 'DITranquillity'` Swift (iOS8+) also need write in your PodFile `use_frameworks!`
-
-###### ViewControllers
-`pod 'DITranquillity/ViewControllers'`
 
 ###### Storyboard
 `pod 'DITranquillity/Storyboard'`
@@ -38,25 +32,26 @@ protocol Animal {
 }
 
 class Cat: Animal {
-    init() { }
-    var name: String { return "Cat" }
+  init() { }
+  var name: String { return "Cat" }
 }
 ```
 ```Swift
 let builder = DIContainerBuilder()
 
-builder.register(Animal)
+builder.register(Cat)
   .asSelf()
-  .initializer { _ in return Cat() }
+  .asType(Animal)
+  .initializer { Cat() }
   
-let scope = try! builder.build() //validate
+let scope = try! builder.build() // validate
 ```
 ```Swift
 let cat: Cat = try! scope.resolve()
 let animal: Animal = try! scope.resolve()
 
-print(cat.name) //Cat
-print(animal.name) //Cat
+print(cat.name) // Cat
+print(animal.name) // Cat
 ```
 
 #### Basic 
@@ -66,28 +61,28 @@ protocol Animal {
 }
 
 class Cat: Animal {
-    init() { }
-    var name: String { return "DefaultCatName" }
+  init() { }
+  var name: String { return "CatName" }
 }
 
 class Dog: Animal {
-    init() { }
-    var name: String { return "DefaultDogName" }
+  init() { }
+  var name: String { return "DogName" }
 }
 
 class Pet: Animal {
-    let petName: String
-    init(name: String) { 
-      petName = name
-    }
-    var name: String { return petName }
+  let petName: String
+  init(name: String) { 
+    petName = name
+  }
+  var name: String { return petName }
 }
 
 class Home {
-    let animals: [Animal]
-    init(animals: [Animal]) { 
-      self.animals = animals
-    }
+  let animals: [Animal]
+  init(animals: [Animal]) { 
+    self.animals = animals
+  }
 }
 ```
 ```Swift
@@ -97,53 +92,47 @@ builder.register(Cat)
   .asSelf()
   .asType(Animal)
   .instancePerDependency() //instanceSingle(), instancePerScope(), instancePerRequest(), instancePerMatchingScope(String)
-  .initializer { _ in  return Cat() }
+  .initializer { Cat() }
   
 builder.register(Dog)
   .asSelf()
   .asType(Animal)
   .instancePerDependency()
-  .initializer { _ in  return Dog() }
+  .initializer { Dog() }
   
 builder.register(Pet)
   .asSelf()
   .asType(Animal)
   .asDefault()
   .instancePerDependency()
-  .initializer { _ in  return Pet(name: "My Pet") }
+  .initializer { Pet(name: "My Pet") }
   
 builder.register(Home)
   .asSelf()
   .instancePerScope()
-  .initializer { s in 
-    return Home(animals: [
-      try! s.resolve(Dog),
-      try! s.resolve() as Cat,
-      *!s as Pet
-    ]) //Also You can write: Home(animals : s.resolveMany()) or Home(animals : **!s)
-  }
+  .initializer { scope in return try! Home(animals: scope.resolveMany()) }
 
-let scope = try! builder.build() //validate
+let scope = try! builder.build() // validate
 ```
 ```Swift
 let cat: Cat = try! scope.resolve()
 let dog = try! scope.resolve(Dog)
 let pet: Pet = *!scope
-let animal: Animal = *!scope //default it's Pet
+let animal: Animal = *!scope // default it's Pet
 let home: Home = *!scope
 
-print(cat.name) //DefaultCatName
-print(dog.name) //DefaultDogName
-print(pet.name) //My Pet
-print(animal.name) //My Pet
-print(home.animals) // [Dog, Cat,Pet]
+print(cat.name) // CatName
+print(dog.name) // DogName
+print(pet.name) // My Pet
+print(animal.name) // My Pet
+print(home.animals) // [Dog, Cat, Pet]
 
 let cat2: Cat = *!scope //cat2 !=== cat
 let home2: Home = *!scope //home2 === home
 ```
 
 #### Storyboard
-Create Your ViewController:
+Create your ViewController:
 ```Swift
 class ViewController: UIViewController {
   internal var inject: Inject?
@@ -155,12 +144,11 @@ class ViewController: UIViewController {
   }
 }
 ```
-Create Your Startup Module:
+Create your module:
 ```Swift
-class SampleStartupModule : DIStartupModule {
+class SampleModule: DIModule {
   override func load(builder: DIContainerBuilder) {
     builder.register(ViewController)
-      .asSelf()
       .instancePerRequest()
       .dependency { (scope, obj) in obj.inject = *!scope }
   }
@@ -170,8 +158,11 @@ Registrate Storyboard:
 ```Swift
 func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
   window = UIWindow(frame: UIScreen.mainScreen().bounds)
-    
-  let storyboard = DIStoryboard(name: "Main", bundle: nil)
+  
+  let builder = DIContainerBuilder()
+  builder.registerModule(SampleModule())
+  
+  let storyboard = DIStoryboard(name: "Main", bundle: nil, builder: builder)
   window!.rootViewController = storyboard.instantiateInitialViewController()
   window!.makeKeyAndVisible()
     
@@ -180,6 +171,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 ```
 
 ## Documentation
+* [ru](https://github.com/ivlevAstef/DITranquillity/blob/master/Documentation/ru/main.md)
 
 ## Requirements
 * Swift - iOS 8.0+; ARC; Xcode 7.0
