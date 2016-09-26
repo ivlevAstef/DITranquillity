@@ -1,6 +1,6 @@
 //
 //  SampleClasses.swift
-//  DITranquillitySample
+//  SampleChaos
 //
 //  Created by Alexander Ivlev on 14/06/16.
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.

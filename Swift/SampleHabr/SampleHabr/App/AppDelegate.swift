@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  SampleChaos
+//  SampleHabr
 //
-//  Created by Alexander Ivlev on 09/06/16.
+//  Created by Alexander Ivlev on 26/09/16.
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
@@ -15,20 +15,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+		let builder = DIContainerBuilder()
+		builder.registerAssembly(AppAssembly())
+		let container = try! builder.build()
+		
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
-    let storyboard = DIStoryboard(name: "Main", bundle: nil, module: SampleStartupModule())
-    window!.rootViewController = storyboard.instantiateInitialViewController()
+		let storyboard: UIStoryboard = try! container.resolve(Name: "Main") // Получаем наш Main storyboard
+		window!.rootViewController = storyboard.instantiateInitialViewController()
+		window!.makeKeyAndVisible()
 
-    window!.makeKeyAndVisible()
-
-    let builder = DIContainerBuilder()
-    builder.registerAssembly(Assembly1())
-		builder.registerModule(SampleStartupModule())
-
-    try! builder.build()
-
-    // Override point for customization after application launch.
     return true
   }
 
