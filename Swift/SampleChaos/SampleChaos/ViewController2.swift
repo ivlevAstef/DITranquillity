@@ -1,6 +1,6 @@
 //
 //  ViewController2.swift
-//  DITranquillitySample
+//  SampleChaos
 //
 //  Created by Alexander Ivlev on 05/07/16.
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.

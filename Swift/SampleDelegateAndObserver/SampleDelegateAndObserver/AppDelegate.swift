@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  SIADependencySample
+//  SampleDelegateAndObserver
 //
-//  Created by Alexander Ivlev on 09/06/16.
+//  Created by Alexander Ivlev on 08/09/16.
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
