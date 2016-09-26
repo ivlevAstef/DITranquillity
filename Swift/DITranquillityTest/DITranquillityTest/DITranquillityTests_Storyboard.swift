@@ -33,7 +33,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .dependency { (scope, vc) in vc.service = *!scope }
     
     
-    let storyboard = DIStoryboard(name: "TestStoryboard", bundle: NSBundle(forClass: self.dynamicType), builder: builder)
+    let storyboard = DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), builder: builder)
     
     let viewController = storyboard.instantiateInitialViewController()
     XCTAssert(viewController is TestViewController)
@@ -55,9 +55,9 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .instancePerRequest()
       .dependency { (scope, vc) in vc.service = *!scope }
     
-    let storyboard = DIStoryboard(name: "TestStoryboard", bundle: NSBundle(forClass: self.dynamicType), builder: builder)
+    let storyboard = DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), builder: builder)
     
-    let viewController = storyboard.instantiateViewControllerWithIdentifier("TestVC2")
+    let viewController = storyboard.instantiateViewController(withIdentifier: "TestVC2")
     XCTAssert(viewController is TestViewController2)
     guard let testVC = viewController as? TestViewController2 else {
       XCTFail("incorrect View Controller")
@@ -70,9 +70,9 @@ class DITranquillityTests_Storyboard: XCTestCase {
   func test03_ViewControllerNotRegistered() {
     let builder = DIContainerBuilder()
     
-    let storyboard = DIStoryboard(name: "TestStoryboard", bundle: NSBundle(forClass: self.dynamicType), builder: builder)
+    let storyboard = DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), builder: builder)
     
-    let viewController = storyboard.instantiateViewControllerWithIdentifier("TestVC2")
+    let viewController = storyboard.instantiateViewController(withIdentifier: "TestVC2")
     XCTAssert(viewController is TestViewController2)
   }
   
@@ -91,7 +91,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .instancePerRequest()
       .dependency { (scope, vc) in vc.service = *!scope }
     
-    let storyboard = DIStoryboard(name: "TestStoryboard", bundle: NSBundle(forClass: self.dynamicType), builder: builder)
+    let storyboard = DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), builder: builder)
     
     let viewController = storyboard.instantiateInitialViewController()
     XCTAssert(viewController is TestViewController)
@@ -101,7 +101,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     }
     XCTAssertEqual(testVC.service.foo(), "foo")
     
-    viewController?.performSegueWithIdentifier("ShowTestViewController2", sender: nil)
+    viewController?.performSegue(withIdentifier: "ShowTestViewController2", sender: nil)
     
     //...
   }  

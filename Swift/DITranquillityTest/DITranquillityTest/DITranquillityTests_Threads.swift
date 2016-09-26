@@ -23,21 +23,21 @@ class DITranquillityTests_Threads: XCTestCase {
     
     let container = try! builder.build()
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
       for _ in 0..<32768 {
         let service: FooService = *!container
         XCTAssertEqual(service.foo(), "foo")
       }
     }
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
       for _ in 0..<16384 {
         let service: FooService = *!container
         XCTAssertEqual(service.foo(), "foo")
       }
     }
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)) {
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
       for _ in 0..<8192 {
         let service: FooService = *!container
         XCTAssertEqual(service.foo(), "foo")
@@ -57,21 +57,21 @@ class DITranquillityTests_Threads: XCTestCase {
     let singleService: FooService = *!container
     XCTAssertEqual(singleService.foo(), "foo")
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
       for _ in 0..<32768 {
         let service: FooService = *!container
         XCTAssert(service === singleService)
       }
     }
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
       for _ in 0..<16384 {
         let service: FooService = *!container
         XCTAssert(service === singleService)
       }
     }
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)) {
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
       for _ in 0..<8192 {
         let service: FooService = *!container
         XCTAssert(service === singleService)
@@ -96,7 +96,7 @@ class DITranquillityTests_Threads: XCTestCase {
     let scopeService2: FooService = *!scope
     XCTAssertEqual(scopeService2.foo(), "foo")
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
       for _ in 0..<32768 {
         let service: FooService = *!container
         XCTAssert(service === scopeService)
@@ -105,7 +105,7 @@ class DITranquillityTests_Threads: XCTestCase {
       }
     }
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
       for _ in 0..<16384 {
         let service: FooService = *!container
         XCTAssert(service === scopeService)
@@ -114,7 +114,7 @@ class DITranquillityTests_Threads: XCTestCase {
       }
     }
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)) {
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
       for _ in 0..<8192 {
         let service: FooService = *!container
         XCTAssert(service === scopeService)

@@ -24,13 +24,13 @@ class DITranquillityTests_Build: XCTestCase {
   func test01_NotSetInitializer() {
     let builder = DIContainerBuilder()
     
-    builder.register(TestProtocol)
+    let _ = builder.register(TestProtocol.self)
     
     do {
       try builder.build()
-    } catch DIError.Build(let errors) {
+    } catch DIError.build(let errors) {
       XCTAssertEqual(errors, [
-        DIError.NotSetInitializer(typeName: String(TestProtocol))
+        DIError.notSetInitializer(typeName: String(describing: TestProtocol.self))
       ])
       return
     } catch {
@@ -42,7 +42,7 @@ class DITranquillityTests_Build: XCTestCase {
   func test02_NotInitializerForPerRequest() {
     let builder = DIContainerBuilder()
     
-    builder.register(TestProtocol)
+    builder.register(TestProtocol.self)
       .instancePerRequest()
     
     do {
@@ -55,21 +55,21 @@ class DITranquillityTests_Build: XCTestCase {
   func test03_MultiplyRegistrateTypeWithMultyDefault() {
     let builder = DIContainerBuilder()
     
-    builder.register(TestClass1)
-      .asType(TestProtocol)
+    builder.register(TestClass1.self)
+      .asType(TestProtocol.self)
       .asDefault()
       .initializer { TestClass1() }
     
-    builder.register(TestClass2)
-      .asType(TestProtocol)
+    builder.register(TestClass2.self)
+      .asType(TestProtocol.self)
       .asDefault()
       .initializer { TestClass2() }
     
     do {
       try builder.build()
-    } catch DIError.Build(let errors) {
+    } catch DIError.build(let errors) {
       XCTAssertEqual(errors, [
-        DIError.MultyRegisterDefault(typeNames: [String(TestClass1), String(TestClass2)], forType: String(TestProtocol))
+        DIError.multyRegisterDefault(typeNames: [String(describing: TestClass1.self), String(describing: TestClass2.self)], forType: String(describing: TestProtocol.self))
       ])
       return
     } catch {
@@ -81,13 +81,13 @@ class DITranquillityTests_Build: XCTestCase {
   func test04_MultiplyRegistrateTypeWithOneDefault() {
     let builder = DIContainerBuilder()
     
-    builder.register(TestClass1)
-      .asType(TestProtocol)
+    builder.register(TestClass1.self)
+      .asType(TestProtocol.self)
       .asDefault()
       .initializer { TestClass1() }
     
-    builder.register(TestClass2)
-      .asType(TestProtocol)
+    builder.register(TestClass2.self)
+      .asType(TestProtocol.self)
       .initializer { TestClass2() }
     
     do {
@@ -100,13 +100,13 @@ class DITranquillityTests_Build: XCTestCase {
   func test05_MultiplyRegistrateTypeWithNames() {
     let builder = DIContainerBuilder()
     
-    builder.register(TestClass1)
-      .asType(TestProtocol)
+    builder.register(TestClass1.self)
+      .asType(TestProtocol.self)
       .asName("foo")
       .initializer { TestClass1() }
     
-    builder.register(TestClass2)
-      .asType(TestProtocol)
+    builder.register(TestClass2.self)
+      .asType(TestProtocol.self)
       .asName("bar")
       .initializer { TestClass2() }
     
@@ -120,8 +120,8 @@ class DITranquillityTests_Build: XCTestCase {
   func test06_IncorrectRegistrateType() {
     let builder = DIContainerBuilder()
     
-    builder.register(TestClass1)
-      .asType(Test2Protocol) //<---- Swift not supported static check
+    builder.register(TestClass1.self)
+      .asType(Test2Protocol.self) //<---- Swift not supported static check
       .initializer { TestClass1() }
     
     do {
@@ -130,9 +130,9 @@ class DITranquillityTests_Build: XCTestCase {
       do {
         let type: Test2Protocol = try container.resolve()
         print("\(type)")
-      } catch DIError.TypeIncorrect(let askableType, let realType) {
-        XCTAssertEqual(askableType, String(Test2Protocol))
-        XCTAssertEqual(realType, String(TestClass1))
+      } catch DIError.typeIncorrect(let askableType, let realType) {
+        XCTAssertEqual(askableType, String(describing: Test2Protocol.self))
+        XCTAssertEqual(realType, String(describing: TestClass1.self))
         return
       } catch {
         XCTFail("Catched error: \(error)")
@@ -146,8 +146,8 @@ class DITranquillityTests_Build: XCTestCase {
   func test07_RegistrationByProtocolAndGetByClass() {
     let builder = DIContainerBuilder()
     
-    builder.register(TestClass1)
-      .asType(TestProtocol)
+    builder.register(TestClass1.self)
+      .asType(TestProtocol.self)
       .initializer { TestClass1() }
     
     do {
@@ -157,8 +157,8 @@ class DITranquillityTests_Build: XCTestCase {
       do {
         let type: TestClass1 = try container.resolve()
         print("\(type)")
-      } catch DIError.TypeNoRegister(let typeName) {
-        XCTAssertEqual(typeName, String(TestClass1))
+      } catch DIError.typeNoRegister(let typeName) {
+        XCTAssertEqual(typeName, String(describing: TestClass1.self))
         return
       } catch {
         XCTFail("Catched error: \(error)")

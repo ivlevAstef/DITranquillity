@@ -214,7 +214,7 @@ class DITranquillityTests_Resolve: XCTestCase {
 		let serviceFoo2: ServiceProtocol = try! container.resolve(Name: "foo2")
 		XCTAssertEqual(serviceFoo2.foo(), "foo")
 		
-		XCTAssertNotEqual(unsafeAddressOf(serviceFoo as! AnyObject), unsafeAddressOf(serviceFoo2 as! AnyObject))
+		XCTAssertNotEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceFoo2 as AnyObject).toOpaque())
 	}
 	
 	func test06_ResolveMultiplyPerScopeByName() {
@@ -235,7 +235,7 @@ class DITranquillityTests_Resolve: XCTestCase {
 		let serviceBar1_2: ServiceProtocol = try! container.resolve(Name: "bar2")
 		XCTAssertEqual(serviceBar1_2.foo(), "bar")
 		
-		XCTAssertNotEqual(unsafeAddressOf(serviceBar1_1 as! AnyObject), unsafeAddressOf(serviceBar1_2 as! AnyObject))
+		XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar1_1 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar1_2 as AnyObject).toOpaque())
 		
 		
 		let container2 = container.newLifeTimeScope()
@@ -246,10 +246,10 @@ class DITranquillityTests_Resolve: XCTestCase {
 		let serviceBar2_2: ServiceProtocol = try! container2.resolve(Name: "bar2")
 		XCTAssertEqual(serviceBar2_2.foo(), "bar")
 		
-		XCTAssertNotEqual(unsafeAddressOf(serviceBar2_1 as! AnyObject), unsafeAddressOf(serviceBar2_2 as! AnyObject))
+		XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar2_1 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar2_2 as AnyObject).toOpaque())
 		
-		XCTAssertNotEqual(unsafeAddressOf(serviceBar1_1 as! AnyObject), unsafeAddressOf(serviceBar2_1 as! AnyObject))
-		XCTAssertNotEqual(unsafeAddressOf(serviceBar1_2 as! AnyObject), unsafeAddressOf(serviceBar2_2 as! AnyObject))
+		XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar1_1 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar2_1 as AnyObject).toOpaque())
+		XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar1_2 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar2_2 as AnyObject).toOpaque())
 	}
 	
   func test06_ResolveMultiplyMany() {
