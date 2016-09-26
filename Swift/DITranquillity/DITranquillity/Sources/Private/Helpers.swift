@@ -14,14 +14,14 @@ internal class Helpers {
     "ImplicitlyUnwrappedOptional"
   ]
   // It's worked but it's no good
-  internal static func removedTypeWrappers<T>(type: T.Type) -> Any {
-    var text = String(type)
+  internal static func removedTypeWrappers<T>(_ type: T.Type) -> Any {
+    var text = String(describing: type)
 
     for wrapper in wrappers {
       if text.hasPrefix(wrapper) {
         // removed wrapper with symbols: '<' '>'
-        text.removeRange(text.startIndex...text.startIndex.advancedBy(wrapper.characters.count))
-        text.removeRange(text.endIndex.predecessor()..<text.endIndex)
+        text.removeSubrange(text.startIndex...text.characters.index(text.startIndex, offsetBy: wrapper.characters.count))
+        text.removeSubrange(text.characters.index(before: text.endIndex)..<text.endIndex)
 
         return text
       }

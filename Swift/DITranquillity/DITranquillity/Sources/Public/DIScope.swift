@@ -6,22 +6,22 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public class DIScope {
-  typealias Method = (scope: DIScope) -> Any
+public final class DIScope {
+  typealias Method = (_ scope: DIScope) -> Any
 
   public func resolve<T>() throws -> T {
-    return try impl.resolve(self) { (initializer: Method) in return initializer(scope: self) }
+    return try impl.resolve(self) { (initializer: Method) in return initializer(self) }
   }
 
   public func resolveMany<T>() throws -> [T] {
-    return try impl.resolveMany(self) { (initializer: Method) in return initializer(scope: self) }
+    return try impl.resolveMany(self) { (initializer: Method) in return initializer(self) }
   }
 
   public func resolve<T>(Name name: String) throws -> T {
-    return try impl.resolve(self, name: name) { (initializer: Method) in return initializer(scope: self) }
+    return try impl.resolve(self, name: name) { (initializer: Method) in return initializer(self) }
   }
 
-  public func resolve<T>(object: T) throws {
+  public func resolve<T>(_ object: T) throws {
     return try impl.resolve(self, object: object)
   }
 
@@ -34,7 +34,7 @@ public class DIScope {
   }
 
   internal func resolve(RType rType: RTypeFinal) throws -> Any {
-    return try impl.resolve(self, rType: rType) { (initializer: Method) in return initializer(scope: self) }
+    return try impl.resolve(self, rType: rType) { (initializer: Method) in return initializer(self) }
   }
 
   internal let impl: DIScopeImpl

@@ -18,18 +18,18 @@ internal struct DIMultimap<Key: Hashable, Value: Equatable> {
     return []
   }
 
-  internal mutating func append(key: Key, value: Value) {
+  internal mutating func append(_ key: Key, value: Value) {
     if nil == dictionary[key] {
       dictionary[key] = []
     }
 
-    if !dictionary[key]!.contains({ (iter) in iter == value }) {
+    if !dictionary[key]!.contains(where: { (iter) in iter == value }) {
       dictionary[key]!.append(value)
     }
   }
 
   internal mutating func removeAll(keepCapacity keep: Bool = true) {
-    dictionary.removeAll(keepCapacity: keep)
+    dictionary.removeAll(keepingCapacity: keep)
   }
 
   private var dictionary = [Key: [Value]]()

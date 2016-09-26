@@ -9,9 +9,9 @@
 import UIKit
 
 class ViewController: UIViewController, PopUpDelegate, Observer {
-	@IBOutlet private var valueLbl: UILabel!
+	@IBOutlet fileprivate var valueLbl: UILabel!
   
-	func sliderValueChanged(value: Int) {
+	func sliderValueChanged(_ value: Int) {
 		print("From View Controller: Slider value changed on: \(value)")
 		
 		valueLbl.text = String(value)

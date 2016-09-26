@@ -13,18 +13,18 @@ internal class RType: BaseRTypeHashable {
   }
 
   // Initializer
-  internal func setInitializer<Method>(method: Method) {
-    initializer[String(Method.self)] = method
+  internal func setInitializer<Method>(_ method: Method) {
+    initializer[String(describing: Method.self)] = method
   }
 
   internal var hasInitializer: Bool { return !initializer.isEmpty }
 
   // Dependency
-  internal func appendDependency<T>(method: (scope: DIScope, obj: T) -> ()) {
+  internal func appendDependency<T>(_ method: @escaping (_ scope: DIScope, _ obj: T) -> ()) {
     dependencies.append { scope, obj in
       let objT = obj as? T
       assert(nil != objT)
-      method(scope: scope, obj: objT!)
+      method(scope, objT!)
     }
   }
 
@@ -37,9 +37,9 @@ internal class RType: BaseRTypeHashable {
       lifeTime: self.lifeTime)
   }
 
-  internal var lifeTime = RTypeLifeTime.PerScope
+  internal var lifeTime = RTypeLifeTime.perScope
   internal var names: Set<String> = []
   internal var isDefault: Bool = false
   private var initializer: [String: Any] = [:] // method type to method
-  private var dependencies: [(scope: DIScope, obj: Any) -> ()] = []
+  private var dependencies: [(_ scope: DIScope, _ obj: Any) -> ()] = []
 }

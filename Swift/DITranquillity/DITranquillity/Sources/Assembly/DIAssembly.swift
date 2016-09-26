@@ -7,8 +7,8 @@
 //
 
 public enum DIModuleScope {
-  case Public
-  case Internal
+  case `public`
+  case `internal`
 }
 
 public typealias DIModuleWithScope = (DIModule, DIModuleScope)
@@ -19,16 +19,16 @@ public protocol DIAssembly {
 }
 
 public extension DIContainerBuilder {
-  public func registerAssembly(assembly: DIAssembly, scope: DIModuleScope = .Public) -> Self {
-    if !ignore(uniqueKey: String(assembly.dynamicType)) {
+  public func registerAssembly(_ assembly: DIAssembly, scope: DIModuleScope = .public) -> Self {
+    if !ignore(uniqueKey: String(describing: type(of: assembly))) {
       for module in assembly.modules {
-        if .Public == scope || .Public == module.1 {
-          registerModule(module.0)
+        if .public == scope || .public == module.1 {
+          let _ = registerModule(module.0)
         }
       }
 
       for dependency in assembly.dependencies {
-        registerAssembly(dependency, scope: .Internal)
+        let _ = registerAssembly(dependency, scope: .internal)
       }
     }
 

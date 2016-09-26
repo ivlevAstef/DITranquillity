@@ -6,7 +6,7 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public class DIContainerBuilder {
+public final class DIContainerBuilder {
   public init() {
   }
 
@@ -15,19 +15,19 @@ public class DIContainerBuilder {
 
     var allTypes: Set<RType> = []
     for (superType, rTypes) in rTypeContainer.data() {
-      errors.appendContentsOf(checkRTypes(superType, rTypes: rTypes))
+      errors.append(contentsOf: checkRTypes(superType, rTypes: rTypes))
 
       allTypes = allTypes.union(rTypes)
     }
 
     for rType in allTypes {
-      if !(rType.hasInitializer || rType.lifeTime == RTypeLifeTime.PerRequest) {
-        errors.append(DIError.NotSetInitializer(typeName: String(rType.implType)))
+      if !(rType.hasInitializer || rType.lifeTime == RTypeLifeTime.perRequest) {
+        errors.append(DIError.notSetInitializer(typeName: String(describing: rType.implType)))
       }
     }
 
     if !errors.isEmpty {
-      throw DIError.Build(errors: errors)
+      throw DIError.build(errors: errors)
     }
 
     let finalRTypes = rTypeContainer.copyFinal()
@@ -35,44 +35,44 @@ public class DIContainerBuilder {
 
     // Init Single types
     for (_, rTypes) in finalRTypes.data() {
-      for rType in rTypes.filter({ $0.lifeTime == RTypeLifeTime.Single }) {
-        try scope.resolve(RType: rType)
+      for rType in rTypes.filter({ $0.lifeTime == RTypeLifeTime.single }) {
+        let _ = try scope.resolve(RType: rType)
       }
     }
 
     return scope
   }
 
-  private func checkRTypes(superType: String, rTypes: [RType]) -> [DIError] {
+  private func checkRTypes(_ superType: String, rTypes: [RType]) -> [DIError] {
     var errors: [DIError] = []
 
     if rTypes.count <= 1 {
       return errors
     }
 
-    errors.appendContentsOf(checkRTypesNames(superType, rTypes: rTypes))
+    errors.append(contentsOf: checkRTypesNames(superType, rTypes: rTypes))
 
     let defaultTypes = rTypes.filter { $0.isDefault }
 
     if defaultTypes.count > 1 {
-      errors.append(DIError.MultyRegisterDefault(typeNames: defaultTypes.map { String($0.implType) }, forType: superType))
+      errors.append(DIError.multyRegisterDefault(typeNames: defaultTypes.map { String(describing: $0.implType) }, forType: superType))
     }
 
     return errors
   }
 
-  private func checkRTypesNames(superType: String, rTypes: [RType]) -> [DIError] {
+  private func checkRTypesNames(_ superType: String, rTypes: [RType]) -> [DIError] {
     var errors: [DIError] = []
 
     var fullNames: Set<String> = []
 
     for rType in rTypes {
-      let intersect = fullNames.intersect(rType.names)
+      let intersect = fullNames.intersection(rType.names)
       if !intersect.isEmpty {
-        errors.append(DIError.MultyRegisterNamesForType(names: intersect, forType: superType))
+        errors.append(DIError.multyRegisterNamesForType(names: intersect, forType: superType))
       }
 
-      fullNames.unionInPlace(rType.names)
+      fullNames.formUnion(rType.names)
     }
 
     return errors

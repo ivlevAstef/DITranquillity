@@ -19,8 +19,8 @@ internal class RTypeContainerFinal {
     return values
   }
 
-  private func hash(type: Any) -> String {
-    return String(type)
+  private func hash(_ type: Any) -> String {
+    return String(describing: type)
   }
 
   private let values: [String: [RTypeFinal]]

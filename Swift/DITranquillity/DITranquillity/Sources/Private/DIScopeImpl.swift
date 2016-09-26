@@ -11,12 +11,12 @@ internal class DIScopeImpl {
     self.registeredTypes = registeredTypes
   }
 
-  internal func resolve<T, Method>(scope: DIScope, circular: Bool = false, method: Method -> Any) throws -> T {
+  internal func resolve<T, Method>(_ scope: DIScope, circular: Bool = false, method: (Method) -> Any) throws -> T {
     let rTypes = try getTypes(T.self)
 
     if rTypes.count > 1 {
-      guard let typeIndex = rTypes.indexOf({ (rType) -> Bool in rType.isDefault }) else {
-        throw DIError.NotFoundDefaultForMultyRegisterType(typeNames: rTypes.map { String($0.implType) }, forType: String(T.self))
+      guard let typeIndex = rTypes.index(where: { (rType) -> Bool in rType.isDefault }) else {
+        throw DIError.notFoundDefaultForMultyRegisterType(typeNames: rTypes.map { String(describing: $0.implType) }, forType: String(describing: T.self))
       }
 
       return try resolveUseRType(scope, pair: RTypeWithNamePair(rTypes[typeIndex], ""), method: method)
@@ -25,17 +25,21 @@ internal class DIScopeImpl {
     return try resolveUseRType(scope, pair: RTypeWithNamePair(rTypes[0], ""), method: method)
   }
 
-  internal func resolveMany<T, Method>(scope: DIScope, circular: Bool = false, method: Method -> Any) throws -> [T] {
+  internal func resolveMany<T, Method>(_ scope: DIScope, circular: Bool = false, method: (Method) -> Any) throws -> [T] {
     let rTypes = try getTypes(T.self)
 
     var result: [T] = []
     for rType in rTypes {
 			do {
 				try result.append(resolveUseRType(scope, pair: RTypeWithNamePair(rType, ""), method: method))
-			} catch DIError.RecursiveInitializer {
+			} catch DIError.recursiveInitializer {
 				// Ignore recursive initializer object for many
-			} catch DIError.MultyPerRequestObjectsForType(let objects, _) {
-				result.appendContentsOf(objects)
+			} catch DIError.multyPerRequestObjectsForType(let objects, _) {
+				for object in objects {
+					if let object = object as? T {
+						result.append(object)
+					}
+				}
 			} catch {
 				throw error
 			}
@@ -44,7 +48,7 @@ internal class DIScopeImpl {
     return result
   }
 
-  internal func resolve<T, Method>(scope: DIScope, name: String, circular: Bool = false, method: Method -> Any) throws -> T {
+  internal func resolve<T, Method>(_ scope: DIScope, name: String, circular: Bool = false, method: (Method) -> Any) throws -> T {
     let rTypes = try getTypes(T.self)
 
     for rType in rTypes {
@@ -53,15 +57,15 @@ internal class DIScopeImpl {
       }
     }
 
-    throw DIError.TypeNoRegisterByName(typeName: String(T.self), name: name)
+    throw DIError.typeNoRegisterByName(typeName: String(describing: T.self), name: name)
   }
 
-  internal func resolve<T>(scope: DIScope, object: T) throws {
-    let rTypes = try getTypes(object.dynamicType)
+  internal func resolve<T>(_ scope: DIScope, object: T) throws {
+    let rTypes = try getTypes(type(of: object))
 
     if rTypes.count > 1 {
-      guard let typeIndex = rTypes.indexOf({ (rType) -> Bool in rType.isDefault }) else {
-        throw DIError.NotFoundDefaultForMultyRegisterType(typeNames: rTypes.map { String($0.implType) }, forType: String(object.dynamicType))
+      guard let typeIndex = rTypes.index(where: { (rType) -> Bool in rType.isDefault }) else {
+        throw DIError.notFoundDefaultForMultyRegisterType(typeNames: rTypes.map { String(describing: $0.implType) }, forType: String(describing: type(of: object)))
       }
 
       resolveUseRTypeAndObject(scope, pair: RTypeWithNamePair(rTypes[typeIndex], ""), obj: object)
@@ -70,46 +74,44 @@ internal class DIScopeImpl {
     }
   }
 
-  internal func resolve<Method>(scope: DIScope, rType: RTypeFinal, method: Method -> Any) throws -> Any {
+  internal func resolve<Method>(_ scope: DIScope, rType: RTypeFinal, method: (Method) -> Any) throws -> Any {
     return try resolveUseRType(scope, pair: RTypeWithNamePair(rType, ""), method: method)
   }
 
-  internal func newLifeTimeScope(scope: DIScope) -> DIScope {
+  internal func newLifeTimeScope(_ scope: DIScope) -> DIScope {
     return DIScope(registeredTypes: registeredTypes)
   }
 
-  private func getTypes<T>(inputType: T.Type) throws -> [RTypeFinal] {
+  private func getTypes<T>(_ inputType: T.Type) throws -> [RTypeFinal] {
     let type = Helpers.removedTypeWrappers(inputType)
 
     guard let rTypes = registeredTypes[type] else {
-      throw DIError.TypeNoRegister(typeName: String(inputType))
+      throw DIError.typeNoRegister(typeName: String(describing: inputType))
     }
     guard !rTypes.isEmpty else {
-      throw DIError.TypeNoRegister(typeName: String(inputType))
+      throw DIError.typeNoRegister(typeName: String(describing: inputType))
     }
     return rTypes
   }
 
-	private func savePerRequestObject<T>(obj: T, pair: RTypeWithNamePair) {
-		guard let anyObj = obj as? AnyObject else {
-			return //Ignore
-		}
+	private func savePerRequestObject<T>(_ obj: T, pair: RTypeWithNamePair) {
+		let anyObj = obj as AnyObject
 		
 		let key = pair.uniqueKey
 		
 		if var list = perRequestObjects[key] {
 			list.append(Weak(value: anyObj))
-			perRequestObjects[key] = list.filter{ nil != $0 } // removed old values
+			perRequestObjects[key] = list.filter{ nil != $0.value } // removed old values
 		} else {
 			perRequestObjects[key] = [Weak(value: anyObj)]
 		}
 	}
 	
-  private func resolveUseRTypeAndObject<T>(scope: DIScope, pair: RTypeWithNamePair, obj: T) {
+  private func resolveUseRTypeAndObject<T>(_ scope: DIScope, pair: RTypeWithNamePair, obj: T) {
     objc_sync_enter(DIScopeImpl.singleMonitor)
     defer { objc_sync_exit(DIScopeImpl.singleMonitor) }
 		
-		if .PerRequest == pair.rType.lifeTime {
+		if .perRequest == pair.rType.lifeTime {
 			savePerRequestObject(obj, pair: pair)
 		}
 
@@ -119,25 +121,25 @@ internal class DIScopeImpl {
     setupAllDependency(scope)
   }
 
-  private func resolveUseRType<T, Method>(scope: DIScope, pair: RTypeWithNamePair, method: Method -> Any) throws -> T {
+  private func resolveUseRType<T, Method>(_ scope: DIScope, pair: RTypeWithNamePair, method: (Method) -> Any) throws -> T {
     objc_sync_enter(DIScopeImpl.singleMonitor)
     defer { objc_sync_exit(DIScopeImpl.singleMonitor) }
 
     switch pair.rType.lifeTime {
-    case .Single:
+    case .single:
       return try resolveSingle(scope, pair: pair, method: method)
-    case .LazySingle:
+    case .lazySingle:
       return try resolveSingle(scope, pair: pair, method: method)
-    case .PerScope:
+    case .perScope:
       return try resolvePerScope(scope, pair: pair, method: method)
-    case .PerDependency:
+    case .perDependency:
       return try resolvePerDependency(scope, pair: pair, method: method)
-    case .PerRequest:
+    case .perRequest:
       return try resolvePerRequest(scope, pair: pair, method: method)
     }
   }
 
-  private func resolveSingle<T, Method>(scope: DIScope, pair: RTypeWithNamePair, method: Method -> Any) throws -> T {
+  private func resolveSingle<T, Method>(_ scope: DIScope, pair: RTypeWithNamePair, method: (Method) -> Any) throws -> T {
     let key = pair.uniqueKey
 
     if let obj = DIScopeImpl.singleObjects[key] {
@@ -149,7 +151,7 @@ internal class DIScopeImpl {
     return obj
   }
 
-  private func resolvePerScope<T, Method>(scope: DIScope, pair: RTypeWithNamePair, method: Method -> Any) throws -> T {
+  private func resolvePerScope<T, Method>(_ scope: DIScope, pair: RTypeWithNamePair, method: (Method) -> Any) throws -> T {
     let key = pair.uniqueKey
 
     if let obj = objects[key] {
@@ -161,11 +163,11 @@ internal class DIScopeImpl {
     return obj
   }
 	
-	private func resolvePerRequest<T, Method>(scope: DIScope, pair: RTypeWithNamePair, method: Method -> Any) throws -> T {
+	private func resolvePerRequest<T, Method>(_ scope: DIScope, pair: RTypeWithNamePair, method: (Method) -> Any) throws -> T {
 		let key = pair.uniqueKey
 		
 		var strongs: [T] = []
-		var finalError: ErrorType!
+		var finalError: Error!
 		
 		do {
 			strongs.append(try resolvePerDependency(scope, pair: pair, method: method))
@@ -182,7 +184,7 @@ internal class DIScopeImpl {
 		}
 		
 		if strongs.count > 1 {
-			throw DIError.MultyPerRequestObjectsForType(objects: strongs.map{ $0 as Any }, forType: String(T.self))
+			throw DIError.multyPerRequestObjectsForType(objects: strongs.map{ $0 as Any }, forType: String(describing: T.self))
 		}
 		
 		if let single = strongs.first {
@@ -192,9 +194,9 @@ internal class DIScopeImpl {
 		throw finalError
 	}
 
-  private func resolvePerDependency<T, Method>(scope: DIScope, pair: RTypeWithNamePair, method: Method -> Any) throws -> T {
+  private func resolvePerDependency<T, Method>(_ scope: DIScope, pair: RTypeWithNamePair, method: (Method) -> Any) throws -> T {
 		if recursiveInitializer.contains(pair.uniqueKey) {
-			throw DIError.RecursiveInitializer(type: String(pair.rType.implType))
+			throw DIError.recursiveInitializer(type: String(describing: pair.rType.implType))
 		}
 		
     for recursiveTypeKey in recursive {
@@ -207,8 +209,11 @@ internal class DIScopeImpl {
     let obj: T = try getObject(scope, pair: pair, circular: isCircular(pair), method: method)
     recursive.removeLast()
 
-    if !allTypes.contains({ (iter) in return iter.1 as? AnyObject === obj as? AnyObject }) {
-      allTypes.insert((pair, obj), atIndex: insertIndex)
+    if !allTypes.contains(where: { (iter) in
+			let iterObj = iter.1 as AnyObject
+			return iterObj === obj as AnyObject
+		}) {
+      allTypes.insert((pair, obj), at: insertIndex)
     }
 
     if recursive.isEmpty {
@@ -218,7 +223,7 @@ internal class DIScopeImpl {
     return obj
   }
 
-  private func isCircular(pair: RTypeWithNamePair) -> Bool {
+  fileprivate func isCircular(_ pair: RTypeWithNamePair) -> Bool {
     for recursiveTypeKey in recursive {
       if dependencies[recursiveTypeKey].contains(pair.uniqueKey) {
         return true
@@ -227,18 +232,18 @@ internal class DIScopeImpl {
     return false
   }
 
-  private func setupDependency(scope: DIScope, pair: RTypeWithNamePair, obj: Any) {
+  private func setupDependency(_ scope: DIScope, pair: RTypeWithNamePair, obj: Any) {
     let cacheSave = objCache
 
     recursive.append(pair.uniqueKey)
     for index in 0..<pair.rType.dependencies.count {
       objCache = cacheSave
-      pair.rType.dependencies[index](scope: scope, obj: obj)
+      pair.rType.dependencies[index](scope, obj)
     }
     recursive.removeLast()
   }
 
-  private func setupAllDependency(scope: DIScope) {
+  private func setupAllDependency(_ scope: DIScope) {
     repeat {
       for (pair, obj) in allTypes {
         setupDependency(scope, pair: pair, obj: obj)
@@ -255,7 +260,7 @@ internal class DIScopeImpl {
     self.objCache.removeAll()
   }
 
-  private func getObject<T, Method>(scope: DIScope, pair: RTypeWithNamePair, circular: Bool, method: Method -> Any) throws -> T {
+  private func getObject<T, Method>(_ scope: DIScope, pair: RTypeWithNamePair, circular: Bool, method: (Method) -> Any) throws -> T {
     if circular, let obj = objCache[pair.uniqueKey] {
       return obj as! T
     }
@@ -265,7 +270,7 @@ internal class DIScopeImpl {
 		recursiveInitializer.remove(pair.uniqueKey)
 
     guard let obj = objAny as? T else {
-      throw DIError.TypeIncorrect(askableType: String(T.self), realType: String(objAny.dynamicType))
+			throw DIError.typeIncorrect(askableType: String(describing: T.self), realType: String(describing: type(of: objAny)))
     }
 
     objCache[pair.uniqueKey] = obj
@@ -281,7 +286,7 @@ internal class DIScopeImpl {
   private var objCache: [RTypeWithNamePair.UniqueKey: Any] = [:] // needed for circular
 
   private static var singleObjects: [RTypeWithNamePair.UniqueKey: Any] = [:]
-  private static let singleMonitor = []
+	private static let singleMonitor: [AnyObject] = []
 	
 	private var perRequestObjects: [RTypeWithNamePair.UniqueKey: [Weak]] = [:]
 

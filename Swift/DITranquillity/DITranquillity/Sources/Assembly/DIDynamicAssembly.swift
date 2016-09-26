@@ -6,20 +6,20 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public class DIDynamicAssembly: DIAssembly {
-  public var modules: [DIModuleWithScope] { return dynamicModules[uniqueKey]! }
-  public private(set) var dependencies: [DIAssembly] = []
+open class DIDynamicAssembly: DIAssembly {
+  open var modules: [DIModuleWithScope] { return dynamicModules[uniqueKey]! }
+  open private(set) var dependencies: [DIAssembly] = []
 
   public init() {
-    uniqueKey = String(self.dynamicType)
+    uniqueKey = String(describing: type(of: self))
 
     if nil == dynamicModules[uniqueKey] {
       dynamicModules[uniqueKey] = []
     }
   }
 
-  public final func addModule(module: DIModule) {
-    dynamicModules[uniqueKey]!.append((module, .Public))
+  public final func addModule(_ module: DIModule) {
+    dynamicModules[uniqueKey]!.append((module, .public))
   }
 
   private let uniqueKey: String

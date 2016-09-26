@@ -8,8 +8,8 @@
 
 import UIKit
 
-public class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
-  public convenience init(name: String, bundle storyboardBundleOrNil: NSBundle?, builder: DIContainerBuilder) {
+public final class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
+  public convenience init(name: String, bundle storyboardBundleOrNil: Bundle?, builder: DIContainerBuilder) {
     do {
       let container = try builder.build()
       self.init(name: name, bundle: storyboardBundleOrNil, container: container)
@@ -18,15 +18,15 @@ public class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
     }
   }
   
-  public convenience init(name: String, bundle storyboardBundleOrNil: NSBundle?, module: DIModule) {
+  public convenience init(name: String, bundle storyboardBundleOrNil: Bundle?, module: DIModule) {
     self.init(name: name, bundle: storyboardBundleOrNil, modules: [module])
   }
   
-  public convenience init(name: String, bundle storyboardBundleOrNil: NSBundle?, modules: [DIModule]) {
+  public convenience init(name: String, bundle storyboardBundleOrNil: Bundle?, modules: [DIModule]) {
     let builder = DIContainerBuilder()
     
     for module in modules {
-      builder.registerModule(module)
+      let _ = builder.registerModule(module)
     }
     
     do {
@@ -37,7 +37,7 @@ public class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
     }
   }
   
-  public required init(name: String, bundle storyboardBundleOrNil: NSBundle?, container: DIScope) {
+  public required init(name: String, bundle storyboardBundleOrNil: Bundle?, container: DIScope) {
     self.container = container
     storyboard = _DIStoryboardBase.create(name, bundle: storyboardBundleOrNil)
     super.init()
@@ -48,15 +48,15 @@ public class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
     return storyboard.instantiateInitialViewController()
   }
   
-  public override func instantiateViewControllerWithIdentifier(identifier: String) -> UIViewController {
+  public override func instantiateViewController(withIdentifier identifier: String) -> UIViewController {
 		if let viewController = singleViewControllersMap[identifier] {
 			return viewController
 		}
 		
-    return storyboard.instantiateViewControllerWithIdentifier(identifier)
+    return storyboard.instantiateViewController(withIdentifier: identifier)
   }
   
-  @objc public func resolve(viewController: UIViewController, identifier: String) -> UIViewController {
+  @objc public func resolve(_ viewController: UIViewController, identifier: String) -> UIViewController {
     do {
       try container.resolve(viewController)
     } catch {
@@ -69,7 +69,7 @@ public class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
     return viewController
   }
 	
-	private var singleIndentifiers: Set<String> = []
+	fileprivate var singleIndentifiers: Set<String> = []
 	private var singleViewControllersMap: [String: UIViewController] = [:]
 	
   private var container: DIScope
@@ -77,7 +77,7 @@ public class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
 }
 
 public extension DIStoryboard {
-	public func single(identifiers: String...) {
-		singleIndentifiers.unionInPlace(identifiers)
+	public func single(_ identifiers: String...) {
+		singleIndentifiers.formUnion(identifiers)
 	}
 }

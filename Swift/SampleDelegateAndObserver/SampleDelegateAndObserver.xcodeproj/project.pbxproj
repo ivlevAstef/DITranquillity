@@ -11,7 +11,6 @@
 		16EE40A61D818619009259A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16EE409B1D818619009259A1 /* Assets.xcassets */; };
 		16EE40A71D818619009259A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16EE409C1D818619009259A1 /* LaunchScreen.storyboard */; };
 		16EE40A81D818619009259A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16EE409E1D818619009259A1 /* Main.storyboard */; };
-		16EE40A91D818619009259A1 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16EE40A01D818619009259A1 /* Info.plist */; };
 		16EE40B51D81A058009259A1 /* ViewControllerSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EE40B41D81A058009259A1 /* ViewControllerSlider.swift */; };
 		16EE40B71D81A06C009259A1 /* ViewControllerFirstObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EE40B61D81A06C009259A1 /* ViewControllerFirstObserver.swift */; };
 		16EE40B91D81A076009259A1 /* ViewControllerSecondObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EE40B81D81A076009259A1 /* ViewControllerSecondObserver.swift */; };
@@ -172,11 +171,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Alexander Ivlev";
 				TargetAttributes = {
 					A58875671D0944FE00D6DE92 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -219,7 +219,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16EE40A91D818619009259A1 /* Info.plist in Resources */,
 				16EE40A81D818619009259A1 /* Main.storyboard in Resources */,
 				16EE40A61D818619009259A1 /* Assets.xcassets in Resources */,
 				16EE40A71D818619009259A1 /* LaunchScreen.storyboard in Resources */,
@@ -288,8 +287,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -334,8 +335,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -354,6 +357,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -362,9 +366,9 @@
 		A588757B1D0944FE00D6DE92 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					__DITRANQUILLITY_STORYBOARD__,
 					"DEBUG=1",
@@ -375,21 +379,23 @@
 				PRODUCT_NAME = SampleDelegateAndObserver;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		A588757C1D0944FE00D6DE92 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = __DITRANQUILLITY_STORYBOARD__;
 				INFOPLIST_FILE = "$(SRCROOT)/SampleDelegateAndObserver/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sia.SampleDelegateAndObserver;
 				PRODUCT_NAME = SampleDelegateAndObserver;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

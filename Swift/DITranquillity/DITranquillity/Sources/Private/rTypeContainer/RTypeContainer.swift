@@ -7,7 +7,7 @@
 //
 
 internal class RTypeContainer {
-  internal func append(key: Any, value: RType) {
+  internal func append(_ key: Any, value: RType) {
     if nil == values[hash(key)] {
       values[hash(key)] = []
     }
@@ -48,8 +48,8 @@ internal class RTypeContainer {
     return RTypeContainerFinal(values: data)
   }
 
-  private func hash(type: Any) -> String {
-    return String(type)
+  private func hash(_ type: Any) -> String {
+    return String(describing: type)
   }
 
   private var values: [String: [RType]] = [:]
