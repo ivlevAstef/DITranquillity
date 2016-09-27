@@ -11,7 +11,6 @@
 		16EE40A61D818619009259A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16EE409B1D818619009259A1 /* Assets.xcassets */; };
 		16EE40A71D818619009259A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16EE409C1D818619009259A1 /* LaunchScreen.storyboard */; };
 		16EE40A81D818619009259A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16EE409E1D818619009259A1 /* Main.storyboard */; };
-		16EE40A91D818619009259A1 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16EE40A01D818619009259A1 /* Info.plist */; };
 		16EE40B51D81A058009259A1 /* ViewControllerSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EE40B41D81A058009259A1 /* ViewControllerSlider.swift */; };
 		16EE40B71D81A06C009259A1 /* ViewControllerFirstObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EE40B61D81A06C009259A1 /* ViewControllerFirstObserver.swift */; };
 		16EE40B91D81A076009259A1 /* ViewControllerSecondObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EE40B81D81A076009259A1 /* ViewControllerSecondObserver.swift */; };
@@ -219,7 +218,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16EE40A91D818619009259A1 /* Info.plist in Resources */,
 				16EE40A81D818619009259A1 /* Main.storyboard in Resources */,
 				16EE40A61D818619009259A1 /* Assets.xcassets in Resources */,
 				16EE40A71D818619009259A1 /* LaunchScreen.storyboard in Resources */,
