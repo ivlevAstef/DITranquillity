@@ -26,7 +26,7 @@ public final class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
     let builder = DIContainerBuilder()
     
     for module in modules {
-			let _ = builder.register(module: module)
+      let _ = builder.register(module: module)
     }
     
     do {
@@ -49,10 +49,10 @@ public final class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
   }
   
   public override func instantiateViewController(withIdentifier identifier: String) -> UIViewController {
-		if let viewController = singleViewControllersMap[identifier] {
-			return viewController
-		}
-		
+    if let viewController = singleViewControllersMap[identifier] {
+      return viewController
+    }
+
     return storyboard.instantiateViewController(withIdentifier: identifier)
   }
   
@@ -61,23 +61,23 @@ public final class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
       try container.resolve(viewController)
     } catch {
     }
-		
-		if singleIndentifiers.contains(identifier) {
-			singleViewControllersMap[identifier] = viewController
-		}
-		
+
+    if singleIndentifiers.contains(identifier) {
+      singleViewControllersMap[identifier] = viewController
+    }
+
     return viewController
   }
-	
-	fileprivate var singleIndentifiers: Set<String> = []
-	private var singleViewControllersMap: [String: UIViewController] = [:]
-	
+
+  fileprivate var singleIndentifiers: Set<String> = []
+  private var singleViewControllersMap: [String: UIViewController] = [:]
+
   private var container: DIScope
   private unowned let storyboard: _DIStoryboardBase
 }
 
 public extension DIStoryboard {
-	public func single(_ identifiers: String...) {
-		singleIndentifiers.formUnion(identifiers)
-	}
+  public func single(_ identifiers: String...) {
+    singleIndentifiers.formUnion(identifiers)
+  }
 }

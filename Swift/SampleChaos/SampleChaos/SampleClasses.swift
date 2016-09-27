@@ -43,22 +43,22 @@ class Logger2: LoggerProtocol {
 
 
 class LoggerAll: LoggerProtocol {
-	let loggers: [LoggerProtocol]
-	var loggersFull: [LoggerProtocol]! {
-		didSet {
-			print(loggersFull)
-		}
-	}
-	
-	init(loggers: [LoggerProtocol]) {
-		self.loggers = loggers
-	}
-	
-	func log(_ msg: String) {
-		for logger in loggers {
-			logger.log(msg)
-		}
-	}
+  let loggers: [LoggerProtocol]
+  var loggersFull: [LoggerProtocol]! {
+    didSet {
+      print(loggersFull)
+    }
+  }
+
+  init(loggers: [LoggerProtocol]) {
+    self.loggers = loggers
+  }
+
+  func log(_ msg: String) {
+    for logger in loggers {
+      logger.log(msg)
+    }
+  }
 }
 
 class Inject {
@@ -149,18 +149,18 @@ class SampleModule : DIModule {
         }
         return FooService()
     }
-		
-		builder.register(LoggerAll.self)
-			.asDefault()
-			.asType(LoggerProtocol.self)
-			.instanceSingle()
-			.initializer { scope in LoggerAll(loggers: **!scope) }
-			.dependency { (scope, self) in self.loggersFull = **!scope }
-		
+
+    builder.register(LoggerAll.self)
+      .asDefault()
+      .asType(LoggerProtocol.self)
+      .instanceSingle()
+      .initializer { scope in LoggerAll(loggers: **!scope) }
+      .dependency { (scope, self) in self.loggersFull = **!scope }
+
     builder.register(Logger.self)
       .asType(LoggerProtocol.self)
       .instanceSingle()
-			.initializer { Logger() }
+      .initializer { Logger() }
     
     builder.register(Logger2.self)
       .asSelf()
@@ -228,7 +228,7 @@ class SampleModule : DIModule {
 
 class SampleStartupModule : DIModule {
   func load(builder: DIContainerBuilder) {
-		builder.register(module: SampleModule(useBarService: true))
+    builder.register(module: SampleModule(useBarService: true))
     
     builder.register(ViewController.self)
       .asSelf()

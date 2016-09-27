@@ -30,19 +30,19 @@ internal class DIScopeImpl {
 
     var result: [T] = []
     for rType in rTypes {
-			do {
-				try result.append(resolveUseRType(scope, pair: RTypeWithNamePair(rType, ""), method: method))
-			} catch DIError.recursiveInitializer {
-				// Ignore recursive initializer object for many
-			} catch DIError.multyPerRequestObjectsForType(let objects, _) {
-				for object in objects {
-					if let object = object as? T {
-						result.append(object)
-					}
-				}
-			} catch {
-				throw error
-			}
+      do {
+        try result.append(resolveUseRType(scope, pair: RTypeWithNamePair(rType, ""), method: method))
+      } catch DIError.recursiveInitializer {
+        // Ignore recursive initializer object for many
+      } catch DIError.multyPerRequestObjectsForType(let objects, _) {
+        for object in objects {
+          if let object = object as? T {
+            result.append(object)
+          }
+        }
+      } catch {
+        throw error
+      }
     }
 
     return result
@@ -94,26 +94,26 @@ internal class DIScopeImpl {
     return rTypes
   }
 
-	private func savePerRequestObject<T>(_ obj: T, pair: RTypeWithNamePair) {
-		let anyObj = obj as AnyObject
-		
-		let key = pair.uniqueKey
-		
-		if var list = perRequestObjects[key] {
-			list.append(Weak(value: anyObj))
-			perRequestObjects[key] = list.filter{ nil != $0.value } // removed old values
-		} else {
-			perRequestObjects[key] = [Weak(value: anyObj)]
-		}
-	}
-	
+  private func savePerRequestObject<T>(_ obj: T, pair: RTypeWithNamePair) {
+    let anyObj = obj as AnyObject
+
+    let key = pair.uniqueKey
+
+    if var list = perRequestObjects[key] {
+      list.append(Weak(value: anyObj))
+      perRequestObjects[key] = list.filter{ nil != $0.value } // removed old values
+    } else {
+      perRequestObjects[key] = [Weak(value: anyObj)]
+    }
+  }
+
   private func resolveUseRTypeAndObject<T>(_ scope: DIScope, pair: RTypeWithNamePair, obj: T) {
     objc_sync_enter(DIScopeImpl.singleMonitor)
     defer { objc_sync_exit(DIScopeImpl.singleMonitor) }
-		
-		if .perRequest == pair.rType.lifeTime {
-			savePerRequestObject(obj, pair: pair)
-		}
+
+    if .perRequest == pair.rType.lifeTime {
+      savePerRequestObject(obj, pair: pair)
+    }
 
     allTypes.append((pair, obj))
     objCache[pair.uniqueKey] = obj
@@ -162,43 +162,43 @@ internal class DIScopeImpl {
     objects[key] = obj
     return obj
   }
-	
-	private func resolvePerRequest<T, Method>(_ scope: DIScope, pair: RTypeWithNamePair, method: (Method) -> Any) throws -> T {
-		let key = pair.uniqueKey
-		
-		var strongs: [T] = []
-		var finalError: Error!
-		
-		do {
-			strongs.append(try resolvePerDependency(scope, pair: pair, method: method))
-		} catch {
-			finalError = error
-		}
-		
-		if let list = perRequestObjects[key] {
-			for weak in list {
-				if let obj = weak.value as? T {
-					strongs.append(obj)
-				}
-			}
-		}
-		
-		if strongs.count > 1 {
-			throw DIError.multyPerRequestObjectsForType(objects: strongs.map{ $0 as Any }, forType: String(describing: T.self))
-		}
-		
-		if let single = strongs.first {
-			return single
-		}
-		
-		throw finalError
-	}
+
+  private func resolvePerRequest<T, Method>(_ scope: DIScope, pair: RTypeWithNamePair, method: (Method) -> Any) throws -> T {
+    let key = pair.uniqueKey
+
+    var strongs: [T] = []
+    var finalError: Error!
+
+    do {
+      strongs.append(try resolvePerDependency(scope, pair: pair, method: method))
+    } catch {
+      finalError = error
+    }
+
+    if let list = perRequestObjects[key] {
+      for weak in list {
+        if let obj = weak.value as? T {
+          strongs.append(obj)
+        }
+      }
+    }
+
+    if strongs.count > 1 {
+      throw DIError.multyPerRequestObjectsForType(objects: strongs.map{ $0 as Any }, forType: String(describing: T.self))
+    }
+
+    if let single = strongs.first {
+      return single
+    }
+
+    throw finalError
+  }
 
   private func resolvePerDependency<T, Method>(_ scope: DIScope, pair: RTypeWithNamePair, method: (Method) -> Any) throws -> T {
-		if recursiveInitializer.contains(pair.uniqueKey) {
-			throw DIError.recursiveInitializer(type: String(describing: pair.rType.implType))
-		}
-		
+    if recursiveInitializer.contains(pair.uniqueKey) {
+      throw DIError.recursiveInitializer(type: String(describing: pair.rType.implType))
+    }
+
     for recursiveTypeKey in recursive {
       dependencies.append(pair.uniqueKey, value: recursiveTypeKey)
     }
@@ -210,9 +210,9 @@ internal class DIScopeImpl {
     recursive.removeLast()
 
     if !allTypes.contains(where: { (iter) in
-			let iterObj = iter.1 as AnyObject
-			return iterObj === obj as AnyObject
-		}) {
+      let iterObj = iter.1 as AnyObject
+      return iterObj === obj as AnyObject
+    }) {
       allTypes.insert((pair, obj), at: insertIndex)
     }
 
@@ -265,12 +265,12 @@ internal class DIScopeImpl {
       return obj as! T
     }
 
-		recursiveInitializer.insert(pair.uniqueKey)
+    recursiveInitializer.insert(pair.uniqueKey)
     let objAny = try pair.rType.initType(method)
-		recursiveInitializer.remove(pair.uniqueKey)
+    recursiveInitializer.remove(pair.uniqueKey)
 
     guard let obj = objAny as? T else {
-			throw DIError.typeIncorrect(askableType: String(describing: T.self), realType: String(describing: type(of: objAny)))
+      throw DIError.typeIncorrect(askableType: String(describing: T.self), realType: String(describing: type(of: objAny)))
     }
 
     objCache[pair.uniqueKey] = obj
@@ -278,17 +278,17 @@ internal class DIScopeImpl {
     return obj
   }
 
-	private var recursiveInitializer: Set<RTypeWithNamePair.UniqueKey> = [] // needed for block call self from self
-	
+  private var recursiveInitializer: Set<RTypeWithNamePair.UniqueKey> = [] // needed for block call self from self
+
   private var allTypes: [(RTypeWithNamePair, Any)] = [] // needed for circular
   private var recursive: [RTypeWithNamePair.UniqueKey] = [] // needed for circular
   private var dependencies = DIMultimap<RTypeWithNamePair.UniqueKey, RTypeWithNamePair.UniqueKey>() // needed for circular
   private var objCache: [RTypeWithNamePair.UniqueKey: Any] = [:] // needed for circular
 
   private static var singleObjects: [RTypeWithNamePair.UniqueKey: Any] = [:]
-	private static let singleMonitor: [AnyObject] = []
-	
-	private var perRequestObjects: [RTypeWithNamePair.UniqueKey: [Weak]] = [:]
+  private static let singleMonitor: [AnyObject] = []
+
+  private var perRequestObjects: [RTypeWithNamePair.UniqueKey: [Weak]] = [:]
 
   private var objects: [RTypeWithNamePair.UniqueKey: Any] = [:]
   private let registeredTypes: RTypeContainerFinal

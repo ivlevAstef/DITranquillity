@@ -17,12 +17,12 @@ public enum DIError: Error, Equatable {
   case notFoundDefaultForMultyRegisterType(typeNames: [String], forType: String)
 
   case multyRegisterNamesForType(names: Set<String>, forType: String)
-	
-	case multyPerRequestObjectsForType(objects: [Any], forType: String)
+
+  case multyPerRequestObjectsForType(objects: [Any], forType: String)
 
   case typeIncorrect(askableType: String, realType: String)
-	
-	case recursiveInitializer(type: String)
+
+  case recursiveInitializer(type: String)
 
   case build(errors: [DIError])
 }

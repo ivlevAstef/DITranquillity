@@ -16,83 +16,83 @@ public extension DIContainerBuilder {
 
 public final class DIRegistrationBuilder<ImplObj> {
   // As
-	@discardableResult
+  @discardableResult
   public func asSelf() -> Self {
     typeSet = true
     container.append(ImplObj.self, value: rType)
     return self
   }
 
-	@discardableResult
-	public func asType<EquallyObj>(_ equallyType: EquallyObj.Type) -> Self {
+  @discardableResult
+  public func asType<EquallyObj>(_ equallyType: EquallyObj.Type) -> Self {
     typeSet = true
     container.append(equallyType, value: rType)
     return self
   }
 
-	@discardableResult
+  @discardableResult
   public func asName(_ name: String) -> Self {
     rType.names.insert(name)
     return self
   }
 
-	@discardableResult
+  @discardableResult
   public func asDefault() -> Self {
     rType.isDefault = true
     return self
   }
 
   // Initializer
-	@discardableResult
+  @discardableResult
   public func initializer(_ method: @escaping (_ scope: DIScope) -> ImplObj) -> Self {
     rType.setInitializer { (s) -> Any in return method(s) }
     return self
   }
 
-	@discardableResult
+  @discardableResult
   public func initializer(_ method: @escaping () -> ImplObj) -> Self {
     rType.setInitializer { (_: DIScope) -> Any in return method() }
     return self
   }
   
   // Dependency
-	@discardableResult
+  @discardableResult
   public func dependency(_ method: @escaping (_ scope: DIScope, _ obj: ImplObj) -> ()) -> Self {
     rType.appendDependency(method)
     return self
   }
 
   // LifeTime
-	@discardableResult
+  @discardableResult
   public func instanceSingle() -> Self {
     rType.lifeTime = RTypeLifeTime.single
     return self
   }
 
-	@discardableResult
+  @discardableResult
   public func instanceLazySingle() -> Self {
     rType.lifeTime = RTypeLifeTime.lazySingle
     return self
   }
 
-	@discardableResult
+  @discardableResult
   public func instancePerScope() -> Self {
     rType.lifeTime = RTypeLifeTime.perScope
     return self
   }
 
-	@discardableResult
+  @discardableResult
   public func instancePerDependency() -> Self {
     rType.lifeTime = RTypeLifeTime.perDependency
     return self
   }
 
-	@discardableResult
+  @discardableResult
   public func instancePerRequest() -> Self {
     rType.lifeTime = RTypeLifeTime.perRequest
     return self
   }
-	
+
   internal init(_ container: RTypeContainer, _ implType: ImplObj.Type) {
     self.container = container
     self.rType = RType(implType)

@@ -19,17 +19,17 @@ public protocol DIAssembly {
 }
 
 public extension DIContainerBuilder {
-	@discardableResult
+  @discardableResult
   public func register(assembly: DIAssembly, scope: DIModuleScope = .public) -> Self {
     if !ignore(uniqueKey: String(describing: type(of: assembly))) {
       for module in assembly.modules {
         if .public == scope || .public == module.1 {
-					let _ = register(module: module.0)
+          let _ = register(module: module.0)
         }
       }
 
       for dependency in assembly.dependencies {
-				let _ = register(assembly: dependency, scope: .internal)
+        let _ = register(assembly: dependency, scope: .internal)
       }
     }
 

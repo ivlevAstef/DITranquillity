@@ -9,14 +9,14 @@
 import UIKit
 
 class ViewControllerSlider: UIViewController {
-	var observers: [Observer] = []
-	
-	@IBAction func sliderValueChanged(_ sender: UISlider) {
-		print("From Slider: Slider value changed on: \(sender.value)")
-		
-		for observer in observers {
-			observer.sliderValueChanged(Int(sender.value))
-		}
-	}
+  var observers: [Observer] = []
+  
+  @IBAction func sliderValueChanged(_ sender: UISlider) {
+    print("From Slider: Slider value changed on: \(sender.value)")
+    
+    for observer in observers {
+      observer.sliderValueChanged(Int(sender.value))
+    }
+  }
 }
 

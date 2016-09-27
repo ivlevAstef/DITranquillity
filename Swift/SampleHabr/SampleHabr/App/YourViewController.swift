@@ -9,15 +9,15 @@
 import UIKit
 
 class YourViewController: UIViewController {
-	var presenter: YourPresenter!
-	
-	@IBOutlet private var webView: UIWebView!
-	
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		
-		if let data = presenter.loadReadme() {
-			webView.loadHTMLString(data, baseURL: nil)
-		}
-	}
+  var presenter: YourPresenter!
+  
+  @IBOutlet private var webView: UIWebView!
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    if let data = presenter.loadReadme() {
+      webView.loadHTMLString(data, baseURL: nil)
+    }
+  }
 }

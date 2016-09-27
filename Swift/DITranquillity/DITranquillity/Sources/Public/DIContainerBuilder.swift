@@ -10,7 +10,7 @@ public final class DIContainerBuilder {
   public init() {
   }
 
-	@discardableResult
+  @discardableResult
   public func build() throws -> DIScope {
     var errors: [DIError] = []
 

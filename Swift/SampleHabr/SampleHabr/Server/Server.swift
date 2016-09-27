@@ -10,25 +10,25 @@ import Foundation
 import Logger
 
 public protocol Server {
-	func get(method: String) -> Data?
+  func get(method: String) -> Data?
 }
 
 class ServerImpl: Server {
-	internal var logger: Logger? = nil
-	
-	init(domain: String) {
-		self.domain = domain
-	}
-	
-	func get(method: String) -> Data? {
-		guard let address = URL(string: domain+method) else {
-			logger?.log("Incorrect url format for string: \(domain+method)")
-			return nil
-		}
-		
-		logger?.log("Get data from url: \(address.absoluteString)")
-		return try? Data(contentsOf: address)
-	}
-	
-	private let domain: String
+  internal var logger: Logger? = nil
+  
+  init(domain: String) {
+    self.domain = domain
+  }
+  
+  func get(method: String) -> Data? {
+    guard let address = URL(string: domain+method) else {
+      logger?.log("Incorrect url format for string: \(domain+method)")
+      return nil
+    }
+    
+    logger?.log("Get data from url: \(address.absoluteString)")
+    return try? Data(contentsOf: address)
+  }
+  
+  private let domain: String
 }

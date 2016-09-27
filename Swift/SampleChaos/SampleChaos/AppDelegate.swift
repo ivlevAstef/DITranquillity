@@ -23,8 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window!.makeKeyAndVisible()
 
     let builder = DIContainerBuilder()
-		builder.register(assembly: Assembly1())
-		builder.register(module: SampleStartupModule())
+    builder.register(assembly: Assembly1())
+    builder.register(module: SampleStartupModule())
 
     try! builder.build()
 

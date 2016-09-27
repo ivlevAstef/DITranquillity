@@ -7,5 +7,5 @@
 //
 
 protocol PopUpDelegate: class {
-	func sliderValueChanged(_ value: Int)
+  func sliderValueChanged(_ value: Int)
 }
