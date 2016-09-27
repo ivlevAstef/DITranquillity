@@ -17,7 +17,7 @@ class DITranquillityTests_Threads: XCTestCase {
   func test01_ResolvePerDependency() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
+    builder.register(FooService.self)
       .instancePerDependency()
       .initializer { FooService() }
     
@@ -48,7 +48,7 @@ class DITranquillityTests_Threads: XCTestCase {
   func test02_ResolvePerSingle() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
+    builder.register(FooService.self)
       .instanceLazySingle()
       .initializer { FooService() }
     
@@ -82,7 +82,7 @@ class DITranquillityTests_Threads: XCTestCase {
   func test03_ResolvePerScope() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
+    builder.register(FooService.self)
       .instancePerScope()
       .initializer { FooService() }
     

@@ -17,26 +17,7 @@ public final class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
       fatalError("Can't build with error: \(error)")
     }
   }
-  
-  public convenience init(name: String, bundle storyboardBundleOrNil: Bundle?, module: DIModule) {
-    self.init(name: name, bundle: storyboardBundleOrNil, modules: [module])
-  }
-  
-  public convenience init(name: String, bundle storyboardBundleOrNil: Bundle?, modules: [DIModule]) {
-    let builder = DIContainerBuilder()
     
-    for module in modules {
-      let _ = builder.register(module: module)
-    }
-    
-    do {
-      let container = try builder.build()
-      self.init(name: name, bundle: storyboardBundleOrNil, container: container)
-    } catch {
-      fatalError("Can't build with error: \(error)")
-    }
-  }
-  
   public required init(name: String, bundle storyboardBundleOrNil: Bundle?, container: DIScope) {
     self.container = container
     storyboard = _DIStoryboardBase.create(name, bundle: storyboardBundleOrNil)

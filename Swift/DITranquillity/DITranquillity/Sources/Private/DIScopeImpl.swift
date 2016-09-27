@@ -15,7 +15,7 @@ internal class DIScopeImpl {
     let rTypes = try getTypes(T.self)
 
     if rTypes.count > 1 {
-      guard let typeIndex = rTypes.index(where: { (rType) -> Bool in rType.isDefault }) else {
+      guard let typeIndex = rTypes.index(where: { $0.isDefault }) else {
         throw DIError.notFoundDefaultForMultyRegisterType(typeNames: rTypes.map { String(describing: $0.implType) }, forType: String(describing: T.self))
       }
 
@@ -52,7 +52,7 @@ internal class DIScopeImpl {
     let rTypes = try getTypes(T.self)
 
     for rType in rTypes {
-      if rType.hasName(name) {
+			if rType.has(name: name) {
         return try resolveUseRType(scope, pair: RTypeWithNamePair(rType, name), method: method)
       }
     }
@@ -64,18 +64,18 @@ internal class DIScopeImpl {
     let rTypes = try getTypes(type(of: object))
 
     if rTypes.count > 1 {
-      guard let typeIndex = rTypes.index(where: { (rType) -> Bool in rType.isDefault }) else {
+			guard let typeIndex = rTypes.index(where: { $0.isDefault }) else {
         throw DIError.notFoundDefaultForMultyRegisterType(typeNames: rTypes.map { String(describing: $0.implType) }, forType: String(describing: type(of: object)))
       }
 
       resolveUseRTypeAndObject(scope, pair: RTypeWithNamePair(rTypes[typeIndex], ""), obj: object)
-    } else {
-      resolveUseRTypeAndObject(scope, pair: RTypeWithNamePair(rTypes[0], ""), obj: object)
-    }
+		} else {
+			resolveUseRTypeAndObject(scope, pair: RTypeWithNamePair(rTypes[0], ""), obj: object)
+		}
   }
 
   internal func resolve<Method>(_ scope: DIScope, rType: RTypeFinal, method: (Method) -> Any) throws -> Any {
-    return try resolveUseRType(scope, pair: RTypeWithNamePair(rType, ""), method: method)
+		return try resolveUseRType(scope, pair: RTypeWithNamePair(rType, ""), method: method)
   }
 
   internal func newLifeTimeScope(_ scope: DIScope) -> DIScope {
@@ -85,25 +85,21 @@ internal class DIScopeImpl {
   private func getTypes<T>(_ inputType: T.Type) throws -> [RTypeFinal] {
     let type = Helpers.removedTypeWrappers(inputType)
 
-    guard let rTypes = registeredTypes[type] else {
+    guard let rTypes = registeredTypes[type], !rTypes.isEmpty else {
       throw DIError.typeNoRegister(typeName: String(describing: inputType))
     }
-    guard !rTypes.isEmpty else {
-      throw DIError.typeNoRegister(typeName: String(describing: inputType))
-    }
+		
     return rTypes
   }
 
   private func savePerRequestObject<T>(_ obj: T, pair: RTypeWithNamePair) {
-    let anyObj = obj as AnyObject
-
     let key = pair.uniqueKey
 
     if var list = perRequestObjects[key] {
-      list.append(Weak(value: anyObj))
+      list.append(Weak(value: obj))
       perRequestObjects[key] = list.filter{ nil != $0.value } // removed old values
     } else {
-      perRequestObjects[key] = [Weak(value: anyObj)]
+      perRequestObjects[key] = [Weak(value: obj)]
     }
   }
 
@@ -209,10 +205,7 @@ internal class DIScopeImpl {
     let obj: T = try getObject(scope, pair: pair, circular: isCircular(pair), method: method)
     recursive.removeLast()
 
-    if !allTypes.contains(where: { (iter) in
-      let iterObj = iter.1 as AnyObject
-      return iterObj === obj as AnyObject
-    }) {
+    if !allTypes.contains(where: { $0.1 as AnyObject === obj as AnyObject }) {
       allTypes.insert((pair, obj), at: insertIndex)
     }
 
@@ -223,13 +216,8 @@ internal class DIScopeImpl {
     return obj
   }
 
-  fileprivate func isCircular(_ pair: RTypeWithNamePair) -> Bool {
-    for recursiveTypeKey in recursive {
-      if dependencies[recursiveTypeKey].contains(pair.uniqueKey) {
-        return true
-      }
-    }
-    return false
+  private func isCircular(_ pair: RTypeWithNamePair) -> Bool {
+		return recursive.contains { dependencies[$0].contains(pair.uniqueKey) }
   }
 
   private func setupDependency(_ scope: DIScope, pair: RTypeWithNamePair, obj: Any) {
@@ -249,15 +237,15 @@ internal class DIScopeImpl {
         setupDependency(scope, pair: pair, obj: obj)
         allTypes.removeFirst()
       }
-    } while (!allTypes.isEmpty)
+    } while (!allTypes.isEmpty) // because setupDependency can added into allTypes
 
     cleanCircularDependencyData()
   }
 
   private func cleanCircularDependencyData() {
-    self.allTypes.removeAll()
-    self.dependencies.removeAll()
-    self.objCache.removeAll()
+    allTypes.removeAll()
+    dependencies.removeAll()
+    objCache.removeAll()
   }
 
   private func getObject<T, Method>(_ scope: DIScope, pair: RTypeWithNamePair, circular: Bool, method: (Method) -> Any) throws -> T {
@@ -266,7 +254,7 @@ internal class DIScopeImpl {
     }
 
     recursiveInitializer.insert(pair.uniqueKey)
-    let objAny = try pair.rType.initType(method)
+    let objAny = try pair.rType.new(method)
     recursiveInitializer.remove(pair.uniqueKey)
 
     guard let obj = objAny as? T else {

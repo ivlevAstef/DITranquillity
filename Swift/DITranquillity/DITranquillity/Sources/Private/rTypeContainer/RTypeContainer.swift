@@ -7,7 +7,7 @@
 //
 
 internal class RTypeContainer {
-  internal func append(_ key: Any, value: RType) {
+  internal func append(key: Any, value: RType) {
     if nil == values[hash(key)] {
       values[hash(key)] = []
     }

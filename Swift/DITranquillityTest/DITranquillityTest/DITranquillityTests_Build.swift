@@ -15,6 +15,21 @@ class TestClass2: TestProtocol { }
 
 protocol Test2Protocol { }
 
+extension DIError: Equatable {
+	public static func == (a: DIError, b: DIError) -> Bool {
+		switch (a, b) {
+			
+		case (.typeNoRegister(let t1), .typeNoRegister(let t2)) where t1 == t2: return true
+		case (.notSetInitializer(let t1), .notSetInitializer(let t2)) where t1 == t2: return true
+		case (.multyRegisterDefault(let tA1, let t1), .multyRegisterDefault(let tA2, let t2)) where tA1 == tA2 && t1 == t2: return true
+		case (.typeIncorrect(let at1, let rt1), .typeIncorrect(let at2, let rt2)) where at1 == at2 && rt1 == rt2: return true
+		case (.build(let errs1), .build(let errs2)) where errs1 == errs2: return true
+			
+		default: return false
+		}
+	}
+}
+
 
 class DITranquillityTests_Build: XCTestCase {
   override func setUp() {

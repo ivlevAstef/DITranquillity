@@ -7,8 +7,7 @@
 //
 
 public final class DIContainerBuilder {
-  public init() {
-  }
+  public init() { }
 
   @discardableResult
   public func build() throws -> DIScope {
@@ -16,13 +15,13 @@ public final class DIContainerBuilder {
 
     var allTypes: Set<RType> = []
     for (superType, rTypes) in rTypeContainer.data() {
-      errors.append(contentsOf: checkRTypes(superType, rTypes: rTypes))
+			checkRTypes(superType, rTypes: rTypes, errors: &errors)
 
-      allTypes = allTypes.union(rTypes)
+      allTypes.formUnion(rTypes)
     }
 
     for rType in allTypes {
-      if !(rType.hasInitializer || rType.lifeTime == RTypeLifeTime.perRequest) {
+      if !(rType.hasInitializer || rType.lifeTime == .perRequest) {
         errors.append(DIError.notSetInitializer(typeName: String(describing: rType.implType)))
       }
     }
@@ -35,36 +34,27 @@ public final class DIContainerBuilder {
     let scope = DIScope(registeredTypes: finalRTypes)
 
     // Init Single types
-    for (_, rTypes) in finalRTypes.data() {
-      for rType in rTypes.filter({ $0.lifeTime == RTypeLifeTime.single }) {
-        let _ = try scope.resolve(RType: rType)
-      }
+		for rType in finalRTypes.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime }) {
+			let _ = try scope.resolve(RType: rType)
     }
 
     return scope
   }
 
-  private func checkRTypes(_ superType: String, rTypes: [RType]) -> [DIError] {
-    var errors: [DIError] = []
-
+	private func checkRTypes(_ superType: String, rTypes: [RType], errors: inout [DIError]) {
     if rTypes.count <= 1 {
-      return errors
+      return
     }
 
-    errors.append(contentsOf: checkRTypesNames(superType, rTypes: rTypes))
+		checkRTypesNames(superType, rTypes: rTypes, errors: &errors)
 
-    let defaultTypes = rTypes.filter { $0.isDefault }
-
+		let defaultTypes = rTypes.filter({ $0.isDefault })
     if defaultTypes.count > 1 {
       errors.append(DIError.multyRegisterDefault(typeNames: defaultTypes.map { String(describing: $0.implType) }, forType: superType))
     }
-
-    return errors
   }
 
-  private func checkRTypesNames(_ superType: String, rTypes: [RType]) -> [DIError] {
-    var errors: [DIError] = []
-
+  private func checkRTypesNames(_ superType: String, rTypes: [RType], errors: inout [DIError]) {
     var fullNames: Set<String> = []
 
     for rType in rTypes {
@@ -75,8 +65,6 @@ public final class DIContainerBuilder {
 
       fullNames.formUnion(rType.names)
     }
-
-    return errors
   }
 
   internal let rTypeContainer = RTypeContainer()

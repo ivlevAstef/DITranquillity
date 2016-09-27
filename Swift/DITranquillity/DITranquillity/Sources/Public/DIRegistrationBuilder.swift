@@ -19,14 +19,14 @@ public final class DIRegistrationBuilder<ImplObj> {
   @discardableResult
   public func asSelf() -> Self {
     typeSet = true
-    container.append(ImplObj.self, value: rType)
+    container.append(key: ImplObj.self, value: rType)
     return self
   }
 
   @discardableResult
-  public func asType<EquallyObj>(_ equallyType: EquallyObj.Type) -> Self {
+	public func asType<EquallyObj>(_ equallyType: EquallyObj.Type) -> Self {
     typeSet = true
-    container.append(equallyType, value: rType)
+    container.append(key: equallyType, value: rType)
     return self
   }
 

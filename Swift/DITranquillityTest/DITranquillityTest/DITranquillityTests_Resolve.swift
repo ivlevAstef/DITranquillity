@@ -17,13 +17,13 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test01_ResolveByClass() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
+    builder.register(FooService.self)
       .asSelf()
       .initializer { FooService() }
     
     let container = try! builder.build()
     
-    let service_classIndicate = try! container.resolve(FooService)
+    let service_classIndicate = try! container.resolve(FooService.self)
     XCTAssertEqual(service_classIndicate.foo(), "foo")
     
     let service_auto: FooService = try! container.resolve()
@@ -37,12 +37,12 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test02_ResolveByClass_AutoSetType() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
+    builder.register(FooService.self)
       .initializer { FooService() }
     
     let container = try! builder.build()
     
-    let service_classIndicate = try! container.resolve(FooService)
+    let service_classIndicate = try! container.resolve(FooService.self)
     XCTAssertEqual(service_classIndicate.foo(), "foo")
     
     let service_auto: FooService = try! container.resolve()
@@ -55,13 +55,13 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test03_ResolveByProtocol() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
+    builder.register(FooService.self)
+      .asType(ServiceProtocol.self)
       .initializer { FooService() }
     
     let container = try! builder.build()
     
-    let service_classIndicate = try! container.resolve(ServiceProtocol)
+    let service_classIndicate = try! container.resolve(ServiceProtocol.self)
     XCTAssertEqual(service_classIndicate.foo(), "foo")
     
     let service_auto: ServiceProtocol = try! container.resolve()
@@ -74,9 +74,9 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test04_ResolveByClassAndProtocol() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
+    builder.register(FooService.self)
       .asSelf()
-      .asType(ServiceProtocol)
+      .asType(ServiceProtocol.self)
       .initializer { FooService() }
     
     let container = try! builder.build()
@@ -91,11 +91,11 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test05_ResolveWithInitializerResolve() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
+    builder.register(FooService.self)
+      .asType(ServiceProtocol.self)
       .initializer { FooService() }
     
-    builder.register(Inject)
+    builder.register(Inject.self)
       .initializer { s in Inject(service:*!s) }
     
     let container = try! builder.build()
@@ -107,11 +107,11 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test05_ResolveWithDependencyResolveOpt() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
+    builder.register(FooService.self)
+      .asType(ServiceProtocol.self)
       .initializer { FooService() }
     
-    builder.register(InjectOpt)
+    builder.register(InjectOpt.self)
       .initializer { InjectOpt() }
       .dependency { (s, obj) in obj.service = *!s }
     
@@ -124,11 +124,11 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test05_ResolveWithDependencyResolveImplicitly() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
+    builder.register(FooService.self)
+      .asType(ServiceProtocol.self)
       .initializer { FooService() }
     
-    builder.register(InjectImplicitly)
+    builder.register(InjectImplicitly.self)
       .initializer { InjectImplicitly() }
       .dependency { (s, obj) in obj.service = *!s }
     
@@ -141,13 +141,13 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test06_ResolveMultiplyWithDefault() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
+    builder.register(FooService.self)
+      .asType(ServiceProtocol.self)
       .asDefault()
       .initializer { FooService() }
     
-    builder.register(BarService)
-      .asType(ServiceProtocol)
+    builder.register(BarService.self)
+      .asType(ServiceProtocol.self)
       .initializer { BarService() }
     
     let container = try! builder.build()
@@ -159,12 +159,12 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test06_ResolveMultiplyWithDefault_Reverse() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
+    builder.register(FooService.self)
+      .asType(ServiceProtocol.self)
       .initializer { FooService() }
     
-    builder.register(BarService)
-      .asType(ServiceProtocol)
+    builder.register(BarService.self)
+      .asType(ServiceProtocol.self)
       .asDefault()
       .initializer { BarService() }
     
@@ -177,13 +177,13 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test06_ResolveMultiplyByName() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
+    builder.register(FooService.self)
+      .asType(ServiceProtocol.self)
       .asName("foo")
       .initializer { FooService() }
     
-    builder.register(BarService)
-      .asType(ServiceProtocol)
+    builder.register(BarService.self)
+      .asType(ServiceProtocol.self)
       .asName("bar")
       .initializer { BarService() }
     
@@ -199,8 +199,8 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test06_ResolveMultiplySingleByName() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
+    builder.register(FooService.self)
+      .asType(ServiceProtocol.self)
       .asName("foo")
       .asName("foo2")
       .instanceSingle()
@@ -220,8 +220,8 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test06_ResolveMultiplyPerScopeByName() {
     let builder = DIContainerBuilder()
     
-    builder.register(BarService)
-      .asType(ServiceProtocol)
+    builder.register(BarService.self)
+      .asType(ServiceProtocol.self)
       .asName("bar")
       .asName("bar2")
       .instancePerScope()
@@ -255,13 +255,13 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test06_ResolveMultiplyMany() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
+    builder.register(FooService.self)
+      .asType(ServiceProtocol.self)
       .asDefault()
       .initializer { FooService() }
     
-    builder.register(BarService)
-      .asType(ServiceProtocol)
+    builder.register(BarService.self)
+      .asType(ServiceProtocol.self)
       .initializer { BarService() }
     
     let container = try! builder.build()
@@ -274,11 +274,11 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test07_ResolveCircular2() {
     let builder = DIContainerBuilder()
     
-    builder.register(Circular2A)
+    builder.register(Circular2A.self)
       .instancePerDependency()
       .initializer { s in Circular2A(b: *!s) }
     
-    builder.register(Circular2B)
+    builder.register(Circular2B.self)
       .instancePerDependency()
       .initializer { Circular2B() }
       .dependency { (s, b) in b.a = *!s }
@@ -300,15 +300,15 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test07_ResolveCircular3() {
     let builder = DIContainerBuilder()
     
-    builder.register(Circular3A)
+    builder.register(Circular3A.self)
       .instancePerDependency()
       .initializer { s in Circular3A(b: *!s) }
     
-    builder.register(Circular3B)
+    builder.register(Circular3B.self)
       .instancePerDependency()
       .initializer { s in Circular3B(c: *!s) }
     
-    builder.register(Circular3C)
+    builder.register(Circular3C.self)
       .instancePerDependency()
       .initializer { Circular3C() }
       .dependency { (s, c) in c.a = *!s }
@@ -343,13 +343,13 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test07_ResolveCircularDouble2() {
     let builder = DIContainerBuilder()
     
-    builder.register(CircularDouble2A)
+    builder.register(CircularDouble2A.self)
       .instancePerDependency()
       .initializer { CircularDouble2A() }
       .dependency { (s, a) in a.b1 = *!s }
       .dependency { (s, a) in a.b2 = *!s }
     
-    builder.register(CircularDouble2B)
+    builder.register(CircularDouble2B.self)
       .instancePerDependency()
       .initializer { s in CircularDouble2B(a: *!s) }
     
@@ -378,7 +378,7 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test07_ResolveCircularDoubleOneDependency2() {
     let builder = DIContainerBuilder()
     
-    builder.register(CircularDouble2A)
+    builder.register(CircularDouble2A.self)
       .instancePerDependency()
       .initializer { CircularDouble2A() }
       .dependency { (s, a) in
@@ -386,7 +386,7 @@ class DITranquillityTests_Resolve: XCTestCase {
         a.b2 = *!s
       }
     
-    builder.register(CircularDouble2B)
+    builder.register(CircularDouble2B.self)
       .instancePerDependency()
       .initializer { s in CircularDouble2B(a: *!s) }
     
@@ -413,14 +413,14 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test08_DependencyIntoDependency() {
     let builder = DIContainerBuilder()
     
-    builder.register(DependencyA)
+    builder.register(DependencyA.self)
       .initializer { DependencyA() }
     
-    builder.register(DependencyB)
+    builder.register(DependencyB.self)
       .initializer { DependencyB() }
     .dependency { (s, b) in b.a = *!s }
     
-    builder.register(DependencyC)
+    builder.register(DependencyC.self)
       .initializer { DependencyC() }
       .dependency { (s, c) in c.b = *!s }
     
@@ -435,7 +435,7 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test09_Params() {
     let builder = DIContainerBuilder()
     
-    builder.register(Params)
+    builder.register(Params.self)
       .instancePerDependency()
       .initializer{ return Params(number:0) }
       .initializer{ _, number in return Params(number:number) }

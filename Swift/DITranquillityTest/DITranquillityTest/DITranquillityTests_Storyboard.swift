@@ -24,11 +24,11 @@ class DITranquillityTests_Storyboard: XCTestCase {
   func test01_InitialViewController() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
+    builder.register(FooService.self)
+      .asType(ServiceProtocol.self)
       .initializer { FooService() }
     
-    builder.register(TestViewController)
+    builder.register(TestViewController.self)
       .instancePerRequest()
       .dependency { (scope, vc) in vc.service = *!scope }
     
@@ -47,11 +47,11 @@ class DITranquillityTests_Storyboard: XCTestCase {
   func test02_ViewControllerByIdentity() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
+    builder.register(FooService.self)
+      .asType(ServiceProtocol.self)
       .initializer { FooService() }
     
-    builder.register(TestViewController2)
+    builder.register(TestViewController2.self)
       .instancePerRequest()
       .dependency { (scope, vc) in vc.service = *!scope }
     
@@ -79,15 +79,15 @@ class DITranquillityTests_Storyboard: XCTestCase {
   func test04_ViewControllerSequence() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
+    builder.register(FooService.self)
+      .asType(ServiceProtocol.self)
       .initializer { FooService() }
     
-    builder.register(TestViewController)
+    builder.register(TestViewController.self)
       .instancePerRequest()
       .dependency { (scope, vc) in vc.service = *!scope }
     
-    builder.register(TestViewController2)
+    builder.register(TestViewController2.self)
       .instancePerRequest()
       .dependency { (scope, vc) in vc.service = *!scope }
     
