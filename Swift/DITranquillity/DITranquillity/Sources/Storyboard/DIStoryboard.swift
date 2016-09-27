@@ -26,7 +26,7 @@ public final class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
     let builder = DIContainerBuilder()
     
     for module in modules {
-      let _ = builder.registerModule(module)
+			let _ = builder.register(module: module)
     }
     
     do {

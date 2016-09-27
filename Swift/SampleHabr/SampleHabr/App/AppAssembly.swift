@@ -11,8 +11,8 @@ import Logger
 
 public class AppAssembly: DIAssembly {
 	public var modules: [DIModuleWithScope] { return [
-		(AppModule(), .Internal),
-		(ServerModule(), .Public)
+		(AppModule(), .internal),
+		(ServerModule(), .public)
   ] }
 	
 	public var dependencies: [DIAssembly] { return [

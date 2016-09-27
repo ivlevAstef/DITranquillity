@@ -10,17 +10,17 @@ import DITranquillity
 
 class AppModule: DIModule {
 	func load(builder: DIContainerBuilder) {
-		builder.register(UIStoryboard)
+		builder.register(UIStoryboard.self)
 			.asName("Main")
 			.instanceSingle()
 			.initializer { scope in DIStoryboard(name: "Main", bundle: nil, container: scope) }
 		
-		builder.register(YourPresenter)
+		builder.register(YourPresenter.self)
 			.instancePerScope()
 			.initializer { (scope) in YourPresenter(server: *!scope) }
 			.dependency { (scope, self) in self.logger = *?scope }
 		
-		builder.register(YourViewController)
+		builder.register(YourViewController.self)
 			.instancePerRequest()
 			.dependency { (scope, self) in self.presenter = try! scope.resolve() }
 	}

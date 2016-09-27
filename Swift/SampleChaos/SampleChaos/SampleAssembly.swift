@@ -11,8 +11,8 @@ import DITranquillity
 //project 1
 class Assembly1: DIAssembly {
   var modules: [DIModuleWithScope] { return [
-    (Module1_1(), .Public),
-    (Module1_2(), .Internal)
+    (Module1_1(), .public),
+    (Module1_2(), .internal)
   ] }
 
   var dependencies: [DIAssembly] { return [Assembly2(), Assembly3(), DynamicAssembly()] }
@@ -34,8 +34,8 @@ class Module1_2: DIModule {
 //project 2
 class Assembly2: DIAssembly {
   var modules: [DIModuleWithScope] { return [
-    (Module2_1(), .Public),
-    (Module2_2(), .Internal)
+    (Module2_1(), .public),
+    (Module2_2(), .internal)
   ] }
   var dependencies: [DIAssembly] { return [Assembly3(), Assembly4(), DynamicAssembly()] }
 
@@ -65,7 +65,7 @@ class Module2_D: DIModule {
 //project 3
 class Assembly3: DIAssembly {
   var modules: [DIModuleWithScope] { return [
-    (Module3_1(), .Public)
+    (Module3_1(), .public)
   ] }
   var dependencies: [DIAssembly] { return [Assembly4()] }
 }
@@ -79,8 +79,8 @@ class Module3_1: DIModule {
 //project 4
 class Assembly4: DIAssembly {
   var modules: [DIModuleWithScope] { return [
-    (Module4_1(), .Public),
-    (Module4_2(), .Internal)
+    (Module4_1(), .public),
+    (Module4_2(), .internal)
   ] }
 
   var dependencies: [DIAssembly] { return [DynamicAssembly()] }

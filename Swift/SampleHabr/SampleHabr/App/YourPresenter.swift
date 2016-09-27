@@ -21,8 +21,8 @@ class YourPresenter {
 		logger?.log("Start load readme")
 		defer { logger?.log("Finish load readme") }
 		
-		if let data = server.get("ivlevAstef/DITranquillity/blob/master/README.md") {
-			return String(data: data, encoding: NSUTF8StringEncoding)
+		if let data = server.get(method: "ivlevAstef/DITranquillity/blob/master/README.md") {
+			return String(data: data, encoding: .utf8)
 		}
 		return nil
 	}

@@ -22,7 +22,8 @@ registrationFunction() { #argcount file
   local Arguments=$(join ', ' ${numbers[@]/#/arg})
   local ArgParam=$(join ', ' $(replaceToArg numbers[@] "arg;I"));
 
-  echo "  public func initializer<$ArgType>(method: @escaping (_ scope: DIScope, _ $ArgumentsType) -> ImplObj) -> Self {
+  echo "  @discardableResult
+  public func initializer<$ArgType>(method: @escaping (_ scope: DIScope, _ $ArgumentsType) -> ImplObj) -> Self {
     rType.setInitializer { (s, $Arguments) -> Any in return method(s, $ArgParam) }
     return self
   }
