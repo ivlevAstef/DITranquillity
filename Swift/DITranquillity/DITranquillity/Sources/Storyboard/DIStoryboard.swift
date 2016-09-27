@@ -9,15 +9,6 @@
 import UIKit
 
 public final class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
-  public convenience init(name: String, bundle storyboardBundleOrNil: Bundle?, builder: DIContainerBuilder) {
-    do {
-      let container = try builder.build()
-      self.init(name: name, bundle: storyboardBundleOrNil, container: container)
-    } catch {
-      fatalError("Can't build with error: \(error)")
-    }
-  }
-    
   public required init(name: String, bundle storyboardBundleOrNil: Bundle?, container: DIScope) {
     self.container = container
     storyboard = _DIStoryboardBase.create(name, bundle: storyboardBundleOrNil)
@@ -38,12 +29,9 @@ public final class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
   }
   
   @objc public func resolve(_ viewController: UIViewController, identifier: String) -> UIViewController {
-    do {
-      try container.resolve(viewController)
-    } catch {
-    }
-
-    if singleIndentifiers.contains(identifier) {
+		let _ = try? container.resolve(viewController)
+		
+		if singleIndentifiers.contains(identifier) {
       singleViewControllersMap[identifier] = viewController
     }
 
