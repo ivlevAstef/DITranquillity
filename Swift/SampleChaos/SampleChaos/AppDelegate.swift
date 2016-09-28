@@ -17,16 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     window = UIWindow(frame: UIScreen.main.bounds)
 
-    let storyboard = DIStoryboard(name: "Main", bundle: nil, module: SampleStartupModule())
+		let builder = DIContainerBuilder()
+		builder.register(assembly: Assembly1())
+		builder.register(module: SampleStartupModule())
+		
+		let container = try! builder.build()
+		
+    let storyboard = DIStoryboard(name: "Main", bundle: nil, container: container)
     window!.rootViewController = storyboard.instantiateInitialViewController()
 
     window!.makeKeyAndVisible()
-
-    let builder = DIContainerBuilder()
-    builder.register(assembly: Assembly1())
-    builder.register(module: SampleStartupModule())
-
-    try! builder.build()
 
     // Override point for customization after application launch.
     return true

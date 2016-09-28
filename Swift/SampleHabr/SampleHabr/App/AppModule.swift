@@ -24,4 +24,5 @@ class AppModule: DIModule {
       .instancePerRequest()
       .dependency { (scope, self) in self.presenter = try! scope.resolve() }
   }
+
 }

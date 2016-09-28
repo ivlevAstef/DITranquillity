@@ -13,6 +13,21 @@ protocol TestProtocol { }
 class TestClass1: TestProtocol { }
 class TestClass2: TestProtocol { }
 
+extension DIError: Equatable {
+}
+public func == (a: DIError, b: DIError) -> Bool {
+	switch (a, b) {
+		
+	case (.TypeNoRegister(let t1), .TypeNoRegister(let t2)) where t1 == t2: return true
+	case (.NotSetInitializer(let t1), .NotSetInitializer(let t2)) where t1 == t2: return true
+	case (.MultyRegisterDefault(let tA1, let t1), .MultyRegisterDefault(let tA2, let t2)) where tA1 == tA2 && t1 == t2: return true
+	case (.TypeIncorrect(let at1, let rt1), .TypeIncorrect(let at2, let rt2)) where at1 == at2 && rt1 == rt2: return true
+	case (.Build(let errs1), .Build(let errs2)) where errs1 == errs2: return true
+		
+	default: return false
+	}
+}
+
 protocol Test2Protocol { }
 
 extension DIError: Equatable {

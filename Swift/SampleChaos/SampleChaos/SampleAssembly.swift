@@ -18,14 +18,14 @@ class Assembly1: DIAssembly {
 }
 
 class Module1_1: DIModule {
-  func load(builder: DIContainerBuilder) {
+  func load(builder builder: DIContainerBuilder) {
     print("load module 1_1")
   }
 
 }
 
 class Module1_2: DIModule {
-  func load(builder: DIContainerBuilder) {
+  func load(builder builder: DIContainerBuilder) {
     print("load module 1_2")
   }
 }
@@ -38,25 +38,25 @@ class Assembly2: DIAssembly {
 	
   var dependencies: [DIAssembly] { return [Assembly3(), Assembly4(), DynamicAssembly()] }
 
-  init() {
-    DynamicAssembly().addModule(Module2_D())
+  func addDynamicModules() {
+    DynamicAssembly().add(module: Module2_D())
   }
 }
 
 class Module2_1: DIModule {
-  func load(builder: DIContainerBuilder) {
+  func load(builder builder: DIContainerBuilder) {
     print("load module 2_1")
   }
 }
 
 class Module2_2: DIModule {
-  func load(builder: DIContainerBuilder) {
+  func load(builder builder: DIContainerBuilder) {
     print("load module 2_2")
   }
 }
 
 class Module2_D: DIModule {
-  func load(builder: DIContainerBuilder) {
+  func load(builder builder: DIContainerBuilder) {
     print("load module 2_D")
   }
 }
@@ -71,7 +71,7 @@ class Assembly3: DIAssembly {
 }
 
 class Module3_1: DIModule {
-  func load(builder: DIContainerBuilder) {
+  func load(builder builder: DIContainerBuilder) {
     print("load module 3_1")
   }
 }
@@ -84,25 +84,25 @@ class Assembly4: DIAssembly {
 	
   var dependencies: [DIAssembly] { return [DynamicAssembly()] }
 
-  init() {
-    DynamicAssembly().addModule(Module4_D())
+  func addDynamicModules() {
+		DynamicAssembly().add(module: Module4_D())
   }
 }
 
 class Module4_1: DIModule {
-  func load(builder: DIContainerBuilder) {
+  func load(builder builder: DIContainerBuilder) {
     print("load module 4_1")
   }
 }
 
 class Module4_2: DIModule {
-  func load(builder: DIContainerBuilder) {
+  func load(builder builder: DIContainerBuilder) {
     print("load module 4_2")
   }
 }
 
 class Module4_D: DIModule {
-  func load(builder: DIContainerBuilder) {
+  func load(builder builder: DIContainerBuilder) {
     print("load module 4_D")
   }
 }

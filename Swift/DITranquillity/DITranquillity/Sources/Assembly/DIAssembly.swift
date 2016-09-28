@@ -9,8 +9,15 @@
 
 public protocol DIAssembly {
 	var publicModules: [DIModule] { get }
-  var modules: [DIModule] { get }
-  var dependencies: [DIAssembly] { get }
+	var modules: [DIModule] { get }
+	var dependencies: [DIAssembly] { get }
+
+	func addDynamicModules()
+}
+
+public extension DIAssembly {
+	func addDynamicModules() {
+	}
 }
 
 public extension DIContainerBuilder {
@@ -32,6 +39,8 @@ public extension DIContainerBuilder {
 					register(module: module)
 				}
 			}
+			
+			assembly.addDynamicModules()
 			
 			for dependency in assembly.dependencies {
 				register(assembly: dependency, registerInternalModules: false)

@@ -32,9 +32,8 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .instancePerRequest()
       .dependency { (scope, vc) in vc.service = *!scope }
     
-    
-    let storyboard = DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), builder: builder)
-    
+    let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
+
     let viewController = storyboard.instantiateInitialViewController()
     XCTAssert(viewController is TestViewController)
     guard let testVC = viewController as? TestViewController else {
@@ -54,8 +53,8 @@ class DITranquillityTests_Storyboard: XCTestCase {
     builder.register(TestViewController2.self)
       .instancePerRequest()
       .dependency { (scope, vc) in vc.service = *!scope }
-    
-    let storyboard = DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), builder: builder)
+		
+    let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
     
     let viewController = storyboard.instantiateViewController(withIdentifier: "TestVC2")
     XCTAssert(viewController is TestViewController2)
@@ -70,7 +69,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
   func test03_ViewControllerNotRegistered() {
     let builder = DIContainerBuilder()
     
-    let storyboard = DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), builder: builder)
+    let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
     
     let viewController = storyboard.instantiateViewController(withIdentifier: "TestVC2")
     XCTAssert(viewController is TestViewController2)
@@ -90,8 +89,8 @@ class DITranquillityTests_Storyboard: XCTestCase {
     builder.register(TestViewController2.self)
       .instancePerRequest()
       .dependency { (scope, vc) in vc.service = *!scope }
-    
-    let storyboard = DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), builder: builder)
+
+    let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
     
     let viewController = storyboard.instantiateInitialViewController()
     XCTAssert(viewController is TestViewController)
