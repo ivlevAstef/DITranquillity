@@ -38,9 +38,9 @@ class Assembly2: DIAssembly {
 	
   var dependencies: [DIAssembly] { return [Assembly3(), Assembly4(), DynamicAssembly()] }
 
-  func addDynamicModules() {
-    DynamicAssembly().add(module: Module2_D())
-  }
+	var dynamicDeclarations: [DIDynamicDeclaration] { return [
+		(assembly: DynamicAssembly(), module: Module2_D())
+  ] }
 }
 
 class Module2_1: DIModule {
@@ -82,11 +82,11 @@ class Assembly4: DIAssembly {
 	
 	var modules: [DIModule] { return [ Module4_2() ] }
 	
-  var dependencies: [DIAssembly] { return [DynamicAssembly()] }
+  var dependencies: [DIAssembly] { return [ DynamicAssembly() ] }
 
-  func addDynamicModules() {
-		DynamicAssembly().add(module: Module4_D())
-  }
+	var dynamicDeclarations: [DIDynamicDeclaration] { return [
+		(assembly: DynamicAssembly(), module: Module4_D())
+  ] }
 }
 
 class Module4_1: DIModule {
