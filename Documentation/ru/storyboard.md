@@ -15,7 +15,7 @@ class YourViewController: UIViewController {
 ```
 
 ```Swift
-builder.register(YourViewController)
+builder.register(YourViewController.self)
   .instancePerRequest()
   .dependency { (scope, viewController) in viewController.inject = *!scope }
 ```
@@ -27,7 +27,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
   window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
 
-  let storyboard = DIStoryboard(name: "Main", bundle: nil, builder: builder)
+  let storyboard = try! DIStoryboard(name: "Main", bundle: nil, container: builder.build())
   window!.rootViewController = storyboard.instantiateInitialViewController()
   window!.makeKeyAndVisible()
 
@@ -35,16 +35,9 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 }
 ```
 
-## Другие способы инициализации
-Сторибоард может инициализироватся с использование: builder, module, scope. То есть возможен вот такой синтаксис:
-`DIStoryboard(name: ..., bundle: ..., builder: ...)`
-`DIStoryboard(name: ..., bundle: ..., module: ...)`
-`DIStoryboard(name: ..., bundle: ..., modules: ...)`
-`DIStoryboard(name: ..., bundle: ..., container: ...)`
-
 Для интеграции со сборками, нужно сам Storyboard зарегестрировать в сборке, к примеру вот так:
 ```Swift
-builder.register(UIStoryboard)
+builder.register(UIStoryboard.self)
   .instanceSingle()
   .initializer { scope in DIStoryboard(name: ..., bundle: ..., container: scope) }
 ```

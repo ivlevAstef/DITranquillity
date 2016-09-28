@@ -38,7 +38,7 @@ class Assembly2: DIAssembly {
 	
   var dependencies: [DIAssembly] { return [Assembly3(), Assembly4(), DynamicAssembly()] }
 
-  init() {
+  func addDynamicModules() {
     DynamicAssembly().add(module: Module2_D())
   }
 }
@@ -84,7 +84,7 @@ class Assembly4: DIAssembly {
 	
   var dependencies: [DIAssembly] { return [DynamicAssembly()] }
 
-  init() {
+  func addDynamicModules() {
 		DynamicAssembly().add(module: Module4_D())
   }
 }

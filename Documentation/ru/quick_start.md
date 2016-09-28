@@ -30,9 +30,9 @@ DITranquallity являет проектом с открытым исходны�
 ```Swift
 let builder = DIContainerBuilder()
 
-builder.register(Cat).asSelf().initializer { Cat(name: "Felix") }
-builder.register(Dog).asSelf().initializer { Dog(name: "Buddy") }
-builder.register(Home).asSelf().initializer { (s) in return Home(animals: [s.resolve(Cat), s.resolve(Dog)]) }
+builder.register(Cat.self).asSelf().initializer { Cat(name: "Felix") }
+builder.register(Dog.self).asSelf().initializer { Dog(name: "Buddy") }
+builder.register(Home.self).asSelf().initializer { (s) in return Home(animals: [s.resolve(Cat), s.resolve(Dog)]) }
 
 let container = try! builder.build()
 ```
@@ -41,8 +41,8 @@ let container = try! builder.build()
 Для разрешения зависимостей вы пользуетесь контейнером, и спрашиваете у него какие зависимости вас интересуют.
 В DITranquallity это делается следующим образом:
 ```Swift
-let cat = try! container.resolve(Cat)
-let dog = try! container.resolve(Dog)
+let cat = try! container.resolve(Cat.self)
+let dog = try! container.resolve(Dog.self)
 let home: Home = try! container.resolve()
 
 print(cat.name) //Felix
@@ -61,7 +61,5 @@ print(home.animals.map{ $0.name })// [Felix, Buddy]
 * [Разрешение зависимостей](resolve.md)
 * [Модули](module.md)
 * [Сборки](assembly.md)
-* Storyboard
-* "Идеальная" архитектура приложения
-* Примеры
-
+* [Storyboard](storyboard.md)
+* [Примеры](sample.md)

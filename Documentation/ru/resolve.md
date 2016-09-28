@@ -3,20 +3,20 @@
 ## Разрешение по типу
 Основной вид разрешения зависимостей - по типу. Если вы зарегестрировали класс `Cat`, то класс `Cat` будет уникальным ключем, по которому можно получить экземпляр этого класса. К примеру:
 ```Swift
-builder.register(Cat).initializer { Cat() }
+builder.register(Cat.self).initializer { Cat() }
 ...
 let scope = try! builder.build()
 ```
 Сдесь мы регистрируем класс `Cat`, и создаем scope. После чего мы в любой точки программы можем создать экземпляр данного класса, простым способом:
 ```Swift
-let cat = try! scope.resolve(Cat)
+let cat = try! scope.resolve(Cat.self)
 ```
 Мы попросили разрешить зависимость по типу `Cat`, в результате чего получили экземпляр этого класса.
 
 ## Разрешение по типу и имени
 Немного расширим прошлый пример и предположим, что у в нашей программе "доме" есть всего два кота: Felix и Tiger.
 ```Swift
-builder.register(Cat).asName("Felix").asName("Tiger").instancePerScope().initializer { Cat() }
+builder.register(Cat.self).asName("Felix").asName("Tiger").instancePerScope().initializer { Cat() }
 ```
 теперь в нашей программе существует два кота, и мы можем их получить следующий образом:
 ```Swift
@@ -29,25 +29,25 @@ let tiger = try! scope.resolve(Cat.self, Name: "Tiger")
 ## Разрешение зависимостей для множественной регистрации
 Но в предыдущем примере, писать `asDefault()` смысла не имеет. Но есть случаи когда это имеет смысл. Например у нас есть класс `Animal`, и от него отнаследованы классы: `Cat`, `Dog`, `Bird`. Зарегестрировать данное выражение можно следующим образом:
 ```Swift
-builder.register(Cat).asSelf().asType(Animal).initializer { Cat() }
-builder.register(Dog).asSelf().asType(Animal).initializer { Dog() }
-builder.register(Bird).asSelf().asType(Animal).initializer { Bird() }
+builder.register(Cat.self).asSelf().asType(Animal.self).initializer { Cat() }
+builder.register(Dog.self).asSelf().asType(Animal.self).initializer { Dog() }
+builder.register(Bird.self).asSelf().asType(Animal.self).initializer { Bird() }
 ```
 
 Как видите мы зарегестрировали в системе 3 вида животных: кошки, собаки, птицы, и все они также доступны по имени 'Animals'. То есть мы можем сейчас написать следующий код:
 ```Swift
-let cat = try! scope.resolve(Cat)
-let dog = try! scope.resolve(Dog)
-let bird = try! scope.resolve(Bird)
-let animals = try! scope.resolveMany(Animal) // [Cat(), Dog(), Bird()]
+let cat = try! scope.resolve(Cat.self)
+let dog = try! scope.resolve(Dog.self)
+let bird = try! scope.resolve(Bird.self)
+let animals = try! scope.resolveMany(Animal.self) // [Cat(), Dog(), Bird()]
 ```
 То есть мы можем получить конкретное животное, или же получить всех животных в системе. В данном примере мы не сможем получил экземпляр 1 животного, так как у нас в системе есть не одназначность. Но добавив `asDefault()` к одному из выражений, мы сможем получить экземпляр 1 животного. К примеру, в коде регистрации мы изменили первую строчку:
 ```Swift
-builder.register(Cat).asSelf().asType(Animal).asDefault().initializer { Cat() }
+builder.register(Cat.self).asSelf().asType(Animal.self).asDefault().initializer { Cat() }
 ```
 Теперь если мы напишем вот так:
 ```Swift
-let animal = try! scope.resolve(Animal)
+let animal = try! scope.resolve(Animal.self)
 ```
 То мы получим экземпляр класса Cat().
 Более приближенный к реальности пример вы можете посмотреть в главе: [Регистрация с указанием имени/множественная регистрация](https://github.com/ivlevAstef/DITranquillity/wiki/MultyRegistration-(RU))
@@ -55,10 +55,10 @@ let animal = try! scope.resolve(Animal)
 ## Разрешение зависимостей с параметрами
 Предположим, что мы хотим создавать кота, и давать ему кличку. В этом случае мы можем написать так:
 ```Swift
-builder.register(Cat).initializer { _, name in Cat(name: name) }
+builder.register(Cat.self).initializer { _, name in Cat(name: name) }
 ...
-let felix = scope.resolve(Cat, arg: "felix")
-let tiger = scope.resolve(Cat, arg: "tiger")
+let felix = scope.resolve(Cat.self, arg: "felix")
+let tiger = scope.resolve(Cat.self, arg: "tiger")
 ```
 В данном примере мы создали двух котов, и передали им имена в качестве входного параметра. 
 Входных аргументов может быть любое количество (в реальности в системе зарегестирована возможность до 9 входных аргументов), и они могут быть любого типа. То есть это можно рассматривать полностью как эквивалент метода init - конструктора.
@@ -66,7 +66,7 @@ let tiger = scope.resolve(Cat, arg: "tiger")
 ## Автоматический вывод типов
 Во всех предыдущих примерах, мы указывали тип в скобках, но это делать не обязательно, можно писать и по другому, вот несколько примеров:
 ```Swift
-let cat = try! scope.resolve(Cat)
+let cat = try! scope.resolve(Cat.self)
 let cat = try! scope.resolve() as Cat
 let cat: Cat = try! scope.resolve()
 ...
@@ -81,7 +81,7 @@ cat = try! scope.resolve()
 ## Проверки во время разрешения зависимостей
 Во всех примерах мы писали try! или try?, и также могли писать просто try. Но зачем? К сожалению существуют случаи когда библиотека не может однозначно понять, что от неё хочет программист, или же программист допустил ошибку. В этих случая библиотека бросает исключения, которые бывают следующих видов:
 
-* `DIError.NotFoundDefaultForMultyRegisterType` - не смогла найти "стандартный" в случае множественной регистрации типов. Например в параграфе "Разрешение зависимостей для множественной регистрации" мы не указали нигде `asDefault()` но всеравно написали код: `scope.resolve(Animal)` - в этом случае бросится исключение
+* `DIError.NotFoundDefaultForMultyRegisterType` - не смогла найти "стандартный" в случае множественной регистрации типов. Например в параграфе "Разрешение зависимостей для множественной регистрации" мы не указали нигде `asDefault()` но всеравно написали код: `scope.resolve(Animal.self)` - в этом случае бросится исключение
 
 * `DIError.TypeNoRegisterByName` - в системе не зарегестрирован тип с таким именем. Такое исключение возможно если мы пытаем разрешить по типу и имени, но такую пару мы не регестрировали. К примеру если мы в параграфе "Разрешение по типу и имени", напишем следующий код: `scope.resolve(Cat.self, Name: "Kitty")` - то бросится исключение
 
