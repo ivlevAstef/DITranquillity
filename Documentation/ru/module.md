@@ -8,7 +8,7 @@
 Попробуем объямить наш модуль. Для этого нам нужно отнаследоватся от протокола: DIModule, и реализовать метод load(builder). Это можно сделать следующим образом:
 ```Swift
 class RegistrationModule: DIModule {
-  func load(builder: DIContainerBuilder) {
+  func load(builder builder: DIContainerBuilder) {
     builder.register...
   }
 }
@@ -20,5 +20,5 @@ class RegistrationModule: DIModule {
 ## Регистрация модуля
 При регистрации модуля, не происходит никакой магии - просто все типы которые описаны внутри модуля будут зарегестрированы в билдере в котором мы его регистрируете. Вы можете зарегестрировать модуль сделующим образом:
 ```Swift
-builder.registerModule(RegistrationModule())
+builder.register(module: RegistrationModule())
 ```

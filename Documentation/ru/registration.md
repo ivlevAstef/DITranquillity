@@ -5,14 +5,14 @@
 
 Пример регистрации класса 'Cat'
 ```Swift
-builder.register(Cat)
+builder.register(Cat.self)
 ```
 
 ## Метод инициализации
 Метод инициализации это функция, которая возвращает тип указанный при регистрации. В этом месте присутствует статическая проверка типов, поэтому возвращаемое значение обязательно будет удовлятворять заданному типу. 
 В простейшем случае, регистрация класса 'Cat' с указанием метода инициализации, выглядит следующим образом:
 ```Swift
-builder.register(Cat).initializer { Cat() }
+builder.register(Cat.self).initializer { Cat() }
 ```
 
 ## Указание альтернативных типов
@@ -21,11 +21,11 @@ builder.register(Cat).initializer { Cat() }
 
 Если мы хотим чтобы наш класс 'Cat' был доступен по типу 'Animal', то мы можем написать следующий код:
 ```Swift
-builder.register(Cat).asType(Animal).initializer { Cat() }
+builder.register(Cat.self).asType(Animal.self).initializer { Cat() }
 ```
 Но такое написание, не позволит обращаться напрямую по типу 'Cat'. Если же мы хотим обращаться по обоим типа то, нужно написать:
 ```Swift
-builder.register(Cat).asSelf().asType(Animal).initializer { Cat() }
+builder.register(Cat.self).asSelf().asType(Animal.self).initializer { Cat() }
 ```
 
 ## Разрешение зависимостей при инициализации
@@ -33,12 +33,12 @@ builder.register(Cat).asSelf().asType(Animal).initializer { Cat() }
 ```Swift
 Home(myCat: Cat) { ... }
 ...
-builder.register(Home).initializer { scope in return Home(myCat: try! scope.resolve()) }
+builder.register(Home.self).initializer { scope in return Home(myCat: try! scope.resolve()) }
 ```
 Из примера видно, что ничего сложно нету - в метод инициализации передается текущий scope (в котором происходило разрешение зависимости для Home), и мы используя данный scope можем у него запросить класс 'Cat'. При этом мы не указываем что данный класс должен быть именно 'Cat', так как компилятор может сам вывести тип. Так как при инициализации могут возникнуть проблемы (не найден тип, или заявленный тип не совпадает с реальным) то надо обработать исключение. В данном примере показан простой способ обработки исключения - мы явно говорим, что его не должно произойти.
 Более подробная информация про разрешение зависимостей написанна в следующей главе. Но в данном месте покажем более короткую запись разрешения зависимостей:
 ```Swift
-builder.register(Home).initializer { s in return Home(myCat: *!s) }
+builder.register(Home.self).initializer { s in return Home(myCat: *!s) }
 ```
 
 ## Методы для добавления зависимостей
@@ -52,10 +52,10 @@ class Home {
   var animals: [Animal] = []
 }
 
-builder.register(Home).initializer { Home() }
-  .dependency { s, home in home.animals.append(s.resolve(Cat)) }
-  .dependency { s, home in home.animals.append(s.resolve(Dog)) }
-  .dependency { s, home in home.animals.append(s.resolve(Hamster)) }
+builder.register(Home.self).initializer { Home() }
+  .dependency { s, home in home.animals.append(s.resolve(Cat.self)) }
+  .dependency { s, home in home.animals.append(s.resolve(Dog.self)) }
+  .dependency { s, home in home.animals.append(s.resolve(Hamster.self)) }
 ```
 
 В данном примере мы видим, как мы к дому добавили 3 животных - кошку, собаку и хомяка.
@@ -69,11 +69,11 @@ class Cat {
   ...
 }
 ...
-builder.register(Cat).initializer { s in return Cat(home: s.resolve()) }
+builder.register(Cat.self).initializer { s in return Cat(home: s.resolve()) }
 ```
 Теперь не зависимо от того что мы создаем (кошку или дом) у них будут ссылки друг на друга.
 Внимание! Циклически ссылки работаю в 3 случая из 4: dependency - dependency, dependency-initializer, initializer-dependency. Циклически ссылки не работаю на случай: initializer-initializer.
-Внимание! На текущий момент если мы для Home напишем два раза: `.dependency { s, home in home.animals.append(s.resolve(Cat)) }` то это приведет не к тому поведению, которое бы ожидалось - кот не будет создан два раза - один и тотже кот добавиться два раза массив.
+Внимание! На текущий момент если мы для Home напишем два раза: `.dependency { s, home in home.animals.append(s.resolve(Cat.self)) }` то это приведет не к тому поведению, которое бы ожидалось - кот не будет создан два раза - один и тотже кот добавиться два раза массив.
 
 ## Передача параметров
 Иногда при разрешении зависимости, бывают случаи что мы хотим передать параметры в функцию инициализации. Предположим, что мы решили, давать собаке кличку, но она может быть разной для разных собак. Данный функционал мы можем описать следующим образом:
@@ -83,7 +83,7 @@ class Dog {
   ...
 }
 ...
-builder.register(Dog).initializer { s, name in return Dog(name: name) }
+builder.register(Dog.self).initializer { s, name in return Dog(name: name) }
 ```
 
 Как видим из кода выше добавление дополнительного параметра, не представляет сложности - после объявления scope мы может через запятую объявить любое количество параметров (до 10), и они будут доступны из вне.
@@ -95,7 +95,7 @@ class Hamster {
   ...
 }
 ...
-builder.register(Hamster)
+builder.register(Hamster.self)
   .initializer { _, name in return Hamster(name: name) }
   .initializer { _, name, hamsterHome in return Hamster(name: name, hamsterHome: hamsterHome) }
 ```
