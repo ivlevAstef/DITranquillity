@@ -18,11 +18,7 @@ Dependency injection for iOS (Swift)
 ## Install
 Via CocoaPods.
 
-###### Core
-`pod 'DITranquillity'` Swift (iOS8+) also need write in your PodFile `use_frameworks!`
-
-###### Storyboard
-`pod 'DITranquillity/Storyboard'`
+###### `pod 'DITranquillity'` Swift (iOS8+) also need write in your PodFile `use_frameworks!`
 
 ## Usage
 #### Simple
