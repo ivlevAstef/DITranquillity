@@ -15,7 +15,7 @@ public final class DIContainerBuilder {
 
     var allTypes: Set<RType> = []
     for (superType, rTypes) in rTypeContainer.data() {
-			checkRTypes(superType, rTypes: rTypes, errors: &errors)
+      checkRTypes(superType, rTypes: rTypes, errors: &errors)
 
       allTypes.formUnion(rTypes)
     }
@@ -34,21 +34,21 @@ public final class DIContainerBuilder {
     let scope = DIScope(registeredTypes: finalRTypes)
 
     // Init Single types
-		for rType in finalRTypes.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime }) {
-			let _ = try scope.resolve(RType: rType)
+    for rType in finalRTypes.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime }) {
+      let _ = try scope.resolve(RType: rType)
     }
 
     return scope
   }
 
-	private func checkRTypes(_ superType: String, rTypes: [RType], errors: inout [DIError]) {
+  private func checkRTypes(_ superType: String, rTypes: [RType], errors: inout [DIError]) {
     if rTypes.count <= 1 {
       return
     }
 
-		checkRTypesNames(superType, rTypes: rTypes, errors: &errors)
+    checkRTypesNames(superType, rTypes: rTypes, errors: &errors)
 
-		let defaultTypes = rTypes.filter({ $0.isDefault })
+    let defaultTypes = rTypes.filter({ $0.isDefault })
     if defaultTypes.count > 1 {
       errors.append(DIError.multyRegisterDefault(typeNames: defaultTypes.map { String(describing: $0.implType) }, forType: superType))
     }

@@ -24,7 +24,7 @@ public final class DIRegistrationBuilder<ImplObj> {
   }
 
   @discardableResult
-	public func asType<EquallyObj>(_ equallyType: EquallyObj.Type) -> Self {
+  public func asType<EquallyObj>(_ equallyType: EquallyObj.Type) -> Self {
     typeSet = true
     container.append(key: equallyType, value: rType)
     return self

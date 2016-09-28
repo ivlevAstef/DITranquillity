@@ -38,8 +38,8 @@ class Assembly2: DIAssembly {
 	
   var dependencies: [DIAssembly] { return [Assembly3(), Assembly4(), DynamicAssembly()] }
 
-	var dynamicDeclarations: [DIDynamicDeclaration] { return [
-		(assembly: DynamicAssembly(), module: Module2_D())
+  var dynamicDeclarations: [DIDynamicDeclaration] { return [
+    (assembly: DynamicAssembly(), module: Module2_D())
   ] }
 }
 
@@ -84,8 +84,8 @@ class Assembly4: DIAssembly {
 	
   var dependencies: [DIAssembly] { return [ DynamicAssembly() ] }
 
-	var dynamicDeclarations: [DIDynamicDeclaration] { return [
-		(assembly: DynamicAssembly(), module: Module4_D())
+  var dynamicDeclarations: [DIDynamicDeclaration] { return [
+    (assembly: DynamicAssembly(), module: Module4_D())
   ] }
 }
 

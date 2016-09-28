@@ -35,7 +35,7 @@ internal class RType: BaseRTypeHashable {
       lifeTime: self.lifeTime)
   }
 
-	internal var lifeTime = RTypeLifeTime.default
+  internal var lifeTime = RTypeLifeTime.default
   internal var names: Set<String> = []
   internal var isDefault: Bool = false
   private var initializers: [String: Any] = [:] // method type to method

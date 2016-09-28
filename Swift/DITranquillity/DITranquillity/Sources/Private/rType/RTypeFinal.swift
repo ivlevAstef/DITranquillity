@@ -30,7 +30,7 @@ internal class RTypeFinal: BaseRTypeHashable {
     return names.contains(name)
   }
 
-	internal let lifeTime: RTypeLifeTime
+  internal let lifeTime: RTypeLifeTime
   internal let isDefault: Bool
   internal let dependencies: [(_ scope: DIScope, _ obj: Any) -> ()]
 

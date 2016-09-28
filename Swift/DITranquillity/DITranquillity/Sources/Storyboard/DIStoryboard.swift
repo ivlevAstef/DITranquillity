@@ -29,9 +29,9 @@ public final class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
   }
   
   @objc public func resolve(_ viewController: UIViewController, identifier: String) -> UIViewController {
-		let _ = try? container.resolve(viewController)
-		
-		if singleIndentifiers.contains(identifier) {
+    let _ = try? container.resolve(viewController)
+
+    if singleIndentifiers.contains(identifier) {
       singleViewControllersMap[identifier] = viewController
     }
 

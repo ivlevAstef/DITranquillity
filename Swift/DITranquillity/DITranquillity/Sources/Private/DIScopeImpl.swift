@@ -52,7 +52,7 @@ internal class DIScopeImpl {
     let rTypes = try getTypes(T.self)
 
     for rType in rTypes {
-			if rType.has(name: name) {
+      if rType.has(name: name) {
         return try resolveUseRType(scope, pair: RTypeWithNamePair(rType, name), method: method)
       }
     }
@@ -64,18 +64,18 @@ internal class DIScopeImpl {
     let rTypes = try getTypes(type(of: object))
 
     if rTypes.count > 1 {
-			guard let typeIndex = rTypes.index(where: { $0.isDefault }) else {
+      guard let typeIndex = rTypes.index(where: { $0.isDefault }) else {
         throw DIError.notFoundDefaultForMultyRegisterType(typeNames: rTypes.map { String(describing: $0.implType) }, forType: String(describing: type(of: object)))
       }
 
       resolveUseRTypeAndObject(scope, pair: RTypeWithNamePair(rTypes[typeIndex], ""), obj: object)
-		} else {
-			resolveUseRTypeAndObject(scope, pair: RTypeWithNamePair(rTypes[0], ""), obj: object)
-		}
+    } else {
+      resolveUseRTypeAndObject(scope, pair: RTypeWithNamePair(rTypes[0], ""), obj: object)
+    }
   }
 
   internal func resolve<Method>(_ scope: DIScope, rType: RTypeFinal, method: (Method) -> Any) throws -> Any {
-		return try resolveUseRType(scope, pair: RTypeWithNamePair(rType, ""), method: method)
+    return try resolveUseRType(scope, pair: RTypeWithNamePair(rType, ""), method: method)
   }
 
   internal func newLifeTimeScope(_ scope: DIScope) -> DIScope {
@@ -88,7 +88,7 @@ internal class DIScopeImpl {
     guard let rTypes = registeredTypes[type], !rTypes.isEmpty else {
       throw DIError.typeNoRegister(typeName: String(describing: inputType))
     }
-		
+
     return rTypes
   }
 
@@ -217,7 +217,7 @@ internal class DIScopeImpl {
   }
 
   private func isCircular(_ pair: RTypeWithNamePair) -> Bool {
-		return recursive.contains { dependencies[$0].contains(pair.uniqueKey) }
+    return recursive.contains { dependencies[$0].contains(pair.uniqueKey) }
   }
 
   private func setupDependency(_ scope: DIScope, pair: RTypeWithNamePair, obj: Any) {
