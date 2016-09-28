@@ -8,7 +8,7 @@
 
 open class DIDynamicAssembly: DIAssembly {
 	open var publicModules: [DIModule] { return dynamicModules[uniqueKey]! }
-  open var modules: [DIModuleWithScope] { return [] }
+  open var modules: [DIModule] { return [] }
   open var dependencies: [DIAssembly] { return [] }
 
   public init() {

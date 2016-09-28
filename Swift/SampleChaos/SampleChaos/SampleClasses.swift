@@ -138,7 +138,7 @@ class SampleModule : DIModule {
   }
   
   func load(builder: DIContainerBuilder) {
-    builder.register(Int).asSelf().instanceLazySingle().initializer { 10 }
+    builder.register(Int.self).asSelf().instanceLazySingle().initializer { 10 }
     
     builder.register(ServiceProtocol.self)
       .asSelf()
