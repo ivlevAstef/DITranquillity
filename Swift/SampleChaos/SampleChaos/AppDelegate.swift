@@ -15,19 +15,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+		let builder = DIContainerBuilder()
+		builder.register(assembly: Assembly1())
+		builder.register(module: SampleStartupModule())
+		
+		let container = try! builder.build()
+		
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
-    let storyboard = DIStoryboard(name: "Main", bundle: nil, module: SampleStartupModule())
+    let storyboard = DIStoryboard(name: "Main", bundle: nil, container: container)
     window!.rootViewController = storyboard.instantiateInitialViewController()
 
     window!.makeKeyAndVisible()
 
-    let builder = DIContainerBuilder()
-    builder.registerAssembly(Assembly1())
-		builder.registerModule(SampleStartupModule())
-
-    try! builder.build()
-
+		
     // Override point for customization after application launch.
     return true
   }

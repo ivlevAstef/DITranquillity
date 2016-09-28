@@ -9,7 +9,7 @@
 import DITranquillity
 
 class AppModule: DIModule {
-	func load(builder: DIContainerBuilder) {
+	func load(builder builder: DIContainerBuilder) {
 		builder.register(UIStoryboard)
 			.asName("Main")
 			.instanceSingle()

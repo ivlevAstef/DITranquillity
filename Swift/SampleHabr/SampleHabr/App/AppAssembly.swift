@@ -10,14 +10,11 @@ import DITranquillity
 import Logger
 
 public class AppAssembly: DIAssembly {
-	public var modules: [DIModuleWithScope] { return [
-		(AppModule(), .Internal),
-		(ServerModule(), .Public)
-  ] }
+	public var publicModules: [DIModule] { return [ ServerModule() ] }
 	
-	public var dependencies: [DIAssembly] { return [
-		LoggerAssembly()
-  ] }
+	public var modules: [DIModule] { return [ AppModule() ] }
+	
+	public var dependencies: [DIAssembly] { return [ LoggerAssembly() ] }
 	
 	public init() {}
 }

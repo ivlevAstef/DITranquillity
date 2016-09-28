@@ -37,7 +37,7 @@ internal class RType: BaseRTypeHashable {
       lifeTime: self.lifeTime)
   }
 
-  internal var lifeTime = RTypeLifeTime.PerScope
+  internal var lifeTime = RTypeLifeTime.Default
   internal var names: Set<String> = []
   internal var isDefault: Bool = false
   private var initializer: [String: Any] = [:] // method type to method

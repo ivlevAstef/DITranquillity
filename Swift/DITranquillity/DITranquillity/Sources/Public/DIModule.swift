@@ -7,13 +7,13 @@
 //
 
 public protocol DIModule: class {
-  func load(builder: DIContainerBuilder)
+  func load(builder builder: DIContainerBuilder)
 }
 
 extension DIContainerBuilder {
-  public func registerModule(module: DIModule) -> Self {
+  public func register(module module: DIModule) -> Self {
     if !ignore(uniqueKey: String(module.dynamicType)) {
-      module.load(self)
+			module.load(builder: self)
     }
     return self
   }

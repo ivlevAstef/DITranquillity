@@ -9,7 +9,7 @@
 import DITranquillity
 
 class ServerModule: DIModule {
-	func load(builder: DIContainerBuilder) {
+	func load(builder builder: DIContainerBuilder) {
 		builder.register(ServerImpl)
 			.asSelf()
 			.asType(Server)
