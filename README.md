@@ -170,7 +170,10 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 * [ru](https://github.com/ivlevAstef/DITranquillity/blob/master/Documentation/ru/main.md)
 
 ## Requirements
-* Swift - iOS 8.0+; ARC; Xcode 8.0
+iOS 8.0+; ARC
+
+* Swift 3.0: Xcode 8.0; version > 0.9.5
+* Swift 2.3: Xcode 8.0; version <= 0.9.5
 
 # Changelog
 See [CHANGELOG.md](https://github.com/ivlevAstef/DITranguillity/blob/master/CHANGELOG.md) file.
