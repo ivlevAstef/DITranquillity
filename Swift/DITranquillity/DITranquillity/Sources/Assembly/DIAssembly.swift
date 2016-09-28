@@ -13,26 +13,26 @@ public protocol DIAssembly {
 }
 
 public extension DIContainerBuilder {
-  public func registerAssembly(assembly: DIAssembly) -> Self {
-		registerAssembly(assembly, registerInternalModules: true)
+  public func register(assembly assembly: DIAssembly) -> Self {
+		register(assembly: assembly, registerInternalModules: true)
 		
 		return self
   }
 	
-	private func registerAssembly(assembly: DIAssembly, registerInternalModules: Bool){
+	private func register(assembly assembly: DIAssembly, registerInternalModules: Bool) {
 		if !ignore(uniqueKey: String(assembly.dynamicType)) {
 			for module in assembly.publicModules {
-				registerModule(module)
+				register(module: module)
 			}
 			
 			if registerInternalModules {
 				for module in assembly.modules {
-					registerModule(module)
+					register(module: module)
 				}
 			}
 			
 			for dependency in assembly.dependencies {
-				registerAssembly(dependency, registerInternalModules: false)
+				register(assembly: dependency, registerInternalModules: false)
 			}
 		}
 	}

@@ -8,35 +8,7 @@
 
 import UIKit
 
-public class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {
-  public convenience init(name: String, bundle storyboardBundleOrNil: NSBundle?, builder: DIContainerBuilder) {
-    do {
-      let container = try builder.build()
-      self.init(name: name, bundle: storyboardBundleOrNil, container: container)
-    } catch {
-      fatalError("Can't build with error: \(error)")
-    }
-  }
-  
-  public convenience init(name: String, bundle storyboardBundleOrNil: NSBundle?, module: DIModule) {
-    self.init(name: name, bundle: storyboardBundleOrNil, modules: [module])
-  }
-  
-  public convenience init(name: String, bundle storyboardBundleOrNil: NSBundle?, modules: [DIModule]) {
-    let builder = DIContainerBuilder()
-    
-    for module in modules {
-      builder.registerModule(module)
-    }
-    
-    do {
-      let container = try builder.build()
-      self.init(name: name, bundle: storyboardBundleOrNil, container: container)
-    } catch {
-      fatalError("Can't build with error: \(error)")
-    }
-  }
-  
+public class DIStoryboard : UIStoryboard, _DIStoryboardBaseResolver {	
   public required init(name: String, bundle storyboardBundleOrNil: NSBundle?, container: DIScope) {
     self.container = container
     storyboard = _DIStoryboardBase.create(name, bundle: storyboardBundleOrNil)

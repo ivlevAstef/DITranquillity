@@ -13,16 +13,5 @@ internal enum RTypeLifeTime: Equatable {
   case PerDependency
   case PerRequest
 
-  static var Default: RTypeLifeTime { return PerDependency }
-}
-
-func == (a: RTypeLifeTime, b: RTypeLifeTime) -> Bool {
-  switch (a, b) {
-  case (.Single, .Single): return true
-  case (.LazySingle, .LazySingle): return true
-  case (.PerScope, .PerScope): return true
-  case (.PerDependency, .PerDependency): return true
-  case (.PerRequest, .PerRequest): return true
-  default: return false
-  }
+  static var Default: RTypeLifeTime { return PerScope }
 }

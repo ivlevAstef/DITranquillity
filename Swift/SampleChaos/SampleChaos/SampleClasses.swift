@@ -137,7 +137,7 @@ class SampleModule : DIModule {
     self.useBarService = useBarService
   }
   
-  func load(builder: DIContainerBuilder) {
+  func load(builder builder: DIContainerBuilder) {
     builder.register(Int).asSelf().instanceLazySingle().initializer { 10 }
     
     builder.register(ServiceProtocol)
@@ -227,8 +227,8 @@ class SampleModule : DIModule {
 }
 
 class SampleStartupModule : DIModule {
-  func load(builder: DIContainerBuilder) {
-    builder.registerModule(SampleModule(useBarService: true))
+  func load(builder builder: DIContainerBuilder) {
+		builder.register(module: SampleModule(useBarService: true))
     
     builder.register(ViewController)
       .asSelf()

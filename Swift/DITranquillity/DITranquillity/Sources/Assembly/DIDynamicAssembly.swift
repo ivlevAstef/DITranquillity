@@ -19,7 +19,7 @@ public class DIDynamicAssembly: DIAssembly {
     }
   }
 
-  public final func addModule(module: DIModule) {
+  public final func add(module module: DIModule) {
     dynamicModules[uniqueKey]!.append(module)
   }
 
