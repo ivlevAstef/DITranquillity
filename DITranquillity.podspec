@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'DITranquillity'
-  s.version      = '0.9.4'
+  s.version      = '0.9.5'
   s.summary      = 'DITranquillity - Dependency injection for iOS (Swift) '
 
   s.description  = <<-DESC
