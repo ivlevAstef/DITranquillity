@@ -18,12 +18,13 @@ registrationFunction() { #argcount file
   numbers[0]=""
 
   local ArgType=$(join ', ' ${numbers[@]/#/Arg})
-  local ArgumentsType=$(join ', ' $(replaceToArg numbers[@] "arg;I:±Arg;I")); ArgumentsType=${ArgumentsType//±/ }
+  local ArgumentsType=$(join ', _ ' $(replaceToArg numbers[@] "arg;I:±Arg;I")); ArgumentsType=${ArgumentsType//±/ }
   local Arguments=$(join ', ' ${numbers[@]/#/arg})
-  local ArgParam=$(join ', ' $(replaceToArg numbers[@] "arg;I:±arg;I")); ArgParam=${ArgParam//±/ }
+  local ArgParam=$(join ', ' $(replaceToArg numbers[@] "arg;I"));
 
-  echo "  public func initializer<$ArgType>(method: (scope: DIScope, $ArgumentsType) -> ImplObj) -> Self {
-    rType.setInitializer { (s, $Arguments) -> Any in return method(scope: s, $ArgParam) }
+  echo "  @discardableResult
+  public func initializer<$ArgType>(method: @escaping (_ scope: DIScope, _ $ArgumentsType) -> ImplObj) -> Self {
+    rType.setInitializer { (s, $Arguments) -> Any in return method(s, $ArgParam) }
     return self
   }
   " >> $2
@@ -53,12 +54,12 @@ resolveFunctions() { #argcount prefix file
 
   local ArgType=$(join ', ' ${numbers[@]/#/Arg})
   local ArgumentsType=$(join ', _ ' $(replaceToArg numbers[@] "arg;I:±Arg;I")); ArgumentsType=${ArgumentsType//±/ }
-  local ArgumentsMethodType=$(join ', ' $(replaceToArg numbers[@] "arg;I:±Arg;I")); ArgumentsMethodType=${ArgumentsMethodType//±/ }
-  local ArgParam=$(join ', ' $(replaceToArg numbers[@] "arg;I:±arg;I")); ArgParam=${ArgParam//±/ }
+  local ArgumentsMethodType=$(join ', _ ' $(replaceToArg numbers[@] "arg;I:±Arg;I")); ArgumentsMethodType=${ArgumentsMethodType//±/ }
+  local ArgParam=$(join ', ' $(replaceToArg numbers[@] "arg;I"));
 
   echo "  public func resolve<T, $ArgType>($prefix$ArgumentsType) throws -> T {
-    typealias Method = (scope: DIScope, $ArgumentsMethodType) -> Any
-    return try impl.resolve(self) { (initializer: Method) in return initializer(scope: self, $ArgParam) }
+    typealias Method = (_ scope: DIScope, _ $ArgumentsMethodType) -> Any
+    return try impl.resolve(self) { (initializer: Method) in return initializer(self, $ArgParam) }
   }
   " >> $3
 }
@@ -70,12 +71,12 @@ resolveManyFunctions() { #argcount prefix file
 
   local ArgType=$(join ', ' ${numbers[@]/#/Arg})
   local ArgumentsType=$(join ', _ ' $(replaceToArg numbers[@] "arg;I:±Arg;I")); ArgumentsType=${ArgumentsType//±/ }
-  local ArgumentsMethodType=$(join ', ' $(replaceToArg numbers[@] "arg;I:±Arg;I")); ArgumentsMethodType=${ArgumentsMethodType//±/ }
-  local ArgParam=$(join ', ' $(replaceToArg numbers[@] "arg;I:±arg;I")); ArgParam=${ArgParam//±/ }
+  local ArgumentsMethodType=$(join ', _ ' $(replaceToArg numbers[@] "arg;I:±Arg;I")); ArgumentsMethodType=${ArgumentsMethodType//±/ }
+  local ArgParam=$(join ', ' $(replaceToArg numbers[@] "arg;I"));
 
   echo "  public func resolveMany<T, $ArgType>($prefix$ArgumentsType) throws -> [T] {
-    typealias Method = (scope: DIScope, $ArgumentsMethodType) -> Any
-    return try impl.resolveMany(self) { (initializer: Method) in return initializer(scope: self, $ArgParam) }
+    typealias Method = (_ scope: DIScope, _ $ArgumentsMethodType) -> Any
+    return try impl.resolveMany(self) { (initializer: Method) in return initializer(self, $ArgParam) }
   }
   " >> $3
 }
@@ -88,13 +89,13 @@ resolveNameFunctions() { #argcount prefix file
 
   local ArgType=$(join ', ' ${numbers[@]/#/Arg})
   local ArgumentsType=$(join ', _ ' $(replaceToArg numbers[@] "arg;I:±Arg;I")); ArgumentsType=${ArgumentsType//±/ }
-  local ArgumentsMethodType=$(join ', ' $(replaceToArg numbers[@] "arg;I:±Arg;I")); ArgumentsMethodType=${ArgumentsMethodType//±/ }
-  local ArgParam=$(join ', ' $(replaceToArg numbers[@] "arg;I:±arg;I")); ArgParam=${ArgParam//±/ }
+  local ArgumentsMethodType=$(join ', _ ' $(replaceToArg numbers[@] "arg;I:±Arg;I")); ArgumentsMethodType=${ArgumentsMethodType//±/ }
+  local ArgParam=$(join ', ' $(replaceToArg numbers[@] "arg;I"));
 
   local name="Name name"
   echo "  public func resolve<T, $ArgType>($prefix$name: String, $ArgumentsType) throws -> T {
-    typealias Method = (scope: DIScope, $ArgumentsMethodType) -> Any
-    return try impl.resolve(self, name: name) { (initializer: Method) -> Any in return initializer(scope: self, $ArgParam) }
+    typealias Method = (_ scope: DIScope, _ $ArgumentsMethodType) -> Any
+    return try impl.resolve(self, name: name) { (initializer: Method) -> Any in return initializer(self, $ArgParam) }
   }
   " >> $3
 }
@@ -111,8 +112,8 @@ resolveFile() { #file
 public extension DIScope {" > $1
 
   for argcount in `seq 0 $argmax`; do
-    resolveFunctions $argcount "arg§" $1
-    resolveManyFunctions $argcount "arg§" $1
+    resolveFunctions $argcount "" $1
+    resolveManyFunctions $argcount "" $1
     resolveNameFunctions $argcount "&" $1
   done
   echo "}" >> $1

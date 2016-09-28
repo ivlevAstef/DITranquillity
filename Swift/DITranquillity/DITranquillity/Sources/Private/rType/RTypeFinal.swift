@@ -9,8 +9,8 @@
 internal class RTypeFinal: BaseRTypeHashable {
   typealias UniqueKey = String
 
-  internal init(implType: Any, initializer: [String: Any], dependencies: [(scope: DIScope, obj: Any) -> ()], names: Set<String>, isDefault: Bool, lifeTime: RTypeLifeTime) {
-    self.initializer = initializer
+  internal init(implType: Any, initializers: [String: Any], dependencies: [(_ scope: DIScope, _ obj: Any) -> ()], names: Set<String>, isDefault: Bool, lifeTime: RTypeLifeTime) {
+    self.initializers = initializers
     self.dependencies = dependencies
     self.names = names
     self.isDefault = isDefault
@@ -18,22 +18,22 @@ internal class RTypeFinal: BaseRTypeHashable {
     super.init(implType: implType)
   }
 
-  func initType<Method, T>(method: Method throws -> T) throws -> T {
-    guard let initMethod = initializer[String(Method)] as? Method else {
-      throw DIError.InitializerWithSignatureNotFound(typeName: String(implType), signature: String(Method))
+  func new<Method, T>(_ method: (Method) throws -> T) throws -> T {
+    guard let initializer = initializers[String(describing: Method.self)] as? Method else {
+      throw DIError.initializerWithSignatureNotFound(typeName: String(describing: implType), signature: String(describing: Method.self))
     }
 
-    return try method(initMethod)
+    return try method(initializer)
   }
 
-  func hasName(name: String) -> Bool {
+  func has(name: String) -> Bool {
     return names.contains(name)
   }
 
-  internal let isDefault: Bool
   internal let lifeTime: RTypeLifeTime
-  internal let dependencies: [(scope: DIScope, obj: Any) -> ()]
+  internal let isDefault: Bool
+  internal let dependencies: [(_ scope: DIScope, _ obj: Any) -> ()]
 
-  private let initializer: [String: Any]
+  private let initializers: [String: Any]
   private let names: Set<String>
 }

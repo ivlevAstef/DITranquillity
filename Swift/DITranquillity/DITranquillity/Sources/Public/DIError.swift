@@ -6,23 +6,23 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public enum DIError: ErrorType {
-  case TypeNoRegister(typeName: String)
-  case TypeNoRegisterByName(typeName: String, name: String)
-  case NotSetInitializer(typeName: String)
+public enum DIError: Error {
+  case typeNoRegister(typeName: String)
+  case typeNoRegisterByName(typeName: String, name: String)
+  case notSetInitializer(typeName: String)
 
-  case InitializerWithSignatureNotFound(typeName: String, signature: String)
+  case initializerWithSignatureNotFound(typeName: String, signature: String)
 
-  case MultyRegisterDefault(typeNames: [String], forType: String)
-  case NotFoundDefaultForMultyRegisterType(typeNames: [String], forType: String)
+  case multyRegisterDefault(typeNames: [String], forType: String)
+  case notFoundDefaultForMultyRegisterType(typeNames: [String], forType: String)
 
-  case MultyRegisterNamesForType(names: Set<String>, forType: String)
-	
-	case MultyPerRequestObjectsForType(objects: [Any], forType: String)
+  case multyRegisterNamesForType(names: Set<String>, forType: String)
 
-  case TypeIncorrect(askableType: String, realType: String)
-	
-	case RecursiveInitializer(type: String)
+  case multyPerRequestObjectsForType(objects: [Any], forType: String)
 
-  case Build(errors: [DIError])
+  case typeIncorrect(askableType: String, realType: String)
+
+  case recursiveInitializer(type: String)
+
+  case build(errors: [DIError])
 }

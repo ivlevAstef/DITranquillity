@@ -9,10 +9,10 @@
 import UIKit
 
 class PopUpViewController: UIViewController {
-	weak var delegate: PopUpDelegate? = nil
-	
-	@IBAction func sliderValueChanged(sender: UISlider) {
-		print("From PopUp: Slider value changed on: \(sender.value)")
-		delegate?.sliderValueChanged(Int(sender.value))
-	}
+  weak var delegate: PopUpDelegate? = nil
+  
+  @IBAction func sliderValueChanged(_ sender: UISlider) {
+    print("From PopUp: Slider value changed on: \(sender.value)")
+    delegate?.sliderValueChanged(Int(sender.value))
+  }
 }

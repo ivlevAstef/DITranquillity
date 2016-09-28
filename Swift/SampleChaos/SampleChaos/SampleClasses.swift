@@ -26,39 +26,39 @@ class BarService: ServiceProtocol {
 }
 
 protocol LoggerProtocol {
-  func log(msg: String)
+  func log(_ msg: String)
 }
 
 class Logger: LoggerProtocol {
-  func log(msg: String) {
+  func log(_ msg: String) {
     print("log: \(msg)")
   }
 }
 
 class Logger2: LoggerProtocol {
-  func log(msg: String) {
+  func log(_ msg: String) {
     print("log2: \(msg)")
   }
 }
 
 
 class LoggerAll: LoggerProtocol {
-	let loggers: [LoggerProtocol]
-	var loggersFull: [LoggerProtocol]! {
-		didSet {
-			print(loggersFull)
-		}
-	}
-	
-	init(loggers: [LoggerProtocol]) {
-		self.loggers = loggers
-	}
-	
-	func log(msg: String) {
-		for logger in loggers {
-			logger.log(msg)
-		}
-	}
+  let loggers: [LoggerProtocol]
+  var loggersFull: [LoggerProtocol]! {
+    didSet {
+      print(loggersFull)
+    }
+  }
+
+  init(loggers: [LoggerProtocol]) {
+    self.loggers = loggers
+  }
+
+  func log(_ msg: String) {
+    for logger in loggers {
+      logger.log(msg)
+    }
+  }
 }
 
 class Inject {
@@ -73,7 +73,7 @@ class Inject {
   }
   
   var description: String {
-    return "<Inject: \(unsafeAddressOf(self)) service:\(unsafeAddressOf(service as! AnyObject)) logger:\(unsafeAddressOf(logger as! AnyObject)) logger2:\(unsafeAddressOf(logger2 as! AnyObject)) service2:\(unsafeAddressOf(service2 as! AnyObject))>"
+    return "<Inject: \(Unmanaged.passUnretained(self).toOpaque()) service:\(Unmanaged.passUnretained(service as AnyObject).toOpaque()) logger:\(Unmanaged.passUnretained(logger as AnyObject).toOpaque()) logger2:\(Unmanaged.passUnretained(logger2 as AnyObject).toOpaque()) service2:\(Unmanaged.passUnretained(service2 as AnyObject).toOpaque())>"
   }
 }
 
@@ -119,7 +119,7 @@ class Circular1 {
   }
   
   var description: String {
-    return "<Circular1: \(unsafeAddressOf(self)) Circular2:\(unsafeAddressOf(ref))>"
+    return "<Circular1: \(Unmanaged.passUnretained(self).toOpaque()) Circular2:\(Unmanaged.passUnretained(ref).toOpaque())>"
   }
 }
 
@@ -127,7 +127,7 @@ class Circular2 {
   var ref: Circular1!
   
   var description: String {
-    return "<Circular2: \(unsafeAddressOf(self)) Circular1:\(unsafeAddressOf(ref))>"
+    return "<Circular2: \(Unmanaged.passUnretained(self).toOpaque()) Circular1:\(Unmanaged.passUnretained(ref).toOpaque())>"
   }
 }
 
@@ -137,10 +137,10 @@ class SampleModule : DIModule {
     self.useBarService = useBarService
   }
   
-  func load(builder builder: DIContainerBuilder) {
-    builder.register(Int).asSelf().instanceLazySingle().initializer { 10 }
+  func load(builder: DIContainerBuilder) {
+    builder.register(Int.self).asSelf().instanceLazySingle().initializer { 10 }
     
-    builder.register(ServiceProtocol)
+    builder.register(ServiceProtocol.self)
       .asSelf()
       .instancePerDependency()
       .initializer {
@@ -149,61 +149,61 @@ class SampleModule : DIModule {
         }
         return FooService()
     }
-		
-		builder.register(LoggerAll)
-			.asDefault()
-			.asType(LoggerProtocol)
-			.instanceSingle()
-			.initializer { scope in LoggerAll(loggers: **!scope) }
-			.dependency { (scope, self) in self.loggersFull = **!scope }
-		
-    builder.register(Logger)
-      .asType(LoggerProtocol)
+
+    builder.register(LoggerAll.self)
+      .asDefault()
+      .asType(LoggerProtocol.self)
       .instanceSingle()
-			.initializer { Logger() }
+      .initializer { scope in LoggerAll(loggers: **!scope) }
+      .dependency { (scope, self) in self.loggersFull = **!scope }
+
+    builder.register(Logger.self)
+      .asType(LoggerProtocol.self)
+      .instanceSingle()
+      .initializer { Logger() }
     
-    builder.register(Logger2)
+    builder.register(Logger2.self)
       .asSelf()
-      .asType(LoggerProtocol)
+      .asType(LoggerProtocol.self)
       .instanceLazySingle()
       .initializer { Logger2() }
     
-    builder.register(Inject)
+    builder.register(Inject.self)
       .asSelf()
       .instancePerDependency()
       .initializer { (scope) in Inject(service: *!scope, logger: *!scope, test: *!scope) }
-      .dependency { (scope, obj) in obj.logger2 = try! scope.resolve(Logger2) }
+      .dependency { (scope, obj) in obj.logger2 = try! scope.resolve(Logger2.self) }
       .dependency { (scope, obj) in obj.service2 = *!scope }
     
-    builder.register(InjectMany)
+    builder.register(InjectMany.self)
       .asSelf()
       .instancePerDependency()
       .initializer { (scope) in InjectMany(loggers: **!scope) }
     
     //Animals
-    builder.register(Animal)
+    builder.register(Animal.self)
       .asSelf()
       .asName("Cat")
       .initializer { Animal(name: "Cat") }
     
-    builder.register(Animal)
+    builder.register(Animal.self)
       .asSelf()
       .asName("Dog")
       .asDefault()
       .initializer { Animal(name: "Dog") }
     
-    builder.register(Animal)
+    builder.register(Animal.self)
       .asSelf()
       .asName("Bear")
       .initializer { Animal(name: "Bear") }
     
     
-    builder.register(Animal)
+    builder.register(Animal.self)
       .asSelf()
       .asName("Custom")
       .initializer { (s, arg1) in Animal(name: arg1) }
     
-    builder.register(Params)
+    builder.register(Params.self)
       .asSelf()
       .instancePerDependency()
       .initializer { (s, p1, p2) in Params(p1: p1, p2: p2) }
@@ -211,12 +211,12 @@ class SampleModule : DIModule {
     
     //circular
     
-    builder.register(Circular1)
+    builder.register(Circular1.self)
       .asSelf()
       .instancePerDependency()
       .initializer { (s) in Circular1(ref: *!s) }
     
-    builder.register(Circular2)
+    builder.register(Circular2.self)
       .asSelf()
       .instancePerDependency()
       .initializer { Circular2() }
@@ -227,26 +227,26 @@ class SampleModule : DIModule {
 }
 
 class SampleStartupModule : DIModule {
-  func load(builder builder: DIContainerBuilder) {
+  func load(builder: DIContainerBuilder) {
 		builder.register(module: SampleModule(useBarService: true))
     
-    builder.register(ViewController)
+    builder.register(ViewController.self)
       .asSelf()
       .instancePerRequest()
       .dependency { (scope, obj) in obj.injectGlobal = *!scope }
       .dependency { (scope, obj) in obj.scope = scope }
     
-    builder.register(ViewController2)
+    builder.register(ViewController2.self)
       .asSelf()
       .instancePerRequest()
       .dependency { (scope, obj) in
-        obj.inject = try! scope.resolve(Inject)
+        obj.inject = try! scope.resolve(Inject.self)
         obj.logger = *!scope
     }
     
-    builder.register(UIView)
+    builder.register(UIView.self)
       .asSelf()
-      .asType(UIAppearance)
+      .asType(UIAppearance.self)
       //.instanceLazySingle()
       //.instancePerMatchingScope("ScopeName")
       //.instancePerScope()

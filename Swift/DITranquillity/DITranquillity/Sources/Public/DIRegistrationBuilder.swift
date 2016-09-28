@@ -9,75 +9,87 @@
 import Foundation
 
 public extension DIContainerBuilder {
-  public func register<T>(rClass: T.Type) -> DIRegistrationBuilder<T> {
+  public func register<T>(_ rClass: T.Type) -> DIRegistrationBuilder<T> {
     return DIRegistrationBuilder<T>(self.rTypeContainer, rClass)
   }
 }
 
-public class DIRegistrationBuilder<ImplObj> {
+public final class DIRegistrationBuilder<ImplObj> {
   // As
+  @discardableResult
   public func asSelf() -> Self {
     typeSet = true
-    container.append(ImplObj.self, value: rType)
+    container.append(key: ImplObj.self, value: rType)
     return self
   }
 
-  public func asType<EquallyObj>(equallyType: EquallyObj.Type) -> Self {
+  @discardableResult
+  public func asType<EquallyObj>(_ equallyType: EquallyObj.Type) -> Self {
     typeSet = true
-    container.append(equallyType, value: rType)
+    container.append(key: equallyType, value: rType)
     return self
   }
 
-  public func asName(name: String) -> Self {
+  @discardableResult
+  public func asName(_ name: String) -> Self {
     rType.names.insert(name)
     return self
   }
 
+  @discardableResult
   public func asDefault() -> Self {
     rType.isDefault = true
     return self
   }
 
   // Initializer
-  public func initializer(method: (scope: DIScope) -> ImplObj) -> Self {
-    rType.setInitializer { (s) -> Any in return method(scope: s) }
+  @discardableResult
+  public func initializer(_ method: @escaping (_ scope: DIScope) -> ImplObj) -> Self {
+    rType.setInitializer { (s) -> Any in return method(s) }
     return self
   }
 
-  public func initializer(method: () -> ImplObj) -> Self {
+  @discardableResult
+  public func initializer(_ method: @escaping () -> ImplObj) -> Self {
     rType.setInitializer { (_: DIScope) -> Any in return method() }
     return self
   }
   
   // Dependency
-  public func dependency(method: (scope: DIScope, obj: ImplObj) -> ()) -> Self {
+  @discardableResult
+  public func dependency(_ method: @escaping (_ scope: DIScope, _ obj: ImplObj) -> ()) -> Self {
     rType.appendDependency(method)
     return self
   }
 
   // LifeTime
+  @discardableResult
   public func instanceSingle() -> Self {
-    rType.lifeTime = RTypeLifeTime.Single
+    rType.lifeTime = RTypeLifeTime.single
     return self
   }
 
+  @discardableResult
   public func instanceLazySingle() -> Self {
-    rType.lifeTime = RTypeLifeTime.LazySingle
+    rType.lifeTime = RTypeLifeTime.lazySingle
     return self
   }
 
+  @discardableResult
   public func instancePerScope() -> Self {
-    rType.lifeTime = RTypeLifeTime.PerScope
+    rType.lifeTime = RTypeLifeTime.perScope
     return self
   }
 
+  @discardableResult
   public func instancePerDependency() -> Self {
-    rType.lifeTime = RTypeLifeTime.PerDependency
+    rType.lifeTime = RTypeLifeTime.perDependency
     return self
   }
 
+  @discardableResult
   public func instancePerRequest() -> Self {
-    rType.lifeTime = RTypeLifeTime.PerRequest
+    rType.lifeTime = RTypeLifeTime.perRequest
     return self
   }
 
@@ -88,7 +100,7 @@ public class DIRegistrationBuilder<ImplObj> {
 
   deinit {
     if !typeSet {
-      asSelf()
+      let _ = asSelf()
     }
   }
 

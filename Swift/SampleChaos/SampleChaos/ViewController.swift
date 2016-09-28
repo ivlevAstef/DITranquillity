@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     let scope2 = scope.newLifeTimeScope()
     let scope3 = scope2.newLifeTimeScope()
     
-    let vc1_1 = try! scope2.resolve(UIView)
+    let vc1_1 = try! scope2.resolve(UIView.self)
     print("Create VC1_1: \(vc1_1)")
     
     let vc1_2: UIView = try! *scope3

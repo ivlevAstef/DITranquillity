@@ -41,9 +41,10 @@ class YourDynamicAssembly: DIDynamicAssembly {
 }
 ...
 class YourAssembly: DIAssembly {
-  func addDynamicModules() {
-    YourDynamicAssembly().add(module: YourModuleFromCurrentAssembly())
-  }
+  ...
+  var dynamicDeclarations: [DIDynamicDeclaration] { return [
+    (assembly: YourDynamicAssembly(), module: YourModuleFromCurrentAssembly())
+  ] }
 }
 ```
 

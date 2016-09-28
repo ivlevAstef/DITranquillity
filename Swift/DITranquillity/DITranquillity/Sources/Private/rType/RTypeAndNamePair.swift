@@ -7,21 +7,21 @@
 //
 
 internal class RTypeWithNamePair: Hashable {
-	typealias UniqueKey = String
-	
-	let rType: RTypeFinal
-	let name: String
-	
-	init(_ rType: RTypeFinal, _ name: String) {
-		self.rType = rType
-		self.name = name
-	}
-	
-	var uniqueKey: UniqueKey { return rType.uniqueKey + name }
-	
-	var hashValue: Int { return rType.hashValue }
+  typealias UniqueKey = String
+
+  let rType: RTypeFinal
+  let name: String
+
+  init(_ rType: RTypeFinal, _ name: String) {
+    self.rType = rType
+    self.name = name
+  }
+
+  var uniqueKey: UniqueKey { return rType.uniqueKey + name }
+
+  var hashValue: Int { return rType.hashValue }
 }
 
 func == (lhs: RTypeWithNamePair, rhs: RTypeWithNamePair) -> Bool {
-	return lhs.rType == rhs.rType && lhs.name == rhs.name
+  return lhs.rType == rhs.rType && lhs.name == rhs.name
 }
