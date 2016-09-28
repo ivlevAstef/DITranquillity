@@ -33,25 +33,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       .asSelf()
       .asType(PopUpDelegate.self)
       .asType(Observer.self) // And Observer
-      .instancePerRequest()
     
     builder.register(PopUpViewController.self)
-      .instancePerRequest()
       .dependency { (scope, obj) in obj.delegate = *!scope }
     
     // Observer
     builder.register(ViewControllerFirstObserver.self)
       .asSelf()
       .asType(Observer.self)
-      .instancePerRequest()
     
     builder.register(ViewControllerSecondObserver.self)
       .asSelf()
       .asType(Observer.self)
-      .instancePerRequest()
     
     builder.register(ViewControllerSlider.self)
-      .instancePerRequest()
       .dependency { (scope, obj) in obj.observers = **!scope }
     
     

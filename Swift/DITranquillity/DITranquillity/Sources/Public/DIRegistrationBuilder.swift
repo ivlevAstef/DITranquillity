@@ -12,6 +12,11 @@ public extension DIContainerBuilder {
   public func register<T>(_ rClass: T.Type) -> DIRegistrationBuilder<T> {
     return DIRegistrationBuilder<T>(self.rTypeContainer, rClass)
   }
+	
+	@discardableResult
+	public func register<T: UIViewController>(_ rClass: T.Type) -> DIRegistrationBuilder<T> {
+		return DIRegistrationBuilder<T>(self.rTypeContainer, rClass).instancePerRequest()
+	}
 }
 
 public final class DIRegistrationBuilder<ImplObj> {

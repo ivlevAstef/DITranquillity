@@ -21,7 +21,6 @@ class AppModule: DIModule {
       .dependency { (scope, self) in self.logger = *?scope }
     
     builder.register(YourViewController.self)
-      .instancePerRequest()
       .dependency { (scope, self) in self.presenter = try! scope.resolve() }
   }
 
