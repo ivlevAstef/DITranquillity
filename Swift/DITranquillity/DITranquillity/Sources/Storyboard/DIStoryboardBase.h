@@ -6,8 +6,6 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-#ifdef __DITRANQUILLITY_STORYBOARD__
-
 #import <UIKit/UIKit.h>
 
 @protocol _DIStoryboardBaseResolver <NSObject>
@@ -25,5 +23,3 @@
 - (nonnull __kindof UIViewController*)instantiateViewControllerWithIdentifier:(nonnull NSString*)identifier;
 
 @end
-
-#endif

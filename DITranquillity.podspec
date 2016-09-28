@@ -23,25 +23,8 @@ Pod::Spec.new do |s|
   storyboard_files = 'Swift/DITranquillity/DITranquillity/Sources/Storyboard/*.{h,m,swift}'
   assembly_files = 'Swift/DITranquillity/DITranquillity/Sources/Assembly/*.swift'
 
-  s.subspec 'Core' do |core|
-    core.source_files = core_files, header_file
-  end
+  s.source_files = core_files, assembly_files, storyboard_files, header_file
 
-  s.subspec 'Assembly' do |assembly|
-    assembly.dependency 'DITranquillity/Core'
-
-    assembly.source_files = assembly_files, core_files, header_file
-  end
-
-  s.subspec 'Storyboard' do |storyboard|
-    storyboard.xcconfig = { 'OTHER_CFLAGS' => '$(inherited) -D__DITRANQUILLITY_STORYBOARD__' }
-    storyboard.dependency 'DITranquillity/Core'
-
-    storyboard.frameworks = 'UIKit'
-
-    storyboard.source_files = storyboard_files, core_files, header_file
-  end
-
-  s.default_subspec = 'Assembly'
-
+  s.frameworks = 'UIKit'
+  
 end
