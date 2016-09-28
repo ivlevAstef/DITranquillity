@@ -7,11 +7,11 @@
 //
 
 internal enum RTypeLifeTime: Equatable {
-  case Single
-  case LazySingle
-  case PerScope
-  case PerDependency
-  case PerRequest
+  case single
+  case lazySingle
+  case perScope
+  case perDependency
+  case perRequest
 
-  static var Default: RTypeLifeTime { return PerScope }
+  static var `default`: RTypeLifeTime { return perScope }
 }

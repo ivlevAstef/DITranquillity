@@ -6,24 +6,35 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public class DIDynamicAssembly: DIAssembly {
-	public var publicModules: [DIModule] { return dynamicModules[uniqueKey]! }
-  public var modules: [DIModule] { return [] }
-  public var dependencies: [DIAssembly] { return [] }
+open class DIDynamicAssembly: DIAssembly {
+  open var publicModules: [DIModule] { return dynamicModules[uniqueKey]! }
+  open var modules: [DIModule] { return [] }
+  open var dependencies: [DIAssembly] { return [] }
+  open var dynamicDeclarations: [DIDynamicDeclaration] { return [] }
 
   public init() {
-    uniqueKey = String(self.dynamicType)
+    uniqueKey = String(describing: type(of: self))
 
     if nil == dynamicModules[uniqueKey] {
       dynamicModules[uniqueKey] = []
     }
   }
 
-  public final func add(module module: DIModule) {
-    dynamicModules[uniqueKey]!.append(module)
+  internal final func add(module: DIModule) {
+    let moduleKey = String(describing: type(of: module))
+
+    objc_sync_enter(dynamicModules)
+
+    if !dynamicModules[uniqueKey]!.contains { moduleKey == String(describing: type(of: $0)) } {
+      dynamicModules[uniqueKey]!.append(module)
+    }
+
+    objc_sync_exit(dynamicModules)
   }
 
   private let uniqueKey: String
 }
 
 private var dynamicModules: [String: [DIModule]] = [:]
+
+public typealias DIDynamicDeclaration = (assembly: DIDynamicAssembly, module: DIModule)

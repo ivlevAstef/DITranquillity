@@ -12,9 +12,9 @@ import Logger
 public class AppAssembly: DIAssembly {
 	public var publicModules: [DIModule] { return [ ServerModule() ] }
 	
-	public var modules: [DIModule] { return [ AppModule() ] }
-	
-	public var dependencies: [DIAssembly] { return [ LoggerAssembly() ] }
-	
-	public init() {}
+  public var modules: [DIModule] { return [ AppModule() ] }
+  
+  public var dependencies: [DIAssembly] { return [ LoggerAssembly() ] }
+  
+  public init() {}
 }

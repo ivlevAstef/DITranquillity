@@ -20,7 +20,7 @@ class DITranquillityTests_Scope: XCTestCase {
   func test01_Single() {
     let builder = DIContainerBuilder()
     
-    builder.register(TestScopeClass)
+    builder.register(TestScopeClass.self)
       .instanceLazySingle()
       .initializer { TestScopeClass() }
     
@@ -42,7 +42,7 @@ class DITranquillityTests_Scope: XCTestCase {
   func test02_PerScope() {
     let builder = DIContainerBuilder()
     
-    builder.register(TestScopeClass)
+    builder.register(TestScopeClass.self)
       .instancePerScope()
       .initializer { TestScopeClass() }
     
@@ -64,7 +64,7 @@ class DITranquillityTests_Scope: XCTestCase {
   func test02_PerScopeDefault() {
     let builder = DIContainerBuilder()
     
-    builder.register(TestScopeClass)
+    builder.register(TestScopeClass.self)
       .initializer { TestScopeClass() }
     
     let container = try! builder.build()
@@ -85,7 +85,7 @@ class DITranquillityTests_Scope: XCTestCase {
   func test03_PerDependency() {
     let builder = DIContainerBuilder()
     
-    builder.register(TestScopeClass)
+    builder.register(TestScopeClass.self)
       .instancePerDependency()
       .initializer { TestScopeClass() }
     

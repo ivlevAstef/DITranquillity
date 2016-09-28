@@ -6,27 +6,27 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-prefix operator *!{}
+prefix operator *!
 public prefix func *!<T>(scope: DIScope) -> T {
   return try! scope.resolve()
 }
 
-prefix operator *?{}
+prefix operator *?
 public prefix func *?<T>(scope: DIScope) -> T? {
   return try? scope.resolve()
 }
 
-prefix operator **!{}
+prefix operator **!
 public prefix func **!<T>(scope: DIScope) -> [T] {
   return try! scope.resolveMany()
 }
 
-prefix operator *{}
+prefix operator *
 public prefix func *<T>(scope: DIScope) throws -> T {
   return try scope.resolve()
 }
 
-prefix operator **{}
+prefix operator **
 public prefix func **<T>(scope: DIScope) throws -> [T] {
   return try scope.resolveMany()
 }

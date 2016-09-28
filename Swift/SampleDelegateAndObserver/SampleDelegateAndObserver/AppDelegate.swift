@@ -14,54 +14,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
-  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    window = UIWindow(frame: UIScreen.mainScreen().bounds)
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    window = UIWindow(frame: UIScreen.main.bounds)
 
-		let scope = registrateAndBuild()
-		
-    window!.rootViewController = try! scope.resolve(UIStoryboard).instantiateInitialViewController()
+    let scope = registrateAndBuild()
+    
+    window!.rootViewController = try! scope.resolve(UIStoryboard.self).instantiateInitialViewController()
     window!.makeKeyAndVisible()
 
     return true
   }
-	
-	func registrateAndBuild() -> DIScope {
-		let builder = DIContainerBuilder()
-		
-		// Delegate
-		builder.register(ViewController)
-			.asSelf()
-			.asType(PopUpDelegate)
-			.asType(Observer) // And Observer
-			.instancePerRequest()
-		
-		builder.register(PopUpViewController)
-			.instancePerRequest()
-			.dependency { (scope, obj) in obj.delegate = *!scope }
-		
-		// Observer
-		builder.register(ViewControllerFirstObserver)
-			.asSelf()
-			.asType(Observer)
-			.instancePerRequest()
-		
-		builder.register(ViewControllerSecondObserver)
-			.asSelf()
-			.asType(Observer)
-			.instancePerRequest()
-		
-		builder.register(ViewControllerSlider)
-			.instancePerRequest()
-			.dependency { (scope, obj) in obj.observers = **!scope }
-		
-		
-		// Storyboard
-		builder.register(UIStoryboard)
-			.instanceSingle()
-			.initializer { scope in DIStoryboard(name: "Main", bundle: nil, container: scope) }
-		
-		return try! builder.build()
-	}
-	
+  
+  func registrateAndBuild() -> DIScope {
+    let builder = DIContainerBuilder()
+    
+    // Delegate
+    builder.register(ViewController.self)
+      .asSelf()
+      .asType(PopUpDelegate.self)
+      .asType(Observer.self) // And Observer
+      .instancePerRequest()
+    
+    builder.register(PopUpViewController.self)
+      .instancePerRequest()
+      .dependency { (scope, obj) in obj.delegate = *!scope }
+    
+    // Observer
+    builder.register(ViewControllerFirstObserver.self)
+      .asSelf()
+      .asType(Observer.self)
+      .instancePerRequest()
+    
+    builder.register(ViewControllerSecondObserver.self)
+      .asSelf()
+      .asType(Observer.self)
+      .instancePerRequest()
+    
+    builder.register(ViewControllerSlider.self)
+      .instancePerRequest()
+      .dependency { (scope, obj) in obj.observers = **!scope }
+    
+    
+    // Storyboard
+    builder.register(UIStoryboard.self)
+      .instanceSingle()
+      .initializer { scope in DIStoryboard(name: "Main", bundle: nil, container: scope) }
+    
+    return try! builder.build()
+  }
+  
 }
 

@@ -24,16 +24,16 @@ class DITranquillityTests_Storyboard: XCTestCase {
   func test01_InitialViewController() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
+    builder.register(FooService.self)
+      .asType(ServiceProtocol.self)
       .initializer { FooService() }
     
-    builder.register(TestViewController)
+    builder.register(TestViewController.self)
       .instancePerRequest()
       .dependency { (scope, vc) in vc.service = *!scope }
-		
-    let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: NSBundle(forClass: self.dynamicType), container: builder.build())
     
+    let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
+
     let viewController = storyboard.instantiateInitialViewController()
     XCTAssert(viewController is TestViewController)
     guard let testVC = viewController as? TestViewController else {
@@ -46,17 +46,17 @@ class DITranquillityTests_Storyboard: XCTestCase {
   func test02_ViewControllerByIdentity() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
+    builder.register(FooService.self)
+      .asType(ServiceProtocol.self)
       .initializer { FooService() }
     
-    builder.register(TestViewController2)
+    builder.register(TestViewController2.self)
       .instancePerRequest()
       .dependency { (scope, vc) in vc.service = *!scope }
+		
+    let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
     
-    let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: NSBundle(forClass: self.dynamicType), container: builder.build())
-    
-    let viewController = storyboard.instantiateViewControllerWithIdentifier("TestVC2")
+    let viewController = storyboard.instantiateViewController(withIdentifier: "TestVC2")
     XCTAssert(viewController is TestViewController2)
     guard let testVC = viewController as? TestViewController2 else {
       XCTFail("incorrect View Controller")
@@ -69,28 +69,28 @@ class DITranquillityTests_Storyboard: XCTestCase {
   func test03_ViewControllerNotRegistered() {
     let builder = DIContainerBuilder()
     
-    let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: NSBundle(forClass: self.dynamicType), container: builder.build())
+    let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
     
-    let viewController = storyboard.instantiateViewControllerWithIdentifier("TestVC2")
+    let viewController = storyboard.instantiateViewController(withIdentifier: "TestVC2")
     XCTAssert(viewController is TestViewController2)
   }
   
   func test04_ViewControllerSequence() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService)
-      .asType(ServiceProtocol)
+    builder.register(FooService.self)
+      .asType(ServiceProtocol.self)
       .initializer { FooService() }
     
-    builder.register(TestViewController)
+    builder.register(TestViewController.self)
       .instancePerRequest()
       .dependency { (scope, vc) in vc.service = *!scope }
     
-    builder.register(TestViewController2)
+    builder.register(TestViewController2.self)
       .instancePerRequest()
       .dependency { (scope, vc) in vc.service = *!scope }
-    
-    let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: NSBundle(forClass: self.dynamicType), container: builder.build())
+
+    let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
     
     let viewController = storyboard.instantiateInitialViewController()
     XCTAssert(viewController is TestViewController)
@@ -100,7 +100,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     }
     XCTAssertEqual(testVC.service.foo(), "foo")
     
-    viewController?.performSegueWithIdentifier("ShowTestViewController2", sender: nil)
+    viewController?.performSegue(withIdentifier: "ShowTestViewController2", sender: nil)
     
     //...
   }  
