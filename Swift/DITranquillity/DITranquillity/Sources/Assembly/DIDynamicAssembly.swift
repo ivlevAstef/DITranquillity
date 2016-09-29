@@ -6,35 +6,37 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-open class DIDynamicAssembly: DIAssembly {
-  open var publicModules: [DIModule] { return dynamicModules[uniqueKey]! }
-  open var modules: [DIModule] { return [] }
-  open var dependencies: [DIAssembly] { return [] }
-  open var dynamicDeclarations: [DIDynamicDeclaration] { return [] }
-
-  public init() {
-    uniqueKey = String(describing: type(of: self))
-
-    if nil == dynamicModules[uniqueKey] {
-      dynamicModules[uniqueKey] = []
-    }
-  }
-
-  internal final func add(module: DIModule) {
-    let moduleKey = String(describing: type(of: module))
-
-    objc_sync_enter(dynamicModules)
-
-    if !dynamicModules[uniqueKey]!.contains { moduleKey == String(describing: type(of: $0)) } {
-      dynamicModules[uniqueKey]!.append(module)
-    }
-
-    objc_sync_exit(dynamicModules)
-  }
-
-  private let uniqueKey: String
+public protocol DIDynamicAssembly: DIAssembly {
+	var dynamicModules: [DIModule] { get }
 }
 
-private var dynamicModules: [String: [DIModule]] = [:]
+public extension DIDynamicAssembly {
+	var publicModules: [DIModule] { return [] }
+	var internalModules: [DIModule] { return [] }
+	var dependencies: [DIAssembly] { return [] }
+  var dynamicModules: [DIModule] { return getDynamicModules(assembly: self) }
+}
 
-public typealias DIDynamicDeclaration = (assembly: DIDynamicAssembly, module: DIModule)
+public typealias DIDynamicDeclaration = (module: DIModule, for: DIDynamicAssembly)
+
+internal extension DIDynamicAssembly {
+  internal func add(module: DIModule) {
+    objc_sync_enter(globalDynamicModules)
+    
+    if nil == globalDynamicModules[uniqueKey] {
+      globalDynamicModules[uniqueKey] = []
+    }
+    
+    if !globalDynamicModules[uniqueKey]!.contains { module.uniqueKey == $0.uniqueKey } {
+      globalDynamicModules[uniqueKey]!.append(module)
+    }
+    
+    objc_sync_exit(globalDynamicModules)
+  }
+  
+}
+
+private var globalDynamicModules: [String: [DIModule]] = [:]
+private func getDynamicModules(assembly: DIAssembly) -> [DIModule] {
+  return globalDynamicModules[assembly.uniqueKey] ?? []
+}

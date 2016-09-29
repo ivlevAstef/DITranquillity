@@ -11,7 +11,7 @@ import DITranquillity
 public final class LoggerAssembly: DIAssembly {
 	public var publicModules: [DIModule] { return [ LoggerModule() ] }
 	
-	public var modules: [DIModule] { return [ ] }
+	public var internalModules: [DIModule] { return [ ] }
 	
 	public var dependencies: [DIAssembly] { return [ ] }
 	

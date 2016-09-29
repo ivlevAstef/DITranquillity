@@ -9,7 +9,7 @@
 
 public protocol DIAssembly {
   var publicModules: [DIModule] { get }
-  var modules: [DIModule] { get }
+  var internalModules: [DIModule] { get }
   var dependencies: [DIAssembly] { get }
 
   var dynamicDeclarations: [DIDynamicDeclaration] { get }
@@ -27,10 +27,16 @@ public extension DIContainerBuilder {
 
     return self
   }
+}
 
-  private func initDeclarations(assembly: DIAssembly) {
+internal extension DIAssembly {
+	internal var uniqueKey: String { return String(describing: type(of: self)) }
+}
+
+fileprivate extension DIContainerBuilder {
+  fileprivate func initDeclarations(assembly: DIAssembly) {
     for declaration in assembly.dynamicDeclarations {
-      declaration.assembly.add(module: declaration.module)
+      declaration.for.add(module: declaration.module)
     }
 
     for dependency in assembly.dependencies {
@@ -38,14 +44,20 @@ public extension DIContainerBuilder {
     }
   }
 
-  private func register(assembly: DIAssembly, registerInternalModules: Bool) {
-    if !ignore(uniqueKey: String(describing: type(of: assembly))) {
+  fileprivate func register(assembly: DIAssembly, registerInternalModules: Bool) {
+    if !ignore(uniqueKey: assembly.uniqueKey) {
+      if let dynamicAssembly = assembly as? DIDynamicAssembly {
+        for module in dynamicAssembly.dynamicModules {
+          register(module: module)
+        }
+      }
+      
       for module in assembly.publicModules {
         register(module: module)
       }
 
       if registerInternalModules {
-        for module in assembly.modules {
+        for module in assembly.internalModules {
           register(module: module)
         }
       }

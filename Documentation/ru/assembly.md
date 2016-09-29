@@ -6,10 +6,10 @@
 Для создания сборки, нам надо отнаследоватся от протокола DIAssembly, и определить 3 переменных:
 ```Swift
 class YourAssembly: DIAssembly {
-  var publicModules: [DIModule] { return [...] }
-  var modules: [DIModule] { return [...] }
+  var publicModules: [DIModule] = [...]
+  var internalModules: [DIModule] = [...]
   
-  var dependencies: [DIAssembly] { return [...] }
+  var dependencies: [DIAssembly] = [...]
 }
 ```
 
@@ -34,17 +34,17 @@ builder.register(assembly: YourAssembly())
 Для того чтобы создать динамическую сборку, надо отнаследоваться от класса: `DIDynamicAssembly`, после чего вы можете делать с этой сборкой все тоже самое, что и с обычной. Для того чтобы добавить теперь модуль из другой сборки нужно воспользоватся методом: `add(module: module)`, все это вместе может выглядет тяк:
 ```Swift
 class YourDynamicAssembly: DIDynamicAssembly {
-  var publicModules: [DIModule] { return [...] }
-  var modules: [DIModule] { return [...] }
+  var publicModules: [DIModule] = [...]
+  var internalModules: [DIModule] = [...]
   
-  var dependencies: [DIAssembly] { return [...] }
+  var dependencies: [DIAssembly] = [...]
 }
 ...
 class YourAssembly: DIAssembly {
   ...
-  var dynamicDeclarations: [DIDynamicDeclaration] { return [
-    (assembly: YourDynamicAssembly(), module: YourModuleFromCurrentAssembly())
-  ] }
+  var dynamicDeclarations: [DIDynamicDeclaration] = [
+    (module: YourModuleFromCurrentAssembly(), for: YourDynamicAssembly())
+  ]
 }
 ```
 

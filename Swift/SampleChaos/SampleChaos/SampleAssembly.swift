@@ -10,11 +10,11 @@ import DITranquillity
 
 //project 1
 class Assembly1: DIAssembly {
-	var publicModules: [DIModule] { return [ Module1_1() ] }
+	var publicModules: [DIModule] = [ Module1_1() ]
 	
-	var modules: [DIModule] { return [ Module1_2() ] }
+	var internalModules: [DIModule] = [ Module1_2() ]
 
-  var dependencies: [DIAssembly] { return [Assembly2(), Assembly3(), DynamicAssembly()] }
+  var dependencies: [DIAssembly] = [Assembly2(), Assembly3(), DynamicAssembly()]
 }
 
 class Module1_1: DIModule {
@@ -32,15 +32,15 @@ class Module1_2: DIModule {
 
 //project 2
 class Assembly2: DIAssembly {
-	var publicModules: [DIModule] { return [ Module2_1() ] }
+	var publicModules: [DIModule] = [ Module2_1() ]
 	
-	var modules: [DIModule] { return [ Module2_2() ] }
+	var internalModules: [DIModule] = [ Module2_2() ]
 	
-  var dependencies: [DIAssembly] { return [Assembly3(), Assembly4(), DynamicAssembly()] }
+  var dependencies: [DIAssembly] = [Assembly3(), Assembly4(), DynamicAssembly()]
 
-  var dynamicDeclarations: [DIDynamicDeclaration] { return [
-    (assembly: DynamicAssembly(), module: Module2_D())
-  ] }
+  var dynamicDeclarations: [DIDynamicDeclaration] = [
+    (module: Module2_D(), for: DynamicAssembly())
+  ]
 }
 
 class Module2_1: DIModule {
@@ -63,11 +63,11 @@ class Module2_D: DIModule {
 
 //project 3
 class Assembly3: DIAssembly {
-	var publicModules: [DIModule] { return [ Module3_1() ] }
+	var publicModules: [DIModule] = [ Module3_1() ]
 
-	var modules: [DIModule] { return [ ] }
+	var internalModules: [DIModule] = []
 	
-  var dependencies: [DIAssembly] { return [Assembly4()] }
+  var dependencies: [DIAssembly] = [ Assembly4() ]
 }
 
 class Module3_1: DIModule {
@@ -78,15 +78,15 @@ class Module3_1: DIModule {
 
 //project 4
 class Assembly4: DIAssembly {
-	var publicModules: [DIModule] { return [ Module4_1() ] }
+	var publicModules: [DIModule] = [ Module4_1() ]
 	
-	var modules: [DIModule] { return [ Module4_2() ] }
+	var internalModules: [DIModule] = [ Module4_2() ]
 	
-  var dependencies: [DIAssembly] { return [ DynamicAssembly() ] }
+  var dependencies: [DIAssembly] = [ DynamicAssembly() ]
 
-  var dynamicDeclarations: [DIDynamicDeclaration] { return [
-    (assembly: DynamicAssembly(), module: Module4_D())
-  ] }
+  var dynamicDeclarations: [DIDynamicDeclaration] = [
+    (module: Module4_D(), for: DynamicAssembly())
+  ]
 }
 
 class Module4_1: DIModule {
