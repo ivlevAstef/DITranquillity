@@ -1,6 +1,14 @@
 # DITranquillity
 Dependency injection for iOS (Swift)
 
+[![Travis CI](https://travis-ci.org/ivlevAstef/DITranquillity.svg?branch=master)](https://travis-ci.org/ivlevAstef/DITranquillity)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![CocoaPods Version](https://img.shields.io/cocoapods/v/DITranquillity.svg?style=flat)](http://cocoapods.org/pods/DITranquillity)
+[![License](https://img.shields.io/github/license/ivlevAstef/DITranquillity.svg?maxAge=2592000)](http://cocoapods.org/pods/DITranquillity)
+[![Platform](https://img.shields.io/cocoapods/p/DITranquillity.svg?style=flat)](http://cocoapods.org/pods/DITranquillity)
+[![Swift Version](https://img.shields.io/badge/Swift-3.0-F16D39.svg?style=flat)](https://developer.apple.com/swift)
+[![Dependency Status](https://www.versioneye.com/objective-c/DITranquillity/0.9.8/badge.svg?style=flat)](https://www.versioneye.com/objective-c/DITranquillity/0.9.8)
+
 ## Features
 * Pure Swift Type Support
 * Native
@@ -20,6 +28,10 @@ Via CocoaPods.
 
 ###### `pod 'DITranquillity'` Swift (iOS8+) also need write in your PodFile `use_frameworks!`
 
+Via Carthage.
+
+###### `github "Swinject/Swinject"` Swift (iOS8+)
+
 ## Usage
 #### Simple
 ```Swift
@@ -35,9 +47,9 @@ class Cat: Animal {
 ```Swift
 let builder = DIContainerBuilder()
 
-builder.register(Cat)
+builder.register(Cat.self)
   .asSelf()
-  .asType(Animal)
+  .asType(Animal.self)
   .initializer { Cat() }
   
 let scope = try! builder.build() // validate
@@ -84,26 +96,26 @@ class Home {
 ```Swift
 let builder = DIContainerBuilder()
 
-builder.register(Cat)
+builder.register(Cat.self)
   .asSelf()
-  .asType(Animal)
-  .instancePerDependency() //instanceSingle(), instancePerScope(), instancePerRequest(), instancePerMatchingScope(String)
+  .asType(Animal.self)
+  .instancePerDependency() // instanceSingle(), instancePerScope(), instancePerRequest(), instancePerMatchingScope(String)
   .initializer { Cat() }
   
-builder.register(Dog)
+builder.register(Dog.self)
   .asSelf()
-  .asType(Animal)
+  .asType(Animal.self)
   .instancePerDependency()
   .initializer { Dog() }
   
-builder.register(Pet)
+builder.register(Pet.self)
   .asSelf()
-  .asType(Animal)
+  .asType(Animal.self)
   .asDefault()
   .instancePerDependency()
   .initializer { Pet(name: "My Pet") }
   
-builder.register(Home)
+builder.register(Home.self)
   .asSelf()
   .instancePerScope()
   .initializer { scope in return try! Home(animals: scope.resolveMany()) }
@@ -112,7 +124,7 @@ let scope = try! builder.build() // validate
 ```
 ```Swift
 let cat: Cat = try! scope.resolve()
-let dog = try! scope.resolve(Dog)
+let dog = try! scope.resolve(Dog.self)
 let pet: Pet = *!scope
 let animal: Animal = *!scope // default it's Pet
 let home: Home = *!scope
