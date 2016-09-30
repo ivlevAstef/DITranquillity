@@ -47,9 +47,9 @@ class Cat: Animal {
 ```Swift
 let builder = DIContainerBuilder()
 
-builder.register(Cat)
+builder.register(Cat.self)
   .asSelf()
-  .asType(Animal)
+  .asType(Animal.self)
   .initializer { Cat() }
   
 let scope = try! builder.build() // validate
@@ -96,26 +96,26 @@ class Home {
 ```Swift
 let builder = DIContainerBuilder()
 
-builder.register(Cat)
+builder.register(Cat.self)
   .asSelf()
-  .asType(Animal)
-  .instancePerDependency() //instanceSingle(), instancePerScope(), instancePerRequest(), instancePerMatchingScope(String)
+  .asType(Animal.self)
+  .instancePerDependency() // instanceSingle(), instancePerScope(), instancePerRequest(), instancePerMatchingScope(String)
   .initializer { Cat() }
   
-builder.register(Dog)
+builder.register(Dog.self)
   .asSelf()
-  .asType(Animal)
+  .asType(Animal.self)
   .instancePerDependency()
   .initializer { Dog() }
   
-builder.register(Pet)
+builder.register(Pet.self)
   .asSelf()
-  .asType(Animal)
+  .asType(Animal.self)
   .asDefault()
   .instancePerDependency()
   .initializer { Pet(name: "My Pet") }
   
-builder.register(Home)
+builder.register(Home.self)
   .asSelf()
   .instancePerScope()
   .initializer { scope in return try! Home(animals: scope.resolveMany()) }
@@ -124,7 +124,7 @@ let scope = try! builder.build() // validate
 ```
 ```Swift
 let cat: Cat = try! scope.resolve()
-let dog = try! scope.resolve(Dog)
+let dog = try! scope.resolve(Dog.self)
 let pet: Pet = *!scope
 let animal: Animal = *!scope // default it's Pet
 let home: Home = *!scope
