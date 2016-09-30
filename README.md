@@ -188,4 +188,4 @@ iOS 8.0+; ARC
 * Swift 2.3: Xcode 8.0; version <= 0.9.5
 
 # Changelog
-See [CHANGELOG.md](https://github.com/ivlevAstef/DITranguillity/blob/master/CHANGELOG.md) file.
+See [CHANGELOG.md](https://github.com/ivlevAstef/DITranquillity/blob/master/CHANGELOG.md) file.
