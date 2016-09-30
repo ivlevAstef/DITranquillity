@@ -50,3 +50,11 @@ public extension DIStoryboard {
     singleIndentifiers.formUnion(identifiers)
   }
 }
+
+public extension DIContainerBuilder {	
+	@discardableResult
+	public func register<T: UIViewController>(_ rClass: T.Type) -> DIRegistrationBuilder<T> {
+		return DIRegistrationBuilder<T>(self.rTypeContainer, rClass).instancePerRequest()
+	}
+}
+
