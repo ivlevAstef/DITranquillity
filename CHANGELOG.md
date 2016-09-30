@@ -2,6 +2,7 @@
 * Supported Carthage
 * Added Travis
 * Supported SwiftPM
+
 # v0.9.8 - v0.9.9
 * Added short registration syntax for types
 * Added short registration syntax for UIViewController
