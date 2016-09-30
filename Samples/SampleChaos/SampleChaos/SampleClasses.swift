@@ -138,7 +138,7 @@ class SampleModule : DIModule {
   }
   
   func load(builder: DIContainerBuilder) {
-    builder.register(Int.self).asSelf().instanceLazySingle().initializer { 10 }
+    builder.register(short: 10).instanceLazySingle()
     
     builder.register(ServiceProtocol.self)
       .asSelf()
@@ -148,7 +148,7 @@ class SampleModule : DIModule {
           return BarService()
         }
         return FooService()
-    }
+			}
 
     builder.register(LoggerAll.self)
       .asDefault()
@@ -157,16 +157,14 @@ class SampleModule : DIModule {
       .initializer { scope in LoggerAll(loggers: **!scope) }
       .dependency { (scope, self) in self.loggersFull = **!scope }
 
-    builder.register(Logger.self)
+    builder.register(short: Logger())
       .asType(LoggerProtocol.self)
       .instanceSingle()
-      .initializer { Logger() }
     
-    builder.register(Logger2.self)
+    builder.register(short: Logger2())
       .asSelf()
       .asType(LoggerProtocol.self)
       .instanceLazySingle()
-      .initializer { Logger2() }
     
     builder.register(Inject.self)
       .asSelf()
@@ -181,22 +179,18 @@ class SampleModule : DIModule {
       .initializer { (scope) in InjectMany(loggers: **!scope) }
     
     //Animals
-    builder.register(Animal.self)
+		builder.register(short: Animal(name: "Cat"))
       .asSelf()
       .asName("Cat")
-      .initializer { Animal(name: "Cat") }
     
-    builder.register(Animal.self)
+    builder.register(short: Animal(name: "Dog"))
       .asSelf()
       .asName("Dog")
       .asDefault()
-      .initializer { Animal(name: "Dog") }
-    
-    builder.register(Animal.self)
+
+    builder.register(short: Animal(name: "Bear"))
       .asSelf()
       .asName("Bear")
-      .initializer { Animal(name: "Bear") }
-    
     
     builder.register(Animal.self)
       .asSelf()
@@ -207,7 +201,7 @@ class SampleModule : DIModule {
       .asSelf()
       .instancePerDependency()
       .initializer { (s, p1, p2) in Params(p1: p1, p2: p2) }
-      .initializer { (s, p1, p2, p3) in Params(p1: p1, p2: p2, p3: p3) }
+      .initializer { Params(p1: $1, p2: $2, p3: $3) }
     
     //circular
     
@@ -230,19 +224,18 @@ class SampleStartupModule : DIModule {
   func load(builder: DIContainerBuilder) {
 		builder.register(module: SampleModule(useBarService: true))
     
-    builder.register(ViewController.self)
+		builder.register(vc: ViewController.self)
       .asSelf()
-      .instancePerRequest()
       .dependency { (scope, obj) in obj.injectGlobal = *!scope }
       .dependency { (scope, obj) in obj.scope = scope }
-    
-    builder.register(ViewController2.self)
+		
+		
+    builder.register(vc: ViewController2.self)
       .asSelf()
-      .instancePerRequest()
       .dependency { (scope, obj) in
         obj.inject = try! scope.resolve(Inject.self)
         obj.logger = *!scope
-    }
+			}
     
     builder.register(UIView.self)
       .asSelf()

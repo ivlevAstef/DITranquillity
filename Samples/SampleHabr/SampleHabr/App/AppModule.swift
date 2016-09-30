@@ -20,7 +20,7 @@ class AppModule: DIModule {
       .initializer { (scope) in YourPresenter(server: *!scope) }
       .dependency { (scope, self) in self.logger = *?scope }
     
-    builder.register(YourViewController.self)
+		builder.register(vc: YourViewController.self)
       .dependency { (scope, self) in self.presenter = try! scope.resolve() }
   }
 

@@ -10,7 +10,7 @@ import DITranquillity
 
 class ServerModule: DIModule {
   func load(builder: DIContainerBuilder) {
-    builder.register(ServerImpl(domain: "https://github.com/"))
+    builder.register(short: ServerImpl(domain: "https://github.com/"))
       .asSelf()
       .asType(Server.self)
       .instanceSingle()

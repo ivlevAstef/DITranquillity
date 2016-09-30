@@ -29,24 +29,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let builder = DIContainerBuilder()
     
     // Delegate
-    builder.register(ViewController.self)
-      .asSelf()
+		builder.register(vc: ViewController.self)
       .asType(PopUpDelegate.self)
       .asType(Observer.self) // And Observer
     
-    builder.register(PopUpViewController.self)
+    builder.register(vc: PopUpViewController.self)
       .dependency { (scope, obj) in obj.delegate = *!scope }
     
     // Observer
-    builder.register(ViewControllerFirstObserver.self)
-      .asSelf()
+    builder.register(vc: ViewControllerFirstObserver.self)
       .asType(Observer.self)
     
-    builder.register(ViewControllerSecondObserver.self)
-      .asSelf()
+    builder.register(vc: ViewControllerSecondObserver.self)
       .asType(Observer.self)
     
-    builder.register(ViewControllerSlider.self)
+    builder.register(vc: ViewControllerSlider.self)
       .dependency { (scope, obj) in obj.observers = **!scope }
     
     

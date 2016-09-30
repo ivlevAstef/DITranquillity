@@ -7,7 +7,7 @@
 //
 
 public extension DIContainerBuilder {
-	public func register<T>(_ initializer: @autoclosure @escaping () -> T) -> DIRegistrationBuilder<T> {
+	public func register<T>(short initializer: @autoclosure @escaping () -> T) -> DIRegistrationBuilder<T> {
 		return DIRegistrationBuilder<T>(self.rTypeContainer, T.self).initializer(initializer)
 	}
 }

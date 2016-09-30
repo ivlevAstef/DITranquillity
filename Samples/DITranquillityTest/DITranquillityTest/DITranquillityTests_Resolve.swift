@@ -464,6 +464,55 @@ class DITranquillityTests_Resolve: XCTestCase {
     let p6: Params = try! container.resolve(arg: 55, true, "test3")
     XCTAssert(p6.number == 55 && p6.str == "test3" && p6.bool == true)    
   }
-  
-  
+	
+	func test10_AutoParams() {
+		let builder = DIContainerBuilder()
+		
+		builder.register(Params.self)
+			.instancePerDependency()
+			.initializer{ Params(number:0) }
+			.initializer{ Params(number:$1) }
+			.initializer{ Params(number:$1, bool: $2) }
+			.initializer{ Params(number:$1, str: $2) }
+			.initializer{ Params(number:$1, str: $2, bool: $3) }
+			.initializer{ Params(number:$1, str: $3, bool: $2) }
+		
+		let container = try! builder.build()
+		
+		let p1: Params = try! container.resolve()
+		XCTAssert(p1.number == 0 && p1.str == "" && p1.bool == false)
+		
+		let p2: Params = try! container.resolve(arg: 15)
+		XCTAssert(p2.number == 15 && p2.str == "" && p2.bool == false)
+		
+		let p3: Params = try! container.resolve(arg: 25, true)
+		XCTAssert(p3.number == 25 && p3.str == "" && p3.bool == true)
+		
+		let p4: Params = try! container.resolve(arg: 35, "test")
+		XCTAssert(p4.number == 35 && p4.str == "test" && p4.bool == false)
+		
+		let p5: Params = try! container.resolve(arg: 45, "test2", true)
+		XCTAssert(p5.number == 45 && p5.str == "test2" && p5.bool == true)
+		
+		let p6: Params = try! container.resolve(arg: 55, true, "test3")
+		XCTAssert(p6.number == 55 && p6.str == "test3" && p6.bool == true)
+	}
+	
+	func test11_ShortRegister() {
+		let builder = DIContainerBuilder()
+		
+		builder.register(short: Params(number:0))
+			.instancePerDependency()
+			.initializer{ Params(number:$1) }
+		
+		let container = try! builder.build()
+		
+		let p1: Params = try! container.resolve()
+		XCTAssert(p1.number == 0 && p1.str == "" && p1.bool == false)
+		
+		let p2: Params = try! container.resolve(arg: 15)
+		XCTAssert(p2.number == 15 && p2.str == "" && p2.bool == false)
+	}
+	
+	
 }
