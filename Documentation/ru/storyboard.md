@@ -20,14 +20,27 @@ builder.register(YourViewController.self)
   .dependency { (scope, viewController) in viewController.inject = *!scope }
 ```
 
+Здесь perRequest() означает, что инициализатор будет отсутствуть, а за создание объекта отвечает ктото другой, в данном случае это сторибоард.
+
+## Сокращенный синтаксис
+Чтобы не писать каждый раз instancePerRequest(), можно написать регистрацию в сокращенной форме, добавив `vc:`:
+```Swift
+builder.register(vc: YourViewController.self)
+  .dependency { (scope, viewController) in viewController.inject = *!scope }
+```
+
 ## Создание Storyboard
 Чтобы подобные зависимости и внедрения работали автоматически надо создать одну из реализации сторибоарда, которая реализована в библиотеке. Можно сделать так:
 ```Swift
-func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
   window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
+  let builder = DIContainerBuilder()
+  ...
 
-  let storyboard = try! DIStoryboard(name: "Main", bundle: nil, container: builder.build())
+  let container = try! builder.build()
+
+  let storyboard = DIStoryboard(name: "Main", bundle: nil, container: container)
   window!.rootViewController = storyboard.instantiateInitialViewController()
   window!.makeKeyAndVisible()
 
@@ -35,9 +48,12 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 }
 ```
 
-Для интеграции со сборками, нужно сам Storyboard зарегестрировать в сборке, к примеру вот так:
+Либо мы можем сам сторибоард добавить в контайнер, и потом его получить:
 ```Swift
 builder.register(UIStoryboard.self)
   .instanceSingle()
-  .initializer { scope in DIStoryboard(name: ..., bundle: ..., container: scope) }
+  .initializer { scope in DIStoryboard(name: "Main", bundle: "", container: scope) }
+
+...
+let storyboard: UIStoryboard = try! container.resolve(name: "Main")
 ```

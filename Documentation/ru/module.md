@@ -8,7 +8,7 @@
 Попробуем объямить наш модуль. Для этого нам нужно отнаследоватся от протокола: DIModule, и реализовать метод load(builder). Это можно сделать следующим образом:
 ```Swift
 class RegistrationModule: DIModule {
-  func load(builder builder: DIContainerBuilder) {
+  func load(builder: DIContainerBuilder) {
     builder.register...
   }
 }

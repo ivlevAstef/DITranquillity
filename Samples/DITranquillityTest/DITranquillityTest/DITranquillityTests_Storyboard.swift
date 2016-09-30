@@ -103,5 +103,55 @@ class DITranquillityTests_Storyboard: XCTestCase {
     viewController?.performSegue(withIdentifier: "ShowTestViewController2", sender: nil)
     
     //...
-  }  
+  }
+	
+	func test05_ViewControllerShortRegister() {
+		let builder = DIContainerBuilder()
+		
+		builder.register(FooService.self)
+			.asType(ServiceProtocol.self)
+			.initializer { FooService() }
+		
+		builder.register(vc: TestViewController2.self)
+			.dependency { (scope, vc) in vc.service = *!scope }
+		
+		let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
+		
+		let viewController = storyboard.instantiateViewController(withIdentifier: "TestVC2")
+		XCTAssert(viewController is TestViewController2)
+		guard let testVC = viewController as? TestViewController2 else {
+			XCTFail("incorrect View Controller")
+			return
+		}
+		
+		XCTAssertEqual(testVC.service.foo(), "foo")
+	}
+	
+	func test06_UIStoryboard() {
+		let builder = DIContainerBuilder()
+		
+		builder.register(FooService.self)
+			.asType(ServiceProtocol.self)
+			.initializer { FooService() }
+		
+		builder.register(TestViewController.self)
+			.instancePerRequest()
+			.dependency { (scope, vc) in vc.service = *!scope }
+		
+		builder.register(UIStoryboard.self)
+			.instanceSingle()
+			.initializer { DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: $0) }
+		
+		let container = try! builder.build()
+		let storyboard: UIStoryboard = *!container
+		
+		let viewController = storyboard.instantiateInitialViewController()
+		XCTAssert(viewController is TestViewController)
+		guard let testVC = viewController as? TestViewController else {
+			XCTFail("incorrect View Controller")
+			return
+		}
+		XCTAssertEqual(testVC.service.foo(), "foo")
+		
+	}
 }

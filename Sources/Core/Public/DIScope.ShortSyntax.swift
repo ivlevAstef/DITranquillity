@@ -1,5 +1,5 @@
 //
-//  DIScope.FasterSyntax.swift
+//  DIScope.ShortSyntax.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 11/07/16.

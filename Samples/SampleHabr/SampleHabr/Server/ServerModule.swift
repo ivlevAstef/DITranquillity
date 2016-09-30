@@ -10,11 +10,10 @@ import DITranquillity
 
 class ServerModule: DIModule {
   func load(builder: DIContainerBuilder) {
-    builder.register(ServerImpl.self)
+		builder.register{ ServerImpl(domain: "https://github.com/") }
       .asSelf()
       .asType(Server.self)
       .instanceSingle()
-      .initializer { ServerImpl(domain: "https://github.com/") }
       .dependency { (scope, self) in self.logger = *?scope }
   }
 }

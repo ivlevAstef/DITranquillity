@@ -19,10 +19,9 @@ Router - это Storyboard, или некоторый собственный к�
 Суть их заключается в том, что где-то, обычно при запуске приложения, прописываются все взаимодействия между модулями/классами, а контейнер берет на себя обязанность за создание/удаление этих классов, и разрешение зависимостей.
  
 ## Добавление DITranquallity в ваш проект
-DITranquallity являет проектом с открытым исходным кодом, и поддерживает cocoapods. 
+DITranquallity являет проектом с открытым исходным кодом, поддерживает cocoapods и carthage. 
 Самый простой способ подключить его в проект, это воспользоваться cocoapods:  
-`pod 'DITranquallity'` - подключает базовые классы необходимые для работы с библиотекой  
-`pod 'DITranquallity/Storyboard'` - нужен для автоматизации разрешения зависимостей у ViewController-ах на Storyboard.
+`pod 'DITranquallity'
 
 ## Регистрация зависимостей
 Для регистрации зависимостей вы должны вначале создать билдер, после чего прописать все зависимости и их свойства в него, и потом сконструировать контейнер.
@@ -30,9 +29,9 @@ DITranquallity являет проектом с открытым исходны�
 ```Swift
 let builder = DIContainerBuilder()
 
-builder.register(Cat.self).asSelf().initializer { Cat(name: "Felix") }
-builder.register(Dog.self).asSelf().initializer { Dog(name: "Buddy") }
-builder.register(Home.self).asSelf().initializer { (s) in return Home(animals: [s.resolve(Cat), s.resolve(Dog)]) }
+builder.register{ Dog(name: "Buddy") }
+builder.register(Cat.self).initializer { Cat(name: "Felix") }
+builder.register(Home.self).initializer { (s) in return Home(animals: [s.resolve(Cat), s.resolve(Dog)]) }
 
 let container = try! builder.build()
 ```
@@ -42,8 +41,8 @@ let container = try! builder.build()
 В DITranquallity это делается следующим образом:
 ```Swift
 let cat = try! container.resolve(Cat.self)
-let dog = try! container.resolve(Dog.self)
-let home: Home = try! container.resolve()
+let dog: Dog = try! container.resolve()
+let home: Home = *!container
 
 print(cat.name) //Felix
 print(dog.name) //Buddy

@@ -189,10 +189,10 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     let container = try! builder.build()
     
-    let serviceFoo: ServiceProtocol = try! container.resolve(Name: "foo")
+    let serviceFoo: ServiceProtocol = try! container.resolve(name: "foo")
     XCTAssertEqual(serviceFoo.foo(), "foo")
     
-    let serviceBar: ServiceProtocol = try! container.resolve(Name: "bar")
+    let serviceBar: ServiceProtocol = try! container.resolve(name: "bar")
     XCTAssertEqual(serviceBar.foo(), "bar")
   }
   
@@ -208,10 +208,10 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     let container = try! builder.build()
     
-    let serviceFoo: ServiceProtocol = try! container.resolve(Name: "foo")
+    let serviceFoo: ServiceProtocol = try! container.resolve(name: "foo")
     XCTAssertEqual(serviceFoo.foo(), "foo")
     
-    let serviceFoo2: ServiceProtocol = try! container.resolve(Name: "foo2")
+    let serviceFoo2: ServiceProtocol = try! container.resolve(name: "foo2")
     XCTAssertEqual(serviceFoo2.foo(), "foo")
     
     XCTAssertNotEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceFoo2 as AnyObject).toOpaque())
@@ -229,10 +229,10 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     let container = try! builder.build()
     
-    let serviceBar1_1: ServiceProtocol = try! container.resolve(Name: "bar")
+    let serviceBar1_1: ServiceProtocol = try! container.resolve(name: "bar")
     XCTAssertEqual(serviceBar1_1.foo(), "bar")
     
-    let serviceBar1_2: ServiceProtocol = try! container.resolve(Name: "bar2")
+    let serviceBar1_2: ServiceProtocol = try! container.resolve(name: "bar2")
     XCTAssertEqual(serviceBar1_2.foo(), "bar")
     
     XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar1_1 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar1_2 as AnyObject).toOpaque())
@@ -240,10 +240,10 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     let container2 = container.newLifeTimeScope()
     
-    let serviceBar2_1: ServiceProtocol = try! container2.resolve(Name: "bar")
+    let serviceBar2_1: ServiceProtocol = try! container2.resolve(name: "bar")
     XCTAssertEqual(serviceBar2_1.foo(), "bar")
     
-    let serviceBar2_2: ServiceProtocol = try! container2.resolve(Name: "bar2")
+    let serviceBar2_2: ServiceProtocol = try! container2.resolve(name: "bar2")
     XCTAssertEqual(serviceBar2_2.foo(), "bar")
     
     XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar2_1 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar2_2 as AnyObject).toOpaque())
@@ -255,14 +255,12 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test06_ResolveMultiplyMany() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService.self)
+		builder.register { FooService() }
       .asType(ServiceProtocol.self)
       .asDefault()
-      .initializer { FooService() }
-    
-    builder.register(BarService.self)
+		
+		builder.register { BarService() }
       .asType(ServiceProtocol.self)
-      .initializer { BarService() }
     
     let container = try! builder.build()
     
@@ -464,6 +462,72 @@ class DITranquillityTests_Resolve: XCTestCase {
     let p6: Params = try! container.resolve(arg: 55, true, "test3")
     XCTAssert(p6.number == 55 && p6.str == "test3" && p6.bool == true)    
   }
-  
-  
+	
+	func test10_AutoParams() {
+		let builder = DIContainerBuilder()
+		
+		builder.register(Params.self)
+			.instancePerDependency()
+			.initializer{ Params(number:0) }
+			.initializer{ Params(number:$1) }
+			.initializer{ Params(number:$1, bool: $2) }
+			.initializer{ Params(number:$1, str: $2) }
+			.initializer{ Params(number:$1, str: $2, bool: $3) }
+			.initializer{ Params(number:$1, str: $3, bool: $2) }
+		
+		let container = try! builder.build()
+		
+		let p1: Params = try! container.resolve()
+		XCTAssert(p1.number == 0 && p1.str == "" && p1.bool == false)
+		
+		let p2: Params = try! container.resolve(arg: 15)
+		XCTAssert(p2.number == 15 && p2.str == "" && p2.bool == false)
+		
+		let p3: Params = try! container.resolve(arg: 25, true)
+		XCTAssert(p3.number == 25 && p3.str == "" && p3.bool == true)
+		
+		let p4: Params = try! container.resolve(arg: 35, "test")
+		XCTAssert(p4.number == 35 && p4.str == "test" && p4.bool == false)
+		
+		let p5: Params = try! container.resolve(arg: 45, "test2", true)
+		XCTAssert(p5.number == 45 && p5.str == "test2" && p5.bool == true)
+		
+		let p6: Params = try! container.resolve(arg: 55, true, "test3")
+		XCTAssert(p6.number == 55 && p6.str == "test3" && p6.bool == true)
+	}
+	
+	func test11_ShortRegister() {
+		let builder = DIContainerBuilder()
+		
+		builder.register { Params(number:0) }
+			.instancePerDependency()
+			.initializer{ Params(number:$1) }
+		
+		let container = try! builder.build()
+		
+		let p1: Params = try! container.resolve()
+		XCTAssert(p1.number == 0 && p1.str == "" && p1.bool == false)
+		
+		let p2: Params = try! container.resolve(arg: 15)
+		XCTAssert(p2.number == 15 && p2.str == "" && p2.bool == false)
+	}
+	
+	func test12_ShortParamRegister() {
+		let builder = DIContainerBuilder()
+		
+		builder.register{ Params(number:$1, str: $2, bool: $3) }
+			.instancePerDependency()
+			.initializer{ Params(number:$1, str: $2) }
+		
+		let container = try! builder.build()
+		
+		let p1: Params = try! container.resolve(arg: 45, "test2", true)
+		XCTAssert(p1.number == 45 && p1.str == "test2" && p1.bool == true)
+		
+		let p2: Params = try! container.resolve(arg: 35, "test")
+		XCTAssert(p2.number == 35 && p2.str == "test" && p2.bool == false)
+	}
+
+	
+	
 }

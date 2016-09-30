@@ -22,6 +22,7 @@ Dependency injection for iOS (Swift)
 * Circular Dependencies
 * Registration by types, modules, assembly
 * Fast resolve syntax
+* Thread safety
 
 ## Install
 Via CocoaPods.
@@ -47,10 +48,9 @@ class Cat: Animal {
 ```Swift
 let builder = DIContainerBuilder()
 
-builder.register(Cat.self)
+builder.register(short: Cat())
   .asSelf()
   .asType(Animal.self)
-  .initializer { Cat() }
   
 let scope = try! builder.build() // validate
 ```
@@ -96,11 +96,10 @@ class Home {
 ```Swift
 let builder = DIContainerBuilder()
 
-builder.register(Cat.self)
+builder.register(short: Cat())
   .asSelf()
   .asType(Animal.self)
   .instancePerDependency() // instanceSingle(), instancePerScope(), instancePerRequest(), instancePerMatchingScope(String)
-  .initializer { Cat() }
   
 builder.register(Dog.self)
   .asSelf()
@@ -108,12 +107,11 @@ builder.register(Dog.self)
   .instancePerDependency()
   .initializer { Dog() }
   
-builder.register(Pet.self)
+builder.register(short: Pet(name: "My Pet"))
   .asSelf()
   .asType(Animal.self)
   .asDefault()
   .instancePerDependency()
-  .initializer { Pet(name: "My Pet") }
   
 builder.register(Home.self)
   .asSelf()
@@ -156,7 +154,7 @@ Create your module:
 ```Swift
 class SampleModule: DIModule {
   override func load(builder: DIContainerBuilder) {
-    builder.register(ViewController)
+    builder.register(ViewController.self)
       .instancePerRequest()
       .dependency { (scope, obj) in obj.inject = *!scope }
   }
@@ -164,13 +162,15 @@ class SampleModule: DIModule {
 ```
 Registrate Storyboard:
 ```Swift
-func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-  window = UIWindow(frame: UIScreen.mainScreen().bounds)
+func applicationDidFinishLaunching(_ application: UIApplication) {
+  window = UIWindow(frame: UIScreen.main.bounds)
   
   let builder = DIContainerBuilder()
-  builder.registerModule(SampleModule())
+  builder.register(module: SampleModule())
+
+	let container = try! builder.build()
   
-  let storyboard = DIStoryboard(name: "Main", bundle: nil, builder: builder)
+  let storyboard = DIStoryboard(name: "Main", bundle: nil, container: container)
   window!.rootViewController = storyboard.instantiateInitialViewController()
   window!.makeKeyAndVisible()
     
