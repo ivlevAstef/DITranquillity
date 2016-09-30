@@ -48,7 +48,7 @@ class Cat: Animal {
 ```Swift
 let builder = DIContainerBuilder()
 
-builder.register(short: Cat())
+builder.register{ Cat() }
   .asSelf()
   .asType(Animal.self)
   
@@ -96,7 +96,7 @@ class Home {
 ```Swift
 let builder = DIContainerBuilder()
 
-builder.register(short: Cat())
+builder.register{ Cat() }
   .asSelf()
   .asType(Animal.self)
   .instancePerDependency() // instanceSingle(), instancePerScope(), instancePerRequest(), instancePerMatchingScope(String)
@@ -107,7 +107,7 @@ builder.register(Dog.self)
   .instancePerDependency()
   .initializer { Dog() }
   
-builder.register(short: Pet(name: "My Pet"))
+builder.register{ Pet(name: "My Pet") }
   .asSelf()
   .asType(Animal.self)
   .asDefault()
