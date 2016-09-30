@@ -17,7 +17,7 @@
 > builder.register(Cat.self).asName("Felix")...
 > try! builder.build()
 > ```
-> Кинет исключение: **`DIError.MultyRegisterNamesForType(names:, forType:)`**  
+> Кинет исключение: **`DIError.multyRegisterNamesForType(names:, forType:)`**  
 ***
 
 * Для нескольких регистраций одного и тогоже типа (включая синтаксис использования альтернативных типов), указан не больше одного default-ого. К примеру код:
@@ -26,7 +26,7 @@
 > builder.register(Cat.self).asDefault()...
 > try! builder.build()
 > ```
-> Кинет исключение: **`DIError.MultyRegisterDefault(typeNames:, forType:)`**
+> Кинет исключение: **`DIError.multyRegisterDefault(typeNames:, forType:)`**
 ***
 
 * Для нескольких регистраций одного и тогоже типа (включая синтаксис использования альтернативных типов), указан хотябы один default или они имеют разные имена. К примеру код:
@@ -35,7 +35,7 @@
 > builder.register(Cat.self)...
 > try! builder.build()
 > ```
-> Кинет исключение: **`DIError.NotSetDefaultForMultyRegisterType(typeNames:,forType:)`**
+> Кинет исключение: **`DIError.notSetDefaultForMultyRegisterType(typeNames:,forType:)`**
 
 * При этом надо понимать, что если мы регестрируем один и тотже тип, не указав default-ный, но при этом указав разные имена, то при создании исключений не будет, но разрешать зависимости надо тогда обязательно по имени. К примеру код:
 > ```Swift
@@ -45,7 +45,7 @@
 > ...
 > try! scope.resolve(Cat.self)
 > ```
-> Кинет исключение во время resolve: **`DIError.NotSetDefaultForMultyRegisterType(typeNames:, forType:)`**
+> Кинет исключение во время resolve: **`DIError.notSetDefaultForMultyRegisterType(typeNames:, forType:)`**
 ***
 
 * У всех зарегестрированных типов есть хотябы 1 инициализатор. Исключением являются типы с областью видимости PerRequest - для таких типов не обязательно должен присутсвовать инициализиров. К примеру код:
@@ -53,15 +53,15 @@
 > builder.register(Cat.self)
 > try! builder.build()
 > ```  
-> Кинет исключение: **`DIError.NotSetInitializer(typeName:)`**
+> Кинет исключение: **`DIError.notSetInitializer(typeName:)`**
 ***
 
 
 ## Чего нету
 Проверки - что альтернативные типы, находятся в тойже иеархии классов, что и основной тип. К примеру код:
 > ```Swift
-> builder.register(Cat.self).asType(Birds)
+> builder.register(Cat.self).asType(Birds.self)
 > ```  
-> Во время регистрации и создании, **не кинет исключение**. Данная ошибка обнаружится, во время разрешения зависимостей, при этом кинет исключение: **`DIError.TypeIncorrect(askableType:, realType:)`**
+> Во время регистрации и создании, **не кинет исключение**. Данная ошибка обнаружится, во время разрешения зависимостей, при этом кинет исключение: **`DIError.typeIncorrect(askableType:, realType:)`**
 
 

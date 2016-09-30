@@ -189,10 +189,10 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     let container = try! builder.build()
     
-    let serviceFoo: ServiceProtocol = try! container.resolve(Name: "foo")
+    let serviceFoo: ServiceProtocol = try! container.resolve(name: "foo")
     XCTAssertEqual(serviceFoo.foo(), "foo")
     
-    let serviceBar: ServiceProtocol = try! container.resolve(Name: "bar")
+    let serviceBar: ServiceProtocol = try! container.resolve(name: "bar")
     XCTAssertEqual(serviceBar.foo(), "bar")
   }
   
@@ -208,10 +208,10 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     let container = try! builder.build()
     
-    let serviceFoo: ServiceProtocol = try! container.resolve(Name: "foo")
+    let serviceFoo: ServiceProtocol = try! container.resolve(name: "foo")
     XCTAssertEqual(serviceFoo.foo(), "foo")
     
-    let serviceFoo2: ServiceProtocol = try! container.resolve(Name: "foo2")
+    let serviceFoo2: ServiceProtocol = try! container.resolve(name: "foo2")
     XCTAssertEqual(serviceFoo2.foo(), "foo")
     
     XCTAssertNotEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceFoo2 as AnyObject).toOpaque())
@@ -229,10 +229,10 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     let container = try! builder.build()
     
-    let serviceBar1_1: ServiceProtocol = try! container.resolve(Name: "bar")
+    let serviceBar1_1: ServiceProtocol = try! container.resolve(name: "bar")
     XCTAssertEqual(serviceBar1_1.foo(), "bar")
     
-    let serviceBar1_2: ServiceProtocol = try! container.resolve(Name: "bar2")
+    let serviceBar1_2: ServiceProtocol = try! container.resolve(name: "bar2")
     XCTAssertEqual(serviceBar1_2.foo(), "bar")
     
     XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar1_1 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar1_2 as AnyObject).toOpaque())
@@ -240,10 +240,10 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     let container2 = container.newLifeTimeScope()
     
-    let serviceBar2_1: ServiceProtocol = try! container2.resolve(Name: "bar")
+    let serviceBar2_1: ServiceProtocol = try! container2.resolve(name: "bar")
     XCTAssertEqual(serviceBar2_1.foo(), "bar")
     
-    let serviceBar2_2: ServiceProtocol = try! container2.resolve(Name: "bar2")
+    let serviceBar2_2: ServiceProtocol = try! container2.resolve(name: "bar2")
     XCTAssertEqual(serviceBar2_2.foo(), "bar")
     
     XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar2_1 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar2_2 as AnyObject).toOpaque())
@@ -255,14 +255,12 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test06_ResolveMultiplyMany() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService.self)
+		builder.register { FooService() }
       .asType(ServiceProtocol.self)
       .asDefault()
-      .initializer { FooService() }
-    
-    builder.register(BarService.self)
+		
+		builder.register { BarService() }
       .asType(ServiceProtocol.self)
-      .initializer { BarService() }
     
     let container = try! builder.build()
     
@@ -501,7 +499,7 @@ class DITranquillityTests_Resolve: XCTestCase {
 	func test11_ShortRegister() {
 		let builder = DIContainerBuilder()
 		
-		builder.register(short: Params(number:0))
+		builder.register { Params(number:0) }
 			.instancePerDependency()
 			.initializer{ Params(number:$1) }
 		

@@ -15,6 +15,14 @@ builder.register(Cat.self)
 builder.register(Cat.self).initializer { Cat() }
 ```
 
+## Краткая форма метода инициализации
+В случае если конструктор не зависит от внешних параметров, то регистрацию можно не указывать а написать в короткой форме:
+```Swift
+builder.register{ Cat() }
+```
+Что будет эквивалентно записи выше.
+
+
 ## Указание альтернативных типов
 Помимо указанного типа при регистрации, можно указать альтернативные типы, по которому будет происходить разрешение зависимостей. При этом если указан альтернативный тип, то по базовому типу разрешение зависимостей происходить не будет, если не указано обратного. 
 Внимание! В силу ограничений языка swift, альтернативный тип можно указать полностью любым, и проблемы обнаружатся лишь при разрешении зависимости. 
@@ -41,6 +49,12 @@ builder.register(Home.self).initializer { scope in return Home(myCat: try! scope
 builder.register(Home.self).initializer { s in return Home(myCat: *!s) }
 ```
 
+## Краткая форма разрешения зависимостей при инициализации
+в случае если не хочется писать такой длинный код, в языке предусмотрена короткая запись для данного случая:
+```Swift
+builder.register { Home(myCat: *!$0) }
+```
+
 ## Методы для добавления зависимостей
 Как было написанно выше, разрешать зависимости мы можем не только при инициализации, но и позже.
 Рекомендация! Не надо в методе инициализации писать код, который разрешает зависимости каким либо способом отличным от разрешения через конструктор.
@@ -53,9 +67,9 @@ class Home {
 }
 
 builder.register(Home.self).initializer { Home() }
-  .dependency { s, home in home.animals.append(s.resolve(Cat.self)) }
-  .dependency { s, home in home.animals.append(s.resolve(Dog.self)) }
-  .dependency { s, home in home.animals.append(s.resolve(Hamster.self)) }
+  .dependency { s, home in try! home.animals.append(s.resolve(Cat.self)) }
+  .dependency { s, home in try! home.animals.append(s.resolve(Dog.self)) }
+  .dependency { s, home in try! home.animals.append(s.resolve(Hamster.self)) }
 ```
 
 В данном примере мы видим, как мы к дому добавили 3 животных - кошку, собаку и хомяка.
@@ -100,5 +114,20 @@ builder.register(Hamster.self)
   .initializer { _, name, hamsterHome in return Hamster(name: name, hamsterHome: hamsterHome) }
 ```
 Методов инициализации может быть много, но они не могут пересекаться - то есть не может быть два метода инициализации которые принимают одни и теже типы в одинаковой последовательности. то есть сигнатура вида `String, Int` не может повторятся дважды, но `Int, String` является другой сигнатурой, и может присутствовать вместе с первой.
+
+## Краткая форма передачи параметров
+Существует более короткая форма, для записи передачи параметров:
+```
+builder.register(Hamster.self)
+  .initializer { Hamster(name: $1) }
+  .initializer { Hamster(name: $1, hamsterHome: $2) }
+```
+Обращаю внимание, что все параметры начинаются с 1, а не с 0, так как под 0 доступено обращение к scope.
+
+Также можно сократить еще эту запись записав один из инициализаторов сразу при регистрации:
+```
+builder.register{ Hamster(name: $1) }
+  .initializer { Hamster(name: $1, hamsterHome: $2) }
+```
 
 

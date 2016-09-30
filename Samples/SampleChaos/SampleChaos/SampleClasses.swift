@@ -138,7 +138,7 @@ class SampleModule : DIModule {
   }
   
   func load(builder: DIContainerBuilder) {
-    builder.register(short: 10).instanceLazySingle()
+		builder.register{ 10 }.instanceLazySingle()
     
     builder.register(ServiceProtocol.self)
       .asSelf()
@@ -157,11 +157,11 @@ class SampleModule : DIModule {
       .initializer { scope in LoggerAll(loggers: **!scope) }
       .dependency { (scope, self) in self.loggersFull = **!scope }
 
-    builder.register(short: Logger())
+		builder.register{ Logger() }
       .asType(LoggerProtocol.self)
       .instanceSingle()
     
-    builder.register(short: Logger2())
+    builder.register{ Logger2() }
       .asSelf()
       .asType(LoggerProtocol.self)
       .instanceLazySingle()
@@ -179,16 +179,16 @@ class SampleModule : DIModule {
       .initializer { (scope) in InjectMany(loggers: **!scope) }
     
     //Animals
-		builder.register(short: Animal(name: "Cat"))
+		builder.register{ Animal(name: "Cat") }
       .asSelf()
       .asName("Cat")
     
-    builder.register(short: Animal(name: "Dog"))
+    builder.register{ Animal(name: "Dog") }
       .asSelf()
       .asName("Dog")
       .asDefault()
 
-    builder.register(short: Animal(name: "Bear"))
+    builder.register{ Animal(name: "Bear") }
       .asSelf()
       .asName("Bear")
     

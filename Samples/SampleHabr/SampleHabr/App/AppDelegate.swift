@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     window = UIWindow(frame: UIScreen.main.bounds)
 
-    let storyboard: UIStoryboard = try! container.resolve(Name: "Main") // Получаем наш Main storyboard
+    let storyboard: UIStoryboard = try! container.resolve(name: "Main") // Получаем наш Main storyboard
     window!.rootViewController = storyboard.instantiateInitialViewController()
     window!.makeKeyAndVisible()
   }

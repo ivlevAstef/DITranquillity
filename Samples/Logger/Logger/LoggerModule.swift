@@ -10,20 +10,19 @@ import DITranquillity
 
 class LoggerModule: DIModule {
   func load(builder: DIContainerBuilder) {
-		builder.register(short: ConsoleLogger())
+		builder.register{ ConsoleLogger() }
 			.asType(Logger.self)
       .instanceSingle()
     
-    builder.register(short: FileLogger(file: "file.log"))
+		builder.register{ FileLogger(file: "file.log") }
       .asType(Logger.self)
       .instanceSingle()
     
-    builder.register(short: ServerLogger(server: "http://server.com/"))
+		builder.register{ServerLogger(server: "http://server.com/") }
       .asType(Logger.self)
       .instanceSingle()
     
-    builder.register(MainLogger.self)
-			.initializer { scope in MainLogger(loggers: **!scope) }
+		builder.register{  MainLogger(loggers: **!$0) }
       .asType(Logger.self)
       .asDefault()
       .instanceSingle()		
