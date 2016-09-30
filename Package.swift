@@ -6,8 +6,5 @@ let package = Package(
 		Target(name: "Core"),
 		Target(name: "Storyboard", dependencies: ["Core"]),
 		Target(name: "Assembly", dependencies: ["Core"]),
-  ],
-	dependencies: [
-		.Package(url: "../DITranquillity", majorVersion: 0),
   ]
 )
