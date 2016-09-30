@@ -30,7 +30,7 @@ Via CocoaPods.
 
 Via Carthage.
 
-###### github "Swinject/Swinject" Swift (iOS8+)
+###### `github "Swinject/Swinject"` Swift (iOS8+)
 
 ## Usage
 #### Simple
