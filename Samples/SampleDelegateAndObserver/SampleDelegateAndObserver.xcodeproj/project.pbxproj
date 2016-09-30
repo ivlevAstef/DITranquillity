@@ -18,21 +18,19 @@
 		16EE40C31D81A8AA009259A1 /* PopUpDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EE40C01D81A8AA009259A1 /* PopUpDelegate.swift */; };
 		16EE40C41D81A8AA009259A1 /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EE40C11D81A8AA009259A1 /* PopUpViewController.swift */; };
 		16EE40C51D81A8AA009259A1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EE40C21D81A8AA009259A1 /* ViewController.swift */; };
-		A5AE2B5D1D0AD81C00FF3E40 /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5AE2B3D1D0AD74800FF3E40 /* DITranquillity.framework */; };
-		A5AE2B5E1D0AD81C00FF3E40 /* DITranquillity.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A5AE2B3D1D0AD74800FF3E40 /* DITranquillity.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		A5AE2B3C1D0AD74800FF3E40 /* PBXContainerItemProxy */ = {
+		16640AA61D9E1FFA00707BFC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = A5AE2B381D0AD74800FF3E40 /* DITranquillity.xcodeproj */;
+			containerPortal = 16640AA21D9E1FF900707BFC /* DITranquillity.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = A58875541D0944AE00D6DE92;
 			remoteInfo = DITranquillity;
 		};
-		A5AE2B5F1D0AD81C00FF3E40 /* PBXContainerItemProxy */ = {
+		16640AA81D9E1FFE00707BFC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = A5AE2B381D0AD74800FF3E40 /* DITranquillity.xcodeproj */;
+			containerPortal = 16640AA21D9E1FF900707BFC /* DITranquillity.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = A58875531D0944AE00D6DE92;
 			remoteInfo = DITranquillity;
@@ -46,7 +44,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A5AE2B5E1D0AD81C00FF3E40 /* DITranquillity.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -54,6 +51,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		16640AA21D9E1FF900707BFC /* DITranquillity.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DITranquillity.xcodeproj; path = ../../DITranquillity.xcodeproj; sourceTree = "<group>"; };
 		16EE409A1D818619009259A1 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		16EE409B1D818619009259A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		16EE409D1D818619009259A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -67,7 +65,6 @@
 		16EE40C11D81A8AA009259A1 /* PopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
 		16EE40C21D81A8AA009259A1 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A58875681D0944FE00D6DE92 /* SampleDelegateAndObserver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleDelegateAndObserver.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A5AE2B381D0AD74800FF3E40 /* DITranquillity.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DITranquillity.xcodeproj; path = ../DITranquillity/DITranquillity.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,13 +72,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5AE2B5D1D0AD81C00FF3E40 /* DITranquillity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		16640AA31D9E1FF900707BFC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				16640AA71D9E1FFA00707BFC /* DITranquillity.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		16EE40991D818619009259A1 /* SampleDelegateAndObserver */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,7 +124,7 @@
 		A588755F1D0944FE00D6DE92 = {
 			isa = PBXGroup;
 			children = (
-				A5AE2B381D0AD74800FF3E40 /* DITranquillity.xcodeproj */,
+				16640AA21D9E1FF900707BFC /* DITranquillity.xcodeproj */,
 				16EE40991D818619009259A1 /* SampleDelegateAndObserver */,
 				A58875691D0944FE00D6DE92 /* Products */,
 			);
@@ -130,14 +134,6 @@
 			isa = PBXGroup;
 			children = (
 				A58875681D0944FE00D6DE92 /* SampleDelegateAndObserver.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		A5AE2B391D0AD74800FF3E40 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A5AE2B3D1D0AD74800FF3E40 /* DITranquillity.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -157,7 +153,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				A5AE2B601D0AD81C00FF3E40 /* PBXTargetDependency */,
+				16640AA91D9E1FFE00707BFC /* PBXTargetDependency */,
 			);
 			name = SampleDelegateAndObserver;
 			productName = SampleDelegateAndObserver;
@@ -193,8 +189,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = A5AE2B391D0AD74800FF3E40 /* Products */;
-					ProjectRef = A5AE2B381D0AD74800FF3E40 /* DITranquillity.xcodeproj */;
+					ProductGroup = 16640AA31D9E1FF900707BFC /* Products */;
+					ProjectRef = 16640AA21D9E1FF900707BFC /* DITranquillity.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -205,11 +201,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		A5AE2B3D1D0AD74800FF3E40 /* DITranquillity.framework */ = {
+		16640AA71D9E1FFA00707BFC /* DITranquillity.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = DITranquillity.framework;
-			remoteRef = A5AE2B3C1D0AD74800FF3E40 /* PBXContainerItemProxy */;
+			remoteRef = 16640AA61D9E1FFA00707BFC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -246,10 +242,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		A5AE2B601D0AD81C00FF3E40 /* PBXTargetDependency */ = {
+		16640AA91D9E1FFE00707BFC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = DITranquillity;
-			targetProxy = A5AE2B5F1D0AD81C00FF3E40 /* PBXContainerItemProxy */;
+			targetProxy = 16640AA81D9E1FFE00707BFC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

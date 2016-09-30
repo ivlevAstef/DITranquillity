@@ -14,22 +14,20 @@
 		A5AE2B491D0AD75300FF3E40 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5AE2B411D0AD75300FF3E40 /* LaunchScreen.storyboard */; };
 		A5AE2B4A1D0AD75300FF3E40 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5AE2B431D0AD75300FF3E40 /* Main.storyboard */; };
 		A5AE2B4C1D0AD75300FF3E40 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AE2B461D0AD75300FF3E40 /* ViewController.swift */; };
-		A5AE2B5D1D0AD81C00FF3E40 /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5AE2B3D1D0AD74800FF3E40 /* DITranquillity.framework */; };
-		A5AE2B5E1D0AD81C00FF3E40 /* DITranquillity.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A5AE2B3D1D0AD74800FF3E40 /* DITranquillity.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A5F73F631D2B7EB300D44746 /* ViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F73F621D2B7EB300D44746 /* ViewController2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		A5AE2B3C1D0AD74800FF3E40 /* PBXContainerItemProxy */ = {
+		16640A9D1D9E1FA900707BFC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = A5AE2B381D0AD74800FF3E40 /* DITranquillity.xcodeproj */;
+			containerPortal = 16640A991D9E1FA800707BFC /* DITranquillity.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = A58875541D0944AE00D6DE92;
 			remoteInfo = DITranquillity;
 		};
-		A5AE2B5F1D0AD81C00FF3E40 /* PBXContainerItemProxy */ = {
+		16640A9F1D9E1FB200707BFC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = A5AE2B381D0AD74800FF3E40 /* DITranquillity.xcodeproj */;
+			containerPortal = 16640A991D9E1FA800707BFC /* DITranquillity.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = A58875531D0944AE00D6DE92;
 			remoteInfo = DITranquillity;
@@ -43,7 +41,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A5AE2B5E1D0AD81C00FF3E40 /* DITranquillity.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -51,10 +48,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		16640A991D9E1FA800707BFC /* DITranquillity.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DITranquillity.xcodeproj; path = ../../DITranquillity.xcodeproj; sourceTree = "<group>"; };
 		16E9CE311D64616500A9A83B /* SampleAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleAssembly.swift; sourceTree = "<group>"; };
 		A51657A71D0FD6B0004A34F5 /* SampleClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleClasses.swift; sourceTree = "<group>"; };
 		A58875681D0944FE00D6DE92 /* SampleChaos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleChaos.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A5AE2B381D0AD74800FF3E40 /* DITranquillity.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DITranquillity.xcodeproj; path = ../DITranquillity/DITranquillity.xcodeproj; sourceTree = "<group>"; };
 		A5AE2B3F1D0AD75300FF3E40 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A5AE2B401D0AD75300FF3E40 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A5AE2B421D0AD75300FF3E40 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -69,17 +66,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5AE2B5D1D0AD81C00FF3E40 /* DITranquillity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		16640A9A1D9E1FA800707BFC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				16640A9E1D9E1FA900707BFC /* DITranquillity.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		A588755F1D0944FE00D6DE92 = {
 			isa = PBXGroup;
 			children = (
-				A5AE2B381D0AD74800FF3E40 /* DITranquillity.xcodeproj */,
+				16640A991D9E1FA800707BFC /* DITranquillity.xcodeproj */,
 				A5AE2B3E1D0AD75300FF3E40 /* SampleChaos */,
 				A58875691D0944FE00D6DE92 /* Products */,
 			);
@@ -89,14 +93,6 @@
 			isa = PBXGroup;
 			children = (
 				A58875681D0944FE00D6DE92 /* SampleChaos.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		A5AE2B391D0AD74800FF3E40 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A5AE2B3D1D0AD74800FF3E40 /* DITranquillity.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -132,7 +128,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				A5AE2B601D0AD81C00FF3E40 /* PBXTargetDependency */,
+				16640AA01D9E1FB200707BFC /* PBXTargetDependency */,
 			);
 			name = SampleChaos;
 			productName = SampleChaos;
@@ -168,8 +164,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = A5AE2B391D0AD74800FF3E40 /* Products */;
-					ProjectRef = A5AE2B381D0AD74800FF3E40 /* DITranquillity.xcodeproj */;
+					ProductGroup = 16640A9A1D9E1FA800707BFC /* Products */;
+					ProjectRef = 16640A991D9E1FA800707BFC /* DITranquillity.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -180,11 +176,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		A5AE2B3D1D0AD74800FF3E40 /* DITranquillity.framework */ = {
+		16640A9E1D9E1FA900707BFC /* DITranquillity.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = DITranquillity.framework;
-			remoteRef = A5AE2B3C1D0AD74800FF3E40 /* PBXContainerItemProxy */;
+			remoteRef = 16640A9D1D9E1FA900707BFC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -218,10 +214,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		A5AE2B601D0AD81C00FF3E40 /* PBXTargetDependency */ = {
+		16640AA01D9E1FB200707BFC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = DITranquillity;
-			targetProxy = A5AE2B5F1D0AD81C00FF3E40 /* PBXContainerItemProxy */;
+			targetProxy = 16640A9F1D9E1FB200707BFC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
