@@ -47,6 +47,38 @@ public extension DIRegistrationBuilder {" > $1
   echo "}" >> $1
 }
 
+registrationShortFunction() { #argcount file
+local numbers=($(seq 0 $1))
+numbers[0]=""
+
+local ArgType=$(join ', ' ${numbers[@]/#/Arg})
+local ArgumentsType=$(join ', _ ' $(replaceToArg numbers[@] "arg;I:±Arg;I")); ArgumentsType=${ArgumentsType//±/ }
+
+echo "  @discardableResult
+  public func register<T, $ArgType>(initializer: @escaping (_ scope: DIScope, _ $ArgumentsType) -> T) -> DIRegistrationBuilder<T> {
+    return DIRegistrationBuilder<T>(self.rTypeContainer, T.self).initializer(method: initializer)
+  }
+" >> $2
+}
+
+
+registationShortFile() { #file
+echo "//
+//  DIContainerBuilder.ShortSyntax.Arg.swift
+//  DITranquillity
+//
+//  Created by Alexander Ivlev on 30/09/16.
+//  Copyright © 2016 Alexander Ivlev. All rights reserved.
+//
+
+public extension DIContainerBuilder {" > $1
+
+for argcount in `seq 0 $argmax`; do
+registrationShortFunction $argcount $1
+done
+echo "}" >> $1
+}
+
 resolveFunctions() { #argcount prefix file
   local prefix=${2//§/ }
   local numbers=($(seq 0 $1))
@@ -140,6 +172,7 @@ public extension DIScope {" > $1
 
 
 registationFile "DIRegistrationBuilder.Arg.swift"
+registationShortFile "DIContainerBuilder.ShortSyntax.Arg.swift"
 
 resolveFile "DIScope.Arg.swift"
 typeResolveFile "DIScope.TypeArg.swift"

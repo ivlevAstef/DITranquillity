@@ -15,9 +15,8 @@ class AppModule: DIModule {
       .instanceSingle()
       .initializer { scope in DIStoryboard(name: "Main", bundle: nil, container: scope) }
     
-    builder.register(YourPresenter.self)
+		builder.register{ YourPresenter(server: *!$0) }
       .instancePerScope()
-      .initializer { (scope) in YourPresenter(server: *!scope) }
       .dependency { (scope, self) in self.logger = *?scope }
     
 		builder.register(vc: YourViewController.self)

@@ -514,5 +514,22 @@ class DITranquillityTests_Resolve: XCTestCase {
 		XCTAssert(p2.number == 15 && p2.str == "" && p2.bool == false)
 	}
 	
+	func test12_ShortParamRegister() {
+		let builder = DIContainerBuilder()
+		
+		builder.register{ Params(number:$1, str: $2, bool: $3) }
+			.instancePerDependency()
+			.initializer{ Params(number:$1, str: $2) }
+		
+		let container = try! builder.build()
+		
+		let p1: Params = try! container.resolve(arg: 45, "test2", true)
+		XCTAssert(p1.number == 45 && p1.str == "test2" && p1.bool == true)
+		
+		let p2: Params = try! container.resolve(arg: 35, "test")
+		XCTAssert(p2.number == 35 && p2.str == "test" && p2.bool == false)
+	}
+
+	
 	
 }

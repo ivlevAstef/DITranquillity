@@ -192,10 +192,9 @@ class SampleModule : DIModule {
       .asSelf()
       .asName("Bear")
     
-    builder.register(Animal.self)
+		builder.register{ Animal(name: $1) }
       .asSelf()
       .asName("Custom")
-      .initializer { (s, arg1) in Animal(name: arg1) }
     
     builder.register(Params.self)
       .asSelf()
@@ -225,7 +224,6 @@ class SampleStartupModule : DIModule {
 		builder.register(module: SampleModule(useBarService: true))
     
 		builder.register(vc: ViewController.self)
-      .asSelf()
       .dependency { (scope, obj) in obj.injectGlobal = *!scope }
       .dependency { (scope, obj) in obj.scope = scope }
 		

@@ -8,12 +8,24 @@
 
 internal class RTypeContainer {
   internal func append(key: Any, value: RType) {
+		if contains(key: key, value: value) {
+			return
+		}
+		
     if nil == values[hash(key)] {
       values[hash(key)] = []
     }
 
     values[hash(key)]?.append(value)
   }
+	
+	internal func contains(key: Any, value: RType) -> Bool {
+		guard let values = values[hash(key)] else {
+			return false
+		}
+		
+		return values.contains(value)
+	}
 
   internal subscript(key: Any) -> [RType]? { return values[hash(key)] }
 
