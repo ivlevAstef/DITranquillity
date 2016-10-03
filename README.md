@@ -31,7 +31,7 @@ Via CocoaPods.
 
 Via Carthage.
 
-###### `github "Swinject/Swinject"` Swift (iOS8+)
+###### `github "ivlevAstef/DITranquillity"` Swift (iOS8+)
 
 ## Usage
 #### Simple
