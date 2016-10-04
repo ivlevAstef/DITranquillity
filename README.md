@@ -222,3 +222,9 @@ iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
 
 # Changelog
 See [CHANGELOG.md](https://github.com/ivlevAstef/DITranquillity/blob/master/CHANGELOG.md) file.
+
+# Alternative
+* [Typhoon](https://github.com/appsquickly/Typhoon)
+* [Swinject](https://github.com/Swinject/Swinject)
+* [DIP](https://github.com/AliSoftware/Dip)
+
