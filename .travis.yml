@@ -10,8 +10,6 @@ env:
     - OSX_SDK=macosx10.12
     - TVOS_SDK=appletvsimulator10.0
   matrix:
-    - DESTINATION="OS=10.0,name=iPhone 6S Plus"
-
     - DESTINATION="OS=9.3,name=iPhone 6" SCHEME="DITranquillity-iOS" SDK="$IOS_SDK" PLATFORM="iOS"
     - DESTINATION="OS=10.0,name=iPhone 6S Plus" SCHEME="DITranquillity-iOS" SDK="$IOS_SDK" PLATFORM="iOS"
     - DESTINATION="arch=x86_64" SCHEME="DITranquillity-OSX" SDK="$OSX_SDK" PLATFORM="Mac"
