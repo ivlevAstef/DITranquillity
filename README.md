@@ -218,7 +218,7 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
 
 * Swift 3.0: Xcode 8.0; version > 0.9.5
-* Swift 2.3: Xcode 8.0; version <= 0.9.5
+* Swift 2.3: Xcode 7.0; version <= 0.9.5
 
 # Changelog
 See [CHANGELOG.md](https://github.com/ivlevAstef/DITranquillity/blob/master/CHANGELOG.md) file.
