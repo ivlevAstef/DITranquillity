@@ -1,3 +1,7 @@
+# v1.0.0
+* Supported macOS
+* Added tvOS
+
 # v0.9.9
 * Added short registration syntax for types
 * Added short registration syntax for UIViewController

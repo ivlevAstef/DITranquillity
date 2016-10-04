@@ -5,10 +5,18 @@ env:
     - LC_CTYPE=en_US.UTF-8
     - LANG=en_US.UTF-8
     - PROJECT=DITranquillity.xcodeproj
-    - SCHEME=DITranquillity
-    - DESTINATION="OS=10.0,name=iPhone 6S Plus"
-    - IOS_SDK=iphonesimulator10.0
     - FRAMEWORK_NAME=DITranquillity
+    - IOS_SDK=iphonesimulator10.0
+    - OSX_SDK=macosx10.12
+    - TVOS_SDK=appletvsimulator10.0
+  matrix:
+    - DESTINATION="OS=10.0,name=iPhone 6S Plus"
+
+    - DESTINATION="OS=9.3,name=iPhone 6" SCHEME="DITranquillity-iOS" SDK="$IOS_SDK" PLATFORM="iOS"
+    - DESTINATION="OS=10.0,name=iPhone 6S Plus" SCHEME="DITranquillity-iOS" SDK="$IOS_SDK" PLATFORM="iOS"
+    - DESTINATION="arch=x86_64" SCHEME="DITranquillity-OSX" SDK="$OSX_SDK" PLATFORM="Mac"
+    - DESTINATION="OS=9.2,name=Apple TV 1080p" SCHEME="DITranquillity-tvOS" SDK="$TVOS_SDK" PLATFORM="tvOS"
+    - DESTINATION="OS=10.0,name=Apple TV 1080p" SCHEME="DITranquillity-tvOS" SDK="$TVOS_SDK" PLATFORM="tvOS"
 before_install:
   - brew update
   - brew outdated carthage || brew upgrade carthage  
@@ -16,8 +24,7 @@ before_deploy:
   - carthage build --no-skip-current
   - carthage archive $FRAMEWORK_NAME
 script:
-  - xcodebuild -version
   - open -b com.apple.iphonesimulator # Workaround https://github.com/travis-ci/travis-ci/issues/3040
-  - xcodebuild -project "$PROJECT" -scheme "$SCHEME" -sdk "$IOS_SDK" -destination "$DESTINATION" 
+  - xcodebuild -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" 
     -configuration Release ONLY_ACTIVE_ARCH=NO build
   - pod lib lint --quick;

@@ -3,8 +3,20 @@
 ## Объявление зависимостей для ViewController
 Для объявления viewController в который будут внедрятся зависимости, регистрируем тип с временем жизни `instancePerRequest()`. Выглядит это так:
 
+##### Для iOS/tvOS:
 ```Swift
 class YourViewController: UIViewController {
+  internal var inject: Inject?
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    print("Inject: \(inject)")
+  }
+}
+```
+##### Для macOS:
+```Swift
+class YourViewController: NSViewController {
   internal var inject: Inject?
 
   override func viewDidLoad() {
@@ -31,6 +43,7 @@ builder.register(vc: YourViewController.self)
 
 ## Создание Storyboard
 Чтобы подобные зависимости и внедрения работали автоматически надо создать одну из реализации сторибоарда, которая реализована в библиотеке. Можно сделать так:
+##### Для iOS/tvOS:
 ```Swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
   window = UIWindow(frame: UIScreen.mainScreen().bounds)
@@ -47,8 +60,25 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
   return true
 }
 ```
+##### Для macOS:
+```Swift
+func applicationDidFinishLaunching(_ aNotification: Notification) {
+  let builder = DIContainerBuilder()
+  ...
+
+  let container = try! builder.build()
+
+  let storyboard = DIStoryboard(name: "Main", bundle: nil, container: container)
+
+  let viewController = storyboard.instantiateInitialController() as! NSViewController
+
+  let window = NSApplication.shared().windows.first
+  window?.contentViewController = viewController
+}
+```
 
 Либо мы можем сам сторибоард добавить в контайнер, и потом его получить:
+##### Для iOS/tvOS:
 ```Swift
 builder.register(UIStoryboard.self)
   .instanceSingle()
@@ -56,4 +86,13 @@ builder.register(UIStoryboard.self)
 
 ...
 let storyboard: UIStoryboard = try! container.resolve(name: "Main")
+```
+##### Для macOS:
+```Swift
+builder.register(NSStoryboard.self)
+  .instanceSingle()
+  .initializer { DIStoryboard(name: "Main", bundle: "", container: $0) }
+
+...
+let storyboard: NSStoryboard = try! container.resolve(name: "Main")
 ```
