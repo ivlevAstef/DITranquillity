@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A58875531D0944AE00D6DE92"
+               BlueprintIdentifier = "169C0DC11DA3501F001F0AD5"
                BuildableName = "DITranquillity.framework"
-               BlueprintName = "DITranquillity"
+               BlueprintName = "DITranquillity-OSX"
                ReferencedContainer = "container:DITranquillity.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A58875531D0944AE00D6DE92"
+            BlueprintIdentifier = "169C0DC11DA3501F001F0AD5"
             BuildableName = "DITranquillity.framework"
-            BlueprintName = "DITranquillity"
+            BlueprintName = "DITranquillity-OSX"
             ReferencedContainer = "container:DITranquillity.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -54,9 +54,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A58875531D0944AE00D6DE92"
+            BlueprintIdentifier = "169C0DC11DA3501F001F0AD5"
             BuildableName = "DITranquillity.framework"
-            BlueprintName = "DITranquillity"
+            BlueprintName = "DITranquillity-OSX"
             ReferencedContainer = "container:DITranquillity.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -72,9 +72,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A58875531D0944AE00D6DE92"
+            BlueprintIdentifier = "169C0DC11DA3501F001F0AD5"
             BuildableName = "DITranquillity.framework"
-            BlueprintName = "DITranquillity"
+            BlueprintName = "DITranquillity-OSX"
             ReferencedContainer = "container:DITranquillity.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

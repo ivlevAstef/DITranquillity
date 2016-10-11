@@ -1,5 +1,5 @@
 # DITranquillity
-Dependency injection for iOS (Swift)
+Dependency injection for iOS/macOS/tvOS (Swift)
 
 [![Travis CI](https://travis-ci.org/ivlevAstef/DITranquillity.svg?branch=master)](https://travis-ci.org/ivlevAstef/DITranquillity)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
@@ -27,11 +27,11 @@ Dependency injection for iOS (Swift)
 ## Install
 Via CocoaPods.
 
-###### `pod 'DITranquillity'` Swift (iOS8+) also need write in your PodFile `use_frameworks!`
+###### `pod 'DITranquillity'` Swift (iOS8+,macOS10.10+,tvOS9+) also need write in your PodFile `use_frameworks!`
 
 Via Carthage.
 
-###### `github "Swinject/Swinject"` Swift (iOS8+)
+###### `github "ivlevAstef/DITranquillity"` Swift (iOS8+,macOS10.10+,tvOS9+)
 
 ## Usage
 #### Simple
@@ -48,7 +48,7 @@ class Cat: Animal {
 ```Swift
 let builder = DIContainerBuilder()
 
-builder.register(short: Cat())
+builder.register{ Cat() }
   .asSelf()
   .asType(Animal.self)
   
@@ -96,7 +96,7 @@ class Home {
 ```Swift
 let builder = DIContainerBuilder()
 
-builder.register(short: Cat())
+builder.register{ Cat() }
   .asSelf()
   .asType(Animal.self)
   .instancePerDependency() // instanceSingle(), instancePerScope(), instancePerRequest(), instancePerMatchingScope(String)
@@ -107,7 +107,7 @@ builder.register(Dog.self)
   .instancePerDependency()
   .initializer { Dog() }
   
-builder.register(short: Pet(name: "My Pet"))
+builder.register{ Pet(name: "My Pet") }
   .asSelf()
   .asType(Animal.self)
   .asDefault()
@@ -138,6 +138,19 @@ let home2: Home = *!scope //home2 === home
 ```
 
 #### Storyboard
+##### All
+Create your module:
+```Swift
+class SampleModule: DIModule {
+  override func load(builder: DIContainerBuilder) {
+    builder.register(ViewController.self)
+      .instancePerRequest()
+      .dependency { (scope, obj) in obj.inject = *!scope }
+  }
+}
+```
+
+##### iOS/tvOS 
 Create your ViewController:
 ```Swift
 class ViewController: UIViewController {
@@ -147,16 +160,6 @@ class ViewController: UIViewController {
     super.viewDidLoad()
     
     print("Inject: \(inject)")
-  }
-}
-```
-Create your module:
-```Swift
-class SampleModule: DIModule {
-  override func load(builder: DIContainerBuilder) {
-    builder.register(ViewController.self)
-      .instancePerRequest()
-      .dependency { (scope, obj) in obj.inject = *!scope }
   }
 }
 ```
@@ -178,14 +181,50 @@ func applicationDidFinishLaunching(_ application: UIApplication) {
 }
 ```
 
+##### OSX
+Create your ViewController:
+```Swift
+class ViewController: NSViewController {
+  internal var inject: Inject?
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    print("Inject: \(inject)")
+  }
+}
+```
+Registrate Storyboard:
+```Swift
+func applicationDidFinishLaunching(_ aNotification: Notification) {
+  let builder = DIContainerBuilder()
+  builder.register(module: SampleModule())
+
+  let container = try! builder.build()
+
+  let storyboard = DIStoryboard(name: "Main", bundle: nil, container: container)
+
+  let viewController = storyboard.instantiateInitialController() as! NSViewController
+
+  let window = NSApplication.shared().windows.first
+  window?.contentViewController = viewController
+}
+```
+
 ## Documentation
 * [ru](https://github.com/ivlevAstef/DITranquillity/blob/master/Documentation/ru/main.md)
 
 ## Requirements
-iOS 8.0+; ARC
+iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
 
 * Swift 3.0: Xcode 8.0; version > 0.9.5
-* Swift 2.3: Xcode 8.0; version <= 0.9.5
+* Swift 2.3: Xcode 7.0; version <= 0.9.5
 
 # Changelog
-See [CHANGELOG.md](https://github.com/ivlevAstef/DITranguillity/blob/master/CHANGELOG.md) file.
+See [CHANGELOG.md](https://github.com/ivlevAstef/DITranquillity/blob/master/CHANGELOG.md) file.
+
+# Alternative
+* [Typhoon](https://github.com/appsquickly/Typhoon)
+* [Swinject](https://github.com/Swinject/Swinject)
+* [DIP](https://github.com/AliSoftware/Dip)
+
