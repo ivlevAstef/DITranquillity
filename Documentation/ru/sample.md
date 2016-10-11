@@ -18,4 +18,9 @@
 ##### [Ссылка](https://github.com/ivlevAstef/DITranquillity/tree/master/Swift/SampleHabr)
 Это маленький пример проекта, содержащий работу с сетью, и связыващий такие уровни как: Data, Presenter, ViewController, Utils. Содержит внутри себя логер, который являет другим проектом.
 
+## OSX
+##### [Ссылка](https://github.com/ivlevAstef/DITranquillity/tree/master/Swift/SampleOSX)
+Пример проекта под OSX
+
+
 ## Big Project

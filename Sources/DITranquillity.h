@@ -6,4 +6,4 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-#import "DIStoryboardBase.h"
+#import <DITranquillity/DIStoryboardBase.h>

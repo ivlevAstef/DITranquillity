@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="YpR-5W-7zt">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="V7V-3s-8tY">
+            <objects>
+                <viewController id="YpR-5W-7zt" customClass="ViewController" customModule="SampleOSX" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="d0D-gC-WRS">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sMq-Cy-IEY">
+                                <rect key="frame" x="185" y="132" width="81" height="32"/>
+                                <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="d4H-Bt-LLL">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <segue destination="Spc-X8-pBg" kind="popover" popoverAnchorView="sMq-Cy-IEY" popoverBehavior="t" preferredEdge="maxY" id="CZy-og-8Q5"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="sMq-Cy-IEY" firstAttribute="centerX" secondItem="d0D-gC-WRS" secondAttribute="centerX" id="fOC-dc-REH"/>
+                            <constraint firstItem="sMq-Cy-IEY" firstAttribute="centerY" secondItem="d0D-gC-WRS" secondAttribute="centerY" id="lBJ-v5-VNi"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="button" destination="sMq-Cy-IEY" id="sp6-un-SI2"/>
+                    </connections>
+                </viewController>
+                <customObject id="VVi-RJ-mIx" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-60" y="172"/>
+        </scene>
+        <!--Next View Controller-->
+        <scene sceneID="grP-4L-IpJ">
+            <objects>
+                <viewController id="Spc-X8-pBg" customClass="NextViewController" customModule="SampleOSX" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="R8h-sk-NlR">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="150"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </view>
+                </viewController>
+                <customObject id="UEJ-Bv-Miw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="431" y="172"/>
+        </scene>
+    </scenes>
+</document>
