@@ -29,6 +29,14 @@ builder.register(module: DIScanModule(predicateByType: { $0 == YourModule.self }
 * Нам надо отнаследовать все сборки которые мы хотим искать от DIScannedAssembly
 * Зарегестрировать сборку DIScanAssembly, с условием поиска в билдере, также как и с модулями.
 
+## Указание Bundle
+Если вам проект разделен на подпроекты, то каждый подпроект имеет свой уникальный bundle, и этим можно воспользоваться, при поиске - можно явно указать в каком bundle надо искать модули или сборки. Сделать это можно используя следующий синтаксис:
+```swift
+DIScanModule(predicateByName: { $0.has("Module") }, in: Bundle(/*create*/))
+...
+DIScanAssembly(predicateByType: { $0 == YourModule.self }, in: Bundle(/*create*/))
+```
+
 ## Как можно еще
 Помимо билдера, мы можем использовать подобный синтаксис и в самой сборке, к примеру вот так:
 ```swift

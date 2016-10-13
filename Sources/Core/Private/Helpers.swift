@@ -28,27 +28,4 @@ class Helpers {
 
     return type
   }
-
-
-  static func getTypesBySuperType<T>(_ supertype: T.Type) -> [T.Type] {
-    let expectedClassCount = objc_getClassList(nil, 0)
-    let allClasses = UnsafeMutablePointer<AnyClass?>.alloc(Int(expectedClassCount))
-    let autoreleasingAllClasses = AutoreleasingUnsafeMutablePointer<AnyClass?>(allClasses)
-    let actualClassCount:Int32 = objc_getClassList(autoreleasingAllClasses, expectedClassCount)
-
-    var result: [T.Type] = []
-    for i in 0 ..< actualClassCount {
-      guard let cls: AnyClass = allClasses[Int(i)] else {
-        continue
-      }
-      
-      if class_getSuperclass(cls) == T.self {
-        result.append(cls as! T.Type)
-      }
-    }
-
-    allClasses.dealloc(Int(expectedClassCount))
-
-    return result
-  }
 }
