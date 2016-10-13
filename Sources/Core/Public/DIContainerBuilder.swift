@@ -11,6 +11,20 @@ public final class DIContainerBuilder {
 
   @discardableResult
   public func build() throws -> DIScope {
+    try validate()
+
+    let finalRTypes = rTypeContainer.copyFinal()
+    let scope = DIScope(registeredTypes: finalRTypes)
+
+    // Init Single types
+    for rType in finalRTypes.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime }) {
+      _ = try scope.resolve(RType: rType)
+    }
+
+    return scope
+  }
+
+  private func validate() throws {
     var errors: [DIError] = []
 
     var allTypes: Set<RType> = []
@@ -29,16 +43,6 @@ public final class DIContainerBuilder {
     if !errors.isEmpty {
       throw DIError.build(errors: errors)
     }
-
-    let finalRTypes = rTypeContainer.copyFinal()
-    let scope = DIScope(registeredTypes: finalRTypes)
-
-    // Init Single types
-    for rType in finalRTypes.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime }) {
-      let _ = try scope.resolve(RType: rType)
-    }
-
-    return scope
   }
 
   private func checkRTypes(_ superType: String, rTypes: [RType], errors: inout [DIError]) {
@@ -48,7 +52,7 @@ public final class DIContainerBuilder {
 
     checkRTypesNames(superType, rTypes: rTypes, errors: &errors)
 
-    let defaultTypes = rTypes.filter({ $0.isDefault })
+    let defaultTypes = rTypes.filter{ $0.isDefault }
     if defaultTypes.count > 1 {
       errors.append(DIError.multyRegisterDefault(typeNames: defaultTypes.map { String(describing: $0.implType) }, forType: superType))
     }

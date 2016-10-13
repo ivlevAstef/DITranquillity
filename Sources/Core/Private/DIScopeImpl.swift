@@ -6,12 +6,12 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-internal class DIScopeImpl {
-  internal init(registeredTypes: RTypeContainerFinal) {
+class DIScopeImpl {
+  init(registeredTypes: RTypeContainerFinal) {
     self.registeredTypes = registeredTypes
   }
 
-  internal func resolve<T, Method>(_ scope: DIScope, circular: Bool = false, method: (Method) -> Any) throws -> T {
+  func resolve<T, Method>(_ scope: DIScope, circular: Bool = false, method: (Method) -> Any) throws -> T {
     let rTypes = try getTypes(T.self)
 
     if rTypes.count > 1 {
@@ -25,7 +25,7 @@ internal class DIScopeImpl {
     return try resolveUseRType(scope, pair: RTypeWithNamePair(rTypes[0], ""), method: method)
   }
 
-  internal func resolveMany<T, Method>(_ scope: DIScope, circular: Bool = false, method: (Method) -> Any) throws -> [T] {
+  func resolveMany<T, Method>(_ scope: DIScope, circular: Bool = false, method: (Method) -> Any) throws -> [T] {
     let rTypes = try getTypes(T.self)
 
     var result: [T] = []
@@ -48,7 +48,7 @@ internal class DIScopeImpl {
     return result
   }
 
-  internal func resolve<T, Method>(_ scope: DIScope, name: String, circular: Bool = false, method: (Method) -> Any) throws -> T {
+  func resolve<T, Method>(_ scope: DIScope, name: String, circular: Bool = false, method: (Method) -> Any) throws -> T {
     let rTypes = try getTypes(T.self)
 
     for rType in rTypes {
@@ -60,7 +60,7 @@ internal class DIScopeImpl {
     throw DIError.typeNoRegisterByName(typeName: String(describing: T.self), name: name)
   }
 
-  internal func resolve<T>(_ scope: DIScope, object: T) throws {
+  func resolve<T>(_ scope: DIScope, object: T) throws {
     let rTypes = try getTypes(type(of: object))
 
     if rTypes.count > 1 {
@@ -74,11 +74,11 @@ internal class DIScopeImpl {
     }
   }
 
-  internal func resolve<Method>(_ scope: DIScope, rType: RTypeFinal, method: (Method) -> Any) throws -> Any {
+  func resolve<Method>(_ scope: DIScope, rType: RTypeFinal, method: (Method) -> Any) throws -> Any {
     return try resolveUseRType(scope, pair: RTypeWithNamePair(rType, ""), method: method)
   }
 
-  internal func newLifeTimeScope(_ scope: DIScope) -> DIScope {
+  func newLifeTimeScope(_ scope: DIScope) -> DIScope {
     return DIScope(registeredTypes: registeredTypes)
   }
 
@@ -196,7 +196,7 @@ internal class DIScopeImpl {
     }
 
     for recursiveTypeKey in recursive {
-      dependencies.append(pair.uniqueKey, value: recursiveTypeKey)
+      dependencies.append(key: pair.uniqueKey, value: recursiveTypeKey)
     }
 
     let insertIndex = allTypes.endIndex

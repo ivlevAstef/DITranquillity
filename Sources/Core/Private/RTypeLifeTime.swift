@@ -6,7 +6,7 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-internal enum RTypeLifeTime: Equatable {
+enum RTypeLifeTime: Equatable {
   case single
   case lazySingle
   case perScope

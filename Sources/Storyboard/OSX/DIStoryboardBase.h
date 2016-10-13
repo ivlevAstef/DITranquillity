@@ -10,14 +10,14 @@
 
 @protocol _DIStoryboardBaseResolver <NSObject>
 
-- (nonnull id)resolve:(nonnull id)viewController identifier:(nonnull NSString*)String;
+  - (nonnull id)resolve:(nonnull id)viewController identifier:(nonnull NSString*)String;
 
 @end
 
 @interface _DIStoryboardBase : NSStoryboard
 
-+ (nonnull instancetype)create:(nonnull NSString*)name bundle:(nullable NSBundle*)storyboardBundleOrNil;
+  + (nonnull instancetype)create:(nonnull NSString*)name bundle:(nullable NSBundle*)storyboardBundleOrNil;
 
-@property (nonatomic, strong, nullable) id<_DIStoryboardBaseResolver> resolver;
+  @property (nonatomic, strong, nullable) id<_DIStoryboardBaseResolver> resolver;
 
 @end

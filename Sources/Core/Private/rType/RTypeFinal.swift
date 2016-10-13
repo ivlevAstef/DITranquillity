@@ -6,10 +6,10 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-internal class RTypeFinal: BaseRTypeHashable {
+class RTypeFinal: BaseRTypeHashable {
   typealias UniqueKey = String
 
-  internal init(implType: Any, initializers: [String: Any], dependencies: [(_ scope: DIScope, _ obj: Any) -> ()], names: Set<String>, isDefault: Bool, lifeTime: RTypeLifeTime) {
+  init(implType: Any, initializers: [String: Any], dependencies: [(_ scope: DIScope, _ obj: Any) -> ()], names: Set<String>, isDefault: Bool, lifeTime: RTypeLifeTime) {
     self.initializers = initializers
     self.dependencies = dependencies
     self.names = names
@@ -30,9 +30,9 @@ internal class RTypeFinal: BaseRTypeHashable {
     return names.contains(name)
   }
 
-  internal let lifeTime: RTypeLifeTime
-  internal let isDefault: Bool
-  internal let dependencies: [(_ scope: DIScope, _ obj: Any) -> ()]
+  let lifeTime: RTypeLifeTime
+  let isDefault: Bool
+  let dependencies: [(_ scope: DIScope, _ obj: Any) -> ()]
 
   private let initializers: [String: Any]
   private let names: Set<String>

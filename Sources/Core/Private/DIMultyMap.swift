@@ -6,19 +6,17 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-import Foundation
+struct DIMultimap<Key: Hashable, Value: Equatable> {
+  init() { }
 
-internal struct DIMultimap<Key: Hashable, Value: Equatable> {
-  internal init() { }
-
-  internal subscript(key: Key) -> [Value] {
+  subscript(key: Key) -> [Value] {
     if let values = dictionary[key] {
       return values
     }
     return []
   }
 
-  internal mutating func append(_ key: Key, value: Value) {
+  mutating func append(key: Key, value: Value) {
     var list = dictionary[key] ?? []
 
     if !list.contains(where: { $0 == value }) {
@@ -28,9 +26,17 @@ internal struct DIMultimap<Key: Hashable, Value: Equatable> {
     dictionary[key] = list
   }
 
-  internal mutating func removeAll(keepCapacity keep: Bool = true) {
+  func contains(key: Key, value: Value) -> Bool {
+    guard let values = dictionary[key] else {
+      return false
+    }
+
+    return values.contains(value)
+  }
+
+  mutating func removeAll(keepCapacity keep: Bool = true) {
     dictionary.removeAll(keepingCapacity: keep)
   }
 
-  private var dictionary: [Key: [Value]] = [:]
+  private(set) var dictionary: [Key: [Value]] = [:]
 }
