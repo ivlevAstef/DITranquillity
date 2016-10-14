@@ -91,6 +91,15 @@
 		169C0E421DA35CBE001F0AD5 /* DIStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169C0E201DA357C3001F0AD5 /* DIStoryboard.swift */; };
 		169C0E451DA35CBE001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		169C0E461DA35CBE001F0AD5 /* DIStoryboardBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 169C0E111DA352C7001F0AD5 /* DIStoryboardBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		16D7BCB81DB086B000A29A9F /* DIScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB51DB086B000A29A9F /* DIScan.swift */; };
+		16D7BCB91DB086B000A29A9F /* DIScanAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB61DB086B000A29A9F /* DIScanAssembly.swift */; };
+		16D7BCBA1DB086B000A29A9F /* DIScanModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB71DB086B000A29A9F /* DIScanModule.swift */; };
+		16D7BCBB1DB086B500A29A9F /* DIScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB51DB086B000A29A9F /* DIScan.swift */; };
+		16D7BCBC1DB086B600A29A9F /* DIScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB51DB086B000A29A9F /* DIScan.swift */; };
+		16D7BCBD1DB086B900A29A9F /* DIScanAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB61DB086B000A29A9F /* DIScanAssembly.swift */; };
+		16D7BCBE1DB086B900A29A9F /* DIScanModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB71DB086B000A29A9F /* DIScanModule.swift */; };
+		16D7BCBF1DB086B900A29A9F /* DIScanAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB61DB086B000A29A9F /* DIScanAssembly.swift */; };
+		16D7BCC01DB086B900A29A9F /* DIScanModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB71DB086B000A29A9F /* DIScanModule.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -129,6 +138,9 @@
 		169C0E201DA357C3001F0AD5 /* DIStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIStoryboard.swift; sourceTree = "<group>"; };
 		169C0E221DA357C8001F0AD5 /* DIStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIStoryboard.swift; sourceTree = "<group>"; };
 		169C0E4B1DA35CBE001F0AD5 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		16D7BCB51DB086B000A29A9F /* DIScan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScan.swift; sourceTree = "<group>"; };
+		16D7BCB61DB086B000A29A9F /* DIScanAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScanAssembly.swift; sourceTree = "<group>"; };
+		16D7BCB71DB086B000A29A9F /* DIScanModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScanModule.swift; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -160,6 +172,7 @@
 		16640A4C1D9E1E7B00707BFC /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				16D7BCB41DB086B000A29A9F /* Scan */,
 				169C0E1C1DA355A6001F0AD5 /* Info.plist */,
 				16640A4D1D9E1E7B00707BFC /* Assembly */,
 				16640A501D9E1E7B00707BFC /* Core */,
@@ -275,6 +288,16 @@
 				169C0E151DA352C7001F0AD5 /* DIStoryboardBase.m */,
 			);
 			path = OSX;
+			sourceTree = "<group>";
+		};
+		16D7BCB41DB086B000A29A9F /* Scan */ = {
+			isa = PBXGroup;
+			children = (
+				16D7BCB51DB086B000A29A9F /* DIScan.swift */,
+				16D7BCB61DB086B000A29A9F /* DIScanAssembly.swift */,
+				16D7BCB71DB086B000A29A9F /* DIScanModule.swift */,
+			);
+			path = Scan;
 			sourceTree = "<group>";
 		};
 		A588754A1D0944AE00D6DE92 = {
@@ -452,6 +475,7 @@
 				169C0DC71DA3501F001F0AD5 /* DIRegistrationBuilder.Arg.swift in Sources */,
 				169C0DC81DA3501F001F0AD5 /* DIScope.Arg.swift in Sources */,
 				169C0DC91DA3501F001F0AD5 /* RTypeLifeTime.swift in Sources */,
+				16D7BCBE1DB086B900A29A9F /* DIScanModule.swift in Sources */,
 				169C0DCB1DA3501F001F0AD5 /* DIContainerBuilder.ShortSyntax.swift in Sources */,
 				169C0DCC1DA3501F001F0AD5 /* DIMultyMap.swift in Sources */,
 				169C0DCD1DA3501F001F0AD5 /* Weak.swift in Sources */,
@@ -462,6 +486,7 @@
 				169C0DD11DA3501F001F0AD5 /* DIScopeImpl.swift in Sources */,
 				169C0DD21DA3501F001F0AD5 /* DIDynamicAssembly.swift in Sources */,
 				169C0DD31DA3501F001F0AD5 /* DIScope.swift in Sources */,
+				16D7BCBB1DB086B500A29A9F /* DIScan.swift in Sources */,
 				169C0DD41DA3501F001F0AD5 /* Helpers.swift in Sources */,
 				169C0DD51DA3501F001F0AD5 /* DIContainerBuilder.swift in Sources */,
 				169C0DD61DA3501F001F0AD5 /* DIScope.ShortSyntax.swift in Sources */,
@@ -469,6 +494,7 @@
 				169C0DD81DA3501F001F0AD5 /* DIModule.swift in Sources */,
 				169C0DD91DA3501F001F0AD5 /* RTypeAndNamePair.swift in Sources */,
 				169C0DDA1DA3501F001F0AD5 /* DIAssembly.swift in Sources */,
+				16D7BCBD1DB086B900A29A9F /* DIScanAssembly.swift in Sources */,
 				169C0DDC1DA3501F001F0AD5 /* BaseRTypeHashable.swift in Sources */,
 				169C0E241DA357CA001F0AD5 /* DIStoryboard.swift in Sources */,
 			);
@@ -485,6 +511,7 @@
 				169C0E2D1DA35CBE001F0AD5 /* DIRegistrationBuilder.Arg.swift in Sources */,
 				169C0E2E1DA35CBE001F0AD5 /* DIScope.Arg.swift in Sources */,
 				169C0E2F1DA35CBE001F0AD5 /* RTypeLifeTime.swift in Sources */,
+				16D7BCC01DB086B900A29A9F /* DIScanModule.swift in Sources */,
 				169C0E301DA35CBE001F0AD5 /* DIContainerBuilder.ShortSyntax.swift in Sources */,
 				169C0E311DA35CBE001F0AD5 /* DIMultyMap.swift in Sources */,
 				169C0E321DA35CBE001F0AD5 /* Weak.swift in Sources */,
@@ -495,6 +522,7 @@
 				169C0E371DA35CBE001F0AD5 /* DIScopeImpl.swift in Sources */,
 				169C0E381DA35CBE001F0AD5 /* DIDynamicAssembly.swift in Sources */,
 				169C0E391DA35CBE001F0AD5 /* DIScope.swift in Sources */,
+				16D7BCBC1DB086B600A29A9F /* DIScan.swift in Sources */,
 				169C0E3A1DA35CBE001F0AD5 /* Helpers.swift in Sources */,
 				169C0E3B1DA35CBE001F0AD5 /* DIContainerBuilder.swift in Sources */,
 				169C0E3C1DA35CBE001F0AD5 /* DIScope.ShortSyntax.swift in Sources */,
@@ -502,6 +530,7 @@
 				169C0E3E1DA35CBE001F0AD5 /* DIModule.swift in Sources */,
 				169C0E3F1DA35CBE001F0AD5 /* RTypeAndNamePair.swift in Sources */,
 				169C0E401DA35CBE001F0AD5 /* DIAssembly.swift in Sources */,
+				16D7BCBF1DB086B900A29A9F /* DIScanAssembly.swift in Sources */,
 				169C0E411DA35CBE001F0AD5 /* BaseRTypeHashable.swift in Sources */,
 				169C0E421DA35CBE001F0AD5 /* DIStoryboard.swift in Sources */,
 			);
@@ -518,6 +547,7 @@
 				16640A7F1D9E1E7B00707BFC /* DIRegistrationBuilder.Arg.swift in Sources */,
 				16640A801D9E1E7B00707BFC /* DIScope.Arg.swift in Sources */,
 				16640A7C1D9E1E7B00707BFC /* RTypeLifeTime.swift in Sources */,
+				16D7BCBA1DB086B000A29A9F /* DIScanModule.swift in Sources */,
 				165F614F1D9E78DD00F6126E /* DIContainerBuilder.ShortSyntax.swift in Sources */,
 				16640A731D9E1E7B00707BFC /* DIMultyMap.swift in Sources */,
 				16640A7D1D9E1E7B00707BFC /* Weak.swift in Sources */,
@@ -528,6 +558,7 @@
 				16640A741D9E1E7B00707BFC /* DIScopeImpl.swift in Sources */,
 				16640A721D9E1E7B00707BFC /* DIDynamicAssembly.swift in Sources */,
 				16640A871D9E1E7B00707BFC /* DIScope.swift in Sources */,
+				16D7BCB81DB086B000A29A9F /* DIScan.swift in Sources */,
 				16640A751D9E1E7B00707BFC /* Helpers.swift in Sources */,
 				16640A821D9E1E7B00707BFC /* DIContainerBuilder.swift in Sources */,
 				16640A861D9E1E7B00707BFC /* DIScope.ShortSyntax.swift in Sources */,
@@ -535,6 +566,7 @@
 				16640A841D9E1E7B00707BFC /* DIModule.swift in Sources */,
 				16640A781D9E1E7B00707BFC /* RTypeAndNamePair.swift in Sources */,
 				16640A711D9E1E7B00707BFC /* DIAssembly.swift in Sources */,
+				16D7BCB91DB086B000A29A9F /* DIScanAssembly.swift in Sources */,
 				16640A761D9E1E7B00707BFC /* BaseRTypeHashable.swift in Sources */,
 				169C0E211DA357C3001F0AD5 /* DIStoryboard.swift in Sources */,
 			);

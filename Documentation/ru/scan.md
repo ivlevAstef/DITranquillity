@@ -16,7 +16,7 @@
 * Онаследовать все модуля которые мы хотим искать от DIScannedModule
 * Зарегестрировать модуль DIScanModule, с условием поиска в билдере, к примеру вот так:
 ```swift
-builder.register(module: DIScanModule(predicateByName: { $0.has("Module") }))
+builder.register(module: DIScanModule(predicateByName: { $0.contains("Module") }))
 ```
 
 Помимо регистрации по имени, возможна регистрация по типу:
@@ -32,7 +32,7 @@ builder.register(module: DIScanModule(predicateByType: { $0 == YourModule.self }
 ## Указание Bundle
 Если вам проект разделен на подпроекты, то каждый подпроект имеет свой уникальный bundle, и этим можно воспользоваться, при поиске - можно явно указать в каком bundle надо искать модули или сборки. Сделать это можно используя следующий синтаксис:
 ```swift
-DIScanModule(predicateByName: { $0.has("Module") }, in: Bundle(/*create*/))
+DIScanModule(predicateByName: { $0.contains("Module") }, in: Bundle(/*create*/))
 ...
 DIScanAssembly(predicateByType: { $0 == YourModule.self }, in: Bundle(/*create*/))
 ```
@@ -41,8 +41,8 @@ DIScanAssembly(predicateByType: { $0 == YourModule.self }, in: Bundle(/*create*/
 Помимо билдера, мы можем использовать подобный синтаксис и в самой сборке, к примеру вот так:
 ```swift
 class YourMainAssembly: DIAssembly {
-  public var publicModules: [DIModule] = [DIScanModule(predicateByName: { $0.has("PublicModule") })]
-  public var internalModules: [DIModule] = [DIScanModule(predicateByName: { $0.has("InternalModule") })]
-  public var dependencies: [DIAssembly] = [DIScanAssembly(predicateByName: { $0.has("Assembly") })]
+  public var publicModules: [DIModule] = [DIScanModule(predicateByName: { $0.contains("PublicModule") })]
+  public var internalModules: [DIModule] = [DIScanModule(predicateByName: { $0.contains("InternalModule") })]
+  public var dependencies: [DIAssembly] = [DIScanAssembly(predicateByName: { $0.contains("Assembly") })]
 }
 ```

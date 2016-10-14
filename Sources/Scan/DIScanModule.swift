@@ -6,13 +6,13 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public class DIScannedModule: DIScanned, DIModule {
-  public func load(builder: DIContainerBuilder) {
-    fatalError("Please override me: \(#function)")
+open class DIScannedModule: DIScanned, DIModule {
+  open func load(builder: DIContainerBuilder) {
+		preconditionFailure("Please override me: \(#function)")
   }
 }
 
-public class DIScanModule: DIScan, DIModule {
+public class DIScanModule: DIScanWithInitializer<DIScannedModule>, DIModule {
   public func load(builder: DIContainerBuilder) {
     for module in getObjects() {
       builder.register(module: module)

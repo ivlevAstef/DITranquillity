@@ -52,5 +52,5 @@ class RTypeContainer {
     return String(describing: type)
   }
 
-  private var values = DIMultyMap<String, RType>()
+  private var values = DIMultimap<String, RType>()
 }
