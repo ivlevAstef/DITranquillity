@@ -18,43 +18,43 @@ open class DIScanWithInitializer<T: DIScanned>: DIScan<T> {
 }
 
 open class DIScan<T: AnyObject> {
-	public typealias PredicateByType = (_ type: T.Type)->(Bool)
-	public typealias PredicateByName = (_ name: String)->(Bool)
-	
-	public init(predicateByType: @escaping PredicateByType) {
-		self.predicate = predicateByType
-		self.bundle = nil
-	}
-	
-	public init(predicateByType: @escaping PredicateByType, in bundle: Bundle) {
-		self.predicate = predicateByType
-		self.bundle = bundle
-	}
-	
-	public init(predicateByName: @escaping PredicateByName) {
-		self.predicate = { predicateByName(String(describing: $0)) }
-		self.bundle = nil
-	}
-	
-	public init(predicateByName: @escaping PredicateByName, in bundle: Bundle) {
-		self.predicate = { predicateByName(String(describing: $0)) }
-		self.bundle = bundle
-	}
-	
-	public func getTypes() -> [T.Type] {
-		let allTypes = getAllTypes(by: T.self)
-		let filterTypes = allTypes.filter{ self.predicate($0) }
-		
-		guard let bundle = self.bundle else {
-			return filterTypes
-		}
-		
-		
-		return filterTypes.filter{ Bundle(for: $0).bundlePath == bundle.bundlePath }
-	}
-	
-	private let predicate: PredicateByType
-	private let bundle: Bundle?
+  public typealias PredicateByType = (_ type: T.Type)->(Bool)
+  public typealias PredicateByName = (_ name: String)->(Bool)
+  
+  public init(predicateByType: @escaping PredicateByType) {
+    self.predicate = predicateByType
+    self.bundle = nil
+  }
+  
+  public init(predicateByType: @escaping PredicateByType, in bundle: Bundle) {
+    self.predicate = predicateByType
+    self.bundle = bundle
+  }
+  
+  public init(predicateByName: @escaping PredicateByName) {
+    self.predicate = { predicateByName(String(describing: $0)) }
+    self.bundle = nil
+  }
+  
+  public init(predicateByName: @escaping PredicateByName, in bundle: Bundle) {
+    self.predicate = { predicateByName(String(describing: $0)) }
+    self.bundle = bundle
+  }
+  
+  public func getTypes() -> [T.Type] {
+    let allTypes = getAllTypes(by: T.self)
+    let filterTypes = allTypes.filter{ self.predicate($0) }
+    
+    guard let bundle = self.bundle else {
+      return filterTypes
+    }
+    
+    
+    return filterTypes.filter{ Bundle(for: $0).bundlePath == bundle.bundlePath }
+  }
+  
+  private let predicate: PredicateByType
+  private let bundle: Bundle?
 }
 
 fileprivate func getAllTypes<T>(by supertype: T.Type) -> [T.Type] {

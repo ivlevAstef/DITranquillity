@@ -20,7 +20,7 @@ public final class DIStoryboard: UIStoryboard, _DIStoryboardBaseResolver {
     return storyboard.instantiateInitialViewController()
   }
 
-  public override func instantiateViewController(withIdentifier identifier: String) -> UIViewController {		
+  public override func instantiateViewController(withIdentifier identifier: String) -> UIViewController {
     return storyboard.instantiateViewController(withIdentifier: identifier)
   }
 

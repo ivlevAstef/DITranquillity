@@ -7,12 +7,12 @@
 //
 
 public extension DIContainerBuilder {
-	@discardableResult
+  @discardableResult
   public func register<T>(initializer: @escaping () -> T) -> DIRegistrationBuilder<T> {
     return DIRegistrationBuilder<T>(self.rTypeContainer, T.self).initializer(initializer)
   }
 
-	@discardableResult
+  @discardableResult
   public func register<T>(initializer: @escaping (_ scope: DIScope) -> T) -> DIRegistrationBuilder<T> {
     return DIRegistrationBuilder<T>(self.rTypeContainer, T.self).initializer(initializer)
   }

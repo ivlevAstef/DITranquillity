@@ -15,7 +15,7 @@ open class DIScannedAssembly: DIScanned, DIAssembly {
 public class DIScanAssembly: DIScanWithInitializer<DIScannedAssembly>, DIAssembly {
   public var publicModules: [DIModule] { return [] }
   public var internalModules: [DIModule] { return [] }
-	public var dynamicDeclarations: [DIDynamicDeclaration] { return [] }
+  public var dynamicDeclarations: [DIDynamicDeclaration] { return [] }
 
   public var dependencies: [DIAssembly] { return getObjects() }
 }

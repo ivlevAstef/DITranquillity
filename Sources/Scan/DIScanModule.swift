@@ -8,7 +8,7 @@
 
 open class DIScannedModule: DIScanned, DIModule {
   open func load(builder: DIContainerBuilder) {
-		preconditionFailure("Please override me: \(#function)")
+    preconditionFailure("Please override me: \(#function)")
   }
 }
 
