@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'DITranquillity'
-  s.version      = '1.0.0'
+  s.version      = '1.1.0'
   s.summary      = 'DITranquillity - Dependency injection for iOS/macOS/tvOS (Swift) '
 
   s.description  = <<-DESC
@@ -22,13 +22,14 @@ Pod::Spec.new do |s|
   ios_tvos_storyboard_files = 'Sources/Storyboard/iOS-tvOS/*.{h,m,swift}'
   osx_storyboard_files = 'Sources/Storyboard/OSX/*.{h,m,swift}'
   assembly_files = 'Sources/Assembly/*.swift'
+  scan_files = 'Sources/Scan/*.swift'
 
-  s.ios.source_files = core_files, assembly_files, ios_tvos_storyboard_files, header_file
-  s.tvos.source_files = core_files, assembly_files, ios_tvos_storyboard_files, header_file
-  s.osx.source_files = core_files, assembly_files, osx_storyboard_files, header_file
+  s.ios.source_files = core_files, assembly_files, scan_files, ios_tvos_storyboard_files, header_file
+  s.tvos.source_files = core_files, assembly_files, scan_files, ios_tvos_storyboard_files, header_file
+  s.osx.source_files = core_files, assembly_files, scan_files, osx_storyboard_files, header_file
 
   s.ios.deployment_target = '8.0'
   s.tvos.deployment_target = '9.0'
   s.osx.deployment_target = '10.10'
-  
+
 end

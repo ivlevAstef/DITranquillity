@@ -1,3 +1,7 @@
+# v1.1.0
+* Added Scan (ScannedModule, ScannedAssembly, ScanModule, ScanAssembly)
+* Update documentation - added scan page
+
 # v1.0.0
 * Supported macOS
 * Added tvOS
