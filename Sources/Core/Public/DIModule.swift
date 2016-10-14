@@ -21,5 +21,5 @@ public extension DIContainerBuilder {
 }
 
 internal extension DIModule {
-	internal var uniqueKey: String { return String(describing: type(of: self)) }
+  internal var uniqueKey: String { return String(describing: type(of: self)) }
 }

@@ -92,7 +92,7 @@ public final class DIRegistrationBuilder<ImplObj> {
     return self
   }
 
-  internal init(_ container: RTypeContainer, _ implType: ImplObj.Type) {
+  init(_ container: RTypeContainer, _ implType: ImplObj.Type) {
     self.container = container
     self.rType = RType(implType)
   }

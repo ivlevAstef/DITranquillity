@@ -6,7 +6,7 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-internal class RTypeWithNamePair: Hashable {
+class RTypeWithNamePair: Hashable {
   typealias UniqueKey = String
 
   let rType: RTypeFinal
@@ -18,10 +18,9 @@ internal class RTypeWithNamePair: Hashable {
   }
 
   var uniqueKey: UniqueKey { return rType.uniqueKey + name }
-
   var hashValue: Int { return rType.hashValue }
-}
 
-func == (lhs: RTypeWithNamePair, rhs: RTypeWithNamePair) -> Bool {
-  return lhs.rType == rhs.rType && lhs.name == rhs.name
+  static func == (lhs: RTypeWithNamePair, rhs: RTypeWithNamePair) -> Bool {
+    return lhs.rType == rhs.rType && lhs.name == rhs.name
+  }
 }

@@ -6,27 +6,24 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-//registration type
-internal class RType: BaseRTypeHashable {
-  internal init<ImplObj>(_ implType: ImplObj.Type) {
+class RType: BaseRTypeHashable {
+  init<ImplObj>(_ implType: ImplObj.Type) {
     super.init(implType: implType)
   }
 
   // Initializer
-  internal func setInitializer<Method>(_ method: Method) {
+  func setInitializer<Method>(_ method: Method) {
     initializers[String(describing: Method.self)] = method
   }
 
-  internal var hasInitializer: Bool { return !initializers.isEmpty }
+  var hasInitializer: Bool { return !initializers.isEmpty }
 
   // Dependency
-  internal func appendDependency<T>(_ method: @escaping (_ scope: DIScope, _ obj: T) -> ()) {
-    dependencies.append { scope, obj in
-      method(scope, obj as! T)
-    }
+  func appendDependency<T>(_ method: @escaping (_ scope: DIScope, _ obj: T) -> ()) {
+    dependencies.append{ method($0, $1 as! T) }
   }
 
-  internal func copyFinal() -> RTypeFinal {
+  func copyFinal() -> RTypeFinal {
     return RTypeFinal(implType: self.implType,
       initializers: self.initializers,
       dependencies: self.dependencies,
@@ -35,9 +32,10 @@ internal class RType: BaseRTypeHashable {
       lifeTime: self.lifeTime)
   }
 
-  internal var lifeTime = RTypeLifeTime.default
-  internal var names: Set<String> = []
-  internal var isDefault: Bool = false
+  var lifeTime = RTypeLifeTime.default
+  var names: Set<String> = []
+  var isDefault: Bool = false
+
   private var initializers: [String: Any] = [:] // method type to method
   private var dependencies: [(_ scope: DIScope, _ obj: Any) -> ()] = []
 }

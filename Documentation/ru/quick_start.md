@@ -61,4 +61,5 @@ print(home.animals.map{ $0.name })// [Felix, Buddy]
 * [Модули](module.md)
 * [Сборки](assembly.md)
 * [Storyboard](storyboard.md)
+* [Поиск](scan.md)
 * [Примеры](sample.md)

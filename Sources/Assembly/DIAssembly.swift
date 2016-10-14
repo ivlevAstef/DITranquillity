@@ -30,7 +30,7 @@ public extension DIContainerBuilder {
 }
 
 internal extension DIAssembly {
-	internal var uniqueKey: String { return String(describing: type(of: self)) }
+  internal var uniqueKey: String { return String(describing: type(of: self)) }
 }
 
 fileprivate extension DIContainerBuilder {
@@ -45,26 +45,28 @@ fileprivate extension DIContainerBuilder {
   }
 
   fileprivate func register(assembly: DIAssembly, registerInternalModules: Bool) {
-    if !ignore(uniqueKey: assembly.uniqueKey) {
-      if let dynamicAssembly = assembly as? DIDynamicAssembly {
-        for module in dynamicAssembly.dynamicModules {
-          register(module: module)
-        }
-      }
-      
-      for module in assembly.publicModules {
+    if ignore(uniqueKey: assembly.uniqueKey) {
+      return
+    }
+
+    if let dynamicAssembly = assembly as? DIDynamicAssembly {
+      for module in dynamicAssembly.dynamicModules {
         register(module: module)
       }
+    }
 
-      if registerInternalModules {
-        for module in assembly.internalModules {
-          register(module: module)
-        }
-      }
+    for module in assembly.publicModules {
+      register(module: module)
+    }
 
-      for dependency in assembly.dependencies {
-        register(assembly: dependency, registerInternalModules: false)
+    if registerInternalModules {
+      for module in assembly.internalModules {
+        register(module: module)
       }
+    }
+
+    for dependency in assembly.dependencies {
+      register(assembly: dependency, registerInternalModules: false)
     }
   }
 }

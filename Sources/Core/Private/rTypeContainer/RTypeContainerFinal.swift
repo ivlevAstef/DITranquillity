@@ -6,16 +6,16 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-internal class RTypeContainerFinal {
+class RTypeContainerFinal {
   init(values: [String: [RTypeFinal]]) {
     self.values = values
   }
 
-  internal subscript(key: Any) -> [RTypeFinal]? {
+  subscript(key: Any) -> [RTypeFinal]? {
     return values[hash(key)]
   }
 
-  internal func data() -> [String: [RTypeFinal]] {
+  func data() -> [String: [RTypeFinal]] {
     return values
   }
 

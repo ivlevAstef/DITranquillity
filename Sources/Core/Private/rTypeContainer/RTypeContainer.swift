@@ -6,38 +6,26 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-internal class RTypeContainer {
-  internal func append(key: Any, value: RType) {
-		if contains(key: key, value: value) {
-			return
-		}
-		
-    if nil == values[hash(key)] {
-      values[hash(key)] = []
-    }
-
-    values[hash(key)]?.append(value)
-  }
-	
-	internal func contains(key: Any, value: RType) -> Bool {
-		guard let values = values[hash(key)] else {
-			return false
-		}
-		
-		return values.contains(value)
-	}
-
-  internal subscript(key: Any) -> [RType]? { return values[hash(key)] }
-
-  internal func data() -> [String: [RType]] {
-    return values
+class RTypeContainer {
+  func append(key: Any, value: RType) {
+    values.append(key: hash(key), value: value)
   }
 
-  internal func copyFinal() -> RTypeContainerFinal {
-    //Hard copy method, for save unique RType
+  func contains(key: Any, value: RType) -> Bool {
+    return values.contains(key: hash(key), value: value)
+  }
+
+  subscript(key: Any) -> [RType] { return values[hash(key)] }
+
+  func data() -> [String: [RType]] {
+    return values.dictionary
+  }
+
+  func copyFinal() -> RTypeContainerFinal {
+    // Hard copy method, for save unique RType
 
     var reverseValues: [RType : [String]] = [:]
-    for valueData in self.values {
+    for valueData in self.values.dictionary {
       for value in valueData.1 {
         if nil == reverseValues[value] {
           reverseValues[value] = []
@@ -64,5 +52,5 @@ internal class RTypeContainer {
     return String(describing: type)
   }
 
-  private var values: [String: [RType]] = [:]
+  private var values = DIMultimap<String, RType>()
 }

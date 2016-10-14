@@ -6,15 +6,14 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-import Foundation
-
-internal class Helpers {
+class Helpers {
   private static let wrappers = [
     "Optional",
     "ImplicitlyUnwrappedOptional"
   ]
+
   // It's worked but it's no good
-  internal static func removedTypeWrappers<T>(_ type: T.Type) -> Any {
+  static func removedTypeWrappers<T>(_ type: T.Type) -> Any {
     var text = String(describing: type)
 
     for wrapper in wrappers {
@@ -29,5 +28,4 @@ internal class Helpers {
 
     return type
   }
-
 }
