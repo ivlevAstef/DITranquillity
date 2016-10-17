@@ -15,44 +15,48 @@ import DITranquillity
 
 class Module1Type { }
 
-class ScannedModule1: DIScannedModule {
-  override func load(builder: DIContainerBuilder) {
+class ScannedModule1: DIScanned, DIModule {
+  func load(builder: DIContainerBuilder) {
     builder.register{ Module1Type() }
   }
 }
 
 class Module2Type { }
 
-class ScannedModule2: DIScannedModule {
-  override func load(builder: DIContainerBuilder) {
+class ScannedModule2: DIScanned, DIModule {
+  func load(builder: DIContainerBuilder) {
     builder.register{ Module2Type() }
   }
 }
 
 class DuMole1Type { }
 
-class ScannedDuMole1: DIScannedModule {
-  override func load(builder: DIContainerBuilder) {
+class ScannedDuMole1: DIScanned, DIModule {
+  func load(builder: DIContainerBuilder) {
     builder.register{ DuMole1Type() }
   }
 }
 
 class DuMole2Type { }
 
-class ScannedDuMole2: DIScannedModule {
-  override func load(builder: DIContainerBuilder) {
+class ScannedDuMole2: DIScanned, DIModule {
+  func load(builder: DIContainerBuilder) {
     builder.register{ DuMole2Type() }
   }
 }
 
 // Assemblies
 
-class ScannedAssembly1: DIScannedAssembly {
-  override var publicModules: [DIModule] { return [ ScannedModule1(), ScannedModule2() ] }
+class ScannedAssembly1: DIScanned, DIAssembly {
+  var publicModules: [DIModule] = [ ScannedModule1(), ScannedModule2() ]
+  var internalModules: [DIModule] = []
+  var dependencies: [DIAssembly] = []
 }
 
-class ScannedAssembly2: DIScannedAssembly {
-  override var publicModules: [DIModule] { return [ ScannedDuMole1(), ScannedDuMole2() ] }
+class ScannedAssembly2: DIScanned, DIAssembly {
+  var publicModules: [DIModule] = [ ScannedDuMole1(), ScannedDuMole2() ]
+  var internalModules: [DIModule] = []
+  var dependencies: [DIAssembly] = []
 }
 
 class AssemblyWithScan1: DIAssembly {
