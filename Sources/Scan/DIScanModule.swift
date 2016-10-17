@@ -6,9 +6,9 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public class DIScanModule: DIScanWithInitializer<DIScannedModule>, DIModule {
+public class DIScanModule: DIScanWithInitializer<DIScanned>, DIModule {
   public func load(builder: DIContainerBuilder) {
-    for module in getObjects().filter{ $0 is DIModule } {
+    for module in getObjects().filter({ $0 is DIModule }) {
       builder.register(module: module as! DIModule)
     }
   }
