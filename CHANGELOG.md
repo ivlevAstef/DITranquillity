@@ -1,3 +1,7 @@
+# v1.1.1
+* Change scan syntax: replace ScannedModule and ScannedAssembly to Scanned + Module and Scanned + Assembly
+* Update documentation page scan
+
 # v1.1.0
 * Added Scan (ScannedModule, ScannedAssembly, ScanModule, ScanAssembly)
 * Update documentation - added scan page
