@@ -16,7 +16,7 @@ class DIScopeImpl {
 
     if rTypes.count > 1 {
       guard let typeIndex = rTypes.index(where: { $0.isDefault }) else {
-        throw DIError.notFoundDefaultForMultyRegisterType(typeNames: rTypes.map { String(describing: $0.implType) }, forType: String(describing: T.self))
+        throw DIError.defaultTypeIsNotSpecified(type: T.self, components: rTypes.map{ $0.implType })
       }
 
       return try resolveUseRType(scope, pair: RTypeWithNamePair(rTypes[typeIndex], ""), method: method)
@@ -32,9 +32,9 @@ class DIScopeImpl {
     for rType in rTypes {
       do {
         try result.append(resolveUseRType(scope, pair: RTypeWithNamePair(rType, ""), method: method))
-      } catch DIError.recursiveInitializer {
-        // Ignore recursive initializer object for many
-      } catch DIError.multyPerRequestObjectsForType(let objects, _) {
+      } catch DIError.recursiveInitialization {
+        // Ignore recursive initialization object for many
+      } catch DIError.severalPerRequestObjectsForType(_, let objects) {
         for object in objects {
           if let object = object as? T {
             result.append(object)
@@ -57,7 +57,7 @@ class DIScopeImpl {
       }
     }
 
-    throw DIError.typeNoRegisterByName(typeName: String(describing: T.self), name: name)
+    throw DIError.typeIsNotFoundForName(type: T.self, name: name)
   }
 
   func resolve<T>(_ scope: DIScope, object: T) throws {
@@ -65,7 +65,7 @@ class DIScopeImpl {
 
     if rTypes.count > 1 {
       guard let typeIndex = rTypes.index(where: { $0.isDefault }) else {
-        throw DIError.notFoundDefaultForMultyRegisterType(typeNames: rTypes.map { String(describing: $0.implType) }, forType: String(describing: type(of: object)))
+        throw DIError.defaultTypeIsNotSpecified(type: type(of: object), components: rTypes.map{ $0.implType })
       }
 
       resolveUseRTypeAndObject(scope, pair: RTypeWithNamePair(rTypes[typeIndex], ""), obj: object)
@@ -86,7 +86,7 @@ class DIScopeImpl {
     let type = Helpers.removedTypeWrappers(inputType)
 
     guard let rTypes = registeredTypes[type], !rTypes.isEmpty else {
-      throw DIError.typeNoRegister(typeName: String(describing: inputType))
+      throw DIError.typeIsNotFound(type: inputType)
     }
 
     return rTypes
@@ -180,7 +180,7 @@ class DIScopeImpl {
     }
 
     if strongs.count > 1 {
-      throw DIError.multyPerRequestObjectsForType(objects: strongs.map{ $0 as Any }, forType: String(describing: T.self))
+      throw DIError.severalPerRequestObjectsForType(type: T.self, objects: strongs.map{ $0 as Any }))
     }
 
     if let single = strongs.first {
@@ -192,7 +192,7 @@ class DIScopeImpl {
 
   private func resolvePerDependency<T, Method>(_ scope: DIScope, pair: RTypeWithNamePair, method: (Method) -> Any) throws -> T {
     if recursiveInitializer.contains(pair.uniqueKey) {
-      throw DIError.recursiveInitializer(type: String(describing: pair.rType.implType))
+      throw DIError.recursiveInitialization(type: pair.rType.implType)
     }
 
     for recursiveTypeKey in recursive {
@@ -258,7 +258,7 @@ class DIScopeImpl {
     recursiveInitializer.remove(pair.uniqueKey)
 
     guard let obj = objAny as? T else {
-      throw DIError.typeIncorrect(askableType: String(describing: T.self), realType: String(describing: type(of: objAny)))
+      throw DIError.typeIsIncorrect(requestedType: T.self, realType: type(of: objAny))
     }
 
     objCache[pair.uniqueKey] = obj

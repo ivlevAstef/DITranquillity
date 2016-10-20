@@ -8,23 +8,23 @@
 
 class RTypeContainer {
   func append(key: Any, value: RType) {
-    values.append(key: hash(key), value: value)
+    values.append(key: AnyKey(key), value: value)
   }
 
   func contains(key: Any, value: RType) -> Bool {
-    return values.contains(key: hash(key), value: value)
+    return values.contains(key: AnyKey(key), value: value)
   }
 
-  subscript(key: Any) -> [RType] { return values[hash(key)] }
+  subscript(key: Any) -> [RType] { return values[AnyKey(key)] }
 
-  func data() -> [String: [RType]] {
+  func data() -> [AnyKey: [RType]] {
     return values.dictionary
   }
 
   func copyFinal() -> RTypeContainerFinal {
     // Hard copy method, for save unique RType
 
-    var reverseValues: [RType : [String]] = [:]
+    var reverseValues: [RType : [AnyKey]] = [:]
     for valueData in self.values.dictionary {
       for value in valueData.1 {
         if nil == reverseValues[value] {
@@ -34,7 +34,7 @@ class RTypeContainer {
       }
     }
 
-    var data: [String: [RTypeFinal]] = [:]
+    var data: [AnyKey: [RTypeFinal]] = [:]
     for value in reverseValues {
       let final = value.0.copyFinal()
       for type in value.1 {
@@ -48,9 +48,21 @@ class RTypeContainer {
     return RTypeContainerFinal(values: data)
   }
 
-  private func hash(_ type: Any) -> String {
-    return String(describing: type)
-  }
+  private var values = DIMultimap<AnyKey, RType>()
+}
 
-  private var values = DIMultimap<String, RType>()
+class AnyKey: Hashable {
+  let value: Any
+  let name: String
+  
+  init(_ value: Any) {
+    self.value = value
+    self.name = String(describing: value)
+  }
+  
+  var hashValue: Int {  return name.hashValue }
+  
+  static func ==(lhs: AnyKey, rhs: AnyKey) -> Bool {
+    return lhs.name == rhs.name
+  }
 }

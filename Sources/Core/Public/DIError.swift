@@ -7,22 +7,22 @@
 //
 
 public enum DIError: Error {
-  case typeNoRegister(typeName: String)
-  case typeNoRegisterByName(typeName: String, name: String)
-  case notSetInitializer(typeName: String)
+  case typeIsNotFound(type: Any)
+  case typeIsNotFoundForName(type: Any, name: String)
+  case notSpecifiedInitializationMethodFor(type: Any)
 
-  case initializerWithSignatureNotFound(typeName: String, signature: String)
+  case initializationMethodWithSignatureIsNotFoundFor(type: Any, signature: Any)
 
-  case multyRegisterDefault(typeNames: [String], forType: String)
-  case notFoundDefaultForMultyRegisterType(typeNames: [String], forType: String)
+  case pluralSpecifiedDefaultType(type: Any, components: [Any])
+  case defaultTypeIsNotSpecified(type: Any, components: [Any])
 
-  case multyRegisterNamesForType(names: Set<String>, forType: String)
+  case intersectionNamesForType(type: Any, names: Set<String>)
 
-  case multyPerRequestObjectsForType(objects: [Any], forType: String)
+  case severalPerRequestObjectsForType(type: Any, objects: [Any])
 
-  case typeIncorrect(askableType: String, realType: String)
+  case typeIsIncorrect(requestedType: Any, realType: Any)
 
-  case recursiveInitializer(type: String)
+  case recursiveInitialization(type: Any)
 
   case build(errors: [DIError])
 }

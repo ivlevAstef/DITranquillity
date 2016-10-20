@@ -23,7 +23,7 @@ let container = try! builder.build()
 
 Во время создания контейнера, библиотека проверяет:
 * Нет совпадений имен для одного и того же типа.
-> Ошибка: **`DIError.multyRegisterNamesForType(names:, forType:)`**
+> Ошибка: **`DIError.intersectionNamesForType(type:, names:)`**
 > Пример:
 > ```Swift
 > builder.register(Cat.self).asName("Felix")...
@@ -33,7 +33,7 @@ let container = try! builder.build()
 ***
 
 * При множественной регистрации указано не более одного default:
-> Ошибка: **`DIError.multyRegisterDefault(typeNames:, forType:)`**
+> Ошибка: **`DIError.pluralSpecifiedDefaultType(type:, components:)`**
 > Пример:
 > ```Swift
 > builder.register(Cat.self).asDefault()...
@@ -42,19 +42,8 @@ let container = try! builder.build()
 > В данном примере, регистрируются две кошки, и обе объявлены по умолчанию.
 ***
 
-* При множественной регистрации указан или один default, или все компоненты имеют разные имена.
-> Ошибка: **`DIError.notSetDefaultForMultyRegisterType(typeNames:,forType:)`**
-> Пример:
-> ```Swift
-> builder.register(Cat.self)...
-> builder.register(Cat.self)...
-> try! builder.build()
-> ```
-> В данном примере, регистрируется две кошки при этом: не указываем какая из них default и не указываем им разные имена. В дальнейшем, при создании объекта, библиотеке не отчего будет отталкивать, чтобы выбрать каким воспользоваться компонентом.
-***
-
 * У типа есть хотябы один метод инициализации, или данный тип отмечат как `perRequest`
-> Ошибка: **`DIError.notSetInitializer(typeName:)`**
+> Ошибка: **`DIError.notSpecifiedInitializationMethodFor(type:)`**
 > Пример:
 > ```Swift
 > builder.register(Cat.self)
@@ -69,6 +58,6 @@ let container = try! builder.build()
 builder.register(Cat.self).asType(Birds.self)...
 ``` 
 Данный пример содержит ошибку: кот не является птицей, но не смотря на это библиотека пропустит такой код на стадии компиляции и на стадии сборки контейнера.
-Ошибка обнаружиться только в тот момент когда программа запросит у библиотеки тип `Birds` - будет произведена проверка, что кошка не является котом, и кинется исключение: **`DIError.typeIncorrect(askableType:, realType:)`**
+Ошибка обнаружиться только в тот момент когда программа запросит у библиотеки тип `Birds` - будет произведена проверка, что кошка не является котом, и кинется исключение: **`DIError.typeIsIncorrect(requestedType:, realType:)`**
 
 На текущий момент swift не имеет возможностей проверить связь между двумя типами.

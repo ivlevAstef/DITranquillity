@@ -7,21 +7,17 @@
 //
 
 class RTypeContainerFinal {
-  init(values: [String: [RTypeFinal]]) {
+  init(values: [AnyKey: [RTypeFinal]]) {
     self.values = values
   }
 
   subscript(key: Any) -> [RTypeFinal]? {
-    return values[hash(key)]
+    return values[AnyKey(key)]
   }
 
-  func data() -> [String: [RTypeFinal]] {
+  func data() -> [AnyKey: [RTypeFinal]] {
     return values
   }
 
-  private func hash(_ type: Any) -> String {
-    return String(describing: type)
-  }
-
-  private let values: [String: [RTypeFinal]]
+  private let values: [AnyKey: [RTypeFinal]]
 }

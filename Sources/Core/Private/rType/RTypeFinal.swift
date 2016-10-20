@@ -20,7 +20,7 @@ class RTypeFinal: BaseRTypeHashable {
 
   func new<Method, T>(_ method: (Method) throws -> T) throws -> T {
     guard let initializer = initializers[String(describing: Method.self)] as? Method else {
-      throw DIError.initializerWithSignatureNotFound(typeName: String(describing: implType), signature: String(describing: Method.self))
+      throw DIError.initializationMethodWithSignatureIsNotFoundFor(type: implType, signature: Method.self)
     }
 
     return try method(initializer)

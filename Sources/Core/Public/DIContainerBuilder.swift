@@ -29,14 +29,14 @@ public final class DIContainerBuilder {
 
     var allTypes: Set<RType> = []
     for (superType, rTypes) in rTypeContainer.data() {
-      checkRTypes(superType, rTypes: rTypes, errors: &errors)
+      checkRTypes(superType.value, rTypes: rTypes, errors: &errors)
 
       allTypes.formUnion(rTypes)
     }
 
     for rType in allTypes {
       if !(rType.hasInitializer || rType.lifeTime == .perRequest) {
-        errors.append(DIError.notSetInitializer(typeName: String(describing: rType.implType)))
+        errors.append(DIError.notSpecifiedInitializationMethodFor(type: rType.implType))
       }
     }
 
@@ -45,7 +45,7 @@ public final class DIContainerBuilder {
     }
   }
 
-  private func checkRTypes(_ superType: String, rTypes: [RType], errors: inout [DIError]) {
+  private func checkRTypes(_ superType: Any, rTypes: [RType], errors: inout [DIError]) {
     if rTypes.count <= 1 {
       return
     }
@@ -54,17 +54,17 @@ public final class DIContainerBuilder {
 
     let defaultTypes = rTypes.filter{ $0.isDefault }
     if defaultTypes.count > 1 {
-      errors.append(DIError.multyRegisterDefault(typeNames: defaultTypes.map { String(describing: $0.implType) }, forType: superType))
+      errors.append(DIError.pluralSpecifiedDefaultType(type: superType, components: defaultTypes.map { $0.implType }))
     }
   }
 
-  private func checkRTypesNames(_ superType: String, rTypes: [RType], errors: inout [DIError]) {
+  private func checkRTypesNames(_ superType: Any, rTypes: [RType], errors: inout [DIError]) {
     var fullNames: Set<String> = []
 
     for rType in rTypes {
       let intersect = fullNames.intersection(rType.names)
       if !intersect.isEmpty {
-        errors.append(DIError.multyRegisterNamesForType(names: intersect, forType: superType))
+        errors.append(DIError.intersectionNamesForType(type: superType, names: intersect))
       }
 
       fullNames.formUnion(rType.names)
