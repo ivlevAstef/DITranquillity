@@ -8,7 +8,7 @@
 
 public class DIScanModule: DIScanWithInitializer<DIScanned>, DIModule {
   public func load(builder: DIContainerBuilder) {
-    for module in getObjects().filter{ $0 is DIModule } {
+    for module in getObjects().filter({ $0 is DIModule }) {
       builder.register(module: module as! DIModule)
     }
   }
