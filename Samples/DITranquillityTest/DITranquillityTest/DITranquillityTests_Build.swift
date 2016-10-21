@@ -15,14 +15,30 @@ class TestClass2: TestProtocol { }
 
 protocol Test2Protocol { }
 
+private func equals(_ t1: Any, _ t2: Any) -> Bool {
+  return String(describing: t1) == String(describing: t2)
+}
+
+extension DIComponent: Equatable {
+  init(type: DIType, file: String, line: Int) {
+    self.type = type
+    self.file = file
+    self.line = line
+  }
+  
+  public static func ==(lhs: DIComponent, rhs: DIComponent) -> Bool {
+    return equals(lhs.type, rhs.type) && lhs.file == rhs.file && lhs.line == rhs.line
+  }
+}
+
 extension DIError: Equatable {
   public static func == (a: DIError, b: DIError) -> Bool {
     switch (a, b) {
       
-    case (.typeNoRegister(let t1), .typeNoRegister(let t2)) where t1 == t2: return true
-    case (.notSetInitializer(let t1), .notSetInitializer(let t2)) where t1 == t2: return true
-    case (.multyRegisterDefault(let tA1, let t1), .multyRegisterDefault(let tA2, let t2)) where tA1 == tA2 && t1 == t2: return true
-    case (.typeIncorrect(let at1, let rt1), .typeIncorrect(let at2, let rt2)) where at1 == at2 && rt1 == rt2: return true
+    case (.typeIsNotFound(let t1), .typeIsNotFound(let t2)) where equals(t1, t2): return true
+    case (.notSpecifiedInitializationMethodFor(let t1), .notSpecifiedInitializationMethodFor(let t2)) where equals(t1, t2): return true
+    case (.pluralSpecifiedDefaultType(let t1, let c1), .pluralSpecifiedDefaultType(let t2, let c2)) where equals(t1, t2) && c1 == c2: return true
+    case (.typeIsIncorrect(let t1, let rt1, let c1), .typeIsIncorrect(let t2, let rt2, let c2)) where equals(t1, t2) && equals(rt1, rt2) && c1 == c2: return true
     case (.build(let errs1), .build(let errs2)) where errs1 == errs2: return true
       
     default: return false
@@ -32,6 +48,8 @@ extension DIError: Equatable {
 
 
 class DITranquillityTests_Build: XCTestCase {
+  var file: String { return #file }
+  
   override func setUp() {
     super.setUp()
   }
@@ -39,13 +57,13 @@ class DITranquillityTests_Build: XCTestCase {
   func test01_NotSetInitializer() {
     let builder = DIContainerBuilder()
     
-    let _ = builder.register(TestProtocol.self)
+    let _ = builder.register(TestProtocol.self); let line = #line
     
     do {
       try builder.build()
     } catch DIError.build(let errors) {
       XCTAssertEqual(errors, [
-        DIError.notSetInitializer(typeName: String(describing: TestProtocol.self))
+        DIError.notSpecifiedInitializationMethodFor(component: DIComponent(type: TestProtocol.self, file: file, line: line))
       ])
       return
     } catch {
@@ -58,7 +76,7 @@ class DITranquillityTests_Build: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(TestProtocol.self)
-      .instancePerRequest()
+      .lifetime(.perRequest)
     
     do {
       try builder.build()
@@ -70,12 +88,12 @@ class DITranquillityTests_Build: XCTestCase {
   func test03_MultiplyRegistrateTypeWithMultyDefault() {
     let builder = DIContainerBuilder()
     
-    builder.register(TestClass1.self)
+    let lineClass1 = #line; builder.register(TestClass1.self)
       .asType(TestProtocol.self)
       .asDefault()
       .initializer { TestClass1() }
     
-    builder.register(TestClass2.self)
+    let lineClass2 = #line; builder.register(TestClass2.self)
       .asType(TestProtocol.self)
       .asDefault()
       .initializer { TestClass2() }
@@ -84,7 +102,10 @@ class DITranquillityTests_Build: XCTestCase {
       try builder.build()
     } catch DIError.build(let errors) {
       XCTAssertEqual(errors, [
-        DIError.multyRegisterDefault(typeNames: [String(describing: TestClass1.self), String(describing: TestClass2.self)], forType: String(describing: TestProtocol.self))
+        DIError.pluralSpecifiedDefaultType(type: TestProtocol.self, components: [
+          DIComponent(type: TestClass1.self, file: file, line: lineClass1),
+          DIComponent(type: TestClass2.self, file: file, line: lineClass2)
+        ])
       ])
       return
     } catch {
@@ -135,7 +156,7 @@ class DITranquillityTests_Build: XCTestCase {
   func test06_IncorrectRegistrateType() {
     let builder = DIContainerBuilder()
     
-    builder.register(TestClass1.self)
+    let line = #line; builder.register(TestClass1.self)
       .asType(Test2Protocol.self) //<---- Swift not supported static check
       .initializer { TestClass1() }
     
@@ -145,9 +166,10 @@ class DITranquillityTests_Build: XCTestCase {
       do {
         let type: Test2Protocol = try container.resolve()
         print("\(type)")
-      } catch DIError.typeIncorrect(let askableType, let realType) {
-        XCTAssertEqual(askableType, String(describing: Test2Protocol.self))
-        XCTAssertEqual(realType, String(describing: TestClass1.self))
+      } catch DIError.typeIsIncorrect(let requestedType, let realType, let component) {
+        XCTAssert(equals(requestedType, Test2Protocol.self))
+        XCTAssert(equals(realType, TestClass1.self))
+        XCTAssertEqual(component, DIComponent(type: TestClass1.self, file: file, line: line))
         return
       } catch {
         XCTFail("Catched error: \(error)")
@@ -172,8 +194,8 @@ class DITranquillityTests_Build: XCTestCase {
       do {
         let type: TestClass1 = try container.resolve()
         print("\(type)")
-      } catch DIError.typeNoRegister(let typeName) {
-        XCTAssertEqual(typeName, String(describing: TestClass1.self))
+      } catch DIError.typeIsNotFound(let type) {
+        XCTAssert(equals(type, TestClass1.self))
         return
       } catch {
         XCTFail("Catched error: \(error)")

@@ -138,11 +138,11 @@ class SampleModule : DIModule {
   }
   
   func load(builder: DIContainerBuilder) {
-		builder.register{ 10 }.instanceLazySingle()
+		builder.register{ 10 }.lifetime(.lazySingle)
     
     builder.register(ServiceProtocol.self)
       .asSelf()
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer {
         if self.useBarService {
           return BarService()
@@ -153,29 +153,29 @@ class SampleModule : DIModule {
     builder.register(LoggerAll.self)
       .asDefault()
       .asType(LoggerProtocol.self)
-      .instanceSingle()
+      .lifetime(.single)
       .initializer { scope in LoggerAll(loggers: **!scope) }
       .dependency { (scope, self) in self.loggersFull = **!scope }
 
 		builder.register{ Logger() }
       .asType(LoggerProtocol.self)
-      .instanceSingle()
+      .lifetime(.single)
     
     builder.register{ Logger2() }
       .asSelf()
       .asType(LoggerProtocol.self)
-      .instanceLazySingle()
+      .lifetime(.lazySingle)
     
     builder.register(Inject.self)
       .asSelf()
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer { (scope) in Inject(service: *!scope, logger: *!scope, test: *!scope) }
       .dependency { (scope, obj) in obj.logger2 = try! scope.resolve(Logger2.self) }
       .dependency { (scope, obj) in obj.service2 = *!scope }
     
     builder.register(InjectMany.self)
       .asSelf()
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer { (scope) in InjectMany(loggers: **!scope) }
     
     //Animals
@@ -198,7 +198,7 @@ class SampleModule : DIModule {
     
     builder.register(Params.self)
       .asSelf()
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer { (s, p1, p2) in Params(p1: p1, p2: p2) }
       .initializer { Params(p1: $1, p2: $2, p3: $3) }
     
@@ -206,12 +206,12 @@ class SampleModule : DIModule {
     
     builder.register(Circular1.self)
       .asSelf()
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer { (s) in Circular1(ref: *!s) }
     
     builder.register(Circular2.self)
       .asSelf()
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer { Circular2() }
       .dependency { (s, obj) in obj.ref = *!s }
   }
@@ -241,7 +241,7 @@ class SampleStartupModule : DIModule {
       //.instanceLazySingle()
       //.instancePerMatchingScope("ScopeName")
       //.instancePerScope()
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer { UIButton() }
     //.initializer { UISwitch() }
   }

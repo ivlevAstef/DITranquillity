@@ -13,30 +13,32 @@ public final class DIContainerBuilder {
   public func build() throws -> DIScope {
     try validate()
 
-    let finalRTypes = rTypeContainer.copyFinal()
-    let scope = DIScope(registeredTypes: finalRTypes)
+    let finalContainer = rTypeContainer.copyFinal()
+    let scope = DIScope(container: finalContainer)
 
-    // Init Single types
-    for rType in finalRTypes.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime }) {
-      _ = try scope.resolve(RType: rType)
-    }
+    try initSingleLifeTime(container: finalContainer, scope: scope)
 
     return scope
   }
+  
+  let rTypeContainer = RTypeContainer()
+  fileprivate var ignoreSet: Set<String> = []
+}
 
-  private func validate() throws {
+extension DIContainerBuilder {
+  fileprivate func validate() throws {
     var errors: [DIError] = []
 
     var allTypes: Set<RType> = []
-    for (superType, rTypes) in rTypeContainer.data() {
-      checkRTypes(superType.value, rTypes: rTypes, errors: &errors)
+    for (typeKey, rTypes) in rTypeContainer.data() {
+      checkRTypes(typeKey.value, rTypes: rTypes, errors: &errors)
 
       allTypes.formUnion(rTypes)
     }
 
     for rType in allTypes {
       if !(rType.hasInitializer || rType.lifeTime == .perRequest) {
-        errors.append(DIError.notSpecifiedInitializationMethodFor(type: rType.implType))
+        errors.append(DIError.notSpecifiedInitializationMethodFor(component: rType.component))
       }
     }
 
@@ -45,7 +47,7 @@ public final class DIContainerBuilder {
     }
   }
 
-  private func checkRTypes(_ superType: Any, rTypes: [RType], errors: inout [DIError]) {
+  fileprivate func checkRTypes(_ superType: DIType, rTypes: [RType], errors: inout [DIError]) {
     if rTypes.count <= 1 {
       return
     }
@@ -54,34 +56,39 @@ public final class DIContainerBuilder {
 
     let defaultTypes = rTypes.filter{ $0.isDefault }
     if defaultTypes.count > 1 {
-      errors.append(DIError.pluralSpecifiedDefaultType(type: superType, components: defaultTypes.map { $0.implType }))
+      errors.append(DIError.pluralSpecifiedDefaultType(type: superType, components: defaultTypes.map { $0.component }))
     }
   }
 
-  private func checkRTypesNames(_ superType: Any, rTypes: [RType], errors: inout [DIError]) {
+  fileprivate func checkRTypesNames(_ superType: DIType, rTypes: [RType], errors: inout [DIError]) {
     var fullNames: Set<String> = []
+    var intersect: Set<String> = []
 
     for rType in rTypes {
-      let intersect = fullNames.intersection(rType.names)
-      if !intersect.isEmpty {
-        errors.append(DIError.intersectionNamesForType(type: superType, names: intersect))
-      }
-
+      intersect.formUnion(fullNames.intersection(rType.names))
       fullNames.formUnion(rType.names)
     }
+    
+    if !intersect.isEmpty {
+      errors.append(DIError.intersectionNamesForType(type: superType, names: intersect, components: rTypes.map{ $0.component }))
+    }
   }
+  
+  fileprivate func initSingleLifeTime(container: RTypeContainerFinal, scope: DIScope) throws {
+    for rType in container.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime }) {
+      _ = try scope.resolve(RType: rType)
+    }
+  }
+}
 
-  internal let rTypeContainer = RTypeContainer()
-
+extension DIContainerBuilder {
   // auto ignore equally register
-  internal func ignore(uniqueKey key: String) -> Bool {
-    if ignoreArr.contains(key) {
+  func ignore(uniqueKey key: String) -> Bool {
+    if ignoreSet.contains(key) {
       return true
     }
 
-    ignoreArr.insert(key)
+    ignoreSet.insert(key)
     return false
   }
-
-  private var ignoreArr: Set<String> = []
 }

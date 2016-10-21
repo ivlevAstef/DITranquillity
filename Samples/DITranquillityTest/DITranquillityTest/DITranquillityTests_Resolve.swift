@@ -203,7 +203,7 @@ class DITranquillityTests_Resolve: XCTestCase {
       .asType(ServiceProtocol.self)
       .asName("foo")
       .asName("foo2")
-      .instanceSingle()
+      .lifetime(.single)
       .initializer { FooService() }
     
     let container = try! builder.build()
@@ -224,7 +224,7 @@ class DITranquillityTests_Resolve: XCTestCase {
       .asType(ServiceProtocol.self)
       .asName("bar")
       .asName("bar2")
-      .instancePerScope()
+      .lifetime(.perScope)
       .initializer { BarService() }
     
     let container = try! builder.build()
@@ -273,11 +273,11 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(Circular2A.self)
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer { s in Circular2A(b: *!s) }
     
     builder.register(Circular2B.self)
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer { Circular2B() }
       .dependency { (s, b) in b.a = *!s }
     
@@ -299,15 +299,15 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(Circular3A.self)
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer { s in Circular3A(b: *!s) }
     
     builder.register(Circular3B.self)
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer { s in Circular3B(c: *!s) }
     
     builder.register(Circular3C.self)
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer { Circular3C() }
       .dependency { (s, c) in c.a = *!s }
     
@@ -342,13 +342,13 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(CircularDouble2A.self)
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer { CircularDouble2A() }
       .dependency { (s, a) in a.b1 = *!s }
       .dependency { (s, a) in a.b2 = *!s }
     
     builder.register(CircularDouble2B.self)
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer { s in CircularDouble2B(a: *!s) }
     
     let container = try! builder.build()
@@ -377,7 +377,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(CircularDouble2A.self)
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer { CircularDouble2A() }
       .dependency { (s, a) in
         a.b1 = *!s
@@ -385,7 +385,7 @@ class DITranquillityTests_Resolve: XCTestCase {
       }
     
     builder.register(CircularDouble2B.self)
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer { s in CircularDouble2B(a: *!s) }
     
     let container = try! builder.build()
@@ -434,7 +434,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(Params.self)
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer{ return Params(number:0) }
       .initializer{ _, number in return Params(number:number) }
       .initializer{ _, number, bool in return Params(number:number, bool: bool) }
@@ -467,7 +467,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(Params.self)
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer{ Params(number:0) }
       .initializer{ Params(number:$1) }
       .initializer{ Params(number:$1, bool: $2) }
@@ -500,7 +500,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register { Params(number:0) }
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer{ Params(number:$1) }
     
     let container = try! builder.build()
@@ -516,7 +516,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register{ Params(number:$1, str: $2, bool: $3) }
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer{ Params(number:$1, str: $2) }
     
     let container = try! builder.build()

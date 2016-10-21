@@ -12,11 +12,11 @@ class AppModule: DIModule {
   func load(builder: DIContainerBuilder) {
     builder.register(UIStoryboard.self)
       .asName("Main")
-      .instanceSingle()
+      .lifetime(.single)
       .initializer { scope in DIStoryboard(name: "Main", bundle: nil, container: scope) }
     
 		builder.register{ YourPresenter(server: *!$0) }
-      .instancePerScope()
+      .lifetime(.perScope)
       .dependency { (scope, self) in self.logger = *?scope }
     
 		builder.register(vc: YourViewController.self)

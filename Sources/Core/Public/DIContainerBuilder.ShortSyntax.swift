@@ -8,12 +8,12 @@
 
 public extension DIContainerBuilder {
   @discardableResult
-  public func register<T>(initializer: @escaping () -> T) -> DIRegistrationBuilder<T> {
-    return DIRegistrationBuilder<T>(self.rTypeContainer, T.self).initializer(initializer)
+  public func register<T>(file: String = #file, line: Int = #line, initializer: @escaping () -> T) -> DIRegistrationBuilder<T> {
+    return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: T.self, file: file, line: line)).initializer(initializer)
   }
 
   @discardableResult
-  public func register<T>(initializer: @escaping (_ scope: DIScope) -> T) -> DIRegistrationBuilder<T> {
-    return DIRegistrationBuilder<T>(self.rTypeContainer, T.self).initializer(initializer)
+  public func register<T>(file: String = #file, line: Int = #line, initializer: @escaping (_ scope: DIScope) -> T) -> DIRegistrationBuilder<T> {
+    return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: T.self, file: file, line: line)).initializer(initializer)
   }
 }

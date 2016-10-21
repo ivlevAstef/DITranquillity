@@ -13,7 +13,7 @@ class ServerModule: DIModule {
 		builder.register{ ServerImpl(domain: "https://github.com/") }
       .asSelf()
       .asType(Server.self)
-      .instanceSingle()
+      .lifetime(.single)
       .dependency { (scope, self) in self.logger = *?scope }
   }
 }

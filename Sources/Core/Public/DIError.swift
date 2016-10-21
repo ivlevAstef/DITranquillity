@@ -7,22 +7,22 @@
 //
 
 public enum DIError: Error {
-  case typeIsNotFound(type: Any)
-  case typeIsNotFoundForName(type: Any, name: String)
-  case notSpecifiedInitializationMethodFor(type: Any)
+  case typeIsNotFound(type: DIType)
+  case typeIsNotFoundForName(type: DIType, name: String)
+  case notSpecifiedInitializationMethodFor(component: DIComponent)
 
-  case initializationMethodWithSignatureIsNotFoundFor(type: Any, signature: Any)
+  case initializationMethodWithSignatureIsNotFoundFor(component: DIComponent, signature: DIMethodSignature)
 
-  case pluralSpecifiedDefaultType(type: Any, components: [Any])
-  case defaultTypeIsNotSpecified(type: Any, components: [Any])
+  case pluralSpecifiedDefaultType(type: DIType, components: [DIComponent])
+  case defaultTypeIsNotSpecified(type: DIType, components: [DIComponent])
 
-  case intersectionNamesForType(type: Any, names: Set<String>)
+  case intersectionNamesForType(type: DIType, names: Set<String>, components: [DIComponent])
 
-  case severalPerRequestObjectsForType(type: Any, objects: [Any])
+  case severalPerRequestObjectsFor(type: DIType, objects: [Any])
 
-  case typeIsIncorrect(requestedType: Any, realType: Any)
+  case typeIsIncorrect(requestedType: DIType, realType: DIType, component: DIComponent)
 
-  case recursiveInitialization(type: Any)
+  case recursiveInitialization(component: DIComponent)
 
   case build(errors: [DIError])
 }
