@@ -15,6 +15,12 @@ public struct DIComponent {
   public let line: Int
 }
 
+public extension DIComponent {
+  public var description: String {
+    return "<Registered component in file: \(file) on line: \(line) for type: \(String(describing: type))>"
+  }
+}
+
 public enum DILifeTime: Equatable {
   case single
   case lazySingle
