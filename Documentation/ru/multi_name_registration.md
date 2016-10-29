@@ -1,54 +1,60 @@
-# Регистрация с указанием имени/ множественная регистрация
+# Указанием имени/множественная регистрация
 
 ## Множественная регистрация
 
-Бывают случаи, когда мы хотим, чтобы для одного интерфейса, было несколько классов, но при этом нам не важны сами классы, нам важны все они вместе. Предположим у нас есть интерфейс Logger, и от него онаследованы: FileLogger, ConsoleLogger, ServerLogger. Теперь представим себе код регистрации:
+Иногда у одного интерфейса есть несколько реализаций, при этом в таких случаях очень редко нужно знать о деталях реализации, а нужен список объектов удовлетворяющих этому интерфейсу.
+Примеров может быть много: UI, Game Objects... но я остановлюсь на самом простом и достаточно универсальном - логгере.
+В простейшем случае Логгер можно представить как интерфейс `Logger`, в котором есть всего один метод: `log(msg:)`. Часто в программах вывод сообщения происходит не в одно место, а в несколько: файл, консоль, передается по сети. Библиотека позаботилась о таком случае:
 ```Swift
-builder.register(FileLogger.self).asType(Logger.self).instanceSingle().initializer { FileLogger("file.txt") }
-builder.register(ConsoleLogger.self).asType(Logger.self).instanceSingle().initializer { ConsoleLogger() }
-builder.register(ServerLogger.self).asType(Logger.self).instanceSingle().initializer { ServerLogger("http://server.com/") }
+builder.register{ FileLogger("file.txt") }.asType(Logger.self).lifetime(.single) 
+builder.register{ ConsoleLogger() }.asType(Logger.self).lifetime(.single) 
+builder.register{ ServerLogger("http://server.com/") }.asType(Logger.self).lifetime(.single) 
 ```
-Пожалуй я запишу тоже самое в более короткой форме:
+И после можно легко создать все 3 класса логгера:
 ```Swift
-builder.register{ FileLogger("file.txt") }.asType(Logger.self).instanceSingle()
-builder.register{ ConsoleLogger() }.asType(Logger.self).instanceSingle()
-builder.register{ ServerLogger("http://server.com/") }.asType(Logger.self).instanceSingle()
+let loggers: [Logger] = try! container.resolveMany()
 ```
 
-Теперь чтобы, создать все 3 класса, или обратится к ним нам не нужно знать о них ничего мы можем написать просто:
-```Swift
-let loggers: [Logger] = try scope.resolveMany()
-```
-и у нас будет все логеры которые мы зарегестрировали в программе.
+## Указание зависимости по умолчанию
 
-## Указание Стандартной (Default) зависимости
-В предыдущем примере, есть проблема - если мы запросим одни Logger, то библиотека не сможет понять какой именно логер нам нужен. С другой стороны, в предыдущем примере, и не понятно какой должен быть "стандартны". Но мы можем дописать код:
+Предыдущий пример нельзя считать завершенным, так как чтобы записать в лог сообщение, нужно каждый раз писать цикл, что не очень удобно. Поэтому стоит добавить еще один логгер и объявить его "по умолчанию". Последнее нужно для возможности получить один экземпляр логгера, а не все вместе:
 ```Swift
-builder.register{ AllLogger() }.asType(Logger.self).instanceSingle()
-  .dependency { s, log in log.loggers = try! s.resolveMany().filter{ $0 !=== log } }
+builder.register{ AllLogger() }.asType(Logger.self).lifetime(.single)
+  .dependency { sсope, log in log.loggers = try! sсope.resolveMany().filter{ $0 !=== log } }
   .asDefault()
 ```
-
-Теперь у библиотеке мы можем запросить Logger, и она будет знать, что нужно выдать тип AllLogger, так как он объявлен как default. Также обращаю внимание как легко, мы в него встроили все логгеры которые зарегестрированы в системе. мы просто запросили все (так как мы сами являемся логером, то этого нельзя делать в initializer), и убрали из всех себя.
-
-Также этот пример можно переписать, еще более красиво воспользовавшись, одной из особенностей библиотеки - если внутри инициализации вызвал множественное разрешение зависимостей, то свой собственный тип будет проигнорирован. то есть мы можем переписать предыдущий код вот так:
+После чего можно в любом месте программы написать:
 ```Swift
-builder.register{ try! AllLogger(loggers: $0.resolveMany()) }.asType(Logger.self).instanceSingle()
+let logger: Logger = container.resolve()
+```
+и получить экземпляр класса `AllLogger`, который содержит все остальные логгеры.
+
+Но такой, способ регистрации можно переписать на более красивый - без `filter`, который нужен, чтобы отсечь самого себя и предотвратить рекурсивный вызов:
+```Swift
+builder.register{ try! AllLogger(loggers: $0.resolveMany()) }
+  .asType(Logger.self)
+  .lifetime(.single)
   .asDefault()
 ```
-Что является почти эквивалентом предыдущем коду, разве что мы указание всех логеров перенесли в конструктор. 
+Так как получение списка логгеров происходит внутри инициализации одного из логгеров, то это логгер будет проигнорирован - библиотека обнаружен рекурсивную инициализацию и в случае множественного разрешения проигнорирует её.
 
-## Регистрация с указанием имени
-Иногда бывают случаи, что один и тотже тип может быть в нескольких экземплярах в системе, но при этом не иметь иеархии наследования. Например карточка в магазине - она бывает gold, silver, bronze. Но все эти карточки ничем не отличаются, кроме процентной ставки. Возможно стоило бы создать Для каждого типа карточки свой класс, но мы бы хотели еще легко уметь сохранять карточку на диск. Мы можем каждой карточке дать имя, тогда мы сможем легко сохранять её на диск, и не создавать экземпляры класса. Мы это можем сделать следующим образом:
+## Указание имени
+
+И вроде все хорошо, но есть одно НО - нет возможности обратиться к конкретному логгеру. То есть если нужно записать сообщение только в файл, то нет возможности получить экземпляр нужного класса. Но и такая проблема решаемая:
 ```Swift
-builder.register(Card.self).asName("gold").instanceSingle().initializer { Card(percent:0.15) }
-builder.register(Card.self).asName("silver").instanceSingle().initializer { Card(percent:0.10) }
-builder.register(Card.self).asName("bronze").instanceSingle().initializer { Card(percent:0.7) }
+builder.register{ FileLogger("file.txt") }.asName("file").asType(Logger.self).lifetime(.single) 
+builder.register{ ConsoleLogger() }.asName("console").asType(Logger.self).lifetime(.single) 
+builder.register{ ServerLogger("http://server.com/") }.asName("server").asType(Logger.self).lifetime(.single) 
 ```
-
-теперь у нас в системе есть 3 карточки, которые являются одним типом и каждая из них является единственной в системе. Чтобы получить к примеру gold карту, можно написать:
+Каждой компоненте было дано имя, благодаря чему можно получить конкретный экземпляр логгера, при этом, не зная о его типе:
 ```Swift
-let card: Card = scope.resolve("gold")
+let logger: Logger = try! container.resolve (name: "file")
 ```
-
-мы получили золотую карточку.
+более подробную информацию можно посмотреть в главе:  [Разрешение зависимостей](resolve.md)
+P.S. Правда никто не запрещает написать вот так:
+```Swift
+builder.register{ FileLogger("file.txt") }.asSelf().asType(Logger.self).lifetime(.single) 
+builder.register{ ConsoleLogger() }.asSelf().asType(Logger.self).lifetime(.single) 
+builder.register{ ServerLogger("http://server.com/") }.asSelf().asType(Logger.self).lifetime(.single) 
+```
+и получать конкретный экземпляр логгера по типу.
