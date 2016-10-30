@@ -138,7 +138,7 @@ print(home.animals.map{ $0.name }) // [Felix, Buddy]
 * [Создание контейнера](build.md)
 * [Разрешение зависимостей](resolve.md)
 * [Указанием имени/множественная регистрация](multi_name_registration.md)
-* [Время жизни](timelife.md)
+* [Время жизни](lifetime.md)
 * [Модули](module.md)
 * [Сборки](assembly.md)
 * [Storyboard](storyboard.md)
