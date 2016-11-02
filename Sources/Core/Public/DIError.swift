@@ -8,7 +8,7 @@
 
 public enum DIError: Error {
   case typeIsNotFound(type: DIType)
-  case typeIsNotFoundForName(type: DIType, name: String)
+  case typeIsNotFoundForName(type: DIType, name: String, components: [DIComponent])
   case notSpecifiedInitializationMethodFor(component: DIComponent)
 
   case initializationMethodWithSignatureIsNotFoundFor(component: DIComponent, signature: DIMethodSignature)

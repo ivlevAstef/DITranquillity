@@ -77,7 +77,7 @@ builder.register(Cat.self).asType(Birds.self)...
 
 Ошибка: **`DIError.typeIsIncorrect(requestedType:, realType:, component:)`**
 Параметры: requestedType - запрашиваемый тип
-           realType - тип, объекта который был создан
+           realType - тип объекта, который был создан
            component - компонент, используемый для создания типа
 
 На текущий момент swift не имеет возможностей проверить связь между двумя типами.

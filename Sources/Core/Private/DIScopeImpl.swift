@@ -57,7 +57,7 @@ class DIScopeImpl {
       }
     }
 
-    throw DIError.typeIsNotFoundForName(type: T.self, name: name)
+    throw DIError.typeIsNotFoundForName(type: T.self, name: name, components: rTypes.map { $0.component})
   }
 
   func resolve<T>(_ scope: DIScope, object: T) throws {
