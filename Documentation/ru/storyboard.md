@@ -1,8 +1,8 @@
 # Storyboard
+Интеграция с базовыми концепциями платформы, одна из важнейших возможностей DI, так как без этого, DI превращался бы в обычный Service Locator.
+Основная особенность apple это storyboard -> специальный файл, в котором описываются ViewController-ы и переходы между ними.
 
-## Объявление зависимостей для ViewController
-Для объявления viewController в который будут внедрятся зависимости, регистрируем тип с временем жизни `instancePerRequest()`. Выглядит это так:
-
+Для дальнейшего обсуждения понадобится добавить ViewController на storyboard и написать под него класс:
 ##### Для iOS/tvOS:
 ```Swift
 class YourViewController: UIViewController {
@@ -26,23 +26,37 @@ class YourViewController: NSViewController {
 }
 ```
 
+## Регистрация ViewController
+Выше был описан ViewController. Также сразу же в нем была объявлена некоторая переменная. Чтобы использовать этот ViewController из storyboard, и при этом получить преимущества DI надо:
+* Зарегистрировать его в билдере
+* объявить время жизни `perRequest`
+* указать все зависимости, которые он имеет
+
+Сделать это можно так:
 ```Swift
 builder.register(YourViewController.self)
-  .instancePerRequest()
+  .lifetime(.perRequest)
+  .dependency { (scope, viewController) in viewController.inject = *!scope }
+```
+При таком способе не получиться использовать внедрение зависимостей через метод инициализации, так как ViewController создает storyboard, а не библиотека.
+
+При этом обращу внимание на то, что если ViewController создается из xib/nib, то можно и нужно использовать обычно время жизни:
+```Swift
+builder.register{ YourViewController(nibName: "NibName", bundle: Bundle) }
+  .lifetime(.perDependency)
   .dependency { (scope, viewController) in viewController.inject = *!scope }
 ```
 
-Здесь perRequest() означает, что инициализатор будет отсутствуть, а за создание объекта отвечает ктото другой, в данном случае это сторибоард.
 
 ## Сокращенный синтаксис
-Чтобы не писать каждый раз instancePerRequest(), можно написать регистрацию в сокращенной форме, добавив `vc:`:
+Так как ViewController-ы создаются часто, каждый раз указывать время жизни надоедает, поэтому для них есть сокращенный синтаксис:
 ```Swift
 builder.register(vc: YourViewController.self)
   .dependency { (scope, viewController) in viewController.inject = *!scope }
 ```
 
 ## Создание Storyboard
-Чтобы подобные зависимости и внедрения работали автоматически надо создать одну из реализации сторибоарда, которая реализована в библиотеке. Можно сделать так:
+Но все это не будет работать, так как обычный storyboard ничего не знает о библиотеке. Поэтому у библиотеки есть собственный класс `DIStoryboard`, являющийся наследником storyboard. По этой причине надо обязательно его создать. Это можно сделать в AppDelegate:
 ##### Для iOS/tvOS:
 ```Swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -77,22 +91,26 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 }
 ```
 
-Либо мы можем сам сторибоард добавить в контайнер, и потом его получить:
+Либо можно зарегистрировать storyboard:
 ##### Для iOS/tvOS:
 ```Swift
 builder.register(UIStoryboard.self)
-  .instanceSingle()
+  .lifetime(.single)
   .initializer { scope in DIStoryboard(name: "Main", bundle: "", container: scope) }
-
-...
-let storyboard: UIStoryboard = try! container.resolve(name: "Main")
 ```
 ##### Для macOS:
 ```Swift
 builder.register(NSStoryboard.self)
-  .instanceSingle()
+  .lifetime(.single)
   .initializer { DIStoryboard(name: "Main", bundle: "", container: $0) }
+```
 
-...
-let storyboard: NSStoryboard = try! container.resolve(name: "Main")
+И потом создать его с помощью библиотеки:
+##### Для iOS/tvOS:
+```Swift
+let storyboard: UIStoryboard = try! container.resolve()
+```
+##### Для macOS:
+```Swift
+let storyboard: NSStoryboard = try! container.resolve()
 ```

@@ -73,9 +73,10 @@ DITranquallity - небольшая библиотека для внедрени
 * Динамические
 
 ## [Storyboard](storyboard.md)
-* Объявление зависимостей для ViewController
-* Создание Storyboard
+* Регистрация ViewController
 * Сокращенный синтаксис
+* Создание Storyboard
+
 
 ## [Поиск](scan.md)
 * Поиск модулей
