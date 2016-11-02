@@ -150,38 +150,44 @@ cats = **!container //cats = try! container.resolveMany()
 Читатель, наверное, обратил внимание, что везде используется `try`. Библиотека отсекла часть ошибок на стадии создания контейнера, но она не способна предугадать, как её будут использовать дальше. 
 Во время разрешения зависимостей возможны следующие ошибки:
 * Нет компонента по указанному типу.
-> Ошибка: **`DIError.typeIsNotFound(type:)`**
-> Параметры: type - тип, для которого не удалось найти компонент
+> Ошибка: **`DIError.typeIsNotFound(type:)`**  
+> Параметры:  
+>            type - тип, для которого не удалось найти компонент
 ***
 
 * Нет компонента по указанному типу и имени.
-> Ошибка: **`DIError.typeIsNotFoundForName(type:,name:,components:)`**
-> Параметры: type - тип, для которого не удалось найти компонент с указанным именем
->            name - имя, для которого не удалось найти компонент
+> Ошибка: **`DIError.typeIsNotFoundForName(type:,name:,components:)`**  
+> Параметры:  
+>            type - тип, для которого не удалось найти компонент с указанным именем  
+>            name - имя, для которого не удалось найти компонент  
 >            components: компоненты, которые были найдены для данного типа
 ***
 
 * Нет метода инициализации с заданной сигнатурой для компоненты.
-> Ошибка: **`DIError.initializationMethodWithSignatureIsNotFoundFor(component:,signature:)`**
-> Параметры: component - компонента, которая была выбрана для типа
+> Ошибка: **`DIError.initializationMethodWithSignatureIsNotFoundFor(component:,signature:)`**  
+> Параметры:  
+>            component - компонента, которая была выбрана для типа  
 >            signature - сигнатура метода, которую не удалось найти
 ***
 
 * Не указана компонента по умолчанию.
-> Ошибка: **`DIError.defaultTypeIsNotSpecified(type:,components:)`**
-> Параметры: type - тип, для которого не указана компонента по умолчанию
->            components - все компоненты для этого типа 
+> Ошибка: **`DIError.defaultTypeIsNotSpecified(type:,components:)`**  
+> Параметры:  
+>            type - тип, для которого не указана компонента по умолчанию  
+>            components - все компоненты для этого типа
 ***
 
 * Рекурсивная инициализация объекта.
-> Ошибка: **`DIError.recursiveInitialization(component:)`**
-> Параметры: component - компонент, который содержит рекурсивную инициализацию
+> Ошибка: **`DIError.recursiveInitialization(component:)`**  
+> Параметры:  
+>            component - компонент, который содержит рекурсивную инициализацию  
 ***
 
 * Созданный объект, не соответсвует запрашиваемому типу (см. примечания в [Создание контейнера](build.md))
-> Ошибка: **`DIError.typeIsIncorrect(requestedType:, realType:, component:)`**
-> Параметры: requestedType - запрашиваемый тип
->            realType - тип объекта, который был создан
+> Ошибка: **`DIError.typeIsIncorrect(requestedType:, realType:, component:)`**  
+> Параметры:  
+>            requestedType - запрашиваемый тип  
+>            realType - тип объекта, который был создан  
 >            component – компонент, используемый для создания типа
 ***
 
