@@ -58,3 +58,7 @@ builder.register{ ConsoleLogger() }.asSelf().asType(Logger.self).lifetime(.singl
 builder.register{ ServerLogger("http://server.com/") }.asSelf().asType(Logger.self).lifetime(.single) 
 ```
 и получать конкретный экземпляр логгера по типу.
+
+#### [Главная](main.md)
+#### [Предыдущая глава "Разрешение зависимостей"](resolve.md)
+#### [Следующая глава "Время жизни"](lifetime.md)

@@ -69,3 +69,7 @@ class YourMainAssembly: DIAssembly {
   public var dependencies: [DIAssembly] = [DIScanAssembly(predicateByName: { $0.contains("Assembly") })]
 }
 ```
+
+#### [Главная](main.md)
+#### [Предыдущая глава "Storyboard"](storyboard.md)
+#### [Следующая глава "Исключения"](errors.md)

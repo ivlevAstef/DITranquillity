@@ -63,3 +63,8 @@ builder.register(Cat.self).lifetime(.perRequest)
 
 ## По умолчанию (default)
 Если у компоненты не указано время жизни, то используется `perScope`.
+
+
+#### [Главная](main.md)
+#### [Предыдущая глава "Указанием имени/множественная регистрация"](multi_name_registration.md)
+#### [Следующая глава "Модули"](module.md)

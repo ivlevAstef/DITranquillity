@@ -114,3 +114,8 @@ let storyboard: UIStoryboard = try! container.resolve()
 ```Swift
 let storyboard: NSStoryboard = try! container.resolve()
 ```
+
+
+#### [Главная](main.md)
+#### [Предыдущая глава "Сборки"](assembly.md)
+#### [Следующая глава "Поиск"](scan.md)

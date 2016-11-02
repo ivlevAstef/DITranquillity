@@ -143,3 +143,6 @@ builder.register(Hamster.self)
 builder.register{ Hamster(name: $1) }
   .initializer { Hamster(name: $1, species: $2) }
 ```
+
+#### [Главная](main.md)
+#### [Следующая глава "Создание контейнера"](build.md)
