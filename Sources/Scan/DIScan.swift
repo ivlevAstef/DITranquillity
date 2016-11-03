@@ -69,7 +69,7 @@ fileprivate func getAllTypes<T>(by supertype: T.Type) -> [T.Type] {
       continue
     }
     
-    if class_getSuperclass(cls) == T.self {
+		if isSuperClass(cls, for: supertype) {
       result.append(cls as! T.Type)
     }
   }
@@ -77,4 +77,11 @@ fileprivate func getAllTypes<T>(by supertype: T.Type) -> [T.Type] {
   allClasses.deallocate(capacity: Int(expectedClassCount))
 
   return result
+}
+
+fileprivate func isSuperClass<T>(_ cls: AnyClass, for type: T.Type) -> Bool {
+	if let superClass = class_getSuperclass(cls) {
+		return superClass == T.self || isSuperClass(superClass, for: type)
+	}
+	return false
 }

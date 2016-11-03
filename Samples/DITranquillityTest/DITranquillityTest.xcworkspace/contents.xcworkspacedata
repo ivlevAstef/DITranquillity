@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:../../DITranquillity.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:SubProject1/SubProject1.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:SubProject2/SubProject2.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:DITranquillityTest.xcodeproj">
+   </FileRef>
+</Workspace>

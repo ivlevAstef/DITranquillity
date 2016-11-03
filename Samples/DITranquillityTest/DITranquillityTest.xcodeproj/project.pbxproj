@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1699AEC11DCAED8C00962832 /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1699AEC01DCAED8C00962832 /* DITranquillity.framework */; };
+		1699AEC31DCAEDD900962832 /* SubProject1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1699AEC21DCAEDD900962832 /* SubProject1.framework */; };
+		1699AEDC1DCAEE6000962832 /* SubProject2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1699AEDB1DCAEE6000962832 /* SubProject2.framework */; };
 		16D7BCC31DB0875600A29A9F /* DITranquillityTests_Scan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCC21DB0875600A29A9F /* DITranquillityTests_Scan.swift */; };
 		A51CEC541D3CA0EA00C5B60A /* DITranquillityTests_Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51CEC531D3CA0EA00C5B60A /* DITranquillityTests_Scope.swift */; };
 		A51CEC561D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51CEC551D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift */; };
@@ -17,39 +20,10 @@
 		A5D918C41D1939A70009F9D4 /* ResolveTestClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D918C11D1939A70009F9D4 /* ResolveTestClasses.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		16640A921D9E1EFF00707BFC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 16640A8E1D9E1EFF00707BFC /* DITranquillity.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A58875541D0944AE00D6DE92;
-			remoteInfo = DITranquillity;
-		};
-		16640A951D9E1F2000707BFC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 16640A8E1D9E1EFF00707BFC /* DITranquillity.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A58875531D0944AE00D6DE92;
-			remoteInfo = DITranquillity;
-		};
-		16D7BCC61DB0875700A29A9F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 16640A8E1D9E1EFF00707BFC /* DITranquillity.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 169C0DE51DA3501F001F0AD5;
-			remoteInfo = "DITranquillity-OSX";
-		};
-		16D7BCC81DB0875700A29A9F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 16640A8E1D9E1EFF00707BFC /* DITranquillity.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 169C0E4B1DA35CBE001F0AD5;
-			remoteInfo = "DITranquillity-tvOS";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		16640A8E1D9E1EFF00707BFC /* DITranquillity.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DITranquillity.xcodeproj; path = ../../DITranquillity.xcodeproj; sourceTree = "<group>"; };
+		1699AEC01DCAED8C00962832 /* DITranquillity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DITranquillity.framework; path = "../../build/Debug-iphoneos/DITranquillity.framework"; sourceTree = "<group>"; };
+		1699AEC21DCAEDD900962832 /* SubProject1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SubProject1.framework; path = "SubProject1/build/Debug-iphoneos/SubProject1.framework"; sourceTree = "<group>"; };
+		1699AEDB1DCAEE6000962832 /* SubProject2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SubProject2.framework; path = "SubProject2/build/Debug-iphoneos/SubProject2.framework"; sourceTree = "<group>"; };
 		16D7BCC21DB0875600A29A9F /* DITranquillityTests_Scan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Scan.swift; sourceTree = "<group>"; };
 		A50053221D1931FE00DFD9CF /* DITranquillityTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DITranquillityTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A51CEC531D3CA0EA00C5B60A /* DITranquillityTests_Scope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Scope.swift; sourceTree = "<group>"; };
@@ -67,28 +41,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1699AEDC1DCAEE6000962832 /* SubProject2.framework in Frameworks */,
+				1699AEC31DCAEDD900962832 /* SubProject1.framework in Frameworks */,
+				1699AEC11DCAED8C00962832 /* DITranquillity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		16640A8F1D9E1EFF00707BFC /* Products */ = {
+		1699AEBF1DCAED8C00962832 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				16640A931D9E1EFF00707BFC /* DITranquillity.framework */,
-				16D7BCC71DB0875700A29A9F /* DITranquillity.framework */,
-				16D7BCC91DB0875700A29A9F /* DITranquillity.framework */,
+				1699AEDB1DCAEE6000962832 /* SubProject2.framework */,
+				1699AEC21DCAEDD900962832 /* SubProject1.framework */,
+				1699AEC01DCAED8C00962832 /* DITranquillity.framework */,
 			);
-			name = Products;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		A50053031D1931FE00DFD9CF = {
 			isa = PBXGroup;
 			children = (
-				16640A8E1D9E1EFF00707BFC /* DITranquillity.xcodeproj */,
 				A5D918BE1D1939A70009F9D4 /* DITranquillityTest */,
 				A500530D1D1931FE00DFD9CF /* Products */,
+				1699AEBF1DCAED8C00962832 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -130,7 +107,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				16640A961D9E1F2000707BFC /* PBXTargetDependency */,
 			);
 			name = DITranquillityTest;
 			productName = DITranquillityTestTests;
@@ -164,42 +140,12 @@
 			mainGroup = A50053031D1931FE00DFD9CF;
 			productRefGroup = A500530D1D1931FE00DFD9CF /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 16640A8F1D9E1EFF00707BFC /* Products */;
-					ProjectRef = 16640A8E1D9E1EFF00707BFC /* DITranquillity.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				A50053211D1931FE00DFD9CF /* DITranquillityTest */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		16640A931D9E1EFF00707BFC /* DITranquillity.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = DITranquillity.framework;
-			remoteRef = 16640A921D9E1EFF00707BFC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		16D7BCC71DB0875700A29A9F /* DITranquillity.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = DITranquillity.framework;
-			remoteRef = 16D7BCC61DB0875700A29A9F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		16D7BCC91DB0875700A29A9F /* DITranquillity.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = DITranquillity.framework;
-			remoteRef = 16D7BCC81DB0875700A29A9F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A50053201D1931FE00DFD9CF /* Resources */ = {
@@ -228,14 +174,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		16640A961D9E1F2000707BFC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = DITranquillity;
-			targetProxy = 16640A951D9E1F2000707BFC /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		A5AD4EEC1D3CB55900A6882C /* TestStoryboard.storyboard */ = {
@@ -342,6 +280,11 @@
 		A500532F1D1931FE00DFD9CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SubProject1/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/SubProject2/build/Debug-iphoneos",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					__DITRANQUILLITY_STORYBOARD__,
 					"DEBUG=1",
@@ -357,6 +300,11 @@
 		A50053301D1931FE00DFD9CF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SubProject1/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/SubProject2/build/Debug-iphoneos",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = __DITRANQUILLITY_STORYBOARD__;
 				INFOPLIST_FILE = DITranquillityTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
