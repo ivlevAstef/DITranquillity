@@ -6,5 +6,6 @@ let package = Package(
 		Target(name: "Core"),
 		Target(name: "Storyboard", dependencies: ["Core"]),
 		Target(name: "Assembly", dependencies: ["Core"]),
+		Target(name: "Scan", dependencies: ["Core"]),
   ]
 )

@@ -23,6 +23,7 @@ Dependency injection for iOS/macOS/tvOS (Swift)
 * Registration by types, modules, assembly
 * Fast resolve syntax
 * Thread safety
+* Scan Modules/Assemblies
 
 ## Install
 Via CocoaPods.
@@ -142,7 +143,7 @@ let home2: Home = *!scope //home2 === home
 Create your module:
 ```Swift
 class SampleModule: DIModule {
-  override func load(builder: DIContainerBuilder) {
+  func load(builder: DIContainerBuilder) {
     builder.register(ViewController.self)
       .instancePerRequest()
       .dependency { (scope, obj) in obj.inject = *!scope }
@@ -217,8 +218,8 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 ## Requirements
 iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
 
-* Swift 3.0: Xcode 8.0; version > 0.9.5
-* Swift 2.3: Xcode 7.0; version <= 0.9.5
+* Swift 3.0: Xcode 8.0; version >= 0.9.5
+* Swift 2.3: Xcode 7.0; version <  0.9.5
 
 # Changelog
 See [CHANGELOG.md](https://github.com/ivlevAstef/DITranquillity/blob/master/CHANGELOG.md) file.

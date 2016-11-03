@@ -56,7 +56,7 @@ local ArgumentsType=$(join ', _ ' $(replaceToArg numbers[@] "arg;I:±Arg;I")); A
 
 echo "  @discardableResult
   public func register<T, $ArgType>(file: String = #file, line: Int = #line, initializer: @escaping (_ scope: DIScope, _ $ArgumentsType) -> T) -> DIRegistrationBuilder<T> {
-return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: T.self, file: file, line: line)).initializer(method: initializer)
+    return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: T.self, file: file, line: line)).initializer(method: initializer)
   }
 " >> $2
 }
