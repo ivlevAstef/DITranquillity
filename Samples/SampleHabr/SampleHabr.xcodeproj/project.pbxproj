@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		163DDDD11DB9E20F0003DE54 /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 163DDDD01DB9E20F0003DE54 /* DITranquillity.framework */; };
+		163DDDD31DB9E2110003DE54 /* Logger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 163DDDD21DB9E2110003DE54 /* Logger.framework */; };
 		165FDF931D9920D900AAE8FA /* AppAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165FDF8A1D9920D900AAE8FA /* AppAssembly.swift */; };
 		165FDF941D9920D900AAE8FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165FDF8B1D9920D900AAE8FA /* AppDelegate.swift */; };
 		165FDF951D9920D900AAE8FA /* AppModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165FDF8C1D9920D900AAE8FA /* AppModule.swift */; };
@@ -14,10 +16,6 @@
 		165FDF971D9920D900AAE8FA /* YourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165FDF8E1D9920D900AAE8FA /* YourViewController.swift */; };
 		165FDF981D9920D900AAE8FA /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165FDF911D9920D900AAE8FA /* Server.swift */; };
 		165FDF991D9920D900AAE8FA /* ServerModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165FDF921D9920D900AAE8FA /* ServerModule.swift */; };
-		165FDFFB1D992B6800AAE8FA /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 165FDFFA1D992B6800AAE8FA /* DITranquillity.framework */; };
-		165FDFFC1D992B6800AAE8FA /* DITranquillity.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 165FDFFA1D992B6800AAE8FA /* DITranquillity.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		165FDFFE1D992B6B00AAE8FA /* Logger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 165FDFFD1D992B6B00AAE8FA /* Logger.framework */; };
-		165FDFFF1D992B6B00AAE8FA /* Logger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 165FDFFD1D992B6B00AAE8FA /* Logger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A5AE2B481D0AD75300FF3E40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5AE2B401D0AD75300FF3E40 /* Assets.xcassets */; };
 		A5AE2B491D0AD75300FF3E40 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5AE2B411D0AD75300FF3E40 /* LaunchScreen.storyboard */; };
 		A5AE2B4A1D0AD75300FF3E40 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5AE2B431D0AD75300FF3E40 /* Main.storyboard */; };
@@ -30,8 +28,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				165FDFFF1D992B6B00AAE8FA /* Logger.framework in Embed Frameworks */,
-				165FDFFC1D992B6800AAE8FA /* DITranquillity.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -39,6 +35,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		163DDDD01DB9E20F0003DE54 /* DITranquillity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DITranquillity.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/SampleHabr-eustovjykuumwyfduhxnxxykbzvt/Build/Products/Debug-iphonesimulator/DITranquillity.framework"; sourceTree = "<group>"; };
+		163DDDD21DB9E2110003DE54 /* Logger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Logger.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/SampleHabr-eustovjykuumwyfduhxnxxykbzvt/Build/Products/Debug-iphonesimulator/Logger.framework"; sourceTree = "<group>"; };
 		165FDF8A1D9920D900AAE8FA /* AppAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppAssembly.swift; sourceTree = "<group>"; };
 		165FDF8B1D9920D900AAE8FA /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		165FDF8C1D9920D900AAE8FA /* AppModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppModule.swift; sourceTree = "<group>"; };
@@ -46,8 +44,6 @@
 		165FDF8E1D9920D900AAE8FA /* YourViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YourViewController.swift; sourceTree = "<group>"; };
 		165FDF911D9920D900AAE8FA /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		165FDF921D9920D900AAE8FA /* ServerModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerModule.swift; sourceTree = "<group>"; };
-		165FDFFA1D992B6800AAE8FA /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = DITranquillity.framework; path = "/Users/ae.ivlev/Library/Developer/Xcode/DerivedData/SampleHabr-fbrxvlbkigpqokbwlmpswwdczoev/Build/Products/Debug-iphonesimulator/DITranquillity.framework"; sourceTree = "<absolute>"; };
-		165FDFFD1D992B6B00AAE8FA /* Logger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Logger.framework; path = "/Users/ae.ivlev/Library/Developer/Xcode/DerivedData/SampleHabr-fbrxvlbkigpqokbwlmpswwdczoev/Build/Products/Debug-iphonesimulator/Logger.framework"; sourceTree = "<absolute>"; };
 		A58875681D0944FE00D6DE92 /* SampleHabr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleHabr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5AE2B401D0AD75300FF3E40 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A5AE2B421D0AD75300FF3E40 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -60,14 +56,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				165FDFFE1D992B6B00AAE8FA /* Logger.framework in Frameworks */,
-				165FDFFB1D992B6800AAE8FA /* DITranquillity.framework in Frameworks */,
+				163DDDD31DB9E2110003DE54 /* Logger.framework in Frameworks */,
+				163DDDD11DB9E20F0003DE54 /* DITranquillity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		163DDDCF1DB9E20F0003DE54 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				163DDDD21DB9E2110003DE54 /* Logger.framework */,
+				163DDDD01DB9E20F0003DE54 /* DITranquillity.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		165FDF891D9920D900AAE8FA /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -92,10 +97,9 @@
 		A588755F1D0944FE00D6DE92 = {
 			isa = PBXGroup;
 			children = (
-				165FDFFD1D992B6B00AAE8FA /* Logger.framework */,
-				165FDFFA1D992B6800AAE8FA /* DITranquillity.framework */,
 				A5AE2B3E1D0AD75300FF3E40 /* SampleHabr */,
 				A58875691D0944FE00D6DE92 /* Products */,
+				163DDDCF1DB9E20F0003DE54 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

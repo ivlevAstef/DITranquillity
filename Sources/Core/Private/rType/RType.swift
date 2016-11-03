@@ -6,14 +6,12 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-class RType: BaseRTypeHashable {
-  init<ImplObj>(_ implType: ImplObj.Type) {
-    super.init(implType: implType)
-  }
-
+class RType: RTypeBase {
+  typealias MethodKey = String
+  
   // Initializer
   func setInitializer<Method>(_ method: Method) {
-    initializers[String(describing: Method.self)] = method
+    initializers[MethodKey(describing: Method.self)] = method
   }
 
   var hasInitializer: Bool { return !initializers.isEmpty }
@@ -24,7 +22,7 @@ class RType: BaseRTypeHashable {
   }
 
   func copyFinal() -> RTypeFinal {
-    return RTypeFinal(implType: self.implType,
+    return RTypeFinal(component: component,
       initializers: self.initializers,
       dependencies: self.dependencies,
       names: self.names,
@@ -32,10 +30,10 @@ class RType: BaseRTypeHashable {
       lifeTime: self.lifeTime)
   }
 
-  var lifeTime = RTypeLifeTime.default
+  var lifeTime = DILifeTime.default
   var names: Set<String> = []
   var isDefault: Bool = false
 
-  private var initializers: [String: Any] = [:] // method type to method
+  private var initializers: [MethodKey: Any] = [:] // method type to method
   private var dependencies: [(_ scope: DIScope, _ obj: Any) -> ()] = []
 }

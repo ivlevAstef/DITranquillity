@@ -11,12 +11,10 @@ public protocol DIModule: class {
 }
 
 public extension DIContainerBuilder {
-  @discardableResult
-  public func register(module: DIModule) -> Self {
+  public func register(module: DIModule) {
     if !ignore(uniqueKey: module.uniqueKey) {
       module.load(builder: self)
     }
-    return self
   }
 }
 
