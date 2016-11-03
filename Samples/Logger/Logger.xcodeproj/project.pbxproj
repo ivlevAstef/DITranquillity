@@ -7,21 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		163DDDD61DB9E2190003DE54 /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 163DDDD51DB9E2190003DE54 /* DITranquillity.framework */; };
 		165FDFAC1D9922EE00AAE8FA /* Logger.h in Headers */ = {isa = PBXBuildFile; fileRef = 165FDFAB1D9922EE00AAE8FA /* Logger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		165FDFC01D99239600AAE8FA /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165FDFBE1D99239600AAE8FA /* Logger.swift */; };
 		165FDFC11D99239600AAE8FA /* LoggerModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165FDFBF1D99239600AAE8FA /* LoggerModule.swift */; };
 		165FDFC51D9923CB00AAE8FA /* LoggerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165FDFC41D9923CB00AAE8FA /* LoggerAssembly.swift */; };
-		165FDFF41D99277C00AAE8FA /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 165FDFF31D99277C00AAE8FA /* DITranquillity.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		163DDDD51DB9E2190003DE54 /* DITranquillity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DITranquillity.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/SampleHabr-eustovjykuumwyfduhxnxxykbzvt/Build/Products/Debug-iphonesimulator/DITranquillity.framework"; sourceTree = "<group>"; };
 		165FDFA81D9922EE00AAE8FA /* Logger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Logger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		165FDFAB1D9922EE00AAE8FA /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		165FDFAD1D9922EE00AAE8FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		165FDFBE1D99239600AAE8FA /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		165FDFBF1D99239600AAE8FA /* LoggerModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggerModule.swift; sourceTree = "<group>"; };
 		165FDFC41D9923CB00AAE8FA /* LoggerAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggerAssembly.swift; sourceTree = "<group>"; };
-		165FDFF31D99277C00AAE8FA /* DITranquillity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DITranquillity.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/SampleHabr-fbrxvlbkigpqokbwlmpswwdczoev/Build/Products/Debug-iphoneos/DITranquillity.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,19 +29,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				165FDFF41D99277C00AAE8FA /* DITranquillity.framework in Frameworks */,
+				163DDDD61DB9E2190003DE54 /* DITranquillity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		163DDDD41DB9E2190003DE54 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				163DDDD51DB9E2190003DE54 /* DITranquillity.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		165FDF9E1D9922ED00AAE8FA = {
 			isa = PBXGroup;
 			children = (
-				165FDFF31D99277C00AAE8FA /* DITranquillity.framework */,
 				165FDFAA1D9922EE00AAE8FA /* Logger */,
 				165FDFA91D9922EE00AAE8FA /* Products */,
+				163DDDD41DB9E2190003DE54 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

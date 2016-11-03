@@ -18,7 +18,7 @@ class DITranquillityTests_Threads: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(FooService.self)
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer { FooService() }
     
     let container = try! builder.build()
@@ -49,7 +49,7 @@ class DITranquillityTests_Threads: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(FooService.self)
-      .instanceLazySingle()
+      .lifetime(.lazySingle)
       .initializer { FooService() }
     
     let container = try! builder.build()
@@ -83,7 +83,7 @@ class DITranquillityTests_Threads: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(FooService.self)
-      .instancePerScope()
+      .lifetime(.perScope)
       .initializer { FooService() }
     
     let container = try! builder.build()

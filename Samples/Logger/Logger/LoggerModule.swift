@@ -12,19 +12,19 @@ class LoggerModule: DIModule {
 	func load(builder: DIContainerBuilder) {
 		builder.register{ ConsoleLogger() }
 			.asType(Logger.self)
-			.instanceSingle()
+			.lifetime(.single)
     
 		builder.register{ FileLogger(file: "file.log") }
 			.asType(Logger.self)
-			.instanceSingle()
+			.lifetime(.single)
     
 		builder.register{ ServerLogger(server: "http://server.com/") }
 			.asType(Logger.self)
-			.instanceSingle()
+			.lifetime(.single)
     
 		builder.register{ MainLogger(loggers: **!$0) }
 			.asType(Logger.self)
 			.asDefault()
-			.instanceSingle()		
+			.lifetime(.single)		
 	}
 }

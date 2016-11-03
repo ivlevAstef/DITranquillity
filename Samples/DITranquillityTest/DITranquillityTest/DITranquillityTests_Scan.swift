@@ -9,55 +9,26 @@
 import XCTest
 import DITranquillity
 
-// Test Data
+import SubProject1
+import SubProject2
 
-// Modules
 
-class Module1Type { }
+public class ScannedRecursiveBase: DIScanned {}
 
-class ScannedModule1: DIScanned, DIModule {
-  func load(builder: DIContainerBuilder) {
-    builder.register{ Module1Type() }
-  }
+public class RecursiveModule1Type { }
+public class ScannedRecursiveModul_1: ScannedRecursiveBase, DIModule {
+	public func load(builder: DIContainerBuilder) {
+		builder.register{ RecursiveModule1Type() }
+	}
 }
 
-class Module2Type { }
-
-class ScannedModule2: DIScanned, DIModule {
-  func load(builder: DIContainerBuilder) {
-    builder.register{ Module2Type() }
-  }
+public class RecursiveModule2Type { }
+public class ScannedRecursiveModul_2: ScannedRecursiveBase, DIModule {
+	public func load(builder: DIContainerBuilder) {
+		builder.register{ RecursiveModule2Type() }
+	}
 }
 
-class DuMole1Type { }
-
-class ScannedDuMole1: DIScanned, DIModule {
-  func load(builder: DIContainerBuilder) {
-    builder.register{ DuMole1Type() }
-  }
-}
-
-class DuMole2Type { }
-
-class ScannedDuMole2: DIScanned, DIModule {
-  func load(builder: DIContainerBuilder) {
-    builder.register{ DuMole2Type() }
-  }
-}
-
-// Assemblies
-
-class ScannedAssembly1: DIScanned, DIAssembly {
-  var publicModules: [DIModule] = [ ScannedModule1(), ScannedModule2() ]
-  var internalModules: [DIModule] = []
-  var dependencies: [DIAssembly] = []
-}
-
-class ScannedAssembly2: DIScanned, DIAssembly {
-  var publicModules: [DIModule] = [ ScannedDuMole1(), ScannedDuMole2() ]
-  var internalModules: [DIModule] = []
-  var dependencies: [DIAssembly] = []
-}
 
 class AssemblyWithScan1: DIAssembly {
   public var publicModules: [DIModule] = []
@@ -181,5 +152,54 @@ class DITranquillityTests_Scan: XCTestCase {
     XCTAssertNotNil(type3)
     XCTAssertNotNil(type4)
   }
-  
+	
+	func test07_ScanModulesInBundleSubProject1() {
+		let builder = DIContainerBuilder()
+		builder.register(module: DIScanModule(predicateByName: { _ in true }, in: Bundle(for: ScannedAssembly1.self)))
+		
+		let container =  try! builder.build()
+		
+		let type1: Module1Type? = *?container
+		let type2: Module2Type? = *?container
+		
+		let type3: DuMole1Type? = *?container
+		let type4: DuMole2Type? = *?container
+		
+		XCTAssertNotNil(type1)
+		XCTAssertNotNil(type2)
+		XCTAssertNil(type3)
+		XCTAssertNil(type4)
+	}
+	
+	func test07_ScanModulesInBundleSubProject2() {
+		let builder = DIContainerBuilder()
+		builder.register(module: DIScanModule(predicateByName: { _ in true }, in: Bundle(for: ScannedAssembly2.self)))
+		
+		let container =  try! builder.build()
+		
+		let type1: Module1Type? = *?container
+		let type2: Module2Type? = *?container
+		
+		let type3: DuMole1Type? = *?container
+		let type4: DuMole2Type? = *?container
+		
+		XCTAssertNil(type1)
+		XCTAssertNil(type2)
+		XCTAssertNotNil(type3)
+		XCTAssertNotNil(type4)
+	}
+
+	func test08_ScanModulesPredicateByType() {
+		let builder = DIContainerBuilder()
+		builder.register(module: DIScanModule(predicateByType: { type in type.init() is ScannedRecursiveBase }))
+		
+		let container =  try! builder.build()
+		
+		let type1: RecursiveModule1Type? = *?container
+		let type2: RecursiveModule2Type? = *?container
+
+		XCTAssertNotNil(type1)
+		XCTAssertNotNil(type2)
+	}
+	
 }

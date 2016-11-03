@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Storyboard
     builder.register(UIStoryboard.self)
-      .instanceSingle()
+      .lifetime(.single)
       .initializer { scope in DIStoryboard(name: "Main", bundle: nil, container: scope) }
     
     return try! builder.build()

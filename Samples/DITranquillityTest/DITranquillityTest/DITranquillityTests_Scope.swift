@@ -21,7 +21,7 @@ class DITranquillityTests_Scope: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(TestScopeClass.self)
-      .instanceLazySingle()
+      .lifetime(.lazySingle)
       .initializer { TestScopeClass() }
     
     let container = try! builder.build()
@@ -43,7 +43,7 @@ class DITranquillityTests_Scope: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(TestScopeClass.self)
-      .instancePerScope()
+      .lifetime(.perScope)
       .initializer { TestScopeClass() }
     
     let container = try! builder.build()
@@ -86,7 +86,7 @@ class DITranquillityTests_Scope: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(TestScopeClass.self)
-      .instancePerDependency()
+      .lifetime(.perDependency)
       .initializer { TestScopeClass() }
     
     let container = try! builder.build()

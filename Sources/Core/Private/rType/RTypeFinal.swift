@@ -6,34 +6,34 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-class RTypeFinal: BaseRTypeHashable {
-  typealias UniqueKey = String
-
-  init(implType: Any, initializers: [String: Any], dependencies: [(_ scope: DIScope, _ obj: Any) -> ()], names: Set<String>, isDefault: Bool, lifeTime: RTypeLifeTime) {
+class RTypeFinal: RTypeBase {
+  typealias MethodKey = String
+  
+  init(component: DIComponent, initializers: [MethodKey: Any], dependencies: [(_ scope: DIScope, _ obj: Any) -> ()], names: Set<String>, isDefault: Bool, lifeTime: DILifeTime) {
     self.initializers = initializers
     self.dependencies = dependencies
     self.names = names
     self.isDefault = isDefault
     self.lifeTime = lifeTime
-    super.init(implType: implType)
+    super.init(component: component)
   }
-
+  
   func new<Method, T>(_ method: (Method) throws -> T) throws -> T {
-    guard let initializer = initializers[String(describing: Method.self)] as? Method else {
-      throw DIError.initializerWithSignatureNotFound(typeName: String(describing: implType), signature: String(describing: Method.self))
+    guard let initializer = initializers[MethodKey(describing: Method.self)] as? Method else {
+      throw DIError.initializationMethodWithSignatureIsNotFoundFor(component: component, signature: Method.self)
     }
-
+    
     return try method(initializer)
   }
-
+  
   func has(name: String) -> Bool {
     return names.contains(name)
   }
-
-  let lifeTime: RTypeLifeTime
+  
+  let lifeTime: DILifeTime
   let isDefault: Bool
   let dependencies: [(_ scope: DIScope, _ obj: Any) -> ()]
-
-  private let initializers: [String: Any]
+  
+  private let initializers: [MethodKey: Any]
   private let names: Set<String>
 }

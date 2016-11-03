@@ -29,8 +29,8 @@ public final class DIScope {
     return impl.newLifeTimeScope(self)
   }
 
-  internal init(registeredTypes: RTypeContainerFinal, name: String = "") {
-    impl = DIScopeImpl(registeredTypes: registeredTypes)
+  internal init(container: RTypeContainerFinal) {
+    impl = DIScopeImpl(container: container)
   }
 
   internal func resolve(RType rType: RTypeFinal) throws -> Any {

@@ -7,47 +7,46 @@
 //
 
 public extension DIContainerBuilder {
-  public func register<T>(_ rClass: T.Type) -> DIRegistrationBuilder<T> {
-    return DIRegistrationBuilder<T>(self.rTypeContainer, rClass)
+  public func register<T>(_ type: T.Type, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
+    return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: type, file: file, line: line))
   }
 }
 
-
-public final class DIRegistrationBuilder<ImplObj> {
+public extension DIRegistrationBuilder {
   // As
   @discardableResult
   public func asSelf() -> Self {
-    typeSet = true
+    isTypeSet = true
     container.append(key: ImplObj.self, value: rType)
     return self
   }
-
+  
   @discardableResult
   public func asType<EquallyObj>(_ equallyType: EquallyObj.Type) -> Self {
-    typeSet = true
+    isTypeSet = true
     container.append(key: equallyType, value: rType)
     return self
   }
-
+  
   @discardableResult
   public func asName(_ name: String) -> Self {
     rType.names.insert(name)
     return self
   }
-
+  
   @discardableResult
   public func asDefault() -> Self {
     rType.isDefault = true
     return self
   }
-
+  
   // Initializer
   @discardableResult
   public func initializer(_ method: @escaping (_ scope: DIScope) -> ImplObj) -> Self {
     rType.setInitializer { (s) -> Any in return method(s) }
     return self
   }
-
+  
   @discardableResult
   public func initializer(_ method: @escaping () -> ImplObj) -> Self {
     rType.setInitializer { (_: DIScope) -> Any in return method() }
@@ -60,50 +59,29 @@ public final class DIRegistrationBuilder<ImplObj> {
     rType.appendDependency(method)
     return self
   }
-
+  
   // LifeTime
   @discardableResult
-  public func instanceSingle() -> Self {
-    rType.lifeTime = RTypeLifeTime.single
+  public func lifetime(_ lifetime: DILifeTime) -> Self {
+    rType.lifeTime = lifetime
     return self
   }
+}
 
-  @discardableResult
-  public func instanceLazySingle() -> Self {
-    rType.lifeTime = RTypeLifeTime.lazySingle
-    return self
-  }
 
-  @discardableResult
-  public func instancePerScope() -> Self {
-    rType.lifeTime = RTypeLifeTime.perScope
-    return self
-  }
-
-  @discardableResult
-  public func instancePerDependency() -> Self {
-    rType.lifeTime = RTypeLifeTime.perDependency
-    return self
-  }
-
-  @discardableResult
-  public func instancePerRequest() -> Self {
-    rType.lifeTime = RTypeLifeTime.perRequest
-    return self
-  }
-
-  init(_ container: RTypeContainer, _ implType: ImplObj.Type) {
+public final class DIRegistrationBuilder<ImplObj> {
+  init(container: RTypeContainer, component: DIComponent) {
     self.container = container
-    self.rType = RType(implType)
+    self.rType = RType(component: component)
   }
-
+  
   deinit {
-    if !typeSet {
+    if !isTypeSet {
       let _ = asSelf()
     }
   }
-
-  internal var typeSet: Bool = false
-  internal let rType: RType
-  internal let container: RTypeContainer
+  
+  var isTypeSet: Bool = false
+  let rType: RType
+  let container: RTypeContainer
 }
