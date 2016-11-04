@@ -100,23 +100,23 @@ let builder = DIContainerBuilder()
 builder.register{ Cat() }
   .asSelf()
   .asType(Animal.self)
-  .instancePerDependency() // instanceSingle(), instancePerScope(), instancePerRequest(), instancePerMatchingScope(String)
+  .lifetime(.perDependency) // single, lazySingle, perScope, perRequest
   
 builder.register(Dog.self)
   .asSelf()
   .asType(Animal.self)
-  .instancePerDependency()
+  .lifetime(.perDependency)
   .initializer { Dog() }
   
 builder.register{ Pet(name: "My Pet") }
   .asSelf()
   .asType(Animal.self)
   .asDefault()
-  .instancePerDependency()
+  .lifetime(.perDependency)
   
 builder.register(Home.self)
   .asSelf()
-  .instancePerScope()
+  .lifetime(.perScope)
   .initializer { scope in return try! Home(animals: scope.resolveMany()) }
 
 let scope = try! builder.build() // validate
@@ -144,8 +144,7 @@ Create your module:
 ```Swift
 class SampleModule: DIModule {
   func load(builder: DIContainerBuilder) {
-    builder.register(ViewController.self)
-      .instancePerRequest()
+    builder.register(vc: ViewController.self)
       .dependency { (scope, obj) in obj.inject = *!scope }
   }
 }
@@ -172,7 +171,7 @@ func applicationDidFinishLaunching(_ application: UIApplication) {
   let builder = DIContainerBuilder()
   builder.register(module: SampleModule())
 
-	let container = try! builder.build()
+  let container = try! builder.build()
   
   let storyboard = DIStoryboard(name: "Main", bundle: nil, container: container)
   window!.rootViewController = storyboard.instantiateInitialViewController()
