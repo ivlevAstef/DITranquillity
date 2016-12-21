@@ -69,8 +69,8 @@ public extension DIRegistrationBuilder {
 	
 	
 	@discardableResult
-	public func withoutInitializer() -> Self {
-		rType.withoutInitializer = true
+	public func initializerDoesNotNeedToBe() -> Self {
+		rType.initializerDoesNotNeedToBe = true
 		return self
 	}
 }

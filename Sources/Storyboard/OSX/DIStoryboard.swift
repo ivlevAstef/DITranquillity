@@ -35,10 +35,30 @@ public final class DIStoryboard: NSStoryboard, _DIStoryboardBaseResolver {
 }
 
 public extension DIContainerBuilder {
-  @discardableResult
-  public func register<T: AnyObject>(vc type: T.Type, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
+	@discardableResult
+	public func register<T: AnyObject>(vc type: T.Type, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
 		return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: type, file: file, line: line))
 			.asSelf()
-			.initializer { NSViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T }
-  }
+			.initializerDoesNotNeedToBe()
+	}
+}
+
+public extension DIRegistrationBuilder where ImplObj: NSViewController {
+  @discardableResult
+	public func initializer<T: NSViewController>(byNib type: T.Type) -> Self {
+		rType.setInitializer { NSViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T }
+		return self
+	}
+	
+	@discardableResult
+	public func initializer(byStoryboard storyboard: NSStoryboard, identifier: String) -> Self {
+		rType.setInitializer { storyboard.instantiateController(withIdentifier: identifier) }
+		return self
+	}
+	
+	@discardableResult
+	public func initializer(byStoryboard storyboard: @escaping (_ scope: DIScope) -> NSStoryboard, identifier: String) -> Self {
+		rType.setInitializer { scope in storyboard(scope).instantiateController(withIdentifier: identifier) }
+		return self
+	}
 }
