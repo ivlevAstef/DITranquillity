@@ -72,20 +72,7 @@ class DITranquillityTests_Build: XCTestCase {
     XCTFail("No try exceptions")
   }
   
-  func test02_NotInitializerForPerRequest() {
-    let builder = DIContainerBuilder()
-    
-    builder.register(TestProtocol.self)
-      .lifetime(.perRequest)
-    
-    do {
-      try builder.build()
-    } catch {
-      XCTFail("Catched error: \(error)")
-    }
-  }
-  
-  func test03_MultiplyRegistrateTypeWithMultyDefault() {
+  func test02_MultiplyRegistrateTypeWithMultyDefault() {
     let builder = DIContainerBuilder()
     
     let lineClass1 = #line; builder.register(TestClass1.self)
@@ -114,7 +101,7 @@ class DITranquillityTests_Build: XCTestCase {
     XCTFail("No try exceptions")
   }
   
-  func test04_MultiplyRegistrateTypeWithOneDefault() {
+  func test03_MultiplyRegistrateTypeWithOneDefault() {
     let builder = DIContainerBuilder()
     
     builder.register(TestClass1.self)
@@ -133,7 +120,7 @@ class DITranquillityTests_Build: XCTestCase {
     }
   }
   
-  func test05_MultiplyRegistrateTypeWithNames() {
+  func test04_MultiplyRegistrateTypeWithNames() {
     let builder = DIContainerBuilder()
     
     builder.register(TestClass1.self)
@@ -153,7 +140,7 @@ class DITranquillityTests_Build: XCTestCase {
     }
   }
   
-  func test06_IncorrectRegistrateType() {
+  func test05_IncorrectRegistrateType() {
     let builder = DIContainerBuilder()
     
     let line = #line; builder.register(TestClass1.self)
@@ -180,7 +167,7 @@ class DITranquillityTests_Build: XCTestCase {
     }
   }
   
-  func test07_RegistrationByProtocolAndGetByClass() {
+  func test06_RegistrationByProtocolAndGetByClass() {
     let builder = DIContainerBuilder()
     
     builder.register(TestClass1.self)
