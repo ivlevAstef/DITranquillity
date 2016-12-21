@@ -11,12 +11,12 @@ class DIScopeImpl {
     self.container = container
   }
 
-  func resolve<T, Method>(_ scope: DIScope, circular: Bool = false, method: (Method) -> Any) throws -> T {
-    let rTypes = try getTypes(T.self)
+	func resolve<T, Method>(_ scope: DIScope, type: T.Type, method: @escaping (Method) -> Any) throws -> T {
+    let rTypes = try getTypes(type)
 
     if rTypes.count > 1 {
       guard let typeIndex = rTypes.index(where: { $0.isDefault }) else {
-        throw DIError.defaultTypeIsNotSpecified(type: T.self, components: rTypes.map{ $0.component })
+        throw DIError.defaultTypeIsNotSpecified(type: type, components: rTypes.map{ $0.component })
       }
 
       return try resolveUseRType(scope, pair: RTypeWithName(rTypes[typeIndex]), method: method)
@@ -25,8 +25,8 @@ class DIScopeImpl {
     return try resolveUseRType(scope, pair: RTypeWithName(rTypes[0]), method: method)
   }
 
-  func resolveMany<T, Method>(_ scope: DIScope, circular: Bool = false, method: (Method) -> Any) throws -> [T] {
-    let rTypes = try getTypes(T.self)
+  func resolveMany<T, Method>(_ scope: DIScope, type: T.Type, method: @escaping (Method) -> Any) throws -> [T] {
+    let rTypes = try getTypes(type)
 
     var result: [T] = []
     for rType in rTypes {
@@ -34,12 +34,6 @@ class DIScopeImpl {
         try result.append(resolveUseRType(scope, pair: RTypeWithName(rType), method: method))
       } catch DIError.recursiveInitialization {
         // Ignore recursive initialization object for many
-      } catch DIError.severalPerRequestObjectsFor(_, let objects) {
-        for object in objects {
-          if let object = object as? T {
-            result.append(object)
-          }
-        }
       } catch {
         throw error
       }
@@ -48,8 +42,8 @@ class DIScopeImpl {
     return result
   }
 
-  func resolve<T, Method>(_ scope: DIScope, name: String, circular: Bool = false, method: (Method) -> Any) throws -> T {
-    let rTypes = try getTypes(T.self)
+  func resolve<T, Method>(_ scope: DIScope, name: String, type: T.Type, method: @escaping (Method) -> Any) throws -> T {
+    let rTypes = try getTypes(type)
 
     for rType in rTypes {
       if rType.has(name: name) {
@@ -57,24 +51,10 @@ class DIScopeImpl {
       }
     }
 
-    throw DIError.typeIsNotFoundForName(type: T.self, name: name, components: rTypes.map { $0.component})
+    throw DIError.typeIsNotFoundForName(type: type, name: name, components: rTypes.map { $0.component})
   }
 
-  func resolve<T>(_ scope: DIScope, object: T) throws {
-    let rTypes = try getTypes(type(of: object))
-
-    if rTypes.count > 1 {
-      guard let typeIndex = rTypes.index(where: { $0.isDefault }) else {
-        throw DIError.defaultTypeIsNotSpecified(type: type(of: object), components: rTypes.map{ $0.component })
-      }
-
-      resolveUseRTypeAndObject(scope, pair: RTypeWithName(rTypes[typeIndex]), obj: object)
-    } else {
-      resolveUseRTypeAndObject(scope, pair: RTypeWithName(rTypes[0]), obj: object)
-    }
-  }
-
-  func resolve<Method>(_ scope: DIScope, rType: RTypeFinal, method: (Method) -> Any) throws -> Any {
+  func resolve<Method>(_ scope: DIScope, rType: RTypeFinal, method: @escaping (Method) -> Any) throws -> Any {
     return try resolveUseRType(scope, pair: RTypeWithName(rType), method: method)
   }
 
@@ -92,32 +72,7 @@ class DIScopeImpl {
     return rTypes
   }
 
-  private func savePerRequestObject<T>(_ obj: T, pair: RTypeWithName) {
-    let key = pair.uniqueKey
-
-    if var list = cache.perRequest[key] {
-      list.append(Weak(value: obj))
-      cache.perRequest[key] = list.filter{ nil != $0.value } // removed old values
-    } else {
-      cache.perRequest[key] = [Weak(value: obj)]
-    }
-  }
-
-  private func resolveUseRTypeAndObject<T>(_ scope: DIScope, pair: RTypeWithName, obj: T) {
-    objc_sync_enter(DIScopeImpl.monitor)
-    defer { objc_sync_exit(DIScopeImpl.monitor) }
-
-    if .perRequest == pair.rType.lifeTime {
-      savePerRequestObject(obj, pair: pair)
-    }
-
-    circular.objects.append((pair, obj))
-    circular.objMap[pair.uniqueKey] = obj
-
-    setupAllDependency(scope)
-  }
-
-  private func resolveUseRType<T, Method>(_ scope: DIScope, pair: RTypeWithName, method: (Method) -> Any) throws -> T {
+  private func resolveUseRType<T, Method>(_ scope: DIScope, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
     objc_sync_enter(DIScopeImpl.monitor)
     defer { objc_sync_exit(DIScopeImpl.monitor) }
 
@@ -130,12 +85,10 @@ class DIScopeImpl {
       return try resolvePerScope(scope, pair: pair, method: method)
     case .perDependency:
       return try resolvePerDependency(scope, pair: pair, method: method)
-    case .perRequest:
-      return try resolvePerRequest(scope, pair: pair, method: method)
     }
   }
 
-  private func resolveSingle<T, Method>(_ scope: DIScope, pair: RTypeWithName, method: (Method) -> Any) throws -> T {
+  private func resolveSingle<T, Method>(_ scope: DIScope, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
     let key = pair.uniqueKey
 
     if let obj = Cache.single[key] {
@@ -147,7 +100,7 @@ class DIScopeImpl {
     return obj
   }
 
-  private func resolvePerScope<T, Method>(_ scope: DIScope, pair: RTypeWithName, method: (Method) -> Any) throws -> T {
+  private func resolvePerScope<T, Method>(_ scope: DIScope, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
     let key = pair.uniqueKey
 
     if let obj = cache.perScope[key] {
@@ -159,38 +112,7 @@ class DIScopeImpl {
     return obj
   }
 
-  private func resolvePerRequest<T, Method>(_ scope: DIScope, pair: RTypeWithName, method: (Method) -> Any) throws -> T {
-    let key = pair.uniqueKey
-
-    var strongs: [T] = []
-    var finalError: Error!
-
-    do {
-      strongs.append(try resolvePerDependency(scope, pair: pair, method: method))
-    } catch {
-      finalError = error
-    }
-
-    if let list = cache.perRequest[key] {
-      for weak in list {
-        if let obj = weak.value as? T {
-          strongs.append(obj)
-        }
-      }
-    }
-
-    if strongs.count > 1 {
-      throw DIError.severalPerRequestObjectsFor(type: T.self, objects: strongs.map{ $0 as Any })
-    }
-
-    if let single = strongs.first {
-      return single
-    }
-
-    throw finalError
-  }
-
-  private func resolvePerDependency<T, Method>(_ scope: DIScope, pair: RTypeWithName, method: (Method) -> Any) throws -> T {
+  private func resolvePerDependency<T, Method>(_ scope: DIScope, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
     if recursiveInitializer.contains(pair.uniqueKey) {
       throw DIError.recursiveInitialization(component: pair.rType.component)
     }
@@ -238,14 +160,19 @@ class DIScopeImpl {
     circular.clean()
   }
 
-  private func getObject<T, Method>(_ scope: DIScope, pair: RTypeWithName, method: (Method) -> Any) throws -> T {
+  private func getObject<T, Method>(_ scope: DIScope, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
     if circular.isCycle(pair: pair), let obj = circular.objMap[pair.uniqueKey] {
       return obj as! T
     }
 
-    recursiveInitializer.insert(pair.uniqueKey)
-    let objAny = try pair.rType.new(method)
-    recursiveInitializer.remove(pair.uniqueKey)
+		let objAny: Any
+		if let specialMethod = (method as Any) as? () -> Any {
+			objAny = specialMethod()
+		} else {
+			recursiveInitializer.insert(pair.uniqueKey)
+			objAny = try pair.rType.new(method)
+			recursiveInitializer.remove(pair.uniqueKey)
+		}
 
     guard let obj = objAny as? T else {
       throw DIError.typeIsIncorrect(requestedType: T.self, realType: type(of: objAny), component: pair.component)
@@ -283,9 +210,6 @@ class DIScopeImpl {
 
   private class Cache {
     fileprivate static var single: [RType.UniqueKey: Any] = [:]
-    
-    fileprivate var perRequest: [RType.UniqueKey: [Weak]] = [:]
-    
     fileprivate var perScope: [RType.UniqueKey: Any] = [:]
   }
   private let cache = Cache()

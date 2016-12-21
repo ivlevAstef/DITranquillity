@@ -37,6 +37,8 @@ public final class DIStoryboard: NSStoryboard, _DIStoryboardBaseResolver {
 public extension DIContainerBuilder {
   @discardableResult
   public func register<T: Any>(vc type: T.Type, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
-    return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: type, file: file, line: line)).lifetime(.perRequest).asSelf()
+		return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: type, file: file, line: line))
+			.asSelf()
+			.initializer { NSViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T }
   }
 }
