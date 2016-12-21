@@ -52,13 +52,13 @@ public extension DIRegistrationBuilder where ImplObj: UIViewController {
 	
 	@discardableResult
 	public func initializer(byStoryboard storyboard: UIStoryboard, identifier: String) -> Self {
-		rType.setInitializer { storyboard.instantiateController(withIdentifier: identifier) }
+		rType.setInitializer { storyboard.instantiateViewController(withIdentifier: identifier) }
 		return self
 	}
 	
 	@discardableResult
 	public func initializer(byStoryboard storyboard: @escaping (_ scope: DIScope) -> UIStoryboard, identifier: String) -> Self {
-		rType.setInitializer { scope in storyboard(scope).instantiateController(withIdentifier: identifier) }
+		rType.setInitializer { scope in storyboard(scope).instantiateViewController(withIdentifier: identifier) }
 		return self
 	}
 }
