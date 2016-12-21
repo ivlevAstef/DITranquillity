@@ -29,18 +29,18 @@ class YourViewController: NSViewController {
 ## Регистрация ViewController
 Выше был описан ViewController. Также сразу же в нем была объявлена некоторая переменная. Чтобы использовать этот ViewController из storyboard, и при этом получить преимущества DI надо:
 * Зарегистрировать его в билдере
-* объявить время жизни `perRequest`
+* указать что инициализатор может отсуствовать (или указать его)
 * указать все зависимости, которые он имеет
 
 Сделать это можно так:
 ```Swift
 builder.register(YourViewController.self)
-  .lifetime(.perRequest)
   .dependency { (scope, viewController) in viewController.inject = *!scope }
+  .initializerDoesNotNeedToBe()
 ```
-При таком способе не получиться использовать внедрение зависимостей через метод инициализации, так как ViewController создает storyboard, а не библиотека.
+При таком способе внедрение зависимостей произойдет автоматически при создании ViewController из storyboard.
 
-При этом обращу внимание на то, что если ViewController создается из xib/nib, то можно и нужно использовать обычно время жизни:
+При этом обращу внимание на то, что если ViewController создается из кода программы, то его стоит регистрировать также как и любой другой объект:
 ```Swift
 builder.register{ YourViewController(nibName: "NibName", bundle: Bundle) }
   .lifetime(.perDependency)
@@ -49,14 +49,37 @@ builder.register{ YourViewController(nibName: "NibName", bundle: Bundle) }
 
 
 ## Сокращенный синтаксис
-Так как ViewController-ы создаются часто, каждый раз указывать время жизни надоедает, поэтому для них есть сокращенный синтаксис:
+Так как ViewController-ы создаются часто, каждый раз указывать отсутствие инициализатора не удобно, поэтому для случае есть ViewController создаеться с помощью переходов на Storyboard есть сокращенный синтаксис:
 ```Swift
 builder.register(vc: YourViewController.self)
   .dependency { (scope, viewController) in viewController.inject = *!scope }
 ```
 
+Обращаю внимание, что такая запись говорит лишь что инициализатора может небыть, но не обязывает библиотеку проверять его отстуствие.
+
+Если требуется создавать ViewController из кода программы, то для расспространных случаев есть сокращенный синтаксис:
+Для создания из xib/nib:
+```Swift
+builder.register(vc: YourViewController.self)
+  .dependency { (scope, viewController) in viewController.inject = *!scope }
+  .initializer(byNib: YourViewController.self)
+```
+Для создания из storyboard, но при наличии вызовов из кода:
+```Swift
+builder.register(vc: YourViewController.self)
+  .dependency { (scope, viewController) in viewController.inject = *!scope }
+  .initializer(byStoryboard: YourStoryboard, identifier: "YourViewController_Identifier")
+```
+
+```Swift
+builder.register(vc: YourViewController.self)
+  .dependency { (scope, viewController) in viewController.inject = *!scope }
+  .initializer(byStoryboard: { scope in return try! scope.resolve(name: "YourStoryboard") }, identifier: "YourViewController_Identifier")
+```
+
+
 ## Создание Storyboard
-Но все это не будет работать, так как обычный storyboard ничего не знает о библиотеке. Поэтому у библиотеки есть собственный класс `DIStoryboard`, являющийся наследником storyboard. По этой причине надо обязательно его создать. Это можно сделать в AppDelegate:
+Но для создания ViewController по средствам переходов на Storyboard (при использовании Segue) выше стоящий код не будет работать, так как обычный storyboard ничего не знает о библиотеке. Поэтому у библиотеки есть собственный класс `DIStoryboard`, являющийся наследником storyboard. Для его создания можно написать:
 ##### Для iOS/tvOS:
 ```Swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -91,7 +114,7 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 }
 ```
 
-Либо можно зарегистрировать storyboard:
+Либо можно зарегистрировать этот storyboard:
 ##### Для iOS/tvOS:
 ```Swift
 builder.register(UIStoryboard.self)

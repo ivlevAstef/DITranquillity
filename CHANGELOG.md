@@ -1,3 +1,9 @@
+# v1.3.0
+* Update documentation
+* Update README
+* Remove lifetime: .perRequest
+* Change arrangement works with ViewControllers
+
 # v1.2.0
 * Update documentation
 * Added base types: DIType, DIMethodSignature, DIComponent

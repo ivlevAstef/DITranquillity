@@ -128,7 +128,9 @@ cat = try! container.resolve()
 ## Для существующего объекта
 В случае если объект создает программа своими собственными силами, но этот объект всё равно имеет зависимости, то можно попросить библиотеку встроить зависимости в уже существующий объект. При этом не стоит забывать, что зарегистрировать компонент для типа этого объекта нужно в любом случае:
 ```Swift
-builder.register{ Cat() }.dependency { scope, cat in cat.owner = try! scope.resolve()  }
+builder.register(Cat.self)
+  .dependency { scope, cat in cat.owner = try! scope.resolve() }
+  .initializerDoesNotNeedToBe() // Чтобы сказать компилятору, что у данного объекта может отсутствовать инициализатор
 ...
 let cat = Cat()
 try! container.resolve(cat)
