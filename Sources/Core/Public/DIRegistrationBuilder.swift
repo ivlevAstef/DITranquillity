@@ -66,6 +66,13 @@ public extension DIRegistrationBuilder {
     rType.lifeTime = lifetime
     return self
   }
+	
+	
+	@discardableResult
+	public func withoutInitializer() -> Self {
+		rType.withoutInitializer = true
+		return self
+	}
 }
 
 

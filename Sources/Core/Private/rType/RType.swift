@@ -31,6 +31,7 @@ class RType: RTypeBase {
   }
 
   var lifeTime = DILifeTime.default
+	var withoutInitializer: Bool = false
   var names: Set<String> = []
   var isDefault: Bool = false
 

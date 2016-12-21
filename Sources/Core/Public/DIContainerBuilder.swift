@@ -37,7 +37,7 @@ extension DIContainerBuilder {
     }
 
     for rType in allTypes {
-      if !(rType.hasInitializer) {
+      if !(rType.hasInitializer || rType.withoutInitializer) {
         errors.append(DIError.notSpecifiedInitializationMethodFor(component: rType.component))
       }
     }
