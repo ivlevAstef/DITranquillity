@@ -8,12 +8,11 @@
 
 import Cocoa
 
-public final class DIStoryboard: NSStoryboard, _DIStoryboardBaseResolver {
+public final class DIStoryboard: NSStoryboard {
   public required init(name: String, bundle storyboardBundleOrNil: Bundle?, container: DIScope) {
-    self.container = container
     storyboard = _DIStoryboardBase.create(name, bundle: storyboardBundleOrNil)
     super.init()
-    storyboard.resolver = self
+    storyboard.resolver = DIStoryboardResolver(container: container)
   }
 
   public override func instantiateInitialController() -> Any? {
@@ -23,15 +22,8 @@ public final class DIStoryboard: NSStoryboard, _DIStoryboardBaseResolver {
   public override func instantiateController(withIdentifier identifier: String) -> Any {
     return storyboard.instantiateController(withIdentifier: identifier)
   }
-
-  @objc public func resolve(_ viewController: Any, identifier: String) -> Any {
-    _ = try? container.resolve(viewController)
-
-    return viewController
-  }
-
-  private var container: DIScope
-  private unowned let storyboard: _DIStoryboardBase
+  
+  private let storyboard: _DIStoryboardBase
 }
 
 public extension DIContainerBuilder {
