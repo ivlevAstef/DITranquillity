@@ -39,6 +39,7 @@ builder.register(YourViewController.self)
   .initializerDoesNotNeedToBe()
 ```
 При таком способе внедрение зависимостей произойдет автоматически при создании ViewController из storyboard.
+Метод `initializerDoesNotNeedToBe()`, говорит библиотеке что метод инициализации может отсутствовать.
 
 При этом обращу внимание на то, что если ViewController создается из кода программы, то его стоит регистрировать также как и любой другой объект:
 ```Swift
