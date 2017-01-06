@@ -3,6 +3,8 @@
 * Update README
 * Remove lifetime: .perRequest
 * Change arrangement works with ViewControllers
+* Fix critical bug (issue-69): App Crash if call DIStoryboard get ViewController methods after short period of time
+* Write Test by issue-69
 
 # v1.2.0
 * Update documentation

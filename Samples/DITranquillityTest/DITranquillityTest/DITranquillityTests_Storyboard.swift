@@ -157,8 +157,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
 			.asType(ServiceProtocol.self)
 			.initializer { FooService() }
 		
-		builder.register(TestViewController.self)
-			.lifetime(.perRequest)
+		builder.register(vc: TestViewController.self)
 			.dependency { (scope, vc) in vc.service = *!scope }
 		
 		builder.register(UIStoryboard.self)

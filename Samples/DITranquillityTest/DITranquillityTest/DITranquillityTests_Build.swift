@@ -76,7 +76,7 @@ class DITranquillityTests_Build: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(TestProtocol.self)
-      .withoutInitializer()
+      .initializerDoesNotNeedToBe()
     
     do {
       try builder.build()
