@@ -10,19 +10,19 @@ public final class DIScope {
   typealias Method = (_ scope: DIScope) -> Any
 
   public func resolve<T>() throws -> T {
-    return try impl.resolve(self) { (initializer: Method) in return initializer(self) }
+    return try impl.resolve(self, type: T.self) { (initializer: Method) in return initializer(self) }
   }
 
   public func resolveMany<T>() throws -> [T] {
-    return try impl.resolveMany(self) { (initializer: Method) in return initializer(self) }
+    return try impl.resolveMany(self, type: T.self) { (initializer: Method) in return initializer(self) }
   }
 
   public func resolve<T>(name: String) throws -> T {
-    return try impl.resolve(self, name: name) { (initializer: Method) in return initializer(self) }
+		return try impl.resolve(self, name: name, type: T.self) { (initializer: Method) in return initializer(self) }
   }
 
   public func resolve<T>(_ object: T) throws {
-    return try impl.resolve(self, object: object)
+		_ = try impl.resolve(self, type: type(of: object)) { object }
   }
 
   public func newLifeTimeScope() -> DIScope {

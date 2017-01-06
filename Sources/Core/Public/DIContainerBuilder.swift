@@ -37,7 +37,7 @@ extension DIContainerBuilder {
     }
 
     for rType in allTypes {
-      if !(rType.hasInitializer || rType.lifeTime == .perRequest) {
+      if !(rType.hasInitializer || rType.initializerDoesNotNeedToBe) {
         errors.append(DIError.notSpecifiedInitializationMethodFor(component: rType.component))
       }
     }
