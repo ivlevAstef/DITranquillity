@@ -72,11 +72,11 @@ class DITranquillityTests_Build: XCTestCase {
     XCTFail("No try exceptions")
   }
   
-  func test02_NotInitializerForPerRequest() {
+  func test02_NotInitializerForWithOutInitializer() {
     let builder = DIContainerBuilder()
     
     builder.register(TestProtocol.self)
-      .lifetime(.perRequest)
+      .initializerDoesNotNeedToBe()
     
     do {
       try builder.build()

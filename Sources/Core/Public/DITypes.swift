@@ -26,7 +26,6 @@ public enum DILifeTime: Equatable {
   case lazySingle
   case perScope
   case perDependency
-  case perRequest
   
   static var `default`: DILifeTime { return perScope }
 }

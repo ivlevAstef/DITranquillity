@@ -28,8 +28,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .asType(ServiceProtocol.self)
       .initializer { FooService() }
     
-    builder.register(TestViewController.self)
-      .lifetime(.perRequest)
+		builder.register(vc: TestViewController.self)
       .dependency { (scope, vc) in vc.service = *!scope }
     
     let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
@@ -50,8 +49,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .asType(ServiceProtocol.self)
       .initializer { FooService() }
     
-    builder.register(TestViewController2.self)
-      .lifetime(.perRequest)
+		builder.register(vc: TestViewController2.self)
       .dependency { (scope, vc) in vc.service = *!scope }
     
     let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
@@ -82,12 +80,10 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .asType(ServiceProtocol.self)
       .initializer { FooService() }
     
-    builder.register(TestViewController.self)
-      .lifetime(.perRequest)
+		builder.register(vc: TestViewController.self)
       .dependency { (scope, vc) in vc.service = *!scope }
     
-    builder.register(TestViewController2.self)
-      .lifetime(.perRequest)
+		builder.register(vc: TestViewController2.self)
       .dependency { (scope, vc) in vc.service = *!scope }
 
     let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
@@ -134,8 +130,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .asType(ServiceProtocol.self)
       .initializer { FooService() }
     
-    builder.register(TestViewController.self)
-      .lifetime(.perRequest)
+		builder.register(vc: TestViewController.self)
       .dependency { (scope, vc) in vc.service = *!scope }
     
     builder.register(UIStoryboard.self)
@@ -154,4 +149,41 @@ class DITranquillityTests_Storyboard: XCTestCase {
     XCTAssertEqual(testVC.service.foo(), "foo")
     
   }
+	
+	func test07_issue69_getViewControllerAfterDelay() {
+		let builder = DIContainerBuilder()
+		
+		builder.register(FooService.self)
+			.asType(ServiceProtocol.self)
+			.initializer { FooService() }
+		
+		builder.register(vc: TestViewController.self)
+			.dependency { (scope, vc) in vc.service = *!scope }
+		
+		builder.register(UIStoryboard.self)
+			.lifetime(.single)
+			.initializer { DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: $0) }
+		
+		var storyboard: UIStoryboard!
+		autoreleasepool {
+			let container = try! builder.build()
+			storyboard = *!container
+		}
+		
+		let semaphore = DispatchSemaphore(value: 0)
+		DispatchQueue.global(qos: .userInteractive).asyncAfter(wallDeadline: .now() + 1) {
+			defer { semaphore.signal() }
+			let viewController = storyboard.instantiateInitialViewController()
+			XCTAssert(viewController is TestViewController)
+			guard let testVC = viewController as? TestViewController else {
+				XCTFail("incorrect View Controller")
+				return
+			}
+			
+			XCTAssertEqual(testVC.service.foo(), "foo")
+		}
+		semaphore.wait()
+		
+		
+	}
 }

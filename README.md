@@ -100,7 +100,7 @@ let builder = DIContainerBuilder()
 builder.register{ Cat() }
   .asSelf()
   .asType(Animal.self)
-  .lifetime(.perDependency) // single, lazySingle, perScope, perRequest
+  .lifetime(.perDependency) // .lazySingle, .single, .perScope, .perDependency
   
 builder.register(Dog.self)
   .asSelf()
