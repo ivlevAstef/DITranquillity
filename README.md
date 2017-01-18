@@ -227,4 +227,5 @@ See [CHANGELOG.md](https://github.com/ivlevAstef/DITranquillity/blob/master/CHAN
 * [Typhoon](https://github.com/appsquickly/Typhoon)
 * [Swinject](https://github.com/Swinject/Swinject)
 * [DIP](https://github.com/AliSoftware/Dip)
+* [Cleanse](https://github.com/square/Cleanse)
 
