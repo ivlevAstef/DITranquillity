@@ -72,4 +72,4 @@ class YourMainAssembly: DIAssembly {
 
 #### [Главная](main.md)
 #### [Предыдущая глава "Storyboard"](storyboard.md)
-#### [Следующая глава "Исключения"](errors.md)
+#### [Следующая глава "Инициализация в момент обращения"](lazy.md)
