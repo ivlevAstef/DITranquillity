@@ -63,7 +63,7 @@ class DIScopeImpl {
   }
 
   private func getTypes<T>(_ inputType: T.Type) throws -> [RTypeFinal] {
-    let type = Helpers.removedTypeWrappers(inputType)
+    let type = removedTypeWrappers(inputType)
 
     guard let rTypes = container[type], !rTypes.isEmpty else {
       throw DIError.typeIsNotFound(type: inputType)
