@@ -24,6 +24,7 @@ Dependency injection for iOS/macOS/tvOS (Swift)
 * Fast resolve syntax
 * Thread safety
 * Scan Modules/Assemblies
+* Lazy injection
 
 ## Install
 Via CocoaPods.

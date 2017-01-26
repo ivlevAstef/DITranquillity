@@ -1,3 +1,8 @@
+# v1.3.1
+* Support Lazy `DILazy`
+* Add documentation for lazy
+* Improved typing - now `DIType` it's `Any.Type` for a place `Any`
+
 # v1.3.0
 * Update documentation
 * Update README
