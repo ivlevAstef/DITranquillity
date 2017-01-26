@@ -10,19 +10,34 @@ class DIScopeImpl {
   init(container: RTypeContainerFinal) {
     self.container = container
   }
-
+	
+	@discardableResult
+	func check<T>(_ scope: DIScope, type: T.Type) throws -> [RTypeFinal] {
+		let rTypes = try getTypes(type)
+		
+		if rTypes.count > 1 && !rTypes.contains(where: { $0.isDefault }) {
+			throw DIError.defaultTypeIsNotSpecified(type: type, components: rTypes.map{ $0.component })
+		}
+		
+		return rTypes
+	}
+	
+	@discardableResult
+	func check<T>(_ scope: DIScope, name: String, type: T.Type) throws -> [RTypeFinal] {
+		let rTypes = try getTypes(type)
+		
+		if !rTypes.contains(where: { $0.has(name: name)}) {
+			throw DIError.typeIsNotFoundForName(type: type, name: name, components: rTypes.map { $0.component })
+		}
+		
+		return rTypes
+	}
+	
 	func resolve<T, Method>(_ scope: DIScope, type: T.Type, method: @escaping (Method) -> Any) throws -> T {
-    let rTypes = try getTypes(type)
+		let rTypes = try check(scope, type: type)
 
-    if rTypes.count > 1 {
-      guard let typeIndex = rTypes.index(where: { $0.isDefault }) else {
-        throw DIError.defaultTypeIsNotSpecified(type: type, components: rTypes.map{ $0.component })
-      }
-
-      return try resolveUseRType(scope, pair: RTypeWithName(rTypes[typeIndex]), method: method)
-    }
-
-    return try resolveUseRType(scope, pair: RTypeWithName(rTypes[0]), method: method)
+		let index = rTypes.count <= 1 ? 0 : rTypes.index(where: { $0.isDefault })!
+    return try resolveUseRType(scope, pair: RTypeWithName(rTypes[index]), method: method)
   }
 
   func resolveMany<T, Method>(_ scope: DIScope, type: T.Type, method: @escaping (Method) -> Any) throws -> [T] {
@@ -43,15 +58,10 @@ class DIScopeImpl {
   }
 
   func resolve<T, Method>(_ scope: DIScope, name: String, type: T.Type, method: @escaping (Method) -> Any) throws -> T {
-    let rTypes = try getTypes(type)
+		let rTypes = try check(scope, name: name, type: type)
 
-    for rType in rTypes {
-      if rType.has(name: name) {
-        return try resolveUseRType(scope, pair: RTypeWithName(rType, name), method: method)
-      }
-    }
-
-    throw DIError.typeIsNotFoundForName(type: type, name: name, components: rTypes.map { $0.component})
+		let rType = rTypes.first(where: { $0.has(name: name) })!
+    return try resolveUseRType(scope, pair: RTypeWithName(rType, name), method: method)
   }
 
   func resolve<Method>(_ scope: DIScope, rType: RTypeFinal, method: @escaping (Method) -> Any) throws -> Any {
@@ -63,7 +73,7 @@ class DIScopeImpl {
   }
 
   private func getTypes<T>(_ inputType: T.Type) throws -> [RTypeFinal] {
-    let type = Helpers.removedTypeWrappers(inputType)
+    let type = removedTypeWrappers(inputType)
 
     guard let rTypes = container[type], !rTypes.isEmpty else {
       throw DIError.typeIsNotFound(type: inputType)
@@ -72,7 +82,7 @@ class DIScopeImpl {
     return rTypes
   }
 
-  private func resolveUseRType<T, Method>(_ scope: DIScope, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
+	private func resolveUseRType<T, Method>(_ scope: DIScope, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
     objc_sync_enter(DIScopeImpl.monitor)
     defer { objc_sync_exit(DIScopeImpl.monitor) }
 

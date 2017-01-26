@@ -6,26 +6,23 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-class Helpers {
-  private static let wrappers = [
-    "Optional",
-    "ImplicitlyUnwrappedOptional"
-  ]
+protocol DITypeGetter {
+	static var type: Any.Type { get }
+}
 
-  // It's worked but it's no good
-  static func removedTypeWrappers<T>(_ type: T.Type) -> Any {
-    var text = String(describing: type)
+extension ImplicitlyUnwrappedOptional: DITypeGetter {
+	static var type: Any.Type { return Wrapped.self  }
+}
 
-    for wrapper in wrappers {
-      if text.hasPrefix(wrapper) {
-        // removed wrapper with symbols: '<' '>'
-        text.removeSubrange(text.startIndex...text.characters.index(text.startIndex, offsetBy: wrapper.characters.count))
-        text.removeSubrange(text.characters.index(before: text.endIndex)..<text.endIndex)
+extension Optional: DITypeGetter {
+	static var type: Any.Type { return Wrapped.self  }
+}
 
-        return text
-      }
-    }
-
-    return type
-  }
+// It's worked but it's no good
+func removedTypeWrappers(_ type: Any.Type) -> Any.Type {
+	if let typeGetter = type as? DITypeGetter.Type {
+		return removedTypeWrappers(typeGetter.type)
+	}
+	
+	return type
 }
