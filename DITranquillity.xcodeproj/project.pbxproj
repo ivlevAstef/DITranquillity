@@ -37,6 +37,12 @@
 		16640A861D9E1E7B00707BFC /* DIScope.ShortSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A691D9E1E7B00707BFC /* DIScope.ShortSyntax.swift */; };
 		16640A871D9E1E7B00707BFC /* DIScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A6A1D9E1E7B00707BFC /* DIScope.swift */; };
 		16640A881D9E1E7B00707BFC /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1683F59C1E32184C0073669D /* DILazy.ShortSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683F59A1E32184C0073669D /* DILazy.ShortSyntax.swift */; };
+		1683F59D1E32184C0073669D /* DILazy.ShortSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683F59A1E32184C0073669D /* DILazy.ShortSyntax.swift */; };
+		1683F59E1E32184C0073669D /* DILazy.ShortSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683F59A1E32184C0073669D /* DILazy.ShortSyntax.swift */; };
+		1683F59F1E32184C0073669D /* DILazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683F59B1E32184C0073669D /* DILazy.swift */; };
+		1683F5A01E32184C0073669D /* DILazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683F59B1E32184C0073669D /* DILazy.swift */; };
+		1683F5A11E32184C0073669D /* DILazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683F59B1E32184C0073669D /* DILazy.swift */; };
 		169C0DC31DA3501F001F0AD5 /* RTypeFinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A591D9E1E7B00707BFC /* RTypeFinal.swift */; };
 		169C0DC41DA3501F001F0AD5 /* DIRegistrationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A681D9E1E7B00707BFC /* DIRegistrationBuilder.swift */; };
 		169C0DC51DA3501F001F0AD5 /* DIContainerBuilder.ShortSyntax.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165F61531D9E82C100F6126E /* DIContainerBuilder.ShortSyntax.Arg.swift */; };
@@ -134,6 +140,8 @@
 		16640A691D9E1E7B00707BFC /* DIScope.ShortSyntax.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScope.ShortSyntax.swift; sourceTree = "<group>"; };
 		16640A6A1D9E1E7B00707BFC /* DIScope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScope.swift; sourceTree = "<group>"; };
 		16640A6B1D9E1E7B00707BFC /* DITranquillity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DITranquillity.h; sourceTree = "<group>"; };
+		1683F59A1E32184C0073669D /* DILazy.ShortSyntax.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DILazy.ShortSyntax.swift; sourceTree = "<group>"; };
+		1683F59B1E32184C0073669D /* DILazy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DILazy.swift; sourceTree = "<group>"; };
 		169C0DE51DA3501F001F0AD5 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		169C0E111DA352C7001F0AD5 /* DIStoryboardBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DIStoryboardBase.h; sourceTree = "<group>"; };
 		169C0E121DA352C7001F0AD5 /* DIStoryboardBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIStoryboardBase.m; sourceTree = "<group>"; };
@@ -241,6 +249,7 @@
 		16640A5F1D9E1E7B00707BFC /* Public */ = {
 			isa = PBXGroup;
 			children = (
+				1683F5991E32184C0073669D /* Lazy */,
 				16640A601D9E1E7B00707BFC /* Arg */,
 				16640A651D9E1E7B00707BFC /* DIContainerBuilder.swift */,
 				16640A661D9E1E7B00707BFC /* DIError.swift */,
@@ -273,6 +282,15 @@
 				169C0E131DA352C7001F0AD5 /* OSX */,
 			);
 			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		1683F5991E32184C0073669D /* Lazy */ = {
+			isa = PBXGroup;
+			children = (
+				1683F59A1E32184C0073669D /* DILazy.ShortSyntax.swift */,
+				1683F59B1E32184C0073669D /* DILazy.swift */,
+			);
+			path = Lazy;
 			sourceTree = "<group>";
 		};
 		169C0E101DA352C7001F0AD5 /* iOS-tvOS */ = {
@@ -492,8 +510,10 @@
 				163DDDC71DB9C84E0003DE54 /* DITypes.swift in Sources */,
 				169C0DD01DA3501F001F0AD5 /* RTypeContainer.swift in Sources */,
 				169C0DD11DA3501F001F0AD5 /* DIScopeImpl.swift in Sources */,
+				1683F59D1E32184C0073669D /* DILazy.ShortSyntax.swift in Sources */,
 				169C0DD21DA3501F001F0AD5 /* DIDynamicAssembly.swift in Sources */,
 				169C0DD31DA3501F001F0AD5 /* DIScope.swift in Sources */,
+				1683F5A01E32184C0073669D /* DILazy.swift in Sources */,
 				16D7BCBB1DB086B500A29A9F /* DIScan.swift in Sources */,
 				169C0DD41DA3501F001F0AD5 /* Helpers.swift in Sources */,
 				169C0DD51DA3501F001F0AD5 /* DIContainerBuilder.swift in Sources */,
@@ -529,8 +549,10 @@
 				163DDDC81DB9C84E0003DE54 /* DITypes.swift in Sources */,
 				169C0E361DA35CBE001F0AD5 /* RTypeContainer.swift in Sources */,
 				169C0E371DA35CBE001F0AD5 /* DIScopeImpl.swift in Sources */,
+				1683F59E1E32184C0073669D /* DILazy.ShortSyntax.swift in Sources */,
 				169C0E381DA35CBE001F0AD5 /* DIDynamicAssembly.swift in Sources */,
 				169C0E391DA35CBE001F0AD5 /* DIScope.swift in Sources */,
+				1683F5A11E32184C0073669D /* DILazy.swift in Sources */,
 				16D7BCBC1DB086B600A29A9F /* DIScan.swift in Sources */,
 				169C0E3A1DA35CBE001F0AD5 /* Helpers.swift in Sources */,
 				169C0E3B1DA35CBE001F0AD5 /* DIContainerBuilder.swift in Sources */,
@@ -566,8 +588,10 @@
 				163DDDC61DB9C84E0003DE54 /* DITypes.swift in Sources */,
 				16640A7A1D9E1E7B00707BFC /* RTypeContainer.swift in Sources */,
 				16640A741D9E1E7B00707BFC /* DIScopeImpl.swift in Sources */,
+				1683F59C1E32184C0073669D /* DILazy.ShortSyntax.swift in Sources */,
 				16640A721D9E1E7B00707BFC /* DIDynamicAssembly.swift in Sources */,
 				16640A871D9E1E7B00707BFC /* DIScope.swift in Sources */,
+				1683F59F1E32184C0073669D /* DILazy.swift in Sources */,
 				16D7BCB81DB086B000A29A9F /* DIScan.swift in Sources */,
 				16640A751D9E1E7B00707BFC /* Helpers.swift in Sources */,
 				16640A821D9E1E7B00707BFC /* DIContainerBuilder.swift in Sources */,
