@@ -6,12 +6,6 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public extension DIContainerBuilder {
-  public func register<T>(_ type: T.Type, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
-    return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: type, file: file, line: line))
-  }
-}
-
 public extension DIRegistrationBuilder {
   // As
   @discardableResult
@@ -42,14 +36,20 @@ public extension DIRegistrationBuilder {
   
   // Initializer
   @discardableResult
-  public func initializer(_ method: @escaping (_ scope: DIScope) -> ImplObj) -> Self {
-    rType.setInitializer { (s) -> Any in return method(s) }
+  public func initializer(closure: @escaping (_ scope: DIScope) -> ImplObj) -> Self {
+    rType.setInitializer { (s) -> Any in return closure(s) }
     return self
   }
   
   @discardableResult
-  public func initializer(_ method: @escaping () -> ImplObj) -> Self {
-    rType.setInitializer { (_: DIScope) -> Any in return method() }
+  public func initializer(closure: @escaping () -> ImplObj) -> Self {
+    rType.setInitializer { (_: DIScope) -> Any in return closure() }
+    return self
+  }
+  
+  @discardableResult
+  public func initializer(init initm: @escaping () -> ImplObj) -> Self {
+    rType.setInitializer { (_: DIScope) -> Any in return initm() }
     return self
   }
   
