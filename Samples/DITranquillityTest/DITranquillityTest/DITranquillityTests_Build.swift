@@ -72,11 +72,11 @@ class DITranquillityTests_Build: XCTestCase {
     XCTFail("No try exceptions")
   }
   
-  func test02_NotInitializerForPerRequest() {
+  func test02_NotInitializerForWithOutInitializer() {
     let builder = DIContainerBuilder()
     
     builder.register(TestProtocol.self)
-      .lifetime(.perRequest)
+      .initializerDoesNotNeedToBe()
     
     do {
       try builder.build()
@@ -91,12 +91,12 @@ class DITranquillityTests_Build: XCTestCase {
     let lineClass1 = #line; builder.register(TestClass1.self)
       .asType(TestProtocol.self)
       .asDefault()
-      .initializer(closure: TestClass1())
+      .initializer(closure:{ TestClass1() })
     
     let lineClass2 = #line; builder.register(TestClass2.self)
       .asType(TestProtocol.self)
       .asDefault()
-      .initializer(closure: TestClass2())
+      .initializer(closure:{ TestClass2() })
     
     do {
       try builder.build()
@@ -120,11 +120,11 @@ class DITranquillityTests_Build: XCTestCase {
     builder.register(TestClass1.self)
       .asType(TestProtocol.self)
       .asDefault()
-      .initializer(closure: TestClass1())
+      .initializer(closure:{ TestClass1() })
     
     builder.register(TestClass2.self)
       .asType(TestProtocol.self)
-      .initializer(closure: TestClass2())
+      .initializer(closure:{ TestClass2() })
     
     do {
       try builder.build()
@@ -139,12 +139,12 @@ class DITranquillityTests_Build: XCTestCase {
     builder.register(TestClass1.self)
       .asType(TestProtocol.self)
       .asName("foo")
-      .initializer(closure: TestClass1())
+      .initializer(closure:{ TestClass1() })
     
     builder.register(TestClass2.self)
       .asType(TestProtocol.self)
       .asName("bar")
-      .initializer(closure: TestClass2())
+      .initializer(closure:{ TestClass2() })
     
     do {
       try builder.build()
@@ -158,7 +158,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     let line = #line; builder.register(TestClass1.self)
       .asType(Test2Protocol.self) //<---- Swift not supported static check
-      .initializer(closure: TestClass1())
+      .initializer(closure:{ TestClass1() })
     
     do {
       let container = try builder.build()
@@ -185,7 +185,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     builder.register(TestClass1.self)
       .asType(TestProtocol.self)
-      .initializer(closure: TestClass1())
+      .initializer(closure:{ TestClass1() })
     
     do {
       let container = try builder.build()

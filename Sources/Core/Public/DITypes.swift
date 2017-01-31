@@ -6,7 +6,7 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public typealias DIType = Any
+public typealias DIType = Any.Type
 public typealias DIMethodSignature = Any
 
 public struct DIComponent {
@@ -26,7 +26,6 @@ public enum DILifeTime: Equatable {
   case lazySingle
   case perScope
   case perDependency
-  case perRequest
   
   static var `default`: DILifeTime { return perScope }
 }

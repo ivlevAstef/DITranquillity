@@ -36,13 +36,7 @@ extension DIRegistrationBuilder {
 }
 
 // Initializer
-extension DIRegistrationBuilder {
-  @discardableResult
-  public func initializer(closure: @autoclosure @escaping () -> ImplObj) -> Self {
-    rType.setInitializer { (_: DIScope) -> Any in return closure() }
-    return self
-  }
-  
+extension DIRegistrationBuilder {  
   @discardableResult
   public func initializer(closure: @escaping () -> ImplObj) -> Self {
     rType.setInitializer { (_: DIScope) -> Any in return closure() }
@@ -78,6 +72,13 @@ extension DIRegistrationBuilder {
     rType.lifeTime = lifetime
     return self
   }
+	
+	
+	@discardableResult
+	public func initializerDoesNotNeedToBe() -> Self {
+		rType.initializerDoesNotNeedToBe = true
+		return self
+	}
 }
 
 

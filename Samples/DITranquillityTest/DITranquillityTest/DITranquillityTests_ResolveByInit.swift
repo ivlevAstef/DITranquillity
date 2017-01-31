@@ -82,9 +82,9 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
   func test06_InitializerAllParams() {
     let builder = DIContainerBuilder()
     
-    builder.register(closure: 15 as Int)
-    builder.register(closure: true as Bool)
-    builder.register(closure: "test" as String)
+    builder.register(closure:{ 15 as Int })
+    builder.register(closure:{ true as Bool })
+    builder.register(closure:{ "test" as String })
     
     builder.register(Params.self)
       .lifetime(.perDependency)
@@ -99,9 +99,9 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
   func test07_RegisterAllParams() {
     let builder = DIContainerBuilder()
     
-    builder.register(closure: 15 as Int)
-    builder.register(closure: true as Bool)
-    builder.register(closure: "test" as String)
+    builder.register(closure:{ 15 as Int })
+    builder.register(closure:{ true as Bool })
+    builder.register(closure:{ "test" as String })
     
     builder.register(init: Params.init(number:str:bool:))
       .lifetime(.perDependency)
@@ -115,9 +115,9 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
   func test08_InitializerParamsMulti() {
     let builder = DIContainerBuilder()
     
-    builder.register(closure: 15 as Int)
-    builder.register(closure: true as Bool)
-    builder.register(closure: "test" as String)
+    builder.register(closure:{ 15 as Int })
+    builder.register(closure:{ true as Bool })
+    builder.register(closure:{ "test" as String })
     
     builder.register(Params.self)
       .lifetime(.perDependency)

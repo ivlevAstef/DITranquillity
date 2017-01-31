@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		118DBCB71E40F9E9003A7D1F /* DITranquillityTests_ResolveByInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCB61E40F9E9003A7D1F /* DITranquillityTests_ResolveByInit.swift */; };
+		118DBCCA1E410001003A7D1F /* DITranquillityTests_Lazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCC91E410001003A7D1F /* DITranquillityTests_Lazy.swift */; };
 		1699AEC11DCAED8C00962832 /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1699AEC01DCAED8C00962832 /* DITranquillity.framework */; };
 		1699AEC31DCAEDD900962832 /* SubProject1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1699AEC21DCAEDD900962832 /* SubProject1.framework */; };
 		1699AEDC1DCAEE6000962832 /* SubProject2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1699AEDB1DCAEE6000962832 /* SubProject2.framework */; };
@@ -23,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		118DBCB61E40F9E9003A7D1F /* DITranquillityTests_ResolveByInit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_ResolveByInit.swift; sourceTree = "<group>"; };
+		118DBCC91E410001003A7D1F /* DITranquillityTests_Lazy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Lazy.swift; sourceTree = "<group>"; };
 		1699AEC01DCAED8C00962832 /* DITranquillity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DITranquillity.framework; path = "../../build/Debug-iphoneos/DITranquillity.framework"; sourceTree = "<group>"; };
 		1699AEC21DCAEDD900962832 /* SubProject1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SubProject1.framework; path = "SubProject1/build/Debug-iphoneos/SubProject1.framework"; sourceTree = "<group>"; };
 		1699AEDB1DCAEE6000962832 /* SubProject2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SubProject2.framework; path = "SubProject2/build/Debug-iphoneos/SubProject2.framework"; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 		A5D918BE1D1939A70009F9D4 /* DITranquillityTest */ = {
 			isa = PBXGroup;
 			children = (
+				118DBCC91E410001003A7D1F /* DITranquillityTests_Lazy.swift */,
 				A5D918BF1D1939A70009F9D4 /* DITranquillityTests_Build.swift */,
 				A5D918C01D1939A70009F9D4 /* Info.plist */,
 				A5D918C11D1939A70009F9D4 /* ResolveTestClasses.swift */,
@@ -166,6 +169,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				118DBCCA1E410001003A7D1F /* DITranquillityTests_Lazy.swift in Sources */,
 				A5AD4F041D3CD4CB00A6882C /* DITranquillityTests_Threads.swift in Sources */,
 				A51CEC561D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift in Sources */,
 				118DBCB71E40F9E9003A7D1F /* DITranquillityTests_ResolveByInit.swift in Sources */,

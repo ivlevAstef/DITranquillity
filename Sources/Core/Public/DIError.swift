@@ -18,8 +18,6 @@ public enum DIError: Error {
 
   case intersectionNamesForType(type: DIType, names: Set<String>, components: [DIComponent])
 
-  case severalPerRequestObjectsFor(type: DIType, objects: [Any])
-
   case typeIsIncorrect(requestedType: DIType, realType: DIType, component: DIComponent)
 
   case recursiveInitialization(component: DIComponent)

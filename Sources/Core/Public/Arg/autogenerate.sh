@@ -180,7 +180,7 @@ resolveFunctions() { #argcount prefix file
 
   echo "  public func resolve<T, $ArgType>($prefix$ArgumentsType) throws -> T {
     typealias Method = (_ scope: DIScope, _ $ArgumentsMethodType) -> Any
-    return try impl.resolve(self) { (\$0 as Method)(self, $ArgParam) }
+    return try impl.resolve(self, type: T.self) { (\$0 as Method)(self, $ArgParam) }
   }
   " >> $3
 }
@@ -197,7 +197,7 @@ resolveManyFunctions() { #argcount prefix file
 
   echo "  public func resolveMany<T, $ArgType>($prefix$ArgumentsType) throws -> [T] {
     typealias Method = (_ scope: DIScope, _ $ArgumentsMethodType) -> Any
-    return try impl.resolveMany(self) { (\$0 as Method)(self, $ArgParam) }
+    return try impl.resolveMany(self, type: T.self) { (\$0 as Method)(self, $ArgParam) }
   }
   " >> $3
 }
@@ -216,7 +216,7 @@ resolveNameFunctions() { #argcount prefix file
   local name="name"
   echo "  public func resolve<T, $ArgType>($prefix$name: String, $ArgumentsType) throws -> T {
     typealias Method = (_ scope: DIScope, _ $ArgumentsMethodType) -> Any
-    return try impl.resolve(self, name: name) { (\$0 as Method)(self, $ArgParam) }
+    return try impl.resolve(self, name: name, type: T.self) { (\$0 as Method)(self, $ArgParam) }
   }
   " >> $3
 }
