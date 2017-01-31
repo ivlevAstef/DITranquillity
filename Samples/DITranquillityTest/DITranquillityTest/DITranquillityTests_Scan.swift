@@ -18,14 +18,14 @@ public class ScannedRecursiveBase: DIScanned {}
 public class RecursiveModule1Type { }
 public class ScannedRecursiveModul_1: ScannedRecursiveBase, DIModule {
 	public func load(builder: DIContainerBuilder) {
-		builder.register{ RecursiveModule1Type() }
+    builder.register(closure: RecursiveModule1Type())
 	}
 }
 
 public class RecursiveModule2Type { }
 public class ScannedRecursiveModul_2: ScannedRecursiveBase, DIModule {
 	public func load(builder: DIContainerBuilder) {
-		builder.register{ RecursiveModule2Type() }
+		builder.register(closure: RecursiveModule2Type())
 	}
 }
 

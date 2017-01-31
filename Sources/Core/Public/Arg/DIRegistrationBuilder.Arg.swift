@@ -8,62 +8,62 @@
 
 public extension DIRegistrationBuilder {
   @discardableResult
-  public func initializer<A0>(closure: @escaping (_ s: DIScope, _ a0: A0) -> ImplObj) -> Self {
-    rType.setInitializer { closure($0, $1) }
+  public func initializer<P0>(closure: @escaping (_ s: DIScope, _ p0: P0) -> ImplObj) -> Self {
+    rType.setInitializer { closure($0, $1) as Any }
     return self
   }
   
   @discardableResult
-  public func initializer<A0, A1>(closure: @escaping (_ s: DIScope, _ a0: A0, _ a1: A1) -> ImplObj) -> Self {
-    rType.setInitializer { closure($0, $1, $2) }
+  public func initializer<P0, P1>(closure: @escaping (_ s: DIScope, _ p0: P0, _ p1: P1) -> ImplObj) -> Self {
+    rType.setInitializer { closure($0, $1, $2) as Any }
     return self
   }
   
   @discardableResult
-  public func initializer<A0, A1, A2>(closure: @escaping (_ s: DIScope, _ a0: A0, _ a1: A1, _ a2: A2) -> ImplObj) -> Self {
-    rType.setInitializer { closure($0, $1, $2, $3) }
+  public func initializer<P0, P1, P2>(closure: @escaping (_ s: DIScope, _ p0: P0, _ p1: P1, _ p2: P2) -> ImplObj) -> Self {
+    rType.setInitializer { closure($0, $1, $2, $3) as Any }
     return self
   }
   
   @discardableResult
-  public func initializer<A0, A1, A2, A3>(closure: @escaping (_ s: DIScope, _ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3) -> ImplObj) -> Self {
-    rType.setInitializer { closure($0, $1, $2, $3, $4) }
+  public func initializer<P0, P1, P2, P3>(closure: @escaping (_ s: DIScope, _ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3) -> ImplObj) -> Self {
+    rType.setInitializer { closure($0, $1, $2, $3, $4) as Any }
     return self
   }
   
   @discardableResult
-  public func initializer<A0, A1, A2, A3, A4>(closure: @escaping (_ s: DIScope, _ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4) -> ImplObj) -> Self {
-    rType.setInitializer { closure($0, $1, $2, $3, $4, $5) }
+  public func initializer<P0, P1, P2, P3, P4>(closure: @escaping (_ s: DIScope, _ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3, _ p4: P4) -> ImplObj) -> Self {
+    rType.setInitializer { closure($0, $1, $2, $3, $4, $5) as Any }
     return self
   }
   
   @discardableResult
-  public func initializer<A0, A1, A2, A3, A4, A5>(closure: @escaping (_ s: DIScope, _ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5) -> ImplObj) -> Self {
-    rType.setInitializer { closure($0, $1, $2, $3, $4, $5, $6) }
+  public func initializer<P0, P1, P2, P3, P4, P5>(closure: @escaping (_ s: DIScope, _ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3, _ p4: P4, _ p5: P5) -> ImplObj) -> Self {
+    rType.setInitializer { closure($0, $1, $2, $3, $4, $5, $6) as Any }
     return self
   }
   
   @discardableResult
-  public func initializer<A0, A1, A2, A3, A4, A5, A6>(closure: @escaping (_ s: DIScope, _ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6) -> ImplObj) -> Self {
-    rType.setInitializer { closure($0, $1, $2, $3, $4, $5, $6, $7) }
+  public func initializer<P0, P1, P2, P3, P4, P5, P6>(closure: @escaping (_ s: DIScope, _ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3, _ p4: P4, _ p5: P5, _ p6: P6) -> ImplObj) -> Self {
+    rType.setInitializer { closure($0, $1, $2, $3, $4, $5, $6, $7) as Any }
     return self
   }
   
   @discardableResult
-  public func initializer<A0, A1, A2, A3, A4, A5, A6, A7>(closure: @escaping (_ s: DIScope, _ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7) -> ImplObj) -> Self {
-    rType.setInitializer { closure($0, $1, $2, $3, $4, $5, $6, $7, $8) }
+  public func initializer<P0, P1, P2, P3, P4, P5, P6, P7>(closure: @escaping (_ s: DIScope, _ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3, _ p4: P4, _ p5: P5, _ p6: P6, _ p7: P7) -> ImplObj) -> Self {
+    rType.setInitializer { closure($0, $1, $2, $3, $4, $5, $6, $7, $8) as Any }
     return self
   }
   
   @discardableResult
-  public func initializer<A0, A1, A2, A3, A4, A5, A6, A7, A8>(closure: @escaping (_ s: DIScope, _ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8) -> ImplObj) -> Self {
-    rType.setInitializer { closure($0, $1, $2, $3, $4, $5, $6, $7, $8, $9) }
+  public func initializer<P0, P1, P2, P3, P4, P5, P6, P7, P8>(closure: @escaping (_ s: DIScope, _ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3, _ p4: P4, _ p5: P5, _ p6: P6, _ p7: P7, _ p8: P8) -> ImplObj) -> Self {
+    rType.setInitializer { closure($0, $1, $2, $3, $4, $5, $6, $7, $8, $9) as Any }
     return self
   }
   
   @discardableResult
-  public func initializer<A0, A1, A2, A3, A4, A5, A6, A7, A8, A9>(closure: @escaping (_ s: DIScope, _ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8, _ a9: A9) -> ImplObj) -> Self {
-    rType.setInitializer { closure($0, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10) }
+  public func initializer<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9>(closure: @escaping (_ s: DIScope, _ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3, _ p4: P4, _ p5: P5, _ p6: P6, _ p7: P7, _ p8: P8, _ p9: P9) -> ImplObj) -> Self {
+    rType.setInitializer { closure($0, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10) as Any }
     return self
   }
   

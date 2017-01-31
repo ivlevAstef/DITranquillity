@@ -18,15 +18,15 @@ replaceToArg() {
 registrationFunction() { #argcount file
   local numbers=($(seq 0 $1))
 
-  local ArgType=$(join ', ' ${numbers[@]/#/A})
-  local ArgumentsType=$(join ', _ ' $(replaceToArg numbers[@] "a;I:±A;I")); ArgumentsType=${ArgumentsType//±/ }
+  local ArgType=$(join ', ' ${numbers[@]/#/P})
+  local ArgumentsType=$(join ', _ ' $(replaceToArg numbers[@] "p;I:±P;I")); ArgumentsType=${ArgumentsType//±/ }
 
   local numbers=($(seq 0 $(($1 + 1))))
   local Params=$(join ', ' $(replaceToArg numbers[@] "\$;I"));
 
   echo "  @discardableResult
   public func initializer<$ArgType>(closure: @escaping (_ s: DIScope, _ $ArgumentsType) -> ImplObj) -> Self {
-    rType.setInitializer { closure($Params) }
+    rType.setInitializer { closure($Params) as Any }
     return self
   }
   " >> $2
@@ -55,8 +55,8 @@ public extension DIRegistrationBuilder {" > $1
 registrationShortFunction() { #argcount file
 local numbers=($(seq 0 $1))
 
-local ArgType=$(join ', ' ${numbers[@]/#/A})
-local ArgumentsType=$(join ', _ ' $(replaceToArg numbers[@] "a;I:±A;I")); ArgumentsType=${ArgumentsType//±/ }
+local ArgType=$(join ', ' ${numbers[@]/#/P})
+local ArgumentsType=$(join ', _ ' $(replaceToArg numbers[@] "p;I:±P;I")); ArgumentsType=${ArgumentsType//±/ }
 
 echo "  @discardableResult
   public func register<T, $ArgType>(closure: @escaping (_ s: DIScope, _ $ArgumentsType) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
@@ -96,12 +96,12 @@ echo "}" >> $1
 registrationInitFunction() { #argcount file
 local numbers=($(seq 0 $1))
 
-local ArgType=$(join ', ' ${numbers[@]/#/A})
-local ArgumentsType=$(join ', _ ' $(replaceToArg numbers[@] "a;I:±A;I")); ArgumentsType=${ArgumentsType//±/ }
+local ArgType=$(join ', ' ${numbers[@]/#/P})
+local ArgumentsType=$(join ', _ ' $(replaceToArg numbers[@] "p;I:±P;I")); ArgumentsType=${ArgumentsType//±/ }
 local Resolvers=$(join ', ' $(replaceToArg numbers[@] "*!s"))
 
 echo "  @discardableResult
-  public func initializer<$ArgType>(init initm: @escaping (_ $ArgumentsType) -> ImplObj) -> Self {
+  public func initializer<$ArgType>(_ initm: @escaping (_ $ArgumentsType) -> ImplObj) -> Self {
     rType.setInitializer { (s: DIScope) -> Any in return initm($Resolvers) }
     return self
   }
@@ -130,13 +130,13 @@ echo "}" >> $1
 containerInitFunction() { #argcount file
 local numbers=($(seq 0 $1))
 
-local ArgType=$(join ', ' ${numbers[@]/#/A})
-local ArgumentsType=$(join ', _ ' $(replaceToArg numbers[@] "a;I:±A;I")); ArgumentsType=${ArgumentsType//±/ }
+local ArgType=$(join ', ' ${numbers[@]/#/P})
+local ArgumentsType=$(join ', _ ' $(replaceToArg numbers[@] "p;I:±P;I")); ArgumentsType=${ArgumentsType//±/ }
 local Resolvers=$(join ', ' $(replaceToArg numbers[@] "*!s"))
 
 echo "  @discardableResult
   public func register<T, $ArgType>(init initm: @escaping (_ $ArgumentsType) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
-    return createBuilder(file: file, line: line).initializer(init: initm)
+    return createBuilder(file: file, line: line).initializer(initm)
   }
 " >> $2
 }

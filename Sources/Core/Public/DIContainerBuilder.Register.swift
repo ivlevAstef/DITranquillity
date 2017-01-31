@@ -14,6 +14,11 @@ public extension DIContainerBuilder {
 
 public extension DIContainerBuilder {
   @discardableResult
+  public func register<T>(closure: @autoclosure @escaping () -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
+    return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: T.self, file: file, line: line)).initializer(closure: closure)
+  }
+  
+  @discardableResult
   public func register<T>(closure: @escaping () -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
     return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: T.self, file: file, line: line)).initializer(closure: closure)
   }
@@ -27,6 +32,6 @@ public extension DIContainerBuilder {
 public extension DIContainerBuilder {
   @discardableResult
   public func register<T>(init initm: @escaping () -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
-    return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: T.self, file: file, line: line)).initializer(init: initm)
+    return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: T.self, file: file, line: line)).initializer(initm)
   }
 }

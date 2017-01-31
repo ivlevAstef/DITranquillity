@@ -6,8 +6,8 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public extension DIRegistrationBuilder {
-  // As
+// As...
+extension DIRegistrationBuilder {
   @discardableResult
   public func asSelf() -> Self {
     isTypeSet = true
@@ -33,11 +33,13 @@ public extension DIRegistrationBuilder {
     rType.isDefault = true
     return self
   }
-  
-  // Initializer
+}
+
+// Initializer
+extension DIRegistrationBuilder {
   @discardableResult
-  public func initializer(closure: @escaping (_ scope: DIScope) -> ImplObj) -> Self {
-    rType.setInitializer { (s) -> Any in return closure(s) }
+  public func initializer(closure: @autoclosure @escaping () -> ImplObj) -> Self {
+    rType.setInitializer { (_: DIScope) -> Any in return closure() }
     return self
   }
   
@@ -48,19 +50,29 @@ public extension DIRegistrationBuilder {
   }
   
   @discardableResult
-  public func initializer(init initm: @escaping () -> ImplObj) -> Self {
-    rType.setInitializer { (_: DIScope) -> Any in return initm() }
+  public func initializer(closure: @escaping (_ scope: DIScope) -> ImplObj) -> Self {
+    rType.setInitializer { (s) -> Any in return closure(s) }
     return self
   }
   
+  @discardableResult
+  public func initializer(_ initm: @escaping () -> ImplObj) -> Self {
+    rType.setInitializer { (_: DIScope) -> Any in return initm() }
+    return self
+  }
+}
+
   // Dependency
+extension DIRegistrationBuilder {
   @discardableResult
   public func dependency(_ method: @escaping (_ scope: DIScope, _ obj: ImplObj) -> ()) -> Self {
     rType.appendDependency(method)
     return self
   }
-  
+}
+
   // LifeTime
+extension DIRegistrationBuilder {
   @discardableResult
   public func lifetime(_ lifetime: DILifeTime) -> Self {
     rType.lifeTime = lifetime

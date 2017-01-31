@@ -8,52 +8,52 @@
 
 public extension DIContainerBuilder {
   @discardableResult
-  public func register<T, A0>(closure: @escaping (_ s: DIScope, _ a0: A0) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
+  public func register<T, P0>(closure: @escaping (_ s: DIScope, _ p0: P0) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
     return createBuilder(file: file, line: line).initializer(closure: closure)
   }
 
   @discardableResult
-  public func register<T, A0, A1>(closure: @escaping (_ s: DIScope, _ a0: A0, _ a1: A1) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
+  public func register<T, P0, P1>(closure: @escaping (_ s: DIScope, _ p0: P0, _ p1: P1) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
     return createBuilder(file: file, line: line).initializer(closure: closure)
   }
 
   @discardableResult
-  public func register<T, A0, A1, A2>(closure: @escaping (_ s: DIScope, _ a0: A0, _ a1: A1, _ a2: A2) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
+  public func register<T, P0, P1, P2>(closure: @escaping (_ s: DIScope, _ p0: P0, _ p1: P1, _ p2: P2) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
     return createBuilder(file: file, line: line).initializer(closure: closure)
   }
 
   @discardableResult
-  public func register<T, A0, A1, A2, A3>(closure: @escaping (_ s: DIScope, _ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
+  public func register<T, P0, P1, P2, P3>(closure: @escaping (_ s: DIScope, _ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
     return createBuilder(file: file, line: line).initializer(closure: closure)
   }
 
   @discardableResult
-  public func register<T, A0, A1, A2, A3, A4>(closure: @escaping (_ s: DIScope, _ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
+  public func register<T, P0, P1, P2, P3, P4>(closure: @escaping (_ s: DIScope, _ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3, _ p4: P4) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
     return createBuilder(file: file, line: line).initializer(closure: closure)
   }
 
   @discardableResult
-  public func register<T, A0, A1, A2, A3, A4, A5>(closure: @escaping (_ s: DIScope, _ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
+  public func register<T, P0, P1, P2, P3, P4, P5>(closure: @escaping (_ s: DIScope, _ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3, _ p4: P4, _ p5: P5) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
     return createBuilder(file: file, line: line).initializer(closure: closure)
   }
 
   @discardableResult
-  public func register<T, A0, A1, A2, A3, A4, A5, A6>(closure: @escaping (_ s: DIScope, _ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
+  public func register<T, P0, P1, P2, P3, P4, P5, P6>(closure: @escaping (_ s: DIScope, _ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3, _ p4: P4, _ p5: P5, _ p6: P6) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
     return createBuilder(file: file, line: line).initializer(closure: closure)
   }
 
   @discardableResult
-  public func register<T, A0, A1, A2, A3, A4, A5, A6, A7>(closure: @escaping (_ s: DIScope, _ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
+  public func register<T, P0, P1, P2, P3, P4, P5, P6, P7>(closure: @escaping (_ s: DIScope, _ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3, _ p4: P4, _ p5: P5, _ p6: P6, _ p7: P7) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
     return createBuilder(file: file, line: line).initializer(closure: closure)
   }
 
   @discardableResult
-  public func register<T, A0, A1, A2, A3, A4, A5, A6, A7, A8>(closure: @escaping (_ s: DIScope, _ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
+  public func register<T, P0, P1, P2, P3, P4, P5, P6, P7, P8>(closure: @escaping (_ s: DIScope, _ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3, _ p4: P4, _ p5: P5, _ p6: P6, _ p7: P7, _ p8: P8) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
     return createBuilder(file: file, line: line).initializer(closure: closure)
   }
 
   @discardableResult
-  public func register<T, A0, A1, A2, A3, A4, A5, A6, A7, A8, A9>(closure: @escaping (_ s: DIScope, _ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8, _ a9: A9) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
+  public func register<T, P0, P1, P2, P3, P4, P5, P6, P7, P8, P9>(closure: @escaping (_ s: DIScope, _ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3, _ p4: P4, _ p5: P5, _ p6: P6, _ p7: P7, _ p8: P8, _ p9: P9) -> T, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
     return createBuilder(file: file, line: line).initializer(closure: closure)
   }
 

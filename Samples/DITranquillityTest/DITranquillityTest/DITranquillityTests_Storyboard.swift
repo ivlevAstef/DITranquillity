@@ -26,7 +26,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     builder.register(FooService.self)
       .asType(ServiceProtocol.self)
-      .initializer { FooService() }
+      .initializer(closure: FooService())
     
     builder.register(TestViewController.self)
       .lifetime(.perRequest)
@@ -48,7 +48,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     builder.register(FooService.self)
       .asType(ServiceProtocol.self)
-      .initializer { FooService() }
+      .initializer(closure: FooService())
     
     builder.register(TestViewController2.self)
       .lifetime(.perRequest)
@@ -80,7 +80,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     builder.register(FooService.self)
       .asType(ServiceProtocol.self)
-      .initializer { FooService() }
+      .initializer(closure: FooService())
     
     builder.register(TestViewController.self)
       .lifetime(.perRequest)
@@ -110,7 +110,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     builder.register(FooService.self)
       .asType(ServiceProtocol.self)
-      .initializer { FooService() }
+      .initializer(closure: FooService())
     
     builder.register(vc: TestViewController2.self)
       .dependency { (scope, vc) in vc.service = *!scope }
@@ -132,7 +132,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     builder.register(FooService.self)
       .asType(ServiceProtocol.self)
-      .initializer { FooService() }
+      .initializer(closure: FooService())
     
     builder.register(TestViewController.self)
       .lifetime(.perRequest)

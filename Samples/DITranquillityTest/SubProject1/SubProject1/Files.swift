@@ -12,7 +12,7 @@ public class Module1Type { }
 
 public class ScannedModule1: DIScanned, DIModule {
 	public func load(builder: DIContainerBuilder) {
-		builder.register{ Module1Type() }
+    builder.register(closure: Module1Type())
 	}
 }
 
@@ -20,7 +20,7 @@ public class Module2Type { }
 
 public class ScannedModule2: DIScanned, DIModule {
 	public func load(builder: DIContainerBuilder) {
-		builder.register{ Module2Type() }
+		builder.register(closure: Module2Type())
 	}
 }
 // Assemblies

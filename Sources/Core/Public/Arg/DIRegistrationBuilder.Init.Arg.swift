@@ -8,61 +8,61 @@
 
 public extension DIRegistrationBuilder {
   @discardableResult
-  public func initializer<A0>(init initm: @escaping (_ a0: A0) -> ImplObj) -> Self {
+  public func initializer<P0>(_ initm: @escaping (_ p0: P0) -> ImplObj) -> Self {
     rType.setInitializer { (s: DIScope) -> Any in return initm(*!s) }
     return self
   }
 
   @discardableResult
-  public func initializer<A0, A1>(init initm: @escaping (_ a0: A0, _ a1: A1) -> ImplObj) -> Self {
+  public func initializer<P0, P1>(_ initm: @escaping (_ p0: P0, _ p1: P1) -> ImplObj) -> Self {
     rType.setInitializer { (s: DIScope) -> Any in return initm(*!s, *!s) }
     return self
   }
 
   @discardableResult
-  public func initializer<A0, A1, A2>(init initm: @escaping (_ a0: A0, _ a1: A1, _ a2: A2) -> ImplObj) -> Self {
+  public func initializer<P0, P1, P2>(_ initm: @escaping (_ p0: P0, _ p1: P1, _ p2: P2) -> ImplObj) -> Self {
     rType.setInitializer { (s: DIScope) -> Any in return initm(*!s, *!s, *!s) }
     return self
   }
 
   @discardableResult
-  public func initializer<A0, A1, A2, A3>(init initm: @escaping (_ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3) -> ImplObj) -> Self {
+  public func initializer<P0, P1, P2, P3>(_ initm: @escaping (_ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3) -> ImplObj) -> Self {
     rType.setInitializer { (s: DIScope) -> Any in return initm(*!s, *!s, *!s, *!s) }
     return self
   }
 
   @discardableResult
-  public func initializer<A0, A1, A2, A3, A4>(init initm: @escaping (_ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4) -> ImplObj) -> Self {
+  public func initializer<P0, P1, P2, P3, P4>(_ initm: @escaping (_ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3, _ p4: P4) -> ImplObj) -> Self {
     rType.setInitializer { (s: DIScope) -> Any in return initm(*!s, *!s, *!s, *!s, *!s) }
     return self
   }
 
   @discardableResult
-  public func initializer<A0, A1, A2, A3, A4, A5>(init initm: @escaping (_ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5) -> ImplObj) -> Self {
+  public func initializer<P0, P1, P2, P3, P4, P5>(_ initm: @escaping (_ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3, _ p4: P4, _ p5: P5) -> ImplObj) -> Self {
     rType.setInitializer { (s: DIScope) -> Any in return initm(*!s, *!s, *!s, *!s, *!s, *!s) }
     return self
   }
 
   @discardableResult
-  public func initializer<A0, A1, A2, A3, A4, A5, A6>(init initm: @escaping (_ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6) -> ImplObj) -> Self {
+  public func initializer<P0, P1, P2, P3, P4, P5, P6>(_ initm: @escaping (_ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3, _ p4: P4, _ p5: P5, _ p6: P6) -> ImplObj) -> Self {
     rType.setInitializer { (s: DIScope) -> Any in return initm(*!s, *!s, *!s, *!s, *!s, *!s, *!s) }
     return self
   }
 
   @discardableResult
-  public func initializer<A0, A1, A2, A3, A4, A5, A6, A7>(init initm: @escaping (_ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7) -> ImplObj) -> Self {
+  public func initializer<P0, P1, P2, P3, P4, P5, P6, P7>(_ initm: @escaping (_ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3, _ p4: P4, _ p5: P5, _ p6: P6, _ p7: P7) -> ImplObj) -> Self {
     rType.setInitializer { (s: DIScope) -> Any in return initm(*!s, *!s, *!s, *!s, *!s, *!s, *!s, *!s) }
     return self
   }
 
   @discardableResult
-  public func initializer<A0, A1, A2, A3, A4, A5, A6, A7, A8>(init initm: @escaping (_ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8) -> ImplObj) -> Self {
+  public func initializer<P0, P1, P2, P3, P4, P5, P6, P7, P8>(_ initm: @escaping (_ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3, _ p4: P4, _ p5: P5, _ p6: P6, _ p7: P7, _ p8: P8) -> ImplObj) -> Self {
     rType.setInitializer { (s: DIScope) -> Any in return initm(*!s, *!s, *!s, *!s, *!s, *!s, *!s, *!s, *!s) }
     return self
   }
 
   @discardableResult
-  public func initializer<A0, A1, A2, A3, A4, A5, A6, A7, A8, A9>(init initm: @escaping (_ a0: A0, _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8, _ a9: A9) -> ImplObj) -> Self {
+  public func initializer<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9>(_ initm: @escaping (_ p0: P0, _ p1: P1, _ p2: P2, _ p3: P3, _ p4: P4, _ p5: P5, _ p6: P6, _ p7: P7, _ p8: P8, _ p9: P9) -> ImplObj) -> Self {
     rType.setInitializer { (s: DIScope) -> Any in return initm(*!s, *!s, *!s, *!s, *!s, *!s, *!s, *!s, *!s, *!s) }
     return self
   }

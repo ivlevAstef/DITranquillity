@@ -12,7 +12,7 @@ public class DuMole1Type { }
 
 public class ScannedDuMole1: DIScanned, DIModule {
 	public func load(builder: DIContainerBuilder) {
-		builder.register{ DuMole1Type() }
+		builder.register(closure: DuMole1Type())
 	}
 }
 
@@ -20,7 +20,7 @@ public class DuMole2Type { }
 
 public class ScannedDuMole2: DIScanned, DIModule {
 	public func load(builder: DIContainerBuilder) {
-		builder.register{ DuMole2Type() }
+		builder.register(closure: DuMole2Type())
 	}
 }
 

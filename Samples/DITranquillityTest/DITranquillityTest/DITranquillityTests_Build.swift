@@ -91,12 +91,12 @@ class DITranquillityTests_Build: XCTestCase {
     let lineClass1 = #line; builder.register(TestClass1.self)
       .asType(TestProtocol.self)
       .asDefault()
-      .initializer { TestClass1() }
+      .initializer(closure: TestClass1())
     
     let lineClass2 = #line; builder.register(TestClass2.self)
       .asType(TestProtocol.self)
       .asDefault()
-      .initializer { TestClass2() }
+      .initializer(closure: TestClass2())
     
     do {
       try builder.build()
@@ -120,11 +120,11 @@ class DITranquillityTests_Build: XCTestCase {
     builder.register(TestClass1.self)
       .asType(TestProtocol.self)
       .asDefault()
-      .initializer { TestClass1() }
+      .initializer(closure: TestClass1())
     
     builder.register(TestClass2.self)
       .asType(TestProtocol.self)
-      .initializer { TestClass2() }
+      .initializer(closure: TestClass2())
     
     do {
       try builder.build()
@@ -139,12 +139,12 @@ class DITranquillityTests_Build: XCTestCase {
     builder.register(TestClass1.self)
       .asType(TestProtocol.self)
       .asName("foo")
-      .initializer { TestClass1() }
+      .initializer(closure: TestClass1())
     
     builder.register(TestClass2.self)
       .asType(TestProtocol.self)
       .asName("bar")
-      .initializer { TestClass2() }
+      .initializer(closure: TestClass2())
     
     do {
       try builder.build()
@@ -158,7 +158,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     let line = #line; builder.register(TestClass1.self)
       .asType(Test2Protocol.self) //<---- Swift not supported static check
-      .initializer { TestClass1() }
+      .initializer(closure: TestClass1())
     
     do {
       let container = try builder.build()
@@ -185,7 +185,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     builder.register(TestClass1.self)
       .asType(TestProtocol.self)
-      .initializer { TestClass1() }
+      .initializer(closure: TestClass1())
     
     do {
       let container = try builder.build()
