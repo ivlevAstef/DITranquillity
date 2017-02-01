@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		114319D21E3BA32F00B73EFB /* DIRegistrationBuilder.Init.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114319D11E3BA32F00B73EFB /* DIRegistrationBuilder.Init.Arg.swift */; };
-		114319D31E3BA32F00B73EFB /* DIRegistrationBuilder.Init.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114319D11E3BA32F00B73EFB /* DIRegistrationBuilder.Init.Arg.swift */; };
-		114319D41E3BA32F00B73EFB /* DIRegistrationBuilder.Init.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114319D11E3BA32F00B73EFB /* DIRegistrationBuilder.Init.Arg.swift */; };
+		110B5ADC1E4250D500A864A9 /* DIRegistrationBuilder.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110B5ADB1E4250D500A864A9 /* DIRegistrationBuilder.Arg.swift */; };
 		118DBCC31E40FFCD003A7D1F /* DILazy.ShortSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCC11E40FFCD003A7D1F /* DILazy.ShortSyntax.swift */; };
 		118DBCC41E40FFCD003A7D1F /* DILazy.ShortSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCC11E40FFCD003A7D1F /* DILazy.ShortSyntax.swift */; };
 		118DBCC51E40FFCD003A7D1F /* DILazy.ShortSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCC11E40FFCD003A7D1F /* DILazy.ShortSyntax.swift */; };
@@ -19,14 +17,13 @@
 		118DBCCC1E4100BF003A7D1F /* DIStoryboardResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCCB1E4100BF003A7D1F /* DIStoryboardResolver.swift */; };
 		118DBCCF1E4100CA003A7D1F /* DIStoryboardResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCCD1E4100C5003A7D1F /* DIStoryboardResolver.swift */; };
 		118DBCD01E4100CD003A7D1F /* DIStoryboardResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCCB1E4100BF003A7D1F /* DIStoryboardResolver.swift */; };
-		11FD649E1E3FA3390043A036 /* DIContainerBuilder.Init.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD649D1E3FA3390043A036 /* DIContainerBuilder.Init.Arg.swift */; };
-		11FD649F1E3FA3390043A036 /* DIContainerBuilder.Init.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD649D1E3FA3390043A036 /* DIContainerBuilder.Init.Arg.swift */; };
-		11FD64A01E3FA3390043A036 /* DIContainerBuilder.Init.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD649D1E3FA3390043A036 /* DIContainerBuilder.Init.Arg.swift */; };
+		11FD649E1E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD649D1E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift */; };
+		11FD649F1E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD649D1E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift */; };
+		11FD64A01E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD649D1E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift */; };
 		163DDDC61DB9C84E0003DE54 /* DITypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163DDDC51DB9C84E0003DE54 /* DITypes.swift */; };
 		163DDDC71DB9C84E0003DE54 /* DITypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163DDDC51DB9C84E0003DE54 /* DITypes.swift */; };
 		163DDDC81DB9C84E0003DE54 /* DITypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163DDDC51DB9C84E0003DE54 /* DITypes.swift */; };
 		165F614F1D9E78DD00F6126E /* DIContainerBuilder.Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165F614E1D9E78DD00F6126E /* DIContainerBuilder.Register.swift */; };
-		165F61541D9E82C100F6126E /* DIContainerBuilder.ShortSyntax.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165F61531D9E82C100F6126E /* DIContainerBuilder.ShortSyntax.Arg.swift */; };
 		16640A711D9E1E7B00707BFC /* DIAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A4E1D9E1E7B00707BFC /* DIAssembly.swift */; };
 		16640A721D9E1E7B00707BFC /* DIDynamicAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A4F1D9E1E7B00707BFC /* DIDynamicAssembly.swift */; };
 		16640A731D9E1E7B00707BFC /* DIMultyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A521D9E1E7B00707BFC /* DIMultyMap.swift */; };
@@ -39,7 +36,7 @@
 		16640A7A1D9E1E7B00707BFC /* RTypeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A5B1D9E1E7B00707BFC /* RTypeContainer.swift */; };
 		16640A7B1D9E1E7B00707BFC /* RTypeContainerFinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A5C1D9E1E7B00707BFC /* RTypeContainerFinal.swift */; };
 		16640A7D1D9E1E7B00707BFC /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A5E1D9E1E7B00707BFC /* Weak.swift */; };
-		16640A7F1D9E1E7B00707BFC /* DIRegistrationBuilder.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A621D9E1E7B00707BFC /* DIRegistrationBuilder.Arg.swift */; };
+		16640A7F1D9E1E7B00707BFC /* DIRegistrationBuilder.Params.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A621D9E1E7B00707BFC /* DIRegistrationBuilder.Params.swift */; };
 		16640A801D9E1E7B00707BFC /* DIScope.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A631D9E1E7B00707BFC /* DIScope.Arg.swift */; };
 		16640A811D9E1E7B00707BFC /* DIScope.TypeArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A641D9E1E7B00707BFC /* DIScope.TypeArg.swift */; };
 		16640A821D9E1E7B00707BFC /* DIContainerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A651D9E1E7B00707BFC /* DIContainerBuilder.swift */; };
@@ -51,9 +48,8 @@
 		16640A881D9E1E7B00707BFC /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		169C0DC31DA3501F001F0AD5 /* RTypeFinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A591D9E1E7B00707BFC /* RTypeFinal.swift */; };
 		169C0DC41DA3501F001F0AD5 /* DIRegistrationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A681D9E1E7B00707BFC /* DIRegistrationBuilder.swift */; };
-		169C0DC51DA3501F001F0AD5 /* DIContainerBuilder.ShortSyntax.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165F61531D9E82C100F6126E /* DIContainerBuilder.ShortSyntax.Arg.swift */; };
 		169C0DC61DA3501F001F0AD5 /* DIScope.TypeArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A641D9E1E7B00707BFC /* DIScope.TypeArg.swift */; };
-		169C0DC71DA3501F001F0AD5 /* DIRegistrationBuilder.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A621D9E1E7B00707BFC /* DIRegistrationBuilder.Arg.swift */; };
+		169C0DC71DA3501F001F0AD5 /* DIRegistrationBuilder.Params.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A621D9E1E7B00707BFC /* DIRegistrationBuilder.Params.swift */; };
 		169C0DC81DA3501F001F0AD5 /* DIScope.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A631D9E1E7B00707BFC /* DIScope.Arg.swift */; };
 		169C0DCB1DA3501F001F0AD5 /* DIContainerBuilder.Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165F614E1D9E78DD00F6126E /* DIContainerBuilder.Register.swift */; };
 		169C0DCC1DA3501F001F0AD5 /* DIMultyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A521D9E1E7B00707BFC /* DIMultyMap.swift */; };
@@ -81,9 +77,8 @@
 		169C0E241DA357CA001F0AD5 /* DIStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169C0E221DA357C8001F0AD5 /* DIStoryboard.swift */; };
 		169C0E291DA35CBE001F0AD5 /* RTypeFinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A591D9E1E7B00707BFC /* RTypeFinal.swift */; };
 		169C0E2A1DA35CBE001F0AD5 /* DIRegistrationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A681D9E1E7B00707BFC /* DIRegistrationBuilder.swift */; };
-		169C0E2B1DA35CBE001F0AD5 /* DIContainerBuilder.ShortSyntax.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165F61531D9E82C100F6126E /* DIContainerBuilder.ShortSyntax.Arg.swift */; };
 		169C0E2C1DA35CBE001F0AD5 /* DIScope.TypeArg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A641D9E1E7B00707BFC /* DIScope.TypeArg.swift */; };
-		169C0E2D1DA35CBE001F0AD5 /* DIRegistrationBuilder.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A621D9E1E7B00707BFC /* DIRegistrationBuilder.Arg.swift */; };
+		169C0E2D1DA35CBE001F0AD5 /* DIRegistrationBuilder.Params.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A621D9E1E7B00707BFC /* DIRegistrationBuilder.Params.swift */; };
 		169C0E2E1DA35CBE001F0AD5 /* DIScope.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A631D9E1E7B00707BFC /* DIScope.Arg.swift */; };
 		169C0E301DA35CBE001F0AD5 /* DIContainerBuilder.Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165F614E1D9E78DD00F6126E /* DIContainerBuilder.Register.swift */; };
 		169C0E311DA35CBE001F0AD5 /* DIMultyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A521D9E1E7B00707BFC /* DIMultyMap.swift */; };
@@ -118,15 +113,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		114319D11E3BA32F00B73EFB /* DIRegistrationBuilder.Init.Arg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIRegistrationBuilder.Init.Arg.swift; sourceTree = "<group>"; };
+		110B5ADB1E4250D500A864A9 /* DIRegistrationBuilder.Arg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIRegistrationBuilder.Arg.swift; sourceTree = "<group>"; };
 		118DBCC11E40FFCD003A7D1F /* DILazy.ShortSyntax.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DILazy.ShortSyntax.swift; sourceTree = "<group>"; };
 		118DBCC21E40FFCD003A7D1F /* DILazy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DILazy.swift; sourceTree = "<group>"; };
 		118DBCCB1E4100BF003A7D1F /* DIStoryboardResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIStoryboardResolver.swift; sourceTree = "<group>"; };
 		118DBCCD1E4100C5003A7D1F /* DIStoryboardResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIStoryboardResolver.swift; sourceTree = "<group>"; };
-		11FD649D1E3FA3390043A036 /* DIContainerBuilder.Init.Arg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainerBuilder.Init.Arg.swift; sourceTree = "<group>"; };
+		11FD649D1E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainerBuilder.Register.Arg.swift; sourceTree = "<group>"; };
 		163DDDC51DB9C84E0003DE54 /* DITypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITypes.swift; sourceTree = "<group>"; };
 		165F614E1D9E78DD00F6126E /* DIContainerBuilder.Register.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainerBuilder.Register.swift; sourceTree = "<group>"; };
-		165F61531D9E82C100F6126E /* DIContainerBuilder.ShortSyntax.Arg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainerBuilder.ShortSyntax.Arg.swift; sourceTree = "<group>"; };
 		16640A4E1D9E1E7B00707BFC /* DIAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIAssembly.swift; sourceTree = "<group>"; };
 		16640A4F1D9E1E7B00707BFC /* DIDynamicAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIDynamicAssembly.swift; sourceTree = "<group>"; };
 		16640A521D9E1E7B00707BFC /* DIMultyMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIMultyMap.swift; sourceTree = "<group>"; };
@@ -140,7 +134,7 @@
 		16640A5C1D9E1E7B00707BFC /* RTypeContainerFinal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTypeContainerFinal.swift; sourceTree = "<group>"; };
 		16640A5E1D9E1E7B00707BFC /* Weak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weak.swift; sourceTree = "<group>"; };
 		16640A611D9E1E7B00707BFC /* autogenerate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = autogenerate.sh; sourceTree = "<group>"; };
-		16640A621D9E1E7B00707BFC /* DIRegistrationBuilder.Arg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIRegistrationBuilder.Arg.swift; sourceTree = "<group>"; };
+		16640A621D9E1E7B00707BFC /* DIRegistrationBuilder.Params.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIRegistrationBuilder.Params.swift; sourceTree = "<group>"; };
 		16640A631D9E1E7B00707BFC /* DIScope.Arg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScope.Arg.swift; sourceTree = "<group>"; };
 		16640A641D9E1E7B00707BFC /* DIScope.TypeArg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScope.TypeArg.swift; sourceTree = "<group>"; };
 		16640A651D9E1E7B00707BFC /* DIContainerBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainerBuilder.swift; sourceTree = "<group>"; };
@@ -284,12 +278,11 @@
 			isa = PBXGroup;
 			children = (
 				16640A611D9E1E7B00707BFC /* autogenerate.sh */,
-				16640A621D9E1E7B00707BFC /* DIRegistrationBuilder.Arg.swift */,
-				114319D11E3BA32F00B73EFB /* DIRegistrationBuilder.Init.Arg.swift */,
+				110B5ADB1E4250D500A864A9 /* DIRegistrationBuilder.Arg.swift */,
+				16640A621D9E1E7B00707BFC /* DIRegistrationBuilder.Params.swift */,
 				16640A631D9E1E7B00707BFC /* DIScope.Arg.swift */,
 				16640A641D9E1E7B00707BFC /* DIScope.TypeArg.swift */,
-				165F61531D9E82C100F6126E /* DIContainerBuilder.ShortSyntax.Arg.swift */,
-				11FD649D1E3FA3390043A036 /* DIContainerBuilder.Init.Arg.swift */,
+				11FD649D1E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift */,
 			);
 			path = Arg;
 			sourceTree = "<group>";
@@ -505,9 +498,8 @@
 			files = (
 				169C0DC31DA3501F001F0AD5 /* RTypeFinal.swift in Sources */,
 				169C0DC41DA3501F001F0AD5 /* DIRegistrationBuilder.swift in Sources */,
-				169C0DC51DA3501F001F0AD5 /* DIContainerBuilder.ShortSyntax.Arg.swift in Sources */,
 				169C0DC61DA3501F001F0AD5 /* DIScope.TypeArg.swift in Sources */,
-				169C0DC71DA3501F001F0AD5 /* DIRegistrationBuilder.Arg.swift in Sources */,
+				169C0DC71DA3501F001F0AD5 /* DIRegistrationBuilder.Params.swift in Sources */,
 				118DBCC41E40FFCD003A7D1F /* DILazy.ShortSyntax.swift in Sources */,
 				169C0DC81DA3501F001F0AD5 /* DIScope.Arg.swift in Sources */,
 				16D7BCBE1DB086B900A29A9F /* DIScanModule.swift in Sources */,
@@ -525,7 +517,6 @@
 				169C0DD31DA3501F001F0AD5 /* DIScope.swift in Sources */,
 				16D7BCBB1DB086B500A29A9F /* DIScan.swift in Sources */,
 				169C0DD41DA3501F001F0AD5 /* Helpers.swift in Sources */,
-				114319D31E3BA32F00B73EFB /* DIRegistrationBuilder.Init.Arg.swift in Sources */,
 				169C0DD51DA3501F001F0AD5 /* DIContainerBuilder.swift in Sources */,
 				169C0DD61DA3501F001F0AD5 /* DIScope.ShortSyntax.swift in Sources */,
 				169C0DD71DA3501F001F0AD5 /* RType.swift in Sources */,
@@ -534,7 +525,7 @@
 				118DBCC71E40FFCD003A7D1F /* DILazy.swift in Sources */,
 				169C0DDA1DA3501F001F0AD5 /* DIAssembly.swift in Sources */,
 				16D7BCBD1DB086B900A29A9F /* DIScanAssembly.swift in Sources */,
-				11FD649F1E3FA3390043A036 /* DIContainerBuilder.Init.Arg.swift in Sources */,
+				11FD649F1E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift in Sources */,
 				169C0DDC1DA3501F001F0AD5 /* RTypeBase.swift in Sources */,
 				169C0E241DA357CA001F0AD5 /* DIStoryboard.swift in Sources */,
 			);
@@ -546,9 +537,8 @@
 			files = (
 				169C0E291DA35CBE001F0AD5 /* RTypeFinal.swift in Sources */,
 				169C0E2A1DA35CBE001F0AD5 /* DIRegistrationBuilder.swift in Sources */,
-				169C0E2B1DA35CBE001F0AD5 /* DIContainerBuilder.ShortSyntax.Arg.swift in Sources */,
 				169C0E2C1DA35CBE001F0AD5 /* DIScope.TypeArg.swift in Sources */,
-				169C0E2D1DA35CBE001F0AD5 /* DIRegistrationBuilder.Arg.swift in Sources */,
+				169C0E2D1DA35CBE001F0AD5 /* DIRegistrationBuilder.Params.swift in Sources */,
 				118DBCC51E40FFCD003A7D1F /* DILazy.ShortSyntax.swift in Sources */,
 				169C0E2E1DA35CBE001F0AD5 /* DIScope.Arg.swift in Sources */,
 				16D7BCC01DB086B900A29A9F /* DIScanModule.swift in Sources */,
@@ -566,7 +556,6 @@
 				169C0E391DA35CBE001F0AD5 /* DIScope.swift in Sources */,
 				16D7BCBC1DB086B600A29A9F /* DIScan.swift in Sources */,
 				169C0E3A1DA35CBE001F0AD5 /* Helpers.swift in Sources */,
-				114319D41E3BA32F00B73EFB /* DIRegistrationBuilder.Init.Arg.swift in Sources */,
 				169C0E3B1DA35CBE001F0AD5 /* DIContainerBuilder.swift in Sources */,
 				169C0E3C1DA35CBE001F0AD5 /* DIScope.ShortSyntax.swift in Sources */,
 				169C0E3D1DA35CBE001F0AD5 /* RType.swift in Sources */,
@@ -575,7 +564,7 @@
 				118DBCC81E40FFCD003A7D1F /* DILazy.swift in Sources */,
 				169C0E401DA35CBE001F0AD5 /* DIAssembly.swift in Sources */,
 				16D7BCBF1DB086B900A29A9F /* DIScanAssembly.swift in Sources */,
-				11FD64A01E3FA3390043A036 /* DIContainerBuilder.Init.Arg.swift in Sources */,
+				11FD64A01E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift in Sources */,
 				169C0E411DA35CBE001F0AD5 /* RTypeBase.swift in Sources */,
 				169C0E421DA35CBE001F0AD5 /* DIStoryboard.swift in Sources */,
 			);
@@ -587,9 +576,8 @@
 			files = (
 				16640A791D9E1E7B00707BFC /* RTypeFinal.swift in Sources */,
 				16640A851D9E1E7B00707BFC /* DIRegistrationBuilder.swift in Sources */,
-				165F61541D9E82C100F6126E /* DIContainerBuilder.ShortSyntax.Arg.swift in Sources */,
 				16640A811D9E1E7B00707BFC /* DIScope.TypeArg.swift in Sources */,
-				16640A7F1D9E1E7B00707BFC /* DIRegistrationBuilder.Arg.swift in Sources */,
+				16640A7F1D9E1E7B00707BFC /* DIRegistrationBuilder.Params.swift in Sources */,
 				118DBCC31E40FFCD003A7D1F /* DILazy.ShortSyntax.swift in Sources */,
 				16640A801D9E1E7B00707BFC /* DIScope.Arg.swift in Sources */,
 				16D7BCBA1DB086B000A29A9F /* DIScanModule.swift in Sources */,
@@ -597,6 +585,7 @@
 				118DBCCC1E4100BF003A7D1F /* DIStoryboardResolver.swift in Sources */,
 				16640A731D9E1E7B00707BFC /* DIMultyMap.swift in Sources */,
 				16640A7D1D9E1E7B00707BFC /* Weak.swift in Sources */,
+				110B5ADC1E4250D500A864A9 /* DIRegistrationBuilder.Arg.swift in Sources */,
 				16640A831D9E1E7B00707BFC /* DIError.swift in Sources */,
 				16640A7B1D9E1E7B00707BFC /* RTypeContainerFinal.swift in Sources */,
 				169C0E171DA352C7001F0AD5 /* DIStoryboardBase.m in Sources */,
@@ -607,7 +596,6 @@
 				16640A871D9E1E7B00707BFC /* DIScope.swift in Sources */,
 				16D7BCB81DB086B000A29A9F /* DIScan.swift in Sources */,
 				16640A751D9E1E7B00707BFC /* Helpers.swift in Sources */,
-				114319D21E3BA32F00B73EFB /* DIRegistrationBuilder.Init.Arg.swift in Sources */,
 				16640A821D9E1E7B00707BFC /* DIContainerBuilder.swift in Sources */,
 				16640A861D9E1E7B00707BFC /* DIScope.ShortSyntax.swift in Sources */,
 				16640A771D9E1E7B00707BFC /* RType.swift in Sources */,
@@ -616,7 +604,7 @@
 				118DBCC61E40FFCD003A7D1F /* DILazy.swift in Sources */,
 				16640A711D9E1E7B00707BFC /* DIAssembly.swift in Sources */,
 				16D7BCB91DB086B000A29A9F /* DIScanAssembly.swift in Sources */,
-				11FD649E1E3FA3390043A036 /* DIContainerBuilder.Init.Arg.swift in Sources */,
+				11FD649E1E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift in Sources */,
 				16640A761D9E1E7B00707BFC /* RTypeBase.swift in Sources */,
 				169C0E211DA357C3001F0AD5 /* DIStoryboard.swift in Sources */,
 			);

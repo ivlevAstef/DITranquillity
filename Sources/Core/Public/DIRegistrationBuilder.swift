@@ -36,22 +36,16 @@ extension DIRegistrationBuilder {
 }
 
 // Initializer
-extension DIRegistrationBuilder {  
+extension DIRegistrationBuilder {
   @discardableResult
-  public func initializer(closure: @escaping () -> ImplObj) -> Self {
-    rType.setInitializer { (_: DIScope) -> Any in return closure() }
+  public func initial(_ closure: @escaping () -> ImplObj) -> Self {
+    rType.setInitial { (_: DIScope) -> Any in return closure() }
     return self
   }
   
   @discardableResult
-  public func initializer(closure: @escaping (_ scope: DIScope) -> ImplObj) -> Self {
-    rType.setInitializer { (s) -> Any in return closure(s) }
-    return self
-  }
-  
-  @discardableResult
-  public func initializer(_ initm: @escaping () -> ImplObj) -> Self {
-    rType.setInitializer { (_: DIScope) -> Any in return initm() }
+  public func initial(_ closure: @escaping (_: DIScope) -> ImplObj) -> Self {
+    rType.setInitial { scope -> Any in return closure(scope) }
     return self
   }
 }
@@ -59,7 +53,7 @@ extension DIRegistrationBuilder {
   // Dependency
 extension DIRegistrationBuilder {
   @discardableResult
-  public func dependency(_ method: @escaping (_ scope: DIScope, _ obj: ImplObj) -> ()) -> Self {
+  public func dependency(_ method: @escaping (_: DIScope, _: ImplObj) -> ()) -> Self {
     rType.appendDependency(method)
     return self
   }
@@ -75,7 +69,7 @@ extension DIRegistrationBuilder {
 	
 	
 	@discardableResult
-	public func initializerDoesNotNeedToBe() -> Self {
+	public func initialDoesNotNeedToBe() -> Self {
 		rType.initializerDoesNotNeedToBe = true
 		return self
 	}

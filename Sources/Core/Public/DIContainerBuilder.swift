@@ -92,3 +92,10 @@ extension DIContainerBuilder {
     return false
   }
 }
+
+
+extension DIContainerBuilder {
+  internal func registrationBuilder<T>(file: String, line: Int) -> DIRegistrationBuilder<T> {
+    return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: T.self, file: file, line: line))
+  }
+}

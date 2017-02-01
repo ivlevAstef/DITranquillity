@@ -9,8 +9,8 @@
 class RType: RTypeBase {
   typealias MethodKey = String
   
-  // Initializer
-  func setInitializer<Method>(_ method: Method) {
+  // Initial
+  func setInitial<Method>(_ method: Method) {
     initializers[MethodKey(describing: Method.self)] = method
   }
 
