@@ -50,17 +50,29 @@ extension DIRegistrationBuilder {
   }
 }
 
-  // Injection
+// Injection
 extension DIRegistrationBuilder {
   @discardableResult
   public func injection(_ closure: @escaping (_: DIScope, _: ImplObj) -> ()) -> Self {
-    rType.appendDependency(closure)
+    rType.appendInjection(closure)
     return self
   }
   
   @discardableResult
   public func injection(_ method: @escaping (_ :ImplObj) -> ()) -> Self {
-    rType.appendDependency{ scope, obj in method(obj) }
+    rType.appendInjection{ scope, obj in method(obj) }
+    return self
+  }
+}
+
+// Auto Property Injection, Only for NSObject hierarchy classes and @objc properties
+extension DIRegistrationBuilder where ImplObj: NSObject {
+  @discardableResult
+  public func useAutoPropertyInjection() -> Self {
+    if !isAutoInjection {
+      rType.appendAutoInjection(ImplObj.self)
+      isAutoInjection = true
+    }
     return self
   }
 }
@@ -95,6 +107,7 @@ public final class DIRegistrationBuilder<ImplObj> {
   }
   
   var isTypeSet: Bool = false
+  var isAutoInjection: Bool = false
   let rType: RType
   let container: RTypeContainer
 }

@@ -17,8 +17,28 @@ class RType: RTypeBase {
   var hasInitializer: Bool { return !initializers.isEmpty }
 
   // Dependency
-  func appendDependency<T>(_ method: @escaping (_ scope: DIScope, _ obj: T) -> ()) {
+  func appendInjection<T>(_ method: @escaping (_ scope: DIScope, _ obj: T) -> ()) {
     dependencies.append{ method($0, $1 as! T) }
+  }
+  
+  func appendAutoInjection<T>(_ type: T.Type) {
+    dependencies.append{ scope, obj in
+      guard let nsObj = obj as? NSObject else {
+        return
+      }
+      
+      for variable in Mirror(reflecting: nsObj).children {
+        guard let key = variable.label, nsObj.responds(to: Selector(key)) else {
+          continue
+        }
+        
+        do {
+          try nsObj.setValue(scope.resolve(byTypeOf: nsObj), forKey: key)
+        } catch {
+          
+        }
+      }
+    }
   }
 
   func copyFinal() -> RTypeFinal {

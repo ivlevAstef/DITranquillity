@@ -95,7 +95,7 @@ local Resolvers=$(join ',' $(replaceToArg numbers[@] "*!s"))
 
 echo "  @discardableResult
   public func injection<$ParamType>(_ method: @escaping (_:ImplObj, _$ParametersType) -> ()) -> Self {
-    rType.appendDependency{ s, o in method(o, $Resolvers) }
+    rType.appendInjection{ s, o in method(o, $Resolvers) }
     return self
   }
 " >> $2

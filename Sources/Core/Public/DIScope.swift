@@ -55,3 +55,10 @@ extension DIScope {
     return try resolve(T.self, name: name)
   }
 }
+
+/// for runtime resolve
+extension DIScope {
+  public func resolve<T>(byTypeOf obj: T) throws -> T {
+    return try impl.resolve(self, type: type(of: obj)) { (initializer: Method) in return initializer(self) }
+  }
+}
