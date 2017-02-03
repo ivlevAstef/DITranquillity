@@ -25,7 +25,7 @@ registrationFunction() { #argcount file
   local Params=$(join ',' $(replaceToArg numbers[@] "\$;I"));
 
   echo "  @discardableResult
-  public func initial<$ParamType>(params closure: @escaping (_:DIScope,_$ParametersType) -> ImplObj) -> Self {
+  public func initialWithParams<$ParamType>(_ closure: @escaping (_:DIScope,_$ParametersType) -> ImplObj) -> Self {
     rType.setInitial { closure($Params) as Any }
     return self
   }
@@ -61,7 +61,7 @@ local Resolvers=$(join ',' $(replaceToArg numbers[@] "*!s"))
 
 echo "  @discardableResult
   public func initial<$ParamType>(_ closure: @escaping (_$ParametersType) -> ImplObj) -> Self {
-    rType.setInitial { (s: DIScope) -> Any in return closure($Resolvers) }
+    rType.setInitial { (s: DIScope) -> Any in closure($Resolvers) }
     return self
   }
 " >> $2

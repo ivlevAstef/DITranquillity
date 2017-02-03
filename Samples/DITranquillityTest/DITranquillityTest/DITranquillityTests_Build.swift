@@ -57,7 +57,7 @@ class DITranquillityTests_Build: XCTestCase {
   func test01_NotSetInitializer() {
     let builder = DIContainerBuilder()
     
-    let _ = builder.register(TestProtocol.self); let line = #line
+    let _ = builder.register(type: TestProtocol.self); let line = #line
     
     do {
       try builder.build()
@@ -75,8 +75,8 @@ class DITranquillityTests_Build: XCTestCase {
   func test02_NotInitializerForWithOutInitializer() {
     let builder = DIContainerBuilder()
     
-    builder.register(TestProtocol.self)
-      .initializerDoesNotNeedToBe()
+    builder.register(type: TestProtocol.self)
+      .initialDoesNotNeedToBe()
     
     do {
       try builder.build()
@@ -88,15 +88,15 @@ class DITranquillityTests_Build: XCTestCase {
   func test03_MultiplyRegistrateTypeWithMultyDefault() {
     let builder = DIContainerBuilder()
     
-    let lineClass1 = #line; builder.register(TestClass1.self)
+    let lineClass1 = #line; builder.register(type: TestClass1.self)
       .asType(TestProtocol.self)
       .asDefault()
-      .initializer(closure:{ TestClass1() })
+      .initial{ TestClass1() }
     
-    let lineClass2 = #line; builder.register(TestClass2.self)
+    let lineClass2 = #line; builder.register(type: TestClass2.self)
       .asType(TestProtocol.self)
       .asDefault()
-      .initializer(closure:{ TestClass2() })
+      .initial(TestClass2.init)
     
     do {
       try builder.build()
@@ -117,14 +117,14 @@ class DITranquillityTests_Build: XCTestCase {
   func test04_MultiplyRegistrateTypeWithOneDefault() {
     let builder = DIContainerBuilder()
     
-    builder.register(TestClass1.self)
+    builder.register(type: TestClass1.self)
       .asType(TestProtocol.self)
       .asDefault()
-      .initializer(closure:{ TestClass1() })
+      .initial(TestClass1.init)
     
-    builder.register(TestClass2.self)
+    builder.register(type: TestClass2.self)
       .asType(TestProtocol.self)
-      .initializer(closure:{ TestClass2() })
+      .initial{ TestClass2() }
     
     do {
       try builder.build()
@@ -136,15 +136,15 @@ class DITranquillityTests_Build: XCTestCase {
   func test05_MultiplyRegistrateTypeWithNames() {
     let builder = DIContainerBuilder()
     
-    builder.register(TestClass1.self)
+    builder.register(type: TestClass1.self)
       .asType(TestProtocol.self)
       .asName("foo")
-      .initializer(closure:{ TestClass1() })
+      .initial{ TestClass1() }
     
-    builder.register(TestClass2.self)
+    builder.register(type: TestClass2.self)
       .asType(TestProtocol.self)
       .asName("bar")
-      .initializer(closure:{ TestClass2() })
+      .initial{ TestClass2() }
     
     do {
       try builder.build()
@@ -156,9 +156,9 @@ class DITranquillityTests_Build: XCTestCase {
   func test06_IncorrectRegistrateType() {
     let builder = DIContainerBuilder()
     
-    let line = #line; builder.register(TestClass1.self)
+    let line = #line; builder.register(type: TestClass1.self)
       .asType(Test2Protocol.self) //<---- Swift not supported static check
-      .initializer(closure:{ TestClass1() })
+      .initial{ TestClass1() }
     
     do {
       let container = try builder.build()
@@ -183,9 +183,9 @@ class DITranquillityTests_Build: XCTestCase {
   func test07_RegistrationByProtocolAndGetByClass() {
     let builder = DIContainerBuilder()
     
-    builder.register(TestClass1.self)
+    builder.register(type: TestClass1.self)
       .asType(TestProtocol.self)
-      .initializer(closure:{ TestClass1() })
+      .initial(TestClass1.init)
     
     do {
       let container = try builder.build()

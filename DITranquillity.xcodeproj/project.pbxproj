@@ -11,12 +11,6 @@
 		1142C1E01E44E74C0000517F /* DIRegistrationBuilder.Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1142C1DF1E44E74C0000517F /* DIRegistrationBuilder.Injection.swift */; };
 		1142C1E11E44E74C0000517F /* DIRegistrationBuilder.Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1142C1DF1E44E74C0000517F /* DIRegistrationBuilder.Injection.swift */; };
 		1142C1E21E44E74C0000517F /* DIRegistrationBuilder.Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1142C1DF1E44E74C0000517F /* DIRegistrationBuilder.Injection.swift */; };
-		118DBCC31E40FFCD003A7D1F /* DILazy.ShortSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCC11E40FFCD003A7D1F /* DILazy.ShortSyntax.swift */; };
-		118DBCC41E40FFCD003A7D1F /* DILazy.ShortSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCC11E40FFCD003A7D1F /* DILazy.ShortSyntax.swift */; };
-		118DBCC51E40FFCD003A7D1F /* DILazy.ShortSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCC11E40FFCD003A7D1F /* DILazy.ShortSyntax.swift */; };
-		118DBCC61E40FFCD003A7D1F /* DILazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCC21E40FFCD003A7D1F /* DILazy.swift */; };
-		118DBCC71E40FFCD003A7D1F /* DILazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCC21E40FFCD003A7D1F /* DILazy.swift */; };
-		118DBCC81E40FFCD003A7D1F /* DILazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCC21E40FFCD003A7D1F /* DILazy.swift */; };
 		118DBCCC1E4100BF003A7D1F /* DIStoryboardResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCCB1E4100BF003A7D1F /* DIStoryboardResolver.swift */; };
 		118DBCCF1E4100CA003A7D1F /* DIStoryboardResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCCD1E4100C5003A7D1F /* DIStoryboardResolver.swift */; };
 		118DBCD01E4100CD003A7D1F /* DIStoryboardResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCCB1E4100BF003A7D1F /* DIStoryboardResolver.swift */; };
@@ -118,8 +112,6 @@
 /* Begin PBXFileReference section */
 		110B5ADB1E4250D500A864A9 /* DIRegistrationBuilder.Arg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIRegistrationBuilder.Arg.swift; sourceTree = "<group>"; };
 		1142C1DF1E44E74C0000517F /* DIRegistrationBuilder.Injection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIRegistrationBuilder.Injection.swift; sourceTree = "<group>"; };
-		118DBCC11E40FFCD003A7D1F /* DILazy.ShortSyntax.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DILazy.ShortSyntax.swift; sourceTree = "<group>"; };
-		118DBCC21E40FFCD003A7D1F /* DILazy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DILazy.swift; sourceTree = "<group>"; };
 		118DBCCB1E4100BF003A7D1F /* DIStoryboardResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIStoryboardResolver.swift; sourceTree = "<group>"; };
 		118DBCCD1E4100C5003A7D1F /* DIStoryboardResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIStoryboardResolver.swift; sourceTree = "<group>"; };
 		11FD649D1E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainerBuilder.Register.Arg.swift; sourceTree = "<group>"; };
@@ -188,15 +180,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		118DBCC01E40FFCD003A7D1F /* lazy */ = {
-			isa = PBXGroup;
-			children = (
-				118DBCC11E40FFCD003A7D1F /* DILazy.ShortSyntax.swift */,
-				118DBCC21E40FFCD003A7D1F /* DILazy.swift */,
-			);
-			path = lazy;
-			sourceTree = "<group>";
-		};
 		16640A4C1D9E1E7B00707BFC /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,7 +247,6 @@
 		16640A5F1D9E1E7B00707BFC /* Public */ = {
 			isa = PBXGroup;
 			children = (
-				118DBCC01E40FFCD003A7D1F /* lazy */,
 				16640A601D9E1E7B00707BFC /* Arg */,
 				16640A651D9E1E7B00707BFC /* DIContainerBuilder.swift */,
 				165F614E1D9E78DD00F6126E /* DIContainerBuilder.Register.swift */,
@@ -505,7 +487,6 @@
 				169C0DC41DA3501F001F0AD5 /* DIRegistrationBuilder.swift in Sources */,
 				169C0DC61DA3501F001F0AD5 /* DIScope.TypeArg.swift in Sources */,
 				169C0DC71DA3501F001F0AD5 /* DIRegistrationBuilder.Params.swift in Sources */,
-				118DBCC41E40FFCD003A7D1F /* DILazy.ShortSyntax.swift in Sources */,
 				169C0DC81DA3501F001F0AD5 /* DIScope.Arg.swift in Sources */,
 				16D7BCBE1DB086B900A29A9F /* DIScanModule.swift in Sources */,
 				169C0DCB1DA3501F001F0AD5 /* DIContainerBuilder.Register.swift in Sources */,
@@ -527,7 +508,6 @@
 				169C0DD71DA3501F001F0AD5 /* RType.swift in Sources */,
 				169C0DD81DA3501F001F0AD5 /* DIModule.swift in Sources */,
 				169C0DD91DA3501F001F0AD5 /* RTypeWithName.swift in Sources */,
-				118DBCC71E40FFCD003A7D1F /* DILazy.swift in Sources */,
 				169C0DDA1DA3501F001F0AD5 /* DIAssembly.swift in Sources */,
 				1142C1E11E44E74C0000517F /* DIRegistrationBuilder.Injection.swift in Sources */,
 				16D7BCBD1DB086B900A29A9F /* DIScanAssembly.swift in Sources */,
@@ -545,7 +525,6 @@
 				169C0E2A1DA35CBE001F0AD5 /* DIRegistrationBuilder.swift in Sources */,
 				169C0E2C1DA35CBE001F0AD5 /* DIScope.TypeArg.swift in Sources */,
 				169C0E2D1DA35CBE001F0AD5 /* DIRegistrationBuilder.Params.swift in Sources */,
-				118DBCC51E40FFCD003A7D1F /* DILazy.ShortSyntax.swift in Sources */,
 				169C0E2E1DA35CBE001F0AD5 /* DIScope.Arg.swift in Sources */,
 				16D7BCC01DB086B900A29A9F /* DIScanModule.swift in Sources */,
 				169C0E301DA35CBE001F0AD5 /* DIContainerBuilder.Register.swift in Sources */,
@@ -567,7 +546,6 @@
 				169C0E3D1DA35CBE001F0AD5 /* RType.swift in Sources */,
 				169C0E3E1DA35CBE001F0AD5 /* DIModule.swift in Sources */,
 				169C0E3F1DA35CBE001F0AD5 /* RTypeWithName.swift in Sources */,
-				118DBCC81E40FFCD003A7D1F /* DILazy.swift in Sources */,
 				169C0E401DA35CBE001F0AD5 /* DIAssembly.swift in Sources */,
 				1142C1E21E44E74C0000517F /* DIRegistrationBuilder.Injection.swift in Sources */,
 				16D7BCBF1DB086B900A29A9F /* DIScanAssembly.swift in Sources */,
@@ -585,7 +563,6 @@
 				16640A851D9E1E7B00707BFC /* DIRegistrationBuilder.swift in Sources */,
 				16640A811D9E1E7B00707BFC /* DIScope.TypeArg.swift in Sources */,
 				16640A7F1D9E1E7B00707BFC /* DIRegistrationBuilder.Params.swift in Sources */,
-				118DBCC31E40FFCD003A7D1F /* DILazy.ShortSyntax.swift in Sources */,
 				16640A801D9E1E7B00707BFC /* DIScope.Arg.swift in Sources */,
 				16D7BCBA1DB086B000A29A9F /* DIScanModule.swift in Sources */,
 				165F614F1D9E78DD00F6126E /* DIContainerBuilder.Register.swift in Sources */,
@@ -609,7 +586,6 @@
 				16640A771D9E1E7B00707BFC /* RType.swift in Sources */,
 				16640A841D9E1E7B00707BFC /* DIModule.swift in Sources */,
 				16640A781D9E1E7B00707BFC /* RTypeWithName.swift in Sources */,
-				118DBCC61E40FFCD003A7D1F /* DILazy.swift in Sources */,
 				16640A711D9E1E7B00707BFC /* DIAssembly.swift in Sources */,
 				16D7BCB91DB086B000A29A9F /* DIScanAssembly.swift in Sources */,
 				11FD649E1E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift in Sources */,

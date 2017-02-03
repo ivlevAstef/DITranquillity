@@ -17,8 +17,8 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
   func test01_UseInitializer() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService.self)
-      .initializer(FooService.init)
+    builder.register(type: FooService.self)
+      .initial(FooService.init)
     
     let container = try! builder.build()
     
@@ -29,7 +29,7 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
   func test02_UseRegister() {
     let builder = DIContainerBuilder()
     
-    builder.register(init: FooService.init)
+    builder.register(type: FooService.init)
     
     let container = try! builder.build()
     
@@ -40,9 +40,9 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
   func test03_UseInitializerWithProtocol() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService.self)
+    builder.register(type: FooService.self)
       .asType(ServiceProtocol.self)
-      .initializer(FooService.init)
+      .initial(FooService.init)
     
     let container = try! builder.build()
     
@@ -53,7 +53,7 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
   func test04_UseRegisterWithProtocol() {
     let builder = DIContainerBuilder()
     
-    builder.register(init: FooService.init)
+    builder.register(type: FooService.init)
       .asType(ServiceProtocol.self)
     
     let container = try! builder.build()
@@ -65,11 +65,11 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
   func test05_ResolveMultiplyMany() {
     let builder = DIContainerBuilder()
     
-    builder.register(init: FooService.init)
+    builder.register(type: FooService.init)
       .asType(ServiceProtocol.self)
       .asDefault()
     
-    builder.register(init: BarService.init)
+    builder.register(type: BarService.init)
       .asType(ServiceProtocol.self)
     
     let container = try! builder.build()
@@ -82,13 +82,13 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
   func test06_InitializerAllParams() {
     let builder = DIContainerBuilder()
     
-    builder.register(closure:{ 15 as Int })
-    builder.register(closure:{ true as Bool })
-    builder.register(closure:{ "test" as String })
+    builder.register(type: { 15 as Int })
+    builder.register(type: { true as Bool })
+    builder.register(type: { "test" as String })
     
-    builder.register(Params.self)
+    builder.register(type: Params.self)
       .lifetime(.perDependency)
-      .initializer(Params.init(number:str:bool:))
+      .initial(Params.init(number:str:bool:))
     
     let container = try! builder.build()
     
@@ -99,11 +99,11 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
   func test07_RegisterAllParams() {
     let builder = DIContainerBuilder()
     
-    builder.register(closure:{ 15 as Int })
-    builder.register(closure:{ true as Bool })
-    builder.register(closure:{ "test" as String })
+    builder.register(type: { 15 as Int })
+    builder.register(type: { true as Bool })
+    builder.register(type: { "test" as String })
     
-    builder.register(init: Params.init(number:str:bool:))
+    builder.register(type: Params.init(number:str:bool:))
       .lifetime(.perDependency)
     
     let container = try! builder.build()
@@ -115,14 +115,14 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
   func test08_InitializerParamsMulti() {
     let builder = DIContainerBuilder()
     
-    builder.register(closure:{ 15 as Int })
-    builder.register(closure:{ true as Bool })
-    builder.register(closure:{ "test" as String })
+    builder.register(type: { 15 as Int })
+    builder.register(type: { true as Bool })
+    builder.register(type: { "test" as String })
     
-    builder.register(Params.self)
+    builder.register(type: Params.self)
       .lifetime(.perDependency)
-      .initializer(Params.init(number:str:bool:))
-      .initializer(Params.init(number:bool:))
+      .initial(Params.init(number:str:bool:))
+      .initial(Params.init(number:bool:))
     /// used last
     
     let container = try! builder.build()

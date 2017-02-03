@@ -24,12 +24,12 @@ class DITranquillityTests_Storyboard: XCTestCase {
   func test01_InitialViewController() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService.self)
+    builder.register(type: FooService.self)
       .asType(ServiceProtocol.self)
-      .initializer(closure:{ FooService() })
+      .initial(FooService.init)
     
 		builder.register(vc: TestViewController.self)
-      .dependency { (scope, vc) in vc.service = *!scope }
+      .injection{ $0.service = $1 }
     
     let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
 
@@ -45,12 +45,12 @@ class DITranquillityTests_Storyboard: XCTestCase {
   func test02_ViewControllerByIdentity() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService.self)
+    builder.register(type: FooService.self)
       .asType(ServiceProtocol.self)
-      .initializer(closure:{ FooService() })
+      .initial(FooService.init)
     
 		builder.register(vc: TestViewController2.self)
-      .dependency { (scope, vc) in vc.service = *!scope }
+      .injection{ scope, vc in vc.service = *!scope }
     
     let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
     
@@ -76,15 +76,15 @@ class DITranquillityTests_Storyboard: XCTestCase {
   func test04_ViewControllerSequence() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService.self)
+    builder.register(type: FooService.self)
       .asType(ServiceProtocol.self)
-      .initializer(closure:{ FooService() })
+      .initial{ FooService() }
     
 		builder.register(vc: TestViewController.self)
-      .dependency { (scope, vc) in vc.service = *!scope }
+      .injection { vc, service in vc.service = service }
     
 		builder.register(vc: TestViewController2.self)
-      .dependency { (scope, vc) in vc.service = *!scope }
+      .injection { scope, vc in vc.service = *!scope }
 
     let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
     
@@ -104,12 +104,12 @@ class DITranquillityTests_Storyboard: XCTestCase {
   func test05_ViewControllerShortRegister() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService.self)
+    builder.register(type: FooService.self)
       .asType(ServiceProtocol.self)
-      .initializer(closure:{ FooService() })
+      .initial(FooService.init)
     
     builder.register(vc: TestViewController2.self)
-      .dependency { (scope, vc) in vc.service = *!scope }
+      .injection { scope, vc in vc.service = *!scope }
     
     let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
     
@@ -126,16 +126,16 @@ class DITranquillityTests_Storyboard: XCTestCase {
   func test06_UIStoryboard() {
     let builder = DIContainerBuilder()
     
-    builder.register(FooService.self)
+    builder.register(type: FooService.self)
       .asType(ServiceProtocol.self)
-      .initializer(closure:{ FooService() })
+      .initial{ FooService() }
     
 		builder.register(vc: TestViewController.self)
-      .dependency { (scope, vc) in vc.service = *!scope }
+      .injection { $0.service = $1 }
     
-    builder.register(UIStoryboard.self)
+    builder.register(type: UIStoryboard.self)
       .lifetime(.single)
-      .initializer { DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: $0) }
+      .initial { DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: $0) }
     
     let container = try! builder.build()
     let storyboard: UIStoryboard = *!container
@@ -153,16 +153,16 @@ class DITranquillityTests_Storyboard: XCTestCase {
 	func test07_issue69_getViewControllerAfterDelay() {
 		let builder = DIContainerBuilder()
 		
-		builder.register(FooService.self)
+		builder.register(type: FooService.self)
 			.asType(ServiceProtocol.self)
-      .initializer(closure:{ FooService() })
+      .initial{ FooService() }
 		
 		builder.register(vc: TestViewController.self)
-			.dependency { (scope, vc) in vc.service = *!scope }
+			.injection { scope, vc in vc.service = *!scope }
 		
-		builder.register(UIStoryboard.self)
+		builder.register(type: UIStoryboard.self)
 			.lifetime(.single)
-			.initializer { DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: $0) }
+			.initial { DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: $0) }
 		
 		var storyboard: UIStoryboard!
 		autoreleasepool {
