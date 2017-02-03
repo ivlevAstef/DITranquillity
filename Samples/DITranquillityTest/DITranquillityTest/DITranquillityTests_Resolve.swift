@@ -408,6 +408,39 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(a.b2 !== b)
   }
   
+  func test07_ResolveCircularDoubleOneDependency2_OtherStyleInjection() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(type: CircularDouble2A.self)
+      .lifetime(.perDependency)
+      .initial{ CircularDouble2A() }
+      .injection{ $0.set(b1: $1, b2: $2) }
+
+    
+    builder.register(type: CircularDouble2B.self)
+      .lifetime(.perDependency)
+      .initial(CircularDouble2B.init(a:))
+    
+    let container = try! builder.build()
+    
+    let a: CircularDouble2A = *!container
+    XCTAssert(a.b1 === a.b2)
+    XCTAssert(a === a.b1.a)
+    XCTAssert(a.b1 === a.b1.a.b1)
+    XCTAssert(a === a.b2.a)
+    XCTAssert(a.b2 === a.b2.a.b2)
+    
+    let b: CircularDouble2B = *!container
+    XCTAssert(b === b.a.b1)
+    XCTAssert(b === b.a.b2)
+    XCTAssert(b.a === b.a.b1.a)
+    XCTAssert(b.a === b.a.b2.a)
+    
+    XCTAssert(a !== b.a)
+    XCTAssert(a.b1 !== b)
+    XCTAssert(a.b2 !== b)
+  }
+  
   func test08_DependencyIntoDependency() {
     let builder = DIContainerBuilder()
     
