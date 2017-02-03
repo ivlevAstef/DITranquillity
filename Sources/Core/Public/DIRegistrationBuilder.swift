@@ -50,11 +50,17 @@ extension DIRegistrationBuilder {
   }
 }
 
-  // Dependency
+  // Injection
 extension DIRegistrationBuilder {
   @discardableResult
-  public func dependency(_ method: @escaping (_: DIScope, _: ImplObj) -> ()) -> Self {
-    rType.appendDependency(method)
+  public func injection(_ closure: @escaping (_: DIScope, _: ImplObj) -> ()) -> Self {
+    rType.appendDependency(closure)
+    return self
+  }
+  
+  @discardableResult
+  public func injection(_ method: @escaping (_ :ImplObj) -> ()) -> Self {
+    rType.appendDependency{ scope, obj in method(obj) }
     return self
   }
 }

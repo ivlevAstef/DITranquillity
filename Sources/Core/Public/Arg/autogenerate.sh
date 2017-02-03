@@ -86,6 +86,40 @@ echo "}" >> $1
 
 ##################################
 
+registrationInjectFunction() { #argcount file
+local numbers=($(seq 0 $1))
+
+local ParamType=$(join ',' ${numbers[@]/#/P})
+local ParametersType=$(join ',_' $(replaceToArg numbers[@] ":P;I"))
+local Resolvers=$(join ',' $(replaceToArg numbers[@] "*!s"))
+
+echo "  @discardableResult
+  public func injection<$ParamType>(_ method: @escaping (_:ImplObj, _$ParametersType) -> ()) -> Self {
+    rType.appendDependency{ s, o in method(o, $Resolvers) }
+    return self
+  }
+" >> $2
+}
+
+registationInjectFile() { #file
+echo "//
+//  DIRegistrationBuilder.Injection.swift
+//  DITranquillity
+//
+//  Created by Alexander Ivlev on 03/02/2017.
+//  Copyright © 2017 Alexander Ivlev. All rights reserved.
+//
+
+public extension DIRegistrationBuilder {" > $1
+
+for argcount in `seq 0 $argmax`; do
+registrationInjectFunction $argcount $1
+done
+echo "}" >> $1
+}
+
+##################################
+
 containerInitFunction() { #argcount file
 local numbers=($(seq 0 $1))
 
@@ -214,6 +248,7 @@ public extension DIScope {" > $1
 
 registationFile "DIRegistrationBuilder.Params.swift"
 registationInitFile "DIRegistrationBuilder.Arg.swift"
+registationInjectFile "DIRegistrationBuilder.Injection.swift"
 
 containerInitFile "DIContainerBuilder.Register.Arg.swift"
 
