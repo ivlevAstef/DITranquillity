@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		110B5ADC1E4250D500A864A9 /* DIRegistrationBuilder.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110B5ADB1E4250D500A864A9 /* DIRegistrationBuilder.Arg.swift */; };
+		1142460F1E45A24100F8B3BA /* DIRegistrationBuilder.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110B5ADB1E4250D500A864A9 /* DIRegistrationBuilder.Arg.swift */; };
+		114246101E45A24100F8B3BA /* DIRegistrationBuilder.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110B5ADB1E4250D500A864A9 /* DIRegistrationBuilder.Arg.swift */; };
 		1142C1E01E44E74C0000517F /* DIRegistrationBuilder.Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1142C1DF1E44E74C0000517F /* DIRegistrationBuilder.Injection.swift */; };
 		1142C1E11E44E74C0000517F /* DIRegistrationBuilder.Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1142C1DF1E44E74C0000517F /* DIRegistrationBuilder.Injection.swift */; };
 		1142C1E21E44E74C0000517F /* DIRegistrationBuilder.Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1142C1DF1E44E74C0000517F /* DIRegistrationBuilder.Injection.swift */; };
@@ -500,6 +502,7 @@
 				169C0DD01DA3501F001F0AD5 /* RTypeContainer.swift in Sources */,
 				169C0DD11DA3501F001F0AD5 /* DIScopeImpl.swift in Sources */,
 				169C0DD21DA3501F001F0AD5 /* DIDynamicAssembly.swift in Sources */,
+				1142460F1E45A24100F8B3BA /* DIRegistrationBuilder.Arg.swift in Sources */,
 				169C0DD31DA3501F001F0AD5 /* DIScope.swift in Sources */,
 				16D7BCBB1DB086B500A29A9F /* DIScan.swift in Sources */,
 				169C0DD41DA3501F001F0AD5 /* Helpers.swift in Sources */,
@@ -538,6 +541,7 @@
 				169C0E361DA35CBE001F0AD5 /* RTypeContainer.swift in Sources */,
 				169C0E371DA35CBE001F0AD5 /* DIScopeImpl.swift in Sources */,
 				169C0E381DA35CBE001F0AD5 /* DIDynamicAssembly.swift in Sources */,
+				114246101E45A24100F8B3BA /* DIRegistrationBuilder.Arg.swift in Sources */,
 				169C0E391DA35CBE001F0AD5 /* DIScope.swift in Sources */,
 				16D7BCBC1DB086B600A29A9F /* DIScan.swift in Sources */,
 				169C0E3A1DA35CBE001F0AD5 /* Helpers.swift in Sources */,

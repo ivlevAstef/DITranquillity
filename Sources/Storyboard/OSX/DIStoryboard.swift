@@ -38,7 +38,7 @@ public extension DIContainerBuilder {
 public extension DIRegistrationBuilder where ImplObj: NSViewController {
   @discardableResult
 	public func initial<T: NSViewController>(byNib type: T.Type) -> Self {
-		rType.setInitialr { NSViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T }
+		rType.setInitial { NSViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T }
 		return self
 	}
 	
