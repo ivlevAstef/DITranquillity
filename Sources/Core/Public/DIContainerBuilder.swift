@@ -40,7 +40,7 @@ extension DIContainerBuilder {
 
     for rType in allTypes {
       if !(rType.hasInitial || rType.initialNotNecessary) {
-        errors.append(DIError.notSpecifiedInitializationMethodFor(component: rType.component))
+        errors.append(DIError.notSpecifiedInitializationMethodFor(typeInfo: rType.typeInfo))
       }
     }
 
@@ -58,7 +58,7 @@ extension DIContainerBuilder {
 
     let defaultTypes = rTypes.filter{ $0.isDefault }
     if defaultTypes.count > 1 {
-      errors.append(DIError.pluralSpecifiedDefaultType(type: superType, components: defaultTypes.map { $0.component }))
+      errors.append(DIError.pluralSpecifiedDefaultType(type: superType, typesInfo: defaultTypes.map { $0.typeInfo }))
     }
   }
 
@@ -72,7 +72,7 @@ extension DIContainerBuilder {
     }
     
     if !intersect.isEmpty {
-      errors.append(DIError.intersectionNamesForType(type: superType, names: intersect, components: rTypes.map{ $0.component }))
+      errors.append(DIError.intersectionNamesForType(type: superType, names: intersect, typesInfo: rTypes.map{ $0.typeInfo }))
     }
   }
   
@@ -98,6 +98,6 @@ extension DIContainerBuilder {
 
 extension DIContainerBuilder {
   internal func registrationBuilder<T>(file: String, line: Int) -> DIRegistrationBuilder<T> {
-    return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: T.self, file: file, line: line))
+    return DIRegistrationBuilder<T>(container: self.rTypeContainer, typeInfo: DITypeInfo(type: T.self, file: file, line: line))
   }
 }

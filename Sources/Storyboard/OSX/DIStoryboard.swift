@@ -29,7 +29,7 @@ public final class DIStoryboard: NSStoryboard {
 public extension DIContainerBuilder {
 	@discardableResult
 	public func register<T: AnyObject>(vc type: T.Type, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
-		return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: type, file: file, line: line))
+		return DIRegistrationBuilder<T>(container: self.rTypeContainer, typeInfo: DITypeInfo(type: type, file: file, line: line))
 			.as(.self)
 			.initialNotNecessary()
 	}

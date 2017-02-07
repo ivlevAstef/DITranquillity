@@ -8,19 +8,19 @@
 
 public enum DIError: Error {
   case typeIsNotFound(type: DIType)
-  case typeIsNotFoundForName(type: DIType, name: String, components: [DIComponent])
-  case notSpecifiedInitializationMethodFor(component: DIComponent)
+  case typeIsNotFoundForName(type: DIType, name: String, typesInfo: [DITypeInfo])
+  case notSpecifiedInitializationMethodFor(typeInfo: DITypeInfo)
 
-  case initializationMethodWithSignatureIsNotFoundFor(component: DIComponent, signature: DIMethodSignature)
+  case initializationMethodWithSignatureIsNotFoundFor(typeInfo: DITypeInfo, signature: DIMethodSignature)
 
-  case pluralSpecifiedDefaultType(type: DIType, components: [DIComponent])
-  case defaultTypeIsNotSpecified(type: DIType, components: [DIComponent])
+  case pluralSpecifiedDefaultType(type: DIType, typesInfo: [DITypeInfo])
+  case defaultTypeIsNotSpecified(type: DIType, typesInfo: [DITypeInfo])
 
-  case intersectionNamesForType(type: DIType, names: Set<String>, components: [DIComponent])
+  case intersectionNamesForType(type: DIType, names: Set<String>, typesInfo: [DITypeInfo])
 
-  case typeIsIncorrect(requestedType: DIType, realType: DIType, component: DIComponent)
+  case typeIsIncorrect(requestedType: DIType, realType: DIType, typeInfo: DITypeInfo)
 
-  case recursiveInitialization(component: DIComponent)
+  case recursiveInitialization(typeInfo: DITypeInfo)
 
   case build(errors: [DIError])
 }

@@ -13,7 +13,7 @@ class RTypeWithName: RTypeBase {
   init(_ rType: RTypeFinal, _ name: String = "") {
     self.rType = rType
     self.name = name
-    super.init(component: rType.component)
+    super.init(typeInfo: rType.typeInfo)
     
     uniqueKey = rType.uniqueKey/*!No self.uniqueKey*/ + name
   }

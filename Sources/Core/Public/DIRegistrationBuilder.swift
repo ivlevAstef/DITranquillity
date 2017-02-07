@@ -116,9 +116,9 @@ extension DIRegistrationBuilder {
 
 
 public final class DIRegistrationBuilder<ImplObj> {
-  init(container: RTypeContainer, component: DIComponent) {
+  init(container: RTypeContainer, typeInfo: DITypeInfo) {
     self.container = container
-    self.rType = RType(component: component)
+    self.rType = RType(typeInfo: typeInfo)
   }
   
   deinit {

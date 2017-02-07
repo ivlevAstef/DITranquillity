@@ -12,7 +12,7 @@ class RType: RTypeBase {
   var hasInitial: Bool { return !initials.isEmpty }
 
   func copyFinal() -> RTypeFinal {
-    return RTypeFinal(component: component,
+    return RTypeFinal(typeInfo: typeInfo,
       initials: self.initials,
       injections: self.injections,
       names: self.names,

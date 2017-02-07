@@ -16,7 +16,7 @@ class DIScopeImpl {
 		let rTypes = try getTypes(type)
 		
 		if rTypes.count > 1 && !rTypes.contains(where: { $0.isDefault }) {
-			throw DIError.defaultTypeIsNotSpecified(type: type, components: rTypes.map{ $0.component })
+			throw DIError.defaultTypeIsNotSpecified(type: type, typesInfo: rTypes.map{ $0.typeInfo })
 		}
 		
 		return rTypes
@@ -27,7 +27,7 @@ class DIScopeImpl {
 		let rTypes = try getTypes(type)
 		
 		if !rTypes.contains(where: { $0.has(name: name)}) {
-			throw DIError.typeIsNotFoundForName(type: type, name: name, components: rTypes.map { $0.component })
+			throw DIError.typeIsNotFoundForName(type: type, name: name, typesInfo: rTypes.map { $0.typeInfo })
 		}
 		
 		return rTypes
@@ -73,7 +73,7 @@ class DIScopeImpl {
   }
 
   private func getTypes<T>(_ inputType: T.Type) throws -> [RTypeFinal] {
-    let type = removedTypeWrappers(inputType)
+    let type = removeTypeWrappers(inputType)
 
     guard let rTypes = container[type], !rTypes.isEmpty else {
       throw DIError.typeIsNotFound(type: inputType)
@@ -124,7 +124,7 @@ class DIScopeImpl {
 
   private func resolvePerDependency<T, Method>(_ scope: DIScope, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
     if recursiveInitializer.contains(pair.uniqueKey) {
-      throw DIError.recursiveInitialization(component: pair.rType.component)
+      throw DIError.recursiveInitialization(typeInfo: pair.rType.typeInfo)
     }
 
     for recursiveTypeKey in circular.recursive {
@@ -185,7 +185,7 @@ class DIScopeImpl {
 		}
 
     guard let obj = objAny as? T else {
-      throw DIError.typeIsIncorrect(requestedType: T.self, realType: type(of: objAny), component: pair.component)
+      throw DIError.typeIsIncorrect(requestedType: T.self, realType: type(of: objAny), typeInfo: pair.typeInfo)
     }
 
     circular.objMap[pair.uniqueKey] = obj

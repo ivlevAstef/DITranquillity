@@ -19,14 +19,14 @@ private func equals(_ t1: Any, _ t2: Any) -> Bool {
   return String(describing: t1) == String(describing: t2)
 }
 
-extension DIComponent: Equatable {
+extension DITypeInfo: Equatable {
   init(type: DIType, file: String, line: Int) {
     self.type = type
     self.file = file
     self.line = line
   }
   
-  public static func ==(lhs: DIComponent, rhs: DIComponent) -> Bool {
+  public static func ==(lhs: DITypeInfo, rhs: DITypeInfo) -> Bool {
     return equals(lhs.type, rhs.type) && lhs.file == rhs.file && lhs.line == rhs.line
   }
 }
@@ -65,7 +65,7 @@ class DITranquillityTests_Build: XCTestCase {
       try builder.build()
     } catch DIError.build(let errors) {
       XCTAssertEqual(errors, [
-        DIError.notSpecifiedInitializationMethodFor(component: DIComponent(type: TestProtocol.self, file: file, line: line))
+        DIError.notSpecifiedInitializationMethodFor(typeInfo: DITypeInfo(type: TestProtocol.self, file: file, line: line))
       ])
       return
     } catch {
@@ -104,9 +104,9 @@ class DITranquillityTests_Build: XCTestCase {
       try builder.build()
     } catch DIError.build(let errors) {
       XCTAssertEqual(errors, [
-        DIError.pluralSpecifiedDefaultType(type: TestProtocol.self, components: [
-          DIComponent(type: TestClass1.self, file: file, line: lineClass1),
-          DIComponent(type: TestClass2.self, file: file, line: lineClass2)
+        DIError.pluralSpecifiedDefaultType(type: TestProtocol.self, typesInfo: [
+          DITypeInfo(type: TestClass1.self, file: file, line: lineClass1),
+          DITypeInfo(type: TestClass2.self, file: file, line: lineClass2)
         ])
       ])
       return
@@ -168,10 +168,10 @@ class DITranquillityTests_Build: XCTestCase {
       do {
         let type: Test2Protocol = try container.resolve()
         print("\(type)")
-      } catch DIError.typeIsIncorrect(let requestedType, let realType, let component) {
+      } catch DIError.typeIsIncorrect(let requestedType, let realType, let typeInfo) {
         XCTAssert(equals(requestedType, Test2Protocol.self))
         XCTAssert(equals(realType, TestClass1.self))
-        XCTAssertEqual(component, DIComponent(type: TestClass1.self, file: file, line: line))
+        XCTAssertEqual(typeInfo, DITypeInfo(type: TestClass1.self, file: file, line: line))
         return
       } catch {
         XCTFail("Catched error: \(error)")

@@ -1,5 +1,5 @@
 //
-//  Helpers.swift
+//  RemoveTypeWrappers.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 14/06/16.
@@ -18,10 +18,9 @@ extension Optional: DITypeGetter {
 	static var type: Any.Type { return Wrapped.self  }
 }
 
-// It's worked but it's no good
-func removedTypeWrappers(_ type: Any.Type) -> Any.Type {
+func removeTypeWrappers(_ type: Any.Type) -> Any.Type {
 	if let typeGetter = type as? DITypeGetter.Type {
-		return removedTypeWrappers(typeGetter.type)
+		return removeTypeWrappers(typeGetter.type)
 	}
 	
 	return type
