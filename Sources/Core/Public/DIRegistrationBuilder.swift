@@ -6,14 +6,8 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public extension DIContainerBuilder {
-  public func register<T>(_ type: T.Type, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
-    return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: type, file: file, line: line))
-  }
-}
-
-public extension DIRegistrationBuilder {
-  // As
+// As...
+extension DIRegistrationBuilder {
   @discardableResult
   public func asSelf() -> Self {
     isTypeSet = true
@@ -39,42 +33,73 @@ public extension DIRegistrationBuilder {
     rType.isDefault = true
     return self
   }
-  
-  // Initializer
+}
+
+// Initializer
+extension DIRegistrationBuilder {
   @discardableResult
-  public func initializer(_ method: @escaping (_ scope: DIScope) -> ImplObj) -> Self {
-    rType.setInitializer { (s) -> Any in return method(s) }
+  public func initial(_ closure: @escaping () -> ImplObj) -> Self {
+    rType.append(initial: { (_: DIScope) -> Any in return closure() })
     return self
   }
   
   @discardableResult
-  public func initializer(_ method: @escaping () -> ImplObj) -> Self {
-    rType.setInitializer { (_: DIScope) -> Any in return method() }
+  public func initial(_ closure: @escaping (_: DIScope) -> ImplObj) -> Self {
+    rType.append(initial: { scope -> Any in return closure(scope) })
     return self
   }
-  
-  // Dependency
+}
+
+// Injection
+extension DIRegistrationBuilder {
   @discardableResult
-  public func dependency(_ method: @escaping (_ scope: DIScope, _ obj: ImplObj) -> ()) -> Self {
-    rType.appendDependency(method)
+  public func injection(_ closure: @escaping (_: DIScope, _: ImplObj) -> ()) -> Self {
+    rType.append(injection: closure)
     return self
   }
   
-  // LifeTime
+  @discardableResult
+  public func injection(_ method: @escaping (_ :ImplObj) -> ()) -> Self {
+    rType.append(injection: { scope, obj in method(obj) })
+    return self
+  }
+}
+
+// Auto Property Injection, Only for NSObject hierarchy classes and @objc properties
+extension DIRegistrationBuilder where ImplObj: NSObject {
+  @discardableResult
+  public func useAutoPropertyInjection() -> Self {
+    if !isAutoInjection {
+      rType.appendAutoInjection(by: ImplObj.self)
+      isAutoInjection = true
+    }
+    return self
+  }
+}
+
+// LifeTime
+extension DIRegistrationBuilder {
   @discardableResult
   public func lifetime(_ lifetime: DILifeTime) -> Self {
     rType.lifeTime = lifetime
     return self
   }
 	
-	
 	@discardableResult
-	public func initializerDoesNotNeedToBe() -> Self {
-		rType.initializerDoesNotNeedToBe = true
+	public func initialDoesNotNeedToBe() -> Self {
+		rType.initialDoesNotNeedToBe = true
 		return self
 	}
 }
 
+// Protocol
+extension DIRegistrationBuilder {
+  @discardableResult
+  public func declareHimselfProtocol() {
+    rType.isProtocol = true
+    rType.initialDoesNotNeedToBe = true
+  }
+}
 
 public final class DIRegistrationBuilder<ImplObj> {
   init(container: RTypeContainer, component: DIComponent) {
@@ -89,6 +114,7 @@ public final class DIRegistrationBuilder<ImplObj> {
   }
   
   var isTypeSet: Bool = false
+  var isAutoInjection: Bool = false
   let rType: RType
   let container: RTypeContainer
 }

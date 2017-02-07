@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1683F58F1E31F05A0073669D /* DITranquillityTests_Lazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1683F58E1E31F05A0073669D /* DITranquillityTests_Lazy.swift */; };
+		1142C1E41E44F7910000517F /* DITranquillityTests_AutoPropertyInjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1142C1E31E44F7910000517F /* DITranquillityTests_AutoPropertyInjection.swift */; };
+		118DBCB71E40F9E9003A7D1F /* DITranquillityTests_ResolveByInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCB61E40F9E9003A7D1F /* DITranquillityTests_ResolveByInit.swift */; };
 		1699AEC11DCAED8C00962832 /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1699AEC01DCAED8C00962832 /* DITranquillity.framework */; };
 		1699AEC31DCAEDD900962832 /* SubProject1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1699AEC21DCAEDD900962832 /* SubProject1.framework */; };
 		1699AEDC1DCAEE6000962832 /* SubProject2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1699AEDB1DCAEE6000962832 /* SubProject2.framework */; };
@@ -22,7 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1683F58E1E31F05A0073669D /* DITranquillityTests_Lazy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Lazy.swift; sourceTree = "<group>"; };
+		1142C1E31E44F7910000517F /* DITranquillityTests_AutoPropertyInjection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_AutoPropertyInjection.swift; sourceTree = "<group>"; };
+		118DBCB61E40F9E9003A7D1F /* DITranquillityTests_ResolveByInit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_ResolveByInit.swift; sourceTree = "<group>"; };
 		1699AEC01DCAED8C00962832 /* DITranquillity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DITranquillity.framework; path = "../../build/Debug-iphoneos/DITranquillity.framework"; sourceTree = "<group>"; };
 		1699AEC21DCAEDD900962832 /* SubProject1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SubProject1.framework; path = "SubProject1/build/Debug-iphoneos/SubProject1.framework"; sourceTree = "<group>"; };
 		1699AEDB1DCAEE6000962832 /* SubProject2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SubProject2.framework; path = "SubProject2/build/Debug-iphoneos/SubProject2.framework"; sourceTree = "<group>"; };
@@ -85,13 +87,14 @@
 				A5D918BF1D1939A70009F9D4 /* DITranquillityTests_Build.swift */,
 				A5D918C01D1939A70009F9D4 /* Info.plist */,
 				A5D918C11D1939A70009F9D4 /* ResolveTestClasses.swift */,
+				118DBCB61E40F9E9003A7D1F /* DITranquillityTests_ResolveByInit.swift */,
 				A52CE30C1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift */,
 				A51CEC531D3CA0EA00C5B60A /* DITranquillityTests_Scope.swift */,
 				A51CEC551D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift */,
 				A5AD4EEC1D3CB55900A6882C /* TestStoryboard.storyboard */,
 				A5AD4F031D3CD4CB00A6882C /* DITranquillityTests_Threads.swift */,
 				16D7BCC21DB0875600A29A9F /* DITranquillityTests_Scan.swift */,
-				1683F58E1E31F05A0073669D /* DITranquillityTests_Lazy.swift */,
+				1142C1E31E44F7910000517F /* DITranquillityTests_AutoPropertyInjection.swift */,
 			);
 			path = DITranquillityTest;
 			sourceTree = "<group>";
@@ -168,10 +171,11 @@
 			files = (
 				A5AD4F041D3CD4CB00A6882C /* DITranquillityTests_Threads.swift in Sources */,
 				A51CEC561D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift in Sources */,
-				1683F58F1E31F05A0073669D /* DITranquillityTests_Lazy.swift in Sources */,
+				118DBCB71E40F9E9003A7D1F /* DITranquillityTests_ResolveByInit.swift in Sources */,
 				A5D918C41D1939A70009F9D4 /* ResolveTestClasses.swift in Sources */,
 				16D7BCC31DB0875600A29A9F /* DITranquillityTests_Scan.swift in Sources */,
 				A51CEC541D3CA0EA00C5B60A /* DITranquillityTests_Scope.swift in Sources */,
+				1142C1E41E44F7910000517F /* DITranquillityTests_AutoPropertyInjection.swift in Sources */,
 				A52CE30D1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift in Sources */,
 				A5D918C21D1939A70009F9D4 /* DITranquillityTests_Build.swift in Sources */,
 			);

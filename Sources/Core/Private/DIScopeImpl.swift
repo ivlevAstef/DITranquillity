@@ -152,9 +152,9 @@ class DIScopeImpl {
     let mapSave = circular.objMap
 
     circular.recursive.append(pair.uniqueKey)
-    for index in 0..<pair.rType.dependencies.count {
+    for index in 0..<pair.rType.injections.count {
       circular.objMap = mapSave
-      pair.rType.dependencies[index](scope, obj)
+      pair.rType.injections[index](scope, obj)
     }
     circular.recursive.removeLast()
   }

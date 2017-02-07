@@ -7,154 +7,154 @@
 //
 
 public extension DIScope {
-  public func resolve<T, Arg>(_: T.Type, arg: Arg) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg) -> Any
-		return try impl.resolve(self, type: T.self) { (initializer: Method) in return initializer(self, arg) }
+  public func resolve<T,A0>(_: T.Type, arg a0:A0) throws -> T {
+    typealias Method = (_:DIScope,_:A0) -> Any
+    return try impl.resolve(self, type: T.self) { ($0 as Method)(self, a0) }
   }
   
-  public func resolveMany<T, Arg>(_: T.Type, arg: Arg) throws -> [T] {
-    typealias Method = (_ scope: DIScope, _ arg: Arg) -> Any
-    return try impl.resolveMany(self, type: T.self) { (initializer: Method) in return initializer(self, arg) }
+  public func resolveMany<T,A0>(_: T.Type, arg a0:A0) throws -> [T] {
+    typealias Method = (_:DIScope,_:A0) -> Any
+    return try impl.resolveMany(self, type: T.self) { ($0 as Method)(self, a0) }
   }
   
-  public func resolve<T, Arg>(_: T.Type, name: String, arg: Arg) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg) -> Any
-    return try impl.resolve(self, name: name, type: T.self) { (initializer: Method) -> Any in return initializer(self, arg) }
+  public func resolve<T,A0>(_: T.Type, name: String, arg a0:A0) throws -> T {
+    typealias Method = (_: DIScope,_:A0) -> Any
+    return try impl.resolve(self, name: name, type: T.self) { ($0 as Method)(self, a0) }
   }
   
-  public func resolve<T, Arg, Arg1>(_: T.Type, arg: Arg, _ arg1: Arg1) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1) -> Any
-		return try impl.resolve(self, type: T.self) { (initializer: Method) in return initializer(self, arg, arg1) }
+  public func resolve<T,A0,A1>(_: T.Type, arg a0:A0,_ a1:A1) throws -> T {
+    typealias Method = (_:DIScope,_:A0,_:A1) -> Any
+    return try impl.resolve(self, type: T.self) { ($0 as Method)(self, a0,a1) }
   }
   
-  public func resolveMany<T, Arg, Arg1>(_: T.Type, arg: Arg, _ arg1: Arg1) throws -> [T] {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1) -> Any
-    return try impl.resolveMany(self, type: T.self) { (initializer: Method) in return initializer(self, arg, arg1) }
+  public func resolveMany<T,A0,A1>(_: T.Type, arg a0:A0,_ a1:A1) throws -> [T] {
+    typealias Method = (_:DIScope,_:A0,_:A1) -> Any
+    return try impl.resolveMany(self, type: T.self) { ($0 as Method)(self, a0,a1) }
   }
   
-  public func resolve<T, Arg, Arg1>(_: T.Type, name: String, arg: Arg, _ arg1: Arg1) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1) -> Any
-    return try impl.resolve(self, name: name, type: T.self) { (initializer: Method) -> Any in return initializer(self, arg, arg1) }
+  public func resolve<T,A0,A1>(_: T.Type, name: String, arg a0:A0,_ a1:A1) throws -> T {
+    typealias Method = (_: DIScope,_:A0,_:A1) -> Any
+    return try impl.resolve(self, name: name, type: T.self) { ($0 as Method)(self, a0,a1) }
   }
   
-  public func resolve<T, Arg, Arg1, Arg2>(_: T.Type, arg: Arg, _ arg1: Arg1, _ arg2: Arg2) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2) -> Any
-		return try impl.resolve(self, type: T.self) { (initializer: Method) in return initializer(self, arg, arg1, arg2) }
+  public func resolve<T,A0,A1,A2>(_: T.Type, arg a0:A0,_ a1:A1,_ a2:A2) throws -> T {
+    typealias Method = (_:DIScope,_:A0,_:A1,_:A2) -> Any
+    return try impl.resolve(self, type: T.self) { ($0 as Method)(self, a0,a1,a2) }
   }
   
-  public func resolveMany<T, Arg, Arg1, Arg2>(_: T.Type, arg: Arg, _ arg1: Arg1, _ arg2: Arg2) throws -> [T] {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2) -> Any
-    return try impl.resolveMany(self, type: T.self) { (initializer: Method) in return initializer(self, arg, arg1, arg2) }
+  public func resolveMany<T,A0,A1,A2>(_: T.Type, arg a0:A0,_ a1:A1,_ a2:A2) throws -> [T] {
+    typealias Method = (_:DIScope,_:A0,_:A1,_:A2) -> Any
+    return try impl.resolveMany(self, type: T.self) { ($0 as Method)(self, a0,a1,a2) }
   }
   
-  public func resolve<T, Arg, Arg1, Arg2>(_: T.Type, name: String, arg: Arg, _ arg1: Arg1, _ arg2: Arg2) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2) -> Any
-    return try impl.resolve(self, name: name, type: T.self) { (initializer: Method) -> Any in return initializer(self, arg, arg1, arg2) }
+  public func resolve<T,A0,A1,A2>(_: T.Type, name: String, arg a0:A0,_ a1:A1,_ a2:A2) throws -> T {
+    typealias Method = (_: DIScope,_:A0,_:A1,_:A2) -> Any
+    return try impl.resolve(self, name: name, type: T.self) { ($0 as Method)(self, a0,a1,a2) }
   }
   
-  public func resolve<T, Arg, Arg1, Arg2, Arg3>(_: T.Type, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3) -> Any
-		return try impl.resolve(self, type: T.self) { (initializer: Method) in return initializer(self, arg, arg1, arg2, arg3) }
+  public func resolve<T,A0,A1,A2,A3>(_: T.Type, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3) throws -> T {
+    typealias Method = (_:DIScope,_:A0,_:A1,_:A2,_:A3) -> Any
+    return try impl.resolve(self, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3) }
   }
   
-  public func resolveMany<T, Arg, Arg1, Arg2, Arg3>(_: T.Type, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3) throws -> [T] {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3) -> Any
-    return try impl.resolveMany(self, type: T.self) { (initializer: Method) in return initializer(self, arg, arg1, arg2, arg3) }
+  public func resolveMany<T,A0,A1,A2,A3>(_: T.Type, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3) throws -> [T] {
+    typealias Method = (_:DIScope,_:A0,_:A1,_:A2,_:A3) -> Any
+    return try impl.resolveMany(self, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3) }
   }
   
-  public func resolve<T, Arg, Arg1, Arg2, Arg3>(_: T.Type, name: String, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3) -> Any
-    return try impl.resolve(self, name: name, type: T.self) { (initializer: Method) -> Any in return initializer(self, arg, arg1, arg2, arg3) }
+  public func resolve<T,A0,A1,A2,A3>(_: T.Type, name: String, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3) throws -> T {
+    typealias Method = (_: DIScope,_:A0,_:A1,_:A2,_:A3) -> Any
+    return try impl.resolve(self, name: name, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3) }
   }
   
-  public func resolve<T, Arg, Arg1, Arg2, Arg3, Arg4>(_: T.Type, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4) -> Any
-		return try impl.resolve(self, type: T.self) { (initializer: Method) in return initializer(self, arg, arg1, arg2, arg3, arg4) }
+  public func resolve<T,A0,A1,A2,A3,A4>(_: T.Type, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3,_ a4:A4) throws -> T {
+    typealias Method = (_:DIScope,_:A0,_:A1,_:A2,_:A3,_:A4) -> Any
+    return try impl.resolve(self, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3,a4) }
   }
   
-  public func resolveMany<T, Arg, Arg1, Arg2, Arg3, Arg4>(_: T.Type, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4) throws -> [T] {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4) -> Any
-    return try impl.resolveMany(self, type: T.self) { (initializer: Method) in return initializer(self, arg, arg1, arg2, arg3, arg4) }
+  public func resolveMany<T,A0,A1,A2,A3,A4>(_: T.Type, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3,_ a4:A4) throws -> [T] {
+    typealias Method = (_:DIScope,_:A0,_:A1,_:A2,_:A3,_:A4) -> Any
+    return try impl.resolveMany(self, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3,a4) }
   }
   
-  public func resolve<T, Arg, Arg1, Arg2, Arg3, Arg4>(_: T.Type, name: String, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4) -> Any
-    return try impl.resolve(self, name: name, type: T.self) { (initializer: Method) -> Any in return initializer(self, arg, arg1, arg2, arg3, arg4) }
+  public func resolve<T,A0,A1,A2,A3,A4>(_: T.Type, name: String, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3,_ a4:A4) throws -> T {
+    typealias Method = (_: DIScope,_:A0,_:A1,_:A2,_:A3,_:A4) -> Any
+    return try impl.resolve(self, name: name, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3,a4) }
   }
   
-  public func resolve<T, Arg, Arg1, Arg2, Arg3, Arg4, Arg5>(_: T.Type, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5) -> Any
-		return try impl.resolve(self, type: T.self) { (initializer: Method) in return initializer(self, arg, arg1, arg2, arg3, arg4, arg5) }
+  public func resolve<T,A0,A1,A2,A3,A4,A5>(_: T.Type, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3,_ a4:A4,_ a5:A5) throws -> T {
+    typealias Method = (_:DIScope,_:A0,_:A1,_:A2,_:A3,_:A4,_:A5) -> Any
+    return try impl.resolve(self, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3,a4,a5) }
   }
   
-  public func resolveMany<T, Arg, Arg1, Arg2, Arg3, Arg4, Arg5>(_: T.Type, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5) throws -> [T] {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5) -> Any
-    return try impl.resolveMany(self, type: T.self) { (initializer: Method) in return initializer(self, arg, arg1, arg2, arg3, arg4, arg5) }
+  public func resolveMany<T,A0,A1,A2,A3,A4,A5>(_: T.Type, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3,_ a4:A4,_ a5:A5) throws -> [T] {
+    typealias Method = (_:DIScope,_:A0,_:A1,_:A2,_:A3,_:A4,_:A5) -> Any
+    return try impl.resolveMany(self, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3,a4,a5) }
   }
   
-  public func resolve<T, Arg, Arg1, Arg2, Arg3, Arg4, Arg5>(_: T.Type, name: String, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5) -> Any
-    return try impl.resolve(self, name: name, type: T.self) { (initializer: Method) -> Any in return initializer(self, arg, arg1, arg2, arg3, arg4, arg5) }
+  public func resolve<T,A0,A1,A2,A3,A4,A5>(_: T.Type, name: String, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3,_ a4:A4,_ a5:A5) throws -> T {
+    typealias Method = (_: DIScope,_:A0,_:A1,_:A2,_:A3,_:A4,_:A5) -> Any
+    return try impl.resolve(self, name: name, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3,a4,a5) }
   }
   
-  public func resolve<T, Arg, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6>(_: T.Type, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6) -> Any
-		return try impl.resolve(self, type: T.self) { (initializer: Method) in return initializer(self, arg, arg1, arg2, arg3, arg4, arg5, arg6) }
+  public func resolve<T,A0,A1,A2,A3,A4,A5,A6>(_: T.Type, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3,_ a4:A4,_ a5:A5,_ a6:A6) throws -> T {
+    typealias Method = (_:DIScope,_:A0,_:A1,_:A2,_:A3,_:A4,_:A5,_:A6) -> Any
+    return try impl.resolve(self, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3,a4,a5,a6) }
   }
   
-  public func resolveMany<T, Arg, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6>(_: T.Type, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6) throws -> [T] {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6) -> Any
-    return try impl.resolveMany(self, type: T.self) { (initializer: Method) in return initializer(self, arg, arg1, arg2, arg3, arg4, arg5, arg6) }
+  public func resolveMany<T,A0,A1,A2,A3,A4,A5,A6>(_: T.Type, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3,_ a4:A4,_ a5:A5,_ a6:A6) throws -> [T] {
+    typealias Method = (_:DIScope,_:A0,_:A1,_:A2,_:A3,_:A4,_:A5,_:A6) -> Any
+    return try impl.resolveMany(self, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3,a4,a5,a6) }
   }
   
-  public func resolve<T, Arg, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6>(_: T.Type, name: String, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6) -> Any
-    return try impl.resolve(self, name: name, type: T.self) { (initializer: Method) -> Any in return initializer(self, arg, arg1, arg2, arg3, arg4, arg5, arg6) }
+  public func resolve<T,A0,A1,A2,A3,A4,A5,A6>(_: T.Type, name: String, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3,_ a4:A4,_ a5:A5,_ a6:A6) throws -> T {
+    typealias Method = (_: DIScope,_:A0,_:A1,_:A2,_:A3,_:A4,_:A5,_:A6) -> Any
+    return try impl.resolve(self, name: name, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3,a4,a5,a6) }
   }
   
-  public func resolve<T, Arg, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7>(_: T.Type, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7) -> Any
-		return try impl.resolve(self, type: T.self) { (initializer: Method) in return initializer(self, arg, arg1, arg2, arg3, arg4, arg5, arg6, arg7) }
+  public func resolve<T,A0,A1,A2,A3,A4,A5,A6,A7>(_: T.Type, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3,_ a4:A4,_ a5:A5,_ a6:A6,_ a7:A7) throws -> T {
+    typealias Method = (_:DIScope,_:A0,_:A1,_:A2,_:A3,_:A4,_:A5,_:A6,_:A7) -> Any
+    return try impl.resolve(self, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3,a4,a5,a6,a7) }
   }
   
-  public func resolveMany<T, Arg, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7>(_: T.Type, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7) throws -> [T] {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7) -> Any
-    return try impl.resolveMany(self, type: T.self) { (initializer: Method) in return initializer(self, arg, arg1, arg2, arg3, arg4, arg5, arg6, arg7) }
+  public func resolveMany<T,A0,A1,A2,A3,A4,A5,A6,A7>(_: T.Type, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3,_ a4:A4,_ a5:A5,_ a6:A6,_ a7:A7) throws -> [T] {
+    typealias Method = (_:DIScope,_:A0,_:A1,_:A2,_:A3,_:A4,_:A5,_:A6,_:A7) -> Any
+    return try impl.resolveMany(self, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3,a4,a5,a6,a7) }
   }
   
-  public func resolve<T, Arg, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7>(_: T.Type, name: String, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7) -> Any
-    return try impl.resolve(self, name: name, type: T.self) { (initializer: Method) -> Any in return initializer(self, arg, arg1, arg2, arg3, arg4, arg5, arg6, arg7) }
+  public func resolve<T,A0,A1,A2,A3,A4,A5,A6,A7>(_: T.Type, name: String, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3,_ a4:A4,_ a5:A5,_ a6:A6,_ a7:A7) throws -> T {
+    typealias Method = (_: DIScope,_:A0,_:A1,_:A2,_:A3,_:A4,_:A5,_:A6,_:A7) -> Any
+    return try impl.resolve(self, name: name, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3,a4,a5,a6,a7) }
   }
   
-  public func resolve<T, Arg, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8>(_: T.Type, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7, _ arg8: Arg8) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7, _ arg8: Arg8) -> Any
-		return try impl.resolve(self, type: T.self) { (initializer: Method) in return initializer(self, arg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8) }
+  public func resolve<T,A0,A1,A2,A3,A4,A5,A6,A7,A8>(_: T.Type, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3,_ a4:A4,_ a5:A5,_ a6:A6,_ a7:A7,_ a8:A8) throws -> T {
+    typealias Method = (_:DIScope,_:A0,_:A1,_:A2,_:A3,_:A4,_:A5,_:A6,_:A7,_:A8) -> Any
+    return try impl.resolve(self, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3,a4,a5,a6,a7,a8) }
   }
   
-  public func resolveMany<T, Arg, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8>(_: T.Type, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7, _ arg8: Arg8) throws -> [T] {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7, _ arg8: Arg8) -> Any
-    return try impl.resolveMany(self, type: T.self) { (initializer: Method) in return initializer(self, arg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8) }
+  public func resolveMany<T,A0,A1,A2,A3,A4,A5,A6,A7,A8>(_: T.Type, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3,_ a4:A4,_ a5:A5,_ a6:A6,_ a7:A7,_ a8:A8) throws -> [T] {
+    typealias Method = (_:DIScope,_:A0,_:A1,_:A2,_:A3,_:A4,_:A5,_:A6,_:A7,_:A8) -> Any
+    return try impl.resolveMany(self, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3,a4,a5,a6,a7,a8) }
   }
   
-  public func resolve<T, Arg, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8>(_: T.Type, name: String, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7, _ arg8: Arg8) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7, _ arg8: Arg8) -> Any
-    return try impl.resolve(self, name: name, type: T.self) { (initializer: Method) -> Any in return initializer(self, arg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8) }
+  public func resolve<T,A0,A1,A2,A3,A4,A5,A6,A7,A8>(_: T.Type, name: String, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3,_ a4:A4,_ a5:A5,_ a6:A6,_ a7:A7,_ a8:A8) throws -> T {
+    typealias Method = (_: DIScope,_:A0,_:A1,_:A2,_:A3,_:A4,_:A5,_:A6,_:A7,_:A8) -> Any
+    return try impl.resolve(self, name: name, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3,a4,a5,a6,a7,a8) }
   }
   
-  public func resolve<T, Arg, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9>(_: T.Type, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7, _ arg8: Arg8, _ arg9: Arg9) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7, _ arg8: Arg8, _ arg9: Arg9) -> Any
-		return try impl.resolve(self, type: T.self) { (initializer: Method) in return initializer(self, arg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9) }
+  public func resolve<T,A0,A1,A2,A3,A4,A5,A6,A7,A8,A9>(_: T.Type, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3,_ a4:A4,_ a5:A5,_ a6:A6,_ a7:A7,_ a8:A8,_ a9:A9) throws -> T {
+    typealias Method = (_:DIScope,_:A0,_:A1,_:A2,_:A3,_:A4,_:A5,_:A6,_:A7,_:A8,_:A9) -> Any
+    return try impl.resolve(self, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3,a4,a5,a6,a7,a8,a9) }
   }
   
-  public func resolveMany<T, Arg, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9>(_: T.Type, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7, _ arg8: Arg8, _ arg9: Arg9) throws -> [T] {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7, _ arg8: Arg8, _ arg9: Arg9) -> Any
-    return try impl.resolveMany(self, type: T.self) { (initializer: Method) in return initializer(self, arg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9) }
+  public func resolveMany<T,A0,A1,A2,A3,A4,A5,A6,A7,A8,A9>(_: T.Type, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3,_ a4:A4,_ a5:A5,_ a6:A6,_ a7:A7,_ a8:A8,_ a9:A9) throws -> [T] {
+    typealias Method = (_:DIScope,_:A0,_:A1,_:A2,_:A3,_:A4,_:A5,_:A6,_:A7,_:A8,_:A9) -> Any
+    return try impl.resolveMany(self, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3,a4,a5,a6,a7,a8,a9) }
   }
   
-  public func resolve<T, Arg, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9>(_: T.Type, name: String, arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7, _ arg8: Arg8, _ arg9: Arg9) throws -> T {
-    typealias Method = (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7, _ arg8: Arg8, _ arg9: Arg9) -> Any
-    return try impl.resolve(self, name: name, type: T.self) { (initializer: Method) -> Any in return initializer(self, arg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9) }
+  public func resolve<T,A0,A1,A2,A3,A4,A5,A6,A7,A8,A9>(_: T.Type, name: String, arg a0:A0,_ a1:A1,_ a2:A2,_ a3:A3,_ a4:A4,_ a5:A5,_ a6:A6,_ a7:A7,_ a8:A8,_ a9:A9) throws -> T {
+    typealias Method = (_: DIScope,_:A0,_:A1,_:A2,_:A3,_:A4,_:A5,_:A6,_:A7,_:A8,_:A9) -> Any
+    return try impl.resolve(self, name: name, type: T.self) { ($0 as Method)(self, a0,a1,a2,a3,a4,a5,a6,a7,a8,a9) }
   }
   
 }

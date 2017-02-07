@@ -37,7 +37,7 @@ extension DIContainerBuilder {
     }
 
     for rType in allTypes {
-      if !(rType.hasInitializer || rType.initializerDoesNotNeedToBe) {
+      if !(rType.hasInitial || rType.initialDoesNotNeedToBe) {
         errors.append(DIError.notSpecifiedInitializationMethodFor(component: rType.component))
       }
     }
@@ -90,5 +90,12 @@ extension DIContainerBuilder {
 
     ignoreSet.insert(key)
     return false
+  }
+}
+
+
+extension DIContainerBuilder {
+  internal func registrationBuilder<T>(file: String, line: Int) -> DIRegistrationBuilder<T> {
+    return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: T.self, file: file, line: line))
   }
 }

@@ -2,69 +2,69 @@
 //  DIRegistrationBuilder.Arg.swift
 //  DITranquillity
 //
-//  Created by Alexander Ivlev on 11/07/16.
-//  Copyright © 2016 Alexander Ivlev. All rights reserved.
+//  Created by Alexander Ivlev on 27/01/2017.
+//  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
 public extension DIRegistrationBuilder {
   @discardableResult
-  public func initializer<Arg>(method: @escaping (_ scope: DIScope, _ arg: Arg) -> ImplObj) -> Self {
-    rType.setInitializer { (s, arg) -> Any in return method(s, arg) }
+  public func initial<P0>(_ closure: @escaping (_:P0) -> ImplObj) -> Self {
+    rType.append(initial: { (s: DIScope) -> Any in closure(*!s) })
     return self
   }
-  
+
   @discardableResult
-  public func initializer<Arg, Arg1>(method: @escaping (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1) -> ImplObj) -> Self {
-    rType.setInitializer { (s, arg, arg1) -> Any in return method(s, arg, arg1) }
+  public func initial<P0,P1>(_ closure: @escaping (_:P0,_:P1) -> ImplObj) -> Self {
+    rType.append(initial: { (s: DIScope) -> Any in closure(*!s,*!s) })
     return self
   }
-  
+
   @discardableResult
-  public func initializer<Arg, Arg1, Arg2>(method: @escaping (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2) -> ImplObj) -> Self {
-    rType.setInitializer { (s, arg, arg1, arg2) -> Any in return method(s, arg, arg1, arg2) }
+  public func initial<P0,P1,P2>(_ closure: @escaping (_:P0,_:P1,_:P2) -> ImplObj) -> Self {
+    rType.append(initial: { (s: DIScope) -> Any in closure(*!s,*!s,*!s) })
     return self
   }
-  
+
   @discardableResult
-  public func initializer<Arg, Arg1, Arg2, Arg3>(method: @escaping (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3) -> ImplObj) -> Self {
-    rType.setInitializer { (s, arg, arg1, arg2, arg3) -> Any in return method(s, arg, arg1, arg2, arg3) }
+  public func initial<P0,P1,P2,P3>(_ closure: @escaping (_:P0,_:P1,_:P2,_:P3) -> ImplObj) -> Self {
+    rType.append(initial: { (s: DIScope) -> Any in closure(*!s,*!s,*!s,*!s) })
     return self
   }
-  
+
   @discardableResult
-  public func initializer<Arg, Arg1, Arg2, Arg3, Arg4>(method: @escaping (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4) -> ImplObj) -> Self {
-    rType.setInitializer { (s, arg, arg1, arg2, arg3, arg4) -> Any in return method(s, arg, arg1, arg2, arg3, arg4) }
+  public func initial<P0,P1,P2,P3,P4>(_ closure: @escaping (_:P0,_:P1,_:P2,_:P3,_:P4) -> ImplObj) -> Self {
+    rType.append(initial: { (s: DIScope) -> Any in closure(*!s,*!s,*!s,*!s,*!s) })
     return self
   }
-  
+
   @discardableResult
-  public func initializer<Arg, Arg1, Arg2, Arg3, Arg4, Arg5>(method: @escaping (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5) -> ImplObj) -> Self {
-    rType.setInitializer { (s, arg, arg1, arg2, arg3, arg4, arg5) -> Any in return method(s, arg, arg1, arg2, arg3, arg4, arg5) }
+  public func initial<P0,P1,P2,P3,P4,P5>(_ closure: @escaping (_:P0,_:P1,_:P2,_:P3,_:P4,_:P5) -> ImplObj) -> Self {
+    rType.append(initial: { (s: DIScope) -> Any in closure(*!s,*!s,*!s,*!s,*!s,*!s) })
     return self
   }
-  
+
   @discardableResult
-  public func initializer<Arg, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6>(method: @escaping (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6) -> ImplObj) -> Self {
-    rType.setInitializer { (s, arg, arg1, arg2, arg3, arg4, arg5, arg6) -> Any in return method(s, arg, arg1, arg2, arg3, arg4, arg5, arg6) }
+  public func initial<P0,P1,P2,P3,P4,P5,P6>(_ closure: @escaping (_:P0,_:P1,_:P2,_:P3,_:P4,_:P5,_:P6) -> ImplObj) -> Self {
+    rType.append(initial: { (s: DIScope) -> Any in closure(*!s,*!s,*!s,*!s,*!s,*!s,*!s) })
     return self
   }
-  
+
   @discardableResult
-  public func initializer<Arg, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7>(method: @escaping (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7) -> ImplObj) -> Self {
-    rType.setInitializer { (s, arg, arg1, arg2, arg3, arg4, arg5, arg6, arg7) -> Any in return method(s, arg, arg1, arg2, arg3, arg4, arg5, arg6, arg7) }
+  public func initial<P0,P1,P2,P3,P4,P5,P6,P7>(_ closure: @escaping (_:P0,_:P1,_:P2,_:P3,_:P4,_:P5,_:P6,_:P7) -> ImplObj) -> Self {
+    rType.append(initial: { (s: DIScope) -> Any in closure(*!s,*!s,*!s,*!s,*!s,*!s,*!s,*!s) })
     return self
   }
-  
+
   @discardableResult
-  public func initializer<Arg, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8>(method: @escaping (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7, _ arg8: Arg8) -> ImplObj) -> Self {
-    rType.setInitializer { (s, arg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8) -> Any in return method(s, arg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8) }
+  public func initial<P0,P1,P2,P3,P4,P5,P6,P7,P8>(_ closure: @escaping (_:P0,_:P1,_:P2,_:P3,_:P4,_:P5,_:P6,_:P7,_:P8) -> ImplObj) -> Self {
+    rType.append(initial: { (s: DIScope) -> Any in closure(*!s,*!s,*!s,*!s,*!s,*!s,*!s,*!s,*!s) })
     return self
   }
-  
+
   @discardableResult
-  public func initializer<Arg, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9>(method: @escaping (_ scope: DIScope, _ arg: Arg, _ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5, _ arg6: Arg6, _ arg7: Arg7, _ arg8: Arg8, _ arg9: Arg9) -> ImplObj) -> Self {
-    rType.setInitializer { (s, arg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9) -> Any in return method(s, arg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9) }
+  public func initial<P0,P1,P2,P3,P4,P5,P6,P7,P8,P9>(_ closure: @escaping (_:P0,_:P1,_:P2,_:P3,_:P4,_:P5,_:P6,_:P7,_:P8,_:P9) -> ImplObj) -> Self {
+    rType.append(initial: { (s: DIScope) -> Any in closure(*!s,*!s,*!s,*!s,*!s,*!s,*!s,*!s,*!s,*!s) })
     return self
   }
-  
+
 }

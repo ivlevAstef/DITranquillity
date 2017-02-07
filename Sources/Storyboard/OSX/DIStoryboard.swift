@@ -31,26 +31,26 @@ public extension DIContainerBuilder {
 	public func register<T: AnyObject>(vc type: T.Type, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
 		return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: type, file: file, line: line))
 			.asSelf()
-			.initializerDoesNotNeedToBe()
+			.initialDoesNotNeedToBe()
 	}
 }
 
 public extension DIRegistrationBuilder where ImplObj: NSViewController {
   @discardableResult
-	public func initializer<T: NSViewController>(byNib type: T.Type) -> Self {
-		rType.setInitializer { NSViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T }
+	public func initial<T: NSViewController>(byNib type: T.Type) -> Self {
+		rType.append(initial: { NSViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T })
 		return self
 	}
 	
 	@discardableResult
-	public func initializer(byStoryboard storyboard: NSStoryboard, identifier: String) -> Self {
-		rType.setInitializer { storyboard.instantiateController(withIdentifier: identifier) }
+	public func initial(byStoryboard storyboard: NSStoryboard, identifier: String) -> Self {
+		rType.append(initial: { storyboard.instantiateController(withIdentifier: identifier) })
 		return self
 	}
 	
 	@discardableResult
-	public func initializer(byStoryboard storyboard: @escaping (_ scope: DIScope) -> NSStoryboard, identifier: String) -> Self {
-		rType.setInitializer { scope in storyboard(scope).instantiateController(withIdentifier: identifier) }
+	public func initial(byStoryboard storyboard: @escaping (_ scope: DIScope) -> NSStoryboard, identifier: String) -> Self {
+		rType.append(initial: { scope in storyboard(scope).instantiateController(withIdentifier: identifier) })
 		return self
 	}
 }
