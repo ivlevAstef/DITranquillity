@@ -21,7 +21,7 @@ class RType: RTypeBase {
   }
 
   var lifeTime = DILifeTime.default
-	var initialDoesNotNeedToBe: Bool = false
+	var initialNotNecessary: Bool = false
   var names: Set<String> = []
   var isDefault: Bool = false
   var isProtocol: Bool = false

@@ -9,11 +9,11 @@
 import XCTest
 import DITranquillity
 
-protocol TestProtocol { }
-class TestClass1: TestProtocol { }
-class TestClass2: TestProtocol { }
+private protocol TestProtocol { }
+private class TestClass1: TestProtocol { }
+private class TestClass2: TestProtocol { }
 
-protocol Test2Protocol { }
+private protocol Test2Protocol { }
 
 private func equals(_ t1: Any, _ t2: Any) -> Bool {
   return String(describing: t1) == String(describing: t2)
@@ -38,6 +38,8 @@ extension DIError: Equatable {
     case (.typeIsNotFound(let t1), .typeIsNotFound(let t2)) where equals(t1, t2): return true
     case (.notSpecifiedInitializationMethodFor(let t1), .notSpecifiedInitializationMethodFor(let t2)) where equals(t1, t2): return true
     case (.pluralSpecifiedDefaultType(let t1, let c1), .pluralSpecifiedDefaultType(let t2, let c2)) where equals(t1, t2) && c1 == c2: return true
+    case (.defaultTypeIsNotSpecified(let t1, let c1), .defaultTypeIsNotSpecified(let t2, let c2)) where equals(t1, t2) && c1 == c2: return true
+      
     case (.typeIsIncorrect(let t1, let rt1, let c1), .typeIsIncorrect(let t2, let rt2, let c2)) where equals(t1, t2) && equals(rt1, rt2) && c1 == c2: return true
     case (.build(let errs1), .build(let errs2)) where errs1 == errs2: return true
       
@@ -76,7 +78,7 @@ class DITranquillityTests_Build: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: TestProtocol.self)
-      .initialDoesNotNeedToBe()
+      .initialNotNecessary()
     
     do {
       try builder.build()
@@ -89,13 +91,13 @@ class DITranquillityTests_Build: XCTestCase {
     let builder = DIContainerBuilder()
     
     let lineClass1 = #line; builder.register(type: TestClass1.self)
-      .asType(TestProtocol.self)
-      .asDefault()
+      .as(TestProtocol.self)
+      .set(.default)
       .initial{ TestClass1() }
     
     let lineClass2 = #line; builder.register(type: TestClass2.self)
-      .asType(TestProtocol.self)
-      .asDefault()
+      .as(TestProtocol.self)
+      .set(.default)
       .initial(TestClass2.init)
     
     do {
@@ -118,12 +120,12 @@ class DITranquillityTests_Build: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: TestClass1.self)
-      .asType(TestProtocol.self)
-      .asDefault()
+      .as(TestProtocol.self)
+      .set(.default)
       .initial(TestClass1.init)
     
     builder.register(type: TestClass2.self)
-      .asType(TestProtocol.self)
+      .as(TestProtocol.self)
       .initial{ TestClass2() }
     
     do {
@@ -137,13 +139,13 @@ class DITranquillityTests_Build: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: TestClass1.self)
-      .asType(TestProtocol.self)
-      .asName("foo")
+      .as(TestProtocol.self)
+      .set(name: "foo")
       .initial{ TestClass1() }
     
     builder.register(type: TestClass2.self)
-      .asType(TestProtocol.self)
-      .asName("bar")
+      .as(TestProtocol.self)
+      .set(name: "bar")
       .initial{ TestClass2() }
     
     do {
@@ -157,7 +159,7 @@ class DITranquillityTests_Build: XCTestCase {
     let builder = DIContainerBuilder()
     
     let line = #line; builder.register(type: TestClass1.self)
-      .asType(Test2Protocol.self) //<---- Swift not supported static check
+      .as(Test2Protocol.self) //<---- Swift not supported static check
       .initial{ TestClass1() }
     
     do {
@@ -184,7 +186,7 @@ class DITranquillityTests_Build: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: TestClass1.self)
-      .asType(TestProtocol.self)
+      .as(TestProtocol.self)
       .initial(TestClass1.init)
     
     do {

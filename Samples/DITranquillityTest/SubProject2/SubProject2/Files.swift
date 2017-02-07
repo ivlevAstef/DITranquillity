@@ -11,6 +11,8 @@ import DITranquillity
 public class DuMole1Type { }
 
 public class ScannedDuMole1: DIScanned, DIModule {
+  public var scope: DIModuleScope { return .public }
+  
 	public func load(builder: DIContainerBuilder) {
     builder.register(type: DuMole1Type.init)
 	}
@@ -19,13 +21,14 @@ public class ScannedDuMole1: DIScanned, DIModule {
 public class DuMole2Type { }
 
 public class ScannedDuMole2: DIScanned, DIModule {
+  public var scope: DIModuleScope { return .public }
+  
 	public func load(builder: DIContainerBuilder) {
     builder.register(type: DuMole2Type.init)
 	}
 }
 
 public class ScannedAssembly2: DIScanned, DIAssembly {
-	public var publicModules: [DIModule] = [ ScannedDuMole1(), ScannedDuMole2() ]
-	public var internalModules: [DIModule] = []
+	public var modules: [DIModule] = [ ScannedDuMole1(), ScannedDuMole2() ]
 	public var dependencies: [DIAssembly] = []
 }

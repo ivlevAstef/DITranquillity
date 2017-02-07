@@ -7,7 +7,13 @@
 //
 
 public protocol DIModule: class {
+  var scope: DIModuleScope { get }
+  
   func load(builder: DIContainerBuilder)
+}
+
+public extension DIModule {
+  var scope: DIModuleScope { return .internal }
 }
 
 public extension DIContainerBuilder {

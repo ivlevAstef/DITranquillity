@@ -24,7 +24,6 @@
 		163DDDC81DB9C84E0003DE54 /* DITypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163DDDC51DB9C84E0003DE54 /* DITypes.swift */; };
 		165F614F1D9E78DD00F6126E /* DIContainerBuilder.Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165F614E1D9E78DD00F6126E /* DIContainerBuilder.Register.swift */; };
 		16640A711D9E1E7B00707BFC /* DIAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A4E1D9E1E7B00707BFC /* DIAssembly.swift */; };
-		16640A721D9E1E7B00707BFC /* DIDynamicAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A4F1D9E1E7B00707BFC /* DIDynamicAssembly.swift */; };
 		16640A731D9E1E7B00707BFC /* DIMultyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A521D9E1E7B00707BFC /* DIMultyMap.swift */; };
 		16640A741D9E1E7B00707BFC /* DIScopeImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A531D9E1E7B00707BFC /* DIScopeImpl.swift */; };
 		16640A751D9E1E7B00707BFC /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A541D9E1E7B00707BFC /* Helpers.swift */; };
@@ -57,7 +56,6 @@
 		169C0DCF1DA3501F001F0AD5 /* RTypeContainerFinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A5C1D9E1E7B00707BFC /* RTypeContainerFinal.swift */; };
 		169C0DD01DA3501F001F0AD5 /* RTypeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A5B1D9E1E7B00707BFC /* RTypeContainer.swift */; };
 		169C0DD11DA3501F001F0AD5 /* DIScopeImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A531D9E1E7B00707BFC /* DIScopeImpl.swift */; };
-		169C0DD21DA3501F001F0AD5 /* DIDynamicAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A4F1D9E1E7B00707BFC /* DIDynamicAssembly.swift */; };
 		169C0DD31DA3501F001F0AD5 /* DIScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A6A1D9E1E7B00707BFC /* DIScope.swift */; };
 		169C0DD41DA3501F001F0AD5 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A541D9E1E7B00707BFC /* Helpers.swift */; };
 		169C0DD51DA3501F001F0AD5 /* DIContainerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A651D9E1E7B00707BFC /* DIContainerBuilder.swift */; };
@@ -87,7 +85,6 @@
 		169C0E351DA35CBE001F0AD5 /* DIStoryboardBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 169C0E121DA352C7001F0AD5 /* DIStoryboardBase.m */; };
 		169C0E361DA35CBE001F0AD5 /* RTypeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A5B1D9E1E7B00707BFC /* RTypeContainer.swift */; };
 		169C0E371DA35CBE001F0AD5 /* DIScopeImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A531D9E1E7B00707BFC /* DIScopeImpl.swift */; };
-		169C0E381DA35CBE001F0AD5 /* DIDynamicAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A4F1D9E1E7B00707BFC /* DIDynamicAssembly.swift */; };
 		169C0E391DA35CBE001F0AD5 /* DIScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A6A1D9E1E7B00707BFC /* DIScope.swift */; };
 		169C0E3A1DA35CBE001F0AD5 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A541D9E1E7B00707BFC /* Helpers.swift */; };
 		169C0E3B1DA35CBE001F0AD5 /* DIContainerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A651D9E1E7B00707BFC /* DIContainerBuilder.swift */; };
@@ -120,7 +117,6 @@
 		163DDDC51DB9C84E0003DE54 /* DITypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITypes.swift; sourceTree = "<group>"; };
 		165F614E1D9E78DD00F6126E /* DIContainerBuilder.Register.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainerBuilder.Register.swift; sourceTree = "<group>"; };
 		16640A4E1D9E1E7B00707BFC /* DIAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIAssembly.swift; sourceTree = "<group>"; };
-		16640A4F1D9E1E7B00707BFC /* DIDynamicAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIDynamicAssembly.swift; sourceTree = "<group>"; };
 		16640A521D9E1E7B00707BFC /* DIMultyMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIMultyMap.swift; sourceTree = "<group>"; };
 		16640A531D9E1E7B00707BFC /* DIScopeImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScopeImpl.swift; sourceTree = "<group>"; };
 		16640A541D9E1E7B00707BFC /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
@@ -199,7 +195,6 @@
 			isa = PBXGroup;
 			children = (
 				16640A4E1D9E1E7B00707BFC /* DIAssembly.swift */,
-				16640A4F1D9E1E7B00707BFC /* DIDynamicAssembly.swift */,
 			);
 			path = Assembly;
 			sourceTree = "<group>";
@@ -501,7 +496,6 @@
 				163DDDC71DB9C84E0003DE54 /* DITypes.swift in Sources */,
 				169C0DD01DA3501F001F0AD5 /* RTypeContainer.swift in Sources */,
 				169C0DD11DA3501F001F0AD5 /* DIScopeImpl.swift in Sources */,
-				169C0DD21DA3501F001F0AD5 /* DIDynamicAssembly.swift in Sources */,
 				1142460F1E45A24100F8B3BA /* DIRegistrationBuilder.Arg.swift in Sources */,
 				169C0DD31DA3501F001F0AD5 /* DIScope.swift in Sources */,
 				16D7BCBB1DB086B500A29A9F /* DIScan.swift in Sources */,
@@ -540,7 +534,6 @@
 				163DDDC81DB9C84E0003DE54 /* DITypes.swift in Sources */,
 				169C0E361DA35CBE001F0AD5 /* RTypeContainer.swift in Sources */,
 				169C0E371DA35CBE001F0AD5 /* DIScopeImpl.swift in Sources */,
-				169C0E381DA35CBE001F0AD5 /* DIDynamicAssembly.swift in Sources */,
 				114246101E45A24100F8B3BA /* DIRegistrationBuilder.Arg.swift in Sources */,
 				169C0E391DA35CBE001F0AD5 /* DIScope.swift in Sources */,
 				16D7BCBC1DB086B600A29A9F /* DIScan.swift in Sources */,
@@ -580,7 +573,6 @@
 				163DDDC61DB9C84E0003DE54 /* DITypes.swift in Sources */,
 				16640A7A1D9E1E7B00707BFC /* RTypeContainer.swift in Sources */,
 				16640A741D9E1E7B00707BFC /* DIScopeImpl.swift in Sources */,
-				16640A721D9E1E7B00707BFC /* DIDynamicAssembly.swift in Sources */,
 				16640A871D9E1E7B00707BFC /* DIScope.swift in Sources */,
 				16D7BCB81DB086B000A29A9F /* DIScan.swift in Sources */,
 				16640A751D9E1E7B00707BFC /* Helpers.swift in Sources */,

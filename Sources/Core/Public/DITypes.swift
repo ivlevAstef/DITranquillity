@@ -21,6 +21,7 @@ public extension DIComponent {
   }
 }
 
+//////////////// lifetime
 public enum DILifeTime: Equatable {
   case single
   case lazySingle
@@ -28,4 +29,20 @@ public enum DILifeTime: Equatable {
   case perDependency
   
   static var `default`: DILifeTime { return perScope }
+}
+
+//////////////// module scope
+public enum DIModuleScope: Equatable {
+  case `public`
+  case `internal`
+  
+  static var `default`: DIModuleScope { return `internal` }
+}
+
+//////////////// implement scope
+public enum DIImpementScope: Equatable {
+  case global
+  case assembly
+  
+  static var `default`: DIImpementScope { return global }
 }

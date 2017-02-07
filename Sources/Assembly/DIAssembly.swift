@@ -8,22 +8,15 @@
 
 
 public protocol DIAssembly {
-  var publicModules: [DIModule] { get }
-  var internalModules: [DIModule] { get }
+  var modules: [DIModule] { get }
   var dependencies: [DIAssembly] { get }
-
-  var dynamicDeclarations: [DIDynamicDeclaration] { get }
 }
 
-public extension DIAssembly {
-  var dynamicDeclarations: [DIDynamicDeclaration] { return [] }
-}
 
 public extension DIContainerBuilder {
   @discardableResult
   public func register(assembly: DIAssembly) -> Self {
-    initDeclarations(assembly: assembly)
-    register(assembly: assembly, registerInternalModules: true)
+    register(assembly: assembly, scope: .public)
 
     return self
   }
@@ -34,39 +27,18 @@ internal extension DIAssembly {
 }
 
 fileprivate extension DIContainerBuilder {
-  fileprivate func initDeclarations(assembly: DIAssembly) {
-    for declaration in assembly.dynamicDeclarations {
-      declaration.for.add(module: declaration.module)
-    }
-
-    for dependency in assembly.dependencies {
-      initDeclarations(assembly: dependency)
-    }
-  }
-
-  fileprivate func register(assembly: DIAssembly, registerInternalModules: Bool) {
+  fileprivate func register(assembly: DIAssembly, scope: DIModuleScope) {
     if ignore(uniqueKey: assembly.uniqueKey) {
       return
     }
 
-    if let dynamicAssembly = assembly as? DIDynamicAssembly {
-      for module in dynamicAssembly.dynamicModules {
-        register(module: module)
-      }
-    }
-
-    for module in assembly.publicModules {
+    let modules = assembly.modules.filter{ .public == scope || .public == $0.scope }
+    for module in modules {
       register(module: module)
     }
 
-    if registerInternalModules {
-      for module in assembly.internalModules {
-        register(module: module)
-      }
-    }
-
     for dependency in assembly.dependencies {
-      register(assembly: dependency, registerInternalModules: false)
+      register(assembly: dependency, scope: .internal)
     }
   }
 }

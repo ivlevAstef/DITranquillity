@@ -30,8 +30,8 @@ public extension DIContainerBuilder {
   @discardableResult
   public func register<T: UIViewController>(vc type: T.Type, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
     return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: type, file: file, line: line))
-			.asSelf()
-			.initialDoesNotNeedToBe()
+			.as(.self)
+			.initialNotNecessary()
   }
 }
 
