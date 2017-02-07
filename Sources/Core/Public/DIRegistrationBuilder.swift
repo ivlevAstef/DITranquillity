@@ -6,30 +6,47 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-// As...
+// as...
+public enum DIAsSelf { case `self` }
+
 extension DIRegistrationBuilder {
   @discardableResult
-  public func asSelf() -> Self {
+  public func `as`(_: DIAsSelf) -> Self {
     isTypeSet = true
     container.append(key: ImplObj.self, value: rType)
     return self
   }
   
   @discardableResult
-  public func asType<EquallyObj>(_ equallyType: EquallyObj.Type) -> Self {
+  public func `as`<EquallyObj>(_ equallyType: EquallyObj.Type) -> Self {
     isTypeSet = true
     container.append(key: equallyType, value: rType)
     return self
   }
   
   @discardableResult
-  public func asName(_ name: String) -> Self {
+  public func `as`<Protocol>(implement _protocol: Protocol.Type, scope: DIImpementScope = .default) -> Self {
+    isTypeSet = true
+    container.append(key: _protocol, value: rType)
+    if .global == scope {
+      RTypeContainer.append(key: _protocol, implementation: rType)
+    }
+    return self
+  }
+}
+
+public enum DISetDefault { case `default` }
+
+// set...
+extension DIRegistrationBuilder {
+  @discardableResult
+  public func set(name: String) -> Self {
     rType.names.insert(name)
     return self
   }
   
   @discardableResult
-  public func asDefault() -> Self {
+  public func set(_: DISetDefault) -> Self {
     rType.isDefault = true
     return self
   }
@@ -86,20 +103,17 @@ extension DIRegistrationBuilder {
   }
 	
 	@discardableResult
-	public func initialDoesNotNeedToBe() -> Self {
-		rType.initialDoesNotNeedToBe = true
+	public func initialNotNecessary() -> Self {
+		rType.initialNotNecessary = true
 		return self
 	}
 }
 
-// Protocol
+// Implementation
 extension DIRegistrationBuilder {
-  @discardableResult
-  public func declareHimselfProtocol() {
-    rType.isProtocol = true
-    rType.initialDoesNotNeedToBe = true
-  }
+  
 }
+
 
 public final class DIRegistrationBuilder<ImplObj> {
   init(container: RTypeContainer, component: DIComponent) {
@@ -109,7 +123,7 @@ public final class DIRegistrationBuilder<ImplObj> {
   
   deinit {
     if !isTypeSet {
-      let _ = asSelf()
+      self.as(.self)
     }
   }
   
@@ -118,3 +132,12 @@ public final class DIRegistrationBuilder<ImplObj> {
   let rType: RType
   let container: RTypeContainer
 }
+
+// Protocol
+extension DIRegistrationBuilder {
+  internal func declareHimselfProtocol() {
+    rType.isProtocol = true
+    rType.initialNotNecessary = true
+  }
+}
+

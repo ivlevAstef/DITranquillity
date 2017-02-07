@@ -11,6 +11,8 @@ public final class DIContainerBuilder {
 
   @discardableResult
   public func build() throws -> DIScope {
+    rTypeContainer.lateBinding()
+    
     try validate()
 
     let finalContainer = rTypeContainer.copyFinal()
@@ -37,7 +39,7 @@ extension DIContainerBuilder {
     }
 
     for rType in allTypes {
-      if !(rType.hasInitial || rType.initialDoesNotNeedToBe) {
+      if !(rType.hasInitial || rType.initialNotNecessary) {
         errors.append(DIError.notSpecifiedInitializationMethodFor(component: rType.component))
       }
     }

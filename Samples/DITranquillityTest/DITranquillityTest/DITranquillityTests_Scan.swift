@@ -31,23 +31,17 @@ public class ScannedRecursiveModul_2: ScannedRecursiveBase, DIModule {
 
 
 class AssemblyWithScan1: DIAssembly {
-  public var publicModules: [DIModule] = []
-  public var internalModules: [DIModule] = []
-  
+  public var modules: [DIModule] = []
   public var dependencies: [DIAssembly] = [ DIScanAssembly(predicateByName: { $0.contains("Assembly") }) ]
 }
 
 class AssemblyWithScan2: DIAssembly {
-  public var publicModules: [DIModule] = [ DIScanModule(predicateByName: { $0.contains("Module") }) ]
-  public var internalModules: [DIModule] = []
-  
+  public var modules: [DIModule] = [ DIScanModule(predicateByName: { $0.contains("Module") }) ]
   public var dependencies: [DIAssembly] = []
 }
 
 class AssemblyWithScan3: DIAssembly {
-  public var publicModules: [DIModule] = []
-  public var internalModules: [DIModule] = [ DIScanModule(predicateByName: { $0.contains("DuMole") }) ]
-  
+  public var modules: [DIModule] = [ DIScanModule(predicateByName: { $0.contains("DuMole") }) ]
   public var dependencies: [DIAssembly] = []
 }
 

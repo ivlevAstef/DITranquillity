@@ -7,6 +7,12 @@
 //
 
 class RTypeContainer {
+  private static var implementations = DIMultimap<DITypeKey, RType>()
+  static func append(key: DIType, implementation: RType) {
+    implementations.append(key: DITypeKey(key), value: implementation)
+  }
+  
+  
   func append(key: DIType, value: RType) {
     values.append(key: DITypeKey(key), value: value)
   }
@@ -20,13 +26,28 @@ class RTypeContainer {
   func data() -> [DITypeKey: [RType]] {
     return values.dictionary
   }
+  
+  func lateBinding() {
+    for data in self.values.dictionary {
+      let protocols = data.value.filter({ $0.isProtocol })
+      if protocols.isEmpty {
+        continue
+      }
+      
+      for value in RTypeContainer.implementations[data.key] {
+        if !data.value.contains(value) {
+          values.append(key: data.key, value: value)
+        }
+      }
+    }
+  }
 
   func copyFinal() -> RTypeContainerFinal {
     var map: [RType: RTypeFinal] = [:]
     var result: [DITypeKey: [RTypeFinal]] = [:]
     
     for data in self.values.dictionary {
-      for rType in data.value {
+      for rType in data.value.filter({ !$0.isProtocol }) {
         let final = map[rType] ?? rType.copyFinal()
         map[rType] = final // additional operation, but simple syntax
         
