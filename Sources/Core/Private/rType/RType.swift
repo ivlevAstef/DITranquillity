@@ -8,21 +8,43 @@
 
 class RType: RTypeBase {
   typealias MethodKey = String
-  
-  // Initial
-  func setInitial<Method>(_ method: Method) {
-    initializers[MethodKey(describing: Method.self)] = method
+
+  var hasInitial: Bool { return !initials.isEmpty }
+
+  func copyFinal() -> RTypeFinal {
+    return RTypeFinal(component: component,
+      initials: self.initials,
+      injections: self.injections,
+      names: self.names,
+      isDefault: self.isDefault,
+      lifeTime: self.lifeTime)
   }
 
-  var hasInitializer: Bool { return !initializers.isEmpty }
+  var lifeTime = DILifeTime.default
+	var initialDoesNotNeedToBe: Bool = false
+  var names: Set<String> = []
+  var isDefault: Bool = false
+  var isProtocol: Bool = false
 
-  // Dependency
-  func appendInjection<T>(_ method: @escaping (_ scope: DIScope, _ obj: T) -> ()) {
-    dependencies.append{ method($0, $1 as! T) }
+  fileprivate var initials: [MethodKey: Any] = [:] // method type to method
+  fileprivate var injections: [(_ scope: DIScope, _ obj: Any) -> ()] = []
+}
+
+// Initial
+extension RType {
+  func append<Method>(initial method: Method) {
+    initials[MethodKey(describing: Method.self)] = method
+  }
+}
+
+// Injection
+extension RType {
+  func append<T>(injection method: @escaping (_ scope: DIScope, _ obj: T) -> ()) {
+    injections.append{ method($0, $1 as! T) }
   }
   
-  func appendAutoInjection<T>(_ type: T.Type) {
-    dependencies.append{ scope, obj in
+  func appendAutoInjection<T>(by type: T.Type) {
+    injections.append{ scope, obj in
       guard let nsObj = obj as? NSObject else {
         return
       }
@@ -40,21 +62,4 @@ class RType: RTypeBase {
       }
     }
   }
-
-  func copyFinal() -> RTypeFinal {
-    return RTypeFinal(component: component,
-      initializers: self.initializers,
-      dependencies: self.dependencies,
-      names: self.names,
-      isDefault: self.isDefault,
-      lifeTime: self.lifeTime)
-  }
-
-  var lifeTime = DILifeTime.default
-	var initializerDoesNotNeedToBe: Bool = false
-  var names: Set<String> = []
-  var isDefault: Bool = false
-
-  private var initializers: [MethodKey: Any] = [:] // method type to method
-  private var dependencies: [(_ scope: DIScope, _ obj: Any) -> ()] = []
 }

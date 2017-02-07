@@ -38,19 +38,19 @@ public extension DIContainerBuilder {
 public extension DIRegistrationBuilder where ImplObj: UIViewController {
 	@discardableResult
 	public func initial<T: UIViewController>(byNib type: T.Type) -> Self {
-		rType.setInitial { UIViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T }
+		rType.append(initial: { UIViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T })
 		return self
 	}
 	
 	@discardableResult
 	public func initial(byStoryboard storyboard: UIStoryboard, identifier: String) -> Self {
-		rType.setInitial { storyboard.instantiateViewController(withIdentifier: identifier) }
+		rType.append(initial: { storyboard.instantiateViewController(withIdentifier: identifier) })
 		return self
 	}
 	
 	@discardableResult
 	public func initial(byStoryboard storyboard: @escaping (_ scope: DIScope) -> UIStoryboard, identifier: String) -> Self {
-		rType.setInitial { scope in storyboard(scope).instantiateViewController(withIdentifier: identifier) }
+		rType.append(initial: { scope in storyboard(scope).instantiateViewController(withIdentifier: identifier) })
 		return self
 	}
 }

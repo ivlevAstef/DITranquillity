@@ -9,9 +9,9 @@
 class RTypeFinal: RTypeBase {
   typealias MethodKey = String
   
-  init(component: DIComponent, initializers: [MethodKey: Any], dependencies: [(_ scope: DIScope, _ obj: Any) -> ()], names: Set<String>, isDefault: Bool, lifeTime: DILifeTime) {
-    self.initializers = initializers
-    self.dependencies = dependencies
+  init(component: DIComponent, initials: [MethodKey: Any], injections: [(_ scope: DIScope, _ obj: Any) -> ()], names: Set<String>, isDefault: Bool, lifeTime: DILifeTime) {
+    self.initials = initials
+    self.injections = injections
     self.names = names
     self.isDefault = isDefault
     self.lifeTime = lifeTime
@@ -19,7 +19,7 @@ class RTypeFinal: RTypeBase {
   }
   
   func new<Method, T>(_ method: (Method) throws -> T) throws -> T {
-    guard let initializer = initializers[MethodKey(describing: Method.self)] as? Method else {
+    guard let initializer = initials[MethodKey(describing: Method.self)] as? Method else {
       throw DIError.initializationMethodWithSignatureIsNotFoundFor(component: component, signature: Method.self)
     }
     
@@ -32,8 +32,8 @@ class RTypeFinal: RTypeBase {
   
   let lifeTime: DILifeTime
   let isDefault: Bool
-  let dependencies: [(_ scope: DIScope, _ obj: Any) -> ()]
+  let injections: [(_ scope: DIScope, _ obj: Any) -> ()]
   
-  private let initializers: [MethodKey: Any]
+  private let initials: [MethodKey: Any]
   private let names: Set<String>
 }
