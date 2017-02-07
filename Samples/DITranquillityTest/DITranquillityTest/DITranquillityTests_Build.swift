@@ -9,11 +9,11 @@
 import XCTest
 import DITranquillity
 
-protocol TestProtocol { }
-class TestClass1: TestProtocol { }
-class TestClass2: TestProtocol { }
+private protocol TestProtocol { }
+private class TestClass1: TestProtocol { }
+private class TestClass2: TestProtocol { }
 
-protocol Test2Protocol { }
+private protocol Test2Protocol { }
 
 private func equals(_ t1: Any, _ t2: Any) -> Bool {
   return String(describing: t1) == String(describing: t2)
@@ -38,6 +38,8 @@ extension DIError: Equatable {
     case (.typeIsNotFound(let t1), .typeIsNotFound(let t2)) where equals(t1, t2): return true
     case (.notSpecifiedInitializationMethodFor(let t1), .notSpecifiedInitializationMethodFor(let t2)) where equals(t1, t2): return true
     case (.pluralSpecifiedDefaultType(let t1, let c1), .pluralSpecifiedDefaultType(let t2, let c2)) where equals(t1, t2) && c1 == c2: return true
+    case (.defaultTypeIsNotSpecified(let t1, let c1), .defaultTypeIsNotSpecified(let t2, let c2)) where equals(t1, t2) && c1 == c2: return true
+      
     case (.typeIsIncorrect(let t1, let rt1, let c1), .typeIsIncorrect(let t2, let rt2, let c2)) where equals(t1, t2) && equals(rt1, rt2) && c1 == c2: return true
     case (.build(let errs1), .build(let errs2)) where errs1 == errs2: return true
       
