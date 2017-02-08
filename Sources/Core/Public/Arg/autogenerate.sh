@@ -25,7 +25,7 @@ registrationFunction() { #argcount file
   local Params=$(join ',' $(replaceToArg numbers[@] "\$;I"));
 
   echo "  @discardableResult
-  public func initialWithParams<$ParamType>(_ closure: @escaping (_:DIScope,_$ParametersType) -> ImplObj) -> Self {
+  public func initialWithParams<$ParamType>(_ closure: @escaping (_:DIContainer,_$ParametersType) -> ImplObj) -> Self {
     rType.append(initial: { closure($Params) as Any })
     return self
   }
@@ -61,7 +61,7 @@ local Resolvers=$(join ',' $(replaceToArg numbers[@] "*!s"))
 
 echo "  @discardableResult
   public func initial<$ParamType>(_ closure: @escaping (_$ParametersType) -> ImplObj) -> Self {
-    rType.append(initial: { (s: DIScope) -> Any in closure($Resolvers) })
+    rType.append(initial: { (s: DIContainer) -> Any in closure($Resolvers) })
     return self
   }
 " >> $2
@@ -165,8 +165,8 @@ resolveFunctions() { #argcount prefix file
   ArgumentsType=${ArgumentsType//a0:A0/arg a0:A0}
 
   echo "  public func resolve<T,$ArgType>($prefix$ArgumentsType) throws -> T {
-    typealias Method = (_:DIScope,_$ArgumentsMethodType) -> Any
-    return try impl.resolve(self, type: T.self) { (\$0 as Method)(self, $ArgParam) }
+    typealias Method = (_:DIContainer,_$ArgumentsMethodType) -> Any
+    return try resolver.resolve(self, type: T.self) { (\$0 as Method)(self, $ArgParam) }
   }
   " >> $3
 }
@@ -182,8 +182,8 @@ resolveManyFunctions() { #argcount prefix file
   ArgumentsType=${ArgumentsType//a0:A0/arg a0:A0}
 
   echo "  public func resolveMany<T,$ArgType>($prefix$arg$ArgumentsType) throws -> [T] {
-    typealias Method = (_:DIScope,_$ArgumentsMethodType) -> Any
-    return try impl.resolveMany(self, type: T.self) { (\$0 as Method)(self, $ArgParam) }
+    typealias Method = (_:DIContainer,_$ArgumentsMethodType) -> Any
+    return try resolver.resolveMany(self, type: T.self) { (\$0 as Method)(self, $ArgParam) }
   }
   " >> $3
 }
@@ -201,22 +201,22 @@ resolveNameFunctions() { #argcount prefix file
 
   local name="name"
   echo "  public func resolve<T,$ArgType>($prefix$name: String, $ArgumentsType) throws -> T {
-    typealias Method = (_: DIScope,_$ArgumentsMethodType) -> Any
-    return try impl.resolve(self, name: name, type: T.self) { (\$0 as Method)(self, $ArgParam) }
+    typealias Method = (_:DIContainer,_$ArgumentsMethodType) -> Any
+    return try resolver.resolve(self, name: name, type: T.self) { (\$0 as Method)(self, $ArgParam) }
   }
   " >> $3
 }
 
 resolveFile() { #file
   echo "//
-//  DIScope.Arg.swift
+//  DIContainer.Arg.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 11/07/16.
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public extension DIScope {" > $1
+public extension DIContainer {" > $1
 
   for argcount in `seq 0 $argmax`; do
     resolveFunctions $argcount "" $1
@@ -228,14 +228,14 @@ public extension DIScope {" > $1
 
 typeResolveFile() { #file
   echo "//
-//  DIScope.TypeArg.swift
+//  DIContainer.TypeArg.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 11/07/16.
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public extension DIScope {" > $1
+public extension DIContainer {" > $1
 
   for argcount in `seq 0 $argmax`; do
     resolveFunctions $argcount "_: T.Type,§" $1
@@ -252,5 +252,5 @@ registationInjectFile "DIRegistrationBuilder.Injection.swift"
 
 containerInitFile "DIContainerBuilder.Register.Arg.swift"
 
-resolveFile "DIScope.Arg.swift"
-typeResolveFile "DIScope.TypeArg.swift"
+resolveFile "DIContainer.Arg.swift"
+typeResolveFile "DIContainer.TypeArg.swift"

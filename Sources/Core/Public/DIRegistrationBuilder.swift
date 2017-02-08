@@ -25,7 +25,7 @@ extension DIRegistrationBuilder {
   }
   
   @discardableResult
-  public func `as`<Protocol>(implement _protocol: Protocol.Type, scope: DIImpementScope = .default) -> Self {
+  public func `as`<Protocol>(implement _protocol: Protocol.Type, scope: DIImplementScope = .default) -> Self {
     isTypeSet = true
     container.append(key: _protocol, value: rType)
     if .global == scope {
@@ -56,12 +56,12 @@ extension DIRegistrationBuilder {
 extension DIRegistrationBuilder {
   @discardableResult
   public func initial(_ closure: @escaping () -> ImplObj) -> Self {
-    rType.append(initial: { (_: DIScope) -> Any in return closure() })
+    rType.append(initial: { (_: DIContainer) -> Any in return closure() })
     return self
   }
   
   @discardableResult
-  public func initial(_ closure: @escaping (_: DIScope) -> ImplObj) -> Self {
+  public func initial(_ closure: @escaping (_: DIContainer) -> ImplObj) -> Self {
     rType.append(initial: { scope -> Any in return closure(scope) })
     return self
   }
@@ -70,7 +70,7 @@ extension DIRegistrationBuilder {
 // Injection
 extension DIRegistrationBuilder {
   @discardableResult
-  public func injection(_ closure: @escaping (_: DIScope, _: ImplObj) -> ()) -> Self {
+  public func injection(_ closure: @escaping (_: DIContainer, _: ImplObj) -> ()) -> Self {
     rType.append(injection: closure)
     return self
   }
@@ -108,12 +108,6 @@ extension DIRegistrationBuilder {
 		return self
 	}
 }
-
-// Implementation
-extension DIRegistrationBuilder {
-  
-}
-
 
 public final class DIRegistrationBuilder<ImplObj> {
   init(container: RTypeContainer, typeInfo: DITypeInfo) {

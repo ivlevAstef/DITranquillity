@@ -27,7 +27,7 @@ class RType: RTypeBase {
   var isProtocol: Bool = false
 
   fileprivate var initials: [MethodKey: Any] = [:] // method type to method
-  fileprivate var injections: [(_ scope: DIScope, _ obj: Any) -> ()] = []
+  fileprivate var injections: [(_: DIContainer, _: Any) -> ()] = []
 }
 
 // Initial
@@ -39,7 +39,7 @@ extension RType {
 
 // Injection
 extension RType {
-  func append<T>(injection method: @escaping (_ scope: DIScope, _ obj: T) -> ()) {
+  func append<T>(injection method: @escaping (_: DIContainer, _: T) -> ()) {
     injections.append{ method($0, $1 as! T) }
   }
   

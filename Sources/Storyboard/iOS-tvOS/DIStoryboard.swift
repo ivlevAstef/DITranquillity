@@ -9,7 +9,7 @@
 import UIKit
 
 public final class DIStoryboard: UIStoryboard {
-  public required init(name: String, bundle storyboardBundleOrNil: Bundle?, container: DIScope) {
+  public required init(name: String, bundle storyboardBundleOrNil: Bundle?, container: DIContainer) {
     storyboard = _DIStoryboardBase.create(name, bundle: storyboardBundleOrNil)
     super.init()
     storyboard.resolver = DIStoryboardResolver(container: container)
@@ -37,20 +37,20 @@ public extension DIContainerBuilder {
 
 public extension DIRegistrationBuilder where ImplObj: UIViewController {
 	@discardableResult
-	public func initial<T: UIViewController>(byNib type: T.Type) -> Self {
+	public func initial<T: UIViewController>(nib type: T.Type) -> Self {
 		rType.append(initial: { UIViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T })
 		return self
 	}
 	
 	@discardableResult
-	public func initial(byStoryboard storyboard: UIStoryboard, identifier: String) -> Self {
+	public func initial(storyboard: UIStoryboard, identifier: String) -> Self {
 		rType.append(initial: { storyboard.instantiateViewController(withIdentifier: identifier) })
 		return self
 	}
 	
 	@discardableResult
-	public func initial(byStoryboard storyboard: @escaping (_ scope: DIScope) -> UIStoryboard, identifier: String) -> Self {
-		rType.append(initial: { scope in storyboard(scope).instantiateViewController(withIdentifier: identifier) })
+	public func initial(storyboard closure: @escaping (_ scope: DIScope) -> UIStoryboard, identifier: String) -> Self {
+		rType.append(initial: { container in closure(container).instantiateViewController(withIdentifier: identifier) })
 		return self
 	}
 }

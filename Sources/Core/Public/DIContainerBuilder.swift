@@ -10,17 +10,17 @@ public final class DIContainerBuilder {
   public init() { }
 
   @discardableResult
-  public func build() throws -> DIScope {
+  public func build() throws -> DIContainer {
     rTypeContainer.lateBinding()
     
     try validate()
 
-    let finalContainer = rTypeContainer.copyFinal()
-    let scope = DIScope(container: finalContainer)
+    let finalRTypeContainer = rTypeContainer.copyFinal()
+    let container = DIContainer(resolver: DIResolver(rTypeContainer: finalRTypeContainer))
 
-    try initSingleLifeTime(container: finalContainer, scope: scope)
+    try initSingleLifeTime(rTypeContainer: finalRTypeContainer, container: container)
 
-    return scope
+    return container
   }
   
   let rTypeContainer = RTypeContainer()
@@ -76,9 +76,9 @@ extension DIContainerBuilder {
     }
   }
   
-  fileprivate func initSingleLifeTime(container: RTypeContainerFinal, scope: DIScope) throws {
-    for rType in container.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime }) {
-      _ = try scope.resolve(RType: rType)
+  fileprivate func initSingleLifeTime(rTypeContainer: RTypeContainerFinal, container: DIContainer) throws {
+    for rType in rTypeContainer.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime }) {
+      _ = try container.resolve(RType: rType)
     }
   }
 }

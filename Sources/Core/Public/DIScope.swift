@@ -2,63 +2,21 @@
 //  DIScope.swift
 //  DITranquillity
 //
-//  Created by Alexander Ivlev on 10/06/16.
-//  Copyright © 2016 Alexander Ivlev. All rights reserved.
+//  Created by Alexander Ivlev on 08/02/2017.
+//  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-public final class DIScope {
-  typealias Method = (_ scope: DIScope) -> Any
-
-	public func resolve<T>(_: T.Type) throws -> T {
-		return try impl.resolve(self, type: T.self) { (initializer: Method) in return initializer(self) }
-	}
-	
-	public func resolve<T>(_: T.Type, name: String) throws -> T {
-		return try impl.resolve(self, name: name, type: T.self) { (initializer: Method) in return initializer(self) }
-	}
-	
-	public func resolveMany<T>(_: T.Type) throws -> [T] {
-		return try impl.resolveMany(self, type: T.self) { (initializer: Method) in return initializer(self) }
-	}
-	
-	public func resolve<T>(_ object: T) throws {
-		_ = try impl.resolve(self, type: type(of: object)) { object }
-	}
-	
-	
-	public func newLifeTimeScope() -> DIScope {
-    return impl.newLifeTimeScope(self)
+public class DIScope {
+  private var cache: [RType.UniqueKey: Any] = [:]
+  
+  internal subscript(key: RType.UniqueKey) -> Any? {
+    get {
+      return cache[key]
+    }
+    set {
+      cache[key] = newValue
+    }
   }
-
-
-	internal init(container: RTypeContainerFinal) {
-    impl = DIScopeImpl(container: container)
-  }
-
-  internal func resolve(RType rType: RTypeFinal) throws -> Any {
-    return try impl.resolve(self, rType: rType) { (initializer: Method) in return initializer(self) }
-  }
-
-  internal let impl: DIScopeImpl
-}
-
-extension DIScope {
-  public func resolve<T>() throws -> T {
-    return try resolve(T.self)
-  }
-
-  public func resolveMany<T>() throws -> [T] {
-    return try resolveMany(T.self)
-  }
-
-  public func resolve<T>(name: String) throws -> T {
-    return try resolve(T.self, name: name)
-  }
-}
-
-/// for runtime resolve
-extension DIScope {
-  public func resolve<T>(byTypeOf obj: T) throws -> T {
-    return try impl.resolve(self, type: type(of: obj)) { (initializer: Method) in return initializer(self) }
-  }
+  
+  internal var isEmpty: Bool { return cache.isEmpty }
 }

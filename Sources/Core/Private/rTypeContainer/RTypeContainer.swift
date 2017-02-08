@@ -6,13 +6,15 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-class RTypeContainer {
-  private static var implementations = DIMultimap<DITypeKey, RType>()
+private var implementations = DIMultimap<DITypeKey, RType>()
+
+extension RTypeContainer {
   static func append(key: DIType, implementation: RType) {
     implementations.append(key: DITypeKey(key), value: implementation)
   }
-  
-  
+}
+
+class RTypeContainer {
   func append(key: DIType, value: RType) {
     values.append(key: DITypeKey(key), value: value)
   }
@@ -34,7 +36,7 @@ class RTypeContainer {
         continue
       }
       
-      for value in RTypeContainer.implementations[data.key] {
+      for value in implementations[data.key] {
         if !data.value.contains(value) {
           values.append(key: data.key, value: value)
         }

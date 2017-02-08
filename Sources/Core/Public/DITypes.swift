@@ -40,9 +40,9 @@ public enum DIComponentScope: Equatable {
 }
 
 //////////////// implement scope
-public enum DIImpementScope: Equatable {
+public enum DIImplementScope: Equatable {
   case global
   case assembly
   
-  static var `default`: DIImpementScope { return global }
+  static var `default`: DIImplementScope { return global }
 }
