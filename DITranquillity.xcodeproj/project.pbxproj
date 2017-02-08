@@ -17,6 +17,8 @@
 		118DBCCC1E4100BF003A7D1F /* DIStoryboardResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCCB1E4100BF003A7D1F /* DIStoryboardResolver.swift */; };
 		118DBCCF1E4100CA003A7D1F /* DIStoryboardResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCCD1E4100C5003A7D1F /* DIStoryboardResolver.swift */; };
 		118DBCD01E4100CD003A7D1F /* DIStoryboardResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCCB1E4100BF003A7D1F /* DIStoryboardResolver.swift */; };
+		118F09061E4B688900C1ED5E /* DIModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110917111E4A43120078A5AE /* DIModule.swift */; };
+		118F09071E4B688900C1ED5E /* DIModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110917111E4A43120078A5AE /* DIModule.swift */; };
 		11FD649E1E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD649D1E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift */; };
 		11FD649F1E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD649D1E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift */; };
 		11FD64A01E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD649D1E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift */; };
@@ -503,6 +505,7 @@
 				169C0DD71DA3501F001F0AD5 /* RType.swift in Sources */,
 				169C0DD81DA3501F001F0AD5 /* DIComponent.swift in Sources */,
 				169C0DD91DA3501F001F0AD5 /* RTypeWithName.swift in Sources */,
+				118F09061E4B688900C1ED5E /* DIModule.swift in Sources */,
 				1142C1E11E44E74C0000517F /* DIRegistrationBuilder.Injection.swift in Sources */,
 				16D7BCBD1DB086B900A29A9F /* DIScanModule.swift in Sources */,
 				11FD649F1E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift in Sources */,
@@ -540,6 +543,7 @@
 				169C0E3D1DA35CBE001F0AD5 /* RType.swift in Sources */,
 				169C0E3E1DA35CBE001F0AD5 /* DIComponent.swift in Sources */,
 				169C0E3F1DA35CBE001F0AD5 /* RTypeWithName.swift in Sources */,
+				118F09071E4B688900C1ED5E /* DIModule.swift in Sources */,
 				1142C1E21E44E74C0000517F /* DIRegistrationBuilder.Injection.swift in Sources */,
 				16D7BCBF1DB086B900A29A9F /* DIScanModule.swift in Sources */,
 				11FD64A01E3FA3390043A036 /* DIContainerBuilder.Register.Arg.swift in Sources */,
