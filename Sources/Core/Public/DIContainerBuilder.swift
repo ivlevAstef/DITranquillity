@@ -10,17 +10,17 @@ public final class DIContainerBuilder {
   public init() { }
 
   @discardableResult
-  public func build() throws -> DIScope {
+  public func build() throws -> DIContainer {
     rTypeContainer.lateBinding()
     
     try validate()
 
-    let finalContainer = rTypeContainer.copyFinal()
-    let scope = DIScope(container: finalContainer)
+    let finalRTypeContainer = rTypeContainer.copyFinal()
+    let container = DIContainer(resolver: DIResolver(rTypeContainer: finalRTypeContainer))
 
-    try initSingleLifeTime(container: finalContainer, scope: scope)
+    try initSingleLifeTime(rTypeContainer: finalRTypeContainer, container: container)
 
-    return scope
+    return container
   }
   
   let rTypeContainer = RTypeContainer()
@@ -40,7 +40,7 @@ extension DIContainerBuilder {
 
     for rType in allTypes {
       if !(rType.hasInitial || rType.initialNotNecessary) {
-        errors.append(DIError.notSpecifiedInitializationMethodFor(component: rType.component))
+        errors.append(DIError.notSpecifiedInitializationMethodFor(typeInfo: rType.typeInfo))
       }
     }
 
@@ -58,7 +58,7 @@ extension DIContainerBuilder {
 
     let defaultTypes = rTypes.filter{ $0.isDefault }
     if defaultTypes.count > 1 {
-      errors.append(DIError.pluralSpecifiedDefaultType(type: superType, components: defaultTypes.map { $0.component }))
+      errors.append(DIError.pluralSpecifiedDefaultType(type: superType, typesInfo: defaultTypes.map { $0.typeInfo }))
     }
   }
 
@@ -72,13 +72,13 @@ extension DIContainerBuilder {
     }
     
     if !intersect.isEmpty {
-      errors.append(DIError.intersectionNamesForType(type: superType, names: intersect, components: rTypes.map{ $0.component }))
+      errors.append(DIError.intersectionNamesForType(type: superType, names: intersect, typesInfo: rTypes.map{ $0.typeInfo }))
     }
   }
   
-  fileprivate func initSingleLifeTime(container: RTypeContainerFinal, scope: DIScope) throws {
-    for rType in container.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime }) {
-      _ = try scope.resolve(RType: rType)
+  fileprivate func initSingleLifeTime(rTypeContainer: RTypeContainerFinal, container: DIContainer) throws {
+    for rType in rTypeContainer.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime }) {
+      _ = try container.resolve(RType: rType)
     }
   }
 }
@@ -98,6 +98,6 @@ extension DIContainerBuilder {
 
 extension DIContainerBuilder {
   internal func registrationBuilder<T>(file: String, line: Int) -> DIRegistrationBuilder<T> {
-    return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: T.self, file: file, line: line))
+    return DIRegistrationBuilder<T>(container: self.rTypeContainer, typeInfo: DITypeInfo(type: T.self, file: file, line: line))
   }
 }

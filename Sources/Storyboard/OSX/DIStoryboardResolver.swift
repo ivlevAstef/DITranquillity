@@ -9,7 +9,7 @@
 import Cocoa
 
 final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
-  init(container: DIScope) {
+  init(container: DIContainer) {
     self.container = container
   }
 
@@ -19,5 +19,5 @@ final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
     return viewController
   }
 
-  private let container: DIScope
+  private let container: DIContainer
 }

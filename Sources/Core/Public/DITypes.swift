@@ -9,15 +9,15 @@
 public typealias DIType = Any.Type
 public typealias DIMethodSignature = Any
 
-public struct DIComponent {
+public struct DITypeInfo {
   public let type: DIType
   public let file: String
   public let line: Int
 }
 
-public extension DIComponent {
+public extension DITypeInfo {
   public var description: String {
-    return "<Registered component in file: \(file) on line: \(line) for type: \(String(describing: type))>"
+    return "<Registered type information in file: \(file) on line: \(line) for type: \(String(describing: type))>"
   }
 }
 
@@ -32,17 +32,17 @@ public enum DILifeTime: Equatable {
 }
 
 //////////////// module scope
-public enum DIModuleScope: Equatable {
+public enum DIComponentScope: Equatable {
   case `public`
   case `internal`
   
-  static var `default`: DIModuleScope { return `internal` }
+  static var `default`: DIComponentScope { return `internal` }
 }
 
 //////////////// implement scope
-public enum DIImpementScope: Equatable {
+public enum DIImplementScope: Equatable {
   case global
   case assembly
   
-  static var `default`: DIImpementScope { return global }
+  static var `default`: DIImplementScope { return global }
 }
