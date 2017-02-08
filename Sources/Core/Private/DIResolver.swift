@@ -26,7 +26,7 @@ class DIResolver {
 	func check<T>(name: String, type: T.Type) throws -> [RTypeFinal] {
 		let rTypes = try getTypes(type)
 		
-		if !rTypes.contains(where: { $0.has(name: name)}) {
+		if !rTypes.contains(where: { $0.has(name: name) }) {
 			throw DIError.typeIsNotFoundForName(type: type, name: name, typesInfo: rTypes.map { $0.typeInfo })
 		}
 		
@@ -36,25 +36,20 @@ class DIResolver {
 	func resolve<T, Method>(_ container: DIContainer, type: T.Type, method: @escaping (Method) -> Any) throws -> T {
 		let rTypes = try check(type: type)
 
-		let index = rTypes.count <= 1 ? 0 : rTypes.index(where: { $0.isDefault })!
+		let index = 1 == rTypes.count ? 0 : rTypes.index(where: { $0.isDefault })!
     return try resolveUseRType(container, pair: RTypeWithName(rTypes[index]), method: method)
   }
 
   func resolveMany<T, Method>(_ container: DIContainer, type: T.Type, method: @escaping (Method) -> Any) throws -> [T] {
     let rTypes = try getTypes(type)
-
-    var result: [T] = []
-    for rType in rTypes {
+    
+    return try rTypes.map { rType in
       do {
-        try result.append(resolveUseRType(container, pair: RTypeWithName(rType), method: method))
+        return try resolveUseRType(container, pair: RTypeWithName(rType), method: method)
       } catch DIError.recursiveInitialization {
-        // Ignore recursive initialization object for many
-      } catch {
-        throw error
+        return nil // Ignore recursive initialization object for many
       }
-    }
-
-    return result
+    }.filter{ $0 != nil }.map{ $0! }
   }
 
   func resolve<T, Method>(_ container: DIContainer, name: String, type: T.Type, method: @escaping (Method) -> Any) throws -> T {
@@ -83,9 +78,7 @@ class DIResolver {
     defer { objc_sync_exit(DIResolver.monitor) }
 
     switch pair.rType.lifeTime {
-    case .single:
-      return try resolveSingle(container, pair: pair, method: method)
-    case .lazySingle:
+    case .single, .lazySingle:
       return try resolveSingle(container, pair: pair, method: method)
     case .weakSingle:
       return try resolveWeakSingle(container, pair: pair, method: method)
@@ -97,13 +90,9 @@ class DIResolver {
   }
 
   private func resolveSingle<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
-    if let obj = Cache.single[pair.uniqueKey] {
-      return obj as! T
-    }
-
-    let obj: T = try resolvePerDependency(container, pair: pair, method: method)
-    Cache.single[pair.uniqueKey] = obj
-    return obj
+    return try _resolveUniversal(container, pair: pair, method: method,
+                                 get: { Cache.single[$0] },
+                                 set: { Cache.single[$0] = $1 })
   }
   
   private func resolveWeakSingle<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
@@ -111,22 +100,25 @@ class DIResolver {
       Cache.weakSingle.removeValue(forKey: data.key)
     }
     
-    if let obj = Cache.weakSingle[pair.uniqueKey]?.value {
+    return try _resolveUniversal(container, pair: pair, method: method,
+                                 get: { Cache.weakSingle[$0]?.value },
+                                 set: { Cache.weakSingle[$0] = Weak(value: $1) })
+  }
+
+  private func resolvePerScope<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
+    return try _resolveUniversal(container, pair: pair, method: method,
+                                 get: { container.scope[$0] },
+                                 set: { container.scope[$0] = $1 })
+  }
+  
+  private func _resolveUniversal<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) -> Any,
+                                get: (_: RType.UniqueKey)->Any?, set: (_:RType.UniqueKey, _:T)->()) throws -> T {
+    if let obj = get(pair.uniqueKey) {
       return obj as! T
     }
     
     let obj: T = try resolvePerDependency(container, pair: pair, method: method)
-    Cache.weakSingle[pair.uniqueKey] = Weak(value: obj)
-    return obj
-  }
-
-  private func resolvePerScope<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
-    if let obj = container.scope[pair.uniqueKey] {
-      return obj as! T
-    }
-
-    let obj: T = try resolvePerDependency(container, pair: pair, method: method)
-    container.scope[pair.uniqueKey] = obj
+    set(pair.uniqueKey, obj)
     return obj
   }
 
