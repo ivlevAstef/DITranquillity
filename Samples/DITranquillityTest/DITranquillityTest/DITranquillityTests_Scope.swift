@@ -17,7 +17,7 @@ class DITranquillityTests_Scope: XCTestCase {
     super.setUp()
   }
   
-  func test01_Single() {
+  func test01_LazySingle() {
     let builder = DIContainerBuilder()
     
     builder.register(type: TestScopeClass.self)
@@ -39,7 +39,90 @@ class DITranquillityTests_Scope: XCTestCase {
     XCTAssert(scopeClass1 === scopeClass3)
   }
   
-  func test02_PerScope() {
+  ///TODO: add check create moment
+  func test02_Single() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(type: TestScopeClass.self)
+      .lifetime(.single)
+      .initial(TestScopeClass.init)
+    
+    let container = try! builder.build()
+    
+    let scopeClass1: TestScopeClass = *!container
+    let scopeClass2: TestScopeClass = *!container
+    
+    let scope2 = container.newLifeTimeScope()
+    
+    let scopeClass3: TestScopeClass = *!scope2
+    let scopeClass4: TestScopeClass = *!scope2
+    
+    XCTAssert(scopeClass1 === scopeClass2)
+    XCTAssert(scopeClass3 === scopeClass4)
+    XCTAssert(scopeClass1 === scopeClass3)
+  }
+  
+  func test03_WeakSingle() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(type: TestScopeClass.self)
+      .lifetime(.weakSingle)
+      .initial(TestScopeClass.init)
+    
+    let container = try! builder.build()
+    
+    let block: ()->String = {
+      let scopeClass1: TestScopeClass = *!container
+      let scopeClass2: TestScopeClass = *!container
+      
+      let scope2 = container.newLifeTimeScope()
+      
+      let scopeClass3: TestScopeClass = *!scope2
+      let scopeClass4: TestScopeClass = *!scope2
+      
+      XCTAssert(scopeClass1 === scopeClass2)
+      XCTAssert(scopeClass3 === scopeClass4)
+      XCTAssert(scopeClass1 === scopeClass3)
+      return String(describing: Unmanaged.passUnretained(scopeClass1).toOpaque())
+    }
+    
+    let address1 = block()
+    let address2 = block()
+    
+    XCTAssert(address1 != address2)
+  }
+  
+  func test03_WeakSingleForSingle() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(type: TestScopeClass.self)
+      .lifetime(.single)
+      .initial(TestScopeClass.init)
+    
+    let container = try! builder.build()
+    
+    let block: ()->String = {
+      let scopeClass1: TestScopeClass = *!container
+      let scopeClass2: TestScopeClass = *!container
+      
+      let scope2 = container.newLifeTimeScope()
+      
+      let scopeClass3: TestScopeClass = *!scope2
+      let scopeClass4: TestScopeClass = *!scope2
+      
+      XCTAssert(scopeClass1 === scopeClass2)
+      XCTAssert(scopeClass3 === scopeClass4)
+      XCTAssert(scopeClass1 === scopeClass3)
+      return String(describing: Unmanaged.passUnretained(scopeClass1).toOpaque())
+    }
+    
+    let address1 = block()
+    let address2 = block()
+    
+    XCTAssert(address1 == address2)
+  }
+  
+  func test04_PerScope() {
     let builder = DIContainerBuilder()
     
     builder.register(type: TestScopeClass.self)

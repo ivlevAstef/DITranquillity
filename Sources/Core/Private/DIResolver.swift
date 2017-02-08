@@ -87,6 +87,8 @@ class DIResolver {
       return try resolveSingle(container, pair: pair, method: method)
     case .lazySingle:
       return try resolveSingle(container, pair: pair, method: method)
+    case .weakSingle:
+      return try resolveWeakSingle(container, pair: pair, method: method)
     case .perScope:
       return try resolvePerScope(container, pair: pair, method: method)
     case .perDependency:
@@ -95,26 +97,36 @@ class DIResolver {
   }
 
   private func resolveSingle<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
-    let key = pair.uniqueKey
-
-    if let obj = Cache.single[key] {
+    if let obj = Cache.single[pair.uniqueKey] {
       return obj as! T
     }
 
     let obj: T = try resolvePerDependency(container, pair: pair, method: method)
-    Cache.single[key] = obj
+    Cache.single[pair.uniqueKey] = obj
+    return obj
+  }
+  
+  private func resolveWeakSingle<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
+    for data in Cache.weakSingle.filter({ $0.value.value == nil }) {
+      Cache.weakSingle.removeValue(forKey: data.key)
+    }
+    
+    if let obj = Cache.weakSingle[pair.uniqueKey]?.value {
+      return obj as! T
+    }
+    
+    let obj: T = try resolvePerDependency(container, pair: pair, method: method)
+    Cache.weakSingle[pair.uniqueKey] = Weak(value: obj)
     return obj
   }
 
   private func resolvePerScope<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
-    let key = pair.uniqueKey
-
-    if let obj = container.scope[key] {
+    if let obj = container.scope[pair.uniqueKey] {
       return obj as! T
     }
 
     let obj: T = try resolvePerDependency(container, pair: pair, method: method)
-    container.scope[key] = obj
+    container.scope[pair.uniqueKey] = obj
     return obj
   }
 
@@ -216,8 +228,8 @@ class DIResolver {
 
   private class Cache {
     fileprivate static var single: [RType.UniqueKey: Any] = [:]
+    fileprivate static var weakSingle: [RType.UniqueKey: Weak] = [:]
   }
-  private let cache = Cache()
   
   // thread save
   private static let monitor = NSObject()

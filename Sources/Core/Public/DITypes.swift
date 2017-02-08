@@ -25,6 +25,7 @@ public extension DITypeInfo {
 public enum DILifeTime: Equatable {
   case single
   case lazySingle
+  case weakSingle
   case perScope
   case perDependency
   
