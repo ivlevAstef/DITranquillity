@@ -18,25 +18,25 @@ extension DIError: CustomStringConvertible {
 	public var description: String {
 		switch self {
 		case .typeIsNotFound(let type):
-			return "Error: type: \(type) not found"
+			return "\nType: \(type) not found\n"
 		case .typeIsNotFoundForName(let type, let name, let typesInfo):
-			return "Error: cannot found type: \(type) for name: \(name).\n\tUse:\n\(multiLine(typesInfo))"
+			return "\nCannot found type: \(type) for name: \(name).\n\tUse:\n\(multiLine(typesInfo))\n"
 		case .notSpecifiedInitializationMethodFor(let typeInfo):
-			return "Error: not specified initial method for:\n \(typeInfo)"
+			return "\nNot specified initial method for:\n \(typeInfo)\n"
 		case .initializationMethodWithSignatureIsNotFoundFor(let typeInfo, let signature):
-			return "Error: initial method with signature: \(signature) not found.\n\tUse: \(typeInfo)"
+			return "\nInitial method with signature: \(signature) not found.\n\tUse: \(typeInfo)\n"
 		case .pluralSpecifiedDefaultType(let type, let typesInfo):
-			return "Error: plural specified default type for type: \(type).\n\tUse:\n\(multiLine(typesInfo))"
+			return "\nPlural specified default type for type: \(type).\n\tUse:\n\(multiLine(typesInfo))\n"
 		case .defaultTypeIsNotSpecified(let type, let typesInfo):
-			return "Error: default type not specified for type: \(type).\n\tUse:\n\(multiLine(typesInfo))"
+			return "\nDefault type not specified for type: \(type).\n\tUse:\n\(multiLine(typesInfo))\n"
 		case .intersectionNamesForType(let type, let names, let typesInfo):
-			return "Error: intersection names for type: \(type).\n\tIntersections: \(names)\n\tUse:\n\(multiLine(typesInfo))"
+			return "\nIntersection names for type: \(type).\n\tIntersections: \(names)\n\tUse:\n\(multiLine(typesInfo))\n"
 		case .typeIsIncorrect(let requestedType, let realType, let typeInfo):
-			return "Error: incorrect type.\n\tRequested type: \(requestedType)\n\tReal type: \(realType)\n\tUse: \(typeInfo)"
+			return "\nIncorrect type.\n\tRequested type: \(requestedType)\n\tReal type: \(realType)\n\tUse: \(typeInfo)\n"
 		case .recursiveInitialization(let typeInfo):
-			return "Error: recursive initialization into:\(typeInfo)"
+			return "\nRecursive initialization into:\(typeInfo)\n"
 		case .build(let errors):
-			return "Build errors:\n\(multiLine(errors))"
+			return "\nList:\n\(multiLine(errors))\n"
 		}
 	}
 
