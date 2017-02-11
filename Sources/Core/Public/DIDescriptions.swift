@@ -10,7 +10,7 @@ import Foundation
 
 extension DITypeInfo: CustomStringConvertible {
 	public var description: String {
-		return "<Registeration type: \(type) in file: \((file as NSString).lastPathComponent), line: \(line)>"
+		return "<Registration type: \(type) in file: \((file as NSString).lastPathComponent), line: \(line)>"
 	}
 }
 
