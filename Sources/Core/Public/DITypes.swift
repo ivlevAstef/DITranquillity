@@ -15,12 +15,6 @@ public struct DITypeInfo {
   public let line: Int
 }
 
-public extension DITypeInfo {
-  public var description: String {
-    return "<Registered type information in file: \(file) on line: \(line) for type: \(String(describing: type))>"
-  }
-}
-
 //////////////// lifetime
 public enum DILifeTime: Equatable {
   case single
