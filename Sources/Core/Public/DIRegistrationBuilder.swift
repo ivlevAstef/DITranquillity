@@ -6,6 +6,8 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
+typealias DITypeCheck<Impl, Protocol> = (_: Impl) -> Protocol
+
 // as...
 public enum DIAsSelf { case `self` }
 
@@ -18,14 +20,14 @@ extension DIRegistrationBuilder {
   }
   
   @discardableResult
-  public func `as`<EquallyObj>(_ equallyType: EquallyObj.Type) -> Self {
+  public func `as`<EquallyObj>(_ equallyType: EquallyObj.Type, check: DITypeCheck<ImplObj, EquallyObj>) -> Self {
     isTypeSet = true
     container.append(key: equallyType, value: rType)
     return self
   }
   
   @discardableResult
-  public func `as`<Protocol>(implement _protocol: Protocol.Type, scope: DIImplementScope = .default) -> Self {
+  public func `as`<Protocol>(implement _protocol: Protocol.Type, scope: DIImplementScope = .default, check: DITypeCheck<ImplObj, Protocol>) -> Self {
     isTypeSet = true
     container.append(key: _protocol, value: rType)
     if .global == scope {

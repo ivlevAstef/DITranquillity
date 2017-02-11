@@ -41,7 +41,7 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: FooService.self)
-      .as(ServiceProtocol.self)
+      .as(ServiceProtocol.self, check: { $0 })
       .initial(FooService.init)
     
     let container = try! builder.build()
@@ -54,7 +54,7 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: FooService.init)
-      .as(ServiceProtocol.self)
+      .as(ServiceProtocol.self, check: { $0 })
     
     let container = try! builder.build()
     
@@ -66,11 +66,11 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: FooService.init)
-      .as(ServiceProtocol.self)
+      .as(ServiceProtocol.self, check: { $0 })
       .set(.default)
     
     builder.register(type: BarService.init)
-      .as(ServiceProtocol.self)
+      .as(ServiceProtocol.self, check: { $0 })
     
     let container = try! builder.build()
     

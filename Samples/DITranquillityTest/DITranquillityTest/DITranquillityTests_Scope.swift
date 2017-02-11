@@ -62,7 +62,7 @@ class DITranquillityTests_Scope: XCTestCase {
     XCTAssert(scopeClass1 === scopeClass3)
   }
   
-  func test03_WeakSingle() {
+  func test03_WeakSingle() { // not guaranteed test
     let builder = DIContainerBuilder()
     
     builder.register(type: TestScopeClass.self)

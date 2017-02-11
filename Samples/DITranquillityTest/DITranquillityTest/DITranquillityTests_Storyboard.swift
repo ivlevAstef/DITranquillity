@@ -25,7 +25,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: FooService.self)
-      .as(ServiceProtocol.self)
+      .as(ServiceProtocol.self, check: { $0 })
       .initial(FooService.init)
     
 		builder.register(vc: TestViewController.self)
@@ -46,7 +46,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: FooService.self)
-      .as(ServiceProtocol.self)
+      .as(ServiceProtocol.self, check: { $0 })
       .initial(FooService.init)
     
 		builder.register(vc: TestViewController2.self)
@@ -77,7 +77,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: FooService.self)
-      .as(ServiceProtocol.self)
+      .as(ServiceProtocol.self, check: { $0 })
       .initial{ FooService() }
     
 		builder.register(vc: TestViewController.self)
@@ -105,7 +105,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: FooService.self)
-      .as(ServiceProtocol.self)
+      .as(ServiceProtocol.self, check: { $0 })
       .initial(FooService.init)
     
     builder.register(vc: TestViewController2.self)
@@ -127,7 +127,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: FooService.self)
-      .as(ServiceProtocol.self)
+      .as(ServiceProtocol.self, check: { $0 })
       .initial{ FooService() }
     
 		builder.register(vc: TestViewController.self)
@@ -154,7 +154,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
 		let builder = DIContainerBuilder()
 		
 		builder.register(type: FooService.self)
-			.as(ServiceProtocol.self)
+			.as(ServiceProtocol.self, check: { $0 })
       .initial{ FooService() }
 		
 		builder.register(vc: TestViewController.self)
