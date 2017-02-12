@@ -91,12 +91,12 @@ class DITranquillityTests_Build: XCTestCase {
     let builder = DIContainerBuilder()
     
     let lineClass1 = #line; builder.register(type: TestClass1.self)
-      .as(TestProtocol.self){$0}
+      .as(TestProtocol.self).check{$0}
       .set(.default)
       .initial{ TestClass1() }
     
     let lineClass2 = #line; builder.register(type: TestClass2.self)
-      .as(TestProtocol.self){$0}
+      .as(TestProtocol.self).check{$0}
       .set(.default)
       .initial(TestClass2.init)
     
@@ -120,12 +120,12 @@ class DITranquillityTests_Build: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: TestClass1.self)
-      .as(TestProtocol.self, check: { $0 })
+      .as(TestProtocol.self).check{$0}
       .set(.default)
       .initial(TestClass1.init)
     
     builder.register(type: TestClass2.self)
-      .as(TestProtocol.self, check: { $0 })
+      .as(TestProtocol.self).check{$0}
       .initial{ TestClass2() }
     
     do {
@@ -139,12 +139,12 @@ class DITranquillityTests_Build: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: TestClass1.self)
-      .as(TestProtocol.self, check: { $0 })
+      .as(TestProtocol.self).check{$0}
       .set(name: "foo")
       .initial{ TestClass1() }
     
     builder.register(type: TestClass2.self)
-      .as(TestProtocol.self, check: { $0 })
+      .as(TestProtocol.self).check{$0}
       .set(name: "bar")
       .initial{ TestClass2() }
     
@@ -159,7 +159,7 @@ class DITranquillityTests_Build: XCTestCase {
 //    let builder = DIContainerBuilder()
 //    
 //    let line = #line; builder.register(type: TestClass1.self)
-//      .as(Test2Protocol.self, check: { $0 }) //<---- Swift not supported static check
+//      .as(Test2Protocol.self).check{$0} //<---- Swift not supported static check
 //      .initial{ TestClass1() }
 //    
 //    do {
@@ -186,7 +186,7 @@ class DITranquillityTests_Build: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: TestClass1.self)
-      .as(TestProtocol.self){$0}
+      .as(TestProtocol.self).unsafe()
       .initial(TestClass1.init)
     
     do {

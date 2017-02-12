@@ -56,7 +56,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: FooService.self)
-      .as(ServiceProtocol.self, check: { $0 })
+      .as(ServiceProtocol.self).check{$0}
       .initial{ FooService() }
     
     let container = try! builder.build()
@@ -76,7 +76,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     builder.register(type: FooService.self)
       .as(.self)
-      .as(ServiceProtocol.self, check: { $0 })
+      .as(ServiceProtocol.self).check{$0}
       .initial(FooService.init)
     
     let container = try! builder.build()
@@ -92,7 +92,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: FooService.self)
-      .as(ServiceProtocol.self, check: { $0 })
+      .as(ServiceProtocol.self).check{$0}
       .initial{ FooService() }
     
     builder.register(type: Inject.self)
@@ -108,7 +108,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: FooService.self)
-      .as(ServiceProtocol.self, check: { $0 })
+      .as(ServiceProtocol.self).check{$0}
       .initial{ FooService() }
     
     builder.register(type: InjectOpt.self)
@@ -125,7 +125,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: FooService.self)
-      .as(ServiceProtocol.self, check: { $0 })
+      .as(ServiceProtocol.self).check{$0}
       .initial{ FooService() }
     
     builder.register(type: InjectImplicitly.self)
@@ -142,12 +142,12 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: FooService.self)
-      .as(ServiceProtocol.self, check: { $0 })
+      .as(ServiceProtocol.self).check{$0}
       .set(.default)
       .initial{ FooService() }
     
     builder.register(type: BarService.self)
-      .as(ServiceProtocol.self, check: { $0 })
+      .as(ServiceProtocol.self).check{$0}
       .initial{ BarService() }
     
     let container = try! builder.build()
@@ -160,11 +160,11 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: FooService.self)
-      .as(ServiceProtocol.self, check: { $0 })
+      .as(ServiceProtocol.self).check{$0}
       .initial{ FooService() }
     
     builder.register(type: BarService.self)
-      .as(ServiceProtocol.self, check: { $0 })
+      .as(ServiceProtocol.self).check{$0}
       .set(.default)
       .initial{ BarService() }
     
@@ -178,12 +178,12 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: FooService.self)
-      .as(ServiceProtocol.self, check: { $0 })
+      .as(ServiceProtocol.self).check{$0}
       .set(name: "foo")
       .initial{ FooService() }
     
     builder.register(type: BarService.self)
-      .as(ServiceProtocol.self, check: { $0 })
+      .as(ServiceProtocol.self).check{$0}
       .set(name: "bar")
       .initial{ BarService() }
     
@@ -200,7 +200,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: FooService.self)
-      .as(ServiceProtocol.self, check: { $0 })
+      .as(ServiceProtocol.self).check{$0}
       .set(name: "foo")
       .set(name: "foo2")
       .lifetime(.single)
@@ -221,7 +221,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: BarService.self)
-      .as(ServiceProtocol.self, check: { $0 })
+      .as(ServiceProtocol.self).check{$0}
       .set(name: "bar")
       .set(name: "bar2")
       .lifetime(.perScope)
@@ -256,11 +256,11 @@ class DITranquillityTests_Resolve: XCTestCase {
     let builder = DIContainerBuilder()
     
     builder.register(type: FooService.init)
-      .as(ServiceProtocol.self, check: { $0 })
+      .as(ServiceProtocol.self).check{$0}
       .set(.default)
     
     builder.register(type: BarService.init)
-      .as(ServiceProtocol.self, check: { $0 })
+      .as(ServiceProtocol.self).check{$0}
     
     let container = try! builder.build()
     

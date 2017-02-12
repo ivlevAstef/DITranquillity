@@ -6,34 +6,22 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-typealias DITypeCheck<Impl, Protocol> = (_: Impl) -> Protocol
-
 // as...
 public enum DIAsSelf { case `self` }
 
 extension DIRegistrationBuilder {
   @discardableResult
   public func `as`(_: DIAsSelf) -> Self {
-    isTypeSet = true
-    container.append(key: ImplObj.self, value: rType)
+    DIRegistrationTypeChecker<ImplObj, ImplObj>(builder: self, type: ImplObj.self).unsafe()
     return self
   }
   
-  @discardableResult
-  public func `as`<EquallyObj>(_ equallyType: EquallyObj.Type, check: DITypeCheck<ImplObj, EquallyObj>) -> Self {
-    isTypeSet = true
-    container.append(key: equallyType, value: rType)
-    return self
+  public func `as`<Super>(_ superType: Super.Type) -> DIRegistrationTypeChecker<ImplObj, Super> {
+    return DIRegistrationTypeChecker<ImplObj, Super>(builder: self, type: superType)
   }
   
-  @discardableResult
-  public func `as`<Protocol>(implement _protocol: Protocol.Type, scope: DIImplementScope = .default, check: DITypeCheck<ImplObj, Protocol>) -> Self {
-    isTypeSet = true
-    container.append(key: _protocol, value: rType)
-    if .global == scope {
-      RTypeContainer.append(key: _protocol, implementation: rType)
-    }
-    return self
+  public func `as`<Protocol>(implement _protocol: Protocol.Type, scope: DIImplementScope = .default) -> DIRegistrationTypeChecker<ImplObj, Protocol> {
+    return DIRegistrationTypeChecker<ImplObj, Protocol>(builder: self, type: _protocol, scope: scope)
   }
 }
 
