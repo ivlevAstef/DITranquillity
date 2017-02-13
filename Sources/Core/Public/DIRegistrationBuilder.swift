@@ -12,16 +12,12 @@ public enum DIAsSelf { case `self` }
 extension DIRegistrationBuilder {
   @discardableResult
   public func `as`(_: DIAsSelf) -> Self {
-    DIRegistrationTypeChecker<ImplObj, ImplObj>(builder: self, type: ImplObj.self).unsafe()
+    DIRegistrationTypeChecker<ImplObj, ImplObj>(builder: self).unsafe()
     return self
   }
   
-  public func `as`<Super>(_ superType: Super.Type) -> DIRegistrationTypeChecker<ImplObj, Super> {
-    return DIRegistrationTypeChecker<ImplObj, Super>(builder: self, type: superType)
-  }
-  
-  public func `as`<Protocol>(implement _protocol: Protocol.Type, scope: DIImplementScope = .default) -> DIRegistrationTypeChecker<ImplObj, Protocol> {
-    return DIRegistrationTypeChecker<ImplObj, Protocol>(builder: self, type: _protocol, scope: scope)
+  public func `as`<Parent>(_ parentType: Parent.Type, scope: DIImplementScope = .default) -> DIRegistrationTypeChecker<ImplObj, Parent> {
+    return DIRegistrationTypeChecker<ImplObj, Parent>(builder: self, scope: scope)
   }
 }
 
