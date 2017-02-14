@@ -10,14 +10,14 @@ public final class DIContainerBuilder {
   public init() { }
 
   @discardableResult
-  public func build() throws -> DIContainer {
+  public func build(f: String = #file, l: Int = #line) throws -> DIContainer {
     rTypeContainer.lateBinding()
     
     try validate()
 
     let finalRTypeContainer = rTypeContainer.copyFinal()
     let container = DIContainer(resolver: DIResolver(rTypeContainer: finalRTypeContainer))
-
+    
     try initSingleLifeTime(rTypeContainer: finalRTypeContainer, container: container)
 
     return container
@@ -78,7 +78,11 @@ extension DIContainerBuilder {
   
   fileprivate func initSingleLifeTime(rTypeContainer: RTypeContainerFinal, container: DIContainer) throws {
     for rType in rTypeContainer.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime }) {
+      do {
       _ = try container.resolve(RType: rType)
+      } catch {
+        throw DIError.whileCreateSingleton(typeInfo: rType.typeInfo, stack: error as! DIError)
+      }
     }
   }
 }

@@ -25,21 +25,21 @@ class DITranquillityTests_Threads: XCTestCase {
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
       for _ in 0..<32768 {
-        let service: FooService = *!container
+        let service: FooService = try! *container
         XCTAssertEqual(service.foo(), "foo")
       }
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
       for _ in 0..<16384 {
-        let service: FooService = *!container
+        let service: FooService = try! *container
         XCTAssertEqual(service.foo(), "foo")
       }
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
       for _ in 0..<8192 {
-        let service: FooService = *!container
+        let service: FooService = try! *container
         XCTAssertEqual(service.foo(), "foo")
       }
     }
@@ -54,26 +54,26 @@ class DITranquillityTests_Threads: XCTestCase {
     
     let container = try! builder.build()
     
-    let singleService: FooService = *!container
+    let singleService: FooService = try! *container
     XCTAssertEqual(singleService.foo(), "foo")
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
       for _ in 0..<32768 {
-        let service: FooService = *!container
+        let service: FooService = try! *container
         XCTAssert(service === singleService)
       }
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
       for _ in 0..<16384 {
-        let service: FooService = *!container
+        let service: FooService = try! *container
         XCTAssert(service === singleService)
       }
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
       for _ in 0..<8192 {
-        let service: FooService = *!container
+        let service: FooService = try! *container
         XCTAssert(service === singleService)
       }
     }
@@ -88,37 +88,37 @@ class DITranquillityTests_Threads: XCTestCase {
     
     let container = try! builder.build()
     
-    let scopeService: FooService = *!container
+    let scopeService: FooService = try! *container
     XCTAssertEqual(scopeService.foo(), "foo")
     
     let scope = container.newLifeTimeScope()
     
-    let scopeService2: FooService = *!scope
+    let scopeService2: FooService = try! *scope
     XCTAssertEqual(scopeService2.foo(), "foo")
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
       for _ in 0..<32768 {
-        let service: FooService = *!container
+        let service: FooService = try! *container
         XCTAssert(service === scopeService)
-        let service2: FooService = *!scope
+        let service2: FooService = try! *scope
         XCTAssert(service2 === scopeService2)
       }
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
       for _ in 0..<16384 {
-        let service: FooService = *!container
+        let service: FooService = try! *container
         XCTAssert(service === scopeService)
-        let service2: FooService = *!scope
+        let service2: FooService = try! *scope
         XCTAssert(service2 === scopeService2)
       }
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
       for _ in 0..<8192 {
-        let service: FooService = *!container
+        let service: FooService = try! *container
         XCTAssert(service === scopeService)
-        let service2: FooService = *!scope
+        let service2: FooService = try! *scope
         XCTAssert(service2 === scopeService2)
       }
     }

@@ -26,13 +26,13 @@ class DITranquillityTests_Scope: XCTestCase {
     
     let container = try! builder.build()
     
-    let scopeClass1: TestScopeClass = *!container
-    let scopeClass2: TestScopeClass = *!container
+    let scopeClass1: TestScopeClass = try! *container
+    let scopeClass2: TestScopeClass = try! *container
     
     let scope2 = container.newLifeTimeScope()
     
-    let scopeClass3: TestScopeClass = *!scope2
-    let scopeClass4: TestScopeClass = *!scope2
+    let scopeClass3: TestScopeClass = try! *scope2
+    let scopeClass4: TestScopeClass = try! *scope2
     
     XCTAssert(scopeClass1 === scopeClass2)
     XCTAssert(scopeClass3 === scopeClass4)
@@ -49,13 +49,13 @@ class DITranquillityTests_Scope: XCTestCase {
     
     let container = try! builder.build()
     
-    let scopeClass1: TestScopeClass = *!container
-    let scopeClass2: TestScopeClass = *!container
+    let scopeClass1: TestScopeClass = try! *container
+    let scopeClass2: TestScopeClass = try! *container
     
     let scope2 = container.newLifeTimeScope()
     
-    let scopeClass3: TestScopeClass = *!scope2
-    let scopeClass4: TestScopeClass = *!scope2
+    let scopeClass3: TestScopeClass = try! *scope2
+    let scopeClass4: TestScopeClass = try! *scope2
     
     XCTAssert(scopeClass1 === scopeClass2)
     XCTAssert(scopeClass3 === scopeClass4)
@@ -72,13 +72,13 @@ class DITranquillityTests_Scope: XCTestCase {
     let container = try! builder.build()
     
     let block: ()->String = {
-      let scopeClass1: TestScopeClass = *!container
-      let scopeClass2: TestScopeClass = *!container
+      let scopeClass1: TestScopeClass = try! *container
+      let scopeClass2: TestScopeClass = try! *container
       
       let scope2 = container.newLifeTimeScope()
       
-      let scopeClass3: TestScopeClass = *!scope2
-      let scopeClass4: TestScopeClass = *!scope2
+      let scopeClass3: TestScopeClass = try! *scope2
+      let scopeClass4: TestScopeClass = try! *scope2
       
       XCTAssert(scopeClass1 === scopeClass2)
       XCTAssert(scopeClass3 === scopeClass4)
@@ -102,13 +102,13 @@ class DITranquillityTests_Scope: XCTestCase {
     let container = try! builder.build()
     
     let block: ()->String = {
-      let scopeClass1: TestScopeClass = *!container
-      let scopeClass2: TestScopeClass = *!container
+      let scopeClass1: TestScopeClass = try! *container
+      let scopeClass2: TestScopeClass = try! *container
       
       let scope2 = container.newLifeTimeScope()
       
-      let scopeClass3: TestScopeClass = *!scope2
-      let scopeClass4: TestScopeClass = *!scope2
+      let scopeClass3: TestScopeClass = try! *scope2
+      let scopeClass4: TestScopeClass = try! *scope2
       
       XCTAssert(scopeClass1 === scopeClass2)
       XCTAssert(scopeClass3 === scopeClass4)
@@ -131,13 +131,13 @@ class DITranquillityTests_Scope: XCTestCase {
     
     let container = try! builder.build()
     
-    let scopeClass1: TestScopeClass = *!container
-    let scopeClass2: TestScopeClass = *!container
+    let scopeClass1: TestScopeClass = try! *container
+    let scopeClass2: TestScopeClass = try! *container
     
     let scope2 = container.newLifeTimeScope()
     
-    let scopeClass3: TestScopeClass = *!scope2
-    let scopeClass4: TestScopeClass = *!scope2
+    let scopeClass3: TestScopeClass = try! *scope2
+    let scopeClass4: TestScopeClass = try! *scope2
     
     XCTAssert(scopeClass1 === scopeClass2)
     XCTAssert(scopeClass3 === scopeClass4)
@@ -152,13 +152,13 @@ class DITranquillityTests_Scope: XCTestCase {
     
     let container = try! builder.build()
     
-    let scopeClass1: TestScopeClass = *!container
-    let scopeClass2: TestScopeClass = *!container
+    let scopeClass1: TestScopeClass = try! *container
+    let scopeClass2: TestScopeClass = try! *container
     
     let scope2 = container.newLifeTimeScope()
     
-    let scopeClass3: TestScopeClass = *!scope2
-    let scopeClass4: TestScopeClass = *!scope2
+    let scopeClass3: TestScopeClass = try! *scope2
+    let scopeClass4: TestScopeClass = try! *scope2
     
     XCTAssert(scopeClass1 === scopeClass2)
     XCTAssert(scopeClass3 === scopeClass4)
@@ -174,13 +174,13 @@ class DITranquillityTests_Scope: XCTestCase {
     
     let container = try! builder.build()
     
-    let scopeClass1: TestScopeClass = *!container
-    let scopeClass2: TestScopeClass = *!container
+    let scopeClass1: TestScopeClass = try! *container
+    let scopeClass2: TestScopeClass = try! *container
     
     let scope2 = container.newLifeTimeScope()
     
-    let scopeClass3: TestScopeClass = *!scope2
-    let scopeClass4: TestScopeClass = *!scope2
+    let scopeClass3: TestScopeClass = try! *scope2
+    let scopeClass4: TestScopeClass = try! *scope2
     
     XCTAssert(scopeClass1 !== scopeClass2)
     XCTAssert(scopeClass1 !== scopeClass3)

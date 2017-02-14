@@ -41,3 +41,10 @@ public enum DIImplementScope: Equatable {
   
   static var `default`: DIImplementScope { return global }
 }
+
+//////////////// resolve style - only for error
+public enum DIResolveStyle {
+  case one
+  case many
+  case byName(name: String)
+}

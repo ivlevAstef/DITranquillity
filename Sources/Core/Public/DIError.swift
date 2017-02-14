@@ -6,7 +6,7 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public enum DIError: Error {
+public indirect enum DIError: Error {
   case typeIsNotFound(type: DIType)
   case typeIsNotFoundForName(type: DIType, name: String, typesInfo: [DITypeInfo])
   case notSpecifiedInitializationMethodFor(typeInfo: DITypeInfo)
@@ -22,5 +22,10 @@ public enum DIError: Error {
 
   case recursiveInitialization(typeInfo: DITypeInfo)
 
+  /// Support
   case build(errors: [DIError])
+  
+  case stack(type: DIType, child: DIError, resolveStyle: DIResolveStyle)
+  case byCall(file: String, line: Int, function: String, stack: DIError)
+  case whileCreateSingleton(typeInfo: DITypeInfo, stack: DIError)
 }

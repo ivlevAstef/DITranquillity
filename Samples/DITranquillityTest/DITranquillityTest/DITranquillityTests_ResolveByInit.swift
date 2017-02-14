@@ -22,7 +22,7 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
     
     let container = try! builder.build()
     
-    let service: FooService = *!container
+    let service: FooService = try! *container
     XCTAssertEqual(service.foo(), "foo")
   }
   
@@ -33,7 +33,7 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
     
     let container = try! builder.build()
     
-    let service: FooService = *!container
+    let service: FooService = try! *container
     XCTAssertEqual(service.foo(), "foo")
   }
   
@@ -46,7 +46,7 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
     
     let container = try! builder.build()
     
-    let service: ServiceProtocol = *!container
+    let service: ServiceProtocol = try! *container
     XCTAssertEqual(service.foo(), "foo")
   }
   
@@ -58,7 +58,7 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
     
     let container = try! builder.build()
     
-    let service: ServiceProtocol = *!container
+    let service: ServiceProtocol = try! *container
     XCTAssertEqual(service.foo(), "foo")
   }
   

@@ -41,14 +41,14 @@ extension DIRegistrationBuilder {
 // Initializer
 extension DIRegistrationBuilder {
   @discardableResult
-  public func initial(_ closure: @escaping () -> ImplObj) -> Self {
-    rType.append(initial: { (_: DIContainer) -> Any in return closure() })
+  public func initial(_ closure: @escaping () throws -> ImplObj) -> Self {
+    rType.append(initial: { (_: DIContainer) throws -> Any in return try closure() })
     return self
   }
   
   @discardableResult
-  public func initial(_ closure: @escaping (_: DIContainer) -> ImplObj) -> Self {
-    rType.append(initial: { scope -> Any in return closure(scope) })
+  public func initial(_ closure: @escaping (_: DIContainer) throws -> ImplObj) -> Self {
+    rType.append(initial: { scope throws -> Any in return try closure(scope) })
     return self
   }
 }
@@ -56,14 +56,14 @@ extension DIRegistrationBuilder {
 // Injection
 extension DIRegistrationBuilder {
   @discardableResult
-  public func injection(_ closure: @escaping (_: DIContainer, _: ImplObj) -> ()) -> Self {
+  public func injection(_ closure: @escaping (_: DIContainer, _: ImplObj) throws -> ()) -> Self {
     rType.append(injection: closure)
     return self
   }
   
   @discardableResult
-  public func injection(_ method: @escaping (_ :ImplObj) -> ()) -> Self {
-    rType.append(injection: { scope, obj in method(obj) })
+  public func injection(_ method: @escaping (_ :ImplObj) throws -> ()) -> Self {
+    rType.append(injection: { scope, obj in try method(obj) })
     return self
   }
 }

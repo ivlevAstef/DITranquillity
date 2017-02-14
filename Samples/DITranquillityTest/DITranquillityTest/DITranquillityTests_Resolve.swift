@@ -29,7 +29,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     let service_auto: FooService = try! container.resolve()
     XCTAssertEqual(service_auto.foo(), "foo")
     
-    let service_fast: FooService = *!container
+    let service_fast: FooService = try! *container
     XCTAssertEqual(service_fast.foo(), "foo")
   }
 
@@ -48,7 +48,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     let service_auto: FooService = try! container.resolve()
     XCTAssertEqual(service_auto.foo(), "foo")
     
-    let service_fast: FooService = *!container
+    let service_fast: FooService = try! *container
     XCTAssertEqual(service_fast.foo(), "foo")
   }
   
@@ -67,7 +67,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     let service_auto: ServiceProtocol = try! container.resolve()
     XCTAssertEqual(service_auto.foo(), "foo")
     
-    let service_fast: ServiceProtocol = *!container
+    let service_fast: ServiceProtocol = try! *container
     XCTAssertEqual(service_fast.foo(), "foo")
   }
   
@@ -81,10 +81,10 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     let container = try! builder.build()
     
-    let service_protocol: ServiceProtocol = *!container
+    let service_protocol: ServiceProtocol = try! *container
     XCTAssertEqual(service_protocol.foo(), "foo")
     
-    let service_class: FooService = *!container
+    let service_class: FooService = try! *container
     XCTAssertEqual(service_class.foo(), "foo")
   }
   
@@ -96,11 +96,11 @@ class DITranquillityTests_Resolve: XCTestCase {
       .initial{ FooService() }
     
     builder.register(type: Inject.self)
-      .initial{ s in Inject(service:*!s) }
+      .initial{ s in try Inject(service:*s) }
     
     let container = try! builder.build()
     
-    let inject: Inject = *!container
+    let inject: Inject = try! *container
     XCTAssertEqual(inject.service.foo(), "foo")
   }
 
@@ -113,11 +113,11 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     builder.register(type: InjectOpt.self)
       .initial(InjectOpt.init)
-      .injection{ s, obj in obj.service = *!s }
+      .injection{ s, obj in try obj.service = *s }
     
     let container = try! builder.build()
     
-    let inject: InjectOpt = *!container
+    let inject: InjectOpt = try! *container
     XCTAssertEqual(inject.service!.foo(), "foo")
   }
   
@@ -134,7 +134,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     let container = try! builder.build()
     
-    let inject: InjectImplicitly = *!container
+    let inject: InjectImplicitly = try! *container
     XCTAssertEqual(inject.service.foo(), "foo")
   }
   
@@ -152,7 +152,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     let container = try! builder.build()
     
-    let service: ServiceProtocol = *!container
+    let service: ServiceProtocol = try! *container
     XCTAssertEqual(service.foo(), "foo")
   }
   
@@ -170,7 +170,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     let container = try! builder.build()
     
-    let service: ServiceProtocol = *!container
+    let service: ServiceProtocol = try! *container
     XCTAssertEqual(service.foo(), "bar")
   }
   
@@ -274,20 +274,20 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     builder.register(type: Circular2A.self)
       .lifetime(.perDependency)
-      .initial { s in Circular2A(b: *!s) }
+      .initial { s in try  Circular2A(b: *s) }
     
     builder.register(type: Circular2B.self)
       .lifetime(.perDependency)
       .initial(Circular2B.init)
-      .injection { (s, b) in b.a = *!s }
+      .injection { (s, b) in try  b.a = *s }
     
     let container = try! builder.build()
     
-    let a: Circular2A = *!container
+    let a: Circular2A = try! *container
     XCTAssert(a === a.b.a)
     XCTAssert(a.b === a.b.a.b)
     
-    let b: Circular2B = *!container
+    let b: Circular2B = try! *container
     XCTAssert(b === b.a.b)
     XCTAssert(b.a === b.a.b.a)
     
@@ -313,17 +313,17 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     let container = try! builder.build()
     
-    let a: Circular3A = *!container
+    let a: Circular3A = try! *container
     XCTAssert(a === a.b.c.a)
     XCTAssert(a.b === a.b.c.a.b)
     XCTAssert(a.b.c === a.b.c.a.b.c)
     
-    let b: Circular3B = *!container
+    let b: Circular3B = try! *container
     XCTAssert(b === b.c.a.b)
     XCTAssert(b.c === b.c.a.b.c)
     XCTAssert(b.c.a === b.c.a.b.c.a)
     
-    let c: Circular3C = *!container
+    let c: Circular3C = try! *container
     XCTAssert(c === c.a.b.c)
     XCTAssert(c.a === c.a.b.c.a)
     XCTAssert(c.a.b === c.a.b.c.a.b)
@@ -344,17 +344,17 @@ class DITranquillityTests_Resolve: XCTestCase {
     builder.register(type: CircularDouble2A.self)
       .lifetime(.perDependency)
       .initial{ CircularDouble2A() }
-      .injection { s, a in a.b1 = *!s }
+      .injection { s, a in try  a.b1 = *s }
       .injection { a, b2 in a.b2 = b2 }
     
     builder.register(type: CircularDouble2B.self)
       .lifetime(.perDependency)
-      .initial { s in CircularDouble2B(a: *!s) }
+      .initial { s in try CircularDouble2B(a: *s) }
     
     let container = try! builder.build()
     
     //b1 !== b2
-    let a: CircularDouble2A = *!container
+    let a: CircularDouble2A = try! *container
     XCTAssert(a.b1 !== a.b2)
     XCTAssert(a === a.b1.a)
     XCTAssert(a.b1 === a.b1.a.b1)
@@ -362,7 +362,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(a.b2 === a.b2.a.b2)
     
     //!!! is not symmetric, b1 === b2 === b
-    let b: CircularDouble2B = *!container
+    let b: CircularDouble2B = try! *container
     XCTAssert(b === b.a.b1)
     XCTAssert(b === b.a.b2)
     XCTAssert(b.a === b.a.b1.a)
@@ -380,8 +380,8 @@ class DITranquillityTests_Resolve: XCTestCase {
       .lifetime(.perDependency)
       .initial{ CircularDouble2A() }
       .injection { s, a in
-        a.b1 = *!s
-        a.b2 = *!s
+        a.b1 = try *s
+        a.b2 = try *s
       }
     
     builder.register(type: CircularDouble2B.self)
@@ -390,14 +390,14 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     let container = try! builder.build()
     
-    let a: CircularDouble2A = *!container
+    let a: CircularDouble2A = try! *container
     XCTAssert(a.b1 === a.b2)
     XCTAssert(a === a.b1.a)
     XCTAssert(a.b1 === a.b1.a.b1)
     XCTAssert(a === a.b2.a)
     XCTAssert(a.b2 === a.b2.a.b2)
     
-    let b: CircularDouble2B = *!container
+    let b: CircularDouble2B = try! *container
     XCTAssert(b === b.a.b1)
     XCTAssert(b === b.a.b2)
     XCTAssert(b.a === b.a.b1.a)
@@ -423,14 +423,14 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     let container = try! builder.build()
     
-    let a: CircularDouble2A = *!container
+    let a: CircularDouble2A = try! *container
     XCTAssert(a.b1 === a.b2)
     XCTAssert(a === a.b1.a)
     XCTAssert(a.b1 === a.b1.a.b1)
     XCTAssert(a === a.b2.a)
     XCTAssert(a.b2 === a.b2.a.b2)
     
-    let b: CircularDouble2B = *!container
+    let b: CircularDouble2B = try! *container
     XCTAssert(b === b.a.b1)
     XCTAssert(b === b.a.b2)
     XCTAssert(b.a === b.a.b1.a)
@@ -449,7 +449,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     builder.register(type: DependencyB.self)
       .initial(DependencyB.init)
-      .injection { s, b in b.a = *!s }
+      .injection { s, b in try b.a = *s }
     
     builder.register(type: DependencyC.self)
       .initial{ DependencyC() }
@@ -457,7 +457,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     let container = try! builder.build()
     
-    let c: DependencyC = *!container
+    let c: DependencyC = try! *container
     
     XCTAssert(c.b != nil)
     XCTAssert(c.b.a != nil)

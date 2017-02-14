@@ -154,8 +154,8 @@ class SampleComponent : DIComponent {
       .set(.default)
       .as(LoggerProtocol.self).check{$0}
       .lifetime(.single)
-      .initial{ container in LoggerAll.init(loggers: **!container) }
-      .injection { (container, self) in self.loggersFull = **!container }
+      .initial{ container in try LoggerAll.init(loggers: **container) }
+      .injection { (container, self) in try self.loggersFull = **container }
 
 		builder.register{ Logger() }
       .as(LoggerProtocol.self).check{$0}
@@ -170,13 +170,13 @@ class SampleComponent : DIComponent {
       .as(.self)
       .lifetime(.perDependency)
       .initial(Inject.init(service:logger:test:))
-      .injection { (container, obj) in obj.logger2 = try! container.resolve(Logger2.self) }
-      .injection { (container, obj) in obj.service2 = *!container }
+      .injection { (container, obj) in obj.logger2 = try container.resolve(Logger2.self) }
+      .injection { (container, obj) in try obj.service2 = *container }
     
     builder.register(type: InjectMany.self)
       .as(.self)
       .lifetime(.perDependency)
-      .initial { container in InjectMany(loggers: **!container) }
+      .initial { container in try InjectMany(loggers: **container) }
     
     //Animals
 		builder.register{ Animal(name: "Cat") }
@@ -208,13 +208,13 @@ class SampleComponent : DIComponent {
     builder.register(type: Circular1.self)
       .as(.self)
       .lifetime(.perDependency)
-      .initial { c in Circular1(ref: *!c) }
+      .initial { c in try Circular1(ref: *c) }
     
     builder.register(type: Circular2.self)
       .as(.self)
       .lifetime(.perDependency)
       .initial { Circular2() }
-      .injection { (s, obj) in obj.ref = *!s }
+      .injection { (s, obj) in try obj.ref = *s }
   }
   
   private let useBarService: Bool

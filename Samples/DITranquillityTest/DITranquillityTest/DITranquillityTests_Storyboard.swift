@@ -50,7 +50,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .initial(FooService.init)
     
 		builder.register(vc: TestViewController2.self)
-      .injection{ scope, vc in vc.service = *!scope }
+      .injection{ scope, vc in try vc.service = *scope }
     
     let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
     
@@ -84,7 +84,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .injection { vc, service in vc.service = service }
     
 		builder.register(vc: TestViewController2.self)
-      .injection { scope, vc in vc.service = *!scope }
+      .injection { scope, vc in try vc.service = *scope }
 
     let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
     
@@ -109,7 +109,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .initial(FooService.init)
     
     builder.register(vc: TestViewController2.self)
-      .injection { scope, vc in vc.service = *!scope }
+      .injection { scope, vc in try vc.service = *scope }
     
     let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
     
@@ -138,7 +138,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .initial { DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: $0) }
     
     let container = try! builder.build()
-    let storyboard: UIStoryboard = *!container
+    let storyboard: UIStoryboard = try! *container
     
     let viewController = storyboard.instantiateInitialViewController()
     XCTAssert(viewController is TestViewController)
@@ -158,7 +158,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .initial{ FooService() }
 		
 		builder.register(vc: TestViewController.self)
-			.injection { scope, vc in vc.service = *!scope }
+			.injection { scope, vc in try vc.service = *scope }
 		
 		builder.register(type: UIStoryboard.self)
 			.lifetime(.single)
@@ -167,7 +167,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
 		var storyboard: UIStoryboard!
 		autoreleasepool {
 			let container = try! builder.build()
-			storyboard = *!container
+			storyboard = try! *container
 		}
 		
 		let semaphore = DispatchSemaphore(value: 0)

@@ -14,7 +14,7 @@ public extension DIContainerBuilder {
 
 public extension DIContainerBuilder {
   @discardableResult
-  public func register<T>(file: String = #file, line: Int = #line, type initial: @escaping () -> T) -> DIRegistrationBuilder<T> {
+  public func register<T>(file: String = #file, line: Int = #line, type initial: @escaping () throws -> T) -> DIRegistrationBuilder<T> {
     return registrationBuilder(file: file, line: line).initial(initial)
   }
 }

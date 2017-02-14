@@ -32,34 +32,47 @@ class DIResolver {
 		
 		return rTypes
 	}
+
 	
-	func resolve<T, Method>(_ container: DIContainer, type: T.Type, method: @escaping (Method) -> Any) throws -> T {
-		let rTypes = try check(type: type)
+	func resolve<T, Method>(_ container: DIContainer, type: T.Type, method: @escaping (Method) throws -> Any) throws -> T {
+    do {
+      let rTypes = try check(type: type)
 
-		let index = 1 == rTypes.count ? 0 : rTypes.index(where: { $0.isDefault })!
-    return try resolveUseRType(container, pair: RTypeWithName(rTypes[index]), method: method)
+      let index = 1 == rTypes.count ? 0 : rTypes.index(where: { $0.isDefault })!
+      return try resolveUseRType(container, pair: RTypeWithName(rTypes[index]), method: method)
+    } catch {
+      throw DIError.stack(type: type, child: error as! DIError, resolveStyle: .one)
+    }
   }
 
-  func resolveMany<T, Method>(_ container: DIContainer, type: T.Type, method: @escaping (Method) -> Any) throws -> [T] {
-    let rTypes = try getTypes(type)
-    
-    return try rTypes.map { rType in
-      do {
-        return try resolveUseRType(container, pair: RTypeWithName(rType), method: method)
-      } catch DIError.recursiveInitialization {
-        return nil // Ignore recursive initialization object for many
-      }
-    }.filter{ $0 != nil }.map{ $0! }
+  func resolveMany<T, Method>(_ container: DIContainer, type: T.Type, method: @escaping (Method) throws -> Any) throws -> [T] {
+    do {
+      let rTypes = try getTypes(type)
+      
+      return try rTypes.map { rType in
+        do {
+          return try resolveUseRType(container, pair: RTypeWithName(rType), method: method)
+        } catch DIError.recursiveInitialization {
+          return nil // Ignore recursive initialization object for many
+        }
+      }.filter{ $0 != nil }.map{ $0! }
+    } catch {
+      throw DIError.stack(type: type, child: error as! DIError, resolveStyle: .many)
+    }
   }
 
-  func resolve<T, Method>(_ container: DIContainer, name: String, type: T.Type, method: @escaping (Method) -> Any) throws -> T {
-		let rTypes = try check(name: name, type: type)
+  func resolve<T, Method>(_ container: DIContainer, name: String, type: T.Type, method: @escaping (Method) throws -> Any) throws -> T {
+    do {
+      let rTypes = try check(name: name, type: type)
 
-		let rType = rTypes.first(where: { $0.has(name: name) })!
-    return try resolveUseRType(container, pair: RTypeWithName(rType, name), method: method)
+      let rType = rTypes.first(where: { $0.has(name: name) })!
+      return try resolveUseRType(container, pair: RTypeWithName(rType, name), method: method)
+    } catch {
+      throw DIError.stack(type: type, child: error as! DIError, resolveStyle: .byName(name: name))
+    }
   }
 
-  func resolve<Method>(_ container: DIContainer, rType: RTypeFinal, method: @escaping (Method) -> Any) throws -> Any {
+  func resolve<Method>(_ container: DIContainer, rType: RTypeFinal, method: @escaping (Method) throws -> Any) throws -> Any {
     return try resolveUseRType(container, pair: RTypeWithName(rType), method: method)
   }
 
@@ -73,7 +86,7 @@ class DIResolver {
     return rTypes
   }
 
-	private func resolveUseRType<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
+	private func resolveUseRType<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) throws -> Any) throws -> T {
     objc_sync_enter(DIResolver.monitor)
     defer { objc_sync_exit(DIResolver.monitor) }
 
@@ -89,13 +102,13 @@ class DIResolver {
     }
   }
 
-  private func resolveSingle<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
+  private func resolveSingle<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) throws -> Any) throws -> T {
     return try _resolveUniversal(container, pair: pair, method: method,
                                  get: { Cache.single[$0] },
                                  set: { Cache.single[$0] = $1 })
   }
   
-  private func resolveWeakSingle<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
+  private func resolveWeakSingle<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) throws -> Any) throws -> T {
     for data in Cache.weakSingle.filter({ $0.value.value == nil }) {
       Cache.weakSingle.removeValue(forKey: data.key)
     }
@@ -105,13 +118,13 @@ class DIResolver {
                                  set: { Cache.weakSingle[$0] = Weak(value: $1) })
   }
 
-  private func resolvePerScope<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
+  private func resolvePerScope<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) throws -> Any) throws -> T {
     return try _resolveUniversal(container, pair: pair, method: method,
                                  get: { container.scope[$0] },
                                  set: { container.scope[$0] = $1 })
   }
   
-  private func _resolveUniversal<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) -> Any,
+  private func _resolveUniversal<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) throws -> Any,
                                 get: (_: RType.UniqueKey)->Any?, set: (_:RType.UniqueKey, _:T)->()) throws -> T {
     if let obj = get(pair.uniqueKey) {
       return obj as! T
@@ -122,7 +135,7 @@ class DIResolver {
     return obj
   }
 
-  private func resolvePerDependency<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
+  private func resolvePerDependency<T, Method>(_ container: DIContainer, pair: RTypeWithName, method: @escaping (Method) throws -> Any) throws -> T {
     if recursiveInitializer.contains(pair.uniqueKey) {
       throw DIError.recursiveInitialization(typeInfo: pair.rType.typeInfo)
     }
@@ -142,27 +155,27 @@ class DIResolver {
     }
 
     if circular.recursive.isEmpty {
-      setupAllDependency(container)
+      try setupAllDependency(container)
     }
 
     return obj
   }
 
-  private func setupDependency(_ container: DIContainer, pair: RTypeWithName, obj: Any) {
+  private func setupDependency(_ container: DIContainer, pair: RTypeWithName, obj: Any) throws {
     let mapSave = circular.objMap
 
     circular.recursive.append(pair.uniqueKey)
     for index in 0..<pair.rType.injections.count {
       circular.objMap = mapSave
-      pair.rType.injections[index](container, obj)
+      try pair.rType.injections[index](container, obj)
     }
     circular.recursive.removeLast()
   }
 
-  private func setupAllDependency(_ container: DIContainer) {
+  private func setupAllDependency(_ container: DIContainer) throws {
     repeat {
       for (pair, obj) in circular.objects {
-        setupDependency(container, pair: pair, obj: obj)
+        try setupDependency(container, pair: pair, obj: obj)
         circular.objects.removeFirst()
       }
     } while (!circular.objects.isEmpty) // because setupDependency can added into allTypes
@@ -170,14 +183,14 @@ class DIResolver {
     circular.clean()
   }
 
-  private func getObject<T, Method>(pair: RTypeWithName, method: @escaping (Method) -> Any) throws -> T {
+  private func getObject<T, Method>(pair: RTypeWithName, method: @escaping (Method) throws -> Any) throws -> T {
     if circular.isCycle(pair: pair), let obj = circular.objMap[pair.uniqueKey] {
       return obj as! T
     }
 
 		let objAny: Any
-		if let specialMethod = (method as Any) as? () -> Any {
-			objAny = specialMethod()
+		if let specialMethod = (method as Any) as? () throws -> Any {
+			objAny = try specialMethod()
 		} else {
 			recursiveInitializer.insert(pair.uniqueKey)
 			objAny = try pair.rType.new(method)

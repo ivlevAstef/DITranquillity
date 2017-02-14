@@ -25,8 +25,8 @@ registrationFunction() { #argcount file
   local Params=$(join ',' $(replaceToArg numbers[@] "\$;I"));
 
   echo "  @discardableResult
-  public func initialWithParams<$ParamType>(_ closure: @escaping (_:DIContainer,_$ParametersType) -> ImplObj) -> Self {
-    rType.append(initial: { closure($Params) as Any })
+  public func initialWithParams<$ParamType>(_ closure: @escaping (_:DIContainer,_$ParametersType) throws -> ImplObj) -> Self {
+    rType.append(initial: { try closure($Params) as Any })
     return self
   }
   " >> $2
@@ -57,11 +57,11 @@ local numbers=($(seq 0 $1))
 
 local ParamType=$(join ',' ${numbers[@]/#/P})
 local ParametersType=$(join ',_' $(replaceToArg numbers[@] ":P;I"))
-local Resolvers=$(join ',' $(replaceToArg numbers[@] "*!s"))
+local Resolvers=$(join ',' $(replaceToArg numbers[@] "*s"))
 
 echo "  @discardableResult
-  public func initial<$ParamType>(_ closure: @escaping (_$ParametersType) -> ImplObj) -> Self {
-    rType.append(initial: { (s: DIContainer) -> Any in closure($Resolvers) })
+  public func initial<$ParamType>(_ closure: @escaping (_$ParametersType) throws -> ImplObj) -> Self {
+    rType.append(initial: { (s: DIContainer) throws -> Any in try closure($Resolvers) })
     return self
   }
 " >> $2
@@ -91,11 +91,11 @@ local numbers=($(seq 0 $1))
 
 local ParamType=$(join ',' ${numbers[@]/#/P})
 local ParametersType=$(join ',_' $(replaceToArg numbers[@] ":P;I"))
-local Resolvers=$(join ',' $(replaceToArg numbers[@] "*!s"))
+local Resolvers=$(join ',' $(replaceToArg numbers[@] "*s"))
 
 echo "  @discardableResult
-  public func injection<$ParamType>(_ method: @escaping (_:ImplObj, _$ParametersType) -> ()) -> Self {
-    rType.append(injection: { s, o in method(o, $Resolvers) })
+  public func injection<$ParamType>(_ method: @escaping (_:ImplObj, _$ParametersType) throws -> ()) -> Self {
+    rType.append(injection: { s, o in try method(o, $Resolvers) })
     return self
   }
 " >> $2
@@ -127,7 +127,7 @@ local ParamType=$(join ',' ${numbers[@]/#/P})
 local ParametersType=$(join ',_:' $(replaceToArg numbers[@] "P;I"));
 
 echo "  @discardableResult
-  public func register<T, $ParamType>(file: String = #file, line: Int = #line, type initial: @escaping (_:$ParametersType) -> T) -> DIRegistrationBuilder<T> {
+  public func register<T, $ParamType>(file: String = #file, line: Int = #line, type initial: @escaping (_:$ParametersType) throws -> T) -> DIRegistrationBuilder<T> {
     return registrationBuilder(file: file, line: line).initial(initial)
   }
 " >> $2
@@ -164,9 +164,9 @@ resolveFunctions() { #argcount prefix file
   local ArgParam=$(join ',' $(replaceToArg numbers[@] "a;I"))
   ArgumentsType=${ArgumentsType//a0:A0/arg a0:A0}
 
-  echo "  public func resolve<T,$ArgType>($prefix$ArgumentsType) throws -> T {
-    typealias Method = (_:DIContainer,_$ArgumentsMethodType) -> Any
-    return try resolver.resolve(self, type: T.self) { (\$0 as Method)(self, $ArgParam) }
+  echo "  public func resolve<T,$ArgType>($prefix$ArgumentsType, f: String = #file, l: Int = #line) throws -> T {
+    typealias Method = (_:DIContainer,_$ArgumentsMethodType) throws -> Any
+    return try ret(f, l) { try resolver.resolve(self, type: T.self) { try (\$0 as Method)(self, $ArgParam) } }
   }
   " >> $3
 }
@@ -181,9 +181,9 @@ resolveManyFunctions() { #argcount prefix file
   local ArgParam=$(join ',' $(replaceToArg numbers[@] "a;I"))
   ArgumentsType=${ArgumentsType//a0:A0/arg a0:A0}
 
-  echo "  public func resolveMany<T,$ArgType>($prefix$arg$ArgumentsType) throws -> [T] {
-    typealias Method = (_:DIContainer,_$ArgumentsMethodType) -> Any
-    return try resolver.resolveMany(self, type: T.self) { (\$0 as Method)(self, $ArgParam) }
+  echo "  public func resolveMany<T,$ArgType>($prefix$arg$ArgumentsType, f: String = #file, l: Int = #line) throws -> [T] {
+    typealias Method = (_:DIContainer,_$ArgumentsMethodType) throws -> Any
+    return try ret(f, l) { try resolver.resolveMany(self, type: T.self) { try (\$0 as Method)(self, $ArgParam) } }
   }
   " >> $3
 }
@@ -200,9 +200,9 @@ resolveNameFunctions() { #argcount prefix file
   ArgumentsType=${ArgumentsType//a0:A0/arg a0:A0}
 
   local name="name"
-  echo "  public func resolve<T,$ArgType>($prefix$name: String, $ArgumentsType) throws -> T {
-    typealias Method = (_:DIContainer,_$ArgumentsMethodType) -> Any
-    return try resolver.resolve(self, name: name, type: T.self) { (\$0 as Method)(self, $ArgParam) }
+  echo "  public func resolve<T,$ArgType>($prefix$name: String, $ArgumentsType, f: String = #file, l: Int = #line) throws -> T {
+    typealias Method = (_:DIContainer,_$ArgumentsMethodType) throws -> Any
+    return try ret(f, l) { try resolver.resolve(self, name: name, type: T.self) { try (\$0 as Method)(self, $ArgParam) } }
   }
   " >> $3
 }

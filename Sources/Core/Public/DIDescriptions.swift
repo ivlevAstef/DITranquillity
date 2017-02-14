@@ -10,33 +10,55 @@ import Foundation
 
 extension DITypeInfo: CustomStringConvertible {
 	public var description: String {
-		return "<Registration type: \(type) in file: \((file as NSString).lastPathComponent), line: \(line)>"
+		return "Register type: \(type) in file: \((file as NSString).lastPathComponent) on line: \(line)"
 	}
+}
+
+extension DIResolveStyle: CustomStringConvertible {
+  public var description: String {
+    switch self {
+    case .one:
+      return "resolve one"
+    case .many:
+      return "resolve many"
+    case .byName(let name):
+      return "resolve by name: \(name)"
+    }
+  }
 }
 
 extension DIError: CustomStringConvertible {
 	public var description: String {
 		switch self {
 		case .typeIsNotFound(let type):
-			return "\nType: \(type) not found\n"
+			return "Type: \(type) not found\n"
 		case .typeIsNotFoundForName(let type, let name, let typesInfo):
-			return "\nCannot found type: \(type) for name: \(name).\n\tUse:\n\(multiLine(typesInfo))\n"
+			return "Cannot found type: \(type) for name: \(name).\n\tUse:\n\(multiLine(typesInfo))\n"
 		case .notSpecifiedInitializationMethodFor(let typeInfo):
-			return "\nNot specified initial method for:\n \(typeInfo)\n"
+			return "Not specified initial method for:\n \(typeInfo)\n"
 		case .initializationMethodWithSignatureIsNotFoundFor(let typeInfo, let signature):
-			return "\nInitial method with signature: \(signature) not found.\n\tUse: \(typeInfo)\n"
+			return "Initial method with signature: \(signature) not found.\n\tUse: \(typeInfo)\n"
 		case .pluralSpecifiedDefaultType(let type, let typesInfo):
-			return "\nPlural specified default type for type: \(type).\n\tUse:\n\(multiLine(typesInfo))\n"
+			return "Plural specified default type for type: \(type).\n\tUse:\n\(multiLine(typesInfo))\n"
 		case .defaultTypeIsNotSpecified(let type, let typesInfo):
-			return "\nDefault type not specified for type: \(type).\n\tUse:\n\(multiLine(typesInfo))\n"
+			return "Default type not specified for type: \(type).\n\tUse:\n\(multiLine(typesInfo))\n"
 		case .intersectionNamesForType(let type, let names, let typesInfo):
-			return "\nIntersection names for type: \(type).\n\tIntersections: \(names)\n\tUse:\n\(multiLine(typesInfo))\n"
+			return "Intersection names for type: \(type).\n\tIntersections: \(names)\n\tUse:\n\(multiLine(typesInfo))\n"
 		case .typeIsIncorrect(let requestedType, let realType, let typeInfo):
-			return "\nIncorrect type.\n\tRequested type: \(requestedType)\n\tReal type: \(realType)\n\tUse: \(typeInfo)\n"
+			return "Incorrect type.\n\tRequested type: \(requestedType)\n\tReal type: \(realType)\n\tUse: \(typeInfo)\n"
 		case .recursiveInitialization(let typeInfo):
-			return "\nRecursive initialization into:\(typeInfo)\n"
+			return "Recursive initialization into:\(typeInfo)\n"
 		case .build(let errors):
 			return "\nList:\n\(multiLine(errors))\n"
+    case .stack(let type, let child, let resolveStyle):
+      if case .stack(_,_,_) = child {
+        return "\(child)\t\(type) use \(resolveStyle)\n"
+      }
+      return "\(child)Stack:\n\t\(type) use \(resolveStyle)\n"
+    case .byCall(let file, let line, let function, let stack):
+      return "\nBy call function: \(function) in file: \((file as NSString).lastPathComponent) on line: \(line).\nDescription: \(stack)"
+    case .whileCreateSingleton(let typeInfo, let stack):
+      return "\nWhile create singleton for \(typeInfo)\n\(stack)\n"
 		}
 	}
 

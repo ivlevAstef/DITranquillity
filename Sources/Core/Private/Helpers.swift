@@ -1,5 +1,5 @@
 //
-//  RemoveTypeWrappers.swift
+//  Helpers.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 14/06/16.
@@ -24,4 +24,14 @@ func removeTypeWrappers(_ type: Any.Type) -> Any.Type {
 	}
 	
 	return type
+}
+
+
+/// rethrow error with additional information
+func ret<T>(_ file: String, _ line: Int, _ function: String = #function, closure: () throws -> T) throws -> T {
+  do {
+    return try closure()
+  } catch {
+    throw DIError.byCall(file: file, line: line, function: function, stack: error as! DIError)
+  }
 }

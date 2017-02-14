@@ -27,7 +27,7 @@ class RType: RTypeBase {
   var isProtocol: Bool = false
 
   fileprivate var initials: [MethodKey: Any] = [:] // method type to method
-  fileprivate var injections: [(_: DIContainer, _: Any) -> ()] = []
+  fileprivate var injections: [(_: DIContainer, _: Any) throws -> ()] = []
 }
 
 // Initial
@@ -39,8 +39,8 @@ extension RType {
 
 // Injection
 extension RType {
-  func append<T>(injection method: @escaping (_: DIContainer, _: T) -> ()) {
-    injections.append{ method($0, $1 as! T) }
+  func append<T>(injection method: @escaping (_: DIContainer, _: T) throws -> ()) {
+    injections.append{ try method($0, $1 as! T) }
   }
   
   func appendAutoInjection<T>(by type: T.Type) {

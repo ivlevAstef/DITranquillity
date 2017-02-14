@@ -9,7 +9,7 @@
 class RTypeFinal: RTypeBase {
   typealias MethodKey = String
   
-  init(typeInfo: DITypeInfo, initials: [MethodKey: Any], injections: [(_: DIContainer, _: Any) -> ()], names: Set<String>, isDefault: Bool, lifeTime: DILifeTime) {
+  init(typeInfo: DITypeInfo, initials: [MethodKey: Any], injections: [(_: DIContainer, _: Any) throws -> ()], names: Set<String>, isDefault: Bool, lifeTime: DILifeTime) {
     self.initials = initials
     self.injections = injections
     self.names = names
@@ -32,7 +32,7 @@ class RTypeFinal: RTypeBase {
   
   let lifeTime: DILifeTime
   let isDefault: Bool
-  let injections: [(_: DIContainer, _: Any) -> ()]
+  let injections: [(_: DIContainer, _: Any) throws -> ()]
   
   private let initials: [MethodKey: Any]
   private let names: Set<String>

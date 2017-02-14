@@ -196,11 +196,18 @@ class DITranquillityTests_Build: XCTestCase {
       do {
         let type: TestClass1 = try container.resolve()
         print("\(type)")
-      } catch DIError.typeIsNotFound(let type) {
-        XCTAssert(equals(type, TestClass1.self))
-        return
+      } catch DIError.byCall(_, _, _, let error) {
+        if case DIError.stack(_, let error, _) = error {
+          if case DIError.typeIsNotFound(let type) = error {
+            XCTAssert(equals(type, TestClass1.self))
+            return
+          }
+        }
+        XCTFail("Catched error: \(error)")
+        
       } catch {
         XCTFail("Catched error: \(error)")
+        return
       }
       XCTFail("No try exceptions")
     } catch {

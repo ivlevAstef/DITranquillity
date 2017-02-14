@@ -26,20 +26,20 @@ class ViewController: UIViewController {
     let vc1_2: UIView = try! *container3
     print("Create VC1_2: \(vc1_2)")
     
-    let vc2_1: UIView  = *!container2
+    let vc2_1: UIView = try! *container2
     print("Create VC2_1: \(vc2_1)")
     
     let vc2_2: UIAppearance = try! container.resolve()
     print("Create VC2_2: \(vc2_2)")
     
     
-    let inject1: Inject = *!container
+    let inject1: Inject = try! *container
     print("Create Inject1: \(inject1.description)")
     
-    let inject2: Inject = *!container2
+    let inject2: Inject = try! *container2
     print("Create Inject2: \(inject2.description)")
     
-    let injectMany: InjectMany = *!container
+    let injectMany: InjectMany = try! *container
     print("Create injectMany: \(injectMany)")
     
     
@@ -66,8 +66,8 @@ class ViewController: UIViewController {
     print("Params p1:\(params3.param1) p2:\(params3.param2) p3:\(params3.param3)")
     
     //Circular
-    let circularT1: Circular1 = *!container
-    let circularT2: Circular2 = *!container
+    let circularT1: Circular1 = try! *container
+    let circularT2: Circular2 = try! *container
     
     print("Circular test 1: \(circularT1.description) + \(circularT1.ref.description)")
     print("Circular test 2: \(circularT2.description) + \(circularT2.ref.description)")

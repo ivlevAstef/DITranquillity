@@ -83,12 +83,18 @@ class DITranquillityTests_ProtocolImplement: XCTestCase {
     do {
       let impl: TestProtocol = try container.resolve()
       XCTFail("incorrect state -> run test03 before test04 or code bug \(impl)")
-    } catch DIError.defaultTypeIsNotSpecified(let type, let typesInfo) {
-      XCTAssert(type == TestProtocol.self)
-      XCTAssertEqual(typesInfo, [
-        DITypeInfo(type: TestImplement.self, file: file, line: lineImpl2),
-        DITypeInfo(type: TestImplement.self, file: file, line: lineImpl1)
-      ])
+    } catch DIError.byCall(_, _, _, let error) {
+      if case DIError.stack(_, let error, _) = error {
+        if case DIError.defaultTypeIsNotSpecified(let type, let typesInfo) = error {
+          XCTAssert(type == TestProtocol.self)
+          XCTAssertEqual(typesInfo, [
+            DITypeInfo(type: TestImplement.self, file: file, line: lineImpl2),
+            DITypeInfo(type: TestImplement.self, file: file, line: lineImpl1)
+          ])
+          return
+        }
+      }
+      XCTFail("unknown error: \(error)")
     } catch {
       XCTFail("unknown error: \(error)")
     }
