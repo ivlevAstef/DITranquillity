@@ -132,7 +132,7 @@ class Circular2 {
 }
 
 
-class SampleModule : DIModule {
+class SampleComponent : DIComponent {
   init(useBarService: Bool) {
     self.useBarService = useBarService
   }
@@ -140,109 +140,105 @@ class SampleModule : DIModule {
   func load(builder: DIContainerBuilder) {
 		builder.register{ 10 }.lifetime(.lazySingle)
     
-    builder.register(ServiceProtocol.self)
-      .asSelf()
+    builder.register(type: ServiceProtocol.self)
+      .as(.self)
       .lifetime(.perDependency)
-      .initializer {
+      .initial {
         if self.useBarService {
           return BarService()
         }
         return FooService()
 			}
 
-    builder.register(LoggerAll.self)
-      .asDefault()
-      .asType(LoggerProtocol.self)
+    builder.register(type: LoggerAll.self)
+      .set(.default)
+      .as(LoggerProtocol.self).check{$0}
       .lifetime(.single)
-      .initializer { scope in LoggerAll(loggers: **!scope) }
-      .dependency { (scope, self) in self.loggersFull = **!scope }
+      .initial{ container in LoggerAll.init(loggers: **!container) }
+      .injection { (container, self) in self.loggersFull = **!container }
 
 		builder.register{ Logger() }
-      .asType(LoggerProtocol.self)
+      .as(LoggerProtocol.self).check{$0}
       .lifetime(.single)
     
     builder.register{ Logger2() }
-      .asSelf()
-      .asType(LoggerProtocol.self)
+      .as(.self)
+      .as(LoggerProtocol.self).check{$0}
       .lifetime(.lazySingle)
     
-    builder.register(Inject.self)
-      .asSelf()
+    builder.register(type: Inject.self)
+      .as(.self)
       .lifetime(.perDependency)
-      .initializer { (scope) in Inject(service: *!scope, logger: *!scope, test: *!scope) }
-      .dependency { (scope, obj) in obj.logger2 = try! scope.resolve(Logger2.self) }
-      .dependency { (scope, obj) in obj.service2 = *!scope }
+      .initial(Inject.init(service:logger:test:))
+      .injection { (container, obj) in obj.logger2 = try! container.resolve(Logger2.self) }
+      .injection { (container, obj) in obj.service2 = *!container }
     
-    builder.register(InjectMany.self)
-      .asSelf()
+    builder.register(type: InjectMany.self)
+      .as(.self)
       .lifetime(.perDependency)
-      .initializer { (scope) in InjectMany(loggers: **!scope) }
+      .initial { container in InjectMany(loggers: **!container) }
     
     //Animals
 		builder.register{ Animal(name: "Cat") }
-      .asSelf()
-      .asName("Cat")
+      .as(.self)
+      .set(name: "Cat")
     
     builder.register{ Animal(name: "Dog") }
-      .asSelf()
-      .asName("Dog")
-      .asDefault()
+      .as(.self)
+      .set(name: "Dog")
+      .set(.default)
 
     builder.register{ Animal(name: "Bear") }
-      .asSelf()
-      .asName("Bear")
+      .as(.self)
+      .set(name: "Bear")
     
-		builder.register{ Animal(name: $1) }
-      .asSelf()
-      .asName("Custom")
+    builder.register(type: Animal.self)
+      .as(.self)
+      .set(name: "Custom")
+      .initialWithParams { Animal(name: $1) }
     
-    builder.register(Params.self)
-      .asSelf()
+    builder.register(type: Params.self)
+      .as(.self)
       .lifetime(.perDependency)
-      .initializer { (s, p1, p2) in Params(p1: p1, p2: p2) }
-      .initializer { Params(p1: $1, p2: $2, p3: $3) }
+      .initialWithParams { (_, p1, p2) in Params(p1: p1, p2: p2) }
+      .initialWithParams { Params(p1: $1, p2: $2, p3: $3) }
     
     //circular
     
-    builder.register(Circular1.self)
-      .asSelf()
+    builder.register(type: Circular1.self)
+      .as(.self)
       .lifetime(.perDependency)
-      .initializer { (s) in Circular1(ref: *!s) }
+      .initial { c in Circular1(ref: *!c) }
     
-    builder.register(Circular2.self)
-      .asSelf()
+    builder.register(type: Circular2.self)
+      .as(.self)
       .lifetime(.perDependency)
-      .initializer { Circular2() }
-      .dependency { (s, obj) in obj.ref = *!s }
+      .initial { Circular2() }
+      .injection { (s, obj) in obj.ref = *!s }
   }
   
   private let useBarService: Bool
 }
 
-class SampleStartupModule : DIModule {
+class SampleStartupComponent : DIComponent {
   func load(builder: DIContainerBuilder) {
-		builder.register(module: SampleModule(useBarService: true))
+		builder.register(component: SampleComponent(useBarService: true))
     
 		builder.register(vc: ViewController.self)
-      .dependency { (scope, obj) in obj.injectGlobal = *!scope }
-      .dependency { (scope, obj) in obj.scope = scope }
+      .injection { $0.injectGlobal = $1 }
+      .injection { container, vc in vc.container = container }
 		
 		
     builder.register(vc: ViewController2.self)
-      .asSelf()
-      .dependency { (scope, obj) in
-        obj.inject = try! scope.resolve(Inject.self)
-        obj.logger = *!scope
-			}
+      .injection { $0.inject = $1 }
+      .injection { $0.logger = $1 }
+
     
-    builder.register(UIView.self)
-      .asSelf()
-      .asType(UIAppearance.self)
-      //.instanceLazySingle()
-      //.instancePerMatchingScope("ScopeName")
-      //.instancePerScope()
+    builder.register(type: UIView.self)
+      .as(.self)
+      .as(UIAppearance.self).check{$0}
       .lifetime(.perDependency)
-      .initializer { UIButton() }
-    //.initializer { UISwitch() }
+      .initial { UIButton() }
+    //.initial { UISwitch() }
   }
 }
