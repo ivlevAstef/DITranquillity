@@ -35,16 +35,16 @@ public extension DIContainerBuilder {
 	}
 }
 
-public extension DIRegistrationBuilder where ImplObj: NSViewController {
+public extension DIRegistrationBuilder where Impl: NSViewController {
   @discardableResult
 	public func initial<T: NSViewController>(nib type: T.Type) -> Self {
-		rType.append(initial: { try NSViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T })
+		rType.append(initial: { () throws -> T in NSViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T })
 		return self
 	}
 	
 	@discardableResult
 	public func initial(storyboard: NSStoryboard, identifier: String) -> Self {
-		rType.append(initial: { try storyboard.instantiateController(withIdentifier: identifier) })
+		rType.append(initial: { () throws -> Any in storyboard.instantiateController(withIdentifier: identifier) })
 		return self
 	}
 	

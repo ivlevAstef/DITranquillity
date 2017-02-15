@@ -15,7 +15,7 @@ public protocol DIModule {
 
 public extension DIContainerBuilder {
   @discardableResult
-  public func register(module: DIModule) -> Self {
+  public final func register(module: DIModule) -> Self {
     register(module: module, scope: .public)
 
     return self
@@ -23,11 +23,11 @@ public extension DIContainerBuilder {
 }
 
 internal extension DIModule {
-  internal var uniqueKey: String { return String(describing: type(of: self)) }
+  internal final var uniqueKey: String { return String(describing: type(of: self)) }
 }
 
 fileprivate extension DIContainerBuilder {
-  fileprivate func register(module: DIModule, scope: DIComponentScope) {
+  fileprivate final func register(module: DIModule, scope: DIComponentScope) {
     if ignore(uniqueKey: module.uniqueKey) {
       return
     }

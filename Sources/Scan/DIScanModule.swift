@@ -6,10 +6,10 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public class DIScanModule: DIScanWithInitializer<DIScanned>, DIModule {
-  public var components: [DIComponent] { return [] }
+public final class DIScanModule: DIScanWithInitializer<DIScanned>, DIModule {
+  public final var components: [DIComponent] { return [] }
   
-  public var dependencies: [DIModule] { 
+  public final var dependencies: [DIModule] { 
     return getObjects().filter{ $0 is DIModule }.map{ $0 as! DIModule }
   }
 }

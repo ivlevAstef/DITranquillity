@@ -25,7 +25,7 @@ registrationFunction() { #argcount file
   local Params=$(join ',' $(replaceToArg numbers[@] "\$;I"));
 
   echo "  @discardableResult
-  public func initialWithParams<$ParamType>(_ closure: @escaping (_:DIContainer,_$ParametersType) throws -> ImplObj) -> Self {
+  public func initialWithParams<$ParamType>(_ closure: @escaping (_:DIContainer,_$ParametersType) throws -> Impl) -> Self {
     rType.append(initial: { try closure($Params) as Any })
     return self
   }
@@ -60,7 +60,7 @@ local ParametersType=$(join ',_' $(replaceToArg numbers[@] ":P;I"))
 local Resolvers=$(join ',' $(replaceToArg numbers[@] "*s"))
 
 echo "  @discardableResult
-  public func initial<$ParamType>(_ closure: @escaping (_$ParametersType) throws -> ImplObj) -> Self {
+  public func initial<$ParamType>(_ closure: @escaping (_$ParametersType) throws -> Impl) -> Self {
     rType.append(initial: { (s: DIContainer) throws -> Any in try closure($Resolvers) })
     return self
   }
@@ -94,7 +94,7 @@ local ParametersType=$(join ',_' $(replaceToArg numbers[@] ":P;I"))
 local Resolvers=$(join ',' $(replaceToArg numbers[@] "*s"))
 
 echo "  @discardableResult
-  public func injection<$ParamType>(_ method: @escaping (_:ImplObj, _$ParametersType) throws -> ()) -> Self {
+  public func injection<$ParamType>(_ method: @escaping (_:Impl, _$ParametersType) throws -> ()) -> Self {
     rType.append(injection: { s, o in try method(o, $Resolvers) })
     return self
   }

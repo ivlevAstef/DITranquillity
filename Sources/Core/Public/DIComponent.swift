@@ -6,7 +6,7 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public protocol DIComponent: class {
+public protocol DIComponent {
   var scope: DIComponentScope { get }
   
   func load(builder: DIContainerBuilder)

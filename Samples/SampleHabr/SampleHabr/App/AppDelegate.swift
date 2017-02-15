@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   public func applicationDidFinishLaunching(_ application: UIApplication) {
     let builder = DIContainerBuilder()
-    builder.register(assembly: AppAssembly())
+    builder.register(module: AppModule())
     let container = try! builder.build()
     
     window = UIWindow(frame: UIScreen.main.bounds)

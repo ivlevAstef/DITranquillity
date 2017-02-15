@@ -17,40 +17,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     window = UIWindow(frame: UIScreen.main.bounds)
 
-    let scope = registrateAndBuild()
+    let container = registrateAndBuild()
     
-    window!.rootViewController = try! scope.resolve(UIStoryboard.self).instantiateInitialViewController()
+    window!.rootViewController = try! container.resolve(UIStoryboard.self).instantiateInitialViewController()
     window!.makeKeyAndVisible()
 
     return true
   }
   
-  func registrateAndBuild() -> DIScope {
+  func registrateAndBuild() -> DIContainer {
     let builder = DIContainerBuilder()
     
     // Delegate
 		builder.register(vc: ViewController.self)
-      .asType(PopUpDelegate.self)
-      .asType(Observer.self) // And Observer
+      .as(PopUpDelegate.self).check{$0}
+      .as(Observer.self).check{$0} // And Observer
     
     builder.register(vc: PopUpViewController.self)
-      .dependency { (scope, obj) in obj.delegate = *!scope }
+      .injection { $0.delegate = $1 }
     
     // Observer
     builder.register(vc: ViewControllerFirstObserver.self)
-      .asType(Observer.self)
+      .as(Observer.self).check{$0}
     
     builder.register(vc: ViewControllerSecondObserver.self)
-      .asType(Observer.self)
+      .as(Observer.self).check{$0}
     
     builder.register(vc: ViewControllerSlider.self)
-      .dependency { (scope, obj) in obj.observers = **!scope }
+      .injection { container, vc in vc.observers = try **container }
     
     
     // Storyboard
-    builder.register(UIStoryboard.self)
+    builder.register(type: UIStoryboard.self)
       .lifetime(.single)
-      .initializer { scope in DIStoryboard(name: "Main", bundle: nil, container: scope) }
+      .initial { DIStoryboard(name: "Main", bundle: nil, container: $0) }
     
     return try! builder.build()
   }
