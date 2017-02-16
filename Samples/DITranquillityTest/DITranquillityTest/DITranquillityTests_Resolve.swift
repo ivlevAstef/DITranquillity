@@ -469,11 +469,11 @@ class DITranquillityTests_Resolve: XCTestCase {
     builder.register(type: Params.self)
       .lifetime(.perDependency)
       .initial{ Params(number:0) }
-      .initialWithParams{ _, number in return Params(number:number) }
-      .initialWithParams{ _, number, bool in return Params(number:number, bool: bool) }
-      .initialWithParams{ _, number, str in return Params(number:number, str: str) }
-      .initialWithParams{ _, number, str, bool in return Params(number:number, str: str, bool: bool) }
-      .initialWithParams{ _, number, bool, str  in return Params(number:number, str: str, bool: bool) }
+      .initialWithArg{ _, number in return Params(number:number) }
+      .initialWithArg{ _, number, bool in return Params(number:number, bool: bool) }
+      .initialWithArg{ _, number, str in return Params(number:number, str: str) }
+      .initialWithArg{ _, number, str, bool in return Params(number:number, str: str, bool: bool) }
+      .initialWithArg{ _, number, bool, str  in return Params(number:number, str: str, bool: bool) }
     
     let container = try! builder.build()
     
@@ -502,11 +502,11 @@ class DITranquillityTests_Resolve: XCTestCase {
     builder.register(type: Params.self)
       .lifetime(.perDependency)
       .initial{ Params(number:0) }
-      .initialWithParams{ Params(number:$1) }
-      .initialWithParams{ Params(number:$1, bool: $2) }
-      .initialWithParams{ Params(number:$1, str: $2) }
-      .initialWithParams{ Params(number:$1, str: $2, bool: $3) }
-      .initialWithParams{ Params(number:$1, str: $3, bool: $2) }
+      .initialWithArg{ Params(number:$1) }
+      .initialWithArg{ Params(number:$1, bool: $2) }
+      .initialWithArg{ Params(number:$1, str: $2) }
+      .initialWithArg{ Params(number:$1, str: $2, bool: $3) }
+      .initialWithArg{ Params(number:$1, str: $3, bool: $2) }
     
     let container = try! builder.build()
     
@@ -535,7 +535,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     builder.register(type: Params.self)
       .lifetime(.perDependency)
       .initial{ Params(number:0) }
-      .initialWithParams{ Params(number: $1) }
+      .initialWithArg{ Params(number: $1) }
     
     let container = try! builder.build()
     
@@ -551,8 +551,8 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     builder.register(type: Params.self)
       .lifetime(.perDependency)
-      .initialWithParams{ Params(number: $1, str: $2, bool: $3) }
-      .initialWithParams{ Params(number: $1, str: $2) }
+      .initialWithArg{ Params(number: $1, str: $2, bool: $3) }
+      .initialWithArg{ Params(number: $1, str: $2) }
     
     let container = try! builder.build()
     

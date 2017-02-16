@@ -49,7 +49,7 @@ public extension DIRegistrationBuilder where Impl: UIViewController {
 	}
 	
 	@discardableResult
-	public func initial(storyboard closure: @escaping (_ scope: DIScope) throws -> UIStoryboard, identifier: String) -> Self {
+	public func initial(storyboard closure: @escaping (DIContainer) throws -> UIStoryboard, identifier: String) -> Self {
 		rType.append(initial: { container in try closure(container).instantiateViewController(withIdentifier: identifier) })
 		return self
 	}

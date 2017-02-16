@@ -29,3 +29,9 @@ public indirect enum DIError: Error {
   case byCall(file: String, line: Int, function: String, stack: DIError)
   case whileCreateSingleton(typeInfo: DITypeInfo, stack: DIError)
 }
+
+public enum DIResolveStyle {
+  case one
+  case many
+  case byName(name: String)
+}

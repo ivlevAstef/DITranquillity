@@ -7,24 +7,23 @@
 //
 
 public final class DIContainer {
-  typealias Method = (_ scope: DIContainer) throws -> Any
+  typealias Method = (DIContainer) throws -> Any
 
 	public func resolve<T>(_: T.Type, f: String = #file, l: Int = #line) throws -> T {
-    return try ret(f, l) { try resolver.resolve(self, type: T.self) { (initializer: Method) in try initializer(self) } }
+    return try ret(f, l) { try resolver.resolve(self, type: T.self) { (initial: Method) in try initial(self) } }
 	}
 	
 	public func resolve<T>(_: T.Type, name: String, f: String = #file, l: Int = #line) throws -> T {
-    return try ret(f, l) { try resolver.resolve(self, name: name, type: T.self) { (initializer: Method) in try initializer(self) } }
+    return try ret(f, l) { try resolver.resolve(self, name: name, type: T.self) { (initial: Method) in try initial(self) } }
 	}
 	
 	public func resolveMany<T>(_: T.Type, f: String = #file, l: Int = #line) throws -> [T] {
-    return try ret(f, l) { try resolver.resolveMany(self, type: T.self) { (initializer: Method) in try initializer(self) } }
+    return try ret(f, l) { try resolver.resolveMany(self, type: T.self) { (initial: Method) in try initial(self) } }
 	}
 	
-	public func resolve<T>(_ object: T, f: String = #file, l: Int = #line, fun: String = #function) throws {
+	public func resolve<T>(_ object: T, f: String = #file, l: Int = #line) throws {
     _ = try ret(f, l) { try resolver.resolve(self, type: type(of: object)) { object } }
 	}
-	
 	
 	public func newLifeTimeScope() -> DIContainer {
     return DIContainer(resolver: self.resolver)
@@ -42,7 +41,7 @@ public final class DIContainer {
   }
 
   internal func resolve(RType rType: RTypeFinal) throws -> Any {
-    return try resolver.resolve(self, rType: rType) { (initializer: Method) in try initializer(self) }
+    return try resolver.resolve(self, rType: rType) { (initial: Method) in try initial(self) }
   }
   
   internal let resolver: DIResolver
@@ -66,10 +65,6 @@ extension DIContainer {
 /// for runtime resolve
 extension DIContainer {
   public func resolve<T>(byTypeOf obj: T, f: String = #file, l: Int = #line) throws -> T {
-    return try ret(f, l) { try resolver.resolve(self, type: type(of: obj)) { (initializer: Method) in try initializer(self) } }
+    return try ret(f, l) { try resolver.resolve(self, type: type(of: obj)) { (initial: Method) in try initial(self) } }
   }
-}
-
-extension DIContainer {
-  
 }

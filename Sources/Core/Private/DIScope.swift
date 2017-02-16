@@ -6,10 +6,10 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-public class DIScope {
+class DIScope {
   private var cache: [RType.UniqueKey: Any] = [:]
   
-  internal subscript(key: RType.UniqueKey) -> Any? {
+  subscript(key: RType.UniqueKey) -> Any? {
     get {
       return cache[key]
     }
@@ -18,5 +18,5 @@ public class DIScope {
     }
   }
   
-  internal var isEmpty: Bool { return cache.isEmpty }
+  var isEmpty: Bool { return cache.isEmpty }
 }

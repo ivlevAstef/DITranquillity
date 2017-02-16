@@ -12,21 +12,17 @@ public enum DIAsSelf { case `self` }
 extension DIRegistrationBuilder {
   @discardableResult
   public func `as`(_: DIAsSelf) -> Self {
-    DIRegistrationTypeChecker<Impl, Impl>(builder: self).unsafe()
+    DIRegistrationAlternativeType<Impl, Impl>(builder: self).unsafe()
     return self
   }
   
-  public func `as`<Parent>(_ parentType: Parent.Type, scope: DIImplementScope = .default) -> DIRegistrationTypeChecker<Impl, Parent> {
-    return DIRegistrationTypeChecker<Impl, Parent>(builder: self, scope: scope)
+  public func `as`<Parent>(_ parentType: Parent.Type) -> DIRegistrationAlternativeType<Impl, Parent> {
+    return DIRegistrationAlternativeType<Impl, Parent>(builder: self)
   }
   
-  public func `as`<Parent>(unsafe parentType: Parent.Type, scope: DIImplementScope = .default) -> Self {
-    DIRegistrationTypeChecker<Impl, Parent>(builder: self, scope: scope).unsafe()
-    return self
-  }
-  
-  public func `as`<Parent>(check parentType: Parent.Type, scope: DIImplementScope = .default, checker: (_: Impl) -> Parent) -> Self {
-    DIRegistrationTypeChecker<Impl, Parent>(builder: self, scope: scope).check(checker)
+  ///short
+  public func `as`<Parent>(_ pType: Parent.Type, scope: DIImplementScope = .default, check: (Impl)->Parent) -> Self {
+    DIRegistrationAlternativeType<Impl, Parent>(builder: self).scope(scope).check(check)
     return self
   }
 }
@@ -57,7 +53,7 @@ extension DIRegistrationBuilder {
   }
   
   @discardableResult
-  public func initial(_ closure: @escaping (_: DIContainer) throws -> Impl) -> Self {
+  public func initial(_ closure: @escaping (DIContainer) throws -> Impl) -> Self {
     rType.append(initial: { scope throws -> Any in return try closure(scope) })
     return self
   }
@@ -66,13 +62,13 @@ extension DIRegistrationBuilder {
 // Injection
 extension DIRegistrationBuilder {
   @discardableResult
-  public func injection(_ closure: @escaping (_: DIContainer, _: Impl) throws -> ()) -> Self {
+  public func injection(_ closure: @escaping (DIContainer, Impl) throws -> ()) -> Self {
     rType.append(injection: closure)
     return self
   }
   
   @discardableResult
-  public func injection(_ method: @escaping (_ :Impl) throws -> ()) -> Self {
+  public func injection(_ method: @escaping (Impl) throws -> ()) -> Self {
     rType.append(injection: { scope, obj in try method(obj) })
     return self
   }

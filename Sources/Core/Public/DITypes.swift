@@ -37,14 +37,7 @@ public enum DIComponentScope: Equatable {
 //////////////// implement scope
 public enum DIImplementScope: Equatable {
   case global
-  case assembly
+  case module
   
-  static var `default`: DIImplementScope { return global }
-}
-
-//////////////// resolve style - only for error
-public enum DIResolveStyle {
-  case one
-  case many
-  case byName(name: String)
+  static var `default`: DIImplementScope { return module }
 }

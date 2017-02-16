@@ -1,14 +1,19 @@
 //
-//  DIRegistrationTypeChecker.swift
+//  DIRegistrationAlternativeType.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 13/02/2017.
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-public class DIRegistrationTypeChecker<Impl, Parent> {
+public class DIRegistrationAlternativeType<Impl, Parent> {
+  public func scope(_ scope: DIImplementScope) -> Self {
+    self.scope = scope
+    return self
+  }
+  
   @discardableResult
-  public func check(_: (_: Impl) -> Parent) -> DIRegistrationBuilder<Impl> {
+  public func check(_: (Impl) -> Parent) -> DIRegistrationBuilder<Impl> {
     register()
     return builder
   }
@@ -19,20 +24,19 @@ public class DIRegistrationTypeChecker<Impl, Parent> {
     return builder
   }
   
-  internal init(builder: DIRegistrationBuilder<Impl>, scope: DIImplementScope? = nil) {
+  internal init(builder: DIRegistrationBuilder<Impl>) {
     self.builder = builder
-    self.scope = scope
   }
   
   private func register() {
     builder.isTypeSet = true
     builder.container.append(key: Parent.self, value: builder.rType)
-    if .some(.global) == scope {
+    if .global == scope {
       RTypeContainer.append(key: Parent.self, implementation: builder.rType)
     }
   }
   
   private let builder: DIRegistrationBuilder<Impl>
-  private let scope: DIImplementScope?
+  private var scope: DIImplementScope = .default
 }
 

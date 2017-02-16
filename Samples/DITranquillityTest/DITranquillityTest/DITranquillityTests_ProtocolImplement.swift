@@ -48,7 +48,7 @@ class DITranquillityTests_ProtocolImplement: XCTestCase {
     
     builder.register(protocol: TestProtocol.self)
     builder.register(type: TestImplement.init)
-      .as(TestProtocol.self, scope: .assembly).check{$0}
+      .as(TestProtocol.self).scope(.module).check{$0}
     
     let container = try! builder.build()
     
@@ -62,7 +62,7 @@ class DITranquillityTests_ProtocolImplement: XCTestCase {
     
     builder.register(protocol: TestProtocol.self)
     lineImpl1 = #line; builder.register(type: TestImplement.init)
-      .as(TestProtocol.self, scope: .global).check{$0}
+      .as(TestProtocol.self).scope(.global).check{$0}
     
     let container = try! builder.build()
     
