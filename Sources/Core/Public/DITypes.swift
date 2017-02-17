@@ -26,14 +26,6 @@ public enum DILifeTime: Equatable {
   static var `default`: DILifeTime { return perScope }
 }
 
-//////////////// module scope
-public enum DIComponentScope: Equatable {
-  case `public`
-  case `internal`
-  
-  static var `default`: DIComponentScope { return `internal` }
-}
-
 //////////////// implement scope
 public enum DIImplementScope: Equatable {
   case global

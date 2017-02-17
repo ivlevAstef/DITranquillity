@@ -16,24 +16,58 @@ Pod::Spec.new do |s|
   s.source       = { :git => 'https://github.com/ivlevAstef/DITranquillity.git', :tag => "v#{s.version}" }
 
   s.requires_arc = true
-  
-  header_file = 'Sources/DITranquillity.h'
-
-  core_files = 'Sources/Core/**/*.swift'
-  descriptions_files = 'Sources/Descriptions/**/*.swift'
-  component_files = 'Sources/Component/*.swift'
-  module_files = 'Sources/Module/*.swift'
-  ios_tvos_storyboard_files = 'Sources/Storyboard/iOS-tvOS/*.{h,m,swift}'
-  osx_storyboard_files = 'Sources/Storyboard/OSX/*.{h,m,swift}'
-  scan_files = 'Sources/Scan/*.swift'
-  runtimeArg_files = 'Sources/RuntimeArgs/*.swift'
-
-  s.ios.source_files = core_files, descriptions_files, component_files, module_files, ios_tvos_storyboard_files, scan_files, runtimeArg_files, header_file
-  s.tvos.source_files = core_files, descriptions_files, component_files, module_files, ios_tvos_storyboard_files, scan_files, runtimeArg_files, header_file
-  s.osx.source_files = core_files, descriptions_files, component_files, module_files, osx_storyboard_files, scan_files, runtimeArg_files, header_file
 
   s.ios.deployment_target = '8.0'
   s.tvos.deployment_target = '9.0'
   s.osx.deployment_target = '10.10'
+
+  s.subspec 'Core' do 'cores'
+    cores.source_files = 'Sources/DITranquillity.h', 'Sources/Core/**/*.swift'
+  end
+
+  s.subspec 'Description' do 'dess'
+    dess.source_files = 'Sources/Descriptions/**/*.swift'
+    dess.dependency 'DITranquillity/Core'
+  end
+
+  s.subspec 'Component' do 'coms'
+    coms.source_files = 'Sources/Component/*.swift'
+    coms.dependency 'DITranquillity/Core'
+  end
+
+  s.subspec 'Module' do 'mods'
+    mods.source_files = 'Sources/Module/*.swift'
+    mods.dependency 'DITranquillity/Component'
+  end
+
+  s.subspec 'Storyboard' do 'storys'
+    storys.ios.source_files = 'Sources/Storyboard/iOS-tvOS/*.{h,m,swift}'
+    storys.tvos.source_files = 'Sources/Storyboard/iOS-tvOS/*.{h,m,swift}'
+    storys.osx.source_files = 'Sources/Storyboard/OSX/*.{h,m,swift}'
+    storys.dependency 'DITranquillity/Core'
+  end
+
+  s.subspec 'Scan' do 'scans'
+    scans.source_files = 'Sources/Scan/*.swift'
+    scans.dependency 'DITranquillity/Component'
+    scans.dependency 'DITranquillity/Module'
+  end
+
+  s.subspec 'RuntimeArgs' do 'args'
+    args.source_files = 'Sources/RuntimeArgs/*.swift'
+    args.dependency 'DITranquillity/Core'
+  end
+
+  s.subspec 'All' do 'alls'
+    alls.dependency 'DITranquillity/Core'
+    alls.dependency 'DITranquillity/Description'
+    alls.dependency 'DITranquillity/Component'
+    alls.dependency 'DITranquillity/Module'
+    alls.dependency 'DITranquillity/Storyboard'
+    alls.dependency 'DITranquillity/Scan'
+    alls.dependency 'DITranquillity/RuntimeArgs'
+  end
+
+  s.default_subspecs = 'Core', 'Description', 'Component', 'Module', 'Storyboard'
 
 end
