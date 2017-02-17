@@ -195,13 +195,13 @@ class SampleComponent : DIComponent {
     builder.register(type: Animal.self)
       .as(.self)
       .set(name: "Custom")
-      .initialWithParams { Animal(name: $1) }
+      .initialWithArg { Animal(name: $1) }
     
     builder.register(type: Params.self)
       .as(.self)
       .lifetime(.perDependency)
-      .initialWithParams { (_, p1, p2) in Params(p1: p1, p2: p2) }
-      .initialWithParams { Params(p1: $1, p2: $2, p3: $3) }
+      .initialWithArg { (_, p1, p2) in Params(p1: p1, p2: p2) }
+      .initialWithArg { Params(p1: $1, p2: $2, p3: $3) }
     
     //circular
     
