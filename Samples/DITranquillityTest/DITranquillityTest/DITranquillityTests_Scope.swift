@@ -12,6 +12,16 @@ import DITranquillity
 protocol TestScopeProtocol { }
 class TestScopeClass: TestScopeProtocol { }
 
+class TestWeakClass {
+  static var isInited = false
+  init() {
+    TestWeakClass.isInited = true
+  }
+  deinit {
+    TestWeakClass.isInited = false
+  }
+}
+
 class DITranquillityTests_Scope: XCTestCase {
   override func setUp() {
     super.setUp()
@@ -65,31 +75,29 @@ class DITranquillityTests_Scope: XCTestCase {
   func test03_WeakSingle() { // not guaranteed test
     let builder = DIContainerBuilder()
     
-    builder.register(type: TestScopeClass.self)
+    builder.register(type: TestWeakClass.init)
       .lifetime(.weakSingle)
-      .initial(TestScopeClass.init)
     
     let container = try! builder.build()
     
-    let block: ()->String = {
-      let scopeClass1: TestScopeClass = try! *container
-      let scopeClass2: TestScopeClass = try! *container
+    let block: ()->() = {
+      let weakClass1: TestWeakClass = try! *container
+      let weakClass2: TestWeakClass = try! *container
       
-      let scope2 = container.newLifeTimeScope()
+      let container2 = container.newLifeTimeScope()
       
-      let scopeClass3: TestScopeClass = try! *scope2
-      let scopeClass4: TestScopeClass = try! *scope2
+      let weakClass3: TestWeakClass = try! *container2
+      let weakClass4: TestWeakClass = try! *container2
       
-      XCTAssert(scopeClass1 === scopeClass2)
-      XCTAssert(scopeClass3 === scopeClass4)
-      XCTAssert(scopeClass1 === scopeClass3)
-      return String(describing: Unmanaged.passUnretained(scopeClass1).toOpaque())
+      XCTAssert(weakClass1 === weakClass2)
+      XCTAssert(weakClass3 === weakClass4)
+      XCTAssert(weakClass1 === weakClass3)
+      XCTAssert(TestWeakClass.isInited)
     }
     
-    let address1 = block()
-    let address2 = block()
-    
-    XCTAssert(address1 != address2)
+    block()
+    XCTAssert(!TestWeakClass.isInited)
+    block()
   }
   
   func test03_WeakSingleForSingle() {

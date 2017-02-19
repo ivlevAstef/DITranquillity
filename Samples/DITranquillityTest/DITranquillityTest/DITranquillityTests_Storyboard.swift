@@ -184,4 +184,30 @@ class DITranquillityTests_Storyboard: XCTestCase {
 		}
 		semaphore.wait()
 	}
+  
+  func test08_shortSyntaxInitialStoryboard() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(type: FooService.self)
+      .as(ServiceProtocol.self).check{$0}
+      .initial{ FooService() }
+    
+    builder.register(vc: TestViewController.self)
+      .injection { $0.service = $1 }
+    
+    builder.register(type: UIStoryboard.self)
+      .lifetime(.single)
+      .initial(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+    
+    let container = try! builder.build()
+    let storyboard: UIStoryboard = try! *container
+    
+    let viewController = storyboard.instantiateInitialViewController()
+    XCTAssert(viewController is TestViewController)
+    guard let testVC = viewController as? TestViewController else {
+      XCTFail("incorrect View Controller")
+      return
+    }
+    XCTAssertEqual(testVC.service.foo(), "foo")
+  }
 }

@@ -35,6 +35,7 @@ public extension DIContainerBuilder {
   }
 }
 
+// ViewController
 public extension DIRegistrationBuilder where Impl: UIViewController {
 	@discardableResult
 	public func initial<T: UIViewController>(nib type: T.Type) -> Self {
@@ -53,5 +54,14 @@ public extension DIRegistrationBuilder where Impl: UIViewController {
 		rType.append(initial: { container in try closure(container).instantiateViewController(withIdentifier: identifier) })
 		return self
 	}
+}
+
+// Storyboard
+public extension DIRegistrationBuilder where Impl: UIStoryboard {
+  @discardableResult
+  public func initial(name: String, bundle storyboardBundleOrNil: Bundle?) -> Self {
+    self.initial { try DIStoryboard(name: name, bundle: storyboardBundleOrNil, container: $0) as! Impl }
+    return self
+  }
 }
 
