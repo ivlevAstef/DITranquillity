@@ -43,13 +43,13 @@ public extension DIRegistrationBuilder where Impl: NSViewController {
 	}
 	
 	@discardableResult
-	public func initial(storyboard: NSStoryboard, identifier: String) -> Self {
+	public func initial(useStoryboard storyboard: NSStoryboard, identifier: String) -> Self {
 		rType.append(initial: { () throws -> Any in storyboard.instantiateController(withIdentifier: identifier) })
 		return self
 	}
 	
 	@discardableResult
-	public func initial(storyboard closure: @escaping (_: DIContainer) throws -> NSStoryboard, identifier: String) -> Self {
+	public func initial(useStoryboard closure: @escaping (_: DIContainer) throws -> NSStoryboard, identifier: String) -> Self {
 		rType.append(initial: { container in try closure(container).instantiateController(withIdentifier: identifier) })
 		return self
 	}
