@@ -1,3 +1,17 @@
+## Supplication (Просьба)
+Everyone who wants to help, to make the library better: try the second version before I'll release her. And if you have any suggestions/comments to submit to the e-mail: ivlev.stef@gmail.com. Thank you.
+Release date: 01.03.2017.
+
+Всем кто хочет помочь, сделать библиотеку лучше: Попробуйте вторую версию, прежде чем я её выпущу. И если есть пожелания/замечания отправляйте на почту: ivlev.stef@gmail.com. Спасибо.
+Дата выпуска: 01.03.2017.
+
+##### Links (ссылки)
+* [migration quide (alfa version)](https://github.com/ivlevAstef/DITranquillity/blob/v2.0.0/Documentation/ru/migration1to2.md)
+* [branch](https://github.com/ivlevAstef/DITranquillity/tree/v2.0.0)
+
+##### Install: `pod 'DITranquillity', git => 'https://github.com/ivlevAstef/DITranquillity', branch => 'v2.0.0'`
+  
+  
 # DITranquillity
 Dependency injection for iOS/macOS/tvOS (Swift)
 
