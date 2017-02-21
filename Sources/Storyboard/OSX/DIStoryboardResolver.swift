@@ -16,6 +16,16 @@ final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
   @objc public func resolve(_ viewController: Any, identifier: String) -> Any {
     _ = try? container.resolve(viewController)
 
+		if let windowController = viewController as? NSWindowController, let viewController = windowController.contentViewController {
+			_ = try? container.resolve(viewController)
+		}
+		
+		if let nsViewController = viewController as? NSViewController {
+			for childVC in nsViewController.childViewControllers {
+				_ = try? container.resolve(childVC)
+			}
+		}
+		
     return viewController
   }
 
