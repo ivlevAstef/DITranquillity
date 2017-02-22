@@ -15,6 +15,12 @@ final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
 
   @objc public func resolve(_ viewController: UIViewController, identifier: String) -> UIViewController {
     _ = try? container.resolve(viewController)
+		
+		for childVC in viewController.childViewControllers {
+			_ = try? container.resolve(childVC)
+		}
+		
+		viewController.viewDidLoad()
 
     return viewController
   }
