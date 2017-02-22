@@ -22,7 +22,7 @@ public final class DIContainer {
 	}
 	
 	public func resolve<T>(_ object: T, f: String = #file, l: Int = #line) throws {
-    _ = try ret(f, l) { try resolver.resolve(self, type: type(of: object)) { object } }
+    _ = try ret(f, l) { try resolver.resolve(self, obj: object) }
 	}
 	
 	public func newLifeTimeScope() -> DIContainer {

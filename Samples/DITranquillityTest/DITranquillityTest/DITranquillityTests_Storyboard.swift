@@ -210,4 +210,41 @@ class DITranquillityTests_Storyboard: XCTestCase {
     }
     XCTAssertEqual(testVC.service.foo(), "foo")
   }
+  
+  func test09_doubleVCfromStoryboard() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(type: FooService.self)
+      .as(ServiceProtocol.self).check{$0}
+      .initial{ FooService() }
+    
+    builder.register(vc: TestViewController.self)
+      .injection { $0.service = $1 }
+      .lifetime(.lazySingle)
+    
+    builder.register(type: UIStoryboard.self)
+      .lifetime(.single)
+      .initial(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+    
+    let container = try! builder.build()
+    let storyboard: UIStoryboard = try! *container
+    
+    let viewController1 = storyboard.instantiateInitialViewController()
+    XCTAssert(viewController1 is TestViewController)
+    guard let testVC1 = viewController1 as? TestViewController else {
+      XCTFail("incorrect View Controller")
+      return
+    }
+    
+    let viewController2 = storyboard.instantiateInitialViewController()
+    XCTAssert(viewController2 is TestViewController)
+    guard let testVC2 = viewController2 as? TestViewController else {
+      XCTFail("incorrect View Controller")
+      return
+    }
+    
+    XCTAssert(testVC1 !== testVC2)
+    XCTAssertEqual(testVC1.service.foo(), "foo")
+    XCTAssertEqual(testVC2.service.foo(), "foo")
+  }
 }
