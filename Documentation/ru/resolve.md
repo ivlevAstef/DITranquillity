@@ -7,13 +7,13 @@
 * [Создание контейнера](build.md)
 
 ## По типу
-Основной способ разрешения зависимостей - по типу. Такой способ похож на вызов обычного конструктора, но с внедрением зависимых объектов.
+Основной способ разрешения зависимостей - по типу. Такой способ похож на вызов обычного конструктора, но при этом происходит внедрение зависимых объектов.
 
 Предположим, в программе зарегистрирован некоторый класс, и регистрировался он по типу:
 ```Swift
-builder.register(Cat.self).initializer { Cat() }
+builder.register(type: Cat.self).initial { Cat() }
 ```
-И был создан контейнер:
+Был создан контейнер:
 ```Swift
 let container = try! builder.build()
 ```
@@ -25,21 +25,22 @@ let cat = try! container.resolve(Cat.self)
 
 Данный пример не сильно наглядный, так как наш класс не имеет зависимостей и по факту можно спокойно вызвать конструктор. Поэтому приведу более сложный пример:
 ```Swift
-builder.register{ Cat() }.asType(Animal.self)
-builder.register{ BMW() }.asType(Vehicle.self)
-builder.register{ try! Home(animal: $0.resolve(Animal.self), vehicle: $0.resolve(Vehicle.self)) }
+builder.register{ Cat() }.as(Animal.self).check{$0}
+builder.register{ BMW() }.as(Vehicle.self).check{$0}
+builder.register(type: Home.init(animal:vehicle:))
 ...
 let home = try! container.resolve(Home.self)
 // дом имеет животное: кошку и имеет машину: BMW
 ```
 
 ## По типу и имени
-В некоторых случаях, на нем достаточно только типа, так как по одному и тому же типу, может быть несколько разных экземпляров объекта. Простой пример: storyboard. В больших программах, количество storyboard-ов может быть больше одного и тогда каждому из них, стоит дать имя:
+В некоторых случаях, не достаточно только типа, так как по одному и тому же типу, может быть несколько разных экземпляров объекта. Простой пример: storyboard. В больших программах, количество storyboard-ов может быть больше одного и тогда каждому из них, стоит дать имя:
 ```Swift
-builder.register{ UIStoryboard(name: "Main",...) }.asName("Main").lifetime(.single)
-builder.register{ UIStoryboard(name: "Login",...) }.asName("Login").lifetime(.single)
+builder.register{ UIStoryboard(name: "Main",...) }.set(name: "Main").lifetime(.single)
+builder.register{ UIStoryboard(name: "Login",...) }.set(name: "Login").lifetime(.single)
 ```
-После чего можно их создать:
+
+Для их создания используется следующий синтакси:
 ```Swift
 let mainStoryboard = try! container.resolve(UIStoryboard.self, name: "Main")
 let loginStoryboard = try! container.resolve(UIStoryboard.self, name: "Login")
@@ -47,8 +48,9 @@ let loginStoryboard = try! container.resolve(UIStoryboard.self, name: "Login")
 
 Также стоит уточнить, что один и тот же объект, может иметь несколько имен:
 ```Swift
-builder.register{ Cat() }.asName("Felix").asName("Carfield").lifetime(.single)
+builder.register{ Cat() }.set(name: "Felix").set(name: "Carfield").lifetime(.single)
 ```
+
 Не смотря на то, что время жизни объявлено как `single`, в программе будут два разных кота:
 ```Swift
 let felix = try! container.resolve(Cat.self, name: "Felix")
@@ -59,51 +61,80 @@ assert(felix !== carfield)
 ## По умолчанию
 В предыдущих примерах надо было обязательно указывать имя при разрешении зависимости. Напишем похожий пример, но для логгеров:
 ```Swift
-builder.register{ FileLogger() }.asName("File").asType(Logger.self).lifetime(.single)
-builder.register{ ConsoleLogger() }.asName("Console").asType(Logger.self).lifetime(.single)
-builder.register{ OtherLogger() }.asName("Other").asType(Logger.self).lifetime(.single)
-builder.register{ MainLogger() }.asName("Main").asType(Logger.self).lifetime(.single)
+builder.register{ FileLogger() }
+    .set(name: "File")
+    .as(Logger.self).check{$0}
+    .lifetime(.single)
+builder.register{ ConsoleLogger() }
+  .set(name: "Console")
+  .as(Logger.self).check{$0}
+  .lifetime(.single)
+builder.register{ OtherLogger() }
+  .set(name: "Other")
+  .as(Logger.self).check{$0}
+  .lifetime(.single)
+builder.register{ MainLogger() }
+  .set(name: "Main")
+  .as(Logger.self).check{$0}
+  .lifetime(.single)
 ```
 В это примере создается 4 разных логгера, но все они доступны по одному типу `Logger`. Если убрать у них указание имен или сделать имена одинаковыми, то во время создания контейнера будет брошено исключение (см. [Создание контейнера](build.md)). Но в программе должен быть один логгер, но при этом при логгировании нужно вызывать метод логгирования для всех логгеров:
 ```Swift
 let logger = try! container.resolve(Logger.self)
 logger.log("msg") // должен вызваться метод для FileLogger(), ConsoleLogger(), OtherLogger()
 ```
-Такая программа кинет исключение, так как не сможет понять, какой логгер от нее требуют. Для таких случаев есть понятие "по умолчанию" `asDefault`:
+Такая программа кинет исключение, так как не сможет понять, какой логгер от нее требуют. Для таких случаев есть метод `set(.default)` для установки объекта "по умолчанию" :
 ```Swift
-builder.register{ FileLogger() }.asType(Logger.self).lifetime(.single)
-builder.register{ ConsoleLogger() }.asType(Logger.self).lifetime(.single)
-builder.register{ OtherLogger() }.asType(Logger.self).lifetime(.single)
-builder.register{ MainLogger() }.asDefault().asType(Logger.self).lifetime(.single)
+builder.register{ FileLogger() }
+  .as(Logger.self).check{$0}
+  .lifetime(.single)
+builder.register{ ConsoleLogger() }
+  .as(Logger.self).check{$0}
+  .lifetime(.single)
+builder.register{ OtherLogger() }
+  .as(Logger.self).check{$0}
+  .lifetime(.single)
+builder.register{ MainLogger() }
+  .set(.default)
+  .as(Logger.self).check{$0}
+  .lifetime(.single)
 ```
-При таком объявлении, не броситься исключение как в прошлом примере, а создастся `MainLogger`, так как он отмечен "по умолчанию".
+При таком объявлении, исключения не будет, как это было в прошлом примере, а создастся `MainLogger`, так как он отмечен "по умолчанию".
 
 ## Множественная
-Но возникла другая проблема - теперь нельзя  получить доступ к другим логгерам. Как вариант можно вернуть имена, но обращаться по имени будет неудобно, так как для этого надо знать все имена. Для таких случаев есть возможность запросить все объекты по типу:
+Но возникла другая проблема - теперь нельзя получить доступ к другим логгерам. Как вариант можно вернуть имена, но обращаться по имени будет неудобно, так как для этого надо знать все имена. Для таких случаев есть возможность запросить все объекты по типу:
 ```Swift
 let loggers: [Logger] = try! container.resolveMany(Logger.self)
 // [FileLogger, ConsoleLogger, OtherLogger, MainLogger]
 ```
 Теперь опираясь на эти знания, можно улучшить `MainLogger`:
 ```Swift
-builder.register{ MainLogger(loggers: $0.resolveMany(Logger.self)) }.asDefault().asType(Logger.self).lifetime(.single)
+builder.register{ try MainLogger(loggers: $0.resolveMany(Logger.self)) }
+  .set(.default)
+  .as(Logger.self).check{$0}
+  .lifetime(.single)
 ```
-Теперь` MainLogger` знает обо всех остальных логгерах. Обращаю также внимание, что из-за того что логгеры получаются внутри инициализации `MainLogger`, сам `MainLogger` не попадает в этот список. Но если получать логгеры внутри `dependency` или в любой другой части программы, то будут получены все логгеры, в том числе и `MainLogger`.
+Теперь` MainLogger` знает обо всех остальных логгерах. Обращаю также внимание, что из-за того что логгеры получаются внутри инициализации `MainLogger`, сам `MainLogger` не попадает в этот список. Но если получать логгеры внутри `injection` или в любой другой части программы, то будут получены все логгеры, в том числе и `MainLogger`.
 
 Более подробная информация описана в главе: [Регистрация с указанием имени/множественная регистрация](multi_name_registration.md)
 
 ## Передача параметров
-Так как метод инициализации является подобием конструктора, а в конструкторе можно указывать параметры, то необходимость передавать параметры напрашивается сама собой:
+!! Данный функционал доступен только если его подключить отдельно.
+
+Так как метод инициализации является подобием конструктора, а в конструкторе можно указывать параметры, то необходимость передавать параметры во время исполнения напрашивается сама собой:
 ```Swift
-builder.register(Cat.self).initializer { _, name in Cat(name: name) }
+builder.register(type: Cat.self)
+  .initialWithArg { _, name in Cat(name: name) }
 ...
 
 let felix = container.resolve(Cat.self, arg: "felix")
 let tiger = container.resolve(Cat.self, arg: "tiger")
 ```
-Мы создали двух котов, и дали им клички. Обращаю внимание, что в отличие от `asName`, если мы пометим компонент как единственный в системе, то не зависимо от того какие будут передаваться аргументы, создастся он всего один раз:
+Мы создали двух котов, и дали им клички. Обращаю внимание, что в отличие от `set(name:)`, если мы пометим тип как единственный в системе, то не зависимо от того какие будут передаваться аргументы, создастся он всего один раз:
 ```Swift
-builder.register{ _, name in  Cat(name: name)}.lifetime(.single)
+builder.register(type: Cat.self)
+  .initialWithArg { _, name in Cat(name: name) }
+  .lifetime(.single)
 ...
 
 let felix = container.resolve(Cat.self, arg: "felix")
@@ -126,73 +157,73 @@ cat = try! container.resolve()
 Выше приведено несколько вариантов записи одного и того же выражения. Также продемонстрированно, что библиотека спокойно работает с Optional и ImplicitlyUnwrappedOptional типами.
 
 ## Для существующего объекта
-В случае если объект создает программа своими собственными силами, но этот объект всё равно имеет зависимости, то можно попросить библиотеку встроить зависимости в уже существующий объект. При этом не стоит забывать, что зарегистрировать компонент для типа этого объекта нужно в любом случае:
+В случае если объект создает программа своими собственными силами, но этот объект всё равно имеет зависимости, то можно попросить библиотеку встроить зависимости в уже существующий объект. При этом не стоит забывать, что зарегистрировать тип этого объекта нужно в любом случае:
 ```Swift
-builder.register(Cat.self)
-  .dependency { scope, cat in cat.owner = try! scope.resolve() }
-  .initializerDoesNotNeedToBe() // Чтобы сказать компилятору, что у данного объекта может отсутствовать инициализатор
+builder.register(type: Cat.self)
+  .inejction { container, cat in cat.owner = try! container.resolve() }
+  .initialNotNecessary() // Чтобы сказать компилятору, что у данного объекта может отсутствовать инициализатор
 ...
 let cat = Cat()
 try! container.resolve(cat)
 ```
-Метод `initializerDoesNotNeedToBe()`, говорит библиотеке что метод инициализации может отсутствовать. При этом это не означает, что его обязательно не должно быть. Вполне допустимо, что написан данный модификатор, а после написан метод инициализции.
+Метод `initialNotNecessary()`, говорит библиотеке что метод инициализации может отсутствовать. При этом это не означает, что его обязательно не должно быть. Вполне допустимо, что используется эта функция вместе с методами инициализации.
 
 Также данная тема затрагивается в главе [Время жизни](lifetime.md)
 
 ## Сокращенный синтаксис
-Писать каждый раз `try! ... resolve` неудобно, а в большинстве случаев тип известен заранее и у компоненты не задано имя. Для таких случаев существует специальные укороченные записи:
+Писать каждый раз `try ... resolve` неудобно, а в большинстве случаев тип известен заранее и при регистрации не задано имя. Для таких случаев существует специальные укороченные записи:
 ```Swift
 cat = try *container //cat = try container.resolve()
-cat = *!container //cat = try! container.resolve()
 cat = *?container //cat = try? container.resolve()
 cats = try **container //cats = try container.resolveMany()
-cats = **!container //cats = try! container.resolveMany()
 ```
-Эта запись, похоже на вариант оператора разыменовывания, и имеет 5 вариантов: `*` `*!` `*?` `**` `**!`
+Эта запись, похоже на вариант оператора разыменовывания, и имеет 3 вариантов: `*` `*?` `**`
+
+!! Те кто пользовался первой версией библиотеки, скорей всего заметили, что операторы: `*!`,`**!` были убраны. Причины этого решения можно найти в описании перехода с первой на вторую версию.
 
 ## Проверки и исключения
 Читатель, наверное, обратил внимание, что везде используется `try`. Библиотека отсекла часть ошибок на стадии создания контейнера, но она не способна предугадать, как её будут использовать дальше. 
 Во время разрешения зависимостей возможны следующие ошибки:
-* Нет компонента по указанному типу.
+* Нет регистрации по указанному типу.
 > Ошибка: **`DIError.typeIsNotFound(type:)`**  
 > Параметры:  
->            type - тип, для которого не удалось найти компонент
+>            type - тип, для которого не удалось найти регистрацию
 ***
 
-* Нет компонента по указанному типу и имени.
-> Ошибка: **`DIError.typeIsNotFoundForName(type:,name:,components:)`**  
+* Нет регистрации по указанному типу и имени.
+> Ошибка: **`DIError.typeIsNotFoundForName(type:,name:,typesInfo:)`**  
 > Параметры:  
->            type - тип, для которого не удалось найти компонент с указанным именем  
->            name - имя, для которого не удалось найти компонент  
->            components: компоненты, которые были найдены для данного типа
+>            type - тип, для которого не удалось найти регистрацию с указанным именем  
+>            name - имя, для которого не удалось найти регистрацию  
+>            typesInfo - информация о регистрациях, которые были найдены для данного типа
 ***
 
-* Нет метода инициализации с заданной сигнатурой для компоненты.
-> Ошибка: **`DIError.initializationMethodWithSignatureIsNotFoundFor(component:,signature:)`**  
+* Нет метода инициализации с заданной сигнатурой для регистрации.
+> Ошибка: **`DIError.initializationMethodWithSignatureIsNotFoundFor(typeInfo:,signature:)`**  
 > Параметры:  
->            component - компонента, которая была выбрана для типа  
+>            typeInfo - информация о регистрации, которая была выбрана для типа  
 >            signature - сигнатура метода, которую не удалось найти
 ***
 
-* Не указана компонента по умолчанию.
-> Ошибка: **`DIError.defaultTypeIsNotSpecified(type:,components:)`**  
+* Не указана регистрация по умолчанию.
+> Ошибка: **`DIError.defaultTypeIsNotSpecified(type:,typesInfo:)`**  
 > Параметры:  
->            type - тип, для которого не указана компонента по умолчанию  
->            components - все компоненты для этого типа
+>            type - тип, для которого не указана регистрация по умолчанию  
+>            typesInfo - все регистрации для этого типа
 ***
 
 * Рекурсивная инициализация объекта.
-> Ошибка: **`DIError.recursiveInitialization(component:)`**  
+> Ошибка: **`DIError.recursiveInitialization(typeInfo:)`**  
 > Параметры:  
->            component - компонент, который содержит рекурсивную инициализацию  
+>            typeInfo - информация о регистрации, которая содержит рекурсивную инициализацию
 ***
 
 * Созданный объект, не соответсвует запрашиваемому типу (см. примечания в [Создание контейнера](build.md))
-> Ошибка: **`DIError.typeIsIncorrect(requestedType:, realType:, component:)`**  
+> Ошибка: **`DIError.typeIsIncorrect(requestedType:, realType:, typeInfo:)`**  
 > Параметры:  
 >            requestedType - запрашиваемый тип  
 >            realType - тип объекта, который был создан  
->            component – компонент, используемый для создания типа
+>            typeInfo – информация о регистрации, используемой для создания объекта
 ***
 
 #### [Главная](main.md)
