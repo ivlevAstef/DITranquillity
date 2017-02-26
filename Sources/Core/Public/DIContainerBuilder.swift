@@ -49,7 +49,7 @@ extension DIContainerBuilder {
     }
   }
 
-  fileprivate func checkRTypes(_ superType: DIType, rTypes: [RType], errors: inout [DIError]) {
+  private func checkRTypes(_ superType: DIType, rTypes: [RType], errors: inout [DIError]) {
     if rTypes.count <= 1 {
       return
     }
@@ -62,7 +62,7 @@ extension DIContainerBuilder {
     }
   }
 
-  fileprivate func checkRTypesNames(_ superType: DIType, rTypes: [RType], errors: inout [DIError]) {
+  private func checkRTypesNames(_ superType: DIType, rTypes: [RType], errors: inout [DIError]) {
     var fullNames: Set<String> = []
     var intersect: Set<String> = []
 
@@ -75,7 +75,10 @@ extension DIContainerBuilder {
       errors.append(DIError.intersectionNamesForType(type: superType, names: intersect, typesInfo: rTypes.map{ $0.typeInfo }))
     }
   }
-  
+}
+
+
+extension DIContainerBuilder {
   fileprivate func initSingleLifeTime(rTypeContainer: RTypeContainerFinal, container: DIContainer) throws {
     for rType in rTypeContainer.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime }) {
       do {
@@ -89,33 +92,7 @@ extension DIContainerBuilder {
 
 extension DIContainerBuilder {
   // auto ignore equally register
-  func ignore(uniqueKey key: String) -> Bool {
-    if ignoreSet.contains(key) {
-      return true
-    }
-
-    ignoreSet.insert(key)
-    return false
-  }
-}
-
-
-extension DIContainerBuilder {
-  internal func registrationBuilder<T>(file: String, line: Int) -> DIRegistrationBuilder<T> {
-    let rBuilder = DIRegistrationBuilder<T>(container: self.rTypeContainer, typeInfo: DITypeInfo(type: T.self, file: file, line: line))
-    if ignore(uniqueKey: rBuilder.uniqueKey) {
-      // if this type it's register, then register in other container for not register
-      rBuilder.container = RTypeContainer()
-    }
-    return rBuilder
-  }
-}
-
-extension DIRegistrationBuilder {
-  internal var uniqueKey: String {
-    let type = String(describing: Impl.self)
-    let file = rType.typeInfo.file
-    let line = "\(rType.typeInfo.line)"
-    return file + line + type
+  internal func ignore(uniqueKey key: String) -> Bool {
+    return !ignoreSet.insert(key).inserted
   }
 }
