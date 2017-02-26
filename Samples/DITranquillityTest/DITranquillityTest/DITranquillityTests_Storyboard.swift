@@ -234,22 +234,18 @@ class DITranquillityTests_Storyboard: XCTestCase {
     let container = try! builder.build()
     let storyboard: UIStoryboard = try! *container
     
-    let viewController1 = storyboard.instantiateInitialViewController()
+    let navigation1: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
+    let viewController1 = navigation1.childViewControllers[0]
     XCTAssert(viewController1 is TestViewController)
-    guard let testVC1 = viewController1 as? TestViewController else {
-      XCTFail("incorrect View Controller")
-      return
-    }
     
-    let viewController2 = storyboard.instantiateInitialViewController()
+    let navigation2: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
+    let viewController2 = navigation2.childViewControllers[0]
     XCTAssert(viewController2 is TestViewController)
-    guard let testVC2 = viewController2 as? TestViewController else {
-      XCTFail("incorrect View Controller")
-      return
-    }
     
-    XCTAssert(testVC1 !== testVC2)
-    XCTAssertEqual(testVC1.service.foo(), "foo")
-    XCTAssertEqual(testVC2.service.foo(), "foo")
+    XCTAssert(viewController1 !== viewController2)
+    
+    let vc = viewController1 as! TestViewController
+    XCTAssertEqual(vc.service.foo(), "foo")
+    XCTAssertEqual(vc.service.foo(), "foo")
   }
 }

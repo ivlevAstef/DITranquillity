@@ -103,8 +103,8 @@ extension DIRegistrationBuilder {
 
 public final class DIRegistrationBuilder<Impl> {
   init(container: RTypeContainer, typeInfo: DITypeInfo) {
-    self.container = container
     self.rType = RType(typeInfo: typeInfo)
+    self.container = container
   }
   
   deinit {
@@ -116,7 +116,7 @@ public final class DIRegistrationBuilder<Impl> {
   var isTypeSet: Bool = false
   var isAutoInjection: Bool = false
   let rType: RType
-  let container: RTypeContainer
+  var container: RTypeContainer!
 }
 
 // Protocol

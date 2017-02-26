@@ -214,6 +214,22 @@ class DITranquillityTests_Build: XCTestCase {
       XCTFail("Catched error: \(error)")
     }
   }
+  
+  func registerForTest(builder: DIContainerBuilder) {
+    builder.register(type: TestClass1.init)
+  }
+  
+  func test08_DoubleRegistrationOneLine() {
+    let builder = DIContainerBuilder()
+    
+    registerForTest(builder: builder)
+    registerForTest(builder: builder)
+    
+    let container = try! builder.build()
+    
+    let type: TestClass1 = try! container.resolve()
+    print(type) // ignore
+  }
 
   
 }
