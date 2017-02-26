@@ -11,8 +11,14 @@ class RType: RTypeBase {
 
   var hasInitial: Bool { return !initials.isEmpty }
 
+  init(typeInfo: DITypeInfo, modules: [DIModuleType]) {
+    self.modules = modules
+    super.init(typeInfo: typeInfo)
+  }
+  
   func copyFinal() -> RTypeFinal {
     return RTypeFinal(typeInfo: typeInfo,
+      modules: modules,
       initials: self.initials,
       injections: self.injections,
       names: self.names,
@@ -20,6 +26,7 @@ class RType: RTypeBase {
       lifeTime: self.lifeTime)
   }
 
+  var modules: [DIModuleType]
   var lifeTime = DILifeTime.default
 	var initialNotNecessary: Bool = false
   var names: Set<String> = []

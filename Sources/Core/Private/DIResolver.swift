@@ -84,6 +84,8 @@ class DIResolver {
           return try resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
         } catch DIError.recursiveInitialization {
           return nil // Ignore recursive initialization object for many
+        } catch DIError.noAccess {
+          return nil // Ignore no access object for many
         }
       }.filter{ $0 != nil }.map{ $0! }
     } catch {
@@ -101,6 +103,22 @@ class DIResolver {
     guard let rTypes = rTypeContainer[type], !rTypes.isEmpty else {
       throw DIError.typeIsNotFound(type: inputType)
     }
+    
+    objc_sync_enter(DIResolver.monitor)
+    defer { objc_sync_exit(DIResolver.monitor) }
+    
+    // if used modules
+    if let last = rTypeStack.last {
+      let rTypesFiltered = rTypes.filter {
+        $0.modules.isEmpty || !last.modules.intersection($0.modules).isEmpty
+      }
+     
+      if rTypesFiltered.isEmpty {
+        throw DIError.noAccess(typesInfo: rTypes.map{ $0.typeInfo }, accessModules: rTypes.flatMap{ $0.modules.map { $0.name } })
+      }
+      
+      return rTypesFiltered
+    }
 
     return rTypes
   }
@@ -108,7 +126,19 @@ class DIResolver {
   private func resolveUseRType<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
     objc_sync_enter(DIResolver.monitor)
     defer { objc_sync_exit(DIResolver.monitor) }
+    
+    // if used modules
+    if !pair.rType.modules.isEmpty {
+      rTypeStack.append(pair.rType)
+      defer { rTypeStack.removeLast() }
+      
+      return try unsafeResolve(container, pair: pair, getter: getter)
+    }
+    
+    return try unsafeResolve(container, pair: pair, getter: getter)
+  }
 
+  private func unsafeResolve<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
     switch pair.rType.lifeTime {
     case .single, .lazySingle:
       return try resolveSingle(container, pair: pair, getter: getter)
@@ -241,6 +271,9 @@ class DIResolver {
 
   // needed for block call self from self
   private var recursiveInitializer: Set<RType.UniqueKey> = []
+  
+  // needed for check access
+  private var rTypeStack: [RTypeFinal] = []
 
   // needed for circular
   private class Circular {

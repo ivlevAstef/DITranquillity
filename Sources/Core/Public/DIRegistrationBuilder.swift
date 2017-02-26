@@ -21,8 +21,8 @@ extension DIRegistrationBuilder {
   }
   
   ///short
-  public func `as`<Parent>(_ pType: Parent.Type, scope: DIImplementScope = .default, check: (Impl)->Parent) -> Self {
-    DIRegistrationAlternativeType<Impl, Parent>(builder: self).scope(scope).check(check)
+  public func `as`<Parent>(_ pType: Parent.Type, check: (Impl)->Parent) -> Self {
+    DIRegistrationAlternativeType<Impl, Parent>(builder: self).check(check)
     return self
   }
 }
@@ -102,9 +102,9 @@ extension DIRegistrationBuilder {
 }
 
 public final class DIRegistrationBuilder<Impl> {
-  init(container: RTypeContainer, typeInfo: DITypeInfo) {
-    self.rType = RType(typeInfo: typeInfo)
-    self.container = container
+  init(container: DIContainerBuilder, typeInfo: DITypeInfo) {
+    self.rType = RType(typeInfo: typeInfo, modules: container.currentModules)
+    self.container = container.rTypeContainer
   }
   
   deinit {

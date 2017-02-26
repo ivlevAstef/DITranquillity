@@ -7,11 +7,6 @@
 //
 
 public class DIRegistrationAlternativeType<Impl, Parent> {
-  public func scope(_ scope: DIImplementScope) -> Self {
-    self.scope = scope
-    return self
-  }
-  
   @discardableResult
   public func check(_: (Impl) -> Parent) -> DIRegistrationBuilder<Impl> {
     register()
@@ -31,12 +26,8 @@ public class DIRegistrationAlternativeType<Impl, Parent> {
   private func register() {
     builder.isTypeSet = true
     builder.container.append(key: Parent.self, value: builder.rType)
-    if .global == scope {
-      RTypeContainer.append(key: Parent.self, implementation: builder.rType)
-    }
   }
   
   private let builder: DIRegistrationBuilder<Impl>
-  private var scope: DIImplementScope = .default
 }
 

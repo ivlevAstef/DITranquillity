@@ -22,6 +22,8 @@ public indirect enum DIError: Error {
 
   case recursiveInitialization(typeInfo: DITypeInfo)
 
+  case noAccess(typesInfo: [DITypeInfo], accessModules: [String])
+  
   /// Support
   case build(errors: [DIError])
   

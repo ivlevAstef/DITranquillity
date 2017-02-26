@@ -16,29 +16,36 @@ public protocol DIModule {
 public extension DIContainerBuilder {
   @discardableResult
   public final func register(module: DIModule) -> Self {
-    register(module: module, scope: .public)
+    privateRegister(module: module, stack: [])
 
     return self
   }
 }
 
-internal extension DIModule {
-  internal final var uniqueKey: String { return String(describing: type(of: self)) }
+fileprivate extension DIContainerBuilder {
+  fileprivate final func privateRegister(module: DIModule, stack: [DIModuleType]) {
+    var stack = stack
+    stack.append(DIModuleType(module))
+    
+    for component in module.components {
+      self.register(component: component, stack: stack)
+    }
+    
+    for dependency in module.dependencies {
+      privateRegister(module: dependency, stack: stack)
+    }
+  }
 }
 
-fileprivate extension DIContainerBuilder {
-  fileprivate final func register(module: DIModule, scope: DIComponentScope) {
-    if ignore(uniqueKey: module.uniqueKey) {
-      return
-    }
+extension DIContainerBuilder {
+  fileprivate func register(component: DIComponent, stack: [DIModuleType]) {
+    let stack = component.realStack(by: stack)
+    component.load(builder: DIContainerBuilder(container: self, stack: stack))
+  }
+}
 
-    let components = module.components.filter{ .public == scope || .public == $0.scope }
-    for component in components {
-      register(component: component)
-    }
-
-    for dependency in module.dependencies {
-      register(module: dependency, scope: .internal)
-    }
+extension DIModuleType {
+  convenience init(_ module: DIModule) {
+    self.init(name: String(describing: type(of: module)))
   }
 }

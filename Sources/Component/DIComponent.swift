@@ -18,12 +18,18 @@ public extension DIComponent {
 
 public extension DIContainerBuilder {
   public func register(component: DIComponent) {
-    if !ignore(uniqueKey: component.uniqueKey) {
-      component.load(builder: self)
-    }
+    let stack = component.realStack(by: self.currentModules)
+    component.load(builder: DIContainerBuilder(container: self, stack: stack))
   }
 }
 
-internal extension DIComponent {
-  internal var uniqueKey: String { return String(describing: type(of: self)) }
+extension DIComponent {
+  internal func realStack(by stack: [DIModuleType]) -> [DIModuleType] {
+    switch scope {
+    case .public:
+      return stack
+    case .internal:
+      return Array(stack.suffix(1))
+    }
+  }
 }

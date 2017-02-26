@@ -48,6 +48,9 @@ extension DIError: CustomStringConvertible {
 			return "Incorrect type.\n\tRequested type: \(requestedType)\n\tReal type: \(realType)\n\tUse: \(typeInfo)\n"
 		case .recursiveInitialization(let typeInfo):
 			return "Recursive initialization into:\(typeInfo)\n"
+    case .noAccess(let typesInfo, let modules):
+      return "No access to \(typesInfo). This type can resolve from: \(modules)\n"
+      
 		case .build(let errors):
 			return "\nList:\n\(multiLine(errors))\n"
     case .stack(let type, let child, let resolveStyle):
