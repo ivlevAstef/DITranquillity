@@ -24,12 +24,6 @@ public extension DIContainerBuilder {
   }
 }
 
-public extension DIContainerBuilder {
-  public func register<T>(protocol: T.Type, file: String = #file, line: Int = #line) {
-    (registrationBuilder(file: file, line: line) as DIRegistrationBuilder<T>).declareHimselfProtocol()
-  }
-}
-
 /// Internal
 extension DIContainerBuilder {
   internal func registrationBuilder<T>(file: String, line: Int) -> DIRegistrationBuilder<T> {

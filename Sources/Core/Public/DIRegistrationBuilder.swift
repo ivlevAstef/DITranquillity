@@ -118,12 +118,3 @@ public final class DIRegistrationBuilder<Impl> {
   let rType: RType
   var container: RTypeContainer!
 }
-
-// Protocol
-extension DIRegistrationBuilder {
-  internal func declareHimselfProtocol() {
-    rType.isProtocol = true
-    rType.initialNotNecessary = true
-  }
-}
-
