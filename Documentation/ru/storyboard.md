@@ -34,18 +34,18 @@ class YourViewController: NSViewController {
 
 Сделать это можно так:
 ```Swift
-builder.register(YourViewController.self)
-  .dependency { (scope, viewController) in viewController.inject = *!scope }
-  .initializerDoesNotNeedToBe()
+builder.register(type: YourViewController.self)
+  .injection { vc, inject in vc.inject = inject }
+  .initialNotNecessary()
 ```
-При таком способе внедрение зависимостей произойдет автоматически при создании ViewController из storyboard.
-Метод `initializerDoesNotNeedToBe()`, говорит библиотеке что метод инициализации может отсутствовать.
+При таком способе внедрение зависимостей произойдет автоматически при создании ViewController из специального! storyboard.
+Метод `initialNotNecessary()`, говорит библиотеке что метод инициализации может отсутствовать.
 
 При этом обращу внимание на то, что если ViewController создается из кода программы, то его стоит регистрировать также как и любой другой объект:
 ```Swift
 builder.register{ YourViewController(nibName: "NibName", bundle: Bundle) }
   .lifetime(.perDependency)
-  .dependency { (scope, viewController) in viewController.inject = *!scope }
+  .injection { vc, inject in vc.inject = inject }
 ```
 
 
@@ -53,29 +53,30 @@ builder.register{ YourViewController(nibName: "NibName", bundle: Bundle) }
 Так как ViewController-ы создаются часто, каждый раз указывать отсутствие инициализатора не удобно, поэтому для случае есть ViewController создаеться с помощью переходов на Storyboard есть сокращенный синтаксис:
 ```Swift
 builder.register(vc: YourViewController.self)
-  .dependency { (scope, viewController) in viewController.inject = *!scope }
+  .injection { vc, inject in vc.inject = inject }
 ```
 
-Обращаю внимание, что такая запись говорит лишь что инициализатора может небыть, но не обязывает библиотеку проверять его отстуствие.
+Обращаю внимание, что такая запись говорит лишь что инициализатора может не быть, но не обязывает библиотеку проверять его отстуствие.
 
 Если требуется создавать ViewController из кода программы, то для расспространных случаев есть сокращенный синтаксис:
 Для создания из xib/nib:
 ```Swift
 builder.register(vc: YourViewController.self)
-  .dependency { (scope, viewController) in viewController.inject = *!scope }
-  .initializer(byNib: YourViewController.self)
+  .injection { vc, inject in vc.inject = inject }
+  .initial(nib: YourViewController.self) // файл должен называться как класс
 ```
+
 Для создания из storyboard, но при наличии вызовов из кода:
 ```Swift
 builder.register(vc: YourViewController.self)
-  .dependency { (scope, viewController) in viewController.inject = *!scope }
-  .initializer(byStoryboard: YourStoryboard, identifier: "YourViewController_Identifier")
+  .injection { vc, inject in vc.inject = inject }
+  .initial(useStoryboard: yourStoryboard, identifier: "YourVCIdentifier")
 ```
 
 ```Swift
 builder.register(vc: YourViewController.self)
-  .dependency { (scope, viewController) in viewController.inject = *!scope }
-  .initializer(byStoryboard: { scope in return try! scope.resolve(name: "YourStoryboard") }, identifier: "YourViewController_Identifier")
+  .injection { vc, inject in vc.inject = inject }
+  .initial(useStoryboard: { c in try c.resolve(name: "YourStoryboard") }, identifier: "YourVCIdentifier")
 ```
 
 
@@ -120,13 +121,13 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 ```Swift
 builder.register(UIStoryboard.self)
   .lifetime(.single)
-  .initializer { scope in DIStoryboard(name: "Main", bundle: "", container: scope) }
+  .initial { c in DIStoryboard(name: "Main", bundle: nil, container: c) }
 ```
 ##### Для macOS:
 ```Swift
 builder.register(NSStoryboard.self)
   .lifetime(.single)
-  .initializer { DIStoryboard(name: "Main", bundle: "", container: $0) }
+  .initial { c in DIStoryboard(name: "Main", bundle: nil, container: c) }
 ```
 
 И потом создать его с помощью библиотеки:
@@ -139,7 +140,23 @@ let storyboard: UIStoryboard = try! container.resolve()
 let storyboard: NSStoryboard = try! container.resolve()
 ```
 
+## Простое создание Storyboard
+Так как инициализация `DIStoryboard` выглядит не самым красивым образом, то был сделан более простой синтаксис `initial(name:bundle:)` который доступен только для storyboard:
+
+##### Для iOS/tvOS:
+```Swift
+builder.register(UIStoryboard.self)
+  .lifetime(.single)
+  .initial(name: "Main", bundle: nil)
+```
+##### Для macOS:
+```Swift
+builder.register(NSStoryboard.self)
+  .lifetime(.single)
+  .initial(name: "Main", bundle: nil)
+```
+
 
 #### [Главная](main.md)
-#### [Предыдущая глава "Сборки"](assembly.md)
+#### [Предыдущая глава "Позднее связывание"](lateBinding.md)
 #### [Следующая глава "Поиск"](scan.md)

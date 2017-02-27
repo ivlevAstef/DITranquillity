@@ -27,33 +27,33 @@ public final class DIStoryboard: NSStoryboard {
 }
 
 public extension DIContainerBuilder {
-	@discardableResult
-	public func register<T: AnyObject>(vc type: T.Type, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
-		return registrationBuilder(file: file, line: line)
-			.as(.self)
-			.initialNotNecessary()
-	}
+  @discardableResult
+  public func register<T: AnyObject>(vc type: T.Type, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
+    return registrationBuilder(file: file, line: line)
+      .as(.self)
+      .initialNotNecessary()
+  }
 }
 
 // ViewController
 public extension DIRegistrationBuilder where Impl: NSViewController {
   @discardableResult
-	public func initial<T: NSViewController>(nib type: T.Type) -> Self {
-		rType.append(initial: { () throws -> T in NSViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T })
-		return self
-	}
-	
-	@discardableResult
-	public func initial(useStoryboard storyboard: NSStoryboard, identifier: String) -> Self {
-		rType.append(initial: { () throws -> Any in storyboard.instantiateController(withIdentifier: identifier) })
-		return self
-	}
-	
-	@discardableResult
-	public func initial(useStoryboard closure: @escaping (_: DIContainer) throws -> NSStoryboard, identifier: String) -> Self {
-		rType.append(initial: { container in try closure(container).instantiateController(withIdentifier: identifier) })
-		return self
-	}
+  public func initial<T: NSViewController>(nib type: T.Type) -> Self {
+    rType.append(initial: { () throws -> T in NSViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T })
+    return self
+  }
+  
+  @discardableResult
+  public func initial(useStoryboard storyboard: NSStoryboard, identifier: String) -> Self {
+    rType.append(initial: { () throws -> Any in storyboard.instantiateController(withIdentifier: identifier) })
+    return self
+  }
+  
+  @discardableResult
+  public func initial(useStoryboard closure: @escaping (_: DIContainer) throws -> NSStoryboard, identifier: String) -> Self {
+    rType.append(initial: { container in try closure(container).instantiateController(withIdentifier: identifier) })
+    return self
+  }
 }
 
 // Storyboard

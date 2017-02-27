@@ -9,23 +9,23 @@
 public final class DIContainer {
   typealias Method = (DIContainer) throws -> Any
 
-	public func resolve<T>(_: T.Type, f: String = #file, l: Int = #line) throws -> T {
+  public func resolve<T>(_: T.Type, f: String = #file, l: Int = #line) throws -> T {
     return try ret(f, l) { try resolver.resolve(self, type: T.self) { (initial: Method) in try initial(self) } }
-	}
-	
-	public func resolve<T>(_: T.Type, name: String, f: String = #file, l: Int = #line) throws -> T {
+  }
+  
+  public func resolve<T>(_: T.Type, name: String, f: String = #file, l: Int = #line) throws -> T {
     return try ret(f, l) { try resolver.resolve(self, name: name, type: T.self) { (initial: Method) in try initial(self) } }
-	}
-	
-	public func resolveMany<T>(_: T.Type, f: String = #file, l: Int = #line) throws -> [T] {
+  }
+  
+  public func resolveMany<T>(_: T.Type, f: String = #file, l: Int = #line) throws -> [T] {
     return try ret(f, l) { try resolver.resolveMany(self, type: T.self) { (initial: Method) in try initial(self) } }
-	}
-	
-	public func resolve<T>(_ object: T, f: String = #file, l: Int = #line) throws {
+  }
+  
+  public func resolve<T>(_ object: T, f: String = #file, l: Int = #line) throws {
     _ = try ret(f, l) { try resolver.resolve(self, obj: object) }
-	}
-	
-	public func newLifeTimeScope() -> DIContainer {
+  }
+  
+  public func newLifeTimeScope() -> DIContainer {
     return DIContainer(resolver: self.resolver)
   }
   
@@ -36,7 +36,7 @@ public final class DIContainer {
   }
 
 
-	internal init(resolver: DIResolver) {
+  internal init(resolver: DIResolver) {
     self.resolver = resolver
   }
 

@@ -17,30 +17,30 @@ class DIResolver {
   init(rTypeContainer: RTypeContainerFinal) {
     self.rTypeContainer = rTypeContainer
   }
-	
-	@discardableResult
-	func check<T>(type: T.Type) throws -> [RTypeFinal] {
-		let rTypes = try getTypes(type)
-		
-		if rTypes.count > 1 && !rTypes.contains(where: { $0.isDefault }) {
-			throw DIError.defaultTypeIsNotSpecified(type: type, typesInfo: rTypes.map{ $0.typeInfo })
-		}
-		
-		return rTypes
-	}
-	
-	@discardableResult
-	func check<T>(name: String, type: T.Type) throws -> [RTypeFinal] {
-		let rTypes = try getTypes(type)
-		
-		if !rTypes.contains(where: { $0.has(name: name) }) {
-			throw DIError.typeIsNotFoundForName(type: type, name: name, typesInfo: rTypes.map { $0.typeInfo })
-		}
-		
-		return rTypes
-	}
+  
+  @discardableResult
+  func check<T>(type: T.Type) throws -> [RTypeFinal] {
+    let rTypes = try getTypes(type)
+    
+    if rTypes.count > 1 && !rTypes.contains(where: { $0.isDefault }) {
+      throw DIError.defaultTypeIsNotSpecified(type: type, typesInfo: rTypes.map{ $0.typeInfo })
+    }
+    
+    return rTypes
+  }
+  
+  @discardableResult
+  func check<T>(name: String, type: T.Type) throws -> [RTypeFinal] {
+    let rTypes = try getTypes(type)
+    
+    if !rTypes.contains(where: { $0.has(name: name) }) {
+      throw DIError.typeIsNotFoundForName(type: type, name: name, typesInfo: rTypes.map { $0.typeInfo })
+    }
+    
+    return rTypes
+  }
 
-	
+  
   func resolve<T, M>(_ container: DIContainer, type: T.Type, method: @escaping Method<M>) throws -> T {
     do {
       let rTypes = try check(type: type)
@@ -276,7 +276,7 @@ class DIResolver {
       return obj as! T
     }
 
-		let finalObj: T
+    let finalObj: T
     switch getter {
     case .object(let obj):
       finalObj = obj

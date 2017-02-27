@@ -93,12 +93,12 @@ extension DIRegistrationBuilder {
     rType.lifeTime = lifetime
     return self
   }
-	
-	@discardableResult
-	public func initialNotNecessary() -> Self {
-		rType.initialNotNecessary = true
-		return self
-	}
+  
+  @discardableResult
+  public func initialNotNecessary() -> Self {
+    rType.initialNotNecessary = true
+    return self
+  }
 }
 
 public final class DIRegistrationBuilder<Impl> {

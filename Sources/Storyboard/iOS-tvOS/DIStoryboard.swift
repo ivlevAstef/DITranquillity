@@ -30,30 +30,30 @@ public extension DIContainerBuilder {
   @discardableResult
   public func register<T: UIViewController>(vc type: T.Type, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
     return registrationBuilder(file: file, line: line)
-			.as(.self)
-			.initialNotNecessary()
+      .as(.self)
+      .initialNotNecessary()
   }
 }
 
 // ViewController
 public extension DIRegistrationBuilder where Impl: UIViewController {
-	@discardableResult
-	public func initial<T: UIViewController>(nib type: T.Type) -> Self {
-		rType.append(initial: { () throws -> T in UIViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T })
-		return self
-	}
-	
-	@discardableResult
-	public func initial(useStoryboard storyboard: UIStoryboard, identifier: String) -> Self {
-		rType.append(initial: { () throws -> UIViewController in storyboard.instantiateViewController(withIdentifier: identifier) })
-		return self
-	}
-	
-	@discardableResult
-	public func initial(useStoryboard closure: @escaping (DIContainer) throws -> UIStoryboard, identifier: String) -> Self {
-		rType.append(initial: { container in try closure(container).instantiateViewController(withIdentifier: identifier) })
-		return self
-	}
+  @discardableResult
+  public func initial<T: UIViewController>(nib type: T.Type) -> Self {
+    rType.append(initial: { () throws -> T in UIViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T })
+    return self
+  }
+  
+  @discardableResult
+  public func initial(useStoryboard storyboard: UIStoryboard, identifier: String) -> Self {
+    rType.append(initial: { () throws -> UIViewController in storyboard.instantiateViewController(withIdentifier: identifier) })
+    return self
+  }
+  
+  @discardableResult
+  public func initial(useStoryboard closure: @escaping (DIContainer) throws -> UIStoryboard, identifier: String) -> Self {
+    rType.append(initial: { container in try closure(container).instantiateViewController(withIdentifier: identifier) })
+    return self
+  }
 }
 
 // Storyboard

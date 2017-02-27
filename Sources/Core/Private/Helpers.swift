@@ -7,23 +7,23 @@
 //
 
 protocol DITypeGetter {
-	static var type: Any.Type { get }
+  static var type: Any.Type { get }
 }
 
 extension ImplicitlyUnwrappedOptional: DITypeGetter {
-	static var type: Any.Type { return Wrapped.self  }
+  static var type: Any.Type { return Wrapped.self  }
 }
 
 extension Optional: DITypeGetter {
-	static var type: Any.Type { return Wrapped.self  }
+  static var type: Any.Type { return Wrapped.self  }
 }
 
 func removeTypeWrappers(_ type: Any.Type) -> Any.Type {
-	if let typeGetter = type as? DITypeGetter.Type {
-		return removeTypeWrappers(typeGetter.type)
-	}
-	
-	return type
+  if let typeGetter = type as? DITypeGetter.Type {
+    return removeTypeWrappers(typeGetter.type)
+  }
+  
+  return type
 }
 
 

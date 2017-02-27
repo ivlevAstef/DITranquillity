@@ -28,7 +28,7 @@ class RType: RTypeBase {
 
   var modules: [DIModuleType]
   var lifeTime = DILifeTime.default
-	var initialNotNecessary: Bool = false
+  var initialNotNecessary: Bool = false
   var names: Set<String> = []
   var isDefault: Bool = false
   var isProtocol: Bool = false

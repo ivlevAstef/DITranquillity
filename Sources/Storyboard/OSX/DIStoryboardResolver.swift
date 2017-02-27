@@ -28,7 +28,7 @@ final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
         }
       }
     }
-		
+    
     return viewController
   }
 
