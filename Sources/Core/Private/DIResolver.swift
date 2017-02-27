@@ -96,6 +96,32 @@ class DIResolver {
   func resolve<M>(_ container: DIContainer, rType: RTypeFinal, method: @escaping Method<M>) throws -> Any {
     return try resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
   }
+  
+  /// special function for resolve in future but on current rType stack
+  func createStackSave() -> (()->()) -> () {
+    objc_sync_enter(rTypeStackMonitor)
+    let saveStack = rTypeStack
+    objc_sync_exit(rTypeStackMonitor)
+    
+    return { [weak self] executor in
+      guard let sSelf = self else {
+        return
+      }
+      
+      objc_sync_enter(DIResolver.monitor)
+      /// no need rTypeStackMonitor
+      
+      let restoreStack = sSelf.rTypeStack
+      sSelf.rTypeStack = saveStack
+      
+      defer {
+        sSelf.rTypeStack = restoreStack
+        objc_sync_exit(DIResolver.monitor)
+      }
+      
+      executor()
+    }
+  }
 
   private func getTypes<T>(_ inputType: T.Type) throws -> [RTypeFinal] {
     let type = removeTypeWrappers(inputType)
@@ -104,8 +130,8 @@ class DIResolver {
       throw DIError.typeIsNotFound(type: inputType)
     }
     
-    objc_sync_enter(DIResolver.monitor)
-    defer { objc_sync_exit(DIResolver.monitor) }
+    objc_sync_enter(rTypeStackMonitor)
+    defer { objc_sync_exit(rTypeStackMonitor) }
     
     // if used modules
     if let last = rTypeStack.last {
@@ -129,8 +155,13 @@ class DIResolver {
     
     // if used modules
     if !pair.rType.modules.isEmpty {
+      objc_sync_enter(rTypeStackMonitor)
       rTypeStack.append(pair.rType)
-      defer { rTypeStack.removeLast() }
+      
+      defer {
+        rTypeStack.removeLast()
+        objc_sync_exit(rTypeStackMonitor)
+      }
       
       return try unsafeResolve(container, pair: pair, getter: getter)
     }
@@ -274,6 +305,7 @@ class DIResolver {
   
   // needed for check access
   private var rTypeStack: [RTypeFinal] = []
+  private var rTypeStackMonitor = NSObject()
 
   // needed for circular
   private class Circular {

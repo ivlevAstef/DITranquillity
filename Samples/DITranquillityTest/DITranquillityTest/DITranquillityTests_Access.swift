@@ -59,6 +59,11 @@ private class Component2p: DIComponent {
     
     builder.register(type: Class2publicOther.init)
       .injection { $0.correct = $1 }
+    
+    builder.register(type: UIStoryboard.self)
+      .set(name: "Component2")
+      .initial(name: "AccessStoryboard1", bundle: Bundle(for: type(of: self)))
+      .lifetime(.lazySingle)
   }
 }
 
@@ -68,13 +73,17 @@ private class Component2: DIComponent {
     builder.register(type: Class2private.init)
       .injection { $0.correct = $1 }
     
-    builder.register(type: OtherClass.init)
+    builder.register(type: AccessOtherClass.init)
+    
+    builder.register(vc: AccessViewController.self)
+      .injection { vc, other in vc.other = other }
+      .injection { _, vc in vc.dynamicName = "Component2" }
   }
 }
 
 private class Class2publicOther {
   var name: String { return "public 2 other" }
-  var correct: OtherClass!
+  var correct: AccessOtherClass!
 }
 
 private class Class2public {
@@ -108,6 +117,11 @@ private class Component3p: DIComponent {
     
     builder.register(type: Class3publicOther.init)
       .injection { $0.correct = $1 }
+    
+    builder.register(type: UIStoryboard.self)
+      .set(name: "Component3")
+      .initial(name: "AccessStoryboard2", bundle: Bundle(for: type(of: self)))
+      .lifetime(.lazySingle)
   }
 }
 
@@ -116,13 +130,17 @@ private class Component3: DIComponent {
     builder.register(type: Class3private.init)
       .injection { $0.incorrect = $1 }
     
-    builder.register(type: OtherClass.init)
+    builder.register(type: AccessOtherClass.init)
+    
+    builder.register(vc: AccessViewController.self)
+      .injection { vc, other in vc.other = other }
+      .injection { _, vc in vc.dynamicName = "Component3" }
   }
 }
 
 private class Class3publicOther {
   var name: String { return "public 3 other" }
-  var correct: OtherClass!
+  var correct: AccessOtherClass!
 }
 
 private class Class3public {
@@ -159,8 +177,15 @@ private protocol Interface {
   var name: String { get }
 }
 
-private class OtherClass {
+class AccessOtherClass {
   var name: String { return "other" }
+}
+
+class AccessViewController: UIViewController {
+  var name: String { return "vc" }
+  var dynamicName: String = ""
+  
+  var other: AccessOtherClass!
 }
 
 
@@ -293,6 +318,59 @@ class DITranquillityTests_Access: XCTestCase {
     } catch {
       print(error)
       XCTFail("i'm no access to other class")
+    }
+  }
+  
+  func test09_GetStoryboards() {
+    let builder = DIContainerBuilder()
+    builder.register(module: Module1())
+    
+    let container = try! builder.build()
+    
+    do {
+      let storyboard1: UIStoryboard = try container.resolve(name: "Component2")
+      let storyboard2: UIStoryboard = try container.resolve(name: "Component3")
+      
+      XCTAssert(storyboard1 !== storyboard2)
+      
+    } catch {
+      print(error)
+      XCTFail("i'm no access to storyboard")
+    }
+  }
+  
+  func test10_GetViewController() {
+    let builder = DIContainerBuilder()
+    builder.register(module: Module1())
+    
+    let container = try! builder.build()
+    
+    do {
+      let storyboard1: UIStoryboard = try container.resolve(name: "Component2")
+      guard let vc1 = storyboard1.instantiateInitialViewController() as? AccessViewController else {
+        XCTFail("Incorrect view controller")
+        return
+      }
+      
+      XCTAssertEqual(vc1.name, "vc")
+      XCTAssertEqual(vc1.dynamicName, "Component2")
+      XCTAssertEqual(vc1.other?.name, "other")
+      
+      
+      let storyboard2: UIStoryboard = try container.resolve(name: "Component3")
+      guard let vc2 = storyboard2.instantiateInitialViewController() as? AccessViewController else {
+        XCTFail("Incorrect view controller")
+        return
+      }
+      
+      XCTAssertEqual(vc2.name, "vc")
+      XCTAssertEqual(vc2.dynamicName, "Component3")
+      XCTAssertEqual(vc2.other?.name, "other")
+      
+      
+    } catch {
+      print(error)
+      XCTFail("i'm no access to storyboard")
     }
   }
 }
