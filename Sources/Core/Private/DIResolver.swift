@@ -144,7 +144,7 @@ class DIResolver {
       // if used modules
       if !pair.rType.modules.isEmpty {
         synchronize(rTypeStackMonitor) { rTypeStack.append(pair.rType) }
-        defer { synchronize(rTypeStackMonitor) { rTypeStack.removeLast() } }
+        defer { _ = synchronize(rTypeStackMonitor) { rTypeStack.removeLast() } }
         
         return try unsafeResolve(container, pair: pair, getter: getter)
       }
@@ -197,7 +197,7 @@ class DIResolver {
       }
       
       /// suspending double injection
-      if obj as? AnyObject === realObj as? AnyObject {
+      if obj as AnyObject === realObj as AnyObject {
         return obj
       }
     }

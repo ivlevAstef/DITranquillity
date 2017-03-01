@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.10'
 
   s.subspec 'Core' do |cores|
-    cores.source_files = 'Sources/DITranquillity.h', 'Sources/Core/**/*.swift'
+    cores.source_files = 'Sources/Core/**/*.swift'
   end
 
   s.subspec 'Description' do |dess|
@@ -41,6 +41,9 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'Storyboard' do |storys|
+    storys.ios.public_header_files = 'Sources/Storyboard/iOS-tvOS/*.h'
+    storys.tvos.public_header_files = 'Sources/Storyboard/iOS-tvOS/*.h'
+    storys.osx.public_header_files = 'Sources/Storyboard/OSX/*.h'
     storys.ios.source_files = 'Sources/Storyboard/iOS-tvOS/*.{h,m,swift}'
     storys.tvos.source_files = 'Sources/Storyboard/iOS-tvOS/*.{h,m,swift}'
     storys.osx.source_files = 'Sources/Storyboard/OSX/*.{h,m,swift}'
