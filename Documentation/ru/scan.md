@@ -27,7 +27,7 @@ class YourModule: DIScanned, DIModule {
 builder.register(module: DIScanModule(predicateByName: { $0.contains("Module") }))
 ```
 
-## Поиск Компонент
+## Поиск компонент
 Поиск компонент идентичен процессу поиска модулей. Вначале наследуемся от `DIScanned`:
 ```swift
 class YourComponent: DIScanned, DIComponent {
