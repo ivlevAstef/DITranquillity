@@ -58,7 +58,7 @@ DITranquallity - небольшая библиотека для внедрени
 * [Сокращенный синтаксис](resolve.md#Сокращенный-синтаксис)
 * [Проверки и исключения](resolve.md#Проверки-и-исключения)
 
-## [Указанием имени/множественная регистрация](multi_name_registration.md#указанием-именимножественная-регистрация)
+## [Указанием имени/множественная регистрация](multi_name_registration.md#Указанием-именимножественная-регистрация)
 * [Множественная регистрация](multi_name_registration.md#Множественная-регистрация)
 * [Указание зависимости по умолчанию](multi_name_registration.md#Указание-зависимости-по-умолчанию)
 * [Указание имени](multi_name_registration.md#Указание-имени)
@@ -86,7 +86,7 @@ DITranquallity - небольшая библиотека для внедрени
 * [На что стоит обратить внимание](lateBinding.md#На-что-стоит-обратить-внимание)
 * [Ошибки](lateBinding.md#Ошибки)
 
-## [Storyboard](storyboard.md#storyboad)
+## [Storyboard](storyboard.md#storyboard)
 * [Регистрация ViewController](storyboard.md#Регистрация-viewcontroller)
 * [Сокращенный синтаксис](storyboard.md#Сокращенный-синтаксис)
 * [Создание Storyboard](storyboard.md#Создание-storyboard)
