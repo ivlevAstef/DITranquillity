@@ -217,6 +217,9 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 ## Documentation
 * [ru](https://github.com/ivlevAstef/DITranquillity/blob/master/Documentation/ru/main.md)
 
+## Migration
+* v1.x.x -> v2.x.x [ru](https://github.com/ivlevAstef/DITranquillity/blob/master/Documentation/ru/migration1to2.md)
+
 ## Requirements
 iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
 
