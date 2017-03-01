@@ -14,7 +14,7 @@ Dependency injection for iOS/macOS/tvOS (Swift)
 * Native
 * Static typing
 * Initializer/Property/Method Dependency Injections
-* Object scopes as Single, LazySingle, PerScope, PerDependency, PerRequest (for UIViewController)
+* Object scopes as Single, LazySingle, WeakSingle, PerScope, PerDependency
 * Storyboard
 * Registration/Resolve by type and name
 * Registration/Resolve with parameters
@@ -22,13 +22,17 @@ Dependency injection for iOS/macOS/tvOS (Swift)
 * Circular Dependencies
 * Registration by types, modules, assembly
 * Fast resolve syntax
-* Thread safety
+* Resolve thread safety
 * Scan Modules/Assemblies
+* 9 types of errors + 4 supported errors. Errors detailing
+* Automatic dependency injection through properties for Obj-C types
 
 ## Install
 Via CocoaPods.
 
 ###### `pod 'DITranquillity'` Swift (iOS8+,macOS10.10+,tvOS9+) also need write in your PodFile `use_frameworks!`
+Also podspec separated on subspecs: `Core`, `Description`, `Component`, `Module`, `Storyboard`, `Scan`, `RuntimeArgs`
+Default included: `Core`, `Description`, `Component`, `Module`, `Storyboard`
 
 Via Carthage.
 
@@ -50,8 +54,8 @@ class Cat: Animal {
 let builder = DIContainerBuilder()
 
 builder.register{ Cat() }
-  .asSelf()
-  .asType(Animal.self)
+  .as(.self)
+  .as(Animal.self).check{$0}
   
 let scope = try! builder.build() // validate
 ```
@@ -98,35 +102,34 @@ class Home {
 let builder = DIContainerBuilder()
 
 builder.register{ Cat() }
-  .asSelf()
-  .asType(Animal.self)
-  .lifetime(.perDependency) // .lazySingle, .single, .perScope, .perDependency
+  .as(.self)
+  .as(Animal.self).check{$0}
+  .lifetime(.perDependency) // .lazySingle, .weakSingle, .single, .perScope, .perDependency
   
-builder.register(Dog.self)
-  .asSelf()
-  .asType(Animal.self)
+builder.register(type: Dog.init)
+  .as(.self)
+  .as(Animal.self).check{$0}
   .lifetime(.perDependency)
-  .initializer { Dog() }
   
 builder.register{ Pet(name: "My Pet") }
-  .asSelf()
-  .asType(Animal.self)
-  .asDefault()
+  .as(.self)
+  .as(Animal.self).check{$0}
+  .set(.default)
   .lifetime(.perDependency)
   
-builder.register(Home.self)
-  .asSelf()
+builder.register(type: Home.self)
+  .as(.self)
   .lifetime(.perScope)
-  .initializer { scope in return try! Home(animals: scope.resolveMany()) }
+  .initial { c in try Home(animals: c.resolveMany()) }
 
-let scope = try! builder.build() // validate
+let container = try! builder.build() // validate
 ```
 ```Swift
-let cat: Cat = try! scope.resolve()
-let dog = try! scope.resolve(Dog.self)
-let pet: Pet = *!scope
-let animal: Animal = *!scope // default it's Pet
-let home: Home = *!scope
+let cat: Cat = try! container.resolve()
+let dog = try! container.resolve(Dog.self)
+let pet: Pet = try! *container
+let animal: Animal = try! *container // default it's Pet
+let home: Home = try! *container
 
 print(cat.name) // CatName
 print(dog.name) // DogName
@@ -134,18 +137,18 @@ print(pet.name) // My Pet
 print(animal.name) // My Pet
 print(home.animals) // [Dog, Cat, Pet]
 
-let cat2: Cat = *!scope //cat2 !=== cat
-let home2: Home = *!scope //home2 === home
+let cat2: Cat = try! *container //cat2 !=== cat
+let home2: Home = try! *container //home2 === home
 ```
 
 #### Storyboard
 ##### All
-Create your module:
+Create your component:
 ```Swift
-class SampleModule: DIModule {
+class SampleComponent: DIComponent {
   func load(builder: DIContainerBuilder) {
     builder.register(vc: ViewController.self)
-      .dependency { (scope, obj) in obj.inject = *!scope }
+      .injection { vc, inject in vc.inject = inject }
   }
 }
 ```
@@ -169,7 +172,7 @@ func applicationDidFinishLaunching(_ application: UIApplication) {
   window = UIWindow(frame: UIScreen.main.bounds)
   
   let builder = DIContainerBuilder()
-  builder.register(module: SampleModule())
+  builder.register(component: SampleComponent())
 
   let container = try! builder.build()
   
@@ -198,7 +201,7 @@ Registrate Storyboard:
 ```Swift
 func applicationDidFinishLaunching(_ aNotification: Notification) {
   let builder = DIContainerBuilder()
-  builder.register(module: SampleModule())
+  builder.register(component: SampleComponent())
 
   let container = try! builder.build()
 
