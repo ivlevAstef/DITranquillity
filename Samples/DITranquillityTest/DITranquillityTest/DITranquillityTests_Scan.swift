@@ -15,40 +15,34 @@ import SubProject2
 
 public class ScannedRecursiveBase: DIScanned {}
 
-public class RecursiveModule1Type { }
-public class ScannedRecursiveModul_1: ScannedRecursiveBase, DIModule {
+public class RecursiveComponent1Type { }
+public class ScannedRecursiveComponent_1: ScannedRecursiveBase, DIComponent {
 	public func load(builder: DIContainerBuilder) {
-		builder.register{ RecursiveModule1Type() }
+    builder.register(type: RecursiveComponent1Type.init)
 	}
 }
 
-public class RecursiveModule2Type { }
-public class ScannedRecursiveModul_2: ScannedRecursiveBase, DIModule {
+public class RecursiveComponent2Type { }
+public class ScannedRecursiveComponent_2: ScannedRecursiveBase, DIComponent {
 	public func load(builder: DIContainerBuilder) {
-		builder.register{ RecursiveModule2Type() }
+		builder.register(type: RecursiveComponent2Type.init)
 	}
 }
 
 
-class AssemblyWithScan1: DIAssembly {
-  public var publicModules: [DIModule] = []
-  public var internalModules: [DIModule] = []
-  
-  public var dependencies: [DIAssembly] = [ DIScanAssembly(predicateByName: { $0.contains("Assembly") }) ]
+class ModuleWithScan1: DIModule {
+  public var components: [DIComponent] = []
+  public var dependencies: [DIModule] = [ DIScanModule(predicateByName: { $0.contains("Module") }) ]
 }
 
-class AssemblyWithScan2: DIAssembly {
-  public var publicModules: [DIModule] = [ DIScanModule(predicateByName: { $0.contains("Module") }) ]
-  public var internalModules: [DIModule] = []
-  
-  public var dependencies: [DIAssembly] = []
+class ModuleWithScan2: DIModule {
+  public var components: [DIComponent] = [ DIScanComponent(predicateByName: { $0.contains("Component") }) ]
+  public var dependencies: [DIModule] = []
 }
 
-class AssemblyWithScan3: DIAssembly {
-  public var publicModules: [DIModule] = []
-  public var internalModules: [DIModule] = [ DIScanModule(predicateByName: { $0.contains("DuMole") }) ]
-  
-  public var dependencies: [DIAssembly] = []
+class ModuleWithScan3: DIModule {
+  public var components: [DIComponent] = [ DIScanComponent(predicateByName: { $0.contains("Onent") }) ]
+  public var dependencies: [DIModule] = []
 }
 
 // Tests
@@ -57,7 +51,7 @@ class DITranquillityTests_Scan: XCTestCase {
   
   func test01_ScanModule() {
     let builder = DIContainerBuilder()
-    builder.register(module: DIScanModule(predicateByName: { $0.contains("Module") }))
+    builder.register(component: DIScanComponent(predicateByName: { $0.contains("Component") }))
     
     let container =  try! builder.build()
     
@@ -70,7 +64,7 @@ class DITranquillityTests_Scan: XCTestCase {
 
   func test02_ScanDuMole() {
     let builder = DIContainerBuilder()
-    builder.register(module: DIScanModule(predicateByName: { $0.contains("DuMole") }))
+    builder.register(component: DIScanComponent(predicateByName: { $0.contains("Onent") }))
     
     let container =  try! builder.build()
     
@@ -83,7 +77,7 @@ class DITranquillityTests_Scan: XCTestCase {
   
   func test03_ScanAssembly() {
     let builder = DIContainerBuilder()
-    builder.register(assembly: DIScanAssembly(predicateByName: { $0.contains("ScannedAssembly") }))
+    builder.register(module: DIScanModule(predicateByName: { $0.contains("ScannedModule") }))
     
     let container =  try! builder.build()
     
@@ -101,7 +95,7 @@ class DITranquillityTests_Scan: XCTestCase {
   
   func test04_ScanAssemblyUseAssembly1() {
     let builder = DIContainerBuilder()
-    builder.register(assembly: AssemblyWithScan1())
+    builder.register(module: ModuleWithScan1())
     
     let container =  try! builder.build()
     
@@ -119,7 +113,7 @@ class DITranquillityTests_Scan: XCTestCase {
   
   func test05_ScanAssemblyUseAssembly2() {
     let builder = DIContainerBuilder()
-    builder.register(assembly: AssemblyWithScan2())
+    builder.register(module: ModuleWithScan2())
     
     let container =  try! builder.build()
     
@@ -137,7 +131,7 @@ class DITranquillityTests_Scan: XCTestCase {
   
   func test06_ScanAssemblyUseAssembly3() {
     let builder = DIContainerBuilder()
-    builder.register(assembly: AssemblyWithScan3())
+    builder.register(module: ModuleWithScan3())
     
     let container =  try! builder.build()
     
@@ -155,7 +149,7 @@ class DITranquillityTests_Scan: XCTestCase {
 	
 	func test07_ScanModulesInBundleSubProject1() {
 		let builder = DIContainerBuilder()
-		builder.register(module: DIScanModule(predicateByName: { _ in true }, in: Bundle(for: ScannedAssembly1.self)))
+		builder.register(component: DIScanComponent(predicateByName: { _ in true }, in: Bundle(for: ScannedModule1.self)))
 		
 		let container =  try! builder.build()
 		
@@ -173,7 +167,7 @@ class DITranquillityTests_Scan: XCTestCase {
 	
 	func test07_ScanModulesInBundleSubProject2() {
 		let builder = DIContainerBuilder()
-		builder.register(module: DIScanModule(predicateByName: { _ in true }, in: Bundle(for: ScannedAssembly2.self)))
+		builder.register(component: DIScanComponent(predicateByName: { _ in true }, in: Bundle(for: ScannedModule2.self)))
 		
 		let container =  try! builder.build()
 		
@@ -191,12 +185,12 @@ class DITranquillityTests_Scan: XCTestCase {
 
 	func test08_ScanModulesPredicateByType() {
 		let builder = DIContainerBuilder()
-		builder.register(module: DIScanModule(predicateByType: { type in type.init() is ScannedRecursiveBase }))
+		builder.register(component: DIScanComponent(predicateByType: { type in type.init() is ScannedRecursiveBase }))
 		
 		let container =  try! builder.build()
 		
-		let type1: RecursiveModule1Type? = *?container
-		let type2: RecursiveModule2Type? = *?container
+		let type1: RecursiveComponent1Type? = *?container
+		let type2: RecursiveComponent2Type? = *?container
 
 		XCTAssertNotNil(type1)
 		XCTAssertNotNil(type2)

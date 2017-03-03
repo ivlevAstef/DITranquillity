@@ -9,15 +9,15 @@
 class RTypeBase {
   typealias UniqueKey = String
   
-  init(component: DIComponent) {
-    self.component = component
+  init(typeInfo: DITypeInfo) {
+    self.typeInfo = typeInfo
     
-    let name = String(describing: component.type)
+    let name = String(describing: typeInfo.type)
     let address = String(describing: Unmanaged.passUnretained(self).toOpaque())
     uniqueKey = name + address
   }
 
-  let component: DIComponent
+  let typeInfo: DITypeInfo
   var uniqueKey: UniqueKey = ""
 }
 

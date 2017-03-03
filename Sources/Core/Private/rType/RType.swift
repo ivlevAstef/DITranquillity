@@ -8,33 +8,65 @@
 
 class RType: RTypeBase {
   typealias MethodKey = String
+
+  var hasInitial: Bool { return !initials.isEmpty }
+
+  init(typeInfo: DITypeInfo, modules: [DIModuleType]) {
+    self.modules = modules
+    super.init(typeInfo: typeInfo)
+  }
   
-  // Initializer
-  func setInitializer<Method>(_ method: Method) {
-    initializers[MethodKey(describing: Method.self)] = method
-  }
-
-  var hasInitializer: Bool { return !initializers.isEmpty }
-
-  // Dependency
-  func appendDependency<T>(_ method: @escaping (_ scope: DIScope, _ obj: T) -> ()) {
-    dependencies.append{ method($0, $1 as! T) }
-  }
-
   func copyFinal() -> RTypeFinal {
-    return RTypeFinal(component: component,
-      initializers: self.initializers,
-      dependencies: self.dependencies,
+    return RTypeFinal(typeInfo: typeInfo,
+      modules: modules,
+      initials: self.initials,
+      injections: self.injections,
       names: self.names,
       isDefault: self.isDefault,
       lifeTime: self.lifeTime)
   }
 
+  var modules: [DIModuleType]
   var lifeTime = DILifeTime.default
-	var initializerDoesNotNeedToBe: Bool = false
+  var initialNotNecessary: Bool = false
   var names: Set<String> = []
   var isDefault: Bool = false
+  var isProtocol: Bool = false
 
-  private var initializers: [MethodKey: Any] = [:] // method type to method
-  private var dependencies: [(_ scope: DIScope, _ obj: Any) -> ()] = []
+  fileprivate var initials: [MethodKey: Any] = [:] // method type to method
+  fileprivate var injections: [(_: DIContainer, _: Any) throws -> ()] = []
+}
+
+// Initial
+extension RType {
+  func append<Method>(initial method: Method) {
+    initials[MethodKey(describing: Method.self)] = method
+  }
+}
+
+// Injection
+extension RType {
+  func append<T>(injection method: @escaping (_: DIContainer, _: T) throws -> ()) {
+    injections.append{ try method($0, $1 as! T) }
+  }
+  
+  func appendAutoInjection<T>(by type: T.Type) {
+    injections.append{ scope, obj in
+      guard let nsObj = obj as? NSObject else {
+        return
+      }
+      
+      for variable in Mirror(reflecting: nsObj).children {
+        guard let key = variable.label, nsObj.responds(to: Selector(key)) else {
+          continue
+        }
+        
+        do {
+          try nsObj.setValue(scope.resolve(byTypeOf: nsObj), forKey: key)
+        } catch {
+          
+        }
+      }
+    }
+  }
 }

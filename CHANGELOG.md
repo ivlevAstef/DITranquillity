@@ -1,3 +1,18 @@
+# v2.0.0
+* Add documentation for migration
+* A full update documentation
+* Remove Lazy
+* Remove DynamicAssembly. Now there are late binding
+* Rename DIModule -> DIComponent and DIAssembly -> DIModule
+* Support area of vision for the components using modules
+* Add weak single
+* Add error description
+* Greatly improve old syntax
+* Separate library on modules: `Core`, `Description`, `Component`, `Module`, `Storyboard`, `Scan`, `RuntimeArgs`
+* Support auto inject properties for Obj-C types
+* Much more
+
+
 # v1.3.1
 * Support Lazy `DILazy`
 * Add documentation for lazy

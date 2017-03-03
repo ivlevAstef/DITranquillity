@@ -22,30 +22,24 @@ class RTypeContainer {
   }
 
   func copyFinal() -> RTypeContainerFinal {
-    // Hard copy method, for save unique RType
-
-    var reverseValues: [RType : [DITypeKey]] = [:]
-    for valueData in self.values.dictionary {
-      for value in valueData.1 {
-        if nil == reverseValues[value] {
-          reverseValues[value] = []
+    var map: [RType: RTypeFinal] = [:]
+    var result: [DITypeKey: [RTypeFinal]] = [:]
+    
+    for data in self.values.dictionary {
+      for rType in data.value.filter({ !$0.isProtocol }) {
+        let final = map[rType] ?? rType.copyFinal()
+        map[rType] = final // additional operation, but simple syntax
+        
+        if nil == result[data.key] {
+          result[data.key] = []
         }
-        reverseValues[value]!.append(valueData.0)
+        
+        result[data.key]!.append(final)
+        
       }
     }
 
-    var data: [DITypeKey: [RTypeFinal]] = [:]
-    for value in reverseValues {
-      let final = value.0.copyFinal()
-      for type in value.1 {
-        if nil == data[type] {
-          data[type] = []
-        }
-        data[type]!.append(final)
-      }
-    }
-
-    return RTypeContainerFinal(values: data)
+    return RTypeContainerFinal(values: result)
   }
 
   private var values = DIMultimap<DITypeKey, RType>()

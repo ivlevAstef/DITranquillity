@@ -9,21 +9,17 @@
 public typealias DIType = Any.Type
 public typealias DIMethodSignature = Any
 
-public struct DIComponent {
+public struct DITypeInfo {
   public let type: DIType
   public let file: String
   public let line: Int
 }
 
-public extension DIComponent {
-  public var description: String {
-    return "<Registered component in file: \(file) on line: \(line) for type: \(String(describing: type))>"
-  }
-}
-
+//////////////// lifetime
 public enum DILifeTime: Equatable {
   case single
   case lazySingle
+  case weakSingle
   case perScope
   case perDependency
   

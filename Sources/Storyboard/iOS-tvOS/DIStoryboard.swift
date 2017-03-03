@@ -9,7 +9,7 @@
 import UIKit
 
 public final class DIStoryboard: UIStoryboard {
-  public required init(name: String, bundle storyboardBundleOrNil: Bundle?, container: DIScope) {
+  public required init(name: String, bundle storyboardBundleOrNil: Bundle?, container: DIContainer) {
     storyboard = _DIStoryboardBase.create(name, bundle: storyboardBundleOrNil)
     super.init()
     storyboard.resolver = DIStoryboardResolver(container: container)
@@ -29,29 +29,39 @@ public final class DIStoryboard: UIStoryboard {
 public extension DIContainerBuilder {
   @discardableResult
   public func register<T: UIViewController>(vc type: T.Type, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
-    return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: type, file: file, line: line))
-			.asSelf()
-			.initializerDoesNotNeedToBe()
+    return registrationBuilder(file: file, line: line)
+      .as(.self)
+      .initialNotNecessary()
   }
 }
 
-public extension DIRegistrationBuilder where ImplObj: UIViewController {
-	@discardableResult
-	public func initializer<T: UIViewController>(byNib type: T.Type) -> Self {
-		rType.setInitializer { UIViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T }
-		return self
-	}
-	
-	@discardableResult
-	public func initializer(byStoryboard storyboard: UIStoryboard, identifier: String) -> Self {
-		rType.setInitializer { storyboard.instantiateViewController(withIdentifier: identifier) }
-		return self
-	}
-	
-	@discardableResult
-	public func initializer(byStoryboard storyboard: @escaping (_ scope: DIScope) -> UIStoryboard, identifier: String) -> Self {
-		rType.setInitializer { scope in storyboard(scope).instantiateViewController(withIdentifier: identifier) }
-		return self
-	}
+// ViewController
+public extension DIRegistrationBuilder where Impl: UIViewController {
+  @discardableResult
+  public func initial<T: UIViewController>(nib type: T.Type) -> Self {
+    rType.append(initial: { () throws -> T in UIViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T })
+    return self
+  }
+  
+  @discardableResult
+  public func initial(useStoryboard storyboard: UIStoryboard, identifier: String) -> Self {
+    rType.append(initial: { () throws -> UIViewController in storyboard.instantiateViewController(withIdentifier: identifier) })
+    return self
+  }
+  
+  @discardableResult
+  public func initial(useStoryboard closure: @escaping (DIContainer) throws -> UIStoryboard, identifier: String) -> Self {
+    rType.append(initial: { container in try closure(container).instantiateViewController(withIdentifier: identifier) })
+    return self
+  }
+}
+
+// Storyboard
+public extension DIRegistrationBuilder where Impl: UIStoryboard {
+  @discardableResult
+  public func initial(name: String, bundle storyboardBundleOrNil: Bundle?) -> Self {
+    self.initial { (c) throws -> Impl in DIStoryboard(name: name, bundle: storyboardBundleOrNil, container: c) as! Impl }
+    return self
+  }
 }
 
