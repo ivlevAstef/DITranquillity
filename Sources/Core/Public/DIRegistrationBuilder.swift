@@ -111,6 +111,17 @@ public final class DIRegistrationBuilder<Impl> {
     if !isTypeSet {
       self.as(.self)
     }
+    
+    #if ENABLE_DI_LOGGER
+      LoggerComposite.instance.log(.registration, msg:
+        "Registration typeInfo: \(rType.typeInfo) with lifetime: \(rType.lifeTime) other:\n" +
+        "  names: \(rType.names)\n" +
+        "  is default: \(rType.isDefault)\n" +
+        "  is protocol: \(rType.isProtocol)\n" +
+        "  has initial: \(rType.hasInitial) \(rType.initialNotNecessary ? "with initial not necessary":"")\n" +
+        "  injections count: \(rType.injectionsCount - (isAutoInjection ? 1:0)) \(isAutoInjection ? "and has auto injection":"")\n"
+      )
+    #endif
   }
   
   var isTypeSet: Bool = false

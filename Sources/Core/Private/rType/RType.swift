@@ -9,8 +9,6 @@
 class RType: RTypeBase {
   typealias MethodKey = String
 
-  var hasInitial: Bool { return !initials.isEmpty }
-
   init(typeInfo: DITypeInfo, modules: [DIModuleType]) {
     self.modules = modules
     super.init(typeInfo: typeInfo)
@@ -26,6 +24,9 @@ class RType: RTypeBase {
       lifeTime: self.lifeTime)
   }
 
+  var hasInitial: Bool { return !initials.isEmpty }
+  var injectionsCount: Int { return injections.count }
+  
   var modules: [DIModuleType]
   var lifeTime = DILifeTime.default
   var initialNotNecessary: Bool = false

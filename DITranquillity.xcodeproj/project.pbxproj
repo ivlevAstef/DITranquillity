@@ -17,6 +17,9 @@
 		11404C8D1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11404C8C1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift */; };
 		11404C8E1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11404C8C1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift */; };
 		11404C8F1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11404C8C1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift */; };
+		11535FCA1E6E560200577FA5 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11535FC91E6E560200577FA5 /* Logger.swift */; };
+		11535FCB1E6E560200577FA5 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11535FC91E6E560200577FA5 /* Logger.swift */; };
+		11535FCC1E6E560200577FA5 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11535FC91E6E560200577FA5 /* Logger.swift */; };
 		115C24C81E6527CA00CC8BC7 /* Synchronize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C24C71E6527CA00CC8BC7 /* Synchronize.swift */; };
 		115C24C91E6527CA00CC8BC7 /* Synchronize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C24C71E6527CA00CC8BC7 /* Synchronize.swift */; };
 		115C24CA1E6527CA00CC8BC7 /* Synchronize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C24C71E6527CA00CC8BC7 /* Synchronize.swift */; };
@@ -134,6 +137,7 @@
 		110917111E4A43120078A5AE /* DIModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIModule.swift; sourceTree = "<group>"; };
 		1123CD7D1E647CC1004D52F9 /* LateBindingExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LateBindingExtensions.swift; sourceTree = "<group>"; };
 		11404C8C1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIRegistrationAlternativeType.swift; sourceTree = "<group>"; };
+		11535FC91E6E560200577FA5 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		115C24C71E6527CA00CC8BC7 /* Synchronize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synchronize.swift; sourceTree = "<group>"; };
 		117798781E634E9E0020B244 /* DIModuleType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIModuleType.swift; sourceTree = "<group>"; };
 		118DBCCB1E4100BF003A7D1F /* DIStoryboardResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIStoryboardResolver.swift; sourceTree = "<group>"; };
@@ -216,6 +220,14 @@
 			path = Module;
 			sourceTree = "<group>";
 		};
+		11535FC81E6E55F600577FA5 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				11535FC91E6E560200577FA5 /* Logger.swift */,
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
 		119F4FAD1E5603A400B2DFA1 /* Component */ = {
 			isa = PBXGroup;
 			children = (
@@ -258,6 +270,7 @@
 		16640A4C1D9E1E7B00707BFC /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				11535FC81E6E55F600577FA5 /* Logger */,
 				16640A501D9E1E7B00707BFC /* Core */,
 				119F4FB21E5603EC00B2DFA1 /* Descriptions */,
 				119F4FAD1E5603A400B2DFA1 /* Component */,
@@ -563,6 +576,7 @@
 				169C0DD31DA3501F001F0AD5 /* DIContainer.swift in Sources */,
 				119F4FD11E56069200B2DFA1 /* DIContainerBuilder.Register.Arg.swift in Sources */,
 				16D7BCBB1DB086B500A29A9F /* DIScan.swift in Sources */,
+				11535FCB1E6E560200577FA5 /* Logger.swift in Sources */,
 				169C0DD41DA3501F001F0AD5 /* Helpers.swift in Sources */,
 				169C0DD51DA3501F001F0AD5 /* DIContainerBuilder.swift in Sources */,
 				169C0DD61DA3501F001F0AD5 /* DIContainer.ShortSyntax.swift in Sources */,
@@ -608,6 +622,7 @@
 				169C0E391DA35CBE001F0AD5 /* DIContainer.swift in Sources */,
 				119F4FD21E56069200B2DFA1 /* DIContainerBuilder.Register.Arg.swift in Sources */,
 				16D7BCBC1DB086B600A29A9F /* DIScan.swift in Sources */,
+				11535FCC1E6E560200577FA5 /* Logger.swift in Sources */,
 				169C0E3A1DA35CBE001F0AD5 /* Helpers.swift in Sources */,
 				169C0E3B1DA35CBE001F0AD5 /* DIContainerBuilder.swift in Sources */,
 				169C0E3C1DA35CBE001F0AD5 /* DIContainer.ShortSyntax.swift in Sources */,
@@ -653,6 +668,7 @@
 				16640A741D9E1E7B00707BFC /* DIResolver.swift in Sources */,
 				119F4FD01E56069200B2DFA1 /* DIContainerBuilder.Register.Arg.swift in Sources */,
 				16640A871D9E1E7B00707BFC /* DIContainer.swift in Sources */,
+				11535FCA1E6E560200577FA5 /* Logger.swift in Sources */,
 				16D7BCB81DB086B000A29A9F /* DIScan.swift in Sources */,
 				16640A751D9E1E7B00707BFC /* Helpers.swift in Sources */,
 				119F4FB41E5603EC00B2DFA1 /* DIDescriptions.swift in Sources */,
@@ -910,7 +926,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
-				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					ENABLE_DI_LOGGER,
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -939,7 +958,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
-				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_PREPROCESSOR_DEFINITIONS = ENABLE_DI_LOGGER;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

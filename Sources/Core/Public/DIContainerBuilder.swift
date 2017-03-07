@@ -100,11 +100,11 @@ extension DIContainerBuilder {
 extension DIContainerBuilder {
   fileprivate func initSingleLifeTime(rTypeContainer: RTypeContainerFinal, container: DIContainer) throws {
     for rType in rTypeContainer.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime }) {
-      do {
+      #if ENABLE_DI_LOGGER
+        LoggerComposite.instance.log(.createSingle, msg: "Begin resolve singleton for type info: \(rType.typeInfo)")
+        defer { LoggerComposite.instance.log(.createSingle, msg: "End resolve singleton for type info: \(rType.typeInfo)") }
+      #endif
       _ = try container.resolve(RType: rType)
-      } catch {
-        throw DIError.whileCreateSingleton(typeInfo: rType.typeInfo, stack: error as! DIError)
-      }
     }
   }
 }

@@ -14,19 +14,6 @@ extension DITypeInfo: CustomStringConvertible {
   }
 }
 
-extension DIResolveStyle: CustomStringConvertible {
-  public var description: String {
-    switch self {
-    case .one:
-      return "resolve one"
-    case .many:
-      return "resolve many"
-    case .byName(let name):
-      return "resolve by name: \(name)"
-    }
-  }
-}
-
 extension DIError: CustomStringConvertible {
   public var description: String {
     switch self {
@@ -53,15 +40,6 @@ extension DIError: CustomStringConvertible {
       
     case .build(let errors):
       return "\nList:\n\(multiLine(errors))\n"
-    case .stack(let type, let child, let resolveStyle):
-      if case .stack(_,_,_) = child {
-        return "\(child)\t\(type) use \(resolveStyle)\n"
-      }
-      return "\(child)Stack:\n\t\(type) use \(resolveStyle)\n"
-    case .byCall(let file, let line, let function, let stack):
-      return "\nBy call function: \(function) in file: \((file as NSString).lastPathComponent) on line: \(line).\nDescription: \(stack)"
-    case .whileCreateSingleton(let typeInfo, let stack):
-      return "\nWhile create singleton for \(typeInfo)\n\(stack)\n"
     }
   }
 

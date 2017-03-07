@@ -42,58 +42,88 @@ class DIResolver {
 
   
   func resolve<T, M>(_ container: DIContainer, type: T.Type, method: @escaping Method<M>) throws -> T {
-    do {
-      let rTypes = try check(type: type)
+    #if ENABLE_DI_LOGGER
+      LoggerComposite.instance.log(.resolving, msg: "Begin resolve type: \(type)")
+      defer { LoggerComposite.instance.log(.resolving, msg: "End resolve type: \(type)") }
+    #endif
+    let rTypes = try check(type: type)
 
-      let index = 1 == rTypes.count ? 0 : rTypes.index(where: { $0.isDefault })!
-      return try resolveUseRType(container, pair: RTypeWithName(rTypes[index]), getter: .method(method))
-    } catch {
-      throw DIError.stack(type: type, child: error as! DIError, resolveStyle: .one)
-    }
+    let index = 1 == rTypes.count ? 0 : rTypes.index(where: { $0.isDefault })!
+    let rType = rTypes[index]
+    
+    #if ENABLE_DI_LOGGER
+      LoggerComposite.instance.log(.found(typeInfo: rType.typeInfo), msg: "Found type info: \(rType.typeInfo) for resolve type: \(type)")
+    #endif
+    
+    return try resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
   }
   
   func resolve<T, M>(_ container: DIContainer, name: String, type: T.Type, method: @escaping Method<M>) throws -> T {
-    do {
-      let rTypes = try check(name: name, type: type)
-      
-      let rType = rTypes.first(where: { $0.has(name: name) })!
-      return try resolveUseRType(container, pair: RTypeWithName(rType, name), getter: .method(method))
-    } catch {
-      throw DIError.stack(type: type, child: error as! DIError, resolveStyle: .byName(name: name))
-    }
+    #if ENABLE_DI_LOGGER
+      LoggerComposite.instance.log(.resolving, msg: "Begin resolve type: \(type) with name: \(name)")
+      defer { LoggerComposite.instance.log(.resolving, msg: "End resolve type: \(type) with name: \(name)") }
+    #endif
+    
+    let rTypes = try check(name: name, type: type)
+    
+    let rType = rTypes.first(where: { $0.has(name: name) })!
+    
+    #if ENABLE_DI_LOGGER
+      LoggerComposite.instance.log(.found(typeInfo: rType.typeInfo), msg: "Found type info: \(rType.typeInfo) for resolve type: \(type) with name: \(name)")
+    #endif
+    
+    return try resolveUseRType(container, pair: RTypeWithName(rType, name), getter: .method(method))
   }
   
   func resolve<T>(_ container: DIContainer, obj: T) throws {
     let type = type(of: obj)
-    do {
-      let rTypes = try check(type: type)
-      
-      let index = 1 == rTypes.count ? 0 : rTypes.index(where: { $0.isDefault })!
-      _ = try resolveUseRType(container, pair: RTypeWithName(rTypes[index]), getter: .object(obj) as Getter<T, Void>)
-    } catch {
-      throw DIError.stack(type: type, child: error as! DIError, resolveStyle: .one)
-    }
+    
+    #if ENABLE_DI_LOGGER
+      LoggerComposite.instance.log(.resolving, msg: "Begin resolve obj: \(obj) with type: \(type)")
+      defer { LoggerComposite.instance.log(.resolving, msg: "End resolve obj: \(obj) with type: \(type)") }
+    #endif
+    
+    let rTypes = try check(type: type)
+    
+    let index = 1 == rTypes.count ? 0 : rTypes.index(where: { $0.isDefault })!
+    let rType = rTypes[index]
+    
+    #if ENABLE_DI_LOGGER
+      LoggerComposite.instance.log(.found(typeInfo: rType.typeInfo), msg: "Found type info: \(rType.typeInfo) for resolve type: \(type)")
+    #endif
+    
+    _ = try resolveUseRType(container, pair: RTypeWithName(rType), getter: .object(obj) as Getter<T, Void>)
   }
 
   func resolveMany<T, M>(_ container: DIContainer, type: T.Type, method: @escaping Method<M>) throws -> [T] {
-    do {
-      let rTypes = try getTypes(type)
+    #if ENABLE_DI_LOGGER
+      LoggerComposite.instance.log(.resolving, msg: "Begin resolve many type: \(type)")
+      defer { LoggerComposite.instance.log(.resolving, msg: "End resolve many type: \(type)") }
+    #endif
+    
+    let rTypes = try getTypes(type)
+    
+    return try rTypes.map { rType in
+      #if ENABLE_DI_LOGGER
+        LoggerComposite.instance.log(.found(typeInfo: rType.typeInfo), msg: "Found type info: \(rType.typeInfo) for resolve type: \(type)")
+      #endif
       
-      return try rTypes.map { rType in
-        do {
-          return try resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
-        } catch DIError.recursiveInitialization {
-          return nil // Ignore recursive initialization object for many
-        } catch DIError.noAccess {
-          return nil // Ignore no access object for many
-        }
-      }.filter{ $0 != nil }.map{ $0! }
-    } catch {
-      throw DIError.stack(type: type, child: error as! DIError, resolveStyle: .many)
-    }
+      do {
+        return try resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
+      } catch DIError.recursiveInitialization {
+        return nil // Ignore recursive initialization object for many
+      } catch DIError.noAccess {
+        return nil // Ignore no access object for many
+      }
+    }.filter{ $0 != nil }.map{ $0! }
   }
 
   func resolve<M>(_ container: DIContainer, rType: RTypeFinal, method: @escaping Method<M>) throws -> Any {
+    #if ENABLE_DI_LOGGER
+      LoggerComposite.instance.log(.resolving, msg: "Begin resolve by type info: \(rType.typeInfo)")
+      defer { LoggerComposite.instance.log(.resolving, msg: "End resolve by type info: \(rType.typeInfo)") }
+    #endif
+    
     return try resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
   }
   
@@ -169,7 +199,8 @@ class DIResolver {
   private func resolveSingle<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
     return try _resolveUniversal(container, pair: pair, getter: getter,
                                  get: { Cache.single[$0] },
-                                 set: { Cache.single[$0] = $1 })
+                                 set: { Cache.single[$0] = $1 },
+                                 cacheName: "single")
   }
   
   private func resolveWeakSingle<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
@@ -179,31 +210,42 @@ class DIResolver {
     
     return try _resolveUniversal(container, pair: pair, getter: getter,
                                  get: { Cache.weakSingle[$0]?.value },
-                                 set: { Cache.weakSingle[$0] = Weak(value: $1) })
+                                 set: { Cache.weakSingle[$0] = Weak(value: $1) },
+                                 cacheName: "weak single")
   }
 
   private func resolvePerScope<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
     return try _resolveUniversal(container, pair: pair, getter: getter,
                                  get: { container.scope[$0] },
-                                 set: { container.scope[$0] = $1 })
+                                 set: { container.scope[$0] = $1 },
+                                 cacheName: "perScope")
   }
   
   private func _resolveUniversal<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>,
-                                get: (_: RType.UniqueKey)->Any?, set: (_:RType.UniqueKey, _:T)->()) throws -> T {
+                                 get: (_: RType.UniqueKey)->Any?, set: (_:RType.UniqueKey, _:T)->(), cacheName: String) throws -> T {
     if let obj = get(pair.uniqueKey) as? T {
       /// suspending ignore injection for new object
       guard case .object(let realObj) = getter else {
+        #if ENABLE_DI_LOGGER
+          LoggerComposite.instance.log(.resolve(.cache), msg: "Resolve object: \(obj) from cache \(cacheName)")
+        #endif
         return obj
       }
       
       /// suspending double injection
       if obj as AnyObject === realObj as AnyObject {
+        #if ENABLE_DI_LOGGER
+          LoggerComposite.instance.log(.resolve(.cache), msg: "Resolve object: \(obj) from cache \(cacheName)")
+        #endif
         return obj
       }
     }
     
     let obj: T = try resolvePerDependency(container, pair: pair, getter: getter)
     set(pair.uniqueKey, obj)
+    #if ENABLE_DI_LOGGER
+      LoggerComposite.instance.log(.cached, msg: "Add object: \(obj) in cache \(cacheName)")
+    #endif
     return obj
   }
 
@@ -227,13 +269,18 @@ class DIResolver {
     }
 
     if circular.recursive.isEmpty {
-      try setupAllDependency(container)
+      try setupAllInjections(container)
     }
 
     return obj
   }
 
-  private func setupDependency(_ container: DIContainer, pair: RTypeWithName, obj: Any) throws {
+  private func setupInjections(_ container: DIContainer, pair: RTypeWithName, obj: Any) throws {
+    #if ENABLE_DI_LOGGER
+      LoggerComposite.instance.log(.injection, msg: "Begin injections in object: \(obj) with typeInfo: \(pair.typeInfo)")
+      defer { LoggerComposite.instance.log(.injection, msg: "End injections in object: \(obj) with typeInfo: \(pair.typeInfo)") }
+    #endif
+    
     let mapSave = circular.objMap
 
     circular.recursive.append(pair.uniqueKey)
@@ -244,19 +291,22 @@ class DIResolver {
     circular.recursive.removeLast()
   }
 
-  private func setupAllDependency(_ container: DIContainer) throws {
+  private func setupAllInjections(_ container: DIContainer) throws {
     repeat {
       for (pair, obj) in circular.objects {
-        try setupDependency(container, pair: pair, obj: obj)
+        try setupInjections(container, pair: pair, obj: obj)
         circular.objects.removeFirst()
       }
-    } while (!circular.objects.isEmpty) // because setupDependency can added into allTypes
+    } while (!circular.objects.isEmpty) // because setupInjections can added into allTypes
 
     circular.clean()
   }
 
   private func getObject<T, M>(pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
     if circular.isCycle(pair: pair), let obj = circular.objMap[pair.uniqueKey] {
+      #if ENABLE_DI_LOGGER
+        LoggerComposite.instance.log(.resolve(.cache), msg: "Resolve object: \(obj) use circular cache")
+      #endif
       return obj as! T
     }
 
@@ -264,6 +314,10 @@ class DIResolver {
     switch getter {
     case .object(let obj):
       finalObj = obj
+      
+      #if ENABLE_DI_LOGGER
+        LoggerComposite.instance.log(.resolve(.use), msg: "Use object: \(obj)")
+      #endif
       
     case .method(let method):
       recursiveInitializer.insert(pair.uniqueKey)
@@ -275,6 +329,10 @@ class DIResolver {
       }
       
       finalObj = obj
+      
+      #if ENABLE_DI_LOGGER
+        LoggerComposite.instance.log(.resolve(.new), msg: "Resolve object: \(obj)")
+      #endif
     }
 
     circular.objMap[pair.uniqueKey] = finalObj

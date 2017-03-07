@@ -6,6 +6,8 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
+import Foundation
+
 protocol DITypeGetter {
   static var type: Any.Type { get }
 }
@@ -29,9 +31,8 @@ func removeTypeWrappers(_ type: Any.Type) -> Any.Type {
 
 /// rethrow error with additional information
 func ret<T>(_ file: String, _ line: Int, _ function: String = #function, closure: () throws -> T) throws -> T {
-  do {
-    return try closure()
-  } catch {
-    throw DIError.byCall(file: file, line: line, function: function, stack: error as! DIError)
-  }
+  #if ENABLE_DI_LOGGER
+    LoggerComposite.instance.log(.call, msg: "Call function: \(function) in file: \((file as NSString).lastPathComponent) on line: \(line) for get type: \(T.self)")
+  #endif
+  return try closure()
 }
