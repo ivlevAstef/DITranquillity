@@ -7,22 +7,27 @@
 //
 
 public indirect enum DIError: Error {
-  case typeIsNotFound(type: DIType)
-  case typeIsNotFoundForName(type: DIType, name: String, typesInfo: [DITypeInfo])
-  case notSpecifiedInitializationMethodFor(typeInfo: DITypeInfo)
+  /// Until Resolve
+  case typeNotFound(type: DIType)
+  case typeForNameNotFound(type: DIType, name: String, typesInfo: [DITypeInfo])
 
-  case initializationMethodWithSignatureIsNotFoundFor(typeInfo: DITypeInfo, signature: DIMethodSignature)
+  case initialMethodNotFound(typeInfo: DITypeInfo, signature: DIMethodSignature)
 
-  case pluralSpecifiedDefaultType(type: DIType, typesInfo: [DITypeInfo])
-  case defaultTypeIsNotSpecified(type: DIType, typesInfo: [DITypeInfo])
+  case ambiguousType(type: DIType, typesInfo: [DITypeInfo])
+  
+  case incorrectType(requestedType: DIType, realType: DIType, typeInfo: DITypeInfo)
 
-  case intersectionNamesForType(type: DIType, names: Set<String>, typesInfo: [DITypeInfo])
-
-  case typeIsIncorrect(requestedType: DIType, realType: DIType, typeInfo: DITypeInfo)
-
-  case recursiveInitialization(typeInfo: DITypeInfo)
+  case recursiveInitial(typeInfo: DITypeInfo)
 
   case noAccess(typesInfo: [DITypeInfo], accessModules: [String])
+  
+  /// Until Build
+  
+  case noSpecifiedInitialMethod(typeInfo: DITypeInfo)
+  
+  case intersectionNames(type: DIType, names: Set<String>, typesInfo: [DITypeInfo])
+  
+  case pluralDefaultAd(type: DIType, typesInfo: [DITypeInfo])
   
   /// Support
   case build(errors: [DIError])

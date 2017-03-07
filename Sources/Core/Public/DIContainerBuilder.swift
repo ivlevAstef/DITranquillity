@@ -59,12 +59,20 @@ extension DIContainerBuilder {
 
     for rType in allTypes {
       if !(rType.hasInitial || rType.initialNotNecessary) {
-        errors.append(DIError.notSpecifiedInitializationMethodFor(typeInfo: rType.typeInfo))
+        let diError = DIError.noSpecifiedInitialMethod(typeInfo: rType.typeInfo)
+        #if ENABLE_DI_LOGGER
+          LoggerComposite.instance.log(.error(diError), msg: "No specified initial method for type info: \(rType.typeInfo)")
+        #endif
+        errors.append(diError)
       }
     }
 
     if !errors.isEmpty {
-      throw DIError.build(errors: errors)
+      let diError = DIError.build(errors: errors)
+      #if ENABLE_DI_LOGGER
+        LoggerComposite.instance.log(.error(diError), msg: "build errors count: \(errors.count)")
+      #endif
+      throw diError
     }
   }
 
@@ -77,7 +85,11 @@ extension DIContainerBuilder {
 
     let defaultTypes = rTypes.filter{ $0.isDefault }
     if defaultTypes.count > 1 {
-      errors.append(DIError.pluralSpecifiedDefaultType(type: superType, typesInfo: defaultTypes.map { $0.typeInfo }))
+      let diError = DIError.pluralDefaultAd(type: superType, typesInfo: defaultTypes.map { $0.typeInfo })
+      #if ENABLE_DI_LOGGER
+        LoggerComposite.instance.log(.error(diError), msg: "Plural default ad for type: \(superType)")
+      #endif
+      errors.append(diError)
     }
   }
 
@@ -91,7 +103,11 @@ extension DIContainerBuilder {
     }
     
     if !intersect.isEmpty {
-      errors.append(DIError.intersectionNamesForType(type: superType, names: intersect, typesInfo: rTypes.map{ $0.typeInfo }))
+      let diError = DIError.intersectionNames(type: superType, names: intersect, typesInfo: rTypes.map{ $0.typeInfo })
+      #if ENABLE_DI_LOGGER
+        LoggerComposite.instance.log(.error(diError), msg: "Intersection names: \(intersect) for type: \(superType)")
+      #endif
+      errors.append(diError)
     }
   }
 }

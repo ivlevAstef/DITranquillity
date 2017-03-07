@@ -35,12 +35,12 @@ extension DIError: Equatable {
   public static func == (a: DIError, b: DIError) -> Bool {
     switch (a, b) {
       
-    case (.typeIsNotFound(let t1), .typeIsNotFound(let t2)) where equals(t1, t2): return true
-    case (.notSpecifiedInitializationMethodFor(let t1), .notSpecifiedInitializationMethodFor(let t2)) where equals(t1, t2): return true
-    case (.pluralSpecifiedDefaultType(let t1, let c1), .pluralSpecifiedDefaultType(let t2, let c2)) where equals(t1, t2) && c1 == c2: return true
-    case (.defaultTypeIsNotSpecified(let t1, let c1), .defaultTypeIsNotSpecified(let t2, let c2)) where equals(t1, t2) && c1 == c2: return true
+    case (.typeNotFound(let t1), .typeNotFound(let t2)) where equals(t1, t2): return true
+    case (.noSpecifiedInitialMethod(let t1), .noSpecifiedInitialMethod(let t2)) where equals(t1, t2): return true
+    case (.pluralDefaultAd(let t1, let c1), .pluralDefaultAd(let t2, let c2)) where equals(t1, t2) && c1 == c2: return true
+    case (.ambiguousType(let t1, let c1), .ambiguousType(let t2, let c2)) where equals(t1, t2) && c1 == c2: return true
       
-    case (.typeIsIncorrect(let t1, let rt1, let c1), .typeIsIncorrect(let t2, let rt2, let c2)) where equals(t1, t2) && equals(rt1, rt2) && c1 == c2: return true
+    case (.incorrectType(let t1, let rt1, let c1), .incorrectType(let t2, let rt2, let c2)) where equals(t1, t2) && equals(rt1, rt2) && c1 == c2: return true
     case (.build(let errs1), .build(let errs2)) where errs1 == errs2: return true
       
     default: return false
@@ -65,7 +65,7 @@ class DITranquillityTests_Build: XCTestCase {
       try builder.build()
     } catch DIError.build(let errors) {
       XCTAssertEqual(errors, [
-        DIError.notSpecifiedInitializationMethodFor(typeInfo: DITypeInfo(type: TestProtocol.self, file: file, line: line))
+        DIError.noSpecifiedInitialMethod(typeInfo: DITypeInfo(type: TestProtocol.self, file: file, line: line))
       ])
       return
     } catch {
@@ -104,7 +104,7 @@ class DITranquillityTests_Build: XCTestCase {
       try builder.build()
     } catch DIError.build(let errors) {
       XCTAssertEqual(errors, [
-        DIError.pluralSpecifiedDefaultType(type: TestProtocol.self, typesInfo: [
+        DIError.pluralDefaultAd(type: TestProtocol.self, typesInfo: [
           DITypeInfo(type: TestClass1.self, file: file, line: lineClass1),
           DITypeInfo(type: TestClass2.self, file: file, line: lineClass2)
         ])
@@ -196,7 +196,7 @@ class DITranquillityTests_Build: XCTestCase {
       do {
         let type: TestClass1 = try container.resolve()
         print("\(type)")
-      } catch DIError.typeIsNotFound(let type) {
+      } catch DIError.typeNotFound(let type) {
           XCTAssert(equals(type, TestClass1.self))
           return
       } catch {

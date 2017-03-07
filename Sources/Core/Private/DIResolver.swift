@@ -23,7 +23,11 @@ class DIResolver {
     let rTypes = try getTypes(type)
     
     if rTypes.count > 1 && !rTypes.contains(where: { $0.isDefault }) {
-      throw DIError.defaultTypeIsNotSpecified(type: type, typesInfo: rTypes.map{ $0.typeInfo })
+      let diError = DIError.ambiguousType(type: type, typesInfo: rTypes.map{ $0.typeInfo })
+      #if ENABLE_DI_LOGGER
+        LoggerComposite.instance.log(.error(diError), msg: "Not found default type: \(type)")
+      #endif
+      throw diError
     }
     
     return rTypes
@@ -34,7 +38,11 @@ class DIResolver {
     let rTypes = try getTypes(type)
     
     if !rTypes.contains(where: { $0.has(name: name) }) {
-      throw DIError.typeIsNotFoundForName(type: type, name: name, typesInfo: rTypes.map { $0.typeInfo })
+      let diError = DIError.typeForNameNotFound(type: type, name: name, typesInfo: rTypes.map { $0.typeInfo })
+      #if ENABLE_DI_LOGGER
+        LoggerComposite.instance.log(.error(diError), msg: "Not found type: \(type) for name: \(name)")
+      #endif
+      throw diError
     }
     
     return rTypes
@@ -43,8 +51,8 @@ class DIResolver {
   
   func resolve<T, M>(_ container: DIContainer, type: T.Type, method: @escaping Method<M>) throws -> T {
     #if ENABLE_DI_LOGGER
-      LoggerComposite.instance.log(.resolving, msg: "Begin resolve type: \(type)")
-      defer { LoggerComposite.instance.log(.resolving, msg: "End resolve type: \(type)") }
+      LoggerComposite.instance.log(.resolving(.begin), msg: "Begin resolve type: \(type)")
+      defer { LoggerComposite.instance.log(.resolving(.end), msg: "End resolve type: \(type)") }
     #endif
     let rTypes = try check(type: type)
 
@@ -60,8 +68,8 @@ class DIResolver {
   
   func resolve<T, M>(_ container: DIContainer, name: String, type: T.Type, method: @escaping Method<M>) throws -> T {
     #if ENABLE_DI_LOGGER
-      LoggerComposite.instance.log(.resolving, msg: "Begin resolve type: \(type) with name: \(name)")
-      defer { LoggerComposite.instance.log(.resolving, msg: "End resolve type: \(type) with name: \(name)") }
+      LoggerComposite.instance.log(.resolving(.begin), msg: "Begin resolve type: \(type) with name: \(name)")
+      defer { LoggerComposite.instance.log(.resolving(.end), msg: "End resolve type: \(type) with name: \(name)") }
     #endif
     
     let rTypes = try check(name: name, type: type)
@@ -79,8 +87,8 @@ class DIResolver {
     let type = type(of: obj)
     
     #if ENABLE_DI_LOGGER
-      LoggerComposite.instance.log(.resolving, msg: "Begin resolve obj: \(obj) with type: \(type)")
-      defer { LoggerComposite.instance.log(.resolving, msg: "End resolve obj: \(obj) with type: \(type)") }
+      LoggerComposite.instance.log(.resolving(.begin), msg: "Begin resolve obj: \(obj) with type: \(type)")
+      defer { LoggerComposite.instance.log(.resolving(.end), msg: "End resolve obj: \(obj) with type: \(type)") }
     #endif
     
     let rTypes = try check(type: type)
@@ -97,8 +105,8 @@ class DIResolver {
 
   func resolveMany<T, M>(_ container: DIContainer, type: T.Type, method: @escaping Method<M>) throws -> [T] {
     #if ENABLE_DI_LOGGER
-      LoggerComposite.instance.log(.resolving, msg: "Begin resolve many type: \(type)")
-      defer { LoggerComposite.instance.log(.resolving, msg: "End resolve many type: \(type)") }
+      LoggerComposite.instance.log(.resolving(.begin), msg: "Begin resolve many type: \(type)")
+      defer { LoggerComposite.instance.log(.resolving(.end), msg: "End resolve many type: \(type)") }
     #endif
     
     let rTypes = try getTypes(type)
@@ -110,7 +118,7 @@ class DIResolver {
       
       do {
         return try resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
-      } catch DIError.recursiveInitialization {
+      } catch DIError.recursiveInitial {
         return nil // Ignore recursive initialization object for many
       } catch DIError.noAccess {
         return nil // Ignore no access object for many
@@ -120,8 +128,8 @@ class DIResolver {
 
   func resolve<M>(_ container: DIContainer, rType: RTypeFinal, method: @escaping Method<M>) throws -> Any {
     #if ENABLE_DI_LOGGER
-      LoggerComposite.instance.log(.resolving, msg: "Begin resolve by type info: \(rType.typeInfo)")
-      defer { LoggerComposite.instance.log(.resolving, msg: "End resolve by type info: \(rType.typeInfo)") }
+      LoggerComposite.instance.log(.resolving(.begin), msg: "Begin resolve by type info: \(rType.typeInfo)")
+      defer { LoggerComposite.instance.log(.resolving(.end), msg: "End resolve by type info: \(rType.typeInfo)") }
     #endif
     
     return try resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
@@ -148,7 +156,11 @@ class DIResolver {
     let type = removeTypeWrappers(inputType)
 
     guard let rTypes = rTypeContainer[type], !rTypes.isEmpty else {
-      throw DIError.typeIsNotFound(type: inputType)
+      let diError = DIError.typeNotFound(type: inputType)
+      #if ENABLE_DI_LOGGER
+        LoggerComposite.instance.log(.error(diError), msg: "Not found type: \(type)")
+      #endif
+      throw diError
     }
     
     let optionalLast = synchronize(rTypeStackMonitor) { rTypeStack.last }
@@ -160,7 +172,11 @@ class DIResolver {
       }
      
       if rTypesFiltered.isEmpty {
-        throw DIError.noAccess(typesInfo: rTypes.map{ $0.typeInfo }, accessModules: rTypes.flatMap{ $0.modules.map { $0.name } })
+        let diError = DIError.noAccess(typesInfo: rTypes.map{ $0.typeInfo }, accessModules: rTypes.flatMap{ $0.modules.map { $0.name } })
+        #if ENABLE_DI_LOGGER
+          LoggerComposite.instance.log(.error(diError), msg: "No access to type: \(inputType)")
+        #endif
+        throw diError
       }
       
       return rTypesFiltered
@@ -251,7 +267,11 @@ class DIResolver {
 
   private func resolvePerDependency<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
     if recursiveInitializer.contains(pair.uniqueKey) {
-      throw DIError.recursiveInitialization(typeInfo: pair.rType.typeInfo)
+      let diError = DIError.recursiveInitial(typeInfo: pair.rType.typeInfo)
+      #if ENABLE_DI_LOGGER
+        LoggerComposite.instance.log(.error(diError), msg: "Recursive initial for type info: \(pair.rType.typeInfo)")
+      #endif
+      throw diError
     }
 
     for recursiveTypeKey in circular.recursive {
@@ -325,7 +345,11 @@ class DIResolver {
       recursiveInitializer.remove(pair.uniqueKey)
       
       guard let obj = objAny as? T else {
-        throw DIError.typeIsIncorrect(requestedType: T.self, realType: type(of: objAny), typeInfo: pair.typeInfo)
+        let diError = DIError.incorrectType(requestedType: T.self, realType: type(of: objAny), typeInfo: pair.typeInfo)
+        #if ENABLE_DI_LOGGER
+          LoggerComposite.instance.log(.error(diError), msg: "incorrect type. requested type: \(T.self); real type: \(type(of: objAny))")
+        #endif
+        throw diError
       }
       
       finalObj = obj

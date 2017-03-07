@@ -7,7 +7,12 @@
 //
 
 public enum LogStyle {
-  case resolving
+  case resolving(ResolvingStyle)
+  public enum ResolvingStyle {
+    case begin
+    case end
+  }
+  
   case found(typeInfo: DITypeInfo)
   case resolve(ResolveStyle)
   public enum ResolveStyle {
@@ -20,6 +25,8 @@ public enum LogStyle {
   case call
   case registration
   case createSingle
+  
+  case error(DIError)
 }
 
 public protocol Logger: class {
