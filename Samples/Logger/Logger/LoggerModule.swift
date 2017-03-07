@@ -8,23 +8,11 @@
 
 import DITranquillity
 
-class LoggerModule: DIModule {
-	func load(builder: DIContainerBuilder) {
-		builder.register{ ConsoleLogger() }
-			.asType(Logger.self)
-			.lifetime(.single)
-    
-		builder.register{ FileLogger(file: "file.log") }
-			.asType(Logger.self)
-			.lifetime(.single)
-    
-		builder.register{ ServerLogger(server: "http://server.com/") }
-			.asType(Logger.self)
-			.lifetime(.single)
-    
-		builder.register{ MainLogger(loggers: **!$0) }
-			.asType(Logger.self)
-			.asDefault()
-			.lifetime(.single)		
-	}
+public final class LoggerModule: DIModule {
+	public var components: [DIComponent] { return [ LoggerComponent() ] }
+	
+	public var dependencies: [DIModule] { return [ ] }
+  
+  public init() { }
 }
+

@@ -7,22 +7,43 @@
 //
 
 public final class DIContainerBuilder {
-  public init() { }
+  public init() {
+    self.rTypeContainer = RTypeContainer()
+    self.currentModules = []
+  }
 
   @discardableResult
-  public func build() throws -> DIScope {
+  public func build(f: String = #file, l: Int = #line) throws -> DIContainer {    
     try validate()
 
-    let finalContainer = rTypeContainer.copyFinal()
-    let scope = DIScope(container: finalContainer)
+    let finalRTypeContainer = rTypeContainer.copyFinal()
+    let container = DIContainer(resolver: DIResolver(rTypeContainer: finalRTypeContainer))
+    
+    try initSingleLifeTime(rTypeContainer: finalRTypeContainer, container: container)
 
-    try initSingleLifeTime(container: finalContainer, scope: scope)
-
-    return scope
+    return container
   }
   
-  let rTypeContainer = RTypeContainer()
-  fileprivate var ignoreSet: Set<String> = []
+  internal init(container: DIContainerBuilder, stack: [DIModuleType]) {
+    rTypeContainer = container.rTypeContainer
+    self.currentModules = stack
+  }
+  
+  let rTypeContainer: RTypeContainer
+  /// need for register type. But filled from components with module
+  let currentModules: [DIModuleType] // DIModuleType
+  
+  fileprivate var ignoreTypes: [String: RType] = [:]
+}
+
+extension DIContainerBuilder {
+  internal func isIgnoreReturnOld(uniqueKey key: String, set rType: RType) -> RType? {
+    if let rType = ignoreTypes[key] {
+      return rType
+    }
+    ignoreTypes[key] = rType
+    return nil
+  }
 }
 
 extension DIContainerBuilder {
@@ -37,8 +58,8 @@ extension DIContainerBuilder {
     }
 
     for rType in allTypes {
-      if !(rType.hasInitializer || rType.initializerDoesNotNeedToBe) {
-        errors.append(DIError.notSpecifiedInitializationMethodFor(component: rType.component))
+      if !(rType.hasInitial || rType.initialNotNecessary) {
+        errors.append(DIError.notSpecifiedInitializationMethodFor(typeInfo: rType.typeInfo))
       }
     }
 
@@ -47,7 +68,7 @@ extension DIContainerBuilder {
     }
   }
 
-  fileprivate func checkRTypes(_ superType: DIType, rTypes: [RType], errors: inout [DIError]) {
+  private func checkRTypes(_ superType: DIType, rTypes: [RType], errors: inout [DIError]) {
     if rTypes.count <= 1 {
       return
     }
@@ -56,11 +77,11 @@ extension DIContainerBuilder {
 
     let defaultTypes = rTypes.filter{ $0.isDefault }
     if defaultTypes.count > 1 {
-      errors.append(DIError.pluralSpecifiedDefaultType(type: superType, components: defaultTypes.map { $0.component }))
+      errors.append(DIError.pluralSpecifiedDefaultType(type: superType, typesInfo: defaultTypes.map { $0.typeInfo }))
     }
   }
 
-  fileprivate func checkRTypesNames(_ superType: DIType, rTypes: [RType], errors: inout [DIError]) {
+  private func checkRTypesNames(_ superType: DIType, rTypes: [RType], errors: inout [DIError]) {
     var fullNames: Set<String> = []
     var intersect: Set<String> = []
 
@@ -70,25 +91,20 @@ extension DIContainerBuilder {
     }
     
     if !intersect.isEmpty {
-      errors.append(DIError.intersectionNamesForType(type: superType, names: intersect, components: rTypes.map{ $0.component }))
-    }
-  }
-  
-  fileprivate func initSingleLifeTime(container: RTypeContainerFinal, scope: DIScope) throws {
-    for rType in container.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime }) {
-      _ = try scope.resolve(RType: rType)
+      errors.append(DIError.intersectionNamesForType(type: superType, names: intersect, typesInfo: rTypes.map{ $0.typeInfo }))
     }
   }
 }
 
-extension DIContainerBuilder {
-  // auto ignore equally register
-  func ignore(uniqueKey key: String) -> Bool {
-    if ignoreSet.contains(key) {
-      return true
-    }
 
-    ignoreSet.insert(key)
-    return false
+extension DIContainerBuilder {
+  fileprivate func initSingleLifeTime(rTypeContainer: RTypeContainerFinal, container: DIContainer) throws {
+    for rType in rTypeContainer.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime }) {
+      do {
+      _ = try container.resolve(RType: rType)
+      } catch {
+        throw DIError.whileCreateSingleton(typeInfo: rType.typeInfo, stack: error as! DIError)
+      }
+    }
   }
 }

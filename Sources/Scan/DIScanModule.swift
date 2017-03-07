@@ -6,10 +6,10 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public class DIScanModule: DIScanWithInitializer<DIScanned>, DIModule {
-  public func load(builder: DIContainerBuilder) {
-    for module in getObjects().filter({ $0 is DIModule }) {
-      builder.register(module: module as! DIModule)
-    }
+public final class DIScanModule: DIScanWithInitializer<DIScanned>, DIModule {
+  public final var components: [DIComponent] { return [] }
+  
+  public final var dependencies: [DIModule] { 
+    return getObjects().filter{ $0 is DIModule }.map{ $0 as! DIModule }
   }
 }

@@ -12,7 +12,7 @@ open class DIScanned {
 }
 
 open class DIScanWithInitializer<T: DIScanned>: DIScan<T> {
-  public func getObjects() -> [T] {
+  public final func getObjects() -> [T] {
     return getTypes().map{ $0.init() }
   }
 }
@@ -41,7 +41,7 @@ open class DIScan<T: AnyObject> {
     self.bundle = bundle
   }
   
-  public func getTypes() -> [T.Type] {
+  public final func getTypes() -> [T.Type] {
     let allTypes = getAllTypes(by: T.self)
     let filterTypes = allTypes.filter{ self.predicate($0) }
     

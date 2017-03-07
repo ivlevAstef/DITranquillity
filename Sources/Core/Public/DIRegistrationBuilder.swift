@@ -6,89 +6,115 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public extension DIContainerBuilder {
-  public func register<T>(_ type: T.Type, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
-    return DIRegistrationBuilder<T>(container: self.rTypeContainer, component: DIComponent(type: type, file: file, line: line))
+// as...
+public enum DIAsSelf { case `self` }
+
+extension DIRegistrationBuilder {
+  @discardableResult
+  public func `as`(_: DIAsSelf) -> Self {
+    DIRegistrationAlternativeType<Impl, Impl>(builder: self).unsafe()
+    return self
+  }
+  
+  public func `as`<Parent>(_ parentType: Parent.Type) -> DIRegistrationAlternativeType<Impl, Parent> {
+    return DIRegistrationAlternativeType<Impl, Parent>(builder: self)
+  }
+  
+  ///short
+  public func `as`<Parent>(_ pType: Parent.Type, check: (Impl)->Parent) -> Self {
+    DIRegistrationAlternativeType<Impl, Parent>(builder: self).check(check)
+    return self
   }
 }
 
-public extension DIRegistrationBuilder {
-  // As
+public enum DISetDefault { case `default` }
+
+// set...
+extension DIRegistrationBuilder {
   @discardableResult
-  public func asSelf() -> Self {
-    isTypeSet = true
-    container.append(key: ImplObj.self, value: rType)
-    return self
-  }
-  
-  @discardableResult
-  public func asType<EquallyObj>(_ equallyType: EquallyObj.Type) -> Self {
-    isTypeSet = true
-    container.append(key: equallyType, value: rType)
-    return self
-  }
-  
-  @discardableResult
-  public func asName(_ name: String) -> Self {
+  public func set(name: String) -> Self {
     rType.names.insert(name)
     return self
   }
   
   @discardableResult
-  public func asDefault() -> Self {
+  public func set(_: DISetDefault) -> Self {
     rType.isDefault = true
     return self
   }
-  
-  // Initializer
+}
+
+// Initializer
+extension DIRegistrationBuilder {
   @discardableResult
-  public func initializer(_ method: @escaping (_ scope: DIScope) -> ImplObj) -> Self {
-    rType.setInitializer { (s) -> Any in return method(s) }
+  public func initial(_ closure: @escaping () throws -> Impl) -> Self {
+    rType.append(initial: { (_: DIContainer) throws -> Any in return try closure() })
     return self
   }
   
   @discardableResult
-  public func initializer(_ method: @escaping () -> ImplObj) -> Self {
-    rType.setInitializer { (_: DIScope) -> Any in return method() }
+  public func initial(_ closure: @escaping (DIContainer) throws -> Impl) -> Self {
+    rType.append(initial: { scope throws -> Any in return try closure(scope) })
     return self
   }
-  
-  // Dependency
+}
+
+// Injection
+extension DIRegistrationBuilder {
   @discardableResult
-  public func dependency(_ method: @escaping (_ scope: DIScope, _ obj: ImplObj) -> ()) -> Self {
-    rType.appendDependency(method)
+  public func injection(_ closure: @escaping (DIContainer, Impl) throws -> ()) -> Self {
+    rType.append(injection: closure)
     return self
   }
   
-  // LifeTime
+  @discardableResult
+  public func injection(_ method: @escaping (Impl) throws -> ()) -> Self {
+    rType.append(injection: { scope, obj in try method(obj) })
+    return self
+  }
+}
+
+// Auto Property Injection, Only for NSObject hierarchy classes and @objc properties
+extension DIRegistrationBuilder where Impl: NSObject {
+  @discardableResult
+  public func useAutoPropertyInjection() -> Self {
+    if !isAutoInjection {
+      rType.appendAutoInjection(by: Impl.self)
+      isAutoInjection = true
+    }
+    return self
+  }
+}
+
+// LifeTime
+extension DIRegistrationBuilder {
   @discardableResult
   public func lifetime(_ lifetime: DILifeTime) -> Self {
     rType.lifeTime = lifetime
     return self
   }
-	
-	
-	@discardableResult
-	public func initializerDoesNotNeedToBe() -> Self {
-		rType.initializerDoesNotNeedToBe = true
-		return self
-	}
+  
+  @discardableResult
+  public func initialNotNecessary() -> Self {
+    rType.initialNotNecessary = true
+    return self
+  }
 }
 
-
-public final class DIRegistrationBuilder<ImplObj> {
-  init(container: RTypeContainer, component: DIComponent) {
-    self.container = container
-    self.rType = RType(component: component)
+public final class DIRegistrationBuilder<Impl> {
+  init(container: DIContainerBuilder, typeInfo: DITypeInfo) {
+    self.rType = RType(typeInfo: typeInfo, modules: container.currentModules)
+    self.container = container.rTypeContainer
   }
   
   deinit {
     if !isTypeSet {
-      let _ = asSelf()
+      self.as(.self)
     }
   }
   
   var isTypeSet: Bool = false
+  var isAutoInjection: Bool = false
   let rType: RType
-  let container: RTypeContainer
+  var container: RTypeContainer!
 }

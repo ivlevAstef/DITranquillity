@@ -9,15 +9,23 @@
 import UIKit
 
 final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
-  init(container: DIScope) {
+  init(container: DIContainer) {
     self.container = container
+    self.stackSave = container.resolver.createStackSave()
   }
 
   @objc public func resolve(_ viewController: UIViewController, identifier: String) -> UIViewController {
-    _ = try? container.resolve(viewController)
+    stackSave {
+      _ = try? self.container.resolve(viewController)
+      
+      for childVC in viewController.childViewControllers {
+        _ = try? self.container.resolve(childVC)
+      }
+    }
 
     return viewController
   }
 
-  private let container: DIScope
+  private let container: DIContainer
+  private let stackSave: (() -> ()) -> ()
 }

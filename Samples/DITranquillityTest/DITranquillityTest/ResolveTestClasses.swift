@@ -76,6 +76,11 @@ class Circular3C {
 class CircularDouble2A {
   var b1: CircularDouble2B!
   var b2: CircularDouble2B!
+  
+  func set(b1: CircularDouble2B!, b2: CircularDouble2B!) {
+    self.b1 = b1
+    self.b2 = b2
+  }
 }
 
 class CircularDouble2B {

@@ -9,18 +9,19 @@
 class RTypeFinal: RTypeBase {
   typealias MethodKey = String
   
-  init(component: DIComponent, initializers: [MethodKey: Any], dependencies: [(_ scope: DIScope, _ obj: Any) -> ()], names: Set<String>, isDefault: Bool, lifeTime: DILifeTime) {
-    self.initializers = initializers
-    self.dependencies = dependencies
+  init(typeInfo: DITypeInfo, modules: [DIModuleType], initials: [MethodKey: Any], injections: [(_: DIContainer, _: Any) throws -> ()], names: Set<String>, isDefault: Bool, lifeTime: DILifeTime) {
+    self.modules = Set(modules)
+    self.initials = initials
+    self.injections = injections
     self.names = names
     self.isDefault = isDefault
     self.lifeTime = lifeTime
-    super.init(component: component)
+    super.init(typeInfo: typeInfo)
   }
   
   func new<Method, T>(_ method: (Method) throws -> T) throws -> T {
-    guard let initializer = initializers[MethodKey(describing: Method.self)] as? Method else {
-      throw DIError.initializationMethodWithSignatureIsNotFoundFor(component: component, signature: Method.self)
+    guard let initializer = initials[MethodKey(describing: Method.self)] as? Method else {
+      throw DIError.initializationMethodWithSignatureIsNotFoundFor(typeInfo: typeInfo, signature: Method.self)
     }
     
     return try method(initializer)
@@ -30,10 +31,11 @@ class RTypeFinal: RTypeBase {
     return names.contains(name)
   }
   
+  let modules: Set<DIModuleType>
   let lifeTime: DILifeTime
   let isDefault: Bool
-  let dependencies: [(_ scope: DIScope, _ obj: Any) -> ()]
+  let injections: [(_: DIContainer, _: Any) throws -> ()]
   
-  private let initializers: [MethodKey: Any]
+  private let initials: [MethodKey: Any]
   private let names: Set<String>
 }

@@ -7,22 +7,31 @@
 //
 
 protocol DITypeGetter {
-	static var type: Any.Type { get }
+  static var type: Any.Type { get }
 }
 
 extension ImplicitlyUnwrappedOptional: DITypeGetter {
-	static var type: Any.Type { return Wrapped.self  }
+  static var type: Any.Type { return Wrapped.self  }
 }
 
 extension Optional: DITypeGetter {
-	static var type: Any.Type { return Wrapped.self  }
+  static var type: Any.Type { return Wrapped.self  }
 }
 
-// It's worked but it's no good
-func removedTypeWrappers(_ type: Any.Type) -> Any.Type {
-	if let typeGetter = type as? DITypeGetter.Type {
-		return removedTypeWrappers(typeGetter.type)
-	}
-	
-	return type
+func removeTypeWrappers(_ type: Any.Type) -> Any.Type {
+  if let typeGetter = type as? DITypeGetter.Type {
+    return removeTypeWrappers(typeGetter.type)
+  }
+  
+  return type
+}
+
+
+/// rethrow error with additional information
+func ret<T>(_ file: String, _ line: Int, _ function: String = #function, closure: () throws -> T) throws -> T {
+  do {
+    return try closure()
+  } catch {
+    throw DIError.byCall(file: file, line: line, function: function, stack: error as! DIError)
+  }
 }
