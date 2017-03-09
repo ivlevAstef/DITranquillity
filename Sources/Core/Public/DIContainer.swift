@@ -9,20 +9,20 @@
 public final class DIContainer {
   typealias Method = (DIContainer) throws -> Any
 
-  public func resolve<T>(_: T.Type, f: String = #file, l: Int = #line) throws -> T {
-    return try ret(f, l) { try resolver.resolve(self, type: T.self) { (initial: Method) in try initial(self) } }
+  public func resolve<T>(_: T.Type) throws -> T {
+    return try resolver.resolve(self, type: T.self) { (initial: Method) in try initial(self) }
   }
   
-  public func resolve<T>(_: T.Type, name: String, f: String = #file, l: Int = #line) throws -> T {
-    return try ret(f, l) { try resolver.resolve(self, name: name, type: T.self) { (initial: Method) in try initial(self) } }
+  public func resolve<T>(_: T.Type, name: String) throws -> T {
+    return try resolver.resolve(self, name: name, type: T.self) { (initial: Method) in try initial(self) }
   }
   
-  public func resolveMany<T>(_: T.Type, f: String = #file, l: Int = #line) throws -> [T] {
-    return try ret(f, l) { try resolver.resolveMany(self, type: T.self) { (initial: Method) in try initial(self) } }
+  public func resolveMany<T>(_: T.Type) throws -> [T] {
+    return try resolver.resolveMany(self, type: T.self) { (initial: Method) in try initial(self) }
   }
   
-  public func resolve<T>(_ object: T, f: String = #file, l: Int = #line) throws {
-    _ = try ret(f, l) { try resolver.resolve(self, obj: object) }
+  public func resolve<T>(_ object: T) throws {
+    _ = try resolver.resolve(self, obj: object)
   }
   
   public func newLifeTimeScope() -> DIContainer {
@@ -49,22 +49,22 @@ public final class DIContainer {
 }
 
 extension DIContainer {
-  public func resolve<T>(f: String = #file, l: Int = #line) throws -> T {
-    return try resolve(T.self, f: f, l: l)
+  public func resolve<T>() throws -> T {
+    return try resolve(T.self)
   }
 
-  public func resolveMany<T>(f: String = #file, l: Int = #line) throws -> [T] {
-    return try resolveMany(T.self, f: f, l: l)
+  public func resolveMany<T>() throws -> [T] {
+    return try resolveMany(T.self)
   }
 
-  public func resolve<T>(name: String, f: String = #file, l: Int = #line) throws -> T {
-    return try resolve(T.self, name: name, f: f, l: l)
+  public func resolve<T>(name: String) throws -> T {
+    return try resolve(T.self, name: name)
   }
 }
 
 /// for runtime resolve
 extension DIContainer {
-  public func resolve<T>(byTypeOf obj: T, f: String = #file, l: Int = #line) throws -> T {
-    return try ret(f, l) { try resolver.resolve(self, type: type(of: obj)) { (initial: Method) in try initial(self) } }
+  public func resolve<T>(byTypeOf obj: T) throws -> T {
+    return try resolver.resolve(self, type: type(of: obj)) { (initial: Method) in try initial(self) }
   }
 }

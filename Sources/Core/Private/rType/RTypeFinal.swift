@@ -23,7 +23,7 @@ class RTypeFinal: RTypeBase {
     guard let initializer = initials[MethodKey(describing: Method.self)] as? Method else {
       let diError = DIError.initialMethodNotFound(typeInfo: typeInfo, signature: Method.self)
       #if ENABLE_DI_LOGGER
-        LoggerComposite.instance.log(.error(diError), msg: "Initial method not found for type info: \(typeInfo)")
+         DILoggerComposite.log(.error(diError), msg: "Initial method not found for type info: \(typeInfo)")
       #endif
       throw diError
     }

@@ -19,16 +19,13 @@ private func equals(_ t1: Any, _ t2: Any) -> Bool {
   return String(describing: t1) == String(describing: t2)
 }
 
-extension DITypeInfo: Equatable {
+extension DITypeInfo {
   init(type: DIType, file: String, line: Int) {
     self.type = type
     self.file = file
     self.line = line
   }
   
-  public static func ==(lhs: DITypeInfo, rhs: DITypeInfo) -> Bool {
-    return equals(lhs.type, rhs.type) && lhs.file == rhs.file && lhs.line == rhs.line
-  }
 }
 
 extension DIError: Equatable {

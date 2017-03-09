@@ -61,7 +61,7 @@ extension DIContainerBuilder {
       if !(rType.hasInitial || rType.initialNotNecessary) {
         let diError = DIError.noSpecifiedInitialMethod(typeInfo: rType.typeInfo)
         #if ENABLE_DI_LOGGER
-          LoggerComposite.instance.log(.error(diError), msg: "No specified initial method for type info: \(rType.typeInfo)")
+           DILoggerComposite.log(.error(diError), msg: "No specified initial method for type info: \(rType.typeInfo)")
         #endif
         errors.append(diError)
       }
@@ -70,7 +70,7 @@ extension DIContainerBuilder {
     if !errors.isEmpty {
       let diError = DIError.build(errors: errors)
       #if ENABLE_DI_LOGGER
-        LoggerComposite.instance.log(.error(diError), msg: "build errors count: \(errors.count)")
+         DILoggerComposite.log(.error(diError), msg: "build errors count: \(errors.count)")
       #endif
       throw diError
     }
@@ -87,7 +87,7 @@ extension DIContainerBuilder {
     if defaultTypes.count > 1 {
       let diError = DIError.pluralDefaultAd(type: superType, typesInfo: defaultTypes.map { $0.typeInfo })
       #if ENABLE_DI_LOGGER
-        LoggerComposite.instance.log(.error(diError), msg: "Plural default ad for type: \(superType)")
+         DILoggerComposite.log(.error(diError), msg: "Plural default ad for type: \(superType)")
       #endif
       errors.append(diError)
     }
@@ -105,7 +105,7 @@ extension DIContainerBuilder {
     if !intersect.isEmpty {
       let diError = DIError.intersectionNames(type: superType, names: intersect, typesInfo: rTypes.map{ $0.typeInfo })
       #if ENABLE_DI_LOGGER
-        LoggerComposite.instance.log(.error(diError), msg: "Intersection names: \(intersect) for type: \(superType)")
+         DILoggerComposite.log(.error(diError), msg: "Intersection names: \(intersect) for type: \(superType)")
       #endif
       errors.append(diError)
     }
@@ -115,11 +115,18 @@ extension DIContainerBuilder {
 
 extension DIContainerBuilder {
   fileprivate func initSingleLifeTime(rTypeContainer: RTypeContainerFinal, container: DIContainer) throws {
-    for rType in rTypeContainer.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime }) {
-      #if ENABLE_DI_LOGGER
-        LoggerComposite.instance.log(.createSingle, msg: "Begin resolve singleton for type info: \(rType.typeInfo)")
-        defer { LoggerComposite.instance.log(.createSingle, msg: "End resolve singleton for type info: \(rType.typeInfo)") }
-      #endif
+    let singleRTypes = rTypeContainer.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime })
+    
+    if singleRTypes.isEmpty { // for ignore log
+      return
+    }
+    
+    #if ENABLE_DI_LOGGER
+      DILoggerComposite.log(.createSingle(.begin), msg: "Begin resolve \(singleRTypes.count) singletons")
+      defer {  DILoggerComposite.log(.createSingle(.end), msg: "End resolve \(singleRTypes.count) singletons") }
+    #endif
+    
+    for rType in singleRTypes {
       _ = try container.resolve(RType: rType)
     }
   }

@@ -13,6 +13,10 @@ protocol ServiceProtocol {
 }
 
 class FooService: ServiceProtocol {
+  init() {
+    
+  }
+  
   func foo() -> String {
     return "foo"
   }
@@ -35,6 +39,7 @@ class Inject {
 
 class InjectImplicitly {
   var service: ServiceProtocol!
+  init() {}
 }
 
 class InjectOpt {

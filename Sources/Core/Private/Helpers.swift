@@ -27,12 +27,3 @@ func removeTypeWrappers(_ type: Any.Type) -> Any.Type {
   
   return type
 }
-
-
-/// rethrow error with additional information
-func ret<T>(_ file: String, _ line: Int, _ function: String = #function, closure: () throws -> T) throws -> T {
-  #if ENABLE_DI_LOGGER
-    LoggerComposite.instance.log(.call, msg: "Call function: \(function) in file: \((file as NSString).lastPathComponent) on line: \(line) for get type: \(T.self)")
-  #endif
-  return try closure()
-}

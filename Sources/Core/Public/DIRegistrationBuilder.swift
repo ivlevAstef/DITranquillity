@@ -113,7 +113,7 @@ public final class DIRegistrationBuilder<Impl> {
     }
     
     #if ENABLE_DI_LOGGER
-      LoggerComposite.instance.log(.registration, msg:
+       DILoggerComposite.log(.registration, msg:
         "Registration typeInfo: \(rType.typeInfo) with lifetime: \(rType.lifeTime) other:\n" +
         "  names: \(rType.names)\n" +
         "  is default: \(rType.isDefault)\n" +
