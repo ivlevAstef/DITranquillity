@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1105F2401E72533200CFC043 /* DIComponentScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1109FD791E724EF9002BC40A /* DIComponentScope.swift */; };
+		1105F2411E72533200CFC043 /* DIComponentScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1109FD791E724EF9002BC40A /* DIComponentScope.swift */; };
 		110917121E4A43120078A5AE /* DIModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110917111E4A43120078A5AE /* DIModule.swift */; };
 		1109FD761E724790002BC40A /* DIModuleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1109FD751E724790002BC40A /* DIModuleType.swift */; };
 		1109FD771E724790002BC40A /* DIModuleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1109FD751E724790002BC40A /* DIModuleType.swift */; };
@@ -582,6 +584,7 @@
 				169C0E1B1DA352D2001F0AD5 /* DIStoryboardBase.m in Sources */,
 				11404C8E1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift in Sources */,
 				163DDDC71DB9C84E0003DE54 /* DITypes.swift in Sources */,
+				1105F2401E72533200CFC043 /* DIComponentScope.swift in Sources */,
 				169C0DD01DA3501F001F0AD5 /* RTypeContainer.swift in Sources */,
 				169C0DD11DA3501F001F0AD5 /* DIResolver.swift in Sources */,
 				169C0DD31DA3501F001F0AD5 /* DIContainer.swift in Sources */,
@@ -629,6 +632,7 @@
 				169C0E351DA35CBE001F0AD5 /* DIStoryboardBase.m in Sources */,
 				11404C8F1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift in Sources */,
 				163DDDC81DB9C84E0003DE54 /* DITypes.swift in Sources */,
+				1105F2411E72533200CFC043 /* DIComponentScope.swift in Sources */,
 				169C0E361DA35CBE001F0AD5 /* RTypeContainer.swift in Sources */,
 				169C0E371DA35CBE001F0AD5 /* DIResolver.swift in Sources */,
 				169C0E391DA35CBE001F0AD5 /* DIContainer.swift in Sources */,
