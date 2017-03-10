@@ -19,7 +19,9 @@ public indirect enum DIError: Error {
 
   case recursiveInitial(typeInfo: DITypeInfo)
 
+  #if ENABLE_DI_MODULE
   case noAccess(typesInfo: [DITypeInfo], accessModules: [String])
+  #endif
   
   /// Until Build
   

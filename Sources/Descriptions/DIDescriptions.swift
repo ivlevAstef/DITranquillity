@@ -16,6 +16,12 @@ extension DITypeInfo: CustomStringConvertible {
 
 extension DIError: CustomStringConvertible {
   public var description: String {
+    #if ENABLE_DI_MODULE // into switch no works. or copy full switch...
+    if case .noAccess(let typesInfo, let modules) = self {
+      return "No access to \(typesInfo). This type can resolve from: \(modules)\n"
+    }
+    #endif
+    
     switch self {
     /// Until Resolve
     case .typeNotFound(let type):
@@ -30,8 +36,6 @@ extension DIError: CustomStringConvertible {
       return "Incorrect type: \(realType) for requested type: \(requestedType)\n\tUse: \(typeInfo)\n"
     case .recursiveInitial(let typeInfo):
       return "Recursive initialize into type info: \(typeInfo)\n"
-    case .noAccess(let typesInfo, let modules):
-      return "No access to \(typesInfo). This type can resolve from: \(modules)\n"
       
     /// Until Build
     case .noSpecifiedInitialMethod(let typeInfo):
@@ -44,6 +48,8 @@ extension DIError: CustomStringConvertible {
       
     case .build(let errors):
       return "\nList:\n\(multiLine(errors))\n"
+    default:
+      fatalError("No initialize full error description switch")
     }
   }
 
