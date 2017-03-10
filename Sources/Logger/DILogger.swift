@@ -6,7 +6,11 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
+#if ENABLE_DI_LOGGER
+
 public protocol DILogger: class {
   func log(_ style: DILogStyle, msg: String)
 }
+
+#endif
 

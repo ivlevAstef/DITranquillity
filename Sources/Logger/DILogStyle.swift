@@ -6,6 +6,8 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
+#if ENABLE_DI_LOGGER
+
 public enum DILogStyle {
   case registration
   case createSingle(BeginEndBrace)
@@ -78,3 +80,5 @@ extension DILogStyle.ResolveStyle: Equatable {
     }
   }
 }
+
+#endif

@@ -6,6 +6,8 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
+#if ENABLE_DI_LOGGER
+
 extension DILoggerComposite {
   @discardableResult
   public static func add(logger: DILogger) -> Bool {
@@ -75,3 +77,5 @@ extension DILoggerComposite {
     instance.log(style, msg: msg)
   }
 }
+
+#endif

@@ -50,6 +50,12 @@ Pod::Spec.new do |s|
     storys.dependency 'DITranquillity/Core'
   end
 
+  s.subspec 'Logger' do |logs|
+    logs.source_files = 'Sources/Logger/*.swift'
+    logs.dependency 'DITranquillity/Core'
+    logs.pod_target_xcconfig = { 'OTHER_SWIFT_FLAGS' => '-D ENABLE_DI_LOGGER' }
+  end
+
   s.subspec 'Scan' do |scans|
     scans.source_files = 'Sources/Scan/*.swift'
     scans.dependency 'DITranquillity/Component'
@@ -67,6 +73,7 @@ Pod::Spec.new do |s|
     alls.dependency 'DITranquillity/Component'
     alls.dependency 'DITranquillity/Module'
     alls.dependency 'DITranquillity/Storyboard'
+    alls.dependency 'DITranquillity/Logger'
     alls.dependency 'DITranquillity/Scan'
     alls.dependency 'DITranquillity/RuntimeArgs'
   end
