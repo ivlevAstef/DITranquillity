@@ -9,7 +9,9 @@
 public final class DIContainerBuilder {
   public init() {
     self.rTypeContainer = RTypeContainer()
+    #if ENABLE_DI_MODULE
     self.currentModules = []
+    #endif
   }
 
   @discardableResult
@@ -24,16 +26,19 @@ public final class DIContainerBuilder {
     return container
   }
   
+  let rTypeContainer: RTypeContainer
+  
+  fileprivate var ignoreTypes: [String: RType] = [:]
+  
+  #if ENABLE_DI_MODULE
   internal init(container: DIContainerBuilder, stack: [DIModuleType]) {
     rTypeContainer = container.rTypeContainer
     self.currentModules = stack
   }
   
-  let rTypeContainer: RTypeContainer
   /// need for register type. But filled from components with module
   let currentModules: [DIModuleType] // DIModuleType
-  
-  fileprivate var ignoreTypes: [String: RType] = [:]
+  #endif
 }
 
 extension DIContainerBuilder {

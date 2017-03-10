@@ -116,6 +116,7 @@ class DIResolver {
          DILoggerComposite.log(.found(typeInfo: rType.typeInfo), msg: "Found type info: \(rType.typeInfo) for resolve type: \(type)")
       #endif
       
+      #if ENABLE_DI_MODULE
       do {
         return try resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
       } catch DIError.recursiveInitial {
@@ -123,6 +124,13 @@ class DIResolver {
       } catch DIError.noAccess {
         return nil // Ignore no access object for many
       }
+      #else
+      do {
+        return try resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
+      } catch DIError.recursiveInitial {
+        return nil // Ignore recursive initialization object for many
+      }
+      #endif
     }.filter{ $0 != nil }.map{ $0! }
   }
 
@@ -137,6 +145,7 @@ class DIResolver {
     return try resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
   }
   
+  #if ENABLE_DI_MODULE
   /// special function for resolve in future but on current rType stack
   func createStackSave() -> (()->()) -> () {
     let saveStack = synchronize(rTypeStackMonitor) { rTypeStack }
@@ -153,6 +162,7 @@ class DIResolver {
       }
     }
   }
+  #endif
 
   private func getTypes<T>(_ inputType: T.Type) throws -> [RTypeFinal] {
     let type = removeTypeWrappers(inputType)
@@ -165,6 +175,7 @@ class DIResolver {
       throw diError
     }
     
+    #if ENABLE_DI_MODULE
     let optionalLast = synchronize(rTypeStackMonitor) { rTypeStack.last }
     
     // if used modules
@@ -183,19 +194,21 @@ class DIResolver {
       
       return rTypesFiltered
     }
+    #endif
 
     return rTypes
   }
 
   private func resolveUseRType<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
     return try synchronize(DIResolver.monitor) {
-      // if used modules
+      #if ENABLE_DI_MODULE
       if !pair.rType.modules.isEmpty {
         synchronize(rTypeStackMonitor) { rTypeStack.append(pair.rType) }
         defer { _ = synchronize(rTypeStackMonitor) { rTypeStack.removeLast() } }
         
         return try unsafeResolve(container, pair: pair, getter: getter)
       }
+      #endif
       
       return try unsafeResolve(container, pair: pair, getter: getter)
     }
@@ -375,9 +388,11 @@ class DIResolver {
   // needed for block call self from self
   private var recursiveInitializer: Set<RType.UniqueKey> = []
   
+  #if ENABLE_DI_MODULE
   // needed for check access
   private var rTypeStack: [RTypeFinal] = []
   private var rTypeStackMonitor = OSSpinLock()
+  #endif
 
   // needed for circular
   private class Circular {

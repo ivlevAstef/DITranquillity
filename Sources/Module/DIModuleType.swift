@@ -6,12 +6,13 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-// for separate module
+#if ENABLE_DI_MODULE
+
 class DIModuleType: Hashable {
   let name: String
   
-  init(name: String) {
-    self.name = name
+  init(_ module: DIModule) {
+    self.name = String(describing: type(of: module))
   }
   
   var hashValue: Int {
@@ -22,3 +23,5 @@ class DIModuleType: Hashable {
     return lhs.name == rhs.name
   }
 }
+
+#endif

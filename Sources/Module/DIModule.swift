@@ -6,6 +6,7 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
+#if ENABLE_DI_MODULE
 
 public protocol DIModule {
   var components: [DIComponent] { get }
@@ -44,8 +45,4 @@ extension DIContainerBuilder {
   }
 }
 
-extension DIModuleType {
-  convenience init(_ module: DIModule) {
-    self.init(name: String(describing: type(of: module)))
-  }
-}
+#endif

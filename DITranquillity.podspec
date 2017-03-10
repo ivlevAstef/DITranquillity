@@ -33,11 +33,13 @@ Pod::Spec.new do |s|
   s.subspec 'Component' do |coms|
     coms.source_files = 'Sources/Component/*.swift'
     coms.dependency 'DITranquillity/Core'
+    coms.pod_target_xcconfig = { 'OTHER_SWIFT_FLAGS' => '-D ENABLE_DI_COMPONENT' }
   end
 
   s.subspec 'Module' do |mods|
     mods.source_files = 'Sources/Module/*.swift'
     mods.dependency 'DITranquillity/Component'
+    mods.pod_target_xcconfig = { 'OTHER_SWIFT_FLAGS' => '-D ENABLE_DI_MODULE' }
   end
 
   s.subspec 'Storyboard' do |storys|
@@ -58,13 +60,20 @@ Pod::Spec.new do |s|
 
   s.subspec 'Scan' do |scans|
     scans.source_files = 'Sources/Scan/*.swift'
-    scans.dependency 'DITranquillity/Component'
-    scans.dependency 'DITranquillity/Module'
   end
 
   s.subspec 'RuntimeArgs' do |args|
     args.source_files = 'Sources/RuntimeArgs/*.swift'
     args.dependency 'DITranquillity/Core'
+  end
+
+  s.subspec 'Modular' do |modls|
+    modls.dependency 'DITranquillity/Core'
+    modls.dependency 'DITranquillity/Description'
+    modls.dependency 'DITranquillity/Component'
+    modls.dependency 'DITranquillity/Module'
+    modls.dependency 'DITranquillity/Storyboard'
+    modls.dependency 'DITranquillity/Scan'
   end
 
   s.subspec 'Full' do |alls|
@@ -78,6 +87,6 @@ Pod::Spec.new do |s|
     alls.dependency 'DITranquillity/RuntimeArgs'
   end
 
-  s.default_subspecs = 'Core', 'Description', 'Component', 'Module', 'Storyboard'
+  s.default_subspecs = 'Core', 'Description', 'Component', 'Storyboard'
 
 end

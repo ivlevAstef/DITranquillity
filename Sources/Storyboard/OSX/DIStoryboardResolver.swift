@@ -11,7 +11,11 @@ import Cocoa
 final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
   init(container: DIContainer) {
     self.container = container
-    self.stackSave = container.resolver.createStackSave()
+    #if ENABLE_DI_MODULE
+      self.stackSave = container.resolver.createStackSave()
+    #else
+      self.stackSave = { $0() } // simply
+    #endif
   }
 
   @objc public func resolve(_ viewController: Any, identifier: String) -> Any {

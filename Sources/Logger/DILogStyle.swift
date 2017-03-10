@@ -48,7 +48,7 @@ extension DILogStyle: Equatable {
     case (.registration, .registration),
          (.cached, .cached):
       return true
-    case (.error(let error1), .error(let error2)):
+    case (.error(_), .error(_)):
       return true
     default:
       return false
