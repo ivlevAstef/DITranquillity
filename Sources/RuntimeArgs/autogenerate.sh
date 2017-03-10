@@ -59,9 +59,9 @@ resolveFunctions() { #argcount prefix file
   local ArgParam=$(join ',' $(replaceToArg numbers[@] "a;I"))
   ArgumentsType=${ArgumentsType//a0:A0/arg a0:A0}
 
-  echo "  public func resolve<T,$ArgType>($prefix$ArgumentsType, f: String = #file, l: Int = #line) throws -> T {
+  echo "  public func resolve<T,$ArgType>($prefix$ArgumentsType) throws -> T {
     typealias Method = (DIContainer,$ArgType) throws -> Any
-    return try ret(f, l){ try resolver.resolve(self, type: T.self){ try (\$0 as Method)(self,$ArgParam) } }
+    return try resolver.resolve(self, type: T.self){ try (\$0 as Method)(self,$ArgParam) }
   }
   " >> $3
 }
@@ -75,9 +75,9 @@ resolveManyFunctions() { #argcount prefix file
   local ArgParam=$(join ',' $(replaceToArg numbers[@] "a;I"))
   ArgumentsType=${ArgumentsType//a0:A0/arg a0:A0}
 
-  echo "  public func resolveMany<T,$ArgType>($prefix$arg$ArgumentsType, f: String = #file, l: Int = #line) throws -> [T] {
+  echo "  public func resolveMany<T,$ArgType>($prefix$arg$ArgumentsType) throws -> [T] {
     typealias Method = (DIContainer,$ArgType) throws -> Any
-    return try ret(f, l){ try resolver.resolveMany(self, type: T.self){ try (\$0 as Method)(self,$ArgParam) } }
+    return try resolver.resolveMany(self, type: T.self){ try (\$0 as Method)(self,$ArgParam) }
   }
   " >> $3
 }
@@ -93,9 +93,9 @@ resolveNameFunctions() { #argcount prefix file
   ArgumentsType=${ArgumentsType//a0:A0/arg a0:A0}
 
   local name="name"
-  echo "  public func resolve<T,$ArgType>($prefix$name: String, $ArgumentsType, f: String = #file, l: Int = #line) throws -> T {
+  echo "  public func resolve<T,$ArgType>($prefix$name: String, $ArgumentsType) throws -> T {
     typealias Method = (DIContainer,$ArgType) throws -> Any
-    return try ret(f, l){ try resolver.resolve(self, name: name, type: T.self){ try (\$0 as Method)(self,$ArgParam) } }
+    return try resolver.resolve(self, name: name, type: T.self){ try (\$0 as Method)(self,$ArgParam) }
   }
   " >> $3
 }

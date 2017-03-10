@@ -21,7 +21,11 @@ class RTypeFinal: RTypeBase {
   
   func new<Method, T>(_ method: (Method) throws -> T) throws -> T {
     guard let initializer = initials[MethodKey(describing: Method.self)] as? Method else {
-      throw DIError.initializationMethodWithSignatureIsNotFoundFor(typeInfo: typeInfo, signature: Method.self)
+      let diError = DIError.initialMethodNotFound(typeInfo: typeInfo, signature: Method.self)
+      #if ENABLE_DI_LOGGER
+         DILoggerComposite.log(.error(diError), msg: "Initial method not found for type info: \(typeInfo)")
+      #endif
+      throw diError
     }
     
     return try method(initializer)
