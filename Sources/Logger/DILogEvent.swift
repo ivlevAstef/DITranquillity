@@ -20,12 +20,12 @@ public enum DILogEvent {
   
   case error(DIError)
   
-  public enum BeginEndBrace {
+  public enum BeginEndBrace: Equatable {
     case begin
     case end
   }
   
-  public enum ResolveStyle {
+  public enum ResolveStyle: Equatable {
     case cache
     case new
     case use
@@ -35,45 +35,14 @@ public enum DILogEvent {
 extension DILogEvent: Equatable {
   public static func ==(lhs: DILogEvent, rhs: DILogEvent) -> Bool {
     switch (lhs, rhs) {
-    case (.createSingle(let brace1), .createSingle(let brace2)):
-      return brace1 == brace2
-    case (.resolving(let brace1), .resolving(let brace2)):
-      return brace1 == brace2
-    case (.found(let typeInfo1), .found(let typeInfo2)):
-      return typeInfo1 == typeInfo2
-    case (.resolve(let brace1), .resolve(let brace2)):
-      return brace1 == brace2
-    case (.injection(let brace1),.injection(let brace2)):
-      return brace1 == brace2
     case (.registration, .registration),
-         (.cached, .cached):
-      return true
-    case (.error(_), .error(_)):
-      return true
-    default:
-      return false
-    }
-  }
-}
-
-extension DILogEvent.BeginEndBrace: Equatable {
-  public static func==(lhs: DILogEvent.BeginEndBrace, rhs: DILogEvent.BeginEndBrace) -> Bool {
-    switch (lhs, rhs) {
-    case (.begin, .begin),
-         (.end, .end):
-      return true
-    default:
-      return false
-    }
-  }
-}
-
-extension DILogEvent.ResolveStyle: Equatable {
-  public static func==(lhs: DILogEvent.ResolveStyle, rhs: DILogEvent.ResolveStyle) -> Bool {
-    switch (lhs, rhs) {
-    case (.cache, .cache),
-         (.new, .new),
-         (.use, .use):
+         (.createSingle(_), .createSingle(_)),
+         (.resolving(_), .resolving(_)),
+         (.found(_), .found(_)),
+         (.resolve(_), .resolve(_)),
+         (.cached, .cached),
+         (.injection(_),.injection(_)),
+         (.error(_), .error(_)):
       return true
     default:
       return false
