@@ -69,4 +69,4 @@ class YourMainModule: DIModule {
 
 #### [Главная](main.md)
 #### [Предыдущая глава "Storyboard"](storyboard.md)
-#### [Следующая глава "Исключения"](errors.md)
+#### [Следующая глава "Логирование"](log.md)

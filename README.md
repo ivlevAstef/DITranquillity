@@ -25,14 +25,17 @@ Dependency injection for iOS/macOS/tvOS (Swift)
 * Resolve thread safety
 * Scan Modules/Assemblies
 * 9 types of errors + 4 supported errors. Errors detailing
+* Logs
 * Automatic dependency injection through properties for Obj-C types
 
 ## Install
 Via CocoaPods.
 
 ###### `pod 'DITranquillity'` Swift (iOS8+,macOS10.10+,tvOS9+) also need write in your PodFile `use_frameworks!`
-Also podspec separated on subspecs: `Core`, `Description`, `Component`, `Module`, `Storyboard`, `Scan`, `RuntimeArgs`
-Default included: `Core`, `Description`, `Component`, `Module`, `Storyboard`
+Also podspec separated on subspecs: `Core`, `Description`, `Component`, `Module`, `Storyboard`, `Scan`, `Logger`, `RuntimeArgs`
+Default included: `Core`, `Description`, `Component`, `Storyboard`
+`Modular` included: `Core`, `Description`, `Component`. `Module`, `Storyboard`, `Scan`
+`Full` included all sibspecs
 
 Via Carthage.
 

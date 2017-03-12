@@ -128,7 +128,7 @@ extension DIContainerBuilder {
     
     #if ENABLE_DI_LOGGER
       DILoggerComposite.log(.createSingle(.begin), msg: "Begin resolve \(singleRTypes.count) singletons")
-      defer {  DILoggerComposite.log(.createSingle(.end), msg: "End resolve \(singleRTypes.count) singletons") }
+      defer {  DILoggerComposite.log(.createSingle(.end), msg: "End resolve singletons") }
     #endif
     
     for rType in singleRTypes {

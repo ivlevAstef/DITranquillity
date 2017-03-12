@@ -1,3 +1,9 @@
+# v2.1.0
+* Add logs
+* Removed supported errors
+* Simplified error names
+* Improved separate project for `module`
+
 # v2.0.0
 * Add documentation for migration
 * A full update documentation
