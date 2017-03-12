@@ -117,14 +117,33 @@ public final class DIRegistrationBuilder<Impl> {
     }
     
     #if ENABLE_DI_LOGGER
-       DILoggerComposite.log(.registration, msg:
-        "Registration typeInfo: \(rType.typeInfo) with lifetime: \(rType.lifeTime) other:\n" +
-        "  names: \(rType.names)\n" +
-        "  is default: \(rType.isDefault)\n" +
-        "  is protocol: \(rType.isProtocol)\n" +
-        "  has initial: \(rType.hasInitial) \(rType.initialNotNecessary ? "with initial not necessary":"")\n" +
-        "  injections count: \(rType.injectionsCount - (isAutoInjection ? 1:0)) \(isAutoInjection ? "and has auto injection":"")\n"
-      )
+      if rType.isProtocol {
+        DILoggerComposite.log(.registration, msg: "Registration protocol: \(rType.typeInfo)")
+      } else {
+        var msg = rType.isDefault ? "Default r" : "R"
+        
+        msg += "egistration: \(rType.typeInfo).\n"
+        msg += "  With lifetime: \(rType.lifeTime).\n"
+        if !rType.names.isEmpty {
+          msg += "  Has names: \(rType.names).\n"
+        }
+        if rType.hasInitial {
+          msg += "  Has one or more initials.\n"
+        }
+        if rType.initialNotNecessary {
+          msg += "  Also initial not necessary.\n"
+        }
+        
+        let injectionCount = rType.injectionsCount - (isAutoInjection ? 1:0)
+        if 0 < injectionCount {
+          msg += "  Has \(injectionCount) injections.\n"
+        }
+        if isAutoInjection {
+          msg += "  Has auto injection."
+        }
+        
+        DILoggerComposite.log(.registration, msg: msg)
+      }
     #endif
   }
   

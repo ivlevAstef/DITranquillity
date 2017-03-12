@@ -9,7 +9,7 @@
 #if ENABLE_DI_LOGGER
 
 public protocol DILogger: class {
-  func log(_ style: DILogStyle, msg: String)
+  func log(_ event: DILogEvent, msg: String)
 }
 
 #endif

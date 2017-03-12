@@ -10,10 +10,10 @@ import XCTest
 import DITranquillity
 
 private class MyLogger: DILogger {
-  var logs: [DILogStyle] = []
+  var logs: [DILogEvent] = []
   
-  func log(_ style: DILogStyle, msg: String) {
-    logs.append(style)
+  func log(_ event: DILogEvent, msg: String) {
+    logs.append(event)
   }
 }
 

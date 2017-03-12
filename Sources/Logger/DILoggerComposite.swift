@@ -64,7 +64,7 @@ extension DILoggerComposite {
 }
 
 extension DILoggerComposite {
-  internal func log(_ style: DILogStyle, msg: String) {
+  internal func log(_ style: DILogEvent, msg: String) {
     let copyLoggers = synchronize(&monitor) { return self.loggers }
     queue.async {
       for logger in copyLoggers {
@@ -73,7 +73,7 @@ extension DILoggerComposite {
     }
   }
   
-  internal static func log(_ style: DILogStyle, msg: String) {
+  internal static func log(_ style: DILogEvent, msg: String) {
     instance.log(style, msg: msg)
   }
 }
