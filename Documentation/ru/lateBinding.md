@@ -36,5 +36,5 @@ builder.register(type: YourProtocolImpl.self)
 ***
 
 #### [Главная](main.md)
-#### [Предыдущая глава "Модули"](module.md)
-#### [Следующая глава "Storyboard"](storyboard.md)
+#### [Предыдущая глава "Модули"](module.md#Модули)
+#### [Следующая глава "Storyboard"](storyboard.md#storyboard)
