@@ -11,7 +11,7 @@ The small library for dependency injection in applications written on pure Swift
 
 
 ## Features
-<img align="right" src="https://habrastorage.org/files/c6d/c89/5d0/c6dc895d02324b96bc679f41228ab6bf.png" alt="Tranquillity">
+<img align="right" src="https://habrastorage.org/files/c6d/c89/5d0/c6dc895d02324b96bc679f41228ab6bf.png" alt="Tranquillity">  
 * Pure Swift Type Support
 * Native
 * Static typing
