@@ -1,5 +1,6 @@
 # DITranquillity
 The small library for dependency injection in applications written on pure Swift for iOS/OSX/tvOS. Despite its size, it solves a large enough range of tasks, including support Storyboard. Its main advantage - support modularity and availability errors with desriptions and lots of opportunities.
+![Tranquillity](https://habrastorage.org/files/c6d/c89/5d0/c6dc895d02324b96bc679f41228ab6bf.png)
 
 [![Travis CI](https://travis-ci.org/ivlevAstef/DITranquillity.svg?branch=master)](https://travis-ci.org/ivlevAstef/DITranquillity)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
@@ -28,6 +29,10 @@ The small library for dependency injection in applications written on pure Swift
 * Logs
 * Automatic dependency injection through properties for Obj-C types
 
+## Usage
+* Read the Quick Start [ru]((Documentation/ru/quick_start.md#Быстрый-старт)/[en]((Documentation/en/quick_start.md#Quick-start)
+* Or Documentation [ru](Documentation/ru/main.md)/[en](Documentation/en/main.md)
+
 ## Install
 ###### Via CocoaPods.
 
@@ -42,7 +47,13 @@ Default included: `Core`, `Description`, `Component`, `Storyboard`
 
 `github "ivlevAstef/DITranquillity"` Swift (iOS8+,macOS10.10+,tvOS9+)
 
-## Usage
+## Requirements
+iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
+
+* Swift 3.0: Xcode 8.0; version >= 0.9.5
+* Swift 2.3: Xcode 7.0; version <  0.9.5
+
+## Basic Usage
 ```Swift
 protocol Animal {
   var name: String { get }
@@ -111,17 +122,8 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 }
 ```
 
-## Documentation
-* [ru](Documentation/ru/main.md)
-
 ## Migration
 * v1.x.x -> v2.x.x [ru](Documentation/ru/migration1to2.md)
-
-## Requirements
-iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
-
-* Swift 3.0: Xcode 8.0; version >= 0.9.5
-* Swift 2.3: Xcode 7.0; version <  0.9.5
 
 ## Changelog
 See [CHANGELOG.md](CHANGELOG.md) file.
