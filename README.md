@@ -1,5 +1,5 @@
 # DITranquillity
-Dependency injection for iOS/macOS/tvOS (Swift)
+The small library for dependency injection in applications written on pure Swift for iOS/OSX/tvOS. Despite its size, it solves a large enough range of tasks, including support Storyboard. Its main advantage - support modularity and availability errors with desriptions and lots of opportunities.
 
 [![Travis CI](https://travis-ci.org/ivlevAstef/DITranquillity.svg?branch=master)](https://travis-ci.org/ivlevAstef/DITranquillity)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
@@ -43,176 +43,69 @@ Default included: `Core`, `Description`, `Component`, `Storyboard`
 `github "ivlevAstef/DITranquillity"` Swift (iOS8+,macOS10.10+,tvOS9+)
 
 ## Usage
-#### Simple
 ```Swift
 protocol Animal {
   var name: String { get }
 }
 
 class Cat: Animal {
-  init() { }
   var name: String { return "Cat" }
 }
-```
-```Swift
-let builder = DIContainerBuilder()
+.................................................
+let builder = DIContainerBuilder() // create builder
 
-builder.register{ Cat() }
-  .as(.self)
-  .as(Animal.self).check{$0}
-  
-let scope = try! builder.build() // validate
-```
-```Swift
-let cat: Cat = try! scope.resolve()
-let animal: Animal = try! scope.resolve()
-
-print(cat.name) // Cat
-print(animal.name) // Cat
-```
-
-#### Basic 
-```Swift
-protocol Animal {
-  var name: String { get }
-}
-
-class Cat: Animal {
-  init() { }
-  var name: String { return "CatName" }
-}
-
-class Dog: Animal {
-  init() { }
-  var name: String { return "DogName" }
-}
-
-class Pet: Animal {
-  let petName: String
-  init(name: String) { 
-    petName = name
-  }
-  var name: String { return petName }
-}
-
-class Home {
-  let animals: [Animal]
-  init(animals: [Animal]) { 
-    self.animals = animals
-  }
-}
-```
-```Swift
-let builder = DIContainerBuilder()
-
-builder.register{ Cat() }
-  .as(.self)
-  .as(Animal.self).check{$0}
-  .lifetime(.perDependency) // .lazySingle, .weakSingle, .single, .perScope, .perDependency
-  
-builder.register(type: Dog.init)
+builder.register(type: Cat.init)
   .as(.self)
   .as(Animal.self).check{$0}
   .lifetime(.perDependency)
   
-builder.register{ Pet(name: "My Pet") }
-  .as(.self)
-  .as(Animal.self).check{$0}
-  .set(.default)
-  .lifetime(.perDependency)
-  
-builder.register(type: Home.self)
-  .as(.self)
-  .lifetime(.perScope)
-  .initial { c in try Home(animals: c.resolveMany()) }
-
-let container = try! builder.build() // validate
-```
-```Swift
+let container = try! builder.build() // create contaiener with validation
+.................................................
 let cat: Cat = try! container.resolve()
-let dog = try! container.resolve(Dog.self)
-let pet: Pet = try! *container
-let animal: Animal = try! *container // default it's Pet
-let home: Home = try! *container
+let animal: Animal = try! *container // short syntax
 
-print(cat.name) // CatName
-print(dog.name) // DogName
-print(pet.name) // My Pet
-print(animal.name) // My Pet
-print(home.animals) // [Dog, Cat, Pet]
-
-let cat2: Cat = try! *container //cat2 !=== cat
-let home2: Home = try! *container //home2 === home
+print(cat.name) // "Cat"
+print(animal.name) // "Cat"
 ```
 
-#### Storyboard
-##### All
-Create your component:
-```Swift
-class SampleComponent: DIComponent {
-  func load(builder: DIContainerBuilder) {
-    builder.register(vc: ViewController.self)
-      .injection { vc, inject in vc.inject = inject }
-  }
-}
-```
-
-##### iOS/tvOS 
+## Storyboard (iOS/OS X)
 Create your ViewController:
 ```Swift
-class ViewController: UIViewController {
-  internal var inject: Inject?
+class ViewController: UIViewController/NSViewController {
+  var inject: Inject?
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     print("Inject: \(inject)")
   }
 }
 ```
-Registrate Storyboard:
+Create container:
 ```Swift
-func applicationDidFinishLaunching(_ application: UIApplication) {
-  window = UIWindow(frame: UIScreen.main.bounds)
-  
   let builder = DIContainerBuilder()
-  builder.register(component: SampleComponent())
+  builder.register(vc: ViewController.self)
+    .injection { $0.inject = $1 }
 
   let container = try! builder.build()
-  
+```
+Create Storyboard:
+```Swift
+/// for iOS
+func applicationDidFinishLaunching(_ application: UIApplication) {
   let storyboard = DIStoryboard(name: "Main", bundle: nil, container: container)
+
+  window = UIWindow(frame: UIScreen.main.bounds)
   window!.rootViewController = storyboard.instantiateInitialViewController()
   window!.makeKeyAndVisible()
-    
-  return true
 }
 ```
 
-##### OSX
-Create your ViewController:
 ```Swift
-class ViewController: NSViewController {
-  internal var inject: Inject?
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    print("Inject: \(inject)")
-  }
-}
-```
-Registrate Storyboard:
-```Swift
+/// for OS X
 func applicationDidFinishLaunching(_ aNotification: Notification) {
-  let builder = DIContainerBuilder()
-  builder.register(component: SampleComponent())
-
-  let container = try! builder.build()
-
   let storyboard = DIStoryboard(name: "Main", bundle: nil, container: container)
 
   let viewController = storyboard.instantiateInitialController() as! NSViewController
-
   let window = NSApplication.shared().windows.first
   window?.contentViewController = viewController
 }
@@ -230,10 +123,10 @@ iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
 * Swift 3.0: Xcode 8.0; version >= 0.9.5
 * Swift 2.3: Xcode 7.0; version <  0.9.5
 
-# Changelog
+## Changelog
 See [CHANGELOG.md](CHANGELOG.md) file.
 
-# Alternative
+## Alternative
 * [Typhoon](https://github.com/appsquickly/Typhoon)
 * [Swinject](https://github.com/Swinject/Swinject)
 * [DIP](https://github.com/AliSoftware/Dip)
