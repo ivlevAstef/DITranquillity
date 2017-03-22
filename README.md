@@ -33,8 +33,8 @@ The small library for dependency injection in applications written on pure Swift
 * Automatic dependency injection through properties for Obj-C types
 
 ## Usage
-* Read the Quick Start [ru]((Documentation/ru/quick_start.md#Быстрый-старт)/[en]((Documentation/en/quick_start.md#Quick-start)
-* Or Documentation [ru](Documentation/ru/main.md)/[en](Documentation/en/main.md)
+* Read the Quick Start [ru](Documentation/ru/quick_start.md#Быстрый-старт) / [en](Documentation/en/quick_start.md#Quick-start)
+* Or Documentation [ru](Documentation/ru/main.md) / [en](Documentation/en/main.md)
 
 ## Install
 ###### Via CocoaPods.
@@ -46,9 +46,9 @@ Also podspec separated on subspecs:
 
 By default included:  
 `Core`, `Description`, `Component`, `Storyboard`  
-`Modular` subspec included:  
-`Core`, `Description`, `Component`. `Module`, `Storyboard`, `Scan`
-`Full` subspec included all subspecs
+'Modular' subspec included:  
+`Core`, `Description`, `Component`. `Module`, `Storyboard`, `Scan`  
+'Full' subspec included all subspecs
 
 ###### Via Carthage.
 
