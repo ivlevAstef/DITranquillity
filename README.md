@@ -14,16 +14,16 @@ Dependency injection for iOS/macOS/tvOS (Swift)
 * Native
 * Static typing
 * Initializer/Property/Method Dependency Injections
-* Object scopes as Single, LazySingle, WeakSingle, PerScope, PerDependency
+* Object lifetime: single, lazySingle, weakSingle, perScope, perDependency
 * Storyboard
 * Registration/Resolve by type and name
 * Registration/Resolve with parameters
 * Enumeration registration and Default
 * Circular Dependencies
-* Registration by types, modules, assembly
+* Registration by types, components, modules
 * Fast resolve syntax
 * Resolve thread safety
-* Scan Modules/Assemblies
+* Scan Components/Modules
 * 9 types of errors + 4 supported errors. Errors detailing
 * Logs
 * Automatic dependency injection through properties for Obj-C types
