@@ -14,23 +14,21 @@ The small library for dependency injection in applications written on pure Swift
 
 <img align="right" src="https://habrastorage.org/files/c6d/c89/5d0/c6dc895d02324b96bc679f41228ab6bf.png" alt="Tranquillity">  
 
-* Pure Swift Type Support
-* Native
-* Static typing
-* Initializer/Property/Method Dependency Injections
-* Object lifetime: single, lazySingle, weakSingle, perScope, perDependency
-* Storyboard
-* Registration/Resolve by type and name
-* Registration/Resolve with parameters
-* Enumeration registration and Default
-* Circular Dependencies
-* Registration by types, components, modules
-* Fast resolve syntax
-* Resolve thread safety
-* Scan Components/Modules
-* 9 types of errors + 4 supported errors. Errors detailing
-* Logs
-* Automatic dependency injection through properties for Obj-C types
+[x] Pure Swift Type Support
+[x] Initializer/Property/Method Injections
+[x] Named definitions
+[x] Type forwarding
+[x] Lifetimes: single, lazySingle, weakSingle, perScope, perDependency
+[x] iOS/macOS Storyboard
+[x] Injection with Arguments
+[x] Circular dependencies
+[x] Three level hierarchy: types, components, modules
+[x] Late binding and components scopes
+[x] Short resolve syntax
+[x] Resolve thread safety
+[x] Scan Components/Modules
+[x] 9 types of errors. Errors detailing. Logs
+[x] Automatic dependency injection through properties for Obj-C types
 
 ## Usage
 * Read the Quick Start [ru](Documentation/ru/quick_start.md#Быстрый-старт) / [en](Documentation/en/quick_start.md#Quick-start)
@@ -77,7 +75,7 @@ builder.register(type: Cat.init)
   .as(Animal.self).check{$0}
   .lifetime(.perDependency)
   
-let container = try! builder.build() // create contaiener with validation
+let container = try! builder.build() // create container with validation
 .................................................
 let cat: Cat = try! container.resolve()
 let animal: Animal = try! *container // short syntax
