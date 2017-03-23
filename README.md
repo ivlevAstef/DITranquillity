@@ -13,51 +13,23 @@ The small library for dependency injection in applications written on pure Swift
 ## Features
 <img align="right" src="https://habrastorage.org/files/c6d/c89/5d0/c6dc895d02324b96bc679f41228ab6bf.png" alt="Tranquillity">  
 
-- [x] Pure Swift Type Support
-- [x] Initializer/Property/Method Injections
-- [x] Named definitions
-- [x] Type forwarding
-- [x] Lifetimes: single, lazySingle, weakSingle, perScope, perDependency
-- [x] iOS/macOS Storyboard
-- [x] Injection with Arguments
-- [x] Circular dependencies
-- [x] Three level hierarchy: types, components, modules
-- [x] Late binding and components scopes
-- [x] Short resolve syntax
-- [x] Resolve thread safety
-- [x] Scan Components/Modules
-- [x] 9 types of errors. Errors detailing. Logs
-- [x] Automatic dependency injection through properties for Obj-C types
+* Pure Swift Type Support
+* Initializer/Property/Method Injections
+* Named definitions
+* Type forwarding
+* Lifetimes: single, lazySingle, weakSingle, perScope, perDependency
+* iOS/macOS Storyboard
+* Injection with Arguments
+* Circular dependencies
+* Three level hierarchy: types, components, modules
+* Late binding and components scopes
+* Short resolve syntax
+* Resolve thread safety
+* Scan Components/Modules
+* 9 types of errors. Errors detailing. Logs
+* Automatic dependency injection through properties for Obj-C types
 
 ## Usage
-* Read the Quick Start [ru](Documentation/ru/quick_start.md#Быстрый-старт) / [en](Documentation/en/quick_start.md#Quick-start)
-* Or Documentation [ru](Documentation/ru/main.md) / [en](Documentation/en/main.md)
-
-## Install
-###### Via CocoaPods.
-
-`pod 'DITranquillity'` Swift (iOS8+,macOS10.10+,tvOS9+) also need write in your PodFile `use_frameworks!`  
-  
-Also podspec separated on subspecs:  
-`Core`, `Description`, `Component`, `Module`, `Storyboard`, `Scan`, `Logger`, `RuntimeArgs`  
-  
-By default included:  
-`Core`, `Description`, `Component`, `Storyboard`  
-'Modular' subspec included:  
-`Core`, `Description`, `Component`. `Module`, `Storyboard`, `Scan`  
-'Full' subspec included all subspecs
-
-###### Via Carthage.
-
-`github "ivlevAstef/DITranquillity"` Swift (iOS8+,macOS10.10+,tvOS9+)
-
-## Requirements
-iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
-
-* Swift 3.0: Xcode 8.0; version >= 0.9.5
-* Swift 2.3: Xcode 7.0; version <  0.9.5
-
-## Basic Usage
 ```Swift
 protocol Animal {
   var name: String { get }
@@ -82,6 +54,40 @@ let animal: Animal = try! *container // short syntax
 print(cat.name) // "Cat"
 print(animal.name) // "Cat"
 ```
+
+*For more details*:
+* Read the Quick Start [ru](Documentation/ru/quick_start.md#Быстрый-старт) / [en](Documentation/en/quick_start.md#Quick-start)
+* Or Documentation [ru](Documentation/ru/main.md) / [en](Documentation/en/main.md)
+
+## Install
+###### Via CocoaPods.
+
+`pod 'DITranquillity'` Swift (iOS8+,macOS10.10+,tvOS9+) also need write in your PodFile `use_frameworks!`  
+  
+*Also podspec separated on subspecs:*  
+`Core`, `Description`, `Component`, `Module`, `Storyboard`, `Scan`, `Logger`, `RuntimeArgs`  
+  
+*By default included:*  
+`Core`, `Description`, `Component`, `Storyboard`  
+*'Modular' subspec included:*  
+`Core`, `Description`, `Component`. `Module`, `Storyboard`, `Scan`  
+*'Full' subspec included all subspecs*
+
+###### Via Carthage.
+
+`github "ivlevAstef/DITranquillity"` Swift (iOS8+,macOS10.10+,tvOS9+)
+
+## Requirements
+iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
+
+* Swift 3.0: Xcode 8.0; version >= 0.9.5
+* Swift 2.3: Xcode 7.0; version <  0.9.5
+
+## Migration
+* v1.x.x -> v2.x.x [ru](Documentation/ru/migration1to2.md)
+
+## Changelog
+See [CHANGELOG.md](CHANGELOG.md) file.
 
 ## Storyboard (iOS/OS X)
 Create your ViewController:
@@ -125,12 +131,6 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
   window?.contentViewController = viewController
 }
 ```
-
-## Migration
-* v1.x.x -> v2.x.x [ru](Documentation/ru/migration1to2.md)
-
-## Changelog
-See [CHANGELOG.md](CHANGELOG.md) file.
 
 ## Alternative
 * [Typhoon](https://github.com/appsquickly/Typhoon)
