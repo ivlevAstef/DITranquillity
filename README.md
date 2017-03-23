@@ -38,14 +38,14 @@ The small library for dependency injection in applications written on pure Swift
 
 `pod 'DITranquillity'` Swift (iOS8+,macOS10.10+,tvOS9+) also need write in your PodFile `use_frameworks!`  
   
-- Also podspec separated on subspecs:
+Also podspec separated on subspecs:  
 `Core`, `Description`, `Component`, `Module`, `Storyboard`, `Scan`, `Logger`, `RuntimeArgs`  
-
-- By default included:  
-`Core`, `Description`, `Component`, `Storyboard`
-- 'Modular' subspec included:  
-`Core`, `Description`, `Component`. `Module`, `Storyboard`, `Scan`
-- 'Full' subspec included all subspecs
+  
+By default included:  
+`Core`, `Description`, `Component`, `Storyboard`  
+'Modular' subspec included:  
+`Core`, `Description`, `Component`. `Module`, `Storyboard`, `Scan`  
+'Full' subspec included all subspecs
 
 ###### Via Carthage.
 
@@ -127,7 +127,7 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 ```
 
 ## Migration
-- v1.x.x -> v2.x.x [ru](Documentation/ru/migration1to2.md)
+* v1.x.x -> v2.x.x [ru](Documentation/ru/migration1to2.md)
 
 ## Changelog
 See [CHANGELOG.md](CHANGELOG.md) file.
