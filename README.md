@@ -7,7 +7,7 @@
 [![Dependency Status](https://www.versioneye.com/objective-c/DITranquillity/2.0.0/badge.svg?style=flat)](https://www.versioneye.com/objective-c/DITranquillity/2.0.0)
 
 # DITranquillity
-The small library for dependency injection in applications written on pure Swift for iOS/OSX/tvOS. Despite its size, it solves a large enough range of tasks, including support Storyboard. Its main advantage - support modularity and availability errors with desriptions and lots of opportunities.
+The small library for [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) in applications written on pure Swift for iOS/OSX/tvOS. Despite its size, it solves a large enough range of tasks, including support Storyboard. Its main advantage - support modularity and availability errors with desriptions and lots of opportunities.
 
 
 ## Features
@@ -31,38 +31,58 @@ The small library for dependency injection in applications written on pure Swift
 
 ## Usage
 ```Swift
+// builder - for register your types
+let builder = DIContainerBuilder()
+
+builder.register{ Cat(name: "Felix") }
+  .as(Animal.self).check{$0} // register Cat with name felix by protocol Animal
+  .lifetime(.perScope) // set lifetime
+
+builder.register(type: PetOwner.init) // register PetOwner
+
+// container - for finished register your types and validation dependencies
+let container = try! builder.build()
+
+.................................................
+
+// get instance of a types from the container
+let owner = try! container.resolve(PetOwner.self)
+let animal: Animal = try! *container // short syntax
+
+/// owner.pet === animal because lifetime perScope
+print(owner.pet.name) // "Felix"
+print(animal.name) // "Felix"
+
+.................................................
+
+// where
 protocol Animal {
   var name: String { get }
 }
 
 class Cat: Animal {
-  var name: String { return "Cat" }
+  let name: String
+  init(name: String) {
+    self.name = name
+  }
 }
-.................................................
-let builder = DIContainerBuilder() // create builder
 
-builder.register(type: Cat.init)
-  .as(.self)
-  .as(Animal.self).check{$0}
-  .lifetime(.perDependency)
-  
-let container = try! builder.build() // create container with validation
-.................................................
-let cat: Cat = try! container.resolve()
-let animal: Animal = try! *container // short syntax
-
-print(cat.name) // "Cat"
-print(animal.name) // "Cat"
+class PetOwner {
+  let pet: Animal
+  init(pet: Animal) {
+    self.pet = pet
+  }
+}
 ```
 
 **For more details**:
 * Read the Quick Start [ru](Documentation/ru/quick_start.md#Быстрый-старт) / [en](Documentation/en/quick_start.md#Quick-start)
-* Or Documentation [ru](Documentation/ru/main.md) / [en](Documentation/en/main.md)
+* Or documentation [ru](Documentation/ru/main.md) / [en](Documentation/en/main.md)
 
 ## Install
 ###### Via CocoaPods.
 
-`pod 'DITranquillity'` Swift (iOS8+,macOS10.10+,tvOS9+) also need write in your PodFile `use_frameworks!`  
+To install DITranquillity with CocoaPods, add the following lines to your Podfile: `pod 'DITranquillity'`  
   
 **Also podspec separated on subspecs:**  
 *Core, Description, Component, Module, Storyboard, Scan, Logger, RuntimeArgs*  
@@ -138,3 +158,10 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 * [DIP](https://github.com/AliSoftware/Dip)
 * [Cleanse](https://github.com/square/Cleanse)
 
+## Feedback
+
+### I've found a bug, or have a feature request
+Please raise a [GitHub issue](https://github.com/ivlevAstef/DITranquillity/issues).
+
+### Question?
+You can feel free to ask the question at e-mail: ivlev.stef@gmail.com.  
