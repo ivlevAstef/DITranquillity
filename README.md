@@ -11,24 +11,23 @@ The small library for dependency injection in applications written on pure Swift
 
 
 ## Features
-
 <img align="right" src="https://habrastorage.org/files/c6d/c89/5d0/c6dc895d02324b96bc679f41228ab6bf.png" alt="Tranquillity">  
 
-[x] Pure Swift Type Support
-[x] Initializer/Property/Method Injections
-[x] Named definitions
-[x] Type forwarding
-[x] Lifetimes: single, lazySingle, weakSingle, perScope, perDependency
-[x] iOS/macOS Storyboard
-[x] Injection with Arguments
-[x] Circular dependencies
-[x] Three level hierarchy: types, components, modules
-[x] Late binding and components scopes
-[x] Short resolve syntax
-[x] Resolve thread safety
-[x] Scan Components/Modules
-[x] 9 types of errors. Errors detailing. Logs
-[x] Automatic dependency injection through properties for Obj-C types
+- [x] Pure Swift Type Support
+- [x] Initializer/Property/Method Injections
+- [x] Named definitions
+- [x] Type forwarding
+- [x] Lifetimes: single, lazySingle, weakSingle, perScope, perDependency
+- [x] iOS/macOS Storyboard
+- [x] Injection with Arguments
+- [x] Circular dependencies
+- [x] Three level hierarchy: types, components, modules
+- [x] Late binding and components scopes
+- [x] Short resolve syntax
+- [x] Resolve thread safety
+- [x] Scan Components/Modules
+- [x] 9 types of errors. Errors detailing. Logs
+- [x] Automatic dependency injection through properties for Obj-C types
 
 ## Usage
 * Read the Quick Start [ru](Documentation/ru/quick_start.md#Быстрый-старт) / [en](Documentation/en/quick_start.md#Quick-start)
@@ -39,14 +38,14 @@ The small library for dependency injection in applications written on pure Swift
 
 `pod 'DITranquillity'` Swift (iOS8+,macOS10.10+,tvOS9+) also need write in your PodFile `use_frameworks!`  
   
-Also podspec separated on subspecs:  
+- Also podspec separated on subspecs:
 `Core`, `Description`, `Component`, `Module`, `Storyboard`, `Scan`, `Logger`, `RuntimeArgs`  
 
-By default included:  
-`Core`, `Description`, `Component`, `Storyboard`  
-'Modular' subspec included:  
-`Core`, `Description`, `Component`. `Module`, `Storyboard`, `Scan`  
-'Full' subspec included all subspecs
+- By default included:  
+`Core`, `Description`, `Component`, `Storyboard`
+- 'Modular' subspec included:  
+`Core`, `Description`, `Component`. `Module`, `Storyboard`, `Scan`
+- 'Full' subspec included all subspecs
 
 ###### Via Carthage.
 
@@ -128,7 +127,7 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 ```
 
 ## Migration
-* v1.x.x -> v2.x.x [ru](Documentation/ru/migration1to2.md)
+- v1.x.x -> v2.x.x [ru](Documentation/ru/migration1to2.md)
 
 ## Changelog
 See [CHANGELOG.md](CHANGELOG.md) file.
