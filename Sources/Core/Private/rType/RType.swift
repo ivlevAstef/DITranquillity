@@ -19,7 +19,7 @@ class RType: RTypeBase {
     return RTypeFinal(typeInfo: typeInfo,
       modules: modules,
       initials: self.initials,
-      injections: self.injections,
+      injections: self.injections + (postInit.map{ [$0] } ?? []), /// append post init to end
       names: self.names,
       isDefault: self.isDefault,
       lifeTime: self.lifeTime)
@@ -47,6 +47,8 @@ class RType: RTypeBase {
   var names: Set<String> = []
   var isDefault: Bool = false
   var isProtocol: Bool = false
+  
+  var postInit: ((_: DIContainer, _: Any) throws -> ())? = nil
 
   fileprivate var initials: [MethodKey: Any] = [:] // method type to method
   fileprivate var injections: [(_: DIContainer, _: Any) throws -> ()] = []

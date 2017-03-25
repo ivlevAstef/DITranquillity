@@ -51,7 +51,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .initial(FooService.init)
     
 		builder.register(vc: TestViewController2.self)
-      .injection{ scope, vc in try vc.service = *scope }
+      .injection(.manual) { scope, vc in try vc.service = *scope }
     
     let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
     
@@ -85,7 +85,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .injection { vc, service in vc.service = service }
     
 		builder.register(vc: TestViewController2.self)
-      .injection { scope, vc in try vc.service = *scope }
+      .postInit { scope, vc in try vc.service = *scope }
 
     let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
     
@@ -111,7 +111,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .initial(FooService.init)
     
     builder.register(vc: TestViewController2.self)
-      .injection { scope, vc in try vc.service = *scope }
+      .injection(.manual) { scope, vc in try vc.service = *scope }
     
     let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
     
@@ -161,7 +161,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .initial{ FooService() }
 		
 		builder.register(vc: TestViewController.self)
-			.injection { scope, vc in try vc.service = *scope }
+			.injection(.manual) { scope, vc in try vc.service = *scope }
 		
 		builder.register(type: UIStoryboard.self)
 			.lifetime(.single)

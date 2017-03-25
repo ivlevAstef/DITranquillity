@@ -1,5 +1,5 @@
 //
-//  DIRegistrationBuilder.Injection.swift
+//  DIRegistrationBuilder.Injection.Methods.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 03/02/2017.
@@ -7,12 +7,6 @@
 //
 
 public extension DIRegistrationBuilder {
-  @discardableResult
-  public func injection<P0>(_ method: @escaping (Impl,P0) throws -> ()) -> Self {
-    rType.append(injection: { s, o in try method(o, *s) })
-    return self
-  }
-
   @discardableResult
   public func injection<P0,P1>(_ method: @escaping (Impl,P0,P1) throws -> ()) -> Self {
     rType.append(injection: { s, o in try method(o, *s,*s) })

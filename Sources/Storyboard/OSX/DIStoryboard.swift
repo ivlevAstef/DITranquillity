@@ -60,7 +60,7 @@ public extension DIRegistrationBuilder where Impl: NSViewController {
 public extension DIRegistrationBuilder where Impl: NSStoryboard {
   @discardableResult
   public func initial(name: String, bundle storyboardBundleOrNil: Bundle?) -> Self {
-		self.initial { (c) throws -> Impl in DIStoryboard(name: name, bundle: storyboardBundleOrNil, container: c) as! Impl }
+    self.initial { (c) throws -> Impl in DIStoryboard(name: name, bundle: storyboardBundleOrNil, container: c) as! Impl }
     return self
   }
 }

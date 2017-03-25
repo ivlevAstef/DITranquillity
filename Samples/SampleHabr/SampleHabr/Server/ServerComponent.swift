@@ -16,6 +16,6 @@ class ServerComponent: DIComponent {
       .as(.self)
       .as(Server.self).check{$0}
       .lifetime(.single)
-      .injection { (container, self) in self.logger = *?container }
+      .postInit { (container, self) in self.logger = *?container }
   }
 }

@@ -58,15 +58,15 @@
 		119F4FD01E56069200B2DFA1 /* DIContainerBuilder.Register.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FCA1E56069200B2DFA1 /* DIContainerBuilder.Register.Arg.swift */; };
 		119F4FD11E56069200B2DFA1 /* DIContainerBuilder.Register.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FCA1E56069200B2DFA1 /* DIContainerBuilder.Register.Arg.swift */; };
 		119F4FD21E56069200B2DFA1 /* DIContainerBuilder.Register.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FCA1E56069200B2DFA1 /* DIContainerBuilder.Register.Arg.swift */; };
-		119F4FD31E56069200B2DFA1 /* DIRegistrationBuilder.Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FCB1E56069200B2DFA1 /* DIRegistrationBuilder.Injection.swift */; };
-		119F4FD41E56069200B2DFA1 /* DIRegistrationBuilder.Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FCB1E56069200B2DFA1 /* DIRegistrationBuilder.Injection.swift */; };
-		119F4FD51E56069200B2DFA1 /* DIRegistrationBuilder.Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FCB1E56069200B2DFA1 /* DIRegistrationBuilder.Injection.swift */; };
 		119F4FD61E56069200B2DFA1 /* DIRegistrationBuilder.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FCC1E56069200B2DFA1 /* DIRegistrationBuilder.Arg.swift */; };
 		119F4FD71E56069200B2DFA1 /* DIRegistrationBuilder.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FCC1E56069200B2DFA1 /* DIRegistrationBuilder.Arg.swift */; };
 		119F4FD81E56069200B2DFA1 /* DIRegistrationBuilder.Arg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FCC1E56069200B2DFA1 /* DIRegistrationBuilder.Arg.swift */; };
 		163DDDC61DB9C84E0003DE54 /* DITypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163DDDC51DB9C84E0003DE54 /* DITypes.swift */; };
 		163DDDC71DB9C84E0003DE54 /* DITypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163DDDC51DB9C84E0003DE54 /* DITypes.swift */; };
 		163DDDC81DB9C84E0003DE54 /* DITypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163DDDC51DB9C84E0003DE54 /* DITypes.swift */; };
+		1651E7041E8631A900E967B4 /* DIRegistrationBuilder.Injection.Methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1651E7031E8631A900E967B4 /* DIRegistrationBuilder.Injection.Methods.swift */; };
+		1651E7061E86373D00E967B4 /* DIRegistrationBuilder.Injection.Methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1651E7031E8631A900E967B4 /* DIRegistrationBuilder.Injection.Methods.swift */; };
+		1651E7071E86373D00E967B4 /* DIRegistrationBuilder.Injection.Methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1651E7031E8631A900E967B4 /* DIRegistrationBuilder.Injection.Methods.swift */; };
 		165F614F1D9E78DD00F6126E /* DIContainerBuilder.Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165F614E1D9E78DD00F6126E /* DIContainerBuilder.Register.swift */; };
 		16640A731D9E1E7B00707BFC /* DIMultyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A521D9E1E7B00707BFC /* DIMultyMap.swift */; };
 		16640A741D9E1E7B00707BFC /* DIResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A531D9E1E7B00707BFC /* DIResolver.swift */; };
@@ -159,9 +159,9 @@
 		119F4FBB1E5604C500B2DFA1 /* DIRegistrationBuilder.Params.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIRegistrationBuilder.Params.swift; sourceTree = "<group>"; };
 		119F4FC91E56069200B2DFA1 /* autogenerate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = autogenerate.sh; sourceTree = "<group>"; };
 		119F4FCA1E56069200B2DFA1 /* DIContainerBuilder.Register.Arg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainerBuilder.Register.Arg.swift; sourceTree = "<group>"; };
-		119F4FCB1E56069200B2DFA1 /* DIRegistrationBuilder.Injection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIRegistrationBuilder.Injection.swift; sourceTree = "<group>"; };
 		119F4FCC1E56069200B2DFA1 /* DIRegistrationBuilder.Arg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIRegistrationBuilder.Arg.swift; sourceTree = "<group>"; };
 		163DDDC51DB9C84E0003DE54 /* DITypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITypes.swift; sourceTree = "<group>"; };
+		1651E7031E8631A900E967B4 /* DIRegistrationBuilder.Injection.Methods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIRegistrationBuilder.Injection.Methods.swift; sourceTree = "<group>"; };
 		165F614E1D9E78DD00F6126E /* DIContainerBuilder.Register.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainerBuilder.Register.swift; sourceTree = "<group>"; };
 		16640A521D9E1E7B00707BFC /* DIMultyMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIMultyMap.swift; sourceTree = "<group>"; };
 		16640A531D9E1E7B00707BFC /* DIResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIResolver.swift; sourceTree = "<group>"; };
@@ -271,8 +271,8 @@
 			isa = PBXGroup;
 			children = (
 				119F4FC91E56069200B2DFA1 /* autogenerate.sh */,
+				1651E7031E8631A900E967B4 /* DIRegistrationBuilder.Injection.Methods.swift */,
 				119F4FCA1E56069200B2DFA1 /* DIContainerBuilder.Register.Arg.swift */,
-				119F4FCB1E56069200B2DFA1 /* DIRegistrationBuilder.Injection.swift */,
 				119F4FCC1E56069200B2DFA1 /* DIRegistrationBuilder.Arg.swift */,
 			);
 			path = AutoResolve;
@@ -599,10 +599,10 @@
 				119F4FC01E5604C500B2DFA1 /* DIContainer.Arg.swift in Sources */,
 				169C0DD91DA3501F001F0AD5 /* RTypeWithName.swift in Sources */,
 				118F09061E4B688900C1ED5E /* DIModule.swift in Sources */,
-				119F4FD41E56069200B2DFA1 /* DIRegistrationBuilder.Injection.swift in Sources */,
 				119F4FC31E5604C500B2DFA1 /* DIContainer.TypeArg.swift in Sources */,
 				16D7BCBD1DB086B900A29A9F /* DIScanModule.swift in Sources */,
 				1123CD7F1E647CC1004D52F9 /* LateBindingExtensions.swift in Sources */,
+				1651E7061E86373D00E967B4 /* DIRegistrationBuilder.Injection.Methods.swift in Sources */,
 				169C0DDC1DA3501F001F0AD5 /* RTypeBase.swift in Sources */,
 				169C0E241DA357CA001F0AD5 /* DIStoryboard.swift in Sources */,
 			);
@@ -647,10 +647,10 @@
 				119F4FC11E5604C500B2DFA1 /* DIContainer.Arg.swift in Sources */,
 				169C0E3F1DA35CBE001F0AD5 /* RTypeWithName.swift in Sources */,
 				118F09071E4B688900C1ED5E /* DIModule.swift in Sources */,
-				119F4FD51E56069200B2DFA1 /* DIRegistrationBuilder.Injection.swift in Sources */,
 				119F4FC41E5604C500B2DFA1 /* DIContainer.TypeArg.swift in Sources */,
 				16D7BCBF1DB086B900A29A9F /* DIScanModule.swift in Sources */,
 				1123CD801E647CC1004D52F9 /* LateBindingExtensions.swift in Sources */,
+				1651E7071E86373D00E967B4 /* DIRegistrationBuilder.Injection.Methods.swift in Sources */,
 				169C0E411DA35CBE001F0AD5 /* RTypeBase.swift in Sources */,
 				169C0E421DA35CBE001F0AD5 /* DIStoryboard.swift in Sources */,
 			);
@@ -695,10 +695,10 @@
 				16640A861D9E1E7B00707BFC /* DIContainer.ShortSyntax.swift in Sources */,
 				16640A771D9E1E7B00707BFC /* RType.swift in Sources */,
 				119F4FC21E5604C500B2DFA1 /* DIContainer.TypeArg.swift in Sources */,
-				119F4FD31E56069200B2DFA1 /* DIRegistrationBuilder.Injection.swift in Sources */,
 				16640A781D9E1E7B00707BFC /* RTypeWithName.swift in Sources */,
 				16D7BCB91DB086B000A29A9F /* DIScanModule.swift in Sources */,
 				1123CD7E1E647CC1004D52F9 /* LateBindingExtensions.swift in Sources */,
+				1651E7041E8631A900E967B4 /* DIRegistrationBuilder.Injection.Methods.swift in Sources */,
 				16640A761D9E1E7B00707BFC /* RTypeBase.swift in Sources */,
 				169C0E211DA357C3001F0AD5 /* DIStoryboard.swift in Sources */,
 			);

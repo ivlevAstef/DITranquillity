@@ -77,7 +77,7 @@ private class Component2: DIComponent {
     
     builder.register(vc: AccessViewController.self)
       .injection { vc, other in vc.other = other }
-      .injection { _, vc in vc.dynamicName = "Component2" }
+      .injection { $0.dynamicName = "Component2" }
   }
 }
 
@@ -134,7 +134,7 @@ private class Component3: DIComponent {
     
     builder.register(vc: AccessViewController.self)
       .injection { vc, other in vc.other = other }
-      .injection { _, vc in vc.dynamicName = "Component3" }
+      .injection { $0.dynamicName = "Component3" }
   }
 }
 

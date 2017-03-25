@@ -48,28 +48,49 @@ extension DIRegistrationBuilder {
 extension DIRegistrationBuilder {
   @discardableResult
   public func initial(_ closure: @escaping () throws -> Impl) -> Self {
-    rType.append(initial: { (_: DIContainer) throws -> Any in return try closure() })
+    rType.append(initial: { (_: DIContainer) throws -> Any in try closure() })
     return self
   }
   
   @discardableResult
   public func initial(_ closure: @escaping (DIContainer) throws -> Impl) -> Self {
-    rType.append(initial: { scope throws -> Any in return try closure(scope) })
+    rType.append(initial: { scope throws -> Any in try closure(scope) })
     return self
   }
 }
 
+public enum DIInjectionOptional { case optional }
+public enum DIInjectionManual { case manual }
+
 // Injection
 extension DIRegistrationBuilder {
   @discardableResult
-  public func injection(_ closure: @escaping (DIContainer, Impl) throws -> ()) -> Self {
-    rType.append(injection: closure)
+  public func injection(_ method: @escaping (Impl) throws -> ()) -> Self {
+    rType.append(injection: { scope, obj in try method(obj) })
+    return self
+  }
+
+  @discardableResult
+  public func injection<Inject>(_ method: @escaping (Impl, Inject) throws -> ()) -> Self {
+    rType.append(injection: { s, o in try method(o, *s) })
     return self
   }
   
   @discardableResult
-  public func injection(_ method: @escaping (Impl) throws -> ()) -> Self {
-    rType.append(injection: { scope, obj in try method(obj) })
+  public func injection<Inject>(_: DIInjectionOptional, _ method: @escaping (Impl, Inject?) throws -> ()) -> Self {
+    rType.append(injection: { s, o in try method(o, *?s) })
+    return self
+  }
+  
+  @discardableResult
+  public func injection(_: DIInjectionManual, _ method: @escaping (DIContainer, Impl) throws -> ()) -> Self {
+    rType.append(injection: method)
+    return self
+  }
+  
+  @discardableResult
+  public func postInit(_ method: @escaping (DIContainer, Impl) throws -> ()) -> Self {
+    rType.postInit = { try method($0, $1 as! Impl) }
     return self
   }
 }

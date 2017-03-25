@@ -17,9 +17,10 @@ class AppComponent: DIComponent {
     
     builder.register(type: YourPresenter.init(server:))
       .lifetime(.perScope)
-      .injection { (container, self) in self.logger = *?container }
+      .injection(.optional) { $0.logger = $1 }
+      .injection(.manual) { (container, self) in self.logger = *?container }
     
-		builder.register(vc: YourViewController.self)
+    builder.register(vc: YourViewController.self)
       .injection { $0.presenter = $1 }
   }
 

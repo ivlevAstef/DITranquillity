@@ -155,7 +155,7 @@ class SampleComponent : DIComponent {
       .as(LoggerProtocol.self).check{$0}
       .lifetime(.single)
       .initial{ container in try LoggerAll.init(loggers: **container) }
-      .injection { (container, self) in try self.loggersFull = **container }
+      .postInit { (container, self) in try self.loggersFull = **container }
 
 		builder.register{ Logger() }
       .as(LoggerProtocol.self).check{$0}
@@ -170,8 +170,8 @@ class SampleComponent : DIComponent {
       .as(.self)
       .lifetime(.perDependency)
       .initial(Inject.init(service:logger:test:))
-      .injection { (container, obj) in obj.logger2 = try container.resolve(Logger2.self) }
-      .injection { (container, obj) in try obj.service2 = *container }
+      .injection { $0.service2 = $1 }
+      .postInit { (container, obj) in obj.logger2 = try container.resolve(Logger2.self) }
     
     builder.register(type: InjectMany.self)
       .as(.self)
@@ -214,7 +214,7 @@ class SampleComponent : DIComponent {
       .as(.self)
       .lifetime(.perDependency)
       .initial { Circular2() }
-      .injection { (s, obj) in try obj.ref = *s }
+      .postInit { (s, obj) in try obj.ref = *s }
   }
   
   private let useBarService: Bool
@@ -226,7 +226,7 @@ class SampleStartupComponent : DIComponent {
     
 		builder.register(vc: ViewController.self)
       .injection { $0.injectGlobal = $1 }
-      .injection { container, vc in vc.container = container }
+      .postInit { container, vc in vc.container = container }
 		
 		
     builder.register(vc: ViewController2.self)

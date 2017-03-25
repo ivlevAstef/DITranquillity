@@ -9,9 +9,9 @@
 import DITranquillity
 
 public final class LoggerModule: DIModule {
-	public var components: [DIComponent] { return [ LoggerComponent() ] }
-	
-	public var dependencies: [DIModule] { return [ ] }
+  public var components: [DIComponent] { return [ LoggerComponent() ] }
+
+  public var dependencies: [DIModule] { return [ ] }
   
   public init() { }
 }
