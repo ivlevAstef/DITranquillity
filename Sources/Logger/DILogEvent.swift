@@ -18,17 +18,22 @@ public enum DILogEvent {
   case cached
   case injection(BeginEndBrace)
   
+  case warning(Warning)
   case error(DIError)
   
-  public enum BeginEndBrace: Equatable {
+  public enum BeginEndBrace {
     case begin
     case end
   }
   
-  public enum ResolveStyle: Equatable {
+  public enum ResolveStyle {
     case cache
     case new
     case use
+  }
+  
+  public enum Warning {
+    case implNotFound(for: DITypeInfo)
   }
 }
 
@@ -42,6 +47,7 @@ extension DILogEvent: Equatable {
          (.resolve(_), .resolve(_)),
          (.cached, .cached),
          (.injection(_),.injection(_)),
+         (.warning(_),.warning(_)),
          (.error(_), .error(_)):
       return true
     default:

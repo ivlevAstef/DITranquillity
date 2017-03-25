@@ -9,12 +9,22 @@
 import UIKit
 import DITranquillity
 
+class AppLogger: DILogger {
+  func log(_ event: DILogEvent, msg: String) {
+    if case .warning(_) = event {
+      print(msg)
+    }
+  }
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
   public func applicationDidFinishLaunching(_ application: UIApplication) {
+    DILoggerComposite.add(logger: AppLogger())
+    
     let builder = DIContainerBuilder()
     builder.register(module: AppModule())
     let container = try! builder.build()

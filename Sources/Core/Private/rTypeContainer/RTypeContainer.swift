@@ -26,6 +26,14 @@ class RTypeContainer {
     var result: [DITypeKey: [RTypeFinal]] = [:]
     
     for data in self.values.dictionary {
+#if ENABLE_DI_LOGGER
+      if !data.value.contains{ !$0.isProtocol } { /// all it's protocol
+        for rType in data.value {
+          DILoggerComposite.log(.warning(.implNotFound(for: rType.typeInfo)), msg: "Not found implementation for protocol: \(rType.typeInfo.type)")
+        }
+      }
+#endif
+      
       for rType in data.value.filter({ !$0.isProtocol }) {
         let final = map[rType] ?? rType.copyFinal()
         map[rType] = final // additional operation, but simple syntax
