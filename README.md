@@ -76,8 +76,8 @@ class PetOwner {
 ```
 
 **For more details**:
-* Read the Quick Start [ru](Documentation/ru/quick_start.md#Быстрый-старт) / [en](Documentation/en/quick_start.md#Quick-start)
-* Or documentation [ru](Documentation/ru/main.md) / [en](Documentation/en/main.md)
+* Read the Quick Start [ru](Documentation/ru/quick_start.md#Быстрый-старт) / [~~en~~](Documentation/en/Ups.md)
+* Or documentation [ru](Documentation/ru/main.md) / [~~en~~](Documentation/en/Ups.md)
 
 ## Install
 ###### Via CocoaPods.
@@ -90,7 +90,7 @@ To install DITranquillity with CocoaPods, add the following lines to your Podfil
 **By default included:**  
 *Core, Description, Component, Storyboard*  
 **Modular** subspec included:  
-*Core, Description, Component. Module, Storyboard, Scan*  
+*Core, Description, Component, Module, Storyboard, Scan*  
 **Full** subspec included all subspecs
 
 ###### Via Carthage.
@@ -162,6 +162,9 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 
 ### I've found a bug, or have a feature request
 Please raise a [GitHub issue](https://github.com/ivlevAstef/DITranquillity/issues).
+
+### I've found a defect in documentation, or thought up how to improve it
+Please help library development and create [pull requests](https://github.com/ivlevAstef/DITranquillity/pulls)
 
 ### Question?
 You can feel free to ask the question at e-mail: ivlev.stef@gmail.com.  
