@@ -5,9 +5,9 @@
 Для указания зависимостей через свойства или любой другой метод, надо перед этим создать объект, в который мы будем внедрять зависимости. Можно это сделать и внутри блока, в котором создается объект, но такой способ не предпочтителен. Для таких случаев существует метод `injection`, который может быть написан несколько раз: 
 ```Swift
 builder.register(type: Home.self).initial { Home() }
-  .injection { container, home in try home.animals.append(container.resolve(Cat.self)) }
-  .injection { container, home in try home.animals.append(container.resolve(Dog.self)) }
-  .injection { container, home in try home.animals.append(container.resolve(Hamster.self)) }
+  .injection(.manual) { container, home in try home.animals.append(container.resolve(Cat.self)) }
+  .injection(.manual) { container, home in try home.animals.append(container.resolve(Dog.self)) }
+  .injection(.manual) { container, home in try home.animals.append(container.resolve(Hamster.self)) }
 ```
 Данный метод очень похож на метод инициализации, но у него есть одно главное отличие: вторым аргументом он принимает созданный объект.
 
@@ -18,7 +18,13 @@ builder.register(type: Home.self).initial { Home() }
   .injection { $0.animals.append($1 as Dog) }
   .injection { $0.hamster = $1 } // автоматически выведет тип
 ```
-!! Обращаю внимание на существенное отличие - в первом случае нулевым параметром идет контейнер, а первым объект. Во втором же случае нулевым параметром идет объект, в который внедряются зависимости, а за ним уже идут объекты, которые внедряются.
+!! Обращаю внимание на существенное отличие - в первом случае нулевым параметром идет контейнер, а первым параметром объект. Во втором же случае нулевым параметром идет объект, в который внедряются зависимости, а за ним уже идут объекты, которые внедряются. Помимо этого в первом случае мы явно указываем, что писать синтаксис будем самостоятельно.
+
+В первом случае - когда нужно писать синтаксис полностью, можно получить любой объект, во втором же случае данный метод работает, только в случае если объект точно существует. Дабы упростить жизнь, существует еще одна форма внедрения зависимости - опциональная:
+```Swift
+builder.register(type: Home.self).initial { Home() }
+  .injection(.optional) { $0.hamster = $1 } // тут hamster имеет опциональный тип: Hamster?
+```
 
 ## Автоматическое внедрение зависимостей через свойства
 Если вы не используете чистые Swift типы, что является частично правдой, так как UI является Obj-C кодом, то существует способ автоматически внедрить все зависимости через свойства без необходимости их перечислять. Но это накладывает два ограничения:
@@ -37,9 +43,9 @@ class YourViewController: UIViewController {
 ```Swift
 /// Старый
 builder.register(vc: YourViewController.self)
-  .inject { vc, inject in vc.inject1 = inject }
-  .inject { vc, inject in vc.inject2 = inject }
-  .inject { vc, inject in vc.inject3 = inject }
+  .injection { vc, inject in vc.inject1 = inject }
+  .injection { vc, inject in vc.inject2 = inject }
+  .injection { vc, inject in vc.inject3 = inject }
   ...
 
 /// Новый

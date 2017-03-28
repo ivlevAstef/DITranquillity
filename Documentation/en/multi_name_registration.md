@@ -29,7 +29,7 @@ let loggers: [Logger] = try! container.resolveMany()
 builder.register{ AllLogger() }
   .as(Logger.self).check{$0}
   .lifetime(.single)
-  .injection { c, log in log.loggers = try! c.resolveMany().filter{ $0 !=== log } }
+  .injection(.manual) { c, log in log.loggers = try! c.resolveMany().filter{ $0 !=== log } }
   .set(.default)
 ```
 
