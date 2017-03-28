@@ -80,7 +80,7 @@ class PetOwner {
 ```
 
 </details>
-
+  
 **For more details**:
 * Read the Quick Start [ru](Documentation/ru/quick_start.md#Быстрый-старт) / [~~en~~](Documentation/en/Ups.md)
 * Or documentation [ru](Documentation/ru/main.md) / [~~en~~](Documentation/en/Ups.md)
@@ -119,7 +119,7 @@ See [CHANGELOG.md](CHANGELOG.md) file.
 ## Storyboard (iOS/OS X)
 
 <details>
-<summarySee</summary>
+<summary>See code</summary>
 
 Create your ViewController:
 ```Swift
