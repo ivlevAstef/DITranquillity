@@ -166,3 +166,4 @@ print(home.animals.map{ $0.name }) // [Felix, Buddy]
 * [Логирование](log.md#Логирование)
 * [Исключения](errors.md#Исключения)
 * [Примеры](sample.md#Примеры)
+* [Словарик](glossary.md#Словарик)

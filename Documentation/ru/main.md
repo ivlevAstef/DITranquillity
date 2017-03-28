@@ -109,6 +109,6 @@ DITranquallity - небольшая библиотека для внедрени
 * [Delegate and Observer](sample.md#delegate-and-observer)
 * [Habr](sample.md#habr)
 * [OSX](sample.md#osx)
-* Big Project
+* ~~Big Project~~
 
-
+# [Словарик](glossary.md#Словарик)
