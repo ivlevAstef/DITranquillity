@@ -29,7 +29,8 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 * 9 types of errors. Errors detailing. Logs
 * Automatic dependency injection through properties for Obj-C types
 
-## Usage
+<details>
+<summary>## Usage</summary>
 ```Swift
 // builder - for register your types
 let builder = DIContainerBuilder()
@@ -74,6 +75,7 @@ class PetOwner {
   }
 }
 ```
+</details>
 
 **For more details**:
 * Read the Quick Start [ru](Documentation/ru/quick_start.md#Быстрый-старт) / [~~en~~](Documentation/en/Ups.md)
@@ -109,7 +111,8 @@ iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
 ## Changelog
 See [CHANGELOG.md](CHANGELOG.md) file.
 
-## Storyboard (iOS/OS X)
+<details>
+<summary>## Storyboard (iOS/OS X)</summary>
 Create your ViewController:
 ```Swift
 class ViewController: UIViewController/NSViewController {
@@ -151,6 +154,7 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
   window?.contentViewController = viewController
 }
 ```
+</details>
 
 ## Alternative
 * [Typhoon](https://github.com/appsquickly/Typhoon)
