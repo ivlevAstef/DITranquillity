@@ -25,3 +25,9 @@ public enum DILifeTime: Equatable {
   
   static var `default`: DILifeTime { return perScope }
 }
+
+extension DITypeInfo: Equatable {
+  public static func==(lhs: DITypeInfo, rhs: DITypeInfo) -> Bool {
+    return lhs.type == rhs.type && lhs.line == rhs.line && lhs.file == rhs.file
+  }
+}

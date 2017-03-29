@@ -9,7 +9,9 @@
 public final class DIContainerBuilder {
   public init() {
     self.rTypeContainer = RTypeContainer()
+    #if ENABLE_DI_MODULE
     self.currentModules = []
+    #endif
   }
 
   @discardableResult
@@ -24,16 +26,19 @@ public final class DIContainerBuilder {
     return container
   }
   
+  let rTypeContainer: RTypeContainer
+  
+  fileprivate var ignoreTypes: [String: RType] = [:]
+  
+  #if ENABLE_DI_MODULE
   internal init(container: DIContainerBuilder, stack: [DIModuleType]) {
     rTypeContainer = container.rTypeContainer
     self.currentModules = stack
   }
   
-  let rTypeContainer: RTypeContainer
   /// need for register type. But filled from components with module
   let currentModules: [DIModuleType] // DIModuleType
-  
-  fileprivate var ignoreTypes: [String: RType] = [:]
+  #endif
 }
 
 extension DIContainerBuilder {
@@ -59,12 +64,20 @@ extension DIContainerBuilder {
 
     for rType in allTypes {
       if !(rType.hasInitial || rType.initialNotNecessary) {
-        errors.append(DIError.notSpecifiedInitializationMethodFor(typeInfo: rType.typeInfo))
+        let diError = DIError.noSpecifiedInitialMethod(typeInfo: rType.typeInfo)
+        #if ENABLE_DI_LOGGER
+           DILoggerComposite.log(.error(diError), msg: "No specified initial method for type info: \(rType.typeInfo)")
+        #endif
+        errors.append(diError)
       }
     }
 
     if !errors.isEmpty {
-      throw DIError.build(errors: errors)
+      let diError = DIError.build(errors: errors)
+      #if ENABLE_DI_LOGGER
+         DILoggerComposite.log(.error(diError), msg: "build errors count: \(errors.count)")
+      #endif
+      throw diError
     }
   }
 
@@ -77,7 +90,11 @@ extension DIContainerBuilder {
 
     let defaultTypes = rTypes.filter{ $0.isDefault }
     if defaultTypes.count > 1 {
-      errors.append(DIError.pluralSpecifiedDefaultType(type: superType, typesInfo: defaultTypes.map { $0.typeInfo }))
+      let diError = DIError.pluralDefaultAd(type: superType, typesInfo: defaultTypes.map { $0.typeInfo })
+      #if ENABLE_DI_LOGGER
+         DILoggerComposite.log(.error(diError), msg: "Plural default ad for type: \(superType)")
+      #endif
+      errors.append(diError)
     }
   }
 
@@ -91,7 +108,11 @@ extension DIContainerBuilder {
     }
     
     if !intersect.isEmpty {
-      errors.append(DIError.intersectionNamesForType(type: superType, names: intersect, typesInfo: rTypes.map{ $0.typeInfo }))
+      let diError = DIError.intersectionNames(type: superType, names: intersect, typesInfo: rTypes.map{ $0.typeInfo })
+      #if ENABLE_DI_LOGGER
+         DILoggerComposite.log(.error(diError), msg: "Intersection names: \(intersect) for type: \(superType)")
+      #endif
+      errors.append(diError)
     }
   }
 }
@@ -99,12 +120,19 @@ extension DIContainerBuilder {
 
 extension DIContainerBuilder {
   fileprivate func initSingleLifeTime(rTypeContainer: RTypeContainerFinal, container: DIContainer) throws {
-    for rType in rTypeContainer.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime }) {
-      do {
+    let singleRTypes = rTypeContainer.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime })
+    
+    if singleRTypes.isEmpty { // for ignore log
+      return
+    }
+    
+    #if ENABLE_DI_LOGGER
+      DILoggerComposite.log(.createSingle(.begin), msg: "Begin resolve \(singleRTypes.count) singletons")
+      defer {  DILoggerComposite.log(.createSingle(.end), msg: "End resolve singletons") }
+    #endif
+    
+    for rType in singleRTypes {
       _ = try container.resolve(RType: rType)
-      } catch {
-        throw DIError.whileCreateSingleton(typeInfo: rType.typeInfo, stack: error as! DIError)
-      }
     }
   }
 }

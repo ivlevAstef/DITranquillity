@@ -64,7 +64,7 @@ echo "  @discardableResult
 
 registationInjectFile() { #file
 echo "//
-//  DIRegistrationBuilder.Injection.swift
+//  DIRegistrationBuilder.Injection.Methods.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 03/02/2017.
@@ -73,7 +73,7 @@ echo "//
 
 public extension DIRegistrationBuilder {" > $1
 
-for argcount in `seq 0 $argmax`; do
+for argcount in `seq 1 $argmax`; do
 registrationInjectFunction $argcount $1
 done
 echo "}" >> $1
@@ -112,6 +112,6 @@ echo "}" >> $1
 }
 
 registationInitFile "DIRegistrationBuilder.Arg.swift"
-registationInjectFile "DIRegistrationBuilder.Injection.swift"
+registationInjectFile "DIRegistrationBuilder.Injection.Methods.swift"
 
 containerInitFile "DIContainerBuilder.Register.Arg.swift"

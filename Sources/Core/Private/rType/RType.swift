@@ -9,8 +9,7 @@
 class RType: RTypeBase {
   typealias MethodKey = String
 
-  var hasInitial: Bool { return !initials.isEmpty }
-
+  #if ENABLE_DI_MODULE
   init(typeInfo: DITypeInfo, modules: [DIModuleType]) {
     self.modules = modules
     super.init(typeInfo: typeInfo)
@@ -20,18 +19,36 @@ class RType: RTypeBase {
     return RTypeFinal(typeInfo: typeInfo,
       modules: modules,
       initials: self.initials,
-      injections: self.injections,
+      injections: self.injections + (postInit.map{ [$0] } ?? []), /// append post init to end
       names: self.names,
       isDefault: self.isDefault,
       lifeTime: self.lifeTime)
   }
-
+  
   var modules: [DIModuleType]
+  
+  #else
+  
+  func copyFinal() -> RTypeFinal {
+    return RTypeFinal(typeInfo: typeInfo,
+                      initials: self.initials,
+                      injections: self.injections,
+                      names: self.names,
+                      isDefault: self.isDefault,
+                      lifeTime: self.lifeTime)
+  }
+  #endif
+
+  var hasInitial: Bool { return !initials.isEmpty }
+  var injectionsCount: Int { return injections.count }
+  
   var lifeTime = DILifeTime.default
   var initialNotNecessary: Bool = false
   var names: Set<String> = []
   var isDefault: Bool = false
   var isProtocol: Bool = false
+  
+  var postInit: ((_: DIContainer, _: Any) throws -> ())? = nil
 
   fileprivate var initials: [MethodKey: Any] = [:] // method type to method
   fileprivate var injections: [(_: DIContainer, _: Any) throws -> ()] = []

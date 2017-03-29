@@ -7,33 +7,30 @@
 //
 
 public indirect enum DIError: Error {
-  case typeIsNotFound(type: DIType)
-  case typeIsNotFoundForName(type: DIType, name: String, typesInfo: [DITypeInfo])
-  case notSpecifiedInitializationMethodFor(typeInfo: DITypeInfo)
+  /// Until Resolve
+  case typeNotFound(type: DIType)
+  case typeForNameNotFound(type: DIType, name: String, typesInfo: [DITypeInfo])
 
-  case initializationMethodWithSignatureIsNotFoundFor(typeInfo: DITypeInfo, signature: DIMethodSignature)
+  case initialMethodNotFound(typeInfo: DITypeInfo, signature: DIMethodSignature)
 
-  case pluralSpecifiedDefaultType(type: DIType, typesInfo: [DITypeInfo])
-  case defaultTypeIsNotSpecified(type: DIType, typesInfo: [DITypeInfo])
+  case ambiguousType(type: DIType, typesInfo: [DITypeInfo])
+  
+  case incorrectType(requestedType: DIType, realType: DIType, typeInfo: DITypeInfo)
 
-  case intersectionNamesForType(type: DIType, names: Set<String>, typesInfo: [DITypeInfo])
+  case recursiveInitial(typeInfo: DITypeInfo)
 
-  case typeIsIncorrect(requestedType: DIType, realType: DIType, typeInfo: DITypeInfo)
-
-  case recursiveInitialization(typeInfo: DITypeInfo)
-
+  #if ENABLE_DI_MODULE
   case noAccess(typesInfo: [DITypeInfo], accessModules: [String])
+  #endif
+  
+  /// Until Build
+  
+  case noSpecifiedInitialMethod(typeInfo: DITypeInfo)
+  
+  case intersectionNames(type: DIType, names: Set<String>, typesInfo: [DITypeInfo])
+  
+  case pluralDefaultAd(type: DIType, typesInfo: [DITypeInfo])
   
   /// Support
   case build(errors: [DIError])
-  
-  case stack(type: DIType, child: DIError, resolveStyle: DIResolveStyle)
-  case byCall(file: String, line: Int, function: String, stack: DIError)
-  case whileCreateSingleton(typeInfo: DITypeInfo, stack: DIError)
-}
-
-public enum DIResolveStyle {
-  case one
-  case many
-  case byName(name: String)
 }

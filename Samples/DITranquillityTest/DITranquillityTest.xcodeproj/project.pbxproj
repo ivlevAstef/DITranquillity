@@ -10,6 +10,7 @@
 		11046A6B1E64182B00788015 /* AccessStoryboard1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11046A691E64182B00788015 /* AccessStoryboard1.storyboard */; };
 		11046A6C1E64182B00788015 /* AccessStoryboard2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11046A6A1E64182B00788015 /* AccessStoryboard2.storyboard */; };
 		1142C1E41E44F7910000517F /* DITranquillityTests_AutoPropertyInjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1142C1E31E44F7910000517F /* DITranquillityTests_AutoPropertyInjection.swift */; };
+		114EDC801E71A3CF00C90CA7 /* DITranquillityTests_Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114EDC7F1E71A3CF00C90CA7 /* DITranquillityTests_Logger.swift */; };
 		117798771E6346550020B244 /* DITranquillityTests_Access.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117798761E6346550020B244 /* DITranquillityTests_Access.swift */; };
 		118DBCB71E40F9E9003A7D1F /* DITranquillityTests_ResolveByInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCB61E40F9E9003A7D1F /* DITranquillityTests_ResolveByInit.swift */; };
 		1699AEC11DCAED8C00962832 /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1699AEC01DCAED8C00962832 /* DITranquillity.framework */; };
@@ -29,6 +30,7 @@
 		11046A691E64182B00788015 /* AccessStoryboard1.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AccessStoryboard1.storyboard; sourceTree = "<group>"; };
 		11046A6A1E64182B00788015 /* AccessStoryboard2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AccessStoryboard2.storyboard; sourceTree = "<group>"; };
 		1142C1E31E44F7910000517F /* DITranquillityTests_AutoPropertyInjection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_AutoPropertyInjection.swift; sourceTree = "<group>"; };
+		114EDC7F1E71A3CF00C90CA7 /* DITranquillityTests_Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Logger.swift; sourceTree = "<group>"; };
 		117798761E6346550020B244 /* DITranquillityTests_Access.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Access.swift; sourceTree = "<group>"; };
 		118DBCB61E40F9E9003A7D1F /* DITranquillityTests_ResolveByInit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_ResolveByInit.swift; sourceTree = "<group>"; };
 		1699AEC01DCAED8C00962832 /* DITranquillity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DITranquillity.framework; path = "../../build/Debug-iphoneos/DITranquillity.framework"; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				117798761E6346550020B244 /* DITranquillityTests_Access.swift */,
 				11046A691E64182B00788015 /* AccessStoryboard1.storyboard */,
 				11046A6A1E64182B00788015 /* AccessStoryboard2.storyboard */,
+				114EDC7F1E71A3CF00C90CA7 /* DITranquillityTests_Logger.swift */,
 			);
 			path = DITranquillityTest;
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 				A5D918C41D1939A70009F9D4 /* ResolveTestClasses.swift in Sources */,
 				16D7BCC31DB0875600A29A9F /* DITranquillityTests_Scan.swift in Sources */,
 				A51CEC541D3CA0EA00C5B60A /* DITranquillityTests_Scope.swift in Sources */,
+				114EDC801E71A3CF00C90CA7 /* DITranquillityTests_Logger.swift in Sources */,
 				1142C1E41E44F7910000517F /* DITranquillityTests_AutoPropertyInjection.swift in Sources */,
 				A52CE30D1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift in Sources */,
 				A5D918C21D1939A70009F9D4 /* DITranquillityTests_Build.swift in Sources */,

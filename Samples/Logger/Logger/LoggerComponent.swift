@@ -11,22 +11,22 @@ import DITranquillity
 class LoggerComponent: DIComponent {
   var scope: DIComponentScope { return .public }
   
-	func load(builder: DIContainerBuilder) {
-		builder.register{ ConsoleLogger() }
+  func load(builder: DIContainerBuilder) {
+    builder.register{ ConsoleLogger() }
       .as(Logger.self).check{$0}
-			.lifetime(.single)
+      .lifetime(.single)
     
-		builder.register{ FileLogger(file: "file.log") }
-			.as(Logger.self).check{$0}
-			.lifetime(.single)
+    builder.register{ FileLogger(file: "file.log") }
+      .as(Logger.self).check{$0}
+      .lifetime(.single)
     
-		builder.register{ ServerLogger(server: "http://server.com/") }
-			.as(Logger.self).check{$0}
-			.lifetime(.single)
+    builder.register{ ServerLogger(server: "http://server.com/") }
+      .as(Logger.self).check{$0}
+      .lifetime(.single)
     
     builder.register{ try MainLogger(loggers: **$0) }
-			.as(Logger.self).check{$0}
-			.set(.default)
-			.lifetime(.single)
-	}
+      .as(Logger.self).check{$0}
+      .set(.default)
+      .lifetime(.single)
+  }
 }

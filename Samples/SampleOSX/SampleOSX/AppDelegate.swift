@@ -30,10 +30,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			.initial { DIStoryboard(name: "ViewControllers", bundle: nil, container: $0) }
 		
 		builder.register(vc: ViewController.self)
-			.injection { (_, self) in self.buttonName = "Next" }
+			.injection { $0.buttonName = "Next" }
 		
 		builder.register(vc: NextViewController.self)
-			.injection { (_, self) in self.inject = 10 }
+			.injection { $0.inject = 10 }
 		
 	}
 

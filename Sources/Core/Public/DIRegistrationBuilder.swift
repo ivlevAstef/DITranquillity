@@ -48,28 +48,49 @@ extension DIRegistrationBuilder {
 extension DIRegistrationBuilder {
   @discardableResult
   public func initial(_ closure: @escaping () throws -> Impl) -> Self {
-    rType.append(initial: { (_: DIContainer) throws -> Any in return try closure() })
+    rType.append(initial: { (_: DIContainer) throws -> Any in try closure() })
     return self
   }
   
   @discardableResult
   public func initial(_ closure: @escaping (DIContainer) throws -> Impl) -> Self {
-    rType.append(initial: { scope throws -> Any in return try closure(scope) })
+    rType.append(initial: { scope throws -> Any in try closure(scope) })
     return self
   }
 }
 
+public enum DIInjectionOptional { case optional }
+public enum DIInjectionManual { case manual }
+
 // Injection
 extension DIRegistrationBuilder {
   @discardableResult
-  public func injection(_ closure: @escaping (DIContainer, Impl) throws -> ()) -> Self {
-    rType.append(injection: closure)
+  public func injection(_ method: @escaping (Impl) throws -> ()) -> Self {
+    rType.append(injection: { scope, obj in try method(obj) })
+    return self
+  }
+
+  @discardableResult
+  public func injection<Inject>(_ method: @escaping (Impl, Inject) throws -> ()) -> Self {
+    rType.append(injection: { s, o in try method(o, *s) })
     return self
   }
   
   @discardableResult
-  public func injection(_ method: @escaping (Impl) throws -> ()) -> Self {
-    rType.append(injection: { scope, obj in try method(obj) })
+  public func injection<Inject>(_: DIInjectionOptional, _ method: @escaping (Impl, Inject?) throws -> ()) -> Self {
+    rType.append(injection: { s, o in try method(o, *?s) })
+    return self
+  }
+  
+  @discardableResult
+  public func injection(_: DIInjectionManual, _ method: @escaping (DIContainer, Impl) throws -> ()) -> Self {
+    rType.append(injection: method)
+    return self
+  }
+  
+  @discardableResult
+  public func postInit(_ method: @escaping (DIContainer, Impl) throws -> ()) -> Self {
+    rType.postInit = { try method($0, $1 as! Impl) }
     return self
   }
 }
@@ -103,7 +124,11 @@ extension DIRegistrationBuilder {
 
 public final class DIRegistrationBuilder<Impl> {
   init(container: DIContainerBuilder, typeInfo: DITypeInfo) {
+    #if ENABLE_DI_MODULE
     self.rType = RType(typeInfo: typeInfo, modules: container.currentModules)
+    #else
+    self.rType = RType(typeInfo: typeInfo)
+    #endif
     self.container = container.rTypeContainer
   }
   
@@ -111,6 +136,36 @@ public final class DIRegistrationBuilder<Impl> {
     if !isTypeSet {
       self.as(.self)
     }
+    
+    #if ENABLE_DI_LOGGER
+      if rType.isProtocol {
+        DILoggerComposite.log(.registration, msg: "Registration protocol: \(rType.typeInfo)")
+      } else {
+        var msg = rType.isDefault ? "Default r" : "R"
+        
+        msg += "egistration: \(rType.typeInfo).\n"
+        msg += "  With lifetime: \(rType.lifeTime).\n"
+        if !rType.names.isEmpty {
+          msg += "  Has names: \(rType.names).\n"
+        }
+        if rType.hasInitial {
+          msg += "  Has one or more initials.\n"
+        }
+        if rType.initialNotNecessary {
+          msg += "  Also initial not necessary.\n"
+        }
+        
+        let injectionCount = rType.injectionsCount - (isAutoInjection ? 1:0)
+        if 0 < injectionCount {
+          msg += "  Has \(injectionCount) injections.\n"
+        }
+        if isAutoInjection {
+          msg += "  Has auto injection."
+        }
+        
+        DILoggerComposite.log(.registration, msg: msg)
+      }
+    #endif
   }
   
   var isTypeSet: Bool = false

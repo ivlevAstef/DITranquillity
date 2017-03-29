@@ -113,7 +113,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     builder.register(type: InjectOpt.self)
       .initial(InjectOpt.init)
-      .injection{ s, obj in try obj.service = *s }
+      .injection(.manual) { s, obj in try obj.service = *s }
     
     let container = try! builder.build()
     
@@ -279,7 +279,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     builder.register(type: Circular2B.self)
       .lifetime(.perDependency)
       .initial(Circular2B.init)
-      .injection { (s, b) in try  b.a = *s }
+      .injection(.manual) { (s, b) in try  b.a = *s }
     
     let container = try! builder.build()
     
@@ -344,7 +344,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     builder.register(type: CircularDouble2A.self)
       .lifetime(.perDependency)
       .initial{ CircularDouble2A() }
-      .injection { s, a in try  a.b1 = *s }
+      .injection(.manual) { s, a in try a.b1 = *s }
       .injection { a, b2 in a.b2 = b2 }
     
     builder.register(type: CircularDouble2B.self)
@@ -379,9 +379,9 @@ class DITranquillityTests_Resolve: XCTestCase {
     builder.register(type: CircularDouble2A.self)
       .lifetime(.perDependency)
       .initial{ CircularDouble2A() }
-      .injection { s, a in
-        a.b1 = try *s
-        a.b2 = try *s
+      .postInit { c, a in
+        a.b1 = try *c
+        a.b2 = try *c
       }
     
     builder.register(type: CircularDouble2B.self)
@@ -449,7 +449,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     builder.register(type: DependencyB.self)
       .initial(DependencyB.init)
-      .injection { s, b in try b.a = *s }
+      .injection(.manual) { c, b in try b.a = *c }
     
     builder.register(type: DependencyC.self)
       .initial{ DependencyC() }

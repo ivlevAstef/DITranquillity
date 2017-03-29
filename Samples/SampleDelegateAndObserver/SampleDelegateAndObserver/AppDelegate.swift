@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       .as(Observer.self).check{$0}
     
     builder.register(vc: ViewControllerSlider.self)
-      .injection { container, vc in vc.observers = try **container }
+      .injection(.manual) { container, vc in vc.observers = try **container }
     
     
     // Storyboard

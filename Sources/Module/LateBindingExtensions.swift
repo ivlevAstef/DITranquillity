@@ -6,6 +6,7 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
+#if ENABLE_DI_MODULE
 
 public extension DIContainerBuilder {
   public func register<T>(protocol: T.Type, file: String = #file, line: Int = #line) {
@@ -19,3 +20,5 @@ extension DIRegistrationBuilder {
     rType.initialNotNecessary = true
   }
 }
+
+#endif

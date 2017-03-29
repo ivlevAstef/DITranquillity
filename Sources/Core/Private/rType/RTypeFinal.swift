@@ -9,6 +9,7 @@
 class RTypeFinal: RTypeBase {
   typealias MethodKey = String
   
+  #if ENABLE_DI_MODULE
   init(typeInfo: DITypeInfo, modules: [DIModuleType], initials: [MethodKey: Any], injections: [(_: DIContainer, _: Any) throws -> ()], names: Set<String>, isDefault: Bool, lifeTime: DILifeTime) {
     self.modules = Set(modules)
     self.initials = initials
@@ -18,10 +19,24 @@ class RTypeFinal: RTypeBase {
     self.lifeTime = lifeTime
     super.init(typeInfo: typeInfo)
   }
+  #else
+  init(typeInfo: DITypeInfo, initials: [MethodKey: Any], injections: [(_: DIContainer, _: Any) throws -> ()], names: Set<String>, isDefault: Bool, lifeTime: DILifeTime) {
+    self.initials = initials
+    self.injections = injections
+    self.names = names
+    self.isDefault = isDefault
+    self.lifeTime = lifeTime
+    super.init(typeInfo: typeInfo)
+  }
+  #endif
   
   func new<Method, T>(_ method: (Method) throws -> T) throws -> T {
     guard let initializer = initials[MethodKey(describing: Method.self)] as? Method else {
-      throw DIError.initializationMethodWithSignatureIsNotFoundFor(typeInfo: typeInfo, signature: Method.self)
+      let diError = DIError.initialMethodNotFound(typeInfo: typeInfo, signature: Method.self)
+      #if ENABLE_DI_LOGGER
+         DILoggerComposite.log(.error(diError), msg: "Initial method not found for type info: \(typeInfo)")
+      #endif
+      throw diError
     }
     
     return try method(initializer)
@@ -31,7 +46,9 @@ class RTypeFinal: RTypeBase {
     return names.contains(name)
   }
   
+  #if ENABLE_DI_MODULE
   let modules: Set<DIModuleType>
+  #endif 
   let lifeTime: DILifeTime
   let isDefault: Bool
   let injections: [(_: DIContainer, _: Any) throws -> ()]

@@ -1,10 +1,10 @@
-# Быстрый старт
+# Quick start
 
-## Знакомство с идеей "инверсии зависимостей" и "внедрения зависимостей"
-Инверсия зависимостей - принцип ООП, используемый для уменьшения связанности в компьютерных программах.
-Смысл его предельно прост:
-* Модули верхнего уровня не должны зависеть от модулей нижнего уровня. И те, и другие должны зависеть от абстракций.
-* Абстракции не должны зависеть от деталей. Детали должны зависеть от абстракций.
+## Concept of "dependency inversion" and "dependency injection"
+In object-oriented design, the dependency inversion principle refers to a specific form of decoupling software modules.
+The principle states:
+* High-level modules should not depend on low-level modules. Both should depend on abstractions.
+* Abstractions should not depend on details. Details should depend on abstractions.
 
 В теории все звучит хорошо, но как дела обстоят на самом деле? Если мы говорим об ООП программах, то в них обязательно присутствует понятие объекта и класса. И так как инверсия зависимостей была придумана для ООП, то стоит все выше сказанное, перефразировать на более простой язык в терминах языка Swift: 
 * Не нужно внутри одного объекта получать другие объекты

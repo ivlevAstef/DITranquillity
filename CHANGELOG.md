@@ -1,3 +1,10 @@
+# v2.1.0
+* Add logs
+* Removed supported errors
+* Simplified error names
+* Improved separate project for `module`
+* Separation `injection` method on: `injection(.manual)`, `injection(.optional)`, `injection`, `postInit`
+
 # v2.0.0
 * Add documentation for migration
 * A full update documentation
