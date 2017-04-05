@@ -106,7 +106,7 @@ To install DITranquillity with CocoaPods, add the following lines to your Podfil
 ## Requirements
 iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
 
-* Swift 3.0: Xcode 8.0; version >= 0.9.5
+* Swift 3.0-3.1: Xcode 8.0; version >= 0.9.5
 * Swift 2.3: Xcode 7.0; version <  0.9.5
 
 ## Migration
