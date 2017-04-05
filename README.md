@@ -7,7 +7,7 @@
 [![Dependency Status](https://www.versioneye.com/objective-c/DITranquillity/2.0.0/badge.svg?style=flat)](https://www.versioneye.com/objective-c/DITranquillity/2.0.0)
 
 # DITranquillity
-The small library for [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) in applications written on pure Swift for iOS/OSX/tvOS. Despite its size, it solves a large enough range of tasks, including support Storyboard. Its main advantage - support modularity and availability errors with desriptions and lots of opportunities.
+The small library for [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) in applications written on pure Swift for iOS/OSX/tvOS. Despite its size, it solves a large enough range of tasks, including Storyboard support. Its main advantage -  modularity of support, detailed errors description and lots of opportunities.
 
 
 ## Features
