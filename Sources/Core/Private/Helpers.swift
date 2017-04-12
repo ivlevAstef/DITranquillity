@@ -27,3 +27,15 @@ func removeTypeWrappers(_ type: Any.Type) -> Any.Type {
   
   return type
 }
+
+func toString(tag: Any) -> String {
+  let type = String(describing: type(of: tag))
+  let mirror = Mirror(reflecting: tag)
+  
+  if .enum == mirror.displayStyle {
+    return "\(type).\(tag)"
+  }
+  
+  let address = String(describing: Unmanaged.passUnretained(tag as AnyObject).toOpaque())
+  return "\(address)_\(type)"
+}

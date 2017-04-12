@@ -42,6 +42,12 @@ extension DIRegistrationBuilder {
     rType.isDefault = true
     return self
   }
+  
+  @discardableResult
+  public func set<T>(tag: T) -> Self {
+    rType.names.insert(toString(tag: tag))
+    return self
+  }
 }
 
 // Initializer

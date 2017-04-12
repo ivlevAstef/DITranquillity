@@ -37,34 +37,4 @@ public extension DIRegistrationBuilder {
     return self
   }
   
-  @discardableResult
-  public func initialWithArg<P0,P1,P2,P3,P4,P5>(_ closure: @escaping (DIContainer,P0,P1,P2,P3,P4,P5) throws -> Impl) -> Self {
-    rType.append(initial:{ try closure($0,$1,$2,$3,$4,$5,$6) as Any })
-    return self
-  }
-  
-  @discardableResult
-  public func initialWithArg<P0,P1,P2,P3,P4,P5,P6>(_ closure: @escaping (DIContainer,P0,P1,P2,P3,P4,P5,P6) throws -> Impl) -> Self {
-    rType.append(initial:{ try closure($0,$1,$2,$3,$4,$5,$6,$7) as Any })
-    return self
-  }
-  
-  @discardableResult
-  public func initialWithArg<P0,P1,P2,P3,P4,P5,P6,P7>(_ closure: @escaping (DIContainer,P0,P1,P2,P3,P4,P5,P6,P7) throws -> Impl) -> Self {
-    rType.append(initial:{ try closure($0,$1,$2,$3,$4,$5,$6,$7,$8) as Any })
-    return self
-  }
-  
-  @discardableResult
-  public func initialWithArg<P0,P1,P2,P3,P4,P5,P6,P7,P8>(_ closure: @escaping (DIContainer,P0,P1,P2,P3,P4,P5,P6,P7,P8) throws -> Impl) -> Self {
-    rType.append(initial:{ try closure($0,$1,$2,$3,$4,$5,$6,$7,$8,$9) as Any })
-    return self
-  }
-  
-  @discardableResult
-  public func initialWithArg<P0,P1,P2,P3,P4,P5,P6,P7,P8,P9>(_ closure: @escaping (DIContainer,P0,P1,P2,P3,P4,P5,P6,P7,P8,P9) throws -> Impl) -> Self {
-    rType.append(initial:{ try closure($0,$1,$2,$3,$4,$5,$6,$7,$8,$9,$10) as Any })
-    return self
-  }
-  
 }

@@ -47,12 +47,28 @@ class DIResolver {
     
     return rTypes
   }
+  
+  @discardableResult
+  func check<T, Tag>(tag: Tag, type: T.Type) throws -> [RTypeFinal] {
+    let name = toString(tag: tag)
+    let rTypes = try getTypes(type)
+    
+    if !rTypes.contains(where: { $0.has(name: name) }) {
+      let diError = DIError.typeForTagNotFound(type: type, tag: tag, typesInfo: rTypes.map { $0.typeInfo })
+      #if ENABLE_DI_LOGGER
+        DILoggerComposite.log(.error(diError), msg: "Not found type: \(type) for tag: \(tag)")
+      #endif
+      throw diError
+    }
+    
+    return rTypes
+  }
 
   
   func resolve<T, M>(_ container: DIContainer, type: T.Type, method: @escaping Method<M>) throws -> T {
     #if ENABLE_DI_LOGGER
-       DILoggerComposite.log(.resolving(.begin), msg: "Begin resolve type: \(type)")
-      defer {  DILoggerComposite.log(.resolving(.end), msg: "End resolve type: \(type)") }
+      DILoggerComposite.log(.resolving(.begin), msg: "Begin resolve type: \(type)")
+      defer { DILoggerComposite.log(.resolving(.end), msg: "End resolve type: \(type)") }
     #endif
     let rTypes = try check(type: type)
 
@@ -69,15 +85,31 @@ class DIResolver {
   func resolve<T, M>(_ container: DIContainer, name: String, type: T.Type, method: @escaping Method<M>) throws -> T {
     #if ENABLE_DI_LOGGER
        DILoggerComposite.log(.resolving(.begin), msg: "Begin resolve type: \(type) with name: \(name)")
-      defer {  DILoggerComposite.log(.resolving(.end), msg: "End resolve type: \(type) with name: \(name)") }
+      defer { DILoggerComposite.log(.resolving(.end), msg: "End resolve type: \(type) with name: \(name)") }
     #endif
     
     let rTypes = try check(name: name, type: type)
-    
     let rType = rTypes.first(where: { $0.has(name: name) })!
     
     #if ENABLE_DI_LOGGER
        DILoggerComposite.log(.found(typeInfo: rType.typeInfo), msg: "Found type info: \(rType.typeInfo) for resolve type: \(type) with name: \(name)")
+    #endif
+    
+    return try resolveUseRType(container, pair: RTypeWithName(rType, name), getter: .method(method))
+  }
+  
+  func resolve<T, M, Tag>(_ container: DIContainer, tag: Tag, type: T.Type, method: @escaping Method<M>) throws -> T {
+    let name = toString(tag: tag)
+    #if ENABLE_DI_LOGGER
+      DILoggerComposite.log(.resolving(.begin), msg: "Begin resolve type: \(type) with tag: \(name)")
+      defer { DILoggerComposite.log(.resolving(.end), msg: "End resolve type: \(type) with tag: \(name)") }
+    #endif
+    
+    let rTypes = try check(tag: tag, type: type)
+    let rType = rTypes.first(where: { $0.has(name: name) })!
+    
+    #if ENABLE_DI_LOGGER
+      DILoggerComposite.log(.found(typeInfo: rType.typeInfo), msg: "Found type info: \(rType.typeInfo) for resolve type: \(type) with tag: \(name)")
     #endif
     
     return try resolveUseRType(container, pair: RTypeWithName(rType, name), getter: .method(method))
@@ -136,8 +168,8 @@ class DIResolver {
 
   func resolve<M>(_ container: DIContainer, rType: RTypeFinal, method: @escaping Method<M>) throws -> Any {
     #if ENABLE_DI_LOGGER
-       DILoggerComposite.log(.resolving(.begin), msg: "Begin resolve by type info: \(rType.typeInfo)")
-      defer {  DILoggerComposite.log(.resolving(.end), msg: "End resolve by type info: \(rType.typeInfo)") }
+      DILoggerComposite.log(.resolving(.begin), msg: "Begin resolve by type info: \(rType.typeInfo)")
+      defer { DILoggerComposite.log(.resolving(.end), msg: "End resolve by type info: \(rType.typeInfo)") }
       
       DILoggerComposite.log(.found(typeInfo: rType.typeInfo), msg: "Used type info: \(rType.typeInfo).")
     #endif

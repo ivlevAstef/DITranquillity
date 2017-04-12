@@ -10,6 +10,7 @@ public indirect enum DIError: Error {
   /// Until Resolve
   case typeNotFound(type: DIType)
   case typeForNameNotFound(type: DIType, name: String, typesInfo: [DITypeInfo])
+  case typeForTagNotFound(type: DIType, tag: Any, typesInfo: [DITypeInfo])
 
   case initialMethodNotFound(typeInfo: DITypeInfo, signature: DIMethodSignature)
 

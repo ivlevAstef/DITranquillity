@@ -1,6 +1,6 @@
 #!/bin/bash
 
-argmax=9
+argmax=4
 
 join() { local d=$1; shift; printf "$1"; shift; printf "%s" "${@/#/$d}"; }
 
@@ -66,22 +66,6 @@ resolveFunctions() { #argcount prefix file
   " >> $3
 }
 
-resolveManyFunctions() { #argcount prefix file
-  local prefix=${2//§/ }
-  local numbers=($(seq 0 $1))
-
-  local ArgType=$(join ',' ${numbers[@]/#/A})
-  local ArgumentsType=$(join ',_ ' $(replaceToArg numbers[@] "a;I:A;I"))
-  local ArgParam=$(join ',' $(replaceToArg numbers[@] "a;I"))
-  ArgumentsType=${ArgumentsType//a0:A0/arg a0:A0}
-
-  echo "  public func resolveMany<T,$ArgType>($prefix$arg$ArgumentsType) throws -> [T] {
-    typealias Method = (DIContainer,$ArgType) throws -> Any
-    return try resolver.resolveMany(self, type: T.self){ try (\$0 as Method)(self,$ArgParam) }
-  }
-  " >> $3
-}
-
 resolveNameFunctions() { #argcount prefix file
   local prefix=${2//§/ }
   prefix=${prefix//&/}
@@ -100,21 +84,40 @@ resolveNameFunctions() { #argcount prefix file
   " >> $3
 }
 
+resolveTagFunctions() { #argcount prefix file
+  local prefix=${2//§/ }
+  prefix=${prefix//&/}
+  local numbers=($(seq 0 $1))
+
+  local ArgType=$(join ',' ${numbers[@]/#/A})
+  local ArgumentsType=$(join ',_ ' $(replaceToArg numbers[@] "a;I:A;I"))
+  local ArgParam=$(join ',' $(replaceToArg numbers[@] "a;I"))
+  ArgumentsType=${ArgumentsType//a0:A0/arg a0:A0}
+
+  local tag="tag"
+  echo "  public func resolve<T,Tag,$ArgType>($prefix$tag: Tag, $ArgumentsType) throws -> T {
+    typealias Method = (DIContainer,$ArgType) throws -> Any
+    return try resolver.resolve(self, tag: tag, type: T.self){ try (\$0 as Method)(self,$ArgParam) }
+  }
+  " >> $3
+}
+
+
 resolveFile() { #file
   echo "//
 //  DIContainer.Arg.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 11/07/16.
-//  Copyright © 2016 Alexander Ivlev. All rights reserved.
+//  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
 public extension DIContainer {" > $1
 
   for argcount in `seq 0 $argmax`; do
     resolveFunctions $argcount "" $1
-    resolveManyFunctions $argcount "" $1
     resolveNameFunctions $argcount "&" $1
+    resolveTagFunctions $argcount "&" $1
   done
   echo "}" >> $1
 } 
@@ -125,15 +128,15 @@ typeResolveFile() { #file
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 11/07/16.
-//  Copyright © 2016 Alexander Ivlev. All rights reserved.
+//  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
 public extension DIContainer {" > $1
 
   for argcount in `seq 0 $argmax`; do
     resolveFunctions $argcount "_: T.Type,§" $1
-    resolveManyFunctions $argcount "_: T.Type,§" $1
     resolveNameFunctions $argcount "_: T.Type,§" $1
+    resolveTagFunctions $argcount "_: T.Type,§" $1
   done
   echo "}" >> $1
 } 

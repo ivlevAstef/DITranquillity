@@ -32,6 +32,8 @@ extension DIError: CustomStringConvertible {
       return "Cannot found type: \(type)\n"
     case .typeForNameNotFound(let type, let name, let typesInfo):
       return "Cannot found type: \(type) for name: \(name).\n\tUse:\n\(multiLine(typesInfo))\n"
+    case .typeForTagNotFound(let type, let tag, let typesInfo):
+      return "Cannot found type: \(type) for tag: \(toString(tag: tag)).\n\tUse:\n\(multiLine(typesInfo))\n"
     case .initialMethodNotFound(let typeInfo, let signature):
       return "Cannot found initial method with signature: \(signature).\n\tUse: \(typeInfo)\n"
     case .ambiguousType(let type, let typesInfo):
@@ -57,8 +59,6 @@ extension DIError: CustomStringConvertible {
   }
 
   private func multiLine<T>(_ array: [T]) -> String {
-    return array.map {
-      return "\t\t\($0)"
-    }.joined(separator: "\n")
+    return array.map { "\t\t\($0)" }.joined(separator: "\n")
   }
 }
