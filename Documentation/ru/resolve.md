@@ -58,6 +58,36 @@ let carfield = try! container.resolve(Cat.self, name: "Carfield")
 assert(felix !== carfield)
 ```
 
+## По типу и тегу
+Для лучше типизации, существует альтернативный способ задания имени - через теги. Тегами может выступать любой объект, но я настоятельно рекомендую использовать перечисления:
+```Swift
+enum Animals {
+  case Cat, Dog
+}
+
+builder.register{ Cat() as Animal }.set(tag: Animals.Cat)
+builder.register{ Dog() as Animal }.set(tag: Animals.Dog)
+```
+
+После такого объявления есть возможность легко получить животное по его типу, при этом не зная о самом типе:
+```Swift
+let cat = try! container.resolve(Animal.self, tag: Animals.Cat)
+let dog = try! container.resolve(Animal.self, tag: Animals.Dog)
+```
+
+Но как было написано, не обязательно использовать enum. в качестве тега может подойти любой объект:
+```Swift
+let tagCat = NSObject()
+let tagDog = NSObject()
+
+builder.register{ Cat() as Animal }.set(tag: tagCat)
+builder.register{ Dog() as Animal }.set(tag: tagDog)
+................
+
+let cat = try! container.resolve(Animal.self, tag: tagCat)
+let dog = try! container.resolve(Animal.self, tag: tagDog)
+```
+
 ## По умолчанию
 В предыдущих примерах надо было обязательно указывать имя при разрешении зависимости. Напишем похожий пример, но для логгеров:
 ```Swift
@@ -182,7 +212,7 @@ cats = try **container //cats = try container.resolveMany()
 !! Те, кто пользовался первой версией библиотеки, скорей всего заметили, что операторы: `*!`,`**!` были убраны. Причины этого решения можно найти в описании перехода с первой на вторую версию.
 
 ## Проверки и исключения
-Читатель, наверное, обратил внимание, что везде используется `try`. Библиотека отсекла часть ошибок на стадии создания контейнера, но она не способна предугадать, как её будут использовать дальше. 
+Читатель, наверное, обратил внимание, что везде используется `try`. Библиотека отсекла часть ошибок на стадии создания контейнера, но она не способна предугадать, как её будут использовать дальше.
 Во время разрешения зависимостей возможны следующие ошибки:
 * Нет регистрации по указанному типу.
 > Ошибка: **`DIError.typeIsNotFound(type:)`**  

@@ -1,3 +1,6 @@
+# v2.2.0
+* Add tags
+
 # v2.1.0, v2.1.1
 * Add logs
 * Removed supported errors

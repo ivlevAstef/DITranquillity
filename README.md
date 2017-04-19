@@ -15,7 +15,7 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 
 * Pure Swift Type Support
 * Initializer/Property/Method Injections
-* Named definitions
+* Named and Tags definitions
 * Type forwarding
 * Lifetimes: single, lazySingle, weakSingle, perScope, perDependency
 * iOS/macOS Storyboard
