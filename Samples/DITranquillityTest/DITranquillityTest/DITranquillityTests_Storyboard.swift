@@ -11,8 +11,20 @@ import DITranquillity
 
 class TestViewController: UIViewController {
   var service: ServiceProtocol!
+  
+  var containerVC: TestViewContainerVC!
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if let identifier = segue.identifier, identifier == "container" {
+      containerVC = segue.destination as! TestViewContainerVC
+    }
+  }
 }
 class TestViewController2: UIViewController {
+  var service: ServiceProtocol!
+}
+
+class TestViewContainerVC: UIViewController {
   var service: ServiceProtocol!
 }
 
@@ -247,5 +259,38 @@ class DITranquillityTests_Storyboard: XCTestCase {
     let vc = viewController1 as! TestViewController
     XCTAssertEqual(vc.service.foo(), "foo")
     XCTAssertEqual(vc.service.foo(), "foo")
+  }
+  
+  func test10_containerViewController() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(type: FooService.self)
+      .as(ServiceProtocol.self).check{$0}
+      .initial{ FooService() }
+    
+    builder.register(vc: TestViewController.self)
+      .injection { $0.service = $1 }
+      .lifetime(.lazySingle)
+    
+    builder.register(vc: TestViewContainerVC.self)
+      .injection { $0.service = $1 }
+    
+    builder.register(type: UIStoryboard.self)
+      .lifetime(.single)
+      .initial(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+    
+    
+    let container = try! builder.build()
+    let storyboard: UIStoryboard = try! *container
+    
+    let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
+    let viewController = navigation.childViewControllers[0]
+    _ = viewController.view // for call viewDidLoad() and full initialization
+    XCTAssert(viewController is TestViewController)
+    
+    let vc = (viewController as! TestViewController).containerVC!
+    
+    XCTAssertEqual(vc.service.foo(), "foo")
+    
   }
 }
