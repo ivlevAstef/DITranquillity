@@ -9,6 +9,12 @@
 import XCTest
 import DITranquillity
 
+
+enum TestTags {
+  case t1
+  case t2
+}
+
 class DITranquillityTests_Resolve: XCTestCase {
   override func setUp() {
     super.setUp()
@@ -564,5 +570,129 @@ class DITranquillityTests_Resolve: XCTestCase {
   }
 
   
+  func test13_ResolveMultiplyByTag() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(type: FooService.self)
+      .as(ServiceProtocol.self).check{$0}
+      .set(tag: TestTags.t1)
+      .initial{ FooService() }
+    
+    builder.register(type: BarService.self)
+      .as(ServiceProtocol.self).check{$0}
+      .set(tag: TestTags.t2)
+      .initial{ BarService() }
+    
+    let container = try! builder.build()
+    
+    let serviceFoo: ServiceProtocol = try! container.resolve(tag: TestTags.t1)
+    XCTAssertEqual(serviceFoo.foo(), "foo")
+    
+    let serviceBar: ServiceProtocol = try! container.resolve(tag: TestTags.t2)
+    XCTAssertEqual(serviceBar.foo(), "bar")
+  }
   
+  func test13_ResolveMultiplySingleByTag() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(type: FooService.self)
+      .as(ServiceProtocol.self).check{$0}
+      .set(tag: TestTags.t1)
+      .set(tag: TestTags.t2)
+      .lifetime(.single)
+      .initial{ FooService() }
+    
+    let container = try! builder.build()
+    
+    let serviceFoo: ServiceProtocol = try! container.resolve(tag: TestTags.t1)
+    XCTAssertEqual(serviceFoo.foo(), "foo")
+    
+    let serviceFoo2: ServiceProtocol = try! container.resolve(tag: TestTags.t2)
+    XCTAssertEqual(serviceFoo2.foo(), "foo")
+    
+    XCTAssertNotEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceFoo2 as AnyObject).toOpaque())
+  }
+  
+  func test13_ResolveMultiplyPerScopeByTag() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(type: BarService.self)
+      .as(ServiceProtocol.self).check{$0}
+      .set(tag: TestTags.t1)
+      .set(tag: TestTags.t2)
+      .lifetime(.perScope)
+      .initial{ BarService() }
+    
+    let container = try! builder.build()
+    
+    let serviceBar1_1: ServiceProtocol = try! container.resolve(tag: TestTags.t1)
+    XCTAssertEqual(serviceBar1_1.foo(), "bar")
+    
+    let serviceBar1_2: ServiceProtocol = try! container.resolve(tag: TestTags.t2)
+    XCTAssertEqual(serviceBar1_2.foo(), "bar")
+    
+    XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar1_1 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar1_2 as AnyObject).toOpaque())
+    
+    
+    let container2 = container.newLifeTimeScope()
+    
+    let serviceBar2_1: ServiceProtocol = try! container2.resolve(tag: TestTags.t1)
+    XCTAssertEqual(serviceBar2_1.foo(), "bar")
+    
+    let serviceBar2_2: ServiceProtocol = try! container2.resolve(tag: TestTags.t2)
+    XCTAssertEqual(serviceBar2_2.foo(), "bar")
+    
+    XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar2_1 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar2_2 as AnyObject).toOpaque())
+    
+    XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar1_1 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar2_1 as AnyObject).toOpaque())
+    XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar1_2 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar2_2 as AnyObject).toOpaque())
+  }
+  
+  func test14_ResolveMultiplyByTagObj() {
+    let builder = DIContainerBuilder()
+    
+    let tag1 = NSObject()
+    let tag2 = NSObject()
+    
+    builder.register(type: FooService.self)
+      .as(ServiceProtocol.self).check{$0}
+      .set(tag: tag1)
+      .initial{ FooService() }
+    
+    builder.register(type: BarService.self)
+      .as(ServiceProtocol.self).check{$0}
+      .set(tag: tag2)
+      .initial{ BarService() }
+    
+    let container = try! builder.build()
+    
+    let serviceFoo: ServiceProtocol = try! container.resolve(tag: tag1)
+    XCTAssertEqual(serviceFoo.foo(), "foo")
+    
+    let serviceBar: ServiceProtocol = try! container.resolve(tag: tag2)
+    XCTAssertEqual(serviceBar.foo(), "bar")
+  }
+  
+  func test14_ResolveMultiplyByOneTagObj() {
+    let builder = DIContainerBuilder()
+    
+    let tag = NSObject()
+    
+    builder.register(type: FooService.self)
+      .as(ServiceProtocol.self).check{$0}
+      .set(tag: tag)
+      .initial{ FooService() }
+      .lifetime(.perScope)
+    
+    let container = try! builder.build()
+    
+    let serviceFoo1: ServiceProtocol = try! container.resolve(tag: tag)
+    XCTAssertEqual(serviceFoo1.foo(), "foo")
+    
+    let serviceFoo2: ServiceProtocol = try! container.resolve(tag: tag)
+    XCTAssertEqual(serviceFoo2.foo(), "foo")
+    
+    XCTAssertEqual(Unmanaged.passUnretained(serviceFoo1 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceFoo2 as AnyObject).toOpaque())
+  }
 }
+

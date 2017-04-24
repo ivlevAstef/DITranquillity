@@ -17,6 +17,10 @@ public final class DIContainer {
     return try resolver.resolve(self, name: name, type: T.self) { (initial: Method) in try initial(self) }
   }
   
+  public func resolve<T, Tag>(_: T.Type, tag: Tag) throws -> T {
+    return try resolver.resolve(self, tag: tag, type: T.self) { (initial: Method) in try initial(self) }
+  }
+  
   public func resolveMany<T>(_: T.Type) throws -> [T] {
     return try resolver.resolveMany(self, type: T.self) { (initial: Method) in try initial(self) }
   }
@@ -59,6 +63,10 @@ extension DIContainer {
 
   public func resolve<T>(name: String) throws -> T {
     return try resolve(T.self, name: name)
+  }
+  
+  public func resolve<T, Tag>(tag: Tag) throws -> T {
+    return try resolve(T.self, tag: tag)
   }
 }
 

@@ -8,13 +8,13 @@
 ```Swift
 builder.register{ FileLogger("file.txt") }
   .as(Logger.self).check{$0}
-  .lifetime(.single) 
+  .lifetime(.single)
 builder.register{ ConsoleLogger() }
   .as(Logger.self).check{$0}
-  .lifetime(.single) 
+  .lifetime(.single)
 builder.register{ ServerLogger("http://server.com/") }
   .as(Logger.self).check{$0}
-  .lifetime(.single) 
+  .lifetime(.single)
 ```
 
 Как видим, мы создали 3 разных логгера. Чтобы получить их все нужно у контейнера вызвать метод `resolveMany`:
@@ -55,15 +55,15 @@ builder.register{ c in try AllLogger(loggers: c.resolveMany()) }
 builder.register{ FileLogger("file.txt") }
   .set(name: "file")
   .as(Logger.self).check{$0}
-  .lifetime(.single) 
+  .lifetime(.single)
 builder.register{ ConsoleLogger() }
   .set(name: "console")
   .as(Logger.self).check{$0}
-  .lifetime(.single) 
+  .lifetime(.single)
 builder.register{ ServerLogger("http://server.com/") }
   .set(name: "server")
   .as(Logger.self).check{$0}
-  .lifetime(.single) 
+  .lifetime(.single)
 ```
 При каждой регистрации было дано имя, благодаря чему можно получить конкретный экземпляр логгера, при этом, не зная о его типе:
 ```Swift
@@ -76,19 +76,42 @@ let logger: Logger = try! container.resolve(name: "file")
 builder.register{ FileLogger("file.txt") }
   .as(.self)
   .as(Logger.self).check{$0}
-  .lifetime(.single) 
+  .lifetime(.single)
 builder.register{ ConsoleLogger() }
   .as(.self)
   .as(Logger.self).check{$0}
-  .lifetime(.single) 
+  .lifetime(.single)
 builder.register{ ServerLogger("http://server.com/") }
   .as(.self)
   .as(Logger.self).check{$0}
-  .lifetime(.single) 
+  .lifetime(.single)
 ```
 и после помимо множественного получения можно получить конкретный экземпляр логгера по типу:
 ```Swift
 let logger: ConsoleLogger = try! container.resolve()
+```
+
+## Указание тега
+Прошлую проблему, можно было решить более типизированный способом, а именно указать перечисление:
+```Swift
+enum LoggerType {
+  case file, console, server
+}
+
+builder.register{ FileLogger("file.txt") as Logger }
+  .set(tag: LoggerType.file)
+  .lifetime(.single)
+builder.register{ ConsoleLogger() as Logger }
+  .set(tag: LoggerType.console)
+  .lifetime(.single)
+builder.register{ ServerLogger("http://server.com/") as Logger }
+  .set(name: LoggerType.server)
+  .lifetime(.single)
+```
+
+Для каждого объекта логгера было задано имя в виде тега. Это дает возможность получить конкретный экземпляр объекта:
+```Swift
+let logger: Logger = try! container.resolve(tag: LoggerType.file)
 ```
 
 #### [Главная](main.md)

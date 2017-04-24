@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
 
   s.name         = 'DITranquillity'
-  s.version      = '2.1.1'
+  s.version      = '2.1.2'
   s.summary      = 'DITranquillity - Dependency injection for iOS/macOS/tvOS (Swift) '
 
   s.description  = <<-DESC
-  					DITranquillity - Prototype Dependency injection for iOS/macOS/tvOS (Swift). 
+  					DITranquillity - The small library for dependency injection in applications written on pure Swift for iOS/OSX/tvOS. Despite its size, it solves a large enough range of tasks, including Storyboard support. Its main advantage - modularity of support, detailed errors description and lots of opportunities. 
             DESC
 
   s.homepage     = 'https://github.com/ivlevAstef/DITranquillity'
