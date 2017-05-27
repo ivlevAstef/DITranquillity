@@ -50,9 +50,7 @@ extension DIError: CustomStringConvertible {
       return "Intersection names for type: \(type).\n\tIntersections: \(names)\n\tUse:\n\(multiLine(typesInfo))\n"
     case .pluralDefaultAd(let type, let typesInfo):
       return "Plural default ad for type: \(type).\n\tUse:\n\(multiLine(typesInfo))\n"
-    case .noAccess(let typesInfo, let modules):
-      return "No access to \(typesInfo). This type can resolve from: \(modules)\n"
-
+    
     default:
       fatalError("Not fully implemented DIError.description")
     }
