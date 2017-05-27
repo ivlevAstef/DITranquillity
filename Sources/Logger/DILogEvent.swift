@@ -6,8 +6,6 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-#if ENABLE_DI_LOGGER
-
 public enum DILogEvent {
   case registration
   case createSingle(BeginEndBrace)
@@ -55,5 +53,3 @@ extension DILogEvent: Equatable {
     }
   }
 }
-
-#endif
