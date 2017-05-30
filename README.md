@@ -80,7 +80,7 @@ class PetOwner {
 ```
 
 </details>
-  
+
 **For more details**:
 * Read the Quick Start [ru](Documentation/ru/quick_start.md#Быстрый-старт) / [~~en~~](Documentation/en/Ups.md)
 * Or documentation [ru](Documentation/ru/main.md) / [~~en~~](Documentation/en/Ups.md)
@@ -89,14 +89,14 @@ class PetOwner {
 ###### Via CocoaPods.
 
 To install DITranquillity with CocoaPods, add the following lines to your Podfile: `pod 'DITranquillity'`  
-  
+
 **Also podspec separated on subspecs:**  
 *Core, Description, Component, Module, Storyboard, Scan, Logger, RuntimeArgs*  
-  
+
 **By default included:**  
-*Core, Description, Component, Storyboard*  
+*Core, Logger, Description, Component, Storyboard*  
 **Modular** subspec included:  
-*Core, Description, Component, Module, Storyboard, Scan*  
+*Core, Logger, Description, Component, Module, Storyboard, Scan*  
 **Full** subspec included all subspecs
 
 ###### Via Carthage.
@@ -125,7 +125,7 @@ Create your ViewController:
 ```Swift
 class ViewController: UIViewController/NSViewController {
   var inject: Inject?
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     print("Inject: \(inject)")

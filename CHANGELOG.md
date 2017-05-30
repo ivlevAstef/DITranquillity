@@ -1,3 +1,9 @@
+# v2.1.4
+* Move logger into default subspec and change realization
+* Fix 'as' short style operation - add @discardableResult
+* Improve intersectionNames error - now this error contains only incorrect types
+* Fix scan components for Modular - now scan component is an public component
+
 # v2.1.2, v2.1.3
 * Add tags
 
@@ -66,4 +72,3 @@
 * Supported Carthage
 * Added Travis
 * Supported SwiftPM
-
