@@ -72,10 +72,16 @@ extension DILoggerComposite {
       }
     }
   }
-  
-  internal static func log(_ style: DILogEvent, msg: String) {
-    instance.log(style, msg: msg)
-  }
 }
 
+internal func log(_ style: DILogEvent, msg: String) {
+  DILoggerComposite.instance.log(style, msg: msg)
+}
+ 
+#else
+
+internal func log(_ style: DILogEvent, msg: @autoclosure ()->String) {
+  // noting
+}
+  
 #endif

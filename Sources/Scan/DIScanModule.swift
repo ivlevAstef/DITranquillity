@@ -11,7 +11,7 @@ public final class DIScanModule: DIScanWithInitializer<DIScanned>, DIModule {
   public final var components: [DIComponent] { return [] }
   
   public final var dependencies: [DIModule] { 
-    return getObjects().filter{ $0 is DIModule }.map{ $0 as! DIModule }
+    return getObjects().flatMap{ $0 as? DIModule }
   }
 }
 #endif

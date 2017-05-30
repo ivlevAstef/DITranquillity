@@ -21,6 +21,7 @@ extension DIRegistrationBuilder {
   }
   
   ///short
+  @discardableResult
   public func `as`<Parent>(_ pType: Parent.Type, check: (Impl)->Parent) -> Self {
     DIRegistrationAlternativeType<Impl, Parent>(builder: self).check(check)
     return self
@@ -143,13 +144,14 @@ public final class DIRegistrationBuilder<Impl> {
       self.as(.self)
     }
     
+    // for optimization
     #if ENABLE_DI_LOGGER
       if rType.isProtocol {
-        DILoggerComposite.log(.registration, msg: "Registration protocol: \(rType.typeInfo)")
+        log(.registration, msg: "Registration protocol: \(rType.typeInfo)")
       } else {
         var msg = rType.isDefault ? "Default r" : "R"
         
-        msg += "egistration: \(rType.typeInfo).\n"
+        msg += "registration: \(rType.typeInfo).\n"
         msg += "  With lifetime: \(rType.lifeTime).\n"
         if !rType.names.isEmpty {
           msg += "  Has names: \(rType.names).\n"
@@ -169,7 +171,7 @@ public final class DIRegistrationBuilder<Impl> {
           msg += "  Has auto injection."
         }
         
-        DILoggerComposite.log(.registration, msg: msg)
+        log(.registration, msg: msg)
       }
     #endif
   }

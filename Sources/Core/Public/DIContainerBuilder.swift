@@ -65,18 +65,14 @@ extension DIContainerBuilder {
     for rType in allTypes {
       if !(rType.hasInitial || rType.initialNotNecessary) {
         let diError = DIError.noSpecifiedInitialMethod(typeInfo: rType.typeInfo)
-        #if ENABLE_DI_LOGGER
-           DILoggerComposite.log(.error(diError), msg: "No specified initial method for type info: \(rType.typeInfo)")
-        #endif
+        log(.error(diError), msg: "No specified initial method for type info: \(rType.typeInfo)")
         errors.append(diError)
       }
     }
 
     if !errors.isEmpty {
       let diError = DIError.build(errors: errors)
-      #if ENABLE_DI_LOGGER
-         DILoggerComposite.log(.error(diError), msg: "build errors count: \(errors.count)")
-      #endif
+      log(.error(diError), msg: "build errors count: \(errors.count)")
       throw diError
     }
   }
@@ -91,9 +87,7 @@ extension DIContainerBuilder {
     let defaultTypes = rTypes.filter{ $0.isDefault }
     if defaultTypes.count > 1 {
       let diError = DIError.pluralDefaultAd(type: superType, typesInfo: defaultTypes.map { $0.typeInfo })
-      #if ENABLE_DI_LOGGER
-         DILoggerComposite.log(.error(diError), msg: "Plural default ad for type: \(superType)")
-      #endif
+      log(.error(diError), msg: "Plural default ad for type: \(superType)")
       errors.append(diError)
     }
   }
@@ -108,10 +102,9 @@ extension DIContainerBuilder {
     }
     
     if !intersect.isEmpty {
-      let diError = DIError.intersectionNames(type: superType, names: intersect, typesInfo: rTypes.map{ $0.typeInfo })
-      #if ENABLE_DI_LOGGER
-         DILoggerComposite.log(.error(diError), msg: "Intersection names: \(intersect) for type: \(superType)")
-      #endif
+      let invalidTypes = rTypes.filter{ !$0.names.intersection(intersect).isEmpty }.map{ $0.typeInfo }
+      let diError = DIError.intersectionNames(type: superType, names: intersect, typesInfo: invalidTypes)
+      log(.error(diError), msg: "Intersection names: \(intersect) for type: \(superType)")
       errors.append(diError)
     }
   }
@@ -126,10 +119,8 @@ extension DIContainerBuilder {
       return
     }
     
-    #if ENABLE_DI_LOGGER
-      DILoggerComposite.log(.createSingle(.begin), msg: "Begin resolve \(singleRTypes.count) singletons")
-      defer {  DILoggerComposite.log(.createSingle(.end), msg: "End resolve singletons") }
-    #endif
+    log(.createSingle(.begin), msg: "Begin resolve \(singleRTypes.count) singletons")
+    defer {  log(.createSingle(.end), msg: "End resolve singletons") }
     
     for rType in singleRTypes {
       _ = try container.resolve(RType: rType)

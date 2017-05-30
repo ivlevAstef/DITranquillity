@@ -15,11 +15,13 @@ import SubProject2
 /// Module 1
 
 private class Module1: DIModule {
-  var components: [DIComponent] = [Component1p()]
-  var dependencies: [DIModule] = [Module4(), Module2(), Module3()]
+  var components: [DIComponent] = [DIScanComponent(predicateByName: {
+    $0.hasPrefix("Component1")
+  })]
+  var dependencies: [DIModule] = [DIScanModule(predicateByName: { $0.hasPrefix("Module") })]
 }
 
-private class Component1p: DIComponent {
+private class Component1p: DIScanned, DIComponent {
   var scope: DIComponentScope { return .public }
   
   func load(builder: DIContainerBuilder) {
@@ -45,12 +47,12 @@ private protocol InterfaceP {
 
 /// Module 2
 
-private class Module2: DIModule {
-  var components: [DIComponent] = [Component2p(), Component2()]
+private class Module2: DIScanned, DIModule {
+  var components: [DIComponent] = [DIScanComponent(predicateByName: { $0.hasPrefix("Component2") })]
   var dependencies: [DIModule] = [Module4()]
 }
 
-private class Component2p: DIComponent {
+private class Component2p: DIScanned, DIComponent {
   var scope: DIComponentScope { return .public }
   
   func load(builder: DIContainerBuilder) {
@@ -67,7 +69,7 @@ private class Component2p: DIComponent {
   }
 }
 
-private class Component2: DIComponent {
+private class Component2: DIScanned, DIComponent {
   
   func load(builder: DIContainerBuilder) {
     builder.register(type: Class2private.init)
@@ -103,12 +105,12 @@ private class Class2publicInterfaceP {
 
 /// Module 3
 
-private class Module3: DIModule {
-  var components: [DIComponent] = [Component3p(), Component3()]
+private class Module3: DIScanned, DIModule {
+  var components: [DIComponent] = [DIScanComponent(predicateByName: { $0.hasPrefix("Component3") })]
   var dependencies: [DIModule] = [Module4()]
 }
 
-private class Component3p: DIComponent {
+private class Component3p: DIScanned, DIComponent {
   var scope: DIComponentScope { return .public }
   
   func load(builder: DIContainerBuilder) {
@@ -125,7 +127,7 @@ private class Component3p: DIComponent {
   }
 }
 
-private class Component3: DIComponent {
+private class Component3: DIScanned, DIComponent {
   func load(builder: DIContainerBuilder) {
     builder.register(type: Class3private.init)
       .injection { $0.incorrect = $1 }
@@ -160,12 +162,12 @@ private class Class3private {
 
 /// Module 4
 
-private class Module4: DIModule {
-  var components: [DIComponent] = [Component4p()]
+private class Module4: DIScanned, DIModule {
+  var components: [DIComponent] = [DIScanComponent(predicateByName: { $0.hasPrefix("Component4") })]
   var dependencies: [DIModule] = []
 }
 
-private class Component4p: DIComponent {
+private class Component4p: DIScanned, DIComponent {
   var scope: DIComponentScope { return .public }
   
   func load(builder: DIContainerBuilder) {

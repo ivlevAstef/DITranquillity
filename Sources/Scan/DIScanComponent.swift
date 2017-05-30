@@ -8,9 +8,12 @@
 
 #if ENABLE_DI_COMPONENT
 public final class DIScanComponent: DIScanWithInitializer<DIScanned>, DIComponent {
+  #if ENABLE_DI_MODULE
+  public let scope: DIComponentScope = .public
+  #endif
   public final func load(builder: DIContainerBuilder) {
-    for component in getObjects().filter({ $0 is DIComponent }) {
-      builder.register(component: component as! DIComponent)
+    for component in getObjects().flatMap({ $0 as? DIComponent }) {
+      builder.register(component: component)
     }
   }
 }
