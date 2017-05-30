@@ -17,6 +17,20 @@ open class DIScanWithInitializer<T: DIScanned>: DIScan<T> {
   }
 }
 
+func genericName<T: AnyObject>(_ type: T.Type) -> String {
+  var fullName: String = "\(type)"
+  
+  if "(" == fullName[fullName.startIndex] {
+    fullName.remove(at: fullName.startIndex)
+  }
+
+  let range = fullName.range(of: " in")
+  if let range = range {
+    return fullName.substring(to: range.lowerBound)
+  }
+  return fullName
+}
+
 open class DIScan<T: AnyObject> {
   public typealias PredicateByType = (_ type: T.Type)->(Bool)
   public typealias PredicateByName = (_ name: String)->(Bool)
@@ -32,12 +46,12 @@ open class DIScan<T: AnyObject> {
   }
   
   public init(predicateByName: @escaping PredicateByName) {
-    self.predicate = { predicateByName(String(describing: $0)) }
+    self.predicate = { predicateByName(genericName($0)) }
     self.bundle = nil
   }
   
   public init(predicateByName: @escaping PredicateByName, in bundle: Bundle) {
-    self.predicate = { predicateByName(String(describing: $0)) }
+    self.predicate = { predicateByName(genericName($0)) }
     self.bundle = bundle
   }
   
