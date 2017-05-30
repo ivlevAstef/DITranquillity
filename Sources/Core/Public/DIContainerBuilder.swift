@@ -102,7 +102,8 @@ extension DIContainerBuilder {
     }
     
     if !intersect.isEmpty {
-      let diError = DIError.intersectionNames(type: superType, names: intersect, typesInfo: rTypes.map{ $0.typeInfo })
+      let invalidTypes = rTypes.filter{ !$0.names.intersection(intersect).isEmpty }.map{ $0.typeInfo }
+      let diError = DIError.intersectionNames(type: superType, names: intersect, typesInfo: invalidTypes)
       log(.error(diError), msg: "Intersection names: \(intersect) for type: \(superType)")
       errors.append(diError)
     }
