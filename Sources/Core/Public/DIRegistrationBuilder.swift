@@ -21,6 +21,7 @@ extension DIRegistrationBuilder {
   }
   
   ///short
+  @discardableResult
   public func `as`<Parent>(_ pType: Parent.Type, check: (Impl)->Parent) -> Self {
     DIRegistrationAlternativeType<Impl, Parent>(builder: self).check(check)
     return self
