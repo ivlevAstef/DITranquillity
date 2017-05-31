@@ -1,3 +1,6 @@
+# v2.1.5
+* Fix modularity access level for complex dependencies
+
 # v2.1.4
 * Move logger into default subspec and change realization
 * Fix 'as' short style operation - add @discardableResult
