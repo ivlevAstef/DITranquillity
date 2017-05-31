@@ -8,8 +8,11 @@
 
 /// Used only for modules, but for simply declare in core
 typealias DIModuleType = String
+
+#if ENABLE_DI_MODULE
 extension DIModuleType {
   init(_ module: DIModule) {
     self.init(describing: type(of: module))
   }
 }
+#endif
