@@ -15,9 +15,10 @@ class RType: RTypeBase {
     super.init(typeInfo: typeInfo)
   }
   
-  func copyFinal() -> RTypeFinal {
+  func copyFinal(protocols: [RType]) -> RTypeFinal {
     return RTypeFinal(typeInfo: typeInfo,
-      modules: modules,
+      inModules: modules,
+      outModules: modules + protocols.flatMap{ $0.modules },
       initials: self.initials,
       injections: self.injections + (postInit.map{ [$0] } ?? []), /// append post init to end
       names: self.names,

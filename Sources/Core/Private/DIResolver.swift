@@ -184,11 +184,11 @@ class DIResolver {
     // if used modules
     if let last = optionalLast {
       let rTypesFiltered = rTypes.filter {
-        $0.modules.isEmpty || !last.modules.intersection($0.modules).isEmpty
+        $0.outModules.isEmpty || !last.inModules.intersection($0.outModules).isEmpty
       }
      
       if rTypesFiltered.isEmpty {
-        let diError = DIError.noAccess(typesInfo: rTypes.map{ $0.typeInfo }, accessModules: rTypes.flatMap{ $0.modules.map { $0.name } })
+        let diError = DIError.noAccess(typesInfo: rTypes.map{ $0.typeInfo }, accessModules: rTypes.flatMap{ $0.outModules.map { $0.name } })
         log(.error(diError), msg: "No access to type: \(inputType)")
         throw diError
       }
@@ -203,7 +203,7 @@ class DIResolver {
   private func resolveUseRType<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
     return try synchronize(DIResolver.monitor) {
       #if ENABLE_DI_MODULE
-      if !pair.rType.modules.isEmpty {
+      if !pair.rType.outModules.isEmpty {
         synchronize(rTypeStackMonitor) { rTypeStack.append(pair.rType) }
         defer { _ = synchronize(rTypeStackMonitor) { rTypeStack.removeLast() } }
         
