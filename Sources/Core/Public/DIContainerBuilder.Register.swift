@@ -29,9 +29,7 @@ extension DIContainerBuilder {
   internal func registrationBuilder<T>(file: String, line: Int) -> DIRegistrationBuilder<T> {
     let rBuilder = DIRegistrationBuilder<T>(container: self, typeInfo: DITypeInfo(type: T.self, file: file, line: line))
     if let oldRType = isIgnoreReturnOld(uniqueKey: rBuilder.uniqueKey, set: rBuilder.rType) {
-      #if ENABLE_DI_MODULE
-      oldRType.modules += self.currentModules // added new modules
-      #endif
+      oldRType.add(modules: self.moduleStack)
       // if this type it's register, then register in other container for not register
       rBuilder.container = RTypeContainer()
     }

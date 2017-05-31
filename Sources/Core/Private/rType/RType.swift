@@ -9,16 +9,15 @@
 class RType: RTypeBase {
   typealias MethodKey = String
 
-  #if ENABLE_DI_MODULE
   init(typeInfo: DITypeInfo, modules: [DIModuleType]) {
-    self.modules = modules
+    self.availableForModules = Set(modules)
+    self.module = modules.last
     super.init(typeInfo: typeInfo)
   }
   
-  func copyFinal(protocols: [RType]) -> RTypeFinal {
+  func copyFinal() -> RTypeFinal {
     return RTypeFinal(typeInfo: typeInfo,
-      inModules: modules,
-      outModules: modules + protocols.flatMap{ $0.modules },
+      module: module,
       initials: self.initials,
       injections: self.injections + (postInit.map{ [$0] } ?? []), /// append post init to end
       names: self.names,
@@ -26,19 +25,12 @@ class RType: RTypeBase {
       lifeTime: self.lifeTime)
   }
   
-  var modules: [DIModuleType]
-  
-  #else
-  
-  func copyFinal(protocols: [RType]) -> RTypeFinal {
-    return RTypeFinal(typeInfo: typeInfo,
-                      initials: self.initials,
-                      injections: self.injections,
-                      names: self.names,
-                      isDefault: self.isDefault,
-                      lifeTime: self.lifeTime)
+  let module: DIModuleType?
+  private(set) var availableForModules: Set<DIModuleType>
+  func add(modules: [DIModuleType]) {
+    assert(module == modules.last)
+    availableForModules.formUnion(modules)
   }
-  #endif
 
   var hasInitial: Bool { return !initials.isEmpty }
   var injectionsCount: Int { return injections.count }

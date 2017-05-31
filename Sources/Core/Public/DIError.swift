@@ -21,7 +21,7 @@ public indirect enum DIError: Error {
   case recursiveInitial(typeInfo: DITypeInfo)
 
   #if ENABLE_DI_MODULE
-  case noAccess(typesInfo: [DITypeInfo], accessModules: [String])
+  case noAccess(typesInfo: [DITypeInfo], accessModules: [(DIType, Set<String>)])
   #endif
   
   /// Until Build

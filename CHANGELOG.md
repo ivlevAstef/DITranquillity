@@ -1,3 +1,6 @@
+# v2.1.7
+* fix modularity bug - reorganization internal work with modularity and access levels
+
 # v2.1.5, v2.1.6
 * Fix modularity access level for complex dependencies
 

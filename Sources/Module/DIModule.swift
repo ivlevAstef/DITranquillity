@@ -12,36 +12,25 @@ public protocol DIModule {
   var components: [DIComponent] { get }
   var dependencies: [DIModule] { get }
 }
-
+  
+protocol DIIgnoreModule {}
 
 public extension DIContainerBuilder {
   @discardableResult
   public final func register(module: DIModule) -> Self {
-    privateRegister(module: module, stack: [])
-
-    return self
-  }
-}
-
-fileprivate extension DIContainerBuilder {
-  fileprivate final func privateRegister(module: DIModule, stack: [DIModuleType]) {
-    var stack = stack
-    stack.append(DIModuleType(module))
+    let ignore = module is DIIgnoreModule
+    if !ignore { moduleStack.append(DIModuleType(module)) }
+    defer { if !ignore { moduleStack.removeLast() } }
     
     for component in module.components {
-      self.register(component: component, stack: stack)
+      self.register(component: component)
     }
     
     for dependency in module.dependencies {
-      privateRegister(module: dependency, stack: stack)
+      register(module: dependency)
     }
-  }
-}
 
-extension DIContainerBuilder {
-  fileprivate func register(component: DIComponent, stack: [DIModuleType]) {
-    let stack = component.realStack(by: stack)
-    component.load(builder: DIContainerBuilder(container: self, stack: stack))
+    return self
   }
 }
 

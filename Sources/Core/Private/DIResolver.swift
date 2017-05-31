@@ -153,15 +153,15 @@ class DIResolver {
   #if ENABLE_DI_MODULE
   /// special function for resolve in future but on current rType stack
   func createStackSave() -> (()->()) -> () {
-    let saveStack = synchronize(rTypeStackMonitor) { rTypeStack }
+    let saveStack = synchronize(moduleStackMonitor) { moduleStack }
     
     return { executor in
       synchronize(DIResolver.monitor) {
         /// no need rTypeStackMonitor because into DIResolver.monitor
         
-        let restoreStack = self.rTypeStack
-        self.rTypeStack = saveStack
-        defer { self.rTypeStack = restoreStack }
+        let restoreStack = self.moduleStack
+        self.moduleStack = saveStack
+        defer { self.moduleStack = restoreStack }
         
         executor()
       }
@@ -179,16 +179,16 @@ class DIResolver {
     }
     
     #if ENABLE_DI_MODULE
-    let optionalLast = synchronize(rTypeStackMonitor) { rTypeStack.last }
-    
     // if used modules
-    if let last = optionalLast {
+    if let currentModule = synchronize(moduleStackMonitor, { moduleStack.last }) {
+      let key = DITypeKey(type)
       let rTypesFiltered = rTypes.filter {
-        $0.outModules.isEmpty || !last.inModules.intersection($0.outModules).isEmpty
+        nil == $0.module || ($0.availableForModules[key]?.contains(currentModule) ?? false)
       }
      
       if rTypesFiltered.isEmpty {
-        let diError = DIError.noAccess(typesInfo: rTypes.map{ $0.typeInfo }, accessModules: rTypes.flatMap{ $0.outModules.map { $0.name } })
+        let accessModules = rTypes.flatMap{ $0.availableForModules.flatMap{ ($0.value, $1) } }
+        let diError = DIError.noAccess(typesInfo: rTypes.map{ $0.typeInfo }, accessModules: accessModules)
         log(.error(diError), msg: "No access to type: \(inputType)")
         throw diError
       }
@@ -203,12 +203,9 @@ class DIResolver {
   private func resolveUseRType<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
     return try synchronize(DIResolver.monitor) {
       #if ENABLE_DI_MODULE
-      if !pair.rType.outModules.isEmpty {
-        synchronize(rTypeStackMonitor) { rTypeStack.append(pair.rType) }
-        defer { _ = synchronize(rTypeStackMonitor) { rTypeStack.removeLast() } }
-        
-        return try unsafeResolve(container, pair: pair, getter: getter)
-      }
+      let optModule = pair.rType.module
+      synchronize(moduleStackMonitor) { if let m = optModule { moduleStack.append(m) } }
+      defer { _ = synchronize(moduleStackMonitor) { if let m = optModule { moduleStack.removeLast() } } }
       #endif
       
       return try unsafeResolve(container, pair: pair, getter: getter)
@@ -310,15 +307,21 @@ class DIResolver {
     
     log(.injection(.begin), msg: "Begin injections in object: \(obj) with typeInfo: \(pair.typeInfo)")
     defer { log(.injection(.end), msg: "End injections in object: \(obj) with typeInfo: \(pair.typeInfo)") }
-    
-    let mapSave = circular.objMap
 
     circular.recursive.append(pair.uniqueKey)
+    defer { circular.recursive.removeLast() }
+    
+    #if ENABLE_DI_MODULE
+      let optModule = pair.rType.module
+      synchronize(moduleStackMonitor) { if let m = optModule { moduleStack.append(m) } }
+      defer { _ = synchronize(moduleStackMonitor) { if let m = optModule { moduleStack.removeLast() } } }
+    #endif
+    
+    let mapSave = circular.objMap
     for index in 0..<pair.rType.injections.count {
       circular.objMap = mapSave
       try pair.rType.injections[index](container, obj)
     }
-    circular.recursive.removeLast()
   }
 
   private func setupAllInjections(_ container: DIContainer) throws {
@@ -371,8 +374,8 @@ class DIResolver {
   
   #if ENABLE_DI_MODULE
   // needed for check access
-  private var rTypeStack: [RTypeFinal] = []
-  private var rTypeStackMonitor = OSSpinLock()
+  private var moduleStack: [DIModuleType] = []
+  private var moduleStackMonitor = OSSpinLock()
   #endif
 
   // needed for circular
