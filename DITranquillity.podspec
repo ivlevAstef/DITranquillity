@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.10'
 
   s.subspec 'Core' do |cores|
-    cores.source_files = 'Sources/Core/**/*.swift'
+    cores.source_files = 'Sources/Core/**/*.swift', 'Sources/Logger/*.swift'
   end
 
   s.subspec 'Description' do |dess|
@@ -53,7 +53,6 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'Logger' do |logs|
-    logs.source_files = 'Sources/Logger/*.swift'
     logs.dependency 'DITranquillity/Core'
     logs.pod_target_xcconfig = { 'OTHER_SWIFT_FLAGS' => '-D ENABLE_DI_LOGGER' }
   end
