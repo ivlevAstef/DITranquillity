@@ -30,7 +30,7 @@ class RType: RTypeBase {
   
   #else
   
-  func copyFinal() -> RTypeFinal {
+  func copyFinal(protocols: [RType]) -> RTypeFinal {
     return RTypeFinal(typeInfo: typeInfo,
                       initials: self.initials,
                       injections: self.injections,
