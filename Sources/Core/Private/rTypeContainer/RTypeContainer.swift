@@ -34,9 +34,10 @@ class RTypeContainer {
         }
       }
 #endif
-      
+			
+      let protocols = data.value.filter{ $0.isProtocol }
       for rType in data.value.filter({ !$0.isProtocol }) {
-        let final = map[rType] ?? rType.copyFinal()
+        let final = map[rType] ?? rType.copyFinal(protocols: protocols)
         map[rType] = final // additional operation, but simple syntax
         
         if nil == result[data.key] {

@@ -9,6 +9,7 @@
 public final class DIContainerBuilder {
   public init() {
     self.rTypeContainer = RTypeContainer()
+    self.ignoreTypes = IgnoreTypes()
     #if ENABLE_DI_MODULE
     self.currentModules = []
     #endif
@@ -27,18 +28,27 @@ public final class DIContainerBuilder {
   }
   
   let rTypeContainer: RTypeContainer
-  
-  fileprivate var ignoreTypes: [String: RType] = [:]
-  
+  fileprivate var ignoreTypes: IgnoreTypes
+	
   #if ENABLE_DI_MODULE
   internal init(container: DIContainerBuilder, stack: [DIModuleType]) {
-    rTypeContainer = container.rTypeContainer
+    self.rTypeContainer = container.rTypeContainer
+    self.ignoreTypes = container.ignoreTypes
     self.currentModules = stack
   }
   
   /// need for register type. But filled from components with module
   let currentModules: [DIModuleType] // DIModuleType
   #endif
+}
+
+private class IgnoreTypes {
+  subscript(key: String) -> RType? {
+    get { return values[key] }
+    set { values[key] = newValue }
+  }
+
+  private var values: [String: RType] = [:]
 }
 
 extension DIContainerBuilder {

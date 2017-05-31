@@ -10,8 +10,9 @@ class RTypeFinal: RTypeBase {
   typealias MethodKey = String
   
   #if ENABLE_DI_MODULE
-  init(typeInfo: DITypeInfo, modules: [DIModuleType], initials: [MethodKey: Any], injections: [(_: DIContainer, _: Any) throws -> ()], names: Set<String>, isDefault: Bool, lifeTime: DILifeTime) {
-    self.modules = Set(modules)
+  init(typeInfo: DITypeInfo, inModules: [DIModuleType], outModules: [DIModuleType], initials: [MethodKey: Any], injections: [(_: DIContainer, _: Any) throws -> ()], names: Set<String>, isDefault: Bool, lifeTime: DILifeTime) {
+    self.inModules = Set(inModules)
+    self.outModules = Set(outModules)
     self.initials = initials
     self.injections = injections
     self.names = names
@@ -45,7 +46,8 @@ class RTypeFinal: RTypeBase {
   }
   
   #if ENABLE_DI_MODULE
-  let modules: Set<DIModuleType>
+  let inModules: Set<DIModuleType>
+  let outModules: Set<DIModuleType>
   #endif 
   let lifeTime: DILifeTime
   let isDefault: Bool

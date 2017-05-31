@@ -30,6 +30,9 @@ private class Component1p: DIScanned, DIComponent {
     
     builder.register(type: InterfacePImpl.init)
       .as(InterfaceP.self).check{$0}
+		
+    builder.register(type: Class1.init)
+      .injection{ $0.incorrect = $1 }
   }
 }
 
@@ -43,6 +46,10 @@ private class InterfacePImpl: InterfaceP {
 
 private protocol InterfaceP {
   var name: String { get }
+}
+
+private class Class1 {
+  var incorrect: Class2private!
 }
 
 /// Module 2
@@ -217,8 +224,8 @@ class DITranquillityTests_Access: XCTestCase {
     let container = try! builder.build()
     
     do {
-      let class2private: Class2private = try container.resolve()
-      print(class2private) // ignore
+      let class1: Class1 = try container.resolve()
+      print(class1.incorrect) // ignore
       XCTFail("i'm no access to class 2 private")
     } catch {
       print(error)
