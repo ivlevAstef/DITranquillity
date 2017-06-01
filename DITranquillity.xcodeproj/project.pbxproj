@@ -136,6 +136,9 @@
 		D51255291EDF2DCA0067796B /* DIModuleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51255281EDF2DCA0067796B /* DIModuleType.swift */; };
 		D512552A1EDF2DCD0067796B /* DIModuleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51255281EDF2DCA0067796B /* DIModuleType.swift */; };
 		D512552B1EDF2DCE0067796B /* DIModuleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51255281EDF2DCA0067796B /* DIModuleType.swift */; };
+		D512552D1EE06F010067796B /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512552C1EE06F010067796B /* DISettings.swift */; };
+		D512552E1EE06F010067796B /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512552C1EE06F010067796B /* DISettings.swift */; };
+		D512552F1EE06F010067796B /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512552C1EE06F010067796B /* DISettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -192,6 +195,7 @@
 		16D7BCB71DB086B000A29A9F /* DIScanComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScanComponent.swift; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D51255281EDF2DCA0067796B /* DIModuleType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIModuleType.swift; sourceTree = "<group>"; };
+		D512552C1EE06F010067796B /* DISettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DISettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -351,6 +355,7 @@
 				11404C8C1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift */,
 				16640A651D9E1E7B00707BFC /* DIContainerBuilder.swift */,
 				165F614E1D9E78DD00F6126E /* DIContainerBuilder.Register.swift */,
+				D512552C1EE06F010067796B /* DISettings.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -593,6 +598,7 @@
 				11535FCB1E6E560200577FA5 /* DILogger.swift in Sources */,
 				169C0DD41DA3501F001F0AD5 /* Helpers.swift in Sources */,
 				169C0DD51DA3501F001F0AD5 /* DIContainerBuilder.swift in Sources */,
+				D512552E1EE06F010067796B /* DISettings.swift in Sources */,
 				169C0DD61DA3501F001F0AD5 /* DIContainer.ShortSyntax.swift in Sources */,
 				119F4FB51E5603EC00B2DFA1 /* DIDescriptions.swift in Sources */,
 				169C0DD71DA3501F001F0AD5 /* RType.swift in Sources */,
@@ -641,6 +647,7 @@
 				11535FCC1E6E560200577FA5 /* DILogger.swift in Sources */,
 				169C0E3A1DA35CBE001F0AD5 /* Helpers.swift in Sources */,
 				169C0E3B1DA35CBE001F0AD5 /* DIContainerBuilder.swift in Sources */,
+				D512552F1EE06F010067796B /* DISettings.swift in Sources */,
 				169C0E3C1DA35CBE001F0AD5 /* DIContainer.ShortSyntax.swift in Sources */,
 				119F4FB61E5603EC00B2DFA1 /* DIDescriptions.swift in Sources */,
 				169C0E3D1DA35CBE001F0AD5 /* RType.swift in Sources */,
@@ -689,6 +696,7 @@
 				11535FCA1E6E560200577FA5 /* DILogger.swift in Sources */,
 				16D7BCB81DB086B000A29A9F /* DIScan.swift in Sources */,
 				16640A751D9E1E7B00707BFC /* Helpers.swift in Sources */,
+				D512552D1EE06F010067796B /* DISettings.swift in Sources */,
 				119F4FB41E5603EC00B2DFA1 /* DIDescriptions.swift in Sources */,
 				16640A821D9E1E7B00707BFC /* DIContainerBuilder.swift in Sources */,
 				119F4FBF1E5604C500B2DFA1 /* DIContainer.Arg.swift in Sources */,

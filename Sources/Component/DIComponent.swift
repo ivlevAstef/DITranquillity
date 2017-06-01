@@ -16,7 +16,7 @@ public protocol DIComponent {
 
 #if ENABLE_DI_MODULE
 public extension DIComponent {
-  var scope: DIComponentScope { return .internal }
+  var scope: DIComponentScope { return .default }
 }
 #endif
 

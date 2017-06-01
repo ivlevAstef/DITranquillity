@@ -12,7 +12,7 @@ public enum DIComponentScope: Equatable {
   case `public`
   case `internal`
   
-  static var `default`: DIComponentScope { return `internal` }
+  static var `default`: DIComponentScope { return DISetting.defaultComponentScope }
 }
   
 #endif

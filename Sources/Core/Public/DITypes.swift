@@ -23,7 +23,7 @@ public enum DILifeTime: Equatable {
   case perScope
   case perDependency
   
-  static var `default`: DILifeTime { return perScope }
+  static var `default`: DILifeTime { return DISetting.defaultLifeTime }
 }
 
 extension DITypeInfo: Equatable {
