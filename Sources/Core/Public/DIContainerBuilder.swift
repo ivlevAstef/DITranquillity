@@ -7,14 +7,8 @@
 //
 
 public final class DIContainerBuilder {
-  public init() {
-    self.rTypeContainer = RTypeContainer()
-    self.ignoreTypes = IgnoreTypes()
-    #if ENABLE_DI_MODULE
-    self.currentModules = []
-    #endif
-  }
-
+  public init() {}
+  
   @discardableResult
   public func build(f: String = #file, l: Int = #line) throws -> DIContainer {    
     try validate()
@@ -27,28 +21,11 @@ public final class DIContainerBuilder {
     return container
   }
   
-  let rTypeContainer: RTypeContainer
-  fileprivate var ignoreTypes: IgnoreTypes
-	
-  #if ENABLE_DI_MODULE
-  internal init(container: DIContainerBuilder, stack: [DIModuleType]) {
-    self.rTypeContainer = container.rTypeContainer
-    self.ignoreTypes = container.ignoreTypes
-    self.currentModules = stack
-  }
-  
+  let rTypeContainer = RTypeContainer()
+  fileprivate var ignoreTypes: [String: RType] = [:]
+
   /// need for register type. But filled from components with module
-  let currentModules: [DIModuleType] // DIModuleType
-  #endif
-}
-
-private class IgnoreTypes {
-  subscript(key: String) -> RType? {
-    get { return values[key] }
-    set { values[key] = newValue }
-  }
-
-  private var values: [String: RType] = [:]
+  var moduleStack: [DIModuleType] = []
 }
 
 extension DIContainerBuilder {

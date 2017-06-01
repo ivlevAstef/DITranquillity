@@ -1,3 +1,8 @@
+# v2.2.0
+* Fix modularity bug - reorganization internal work with modularity and access levels
+* Supported settings for set default behavior
+* Improve injection into ViewControllers. Now app crash if found injections for VC but can’t injection into VC
+
 # v2.1.5, v2.1.6
 * Fix modularity access level for complex dependencies
 

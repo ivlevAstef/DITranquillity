@@ -131,11 +131,7 @@ extension DIRegistrationBuilder {
 
 public final class DIRegistrationBuilder<Impl> {
   init(container: DIContainerBuilder, typeInfo: DITypeInfo) {
-    #if ENABLE_DI_MODULE
-    self.rType = RType(typeInfo: typeInfo, modules: container.currentModules)
-    #else
-    self.rType = RType(typeInfo: typeInfo)
-    #endif
+    self.rType = RType(typeInfo: typeInfo, modules: container.moduleStack)
     self.container = container.rTypeContainer
   }
   

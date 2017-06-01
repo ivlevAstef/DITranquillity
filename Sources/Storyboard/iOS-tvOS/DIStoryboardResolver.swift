@@ -20,14 +20,24 @@ final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
 
   @objc public func resolve(_ viewController: UIViewController, identifier: String) -> UIViewController {
     stackSave {
-      _ = try? self.container.resolve(viewController)
+      try! resolve(viewController)
       
       for childVC in viewController.childViewControllers {
-        _ = try? self.container.resolve(childVC)
+        try! resolve(childVC)
       }
     }
 
     return viewController
+  }
+  
+  private func resolve(_ vc: UIViewController) throws {
+    do {
+      _ = try self.container.resolve(vc)
+    } catch DIError.typeNotFound(let type) where type == type(of: vc) {
+      // not found vc -> ignore
+    } catch {
+      throw error
+    }
   }
 
   private let container: DIContainer

@@ -16,18 +16,18 @@ public protocol DIComponent {
 
 #if ENABLE_DI_MODULE
 public extension DIComponent {
-  var scope: DIComponentScope { return .internal }
+  var scope: DIComponentScope { return .default }
 }
 #endif
 
 public extension DIContainerBuilder {
   public func register(component: DIComponent) {
-    #if ENABLE_DI_MODULE
-    let stack = component.realStack(by: self.currentModules)
-    component.load(builder: DIContainerBuilder(container: self, stack: stack))
-    #else
+#if ENABLE_DI_MODULE
+    let save = self.moduleStack
+    defer { self.moduleStack = save }
+    self.moduleStack = component.realStack(by: self.moduleStack)
+#endif
     component.load(builder: self)
-    #endif
   }
 }
 

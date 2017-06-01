@@ -20,20 +20,30 @@ final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
 
   @objc public func resolve(_ viewController: Any, identifier: String) -> Any {
     self.stackSave {
-      _ = try? self.container.resolve(viewController)
+      try! resolve(viewController)
 
       if let windowController = viewController as? NSWindowController, let viewController = windowController.contentViewController {
-        _ = try? self.container.resolve(viewController)
+        try! resolve(viewController)
       }
       
       if let nsViewController = viewController as? NSViewController {
         for childVC in nsViewController.childViewControllers {
-          _ = try? self.container.resolve(childVC)
+          try! resolve(childVC)
         }
       }
     }
     
     return viewController
+  }
+  
+  private func resolve(_ vc: Any) throws {
+    do {
+      _ = try self.container.resolve(vc)
+    } catch DIError.typeNotFound(let type) where type == type(of: vc) {
+      // not found vc -> ignore
+    } catch {
+      throw error
+    }
   }
 
   private let container: DIContainer

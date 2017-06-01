@@ -9,10 +9,8 @@
 class RTypeFinal: RTypeBase {
   typealias MethodKey = String
   
-  #if ENABLE_DI_MODULE
-  init(typeInfo: DITypeInfo, inModules: [DIModuleType], outModules: [DIModuleType], initials: [MethodKey: Any], injections: [(_: DIContainer, _: Any) throws -> ()], names: Set<String>, isDefault: Bool, lifeTime: DILifeTime) {
-    self.inModules = Set(inModules)
-    self.outModules = Set(outModules)
+  init(typeInfo: DITypeInfo, module: DIModuleType?, initials: [MethodKey: Any], injections: [(_: DIContainer, _: Any) throws -> ()], names: Set<String>, isDefault: Bool, lifeTime: DILifeTime) {
+    self.module = module
     self.initials = initials
     self.injections = injections
     self.names = names
@@ -20,16 +18,11 @@ class RTypeFinal: RTypeBase {
     self.lifeTime = lifeTime
     super.init(typeInfo: typeInfo)
   }
-  #else
-  init(typeInfo: DITypeInfo, initials: [MethodKey: Any], injections: [(_: DIContainer, _: Any) throws -> ()], names: Set<String>, isDefault: Bool, lifeTime: DILifeTime) {
-    self.initials = initials
-    self.injections = injections
-    self.names = names
-    self.isDefault = isDefault
-    self.lifeTime = lifeTime
-    super.init(typeInfo: typeInfo)
+  
+  /// used only for create!!!
+  func add(modules: Set<DIModuleType>, for type: DIType) {
+    availableForModules[DITypeKey(type)] = modules
   }
-  #endif
   
   func new<Method, T>(_ method: (Method) throws -> T) throws -> T {
     guard let initializer = initials[MethodKey(describing: Method.self)] as? Method else {
@@ -45,10 +38,9 @@ class RTypeFinal: RTypeBase {
     return names.contains(name)
   }
   
-  #if ENABLE_DI_MODULE
-  let inModules: Set<DIModuleType>
-  let outModules: Set<DIModuleType>
-  #endif 
+  let module: DIModuleType?
+  private(set) var availableForModules: [DITypeKey: Set<DIModuleType>] = [:]
+  
   let lifeTime: DILifeTime
   let isDefault: Bool
   let injections: [(_: DIContainer, _: Any) throws -> ()]

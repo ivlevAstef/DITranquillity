@@ -26,8 +26,7 @@ class RTypeContainer {
     var result: [DITypeKey: [RTypeFinal]] = [:]
     
     for data in self.values.dictionary {
-      // for optimization
-#if ENABLE_DI_LOGGER
+#if ENABLE_DI_LOGGER // for optimization
       if !data.value.contains{ !$0.isProtocol } { /// all it's protocol
         for rType in data.value {
           log(.warning(.implNotFound(for: rType.typeInfo)), msg: "Not found implementation for protocol: \(rType.typeInfo.type)")
@@ -35,9 +34,10 @@ class RTypeContainer {
       }
 #endif
 			
-      let protocols = data.value.filter{ $0.isProtocol }
+      let protocolModules = data.value.filter{ $0.isProtocol }.flatMap{ $0.availableForModules }
       for rType in data.value.filter({ !$0.isProtocol }) {
-        let final = map[rType] ?? rType.copyFinal(protocols: protocols)
+        let final = map[rType] ?? rType.copyFinal()
+        final.add(modules: rType.availableForModules.union(protocolModules), for: data.key.value)
         map[rType] = final // additional operation, but simple syntax
         
         if nil == result[data.key] {
@@ -64,7 +64,7 @@ class DITypeKey: Hashable {
     self.name = String(describing: value)
   }
   
-  var hashValue: Int {  return name.hashValue }
+  var hashValue: Int { return name.hashValue }
   
   static func ==(lhs: DITypeKey, rhs: DITypeKey) -> Bool {
     return lhs.name == rhs.name

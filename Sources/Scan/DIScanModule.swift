@@ -7,7 +7,7 @@
 //
 
 #if ENABLE_DI_MODULE
-public final class DIScanModule: DIScanWithInitializer<DIScanned>, DIModule {
+public final class DIScanModule: DIScanWithInitializer<DIScanned>, DIModule, DIIgnoreModule {
   public final var components: [DIComponent] { return [] }
   
   public final var dependencies: [DIModule] { 
