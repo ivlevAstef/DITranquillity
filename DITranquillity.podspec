@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'DITranquillity'
-  s.version      = '2.2.2'
+  s.version      = '2.2.3'
   s.summary      = 'DITranquillity - Dependency injection for iOS/macOS/tvOS (Swift) '
 
   s.description  = <<-DESC
@@ -21,10 +21,9 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = '9.0'
   s.osx.deployment_target = '10.10'
 
-  s.source_files = 'Sources/DITranquillity.h'
-
   s.subspec 'Core' do |cores|
-    cores.source_files = 'Sources/Core/**/*.swift', 'Sources/Logger/*.swift'
+    cores.public_header_files = 'Sources/DITranquillity.h'
+    cores.source_files = 'Sources/Core/**/*.swift', 'Sources/Logger/*.swift', 'Sources/DITranquillity.h'
   end
 
   s.subspec 'Description' do |dess|
