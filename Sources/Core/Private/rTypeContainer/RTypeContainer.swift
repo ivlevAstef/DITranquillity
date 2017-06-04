@@ -34,10 +34,10 @@ class RTypeContainer {
       }
 #endif
 			
-      let protocolModules = data.value.filter{ $0.isProtocol }.flatMap{ $0.availableForModules }
+      let protocolModules = data.value.filter{ $0.isProtocol }.flatMap{ $0.availability }
       for rType in data.value.filter({ !$0.isProtocol }) {
         let final = map[rType] ?? rType.copyFinal()
-        final.add(modules: rType.availableForModules.union(protocolModules), for: data.key.value)
+        final.add(modules: rType.availability.union(protocolModules), for: data.key.value)
         map[rType] = final // additional operation, but simple syntax
         
         if nil == result[data.key] {

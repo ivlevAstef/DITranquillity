@@ -71,6 +71,11 @@ extension DILoggerComposite {
         logger.log(style, msg: msg)
       }
     }
+    
+    if .error == style {
+      wait()
+      fatalError(msg)
+    }
   }
 }
 

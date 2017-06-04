@@ -70,7 +70,6 @@
 		16640A751D9E1E7B00707BFC /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A541D9E1E7B00707BFC /* Helpers.swift */; };
 		16640A761D9E1E7B00707BFC /* RTypeBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A561D9E1E7B00707BFC /* RTypeBase.swift */; };
 		16640A771D9E1E7B00707BFC /* RType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A571D9E1E7B00707BFC /* RType.swift */; };
-		16640A781D9E1E7B00707BFC /* RTypeWithName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A581D9E1E7B00707BFC /* RTypeWithName.swift */; };
 		16640A791D9E1E7B00707BFC /* RTypeFinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A591D9E1E7B00707BFC /* RTypeFinal.swift */; };
 		16640A7A1D9E1E7B00707BFC /* RTypeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A5B1D9E1E7B00707BFC /* RTypeContainer.swift */; };
 		16640A7B1D9E1E7B00707BFC /* RTypeContainerFinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A5C1D9E1E7B00707BFC /* RTypeContainerFinal.swift */; };
@@ -95,7 +94,6 @@
 		169C0DD51DA3501F001F0AD5 /* DIContainerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A651D9E1E7B00707BFC /* DIContainerBuilder.swift */; };
 		169C0DD61DA3501F001F0AD5 /* DIContainer.ShortSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A691D9E1E7B00707BFC /* DIContainer.ShortSyntax.swift */; };
 		169C0DD71DA3501F001F0AD5 /* RType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A571D9E1E7B00707BFC /* RType.swift */; };
-		169C0DD91DA3501F001F0AD5 /* RTypeWithName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A581D9E1E7B00707BFC /* RTypeWithName.swift */; };
 		169C0DDC1DA3501F001F0AD5 /* RTypeBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A561D9E1E7B00707BFC /* RTypeBase.swift */; };
 		169C0DDF1DA3501F001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		169C0E161DA352C7001F0AD5 /* DIStoryboardBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 169C0E111DA352C7001F0AD5 /* DIStoryboardBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -119,7 +117,6 @@
 		169C0E3B1DA35CBE001F0AD5 /* DIContainerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A651D9E1E7B00707BFC /* DIContainerBuilder.swift */; };
 		169C0E3C1DA35CBE001F0AD5 /* DIContainer.ShortSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A691D9E1E7B00707BFC /* DIContainer.ShortSyntax.swift */; };
 		169C0E3D1DA35CBE001F0AD5 /* RType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A571D9E1E7B00707BFC /* RType.swift */; };
-		169C0E3F1DA35CBE001F0AD5 /* RTypeWithName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A581D9E1E7B00707BFC /* RTypeWithName.swift */; };
 		169C0E411DA35CBE001F0AD5 /* RTypeBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A561D9E1E7B00707BFC /* RTypeBase.swift */; };
 		169C0E421DA35CBE001F0AD5 /* DIStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169C0E201DA357C3001F0AD5 /* DIStoryboard.swift */; };
 		169C0E451DA35CBE001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -170,7 +167,6 @@
 		16640A541D9E1E7B00707BFC /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		16640A561D9E1E7B00707BFC /* RTypeBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTypeBase.swift; sourceTree = "<group>"; };
 		16640A571D9E1E7B00707BFC /* RType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RType.swift; sourceTree = "<group>"; };
-		16640A581D9E1E7B00707BFC /* RTypeWithName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTypeWithName.swift; sourceTree = "<group>"; };
 		16640A591D9E1E7B00707BFC /* RTypeFinal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTypeFinal.swift; sourceTree = "<group>"; };
 		16640A5B1D9E1E7B00707BFC /* RTypeContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTypeContainer.swift; sourceTree = "<group>"; };
 		16640A5C1D9E1E7B00707BFC /* RTypeContainerFinal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTypeContainerFinal.swift; sourceTree = "<group>"; };
@@ -329,7 +325,6 @@
 				16640A561D9E1E7B00707BFC /* RTypeBase.swift */,
 				16640A571D9E1E7B00707BFC /* RType.swift */,
 				16640A591D9E1E7B00707BFC /* RTypeFinal.swift */,
-				16640A581D9E1E7B00707BFC /* RTypeWithName.swift */,
 			);
 			path = rType;
 			sourceTree = "<group>";
@@ -603,7 +598,6 @@
 				119F4FB51E5603EC00B2DFA1 /* DIDescriptions.swift in Sources */,
 				169C0DD71DA3501F001F0AD5 /* RType.swift in Sources */,
 				119F4FC01E5604C500B2DFA1 /* DIContainer.Arg.swift in Sources */,
-				169C0DD91DA3501F001F0AD5 /* RTypeWithName.swift in Sources */,
 				118F09061E4B688900C1ED5E /* DIModule.swift in Sources */,
 				119F4FC31E5604C500B2DFA1 /* DIContainer.TypeArg.swift in Sources */,
 				16D7BCBD1DB086B900A29A9F /* DIScanModule.swift in Sources */,
@@ -652,7 +646,6 @@
 				119F4FB61E5603EC00B2DFA1 /* DIDescriptions.swift in Sources */,
 				169C0E3D1DA35CBE001F0AD5 /* RType.swift in Sources */,
 				119F4FC11E5604C500B2DFA1 /* DIContainer.Arg.swift in Sources */,
-				169C0E3F1DA35CBE001F0AD5 /* RTypeWithName.swift in Sources */,
 				118F09071E4B688900C1ED5E /* DIModule.swift in Sources */,
 				119F4FC41E5604C500B2DFA1 /* DIContainer.TypeArg.swift in Sources */,
 				16D7BCBF1DB086B900A29A9F /* DIScanModule.swift in Sources */,
@@ -703,7 +696,6 @@
 				16640A861D9E1E7B00707BFC /* DIContainer.ShortSyntax.swift in Sources */,
 				16640A771D9E1E7B00707BFC /* RType.swift in Sources */,
 				119F4FC21E5604C500B2DFA1 /* DIContainer.TypeArg.swift in Sources */,
-				16640A781D9E1E7B00707BFC /* RTypeWithName.swift in Sources */,
 				16D7BCB91DB086B000A29A9F /* DIScanModule.swift in Sources */,
 				1123CD7E1E647CC1004D52F9 /* LateBindingExtensions.swift in Sources */,
 				1651E7041E8631A900E967B4 /* DIRegistrationBuilder.Injection.Methods.swift in Sources */,

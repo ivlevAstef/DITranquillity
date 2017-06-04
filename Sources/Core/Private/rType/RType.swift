@@ -10,7 +10,7 @@ class RType: RTypeBase {
   typealias MethodKey = String
 
   init(typeInfo: DITypeInfo, modules: [DIModuleType]) {
-    self.availableForModules = Set(modules)
+    self.availability = Set(modules)
     self.module = modules.last
     super.init(typeInfo: typeInfo)
   }
@@ -25,12 +25,13 @@ class RType: RTypeBase {
       lifeTime: self.lifeTime)
   }
   
-  let module: DIModuleType?
-  private(set) var availableForModules: Set<DIModuleType>
   func add(modules: [DIModuleType]) {
     assert(module == modules.last)
-    availableForModules.formUnion(modules)
+    availability.formUnion(modules)
   }
+  
+  let module: DIModuleType?
+  private(set) var availability: Set<DIModuleType>
 
   var hasInitial: Bool { return !initials.isEmpty }
   var injectionsCount: Int { return injections.count }
@@ -40,24 +41,20 @@ class RType: RTypeBase {
   var names: Set<String> = []
   var isDefault: Bool = false
   var isProtocol: Bool = false
-  
-  var postInit: ((_: DIContainer, _: Any) throws -> ())? = nil
 
-  fileprivate var initials: [MethodKey: Any] = [:] // method type to method
-  fileprivate var injections: [(_: DIContainer, _: Any) throws -> ()] = []
+  fileprivate(set) var initials: [MethodKey: Any] = [:] // method type to method
+  fileprivate(set) var injections: [(_: DIContainer, _: Any) -> ()] = []
+  
+  var postInit: ((_: DIContainer, _: Any) -> ())? = nil
 }
 
-// Initial
 extension RType {
   func append<Method>(initial method: Method) {
     initials[MethodKey(describing: Method.self)] = method
   }
-}
-
-// Injection
-extension RType {
-  func append<T>(injection method: @escaping (_: DIContainer, _: T) throws -> ()) {
-    injections.append{ try method($0, $1 as! T) }
+  
+  func append<T>(injection method: @escaping (_: DIContainer, _: T) -> ()) {
+    injections.append{ method($0, $1 as! T) }
   }
   
   func appendAutoInjection<T>(by type: T.Type) {
@@ -71,11 +68,7 @@ extension RType {
           continue
         }
         
-        do {
-          try nsObj.setValue(scope.resolve(byTypeOf: nsObj), forKey: key)
-        } catch {
-          
-        }
+        nsObj.setValue(scope.resolve(byTypeOf: nsObj), forKey: key)
       }
     }
   }

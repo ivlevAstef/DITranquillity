@@ -16,7 +16,7 @@ public final class DIContainerBuilder {
     let finalRTypeContainer = rTypeContainer.copyFinal()
     let container = DIContainer(resolver: DIResolver(rTypeContainer: finalRTypeContainer))
     
-    try initSingleLifeTime(rTypeContainer: finalRTypeContainer, container: container)
+    initSingleLifeTime(rTypeContainer: finalRTypeContainer, container: container)
 
     return container
   }
@@ -52,14 +52,14 @@ extension DIContainerBuilder {
     for rType in allTypes {
       if !(rType.hasInitial || rType.initialNotNecessary) {
         let diError = DIError.noSpecifiedInitialMethod(typeInfo: rType.typeInfo)
-        log(.error(diError), msg: "No specified initial method for type info: \(rType.typeInfo)")
+        log(.error, msg: "No specified initial method for type info: \(rType.typeInfo)")
         errors.append(diError)
       }
     }
 
     if !errors.isEmpty {
       let diError = DIError.build(errors: errors)
-      log(.error(diError), msg: "build errors count: \(errors.count)")
+      log(.error, msg: "build errors count: \(errors.count)")
       throw diError
     }
   }
@@ -74,7 +74,7 @@ extension DIContainerBuilder {
     let defaultTypes = rTypes.filter{ $0.isDefault }
     if defaultTypes.count > 1 {
       let diError = DIError.pluralDefaultAd(type: superType, typesInfo: defaultTypes.map { $0.typeInfo })
-      log(.error(diError), msg: "Plural default ad for type: \(superType)")
+      log(.error, msg: "Plural default ad for type: \(superType)")
       errors.append(diError)
     }
   }
@@ -91,7 +91,7 @@ extension DIContainerBuilder {
     if !intersect.isEmpty {
       let invalidTypes = rTypes.filter{ !$0.names.intersection(intersect).isEmpty }.map{ $0.typeInfo }
       let diError = DIError.intersectionNames(type: superType, names: intersect, typesInfo: invalidTypes)
-      log(.error(diError), msg: "Intersection names: \(intersect) for type: \(superType)")
+      log(.error, msg: "Intersection names: \(intersect) for type: \(superType)")
       errors.append(diError)
     }
   }
@@ -99,7 +99,7 @@ extension DIContainerBuilder {
 
 
 extension DIContainerBuilder {
-  fileprivate func initSingleLifeTime(rTypeContainer: RTypeContainerFinal, container: DIContainer) throws {
+  fileprivate func initSingleLifeTime(rTypeContainer: RTypeContainerFinal, container: DIContainer) {
     let singleRTypes = rTypeContainer.data().flatMap({ $0.1 }).filter({ .single == $0.lifeTime })
     
     if singleRTypes.isEmpty { // for ignore log
@@ -107,10 +107,10 @@ extension DIContainerBuilder {
     }
     
     log(.createSingle(.begin), msg: "Begin resolve \(singleRTypes.count) singletons")
-    defer {  log(.createSingle(.end), msg: "End resolve singletons") }
+    defer { log(.createSingle(.end), msg: "End resolve singletons") }
     
     for rType in singleRTypes {
-      _ = try container.resolve(RType: rType)
+      _ = container.resolve(RType: rType)
     }
   }
 }

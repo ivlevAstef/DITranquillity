@@ -17,7 +17,7 @@ public enum DILogEvent {
   case injection(BeginEndBrace)
   
   case warning(Warning)
-  case error(DIError)
+  case error
   
   public enum BeginEndBrace {
     case begin
@@ -46,7 +46,7 @@ extension DILogEvent: Equatable {
          (.cached, .cached),
          (.injection(_),.injection(_)),
          (.warning(_),.warning(_)),
-         (.error(_), .error(_)):
+         (.error, .error):
       return true
     default:
       return false

@@ -8,146 +8,89 @@
 
 private enum Getter<T, M> {
   case object(T)
-  case method((M) throws -> Any)
+  case method((M) -> Any)
 }
 
 class DIResolver {
-  typealias Method<M> = (M) throws -> Any
+  typealias Method<M> = (M) -> Any
   
   init(rTypeContainer: RTypeContainerFinal) {
     self.rTypeContainer = rTypeContainer
   }
   
-  @discardableResult
-  func check<T>(type: T.Type) throws -> [RTypeFinal] {
-    let rTypes = try getTypes(type)
-    
-    if rTypes.count > 1 && !rTypes.contains(where: { $0.isDefault }) {
-      let diError = DIError.ambiguousType(type: type, typesInfo: rTypes.map{ $0.typeInfo })
-      log(.error(diError), msg: "Not found default type: \(type)")
-      throw diError
-    }
-    
-    return rTypes
-  }
-  
-  @discardableResult
-  func check<T>(name: String, type: T.Type) throws -> [RTypeFinal] {
-    let rTypes = try getTypes(type)
-    
-    if !rTypes.contains(where: { $0.has(name: name) }) {
-      let diError = DIError.typeForNameNotFound(type: type, name: name, typesInfo: rTypes.map { $0.typeInfo })
-      log(.error(diError), msg: "Not found type: \(type) for name: \(name)")
-      throw diError
-    }
-    
-    return rTypes
-  }
-  
-  @discardableResult
-  func check<T, Tag>(tag: Tag, type: T.Type) throws -> [RTypeFinal] {
-    let name = toString(tag: tag)
-    let rTypes = try getTypes(type)
-    
-    if !rTypes.contains(where: { $0.has(name: name) }) {
-      let diError = DIError.typeForTagNotFound(type: type, tag: tag, typesInfo: rTypes.map { $0.typeInfo })
-      log(.error(diError), msg: "Not found type: \(type) for tag: \(tag)")
-      throw diError
-    }
-    
-    return rTypes
-  }
-
-  
-  func resolve<T, M>(_ container: DIContainer, type: T.Type, method: @escaping Method<M>) throws -> T {
+  func resolve<T, M>(_ container: DIContainer, type: T.Type, method: @escaping Method<M>) -> T {
     log(.resolving(.begin), msg: "Begin resolve type: \(type)")
     defer { log(.resolving(.end), msg: "End resolve type: \(type)") }
-    let rTypes = try check(type: type)
+    let rTypes = getTypes(type)
 
-    let index = 1 == rTypes.count ? 0 : rTypes.index(where: { $0.isDefault })!
+    let index = rTypes.index(where: { $0.isDefault }) ?? rTypes.count - 1
     let rType = rTypes[index]
     
     log(.found(typeInfo: rType.typeInfo), msg: "Found type info: \(rType.typeInfo) for resolve type: \(type)")
     
-    return try resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
+    return resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
   }
   
-  func resolve<T, M>(_ container: DIContainer, name: String, type: T.Type, method: @escaping Method<M>) throws -> T {
+  func resolve<T, M>(_ container: DIContainer, name: String, type: T.Type, method: @escaping Method<M>) -> T {
     log(.resolving(.begin), msg: "Begin resolve type: \(type) with name: \(name)")
     defer { log(.resolving(.end), msg: "End resolve type: \(type) with name: \(name)") }
     
-    let rTypes = try check(name: name, type: type)
+    let rTypes = getTypes(type)
     let rType = rTypes.first(where: { $0.has(name: name) })!
     
     log(.found(typeInfo: rType.typeInfo), msg: "Found type info: \(rType.typeInfo) for resolve type: \(type) with name: \(name)")
     
-    return try resolveUseRType(container, pair: RTypeWithName(rType, name), getter: .method(method))
+    return resolveUseRType(container, pair: RTypeWithName(rType, name), getter: .method(method))
   }
   
-  func resolve<T, M, Tag>(_ container: DIContainer, tag: Tag, type: T.Type, method: @escaping Method<M>) throws -> T {
+  func resolve<T, M, Tag>(_ container: DIContainer, tag: Tag, type: T.Type, method: @escaping Method<M>) -> T {
     let name = toString(tag: tag)
     
     log(.resolving(.begin), msg: "Begin resolve type: \(type) with tag: \(name)")
     defer { log(.resolving(.end), msg: "End resolve type: \(type) with tag: \(name)") }
     
-    let rTypes = try check(tag: tag, type: type)
+    let rTypes = getTypes(type)
     let rType = rTypes.first(where: { $0.has(name: name) })!
     
     log(.found(typeInfo: rType.typeInfo), msg: "Found type info: \(rType.typeInfo) for resolve type: \(type) with tag: \(name)")
     
-    return try resolveUseRType(container, pair: RTypeWithName(rType, name), getter: .method(method))
+    return resolveUseRType(container, pair: RTypeWithName(rType, name), getter: .method(method))
   }
   
-  func resolve<T>(_ container: DIContainer, obj: T) throws {
+  func resolve<T>(_ container: DIContainer, obj: T) {
     let type = type(of: obj)
     
     log(.resolving(.begin), msg: "Begin resolve obj: \(obj) with type: \(type)")
     defer {  log(.resolving(.end), msg: "End resolve obj: \(obj) with type: \(type)") }
     
-    let rTypes = try check(type: type)
+    let rTypes = getTypes(type)
     
-    let index = 1 == rTypes.count ? 0 : rTypes.index(where: { $0.isDefault })!
+    let index = rTypes.index(where: { $0.isDefault }) ?? rTypes.count - 1
     let rType = rTypes[index]
     
     log(.found(typeInfo: rType.typeInfo), msg: "Found type info: \(rType.typeInfo) for resolve type: \(type)")
     
-    _ = try resolveUseRType(container, pair: RTypeWithName(rType), getter: .object(obj) as Getter<T, Void>)
+    _ = resolveUseRType(container, pair: RTypeWithName(rType), getter: .object(obj) as Getter<T, Void>)
   }
 
-  func resolveMany<T, M>(_ container: DIContainer, type: T.Type, method: @escaping Method<M>) throws -> [T] {
+  func resolveMany<T, M>(_ container: DIContainer, type: T.Type, method: @escaping Method<M>) -> [T] {
     log(.resolving(.begin), msg: "Begin resolve many type: \(type)")
     defer {  log(.resolving(.end), msg: "End resolve many type: \(type)") }
     
-    let rTypes = try getTypes(type)
-    
-    return try rTypes.map { rType in
+    return getTypes(type).map { rType in
       log(.found(typeInfo: rType.typeInfo), msg: "Found type info: \(rType.typeInfo) for resolve type: \(type)")
       
-      #if ENABLE_DI_MODULE
-      do {
-        return try resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
-      } catch DIError.recursiveInitial {
-        return nil // Ignore recursive initialization object for many
-      } catch DIError.noAccess {
-        return nil // Ignore no access object for many
-      }
-      #else
-      do {
-        return try resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
-      } catch DIError.recursiveInitial {
-        return nil // Ignore recursive initialization object for many
-      }
-      #endif
-    }.filter{ $0 != nil }.map{ $0! }
+      return resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
+    }.flatMap{ $0 }
   }
 
-  func resolve<M>(_ container: DIContainer, rType: RTypeFinal, method: @escaping Method<M>) throws -> Any {
+  func resolve<M>(_ container: DIContainer, rType: RTypeFinal, method: @escaping Method<M>) -> Any {
     log(.resolving(.begin), msg: "Begin resolve by type info: \(rType.typeInfo)")
     defer { log(.resolving(.end), msg: "End resolve by type info: \(rType.typeInfo)") }
     
     log(.found(typeInfo: rType.typeInfo), msg: "Used type info: \(rType.typeInfo).")
     
-    return try resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
+    return resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
   }
   
   #if ENABLE_DI_MODULE
@@ -169,13 +112,12 @@ class DIResolver {
   }
   #endif
 
-  private func getTypes<T>(_ inputType: T.Type) throws -> [RTypeFinal] {
+  private func getTypes<T>(_ inputType: T.Type) -> [RTypeFinal] {
     let type = removeTypeWrappers(inputType)
 
     guard let rTypes = rTypeContainer[type], !rTypes.isEmpty else {
-      let diError = DIError.typeNotFound(type: inputType)
-      log(.error(diError), msg: "Not found type: \(type)")
-      throw diError
+      log(.error, msg: "Not found type: \(type)")
+      return []
     }
     
     #if ENABLE_DI_MODULE
@@ -187,10 +129,7 @@ class DIResolver {
       }
      
       if rTypesFiltered.isEmpty {
-        let accessModules = rTypes.flatMap{ $0.availableForModules.flatMap{ ($0.value, $1) } }
-        let diError = DIError.noAccess(typesInfo: rTypes.map{ $0.typeInfo }, accessModules: accessModules)
-        log(.error(diError), msg: "No access to type: \(inputType)")
-        throw diError
+        log(.error, msg: "No access to type: \(inputType)")
       }
       
       return rTypesFiltered
@@ -200,58 +139,58 @@ class DIResolver {
     return rTypes
   }
 
-  private func resolveUseRType<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
-    return try synchronize(DIResolver.monitor) {
+  private func resolveUseRType<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) -> T {
+    return synchronize(DIResolver.monitor) {
       #if ENABLE_DI_MODULE
       let optModule = pair.rType.module
       synchronize(moduleStackMonitor) { if let m = optModule { moduleStack.append(m) } }
       defer { _ = synchronize(moduleStackMonitor) { if let m = optModule { moduleStack.removeLast() } } }
       #endif
       
-      return try unsafeResolve(container, pair: pair, getter: getter)
+      return unsafeResolve(container, pair: pair, getter: getter)
     }
   }
 
-  private func unsafeResolve<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
+  private func unsafeResolve<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) -> T {
     switch pair.rType.lifeTime {
     case .single, .lazySingle:
-      return try resolveSingle(container, pair: pair, getter: getter)
+      return resolveSingle(container, pair: pair, getter: getter)
     case .weakSingle:
-      return try resolveWeakSingle(container, pair: pair, getter: getter)
+      return resolveWeakSingle(container, pair: pair, getter: getter)
     case .perScope:
-      return try resolvePerScope(container, pair: pair, getter: getter)
+      return resolvePerScope(container, pair: pair, getter: getter)
     case .perDependency:
-      return try resolvePerDependency(container, pair: pair, getter: getter)
+      return resolvePerDependency(container, pair: pair, getter: getter)
     }
   }
 
-  private func resolveSingle<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
-    return try _resolveUniversal(container, pair: pair, getter: getter,
+  private func resolveSingle<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) -> T {
+    return _resolveUniversal(container, pair: pair, getter: getter,
                                  get: { Cache.single[$0] },
                                  set: { Cache.single[$0] = $1 },
                                  cacheName: "single")
   }
   
-  private func resolveWeakSingle<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
+  private func resolveWeakSingle<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) -> T {
     for data in Cache.weakSingle.filter({ $0.value.value == nil }) {
       Cache.weakSingle.removeValue(forKey: data.key)
     }
     
-    return try _resolveUniversal(container, pair: pair, getter: getter,
+    return _resolveUniversal(container, pair: pair, getter: getter,
                                  get: { Cache.weakSingle[$0]?.value },
                                  set: { Cache.weakSingle[$0] = Weak(value: $1) },
                                  cacheName: "weak single")
   }
 
-  private func resolvePerScope<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
-    return try _resolveUniversal(container, pair: pair, getter: getter,
+  private func resolvePerScope<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) -> T {
+    return _resolveUniversal(container, pair: pair, getter: getter,
                                  get: { container.scope[$0] },
                                  set: { container.scope[$0] = $1 },
                                  cacheName: "perScope")
   }
   
   private func _resolveUniversal<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>,
-                                 get: (_: RType.UniqueKey)->Any?, set: (_:RType.UniqueKey, _:T)->(), cacheName: String) throws -> T {
+                                 get: (_: RType.UniqueKey)->Any?, set: (_:RType.UniqueKey, _:T)->(), cacheName: String) -> T {
     if let obj = get(pair.uniqueKey) as? T {
       /// suspending ignore injection for new object
       guard case .object(let realObj) = getter else {
@@ -266,17 +205,16 @@ class DIResolver {
       }
     }
     
-    let obj: T = try resolvePerDependency(container, pair: pair, getter: getter)
+    let obj: T = resolvePerDependency(container, pair: pair, getter: getter)
     set(pair.uniqueKey, obj)
     log(.cached, msg: "Add object: \(obj) in cache \(cacheName)")
     return obj
   }
 
-  private func resolvePerDependency<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
+  private func resolvePerDependency<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) -> T {
     if recursiveInitializer.contains(pair.uniqueKey) {
-      let diError = DIError.recursiveInitial(typeInfo: pair.rType.typeInfo)
-      log(.error(diError), msg: "Recursive initial for type info: \(pair.rType.typeInfo)")
-      throw diError
+      log(.error, msg: "Recursive initial for type info: \(pair.rType.typeInfo)")
+      fatalError("")
     }
 
     for recursiveTypeKey in circular.recursive {
@@ -286,7 +224,7 @@ class DIResolver {
     let insertIndex = circular.objects.endIndex
 
     circular.recursive.append(pair.uniqueKey)
-    let obj: T = try getObject(pair: pair, getter: getter)
+    let obj: T = getObject(pair: pair, getter: getter)
     circular.recursive.removeLast()
 
     if !circular.objects.contains(where: { $0.1 as AnyObject === obj as AnyObject }) {
@@ -294,13 +232,13 @@ class DIResolver {
     }
 
     if circular.recursive.isEmpty {
-      try setupAllInjections(container)
+      setupAllInjections(container)
     }
 
     return obj
   }
 
-  private func setupInjections(_ container: DIContainer, pair: RTypeWithName, obj: Any) throws {
+  private func setupInjections(_ container: DIContainer, pair: RTypeWithName, obj: Any) {
     if pair.rType.injections.isEmpty {
       return
     }
@@ -320,14 +258,14 @@ class DIResolver {
     let mapSave = circular.objMap
     for index in 0..<pair.rType.injections.count {
       circular.objMap = mapSave
-      try pair.rType.injections[index](container, obj)
+      pair.rType.injections[index](container, obj)
     }
   }
 
-  private func setupAllInjections(_ container: DIContainer) throws {
+  private func setupAllInjections(_ container: DIContainer) {
     repeat {
       for (pair, obj) in circular.objects {
-        try setupInjections(container, pair: pair, obj: obj)
+        setupInjections(container, pair: pair, obj: obj)
         circular.objects.removeFirst()
       }
     } while (!circular.objects.isEmpty) // because setupInjections can added into allTypes
@@ -335,7 +273,7 @@ class DIResolver {
     circular.clean()
   }
 
-  private func getObject<T, M>(pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
+  private func getObject<T, M>(pair: RTypeWithName, getter: Getter<T, M>) -> T {
     if circular.isCycle(pair: pair), let obj = circular.objMap[pair.uniqueKey] {
       log(.resolve(.cache), msg: "Resolve object: \(obj) use circular cache")
       return obj as! T
@@ -349,16 +287,9 @@ class DIResolver {
       
     case .method(let method):
       recursiveInitializer.insert(pair.uniqueKey)
-      let objAny = try pair.rType.new(method)
+      finalObj = pair.rType.new(method) as! T
       recursiveInitializer.remove(pair.uniqueKey)
       
-      guard let obj = objAny as? T else {
-        let diError = DIError.incorrectType(requestedType: T.self, realType: type(of: objAny), typeInfo: pair.typeInfo)
-        log(.error(diError), msg: "incorrect type. requested type: \(T.self); real type: \(type(of: objAny))")
-        throw diError
-      }
-      
-      finalObj = obj
       log(.resolve(.new), msg: "Resolve object: \(obj)")
     }
 
