@@ -1,3 +1,7 @@
+# v2.3.0
+* Fix bug (issue98) into methods initial(useStoryboard:identifier:) and initial(nib:).
+
+
 # v2.2.0
 * Fix modularity bug - reorganization internal work with modularity and access levels
 * Supported settings for set default behavior
