@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'DITranquillity'
-  s.version      = '2.2.0'
+  s.version      = '2.2.3'
   s.summary      = 'DITranquillity - Dependency injection for iOS/macOS/tvOS (Swift) '
 
   s.description  = <<-DESC
@@ -22,7 +22,8 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.10'
 
   s.subspec 'Core' do |cores|
-    cores.source_files = 'Sources/Core/**/*.swift', 'Sources/Logger/*.swift'
+    cores.public_header_files = 'Sources/DITranquillity.h'
+    cores.source_files = 'Sources/Core/**/*.swift', 'Sources/Logger/*.swift', 'Sources/DITranquillity.h'
   end
 
   s.subspec 'Description' do |dess|
@@ -49,6 +50,7 @@ Pod::Spec.new do |s|
     storys.ios.source_files = 'Sources/Storyboard/iOS-tvOS/*.{h,m,swift}'
     storys.tvos.source_files = 'Sources/Storyboard/iOS-tvOS/*.{h,m,swift}'
     storys.osx.source_files = 'Sources/Storyboard/OSX/*.{h,m,swift}'
+    storys.pod_target_xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'ENABLE_DI_STORYBOARD' }
     storys.dependency 'DITranquillity/Core'
   end
 
