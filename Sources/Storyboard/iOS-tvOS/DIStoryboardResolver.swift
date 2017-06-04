@@ -35,6 +35,8 @@ final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
       _ = try self.container.resolve(vc)
     } catch DIError.typeNotFound(let type) where type == type(of: vc) {
       // not found vc -> ignore
+    } catch DIError.recursiveInitial(let typeInfo) where typeInfo.type == type(of: vc) {
+      // recurseve self -> ignore
     } catch {
       throw error
     }
