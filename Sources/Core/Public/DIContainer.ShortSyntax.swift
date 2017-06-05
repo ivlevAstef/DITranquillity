@@ -7,16 +7,11 @@
 //
 
 prefix operator *
-public prefix func *<T>(container: DIContainer) throws -> T {
-  return try container.resolve()
+public prefix func *<T>(container: DIContainer) -> T {
+  return container.resolve()
 }
 
 prefix operator **
-public prefix func **<T>(container: DIContainer) throws -> [T] {
-  return try container.resolveMany()
-}
-
-prefix operator *?
-public prefix func *?<T>(container: DIContainer) -> T? {
-  return try? container.resolve()
+public prefix func **<T>(container: DIContainer) -> [T] {
+  return container.resolveMany()
 }

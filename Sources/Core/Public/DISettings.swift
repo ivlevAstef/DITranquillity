@@ -11,4 +11,10 @@ public struct DISetting {
   #if ENABLE_DI_MODULE
   public static var defaultComponentScope: DIComponentScope = .internal
   #endif
+  
+  public struct Log {
+    public static var fun: DILogFunc? = { print("\($0): \($1)") }
+    public static var level: DILogLevel = .warning
+    public static var tab: String = " "
+  }
 }

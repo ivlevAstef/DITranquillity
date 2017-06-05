@@ -19,11 +19,11 @@ registrationInitFunction() { #argcount file
 local numbers=($(seq 0 $1))
 
 local ParamType=$(join ',' ${numbers[@]/#/P})
-local Resolvers=$(join ',' $(replaceToArg numbers[@] "*s"))
+local Resolvers=$(join ',' $(replaceToArg numbers[@] "*c"))
 
 echo "  @discardableResult
-  public func initial<$ParamType>(_ closure: @escaping ($ParamType) throws -> Impl) -> Self {
-    rType.append(initial: { (s: DIContainer) throws -> Any in try closure($Resolvers) })
+  public func initial<$ParamType>(_ closure: @escaping ($ParamType) -> Impl) -> Self {
+    rType.append(initial: { (c: DIContainer) -> Any in closure($Resolvers) })
     return self
   }
 " >> $2
@@ -55,8 +55,8 @@ local ParamType=$(join ',' ${numbers[@]/#/P})
 local Resolvers=$(join ',' $(replaceToArg numbers[@] "*s"))
 
 echo "  @discardableResult
-  public func injection<$ParamType>(_ method: @escaping (Impl,$ParamType) throws -> ()) -> Self {
-    rType.append(injection: { s, o in try method(o, $Resolvers) })
+  public func injection<$ParamType>(_ method: @escaping (Impl,$ParamType) -> ()) -> Self {
+    rType.append(injection: { c, o in method(o, $Resolvers) })
     return self
   }
 " >> $2
@@ -87,7 +87,7 @@ local numbers=($(seq 0 $1))
 local ParamType=$(join ',' ${numbers[@]/#/P})
 
 echo "  @discardableResult
-  public func register<T, $ParamType>(file: String = #file, line: Int = #line, type initial: @escaping ($ParamType) throws -> T) -> DIRegistrationBuilder<T> {
+  public func register<T, $ParamType>(file: String = #file, line: Int = #line, type initial: @escaping ($ParamType) -> T) -> DIRegistrationBuilder<T> {
     return registrationBuilder(file: file, line: line).initial(initial)
   }
 " >> $2

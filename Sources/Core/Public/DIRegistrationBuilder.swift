@@ -54,50 +54,36 @@ extension DIRegistrationBuilder {
 // Initializer
 extension DIRegistrationBuilder {
   @discardableResult
-  public func initial(_ closure: @escaping () throws -> Impl) -> Self {
-    rType.append(initial: { (_: DIContainer) throws -> Any in try closure() })
+  public func initial(_ closure: @escaping () -> Impl) -> Self {
+    rType.append(initial: { (_: DIContainer) -> Any in closure() })
     return self
   }
   
   @discardableResult
-  public func initial(_ closure: @escaping (DIContainer) throws -> Impl) -> Self {
-    rType.append(initial: { scope throws -> Any in try closure(scope) })
+  public func initial(_ closure: @escaping (DIContainer) -> Impl) -> Self {
+    rType.append(initial: { c -> Any in closure(c) })
     return self
   }
 }
 
-public enum DIInjectionOptional { case optional }
-public enum DIInjectionManual { case manual }
-
 // Injection
 extension DIRegistrationBuilder {
   @discardableResult
-  public func injection(_ method: @escaping (Impl) throws -> ()) -> Self {
-    rType.append(injection: { scope, obj in try method(obj) })
+  public func injection(_ method: @escaping (Impl) -> ()) -> Self {
+    rType.append(injection: { _, obj in method(obj) })
     return self
   }
 
   @discardableResult
-  public func injection<Inject>(_ method: @escaping (Impl, Inject) throws -> ()) -> Self {
-    rType.append(injection: { s, o in try method(o, *s) })
+  public func injection<Inject>(_ method: @escaping (Impl, Inject) -> ()) -> Self {
+    rType.append(injection: { c, o in method(o, *c) })
     return self
   }
+
   
   @discardableResult
-  public func injection<Inject>(_: DIInjectionOptional, _ method: @escaping (Impl, Inject?) throws -> ()) -> Self {
-    rType.append(injection: { s, o in try method(o, *?s) })
-    return self
-  }
-  
-  @discardableResult
-  public func injection(_: DIInjectionManual, _ method: @escaping (DIContainer, Impl) throws -> ()) -> Self {
-    rType.append(injection: method)
-    return self
-  }
-  
-  @discardableResult
-  public func postInit(_ method: @escaping (DIContainer, Impl) throws -> ()) -> Self {
-    rType.postInit = { try method($0, $1 as! Impl) }
+  public func postInit(_ method: @escaping (DIContainer, Impl) -> ()) -> Self {
+    rType.postInit = { method($0, $1 as! Impl) }
     return self
   }
 }

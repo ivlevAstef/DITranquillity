@@ -11,6 +11,7 @@ import UIKit
 final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
   init(container: DIContainer) {
     self.container = container
+    self.module = container.mo
     #if ENABLE_DI_MODULE
     self.stackSave = container.resolver.createStackSave()
     #else
@@ -20,28 +21,20 @@ final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
 
   @objc public func resolve(_ viewController: UIViewController, identifier: String) -> UIViewController {
     stackSave {
-      try! resolve(viewController)
+      resolve(viewController)
       
       for childVC in viewController.childViewControllers {
-        try! resolve(childVC)
+        resolve(childVC)
       }
     }
 
     return viewController
   }
   
-  private func resolve(_ vc: UIViewController) throws {
-    do {
-      _ = try self.container.resolve(vc)
-    } catch DIError.typeNotFound(let type) where type == type(of: vc) {
-      // not found vc -> ignore
-    } catch DIError.recursiveInitial(let typeInfo) where typeInfo.type == type(of: vc) {
-      // recurseve self -> ignore
-    } catch {
-      throw error
-    }
+  private func resolve(_ vc: UIViewController) {
+    _ = self.container.resolve(vc)
   }
 
   private let container: DIContainer
-  private let stackSave: (() -> ()) -> ()
+  private let module: DIModuleType?
 }

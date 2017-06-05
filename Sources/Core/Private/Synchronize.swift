@@ -17,9 +17,3 @@ internal func synchronize<T>(_ monitor: Any!, _ closure: () -> T) -> T {
   defer { objc_sync_exit(monitor) }
   return closure()
 }
-
-internal func synchronize<T>(_ monitor: Any!, _ closure: () throws -> T) throws -> T {
-  objc_sync_enter(monitor)
-  defer { objc_sync_exit(monitor) }
-  return try closure()
-}

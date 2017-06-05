@@ -11,14 +11,11 @@ class RTypeBase {
   
   init(typeInfo: DITypeInfo) {
     self.typeInfo = typeInfo
-    
-    let name = String(describing: typeInfo.type)
-    let address = String(describing: Unmanaged.passUnretained(self).toOpaque())
-    uniqueKey = name + address
+    self.uniqueKey = "\(typeInfo.type)\(typeInfo.file)\(typeInfo.line)"
   }
 
   let typeInfo: DITypeInfo
-  var uniqueKey: UniqueKey = ""
+  fileprivate(set) var uniqueKey: UniqueKey = ""
 }
 
 extension RTypeBase: Hashable {
@@ -26,5 +23,19 @@ extension RTypeBase: Hashable {
   
   static func == (lhs: RTypeBase, rhs: RTypeBase) -> Bool {
     return lhs.uniqueKey == rhs.uniqueKey
+  }
+}
+
+
+class RTypeWithName: RTypeBase {
+  let rType: RTypeFinal
+  let name: String
+  
+  init(_ rType: RTypeFinal, _ name: String = "") {
+    self.rType = rType
+    self.name = name
+    super.init(typeInfo: rType.typeInfo)
+    
+    uniqueKey = rType.uniqueKey/*!No self.uniqueKey*/ + name
   }
 }

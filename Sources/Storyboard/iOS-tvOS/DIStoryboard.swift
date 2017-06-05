@@ -39,18 +39,18 @@ public extension DIContainerBuilder {
 public extension DIRegistrationBuilder where Impl: UIViewController {
   @discardableResult
   public func initial<T: UIViewController>(nib type: T.Type) -> Self {
-    rType.append(initial: { (_:DIContainer) throws -> Any in UIViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T })
+    rType.append(initial: { (_:DIContainer) -> Any in UIViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T })
     return self
   }
   
   @discardableResult
   public func initial(useStoryboard storyboard: UIStoryboard, identifier: String) -> Self {
-    rType.append(initial: { (_:DIContainer) throws -> Any in storyboard.instantiateViewController(withIdentifier: identifier) })
+    rType.append(initial: { (_:DIContainer) -> Any in storyboard.instantiateViewController(withIdentifier: identifier) })
     return self
   }
   
   @discardableResult
-  public func initial(useStoryboard closure: @escaping (DIContainer) throws -> UIStoryboard, identifier: String) -> Self {
+  public func initial(useStoryboard closure: @escaping (DIContainer) -> UIStoryboard, identifier: String) -> Self {
     rType.append(initial: { c -> Any in try closure(c).instantiateViewController(withIdentifier: identifier) })
     return self
   }
@@ -60,7 +60,7 @@ public extension DIRegistrationBuilder where Impl: UIViewController {
 public extension DIRegistrationBuilder where Impl: UIStoryboard {
   @discardableResult
   public func initial(name: String, bundle storyboardBundleOrNil: Bundle?) -> Self {
-    self.initial { c throws -> Impl in DIStoryboard(name: name, bundle: storyboardBundleOrNil, container: c) as! Impl }
+    self.initial { c -> Impl in DIStoryboard(name: name, bundle: storyboardBundleOrNil, container: c) as! Impl }
     return self
   }
 }
