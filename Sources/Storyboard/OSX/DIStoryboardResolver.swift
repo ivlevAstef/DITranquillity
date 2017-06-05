@@ -26,7 +26,7 @@ final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
     return viewController
   }
 	
-  private func recursiveResolve(_ vc: UIViewController) {
+  private func recursiveResolve(_ vc: Any) {
     try! resolve(vc)
 
     if let windowController = vc as? NSWindowController, let viewController = windowController.contentViewController {
@@ -35,7 +35,7 @@ final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
 		
     if let nsViewController = vc as? NSViewController {
       for childVC in nsViewController.childViewControllers {
-        recursiveResolve(viewController)
+        recursiveResolve(childVC)
       }
     }
   }
