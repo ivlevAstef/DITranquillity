@@ -28,6 +28,27 @@ func removeTypeWrappers(_ type: Any.Type) -> Any.Type {
   return type
 }
 
+protocol DIOptional {
+  static func make(by obj: Any?) -> Self
+}
+
+extension Optional: DIOptional {
+  static func make(by obj: Any?) -> Optional<Wrapped> {
+    if let typeObj = obj as? Wrapped {
+      return typeObj
+    }
+    return nil
+  }
+}
+
+func make<T>(by obj: Any?) -> T {
+  if let opt = T.self as? DIOptional.Type {
+    return opt.make(by: obj) as! T // it's always valid
+  }
+  
+  return obj as! T // can crash, but it's normally
+}
+
 func toString(tag: Any) -> String {
   let type = String(describing: type(of: tag))
   let mirror = Mirror(reflecting: tag)

@@ -6,10 +6,10 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-class DIScope {
-  private var cache: [RType.UniqueKey: Any] = [:]
+class DIScope<T> {
+  fileprivate var cache: [RType.UniqueKey: T] = [:]
   
-  subscript(key: RType.UniqueKey) -> Any? {
+  subscript(key: RType.UniqueKey) -> T? {
     get {
       return cache[key]
     }
@@ -19,4 +19,13 @@ class DIScope {
   }
   
   var isEmpty: Bool { return cache.isEmpty }
+}
+
+
+extension DIScope where T == Weak {
+  func clean() {
+    for data in cache.filter({ $0.value.value == nil }) {
+      cache.removeValue(forKey: data.key)
+    }
+  }
 }

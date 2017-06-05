@@ -9,29 +9,15 @@
 class RType: RTypeBase {
   typealias MethodKey = String
 
-  init(typeInfo: DITypeInfo, modules: [DIModuleType]) {
-    self.availability = Set(modules)
-    self.module = modules.last
-    super.init(typeInfo: typeInfo)
-  }
   
   func copyFinal() -> RTypeFinal {
     return RTypeFinal(typeInfo: typeInfo,
-      module: module,
       initials: self.initials,
       injections: self.injections + (postInit.map{ [$0] } ?? []), /// append post init to end
       names: self.names,
       isDefault: self.isDefault,
       lifeTime: self.lifeTime)
   }
-  
-  func add(modules: [DIModuleType]) {
-    assert(module == modules.last)
-    availability.formUnion(modules)
-  }
-  
-  let module: DIModuleType?
-  private(set) var availability: Set<DIModuleType>
 
   var hasInitial: Bool { return !initials.isEmpty }
   var injectionsCount: Int { return injections.count }

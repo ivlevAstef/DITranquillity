@@ -8,11 +8,18 @@
 
 public typealias DIType = Any.Type
 public typealias DIMethodSignature = Any
+public typealias DILogFunc = (DILogLevel, String)->()
 
 public struct DITypeInfo {
   public let type: DIType
   public let file: String
   public let line: Int
+}
+
+public enum DILogLevel {
+  case error
+  case warning
+  case info
 }
 
 //////////////// lifetime

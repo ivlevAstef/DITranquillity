@@ -32,24 +32,18 @@ public final class DIContainer {
   public func newLifeTimeScope() -> DIContainer {
     return DIContainer(resolver: self.resolver)
   }
-  
-  public func useScope(from container: DIContainer) -> DIContainer {
-    assert(self.scope.isEmpty)
-    self.scope = container.scope
-    return self
-  }
-
 
   internal init(resolver: DIResolver) {
     self.resolver = resolver
   }
 
+  // for single initial
   internal func resolve(RType rType: RTypeFinal) -> Any {
     return resolver.resolve(self, rType: rType) { (initial: Method) in initial(self) }
   }
   
   internal let resolver: DIResolver
-  internal private(set) var scope = DIScope()
+  internal private(set) var scope = DIScope<Any>()
 }
 
 extension DIContainer {

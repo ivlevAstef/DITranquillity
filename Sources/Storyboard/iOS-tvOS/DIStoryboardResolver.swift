@@ -11,6 +11,7 @@ import UIKit
 final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
   init(container: DIContainer) {
     self.container = container
+    self.module = container.mo
     #if ENABLE_DI_MODULE
     self.stackSave = container.resolver.createStackSave()
     #else
@@ -35,5 +36,5 @@ final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
   }
 
   private let container: DIContainer
-  private let stackSave: (() -> ()) -> ()
+  private let module: DIModuleType?
 }

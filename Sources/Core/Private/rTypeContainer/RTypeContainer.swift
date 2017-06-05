@@ -61,7 +61,8 @@ class DITypeKey: Hashable {
   
   init(_ value: DIType) {
     self.value = value
-    self.name = String(describing: value)
+    let bundle = Bundle(for: value as! AnyClass)
+    self.name = "\(value)_\(bundle)"
   }
   
   var hashValue: Int { return name.hashValue }

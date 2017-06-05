@@ -17,15 +17,6 @@
 		11404C8D1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11404C8C1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift */; };
 		11404C8E1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11404C8C1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift */; };
 		11404C8F1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11404C8C1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift */; };
-		114EDC821E71A40300C90CA7 /* DILoggerComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114EDC811E71A40300C90CA7 /* DILoggerComposite.swift */; };
-		114EDC831E71A40300C90CA7 /* DILoggerComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114EDC811E71A40300C90CA7 /* DILoggerComposite.swift */; };
-		114EDC841E71A40300C90CA7 /* DILoggerComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114EDC811E71A40300C90CA7 /* DILoggerComposite.swift */; };
-		114EDC861E71A6CD00C90CA7 /* DILogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114EDC851E71A6CD00C90CA7 /* DILogEvent.swift */; };
-		114EDC871E71A6CD00C90CA7 /* DILogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114EDC851E71A6CD00C90CA7 /* DILogEvent.swift */; };
-		114EDC881E71A6CD00C90CA7 /* DILogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114EDC851E71A6CD00C90CA7 /* DILogEvent.swift */; };
-		11535FCA1E6E560200577FA5 /* DILogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11535FC91E6E560200577FA5 /* DILogger.swift */; };
-		11535FCB1E6E560200577FA5 /* DILogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11535FC91E6E560200577FA5 /* DILogger.swift */; };
-		11535FCC1E6E560200577FA5 /* DILogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11535FC91E6E560200577FA5 /* DILogger.swift */; };
 		115C24C81E6527CA00CC8BC7 /* Synchronize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C24C71E6527CA00CC8BC7 /* Synchronize.swift */; };
 		115C24C91E6527CA00CC8BC7 /* Synchronize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C24C71E6527CA00CC8BC7 /* Synchronize.swift */; };
 		115C24CA1E6527CA00CC8BC7 /* Synchronize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C24C71E6527CA00CC8BC7 /* Synchronize.swift */; };
@@ -130,12 +121,12 @@
 		16D7BCBE1DB086B900A29A9F /* DIScanComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB71DB086B000A29A9F /* DIScanComponent.swift */; };
 		16D7BCBF1DB086B900A29A9F /* DIScanModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB61DB086B000A29A9F /* DIScanModule.swift */; };
 		16D7BCC01DB086B900A29A9F /* DIScanComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB71DB086B000A29A9F /* DIScanComponent.swift */; };
-		D51255291EDF2DCA0067796B /* DIModuleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51255281EDF2DCA0067796B /* DIModuleType.swift */; };
-		D512552A1EDF2DCD0067796B /* DIModuleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51255281EDF2DCA0067796B /* DIModuleType.swift */; };
-		D512552B1EDF2DCE0067796B /* DIModuleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51255281EDF2DCA0067796B /* DIModuleType.swift */; };
 		D512552D1EE06F010067796B /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512552C1EE06F010067796B /* DISettings.swift */; };
 		D512552E1EE06F010067796B /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512552C1EE06F010067796B /* DISettings.swift */; };
 		D512552F1EE06F010067796B /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512552C1EE06F010067796B /* DISettings.swift */; };
+		D55368F21EE5BD3300015926 /* DILog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F11EE5BD3300015926 /* DILog.swift */; };
+		D55368F31EE5BD3600015926 /* DILog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F11EE5BD3300015926 /* DILog.swift */; };
+		D55368F41EE5BD3600015926 /* DILog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F11EE5BD3300015926 /* DILog.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -143,9 +134,6 @@
 		1109FD791E724EF9002BC40A /* DIComponentScope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIComponentScope.swift; sourceTree = "<group>"; };
 		1123CD7D1E647CC1004D52F9 /* LateBindingExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LateBindingExtensions.swift; sourceTree = "<group>"; };
 		11404C8C1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIRegistrationAlternativeType.swift; sourceTree = "<group>"; };
-		114EDC811E71A40300C90CA7 /* DILoggerComposite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DILoggerComposite.swift; sourceTree = "<group>"; };
-		114EDC851E71A6CD00C90CA7 /* DILogEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DILogEvent.swift; sourceTree = "<group>"; };
-		11535FC91E6E560200577FA5 /* DILogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DILogger.swift; sourceTree = "<group>"; };
 		115C24C71E6527CA00CC8BC7 /* Synchronize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synchronize.swift; sourceTree = "<group>"; };
 		118DBCCB1E4100BF003A7D1F /* DIStoryboardResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIStoryboardResolver.swift; sourceTree = "<group>"; };
 		118DBCCD1E4100C5003A7D1F /* DIStoryboardResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIStoryboardResolver.swift; sourceTree = "<group>"; };
@@ -190,8 +178,8 @@
 		16D7BCB61DB086B000A29A9F /* DIScanModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScanModule.swift; sourceTree = "<group>"; };
 		16D7BCB71DB086B000A29A9F /* DIScanComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScanComponent.swift; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D51255281EDF2DCA0067796B /* DIModuleType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIModuleType.swift; sourceTree = "<group>"; };
 		D512552C1EE06F010067796B /* DISettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DISettings.swift; sourceTree = "<group>"; };
+		D55368F11EE5BD3300015926 /* DILog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DILog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,16 +215,6 @@
 				1123CD7D1E647CC1004D52F9 /* LateBindingExtensions.swift */,
 			);
 			path = Module;
-			sourceTree = "<group>";
-		};
-		11535FC81E6E55F600577FA5 /* Logger */ = {
-			isa = PBXGroup;
-			children = (
-				11535FC91E6E560200577FA5 /* DILogger.swift */,
-				114EDC811E71A40300C90CA7 /* DILoggerComposite.swift */,
-				114EDC851E71A6CD00C90CA7 /* DILogEvent.swift */,
-			);
-			path = Logger;
 			sourceTree = "<group>";
 		};
 		119F4FAD1E5603A400B2DFA1 /* Component */ = {
@@ -280,7 +258,6 @@
 		16640A4C1D9E1E7B00707BFC /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				11535FC81E6E55F600577FA5 /* Logger */,
 				16640A501D9E1E7B00707BFC /* Core */,
 				119F4FB21E5603EC00B2DFA1 /* Descriptions */,
 				119F4FAD1E5603A400B2DFA1 /* Component */,
@@ -306,7 +283,7 @@
 		16640A511D9E1E7B00707BFC /* Private */ = {
 			isa = PBXGroup;
 			children = (
-				D51255281EDF2DCA0067796B /* DIModuleType.swift */,
+				D55368F11EE5BD3300015926 /* DILog.swift */,
 				119F4FA91E56014000B2DFA1 /* DIScope.swift */,
 				16640A521D9E1E7B00707BFC /* DIMultyMap.swift */,
 				16640A531D9E1E7B00707BFC /* DIResolver.swift */,
@@ -569,14 +546,11 @@
 				119F4FAC1E56014400B2DFA1 /* DIScope.swift in Sources */,
 				119F4FD71E56069200B2DFA1 /* DIRegistrationBuilder.Arg.swift in Sources */,
 				169C0DC41DA3501F001F0AD5 /* DIRegistrationBuilder.swift in Sources */,
-				114EDC871E71A6CD00C90CA7 /* DILogEvent.swift in Sources */,
 				16D7BCBE1DB086B900A29A9F /* DIScanComponent.swift in Sources */,
 				169C0DCB1DA3501F001F0AD5 /* DIContainerBuilder.Register.swift in Sources */,
 				118DBCCF1E4100CA003A7D1F /* DIStoryboardResolver.swift in Sources */,
 				169C0DCC1DA3501F001F0AD5 /* DIMultyMap.swift in Sources */,
 				169C0DCD1DA3501F001F0AD5 /* Weak.swift in Sources */,
-				D512552A1EDF2DCD0067796B /* DIModuleType.swift in Sources */,
-				114EDC831E71A40300C90CA7 /* DILoggerComposite.swift in Sources */,
 				169C0DCE1DA3501F001F0AD5 /* DIError.swift in Sources */,
 				119F4FB01E5603A400B2DFA1 /* DIComponent.swift in Sources */,
 				115C24C91E6527CA00CC8BC7 /* Synchronize.swift in Sources */,
@@ -590,11 +564,11 @@
 				169C0DD31DA3501F001F0AD5 /* DIContainer.swift in Sources */,
 				119F4FD11E56069200B2DFA1 /* DIContainerBuilder.Register.Arg.swift in Sources */,
 				16D7BCBB1DB086B500A29A9F /* DIScan.swift in Sources */,
-				11535FCB1E6E560200577FA5 /* DILogger.swift in Sources */,
 				169C0DD41DA3501F001F0AD5 /* Helpers.swift in Sources */,
 				169C0DD51DA3501F001F0AD5 /* DIContainerBuilder.swift in Sources */,
 				D512552E1EE06F010067796B /* DISettings.swift in Sources */,
 				169C0DD61DA3501F001F0AD5 /* DIContainer.ShortSyntax.swift in Sources */,
+				D55368F31EE5BD3600015926 /* DILog.swift in Sources */,
 				119F4FB51E5603EC00B2DFA1 /* DIDescriptions.swift in Sources */,
 				169C0DD71DA3501F001F0AD5 /* RType.swift in Sources */,
 				119F4FC01E5604C500B2DFA1 /* DIContainer.Arg.swift in Sources */,
@@ -617,14 +591,11 @@
 				119F4FAB1E56014400B2DFA1 /* DIScope.swift in Sources */,
 				119F4FD81E56069200B2DFA1 /* DIRegistrationBuilder.Arg.swift in Sources */,
 				169C0E2A1DA35CBE001F0AD5 /* DIRegistrationBuilder.swift in Sources */,
-				114EDC881E71A6CD00C90CA7 /* DILogEvent.swift in Sources */,
 				16D7BCC01DB086B900A29A9F /* DIScanComponent.swift in Sources */,
 				169C0E301DA35CBE001F0AD5 /* DIContainerBuilder.Register.swift in Sources */,
 				118DBCD01E4100CD003A7D1F /* DIStoryboardResolver.swift in Sources */,
 				169C0E311DA35CBE001F0AD5 /* DIMultyMap.swift in Sources */,
 				169C0E321DA35CBE001F0AD5 /* Weak.swift in Sources */,
-				D512552B1EDF2DCE0067796B /* DIModuleType.swift in Sources */,
-				114EDC841E71A40300C90CA7 /* DILoggerComposite.swift in Sources */,
 				169C0E331DA35CBE001F0AD5 /* DIError.swift in Sources */,
 				119F4FB11E5603A400B2DFA1 /* DIComponent.swift in Sources */,
 				115C24CA1E6527CA00CC8BC7 /* Synchronize.swift in Sources */,
@@ -638,11 +609,11 @@
 				169C0E391DA35CBE001F0AD5 /* DIContainer.swift in Sources */,
 				119F4FD21E56069200B2DFA1 /* DIContainerBuilder.Register.Arg.swift in Sources */,
 				16D7BCBC1DB086B600A29A9F /* DIScan.swift in Sources */,
-				11535FCC1E6E560200577FA5 /* DILogger.swift in Sources */,
 				169C0E3A1DA35CBE001F0AD5 /* Helpers.swift in Sources */,
 				169C0E3B1DA35CBE001F0AD5 /* DIContainerBuilder.swift in Sources */,
 				D512552F1EE06F010067796B /* DISettings.swift in Sources */,
 				169C0E3C1DA35CBE001F0AD5 /* DIContainer.ShortSyntax.swift in Sources */,
+				D55368F41EE5BD3600015926 /* DILog.swift in Sources */,
 				119F4FB61E5603EC00B2DFA1 /* DIDescriptions.swift in Sources */,
 				169C0E3D1DA35CBE001F0AD5 /* RType.swift in Sources */,
 				119F4FC11E5604C500B2DFA1 /* DIContainer.Arg.swift in Sources */,
@@ -665,14 +636,11 @@
 				119F4FAA1E56014000B2DFA1 /* DIScope.swift in Sources */,
 				119F4FD61E56069200B2DFA1 /* DIRegistrationBuilder.Arg.swift in Sources */,
 				16640A851D9E1E7B00707BFC /* DIRegistrationBuilder.swift in Sources */,
-				114EDC861E71A6CD00C90CA7 /* DILogEvent.swift in Sources */,
 				16D7BCBA1DB086B000A29A9F /* DIScanComponent.swift in Sources */,
 				165F614F1D9E78DD00F6126E /* DIContainerBuilder.Register.swift in Sources */,
 				118DBCCC1E4100BF003A7D1F /* DIStoryboardResolver.swift in Sources */,
 				16640A731D9E1E7B00707BFC /* DIMultyMap.swift in Sources */,
 				16640A7D1D9E1E7B00707BFC /* Weak.swift in Sources */,
-				D51255291EDF2DCA0067796B /* DIModuleType.swift in Sources */,
-				114EDC821E71A40300C90CA7 /* DILoggerComposite.swift in Sources */,
 				119F4FAF1E5603A400B2DFA1 /* DIComponent.swift in Sources */,
 				110917121E4A43120078A5AE /* DIModule.swift in Sources */,
 				115C24C81E6527CA00CC8BC7 /* Synchronize.swift in Sources */,
@@ -686,11 +654,11 @@
 				16640A741D9E1E7B00707BFC /* DIResolver.swift in Sources */,
 				119F4FD01E56069200B2DFA1 /* DIContainerBuilder.Register.Arg.swift in Sources */,
 				16640A871D9E1E7B00707BFC /* DIContainer.swift in Sources */,
-				11535FCA1E6E560200577FA5 /* DILogger.swift in Sources */,
 				16D7BCB81DB086B000A29A9F /* DIScan.swift in Sources */,
 				16640A751D9E1E7B00707BFC /* Helpers.swift in Sources */,
 				D512552D1EE06F010067796B /* DISettings.swift in Sources */,
 				119F4FB41E5603EC00B2DFA1 /* DIDescriptions.swift in Sources */,
+				D55368F21EE5BD3300015926 /* DILog.swift in Sources */,
 				16640A821D9E1E7B00707BFC /* DIContainerBuilder.swift in Sources */,
 				119F4FBF1E5604C500B2DFA1 /* DIContainer.Arg.swift in Sources */,
 				16640A861D9E1E7B00707BFC /* DIContainer.ShortSyntax.swift in Sources */,

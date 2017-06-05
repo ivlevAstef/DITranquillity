@@ -18,135 +18,105 @@ class DIResolver {
     self.rTypeContainer = rTypeContainer
   }
   
+  ///// RESOLVE FUNCTION
+  
   func resolve<T, M>(_ container: DIContainer, type: T.Type, method: @escaping Method<M>) -> T {
-    log(.resolving(.begin), msg: "Begin resolve type: \(type)")
-    defer { log(.resolving(.end), msg: "End resolve type: \(type)") }
-    let rTypes = getTypes(type)
-
-    let index = rTypes.index(where: { $0.isDefault }) ?? rTypes.count - 1
-    let rType = rTypes[index]
+    log(.info, msg: "Begin resolve type: \(type)", brace: .begin)
+    defer { log(.info, msg: "End resolve type: \(type)", brace: .end) }
     
-    log(.found(typeInfo: rType.typeInfo), msg: "Found type info: \(rType.typeInfo) for resolve type: \(type)")
+    guard let rType = getDefaultType(type) else {
+      log(.warning, msg: "Not found type: \(type)")
+      return make(by: nil)
+    }
     
-    return resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
+    log(.info, msg: "Found type info: \(rType.typeInfo) for resolve type: \(type)")
+    
+    return safeResolve(container, pair: RTypeWithName(rType), getter: .method(method))
   }
   
   func resolve<T, M>(_ container: DIContainer, name: String, type: T.Type, method: @escaping Method<M>) -> T {
-    log(.resolving(.begin), msg: "Begin resolve type: \(type) with name: \(name)")
-    defer { log(.resolving(.end), msg: "End resolve type: \(type) with name: \(name)") }
+    log(.info, msg: "Begin resolve type: \(type) with name: \(name)", brace: .begin)
+    defer { log(.info, msg: "End resolve type: \(type) with name: \(name)", brace: .end) }
     
-    let rTypes = getTypes(type)
-    let rType = rTypes.first(where: { $0.has(name: name) })!
+    guard let rType = getType(type, by: name) else {
+      log(.warning, msg: "Not found type: \(type) with name: \(name)")
+      return make(by: nil)
+    }
     
-    log(.found(typeInfo: rType.typeInfo), msg: "Found type info: \(rType.typeInfo) for resolve type: \(type) with name: \(name)")
+    log(.info, msg: "Found type info: \(rType.typeInfo) for resolve type: \(type) with name: \(name)")
     
-    return resolveUseRType(container, pair: RTypeWithName(rType, name), getter: .method(method))
+    return safeResolve(container, pair: RTypeWithName(rType, name), getter: .method(method))
   }
   
   func resolve<T, M, Tag>(_ container: DIContainer, tag: Tag, type: T.Type, method: @escaping Method<M>) -> T {
     let name = toString(tag: tag)
     
-    log(.resolving(.begin), msg: "Begin resolve type: \(type) with tag: \(name)")
-    defer { log(.resolving(.end), msg: "End resolve type: \(type) with tag: \(name)") }
+    log(.info, msg: "Begin resolve type: \(type) with tag: \(name)", brace: .begin)
+    defer { log(.info, msg: "End resolve type: \(type) with tag: \(name)", brace: .end) }
     
-    let rTypes = getTypes(type)
-    let rType = rTypes.first(where: { $0.has(name: name) })!
+    guard let rType = getType(type, by: name) else {
+      log(.warning, msg: "Not found type: \(type) with tag: \(name)")
+      return make(by: nil)
+    }
     
-    log(.found(typeInfo: rType.typeInfo), msg: "Found type info: \(rType.typeInfo) for resolve type: \(type) with tag: \(name)")
+    log(.info, msg: "Found type info: \(rType.typeInfo) for resolve type: \(type) with tag: \(name)")
     
-    return resolveUseRType(container, pair: RTypeWithName(rType, name), getter: .method(method))
+    return safeResolve(container, pair: RTypeWithName(rType, name), getter: .method(method))
   }
   
   func resolve<T>(_ container: DIContainer, obj: T) {
+    log(.info, msg: "Begin resolve obj: \(obj)", brace: .begin)
+    defer { log(.info, msg: "End resolve obj: \(obj)", brace: .end) }
+    
     let type = type(of: obj)
+    guard let rType = getDefaultType(type) else {
+      log(.warning, msg: "Not found type: \(type)")
+      return
+    }
     
-    log(.resolving(.begin), msg: "Begin resolve obj: \(obj) with type: \(type)")
-    defer {  log(.resolving(.end), msg: "End resolve obj: \(obj) with type: \(type)") }
+    log(.info, msg: "Found type info: \(rType.typeInfo) for resolve type: \(type)")
     
-    let rTypes = getTypes(type)
-    
-    let index = rTypes.index(where: { $0.isDefault }) ?? rTypes.count - 1
-    let rType = rTypes[index]
-    
-    log(.found(typeInfo: rType.typeInfo), msg: "Found type info: \(rType.typeInfo) for resolve type: \(type)")
-    
-    _ = resolveUseRType(container, pair: RTypeWithName(rType), getter: .object(obj) as Getter<T, Void>)
+    _ = safeResolve(container, pair: RTypeWithName(rType), getter: .object(obj) as Getter<T, Void>)
   }
 
   func resolveMany<T, M>(_ container: DIContainer, type: T.Type, method: @escaping Method<M>) -> [T] {
-    log(.resolving(.begin), msg: "Begin resolve many type: \(type)")
-    defer {  log(.resolving(.end), msg: "End resolve many type: \(type)") }
+    log(.info, msg: "Begin resolve many type: \(type)", brace: .begin)
+    defer { log(.info, msg: "End resolve many type: \(type)", brace: .end) }
     
-    return getTypes(type).map { rType in
-      log(.found(typeInfo: rType.typeInfo), msg: "Found type info: \(rType.typeInfo) for resolve type: \(type)")
-      
-      return resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
-    }.flatMap{ $0 }
+    return getTypes(type)
+      .map{ RTypeWithName($0) }
+      .filter{ !recursiveInitializer.contains($0.uniqueKey) }
+      .map{
+        log(.info, msg: "Found type info: \($0.typeInfo) for resolve type: \(type)")
+        return safeResolve(container, pair: $0, getter: .method(method))
+      }
   }
 
   func resolve<M>(_ container: DIContainer, rType: RTypeFinal, method: @escaping Method<M>) -> Any {
-    log(.resolving(.begin), msg: "Begin resolve by type info: \(rType.typeInfo)")
-    defer { log(.resolving(.end), msg: "End resolve by type info: \(rType.typeInfo)") }
+    log(.info, msg: "Begin resolve by type info: \(rType.typeInfo)", brace: .begin)
+    defer { log(.info, msg: "End resolve by type info: \(rType.typeInfo)", brace: .end) }
     
-    log(.found(typeInfo: rType.typeInfo), msg: "Used type info: \(rType.typeInfo).")
-    
-    return resolveUseRType(container, pair: RTypeWithName(rType), getter: .method(method))
+    return safeResolve(container, pair: RTypeWithName(rType), getter: .method(method))
   }
   
-  #if ENABLE_DI_MODULE
-  /// special function for resolve in future but on current rType stack
-  func createStackSave() -> (()->()) -> () {
-    let saveStack = synchronize(moduleStackMonitor) { moduleStack }
-    
-    return { executor in
-      synchronize(DIResolver.monitor) {
-        /// no need rTypeStackMonitor because into DIResolver.monitor
-        
-        let restoreStack = self.moduleStack
-        self.moduleStack = saveStack
-        defer { self.moduleStack = restoreStack }
-        
-        executor()
-      }
-    }
-  }
-  #endif
+  /// GET TYPE FUNCTIONS
 
+  private func getDefaultType<T>(_ inputType: T.Type) -> RTypeFinal? {
+    let rTypes = getTypes(inputType)
+    return 1 == rTypes.count ? rTypes.first : rTypes.first(where: { $0.isDefault })
+  }
+  private func getType<T>(_ inputType: T.Type, by name: String) -> RTypeFinal? {
+    return getTypes(inputType).first(where: { $0.has(name: name) })
+  }
   private func getTypes<T>(_ inputType: T.Type) -> [RTypeFinal] {
     let type = removeTypeWrappers(inputType)
-
-    guard let rTypes = rTypeContainer[type], !rTypes.isEmpty else {
-      log(.error, msg: "Not found type: \(type)")
-      return []
-    }
-    
-    #if ENABLE_DI_MODULE
-    // if used modules
-    if let currentModule = synchronize(moduleStackMonitor, { moduleStack.last }) {
-      let key = DITypeKey(type)
-      let rTypesFiltered = rTypes.filter {
-        nil == $0.module || ($0.availableForModules[key]?.contains(currentModule) ?? false)
-      }
-     
-      if rTypesFiltered.isEmpty {
-        log(.error, msg: "No access to type: \(inputType)")
-      }
-      
-      return rTypesFiltered
-    }
-    #endif
-
-    return rTypes
+    return rTypeContainer[type] ?? []
   }
 
-  private func resolveUseRType<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) -> T {
+  /// IMPL FUNCTIONS
+  
+  private func safeResolve<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) -> T {
     return synchronize(DIResolver.monitor) {
-      #if ENABLE_DI_MODULE
-      let optModule = pair.rType.module
-      synchronize(moduleStackMonitor) { if let m = optModule { moduleStack.append(m) } }
-      defer { _ = synchronize(moduleStackMonitor) { if let m = optModule { moduleStack.removeLast() } } }
-      #endif
-      
       return unsafeResolve(container, pair: pair, getter: getter)
     }
   }
@@ -172,10 +142,7 @@ class DIResolver {
   }
   
   private func resolveWeakSingle<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) -> T {
-    for data in Cache.weakSingle.filter({ $0.value.value == nil }) {
-      Cache.weakSingle.removeValue(forKey: data.key)
-    }
-    
+    Cache.weakSingle.clean()
     return _resolveUniversal(container, pair: pair, getter: getter,
                                  get: { Cache.weakSingle[$0]?.value },
                                  set: { Cache.weakSingle[$0] = Weak(value: $1) },
@@ -194,27 +161,29 @@ class DIResolver {
     if let obj = get(pair.uniqueKey) as? T {
       /// suspending ignore injection for new object
       guard case .object(let realObj) = getter else {
-        log(.resolve(.cache), msg: "Resolve object: \(obj) from cache \(cacheName)")
+        log(.info, msg: "Resolve object: \(obj) from cache \(cacheName)")
         return obj
       }
       
       /// suspending double injection
       if obj as AnyObject === realObj as AnyObject {
-        log(.resolve(.cache), msg: "Resolve object: \(obj) from cache \(cacheName)")
+        log(.info, msg: "Resolve object: \(obj) from cache \(cacheName)")
         return obj
       }
     }
     
     let obj: T = resolvePerDependency(container, pair: pair, getter: getter)
     set(pair.uniqueKey, obj)
-    log(.cached, msg: "Add object: \(obj) in cache \(cacheName)")
+    log(.info, msg: "Add object: \(obj) in cache \(cacheName)")
     return obj
   }
+  
+  // VERY COMPLEX CODE
 
   private func resolvePerDependency<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) -> T {
     if recursiveInitializer.contains(pair.uniqueKey) {
       log(.error, msg: "Recursive initial for type info: \(pair.rType.typeInfo)")
-      fatalError("")
+      return make(by: nil)
     }
 
     for recursiveTypeKey in circular.recursive {
@@ -238,44 +207,9 @@ class DIResolver {
     return obj
   }
 
-  private func setupInjections(_ container: DIContainer, pair: RTypeWithName, obj: Any) {
-    if pair.rType.injections.isEmpty {
-      return
-    }
-    
-    log(.injection(.begin), msg: "Begin injections in object: \(obj) with typeInfo: \(pair.typeInfo)")
-    defer { log(.injection(.end), msg: "End injections in object: \(obj) with typeInfo: \(pair.typeInfo)") }
-
-    circular.recursive.append(pair.uniqueKey)
-    defer { circular.recursive.removeLast() }
-    
-    #if ENABLE_DI_MODULE
-      let optModule = pair.rType.module
-      synchronize(moduleStackMonitor) { if let m = optModule { moduleStack.append(m) } }
-      defer { _ = synchronize(moduleStackMonitor) { if let m = optModule { moduleStack.removeLast() } } }
-    #endif
-    
-    let mapSave = circular.objMap
-    for index in 0..<pair.rType.injections.count {
-      circular.objMap = mapSave
-      pair.rType.injections[index](container, obj)
-    }
-  }
-
-  private func setupAllInjections(_ container: DIContainer) {
-    repeat {
-      for (pair, obj) in circular.objects {
-        setupInjections(container, pair: pair, obj: obj)
-        circular.objects.removeFirst()
-      }
-    } while (!circular.objects.isEmpty) // because setupInjections can added into allTypes
-
-    circular.clean()
-  }
-
   private func getObject<T, M>(pair: RTypeWithName, getter: Getter<T, M>) -> T {
     if circular.isCycle(pair: pair), let obj = circular.objMap[pair.uniqueKey] {
-      log(.resolve(.cache), msg: "Resolve object: \(obj) use circular cache")
+      log(.info, msg: "Resolve object: \(obj) use circular cache")
       return obj as! T
     }
 
@@ -283,14 +217,14 @@ class DIResolver {
     switch getter {
     case .object(let obj):
       finalObj = obj
-      log(.resolve(.use), msg: "Use object: \(obj)")
+      log(.info, msg: "Use object: \(finalObj)")
       
     case .method(let method):
       recursiveInitializer.insert(pair.uniqueKey)
-      finalObj = pair.rType.new(method) as! T
+      finalObj = make(by: pair.rType.new(method))
       recursiveInitializer.remove(pair.uniqueKey)
       
-      log(.resolve(.new), msg: "Resolve object: \(obj)")
+      log(.info, msg: "Create object: \(finalObj)")
     }
 
     circular.objMap[pair.uniqueKey] = finalObj
@@ -298,16 +232,41 @@ class DIResolver {
     return finalObj
   }
   
+  private func setupInjections(_ container: DIContainer, pair: RTypeWithName, obj: Any) {
+    if pair.rType.injections.isEmpty {
+      return
+    }
+    
+    log(.info, msg: "Begin injections in object: \(obj) with typeInfo: \(pair.typeInfo)", brace: .begin)
+    defer { log(.info, msg: "End injections in object: \(obj) with typeInfo: \(pair.typeInfo)", brace: .end) }
+    
+    circular.recursive.append(pair.uniqueKey)
+    defer { circular.recursive.removeLast() }
+    
+    let mapSave = circular.objMap
+    for index in 0..<pair.rType.injections.count {
+      circular.objMap = mapSave
+      pair.rType.injections[index](container, obj)
+    }
+  }
+  
+  private func setupAllInjections(_ container: DIContainer) {
+    repeat {
+      for (pair, obj) in circular.objects {
+        setupInjections(container, pair: pair, obj: obj)
+        circular.objects.removeFirst()
+      }
+    } while (!circular.objects.isEmpty) // because setupInjections can added into allTypes
+    
+    circular.clean()
+  }
+  
+  /// PROPERTIES
+  
   private let rTypeContainer: RTypeContainerFinal
 
   // needed for block call self from self
   private var recursiveInitializer: Set<RType.UniqueKey> = []
-  
-  #if ENABLE_DI_MODULE
-  // needed for check access
-  private var moduleStack: [DIModuleType] = []
-  private var moduleStackMonitor = OSSpinLock()
-  #endif
 
   // needed for circular
   private class Circular {
@@ -330,8 +289,8 @@ class DIResolver {
   
 
   private class Cache {
-    fileprivate static var single: [RType.UniqueKey: Any] = [:]
-    fileprivate static var weakSingle: [RType.UniqueKey: Weak] = [:]
+    fileprivate static var single = DIScope<Any>()
+    fileprivate static var weakSingle = DIScope<Weak>()
   }
   
   // thread save
