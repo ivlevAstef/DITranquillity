@@ -293,4 +293,49 @@ class DITranquillityTests_Storyboard: XCTestCase {
     XCTAssertEqual(vc.service.foo(), "foo")
     
   }
+  
+  func test11_issue98_getVCByTypeFromDIStoryboard() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(type: FooService.self)
+      .as(ServiceProtocol.self).check{$0}
+      .initial{ FooService() }
+    
+    builder.register(vc: TestViewController.self)
+      .initial(useStoryboard: { try *$0 }, identifier: "testID")
+      .injection{ $0.service = $1 }
+    
+    builder.register(type: UIStoryboard.self)
+      .lifetime(.single)
+      .initial(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+    
+    let container = try! builder.build()
+    
+    let vc: TestViewController = try! container.resolve()
+    _ = vc.view // for call viewDidLoad() and full initialization
+    
+    XCTAssertEqual(vc.service.foo(), "foo")
+  }
+  
+  func test12_getVCByTypeFromDIStoryboardManual() {
+    let builder = DIContainerBuilder()
+    
+    let scontainer = try! builder.build()
+    let storyboard = DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: scontainer)
+    
+    builder.register(type: FooService.self)
+      .as(ServiceProtocol.self).check{$0}
+      .initial{ FooService() }
+    
+    builder.register(vc: TestViewController.self)
+      .initial(useStoryboard: storyboard, identifier: "testID")
+      .injection{ $0.service = $1 }
+    
+    let container = try! builder.build()
+    
+    let vc: TestViewController = try! container.resolve()
+    _ = vc.view // for call viewDidLoad() and full initialization
+    
+    XCTAssertEqual(vc.service.foo(), "foo")
+  }
 }

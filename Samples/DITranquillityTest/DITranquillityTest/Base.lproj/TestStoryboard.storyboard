@@ -28,7 +28,7 @@
         <!--Test View Controller-->
         <scene sceneID="MIQ-Eb-vd8">
             <objects>
-                <viewController id="uD5-0H-5pK" customClass="TestViewController" customModule="DITranquillityTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="testID" id="uD5-0H-5pK" customClass="TestViewController" customModule="DITranquillityTest" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MJO-Qs-Nfh"/>
                         <viewControllerLayoutGuide type="bottom" id="4iX-cX-kJE"/>
@@ -83,6 +83,10 @@
         <scene sceneID="g2f-h5-dKm">
             <objects>
                 <viewController id="Vnf-Oc-1pL" customClass="TestViewContainerVC" customModule="DITranquillityTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="b2D-f5-5yf"/>
+                        <viewControllerLayoutGuide type="bottom" id="5bt-xQ-YhW"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="t1t-hl-EYK">
                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

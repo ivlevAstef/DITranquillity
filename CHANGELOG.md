@@ -1,3 +1,6 @@
+# v2.3.1
+* Fix bug. Supported recursive resolve ViewControllers.
+
 # v2.3.0
 * Fix bug (issue98) into methods initial(useStoryboard:identifier:) and initial(nib:).
 
