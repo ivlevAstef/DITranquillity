@@ -20,16 +20,20 @@ final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
 
   @objc public func resolve(_ viewController: UIViewController, identifier: String) -> UIViewController {
     stackSave {
-      try! resolve(viewController)
-      
-      for childVC in viewController.childViewControllers {
-        try! resolve(childVC)
-      }
+      recursiveResolve(viewController)
     }
 
     return viewController
   }
-  
+
+  private func recursiveResolve(_ vc: UIViewController) {
+    try! resolve(vc)
+		
+    for childVC in vc.childViewControllers {
+      recursiveResolve(childVC)
+    }
+  }
+
   private func resolve(_ vc: UIViewController) throws {
     do {
       _ = try self.container.resolve(vc)

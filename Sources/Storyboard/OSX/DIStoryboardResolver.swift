@@ -20,22 +20,26 @@ final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
 
   @objc public func resolve(_ viewController: Any, identifier: String) -> Any {
     self.stackSave {
-      try! resolve(viewController)
-
-      if let windowController = viewController as? NSWindowController, let viewController = windowController.contentViewController {
-        try! resolve(viewController)
-      }
-      
-      if let nsViewController = viewController as? NSViewController {
-        for childVC in nsViewController.childViewControllers {
-          try! resolve(childVC)
-        }
-      }
+      recursiveResolve(viewController)
     }
     
     return viewController
   }
-  
+	
+  private func recursiveResolve(_ vc: UIViewController) {
+    try! resolve(vc)
+
+    if let windowController = vc as? NSWindowController, let viewController = windowController.contentViewController {
+      recursiveResolve(viewController)
+    }
+		
+    if let nsViewController = vc as? NSViewController {
+      for childVC in nsViewController.childViewControllers {
+        recursiveResolve(viewController)
+      }
+    }
+  }
+
   private func resolve(_ vc: Any) throws {
     do {
       _ = try self.container.resolve(vc)
