@@ -9,25 +9,33 @@
 #if ENABLE_DI_MODULE
 
 public protocol DIModule {
-  var components: [DIComponent] { get }
-  var dependencies: [DIModule] { get }
+  static var components: [DIComponent.Type] { get }
+  static var dependencies: [DIModule.Type] { get }
 }
   
-protocol DIIgnoreModule {}
+protocol IgnoredModule {}
 
 public extension DIContainerBuilder {
   @discardableResult
-  public final func register(module: DIModule) -> Self {
-    let ignore = module is DIIgnoreModule
-    if !ignore { moduleStack.append(DIModuleType(module)) }
-    defer { if !ignore { moduleStack.removeLast() } }
+  public final func register(module mType: DIModule.Type) -> Self {
+    let builder: DIContainerBuilder
     
-    for component in module.components {
-      self.register(component: component)
+    if mType is IgnoredModule.Type {
+      builder = self
+    } else {
+      let module = moduleContainer.make(by: mType)
+      moduleContainer.dependency(parent: currentModule, child: module)
+      
+      builder = DIContainerBuilder(by: self, module: module)
     }
     
-    for dependency in module.dependencies {
-      register(module: dependency)
+    
+    for component in mType.components {
+      builder.register(component: component)
+    }
+    
+    for dependency in mType.dependencies {
+      builder.register(module: dependency)
     }
 
     return self

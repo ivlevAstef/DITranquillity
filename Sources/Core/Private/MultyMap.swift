@@ -1,33 +1,31 @@
 //
-//  DIMultyMap.swift
+//  MultyMap.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 15/07/16.
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-struct DIMultimap<Key: Hashable, Value: Equatable> {
+struct Multimap<Key: Hashable, Value: Equatable> {
   init() { }
 
   subscript(key: Key) -> [Value] {
-    if let values = dictionary[key] {
+    if let values = dict[key] {
       return values
     }
     return []
   }
 
   mutating func append(key: Key, value: Value) {
-    var list = dictionary[key] ?? []
+    let list = dict[key] ?? []
 
-    if !list.contains(where: { $0 == value }) {
-      list.append(value)
+    if !list.contains(value) {
+      dict[key] = list + [value]
     }
-
-    dictionary[key] = list
   }
 
   func contains(key: Key, value: Value) -> Bool {
-    guard let values = dictionary[key] else {
+    guard let values = dict[key] else {
       return false
     }
 
@@ -35,8 +33,8 @@ struct DIMultimap<Key: Hashable, Value: Equatable> {
   }
 
   mutating func removeAll(keepCapacity keep: Bool = true) {
-    dictionary.removeAll(keepingCapacity: keep)
+    dict.removeAll(keepingCapacity: keep)
   }
 
-  private(set) var dictionary: [Key: [Value]] = [:]
+  private(set) var dict: [Key: [Value]] = [:]
 }

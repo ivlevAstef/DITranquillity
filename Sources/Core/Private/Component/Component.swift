@@ -1,23 +1,25 @@
 //
-//  RType.swift
+//  Component.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 10/06/16.
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-class RType: RTypeBase {
+class Component: _Component {
   typealias MethodKey = String
-
   
-  func copyFinal() -> RTypeFinal {
-    return RTypeFinal(typeInfo: typeInfo,
+  func copyFinal() -> ComponentFinal {
+    return ComponentFinal(typeInfo: typeInfo,
       initials: self.initials,
       injections: self.injections + (postInit.map{ [$0] } ?? []), /// append post init to end
       names: self.names,
       isDefault: self.isDefault,
-      lifeTime: self.lifeTime)
+      lifeTime: self.lifeTime,
+      access: self.access)
   }
+  
+  var access: DIAccess = DIAccess.default
 
   var hasInitial: Bool { return !initials.isEmpty }
   var injectionsCount: Int { return injections.count }
@@ -34,28 +36,13 @@ class RType: RTypeBase {
   var postInit: ((_: DIContainer, _: Any) -> ())? = nil
 }
 
-extension RType {
+extension Component {
+  // this method signature: (DIContainer,...) -> Any
   func append<Method>(initial method: Method) {
     initials[MethodKey(describing: Method.self)] = method
   }
   
   func append<T>(injection method: @escaping (_: DIContainer, _: T) -> ()) {
     injections.append{ method($0, $1 as! T) }
-  }
-  
-  func appendAutoInjection<T>(by type: T.Type) {
-    injections.append{ scope, obj in
-      guard let nsObj = obj as? NSObject else {
-        return
-      }
-      
-      for variable in Mirror(reflecting: nsObj).children {
-        guard let key = variable.label, nsObj.responds(to: Selector(key)) else {
-          continue
-        }
-        
-        nsObj.setValue(scope.resolve(byTypeOf: nsObj), forKey: key)
-      }
-    }
-  }
+  }  
 }

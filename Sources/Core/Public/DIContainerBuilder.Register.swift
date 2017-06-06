@@ -27,21 +27,11 @@ public extension DIContainerBuilder {
 /// Internal
 extension DIContainerBuilder {
   internal func registrationBuilder<T>(file: String, line: Int) -> DIRegistrationBuilder<T> {
-    let rBuilder = DIRegistrationBuilder<T>(container: self, typeInfo: DITypeInfo(type: T.self, file: file, line: line))
-    if let oldRType = isIgnoreReturnOld(uniqueKey: rBuilder.uniqueKey, set: rBuilder.rType) {
-      oldRType.add(modules: self.moduleStack)
-      // if this type it's register, then register in other container for not register
-      rBuilder.container = RTypeContainer()
-    }
-    return rBuilder
-  }
-}
-
-extension DIRegistrationBuilder {
-  internal var uniqueKey: String {
-    let type = String(describing: Impl.self)
-    let file = rType.typeInfo.file
-    let line = "\(rType.typeInfo.line)"
-    return file + line + type
+    let builder = DIRegistrationBuilder<T>(container: self, typeInfo: DITypeInfo(type: T.self, file: file, line: line))
+      .access(self.access)
+    
+    moduleContainer.register(component: builder.component, for: currentModule)
+    
+    return builder
   }
 }

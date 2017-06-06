@@ -8,31 +8,31 @@
 
 import Foundation
 
-protocol DITypeGetter {
+protocol TypeGetter {
   static var type: Any.Type { get }
 }
 
-extension ImplicitlyUnwrappedOptional: DITypeGetter {
+extension ImplicitlyUnwrappedOptional: TypeGetter {
   static var type: Any.Type { return Wrapped.self  }
 }
 
-extension Optional: DITypeGetter {
+extension Optional: TypeGetter {
   static var type: Any.Type { return Wrapped.self  }
 }
 
 func removeTypeWrappers(_ type: Any.Type) -> Any.Type {
-  if let typeGetter = type as? DITypeGetter.Type {
+  if let typeGetter = type as? TypeGetter.Type {
     return removeTypeWrappers(typeGetter.type)
   }
   
   return type
 }
 
-protocol DIOptional {
+protocol OptionalMake {
   static func make(by obj: Any?) -> Self
 }
 
-extension Optional: DIOptional {
+extension Optional: OptionalMake {
   static func make(by obj: Any?) -> Optional<Wrapped> {
     if let typeObj = obj as? Wrapped {
       return typeObj
@@ -42,7 +42,7 @@ extension Optional: DIOptional {
 }
 
 func make<T>(by obj: Any?) -> T {
-  if let opt = T.self as? DIOptional.Type {
+  if let opt = T.self as? OptionalMake.Type {
     return opt.make(by: obj) as! T // it's always valid
   }
   

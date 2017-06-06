@@ -1,18 +1,18 @@
 //
-//  DILog.swift
+//  Log.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 09/03/2017.
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-enum DILogBrace {
+enum LogBrace {
   case begin, neutral, end
 }
 
 private var tabulation = ""
 
-internal func log(_ level: DILogLevel, msg: String, brace: DILogBrace = .neutral) {
+internal func log(_ level: DILogLevel, msg: String, brace: LogBrace = .neutral) {
   guard let logFunc = DISetting.Log.fun else {
     return
   }
@@ -36,7 +36,7 @@ internal func log(_ level: DILogLevel, msg: String, brace: DILogBrace = .neutral
   logFunc(level, tabulation + msg)
 }
 
-extension DILogLevel {
+extension LogLevel {
   fileprivate var priority: Int {
     switch self {
     case .info:

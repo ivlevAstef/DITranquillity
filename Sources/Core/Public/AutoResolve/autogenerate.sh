@@ -23,7 +23,7 @@ local Resolvers=$(join ',' $(replaceToArg numbers[@] "*c"))
 
 echo "  @discardableResult
   public func initial<$ParamType>(_ closure: @escaping ($ParamType) -> Impl) -> Self {
-    rType.append(initial: { (c: DIContainer) -> Any in closure($Resolvers) })
+    component.append(initial: { (c: DIContainer) -> Any in closure($Resolvers) })
     return self
   }
 " >> $2
@@ -52,11 +52,11 @@ registrationInjectFunction() { #argcount file
 local numbers=($(seq 0 $1))
 
 local ParamType=$(join ',' ${numbers[@]/#/P})
-local Resolvers=$(join ',' $(replaceToArg numbers[@] "*s"))
+local Resolvers=$(join ',' $(replaceToArg numbers[@] "*c"))
 
 echo "  @discardableResult
   public func injection<$ParamType>(_ method: @escaping (Impl,$ParamType) -> ()) -> Self {
-    rType.append(injection: { c, o in method(o, $Resolvers) })
+    component.append(injection: { c, o in method(o, $Resolvers) })
     return self
   }
 " >> $2

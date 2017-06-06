@@ -7,39 +7,17 @@
 //
 
 public protocol DIComponent {
-  #if ENABLE_DI_MODULE
-  var scope: DIComponentScope { get }
-  #endif
+  static var access: DIAccess { get }
   
-  func load(builder: DIContainerBuilder)
+  static func load(builder: DIContainerBuilder)
 }
 
-#if ENABLE_DI_MODULE
 public extension DIComponent {
-  var scope: DIComponentScope { return .default }
+  static var access: DIAccess { return .default }
 }
-#endif
 
 public extension DIContainerBuilder {
-  public func register(component: DIComponent) {
-#if ENABLE_DI_MODULE
-    let save = self.moduleStack
-    defer { self.moduleStack = save }
-    self.moduleStack = component.realStack(by: self.moduleStack)
-#endif
-    component.load(builder: self)
+  public func register(component: DIComponent.Type) {
+    component.load(builder: DIContainerBuilder(by: self, access: component.access))
   }
 }
-
-#if ENABLE_DI_MODULE
-extension DIComponent {
-  internal func realStack(by stack: [DIModuleType]) -> [DIModuleType] {
-    switch scope {
-    case .public:
-      return stack
-    case .internal:
-      return Array(stack.suffix(1))
-    }
-  }
-}
-#endif

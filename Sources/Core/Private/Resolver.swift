@@ -11,10 +11,10 @@ private enum Getter<T, M> {
   case method((M) -> Any)
 }
 
-class DIResolver {
+class Resolver {
   typealias Method<M> = (M) -> Any
   
-  init(rTypeContainer: RTypeContainerFinal) {
+  init(rTypeContainer: ComponentContainerFinal) {
     self.rTypeContainer = rTypeContainer
   }
   
@@ -31,7 +31,7 @@ class DIResolver {
     
     log(.info, msg: "Found type info: \(rType.typeInfo) for resolve type: \(type)")
     
-    return safeResolve(container, pair: RTypeWithName(rType), getter: .method(method))
+    return safeResolve(container, pair: NamedComponent(rType), getter: .method(method))
   }
   
   func resolve<T, M>(_ container: DIContainer, name: String, type: T.Type, method: @escaping Method<M>) -> T {
@@ -45,7 +45,7 @@ class DIResolver {
     
     log(.info, msg: "Found type info: \(rType.typeInfo) for resolve type: \(type) with name: \(name)")
     
-    return safeResolve(container, pair: RTypeWithName(rType, name), getter: .method(method))
+    return safeResolve(container, pair: NamedComponent(rType, name), getter: .method(method))
   }
   
   func resolve<T, M, Tag>(_ container: DIContainer, tag: Tag, type: T.Type, method: @escaping Method<M>) -> T {
@@ -61,7 +61,7 @@ class DIResolver {
     
     log(.info, msg: "Found type info: \(rType.typeInfo) for resolve type: \(type) with tag: \(name)")
     
-    return safeResolve(container, pair: RTypeWithName(rType, name), getter: .method(method))
+    return safeResolve(container, pair: NamedComponent(rType, name), getter: .method(method))
   }
   
   func resolve<T>(_ container: DIContainer, obj: T) {
@@ -76,7 +76,7 @@ class DIResolver {
     
     log(.info, msg: "Found type info: \(rType.typeInfo) for resolve type: \(type)")
     
-    _ = safeResolve(container, pair: RTypeWithName(rType), getter: .object(obj) as Getter<T, Void>)
+    _ = safeResolve(container, pair: NamedComponent(rType), getter: .object(obj) as Getter<T, Void>)
   }
 
   func resolveMany<T, M>(_ container: DIContainer, type: T.Type, method: @escaping Method<M>) -> [T] {
@@ -84,7 +84,7 @@ class DIResolver {
     defer { log(.info, msg: "End resolve many type: \(type)", brace: .end) }
     
     return getTypes(type)
-      .map{ RTypeWithName($0) }
+      .map{ ComponentWithName($0) }
       .filter{ !recursiveInitializer.contains($0.uniqueKey) }
       .map{
         log(.info, msg: "Found type info: \($0.typeInfo) for resolve type: \(type)")
@@ -92,36 +92,36 @@ class DIResolver {
       }
   }
 
-  func resolve<M>(_ container: DIContainer, rType: RTypeFinal, method: @escaping Method<M>) -> Any {
+  func resolve<M>(_ container: DIContainer, rType: ComponentFinal, method: @escaping Method<M>) -> Any {
     log(.info, msg: "Begin resolve by type info: \(rType.typeInfo)", brace: .begin)
     defer { log(.info, msg: "End resolve by type info: \(rType.typeInfo)", brace: .end) }
     
-    return safeResolve(container, pair: RTypeWithName(rType), getter: .method(method))
+    return safeResolve(container, pair: NamedComponent(rType), getter: .method(method))
   }
   
   /// GET TYPE FUNCTIONS
 
-  private func getDefaultType<T>(_ inputType: T.Type) -> RTypeFinal? {
+  private func getDefaultType<T>(_ inputType: T.Type) -> ComponentFinal? {
     let rTypes = getTypes(inputType)
     return 1 == rTypes.count ? rTypes.first : rTypes.first(where: { $0.isDefault })
   }
-  private func getType<T>(_ inputType: T.Type, by name: String) -> RTypeFinal? {
+  private func getType<T>(_ inputType: T.Type, by name: String) -> ComponentFinal? {
     return getTypes(inputType).first(where: { $0.has(name: name) })
   }
-  private func getTypes<T>(_ inputType: T.Type) -> [RTypeFinal] {
+  private func getTypes<T>(_ inputType: T.Type) -> [ComponentFinal] {
     let type = removeTypeWrappers(inputType)
     return rTypeContainer[type] ?? []
   }
 
   /// IMPL FUNCTIONS
   
-  private func safeResolve<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) -> T {
+  private func safeResolve<T, M>(_ container: DIContainer, pair: NamedComponent, getter: Getter<T, M>) -> T {
     return synchronize(DIResolver.monitor) {
       return unsafeResolve(container, pair: pair, getter: getter)
     }
   }
 
-  private func unsafeResolve<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) -> T {
+  private func unsafeResolve<T, M>(_ container: DIContainer, pair: NamedComponent, getter: Getter<T, M>) -> T {
     switch pair.rType.lifeTime {
     case .single, .lazySingle:
       return resolveSingle(container, pair: pair, getter: getter)
@@ -134,14 +134,14 @@ class DIResolver {
     }
   }
 
-  private func resolveSingle<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) -> T {
+  private func resolveSingle<T, M>(_ container: DIContainer, pair: NamedComponent, getter: Getter<T, M>) -> T {
     return _resolveUniversal(container, pair: pair, getter: getter,
                                  get: { Cache.single[$0] },
                                  set: { Cache.single[$0] = $1 },
                                  cacheName: "single")
   }
   
-  private func resolveWeakSingle<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) -> T {
+  private func resolveWeakSingle<T, M>(_ container: DIContainer, pair: NamedComponent, getter: Getter<T, M>) -> T {
     Cache.weakSingle.clean()
     return _resolveUniversal(container, pair: pair, getter: getter,
                                  get: { Cache.weakSingle[$0]?.value },
@@ -149,15 +149,15 @@ class DIResolver {
                                  cacheName: "weak single")
   }
 
-  private func resolvePerScope<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) -> T {
+  private func resolvePerScope<T, M>(_ container: DIContainer, pair: NamedComponent, getter: Getter<T, M>) -> T {
     return _resolveUniversal(container, pair: pair, getter: getter,
                                  get: { container.scope[$0] },
                                  set: { container.scope[$0] = $1 },
                                  cacheName: "perScope")
   }
   
-  private func _resolveUniversal<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>,
-                                 get: (_: RType.UniqueKey)->Any?, set: (_:RType.UniqueKey, _:T)->(), cacheName: String) -> T {
+  private func _resolveUniversal<T, M>(_ container: DIContainer, pair: NamedComponent, getter: Getter<T, M>,
+                                 get: (_: Component.UniqueKey)->Any?, set: (_:Component.UniqueKey, _:T)->(), cacheName: String) -> T {
     if let obj = get(pair.uniqueKey) as? T {
       /// suspending ignore injection for new object
       guard case .object(let realObj) = getter else {
@@ -180,7 +180,7 @@ class DIResolver {
   
   // VERY COMPLEX CODE
 
-  private func resolvePerDependency<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) -> T {
+  private func resolvePerDependency<T, M>(_ container: DIContainer, pair: NamedComponent, getter: Getter<T, M>) -> T {
     if recursiveInitializer.contains(pair.uniqueKey) {
       log(.error, msg: "Recursive initial for type info: \(pair.rType.typeInfo)")
       return make(by: nil)
@@ -207,7 +207,7 @@ class DIResolver {
     return obj
   }
 
-  private func getObject<T, M>(pair: RTypeWithName, getter: Getter<T, M>) -> T {
+  private func getObject<T, M>(pair: NamedComponent, getter: Getter<T, M>) -> T {
     if circular.isCycle(pair: pair), let obj = circular.objMap[pair.uniqueKey] {
       log(.info, msg: "Resolve object: \(obj) use circular cache")
       return obj as! T
@@ -232,7 +232,7 @@ class DIResolver {
     return finalObj
   }
   
-  private func setupInjections(_ container: DIContainer, pair: RTypeWithName, obj: Any) {
+  private func setupInjections(_ container: DIContainer, pair: NamedComponent, obj: Any) {
     if pair.rType.injections.isEmpty {
       return
     }
@@ -263,17 +263,17 @@ class DIResolver {
   
   /// PROPERTIES
   
-  private let rTypeContainer: RTypeContainerFinal
+  private let rTypeContainer: ComponentContainerFinal
 
   // needed for block call self from self
-  private var recursiveInitializer: Set<RType.UniqueKey> = []
+  private var recursiveInitializer: Set<Component.UniqueKey> = []
 
   // needed for circular
   private class Circular {
-    fileprivate var objects: [(RTypeWithName, Any)] = []
-    fileprivate var recursive: [RType.UniqueKey] = []
-    fileprivate var dependencies = DIMultimap<RType.UniqueKey, RType.UniqueKey>()
-    fileprivate var objMap: [RType.UniqueKey: Any] = [:]
+    fileprivate var objects: [(ComponentWithName, Any)] = []
+    fileprivate var recursive: [Component.UniqueKey] = []
+    fileprivate var dependencies = Multimap<Component.UniqueKey, Component.UniqueKey>()
+    fileprivate var objMap: [Component.UniqueKey: Any] = [:]
     
     fileprivate func clean() {
       objects.removeAll()
@@ -281,7 +281,7 @@ class DIResolver {
       objMap.removeAll()
     }
     
-    fileprivate func isCycle(pair: RTypeWithName) -> Bool {
+    fileprivate func isCycle(pair: NamedComponent) -> Bool {
       return recursive.contains { dependencies[$0].contains(pair.uniqueKey) }
     }
   }

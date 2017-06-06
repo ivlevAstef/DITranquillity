@@ -7,10 +7,10 @@
 //
 
 public struct DISetting {
-  public static var defaultLifeTime: DILifeTime = .perScope
-  #if ENABLE_DI_MODULE
-  public static var defaultComponentScope: DIComponentScope = .internal
-  #endif
+  public struct Defaults {
+    public static var lifeTime: DILifeTime = .perScope
+    public static var access: DIAccess = .internal
+  }
   
   public struct Log {
     public static var fun: DILogFunc? = { print("\($0): \($1)") }

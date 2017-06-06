@@ -33,17 +33,17 @@ public final class DIContainer {
     return DIContainer(resolver: self.resolver)
   }
 
-  internal init(resolver: DIResolver) {
+  internal init(resolver: Resolver) {
     self.resolver = resolver
   }
 
   // for single initial
-  internal func resolve(RType rType: RTypeFinal) -> Any {
+  internal func resolve(Component rType: ComponentFinal) -> Any {
     return resolver.resolve(self, rType: rType) { (initial: Method) in initial(self) }
   }
   
-  internal let resolver: DIResolver
-  internal private(set) var scope = DIScope<Any>()
+  internal let resolver: Resolver
+  internal private(set) var scope = Scope<Any>()
 }
 
 extension DIContainer {

@@ -10,19 +10,29 @@ public typealias DIType = Any.Type
 public typealias DIMethodSignature = Any
 public typealias DILogFunc = (DILogLevel, String)->()
 
-public struct DITypeInfo {
+public struct DITypeInfo: Equatable {
   public let type: DIType
   public let file: String
   public let line: Int
+  
+  public static func==(lhs: DITypeInfo, rhs: DITypeInfo) -> Bool {
+    return lhs.type == rhs.type && lhs.line == rhs.line && lhs.file == rhs.file
+  }
 }
 
-public enum DILogLevel {
+public enum DILogLevel: Equatable {
   case error
   case warning
   case info
 }
 
-//////////////// lifetime
+public enum DIAccess: Equatable {
+  case `public`
+  case `internal`
+  
+  static var `default`: DIAccess { return DISetting.Defaults.access }
+}
+
 public enum DILifeTime: Equatable {
   case single
   case lazySingle
@@ -30,11 +40,12 @@ public enum DILifeTime: Equatable {
   case perScope
   case perDependency
   
-  static var `default`: DILifeTime { return DISetting.defaultLifeTime }
+  static var `default`: DILifeTime { return DISetting.Defaults.lifeTime }
 }
 
-extension DITypeInfo: Equatable {
-  public static func==(lhs: DITypeInfo, rhs: DITypeInfo) -> Bool {
-    return lhs.type == rhs.type && lhs.line == rhs.line && lhs.file == rhs.file
-  }
+public enum DIResolveStyle {
+  case arg
+  case name(String)
+  case tag(Any)
+  case value(Any)
 }

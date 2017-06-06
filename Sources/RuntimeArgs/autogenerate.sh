@@ -15,41 +15,6 @@ replaceToArg() {
 
 ######################################
 
-registrationFunction() { #argcount file
-  local numbers=($(seq 0 $1))
-
-  local ParamType=$(join ',' ${numbers[@]/#/P})
-
-  local numbers=($(seq 0 $(($1 + 1))))
-  local Params=$(join ',' $(replaceToArg numbers[@] "\$;I"));
-
-  echo "  @discardableResult
-  public func initialWithArg<$ParamType>(_ closure: @escaping (DIContainer,$ParamType) throws -> Impl) -> Self {
-    rType.append(initial:{ try closure($Params) as Any })
-    return self
-  }
-  " >> $2
-}
-
-registationFile() { #file
-  echo "//
-//  DIRegistrationBuilder.Params.swift
-//  DITranquillity
-//
-//  Created by Alexander Ivlev on 11/07/16.
-//  Copyright © 2016 Alexander Ivlev. All rights reserved.
-//
-
-public extension DIRegistrationBuilder {" > $1
-
-  for argcount in `seq 0 $argmax`; do
-    registrationFunction $argcount $1
-  done
-  echo "}" >> $1
-}
-
-######################################
-
 resolveFunctions() { #argcount prefix file
   local prefix=${2//§/ }
   local numbers=($(seq 0 $1))
@@ -59,9 +24,9 @@ resolveFunctions() { #argcount prefix file
   local ArgParam=$(join ',' $(replaceToArg numbers[@] "a;I"))
   ArgumentsType=${ArgumentsType//a0:A0/arg a0:A0}
 
-  echo "  public func resolve<T,$ArgType>($prefix$ArgumentsType) throws -> T {
-    typealias Method = (DIContainer,$ArgType) throws -> Any
-    return try resolver.resolve(self, type: T.self){ try (\$0 as Method)(self,$ArgParam) }
+  echo "  public func resolve<T,$ArgType>($prefix$ArgumentsType) -> T {
+    typealias Method = (DIContainer,$ArgType) -> Any
+    return resolver.resolve(self, type: T.self){ (\$0 as Method)(self,$ArgParam) }
   }
   " >> $3
 }
@@ -77,9 +42,9 @@ resolveNameFunctions() { #argcount prefix file
   ArgumentsType=${ArgumentsType//a0:A0/arg a0:A0}
 
   local name="name"
-  echo "  public func resolve<T,$ArgType>($prefix$name: String, $ArgumentsType) throws -> T {
-    typealias Method = (DIContainer,$ArgType) throws -> Any
-    return try resolver.resolve(self, name: name, type: T.self){ try (\$0 as Method)(self,$ArgParam) }
+  echo "  public func resolve<T,$ArgType>($prefix$name: String, $ArgumentsType) -> T {
+    typealias Method = (DIContainer,$ArgType) -> Any
+    return resolver.resolve(self, name: name, type: T.self){ (\$0 as Method)(self,$ArgParam) }
   }
   " >> $3
 }
@@ -95,9 +60,9 @@ resolveTagFunctions() { #argcount prefix file
   ArgumentsType=${ArgumentsType//a0:A0/arg a0:A0}
 
   local tag="tag"
-  echo "  public func resolve<T,Tag,$ArgType>($prefix$tag: Tag, $ArgumentsType) throws -> T {
-    typealias Method = (DIContainer,$ArgType) throws -> Any
-    return try resolver.resolve(self, tag: tag, type: T.self){ try (\$0 as Method)(self,$ArgParam) }
+  echo "  public func resolve<T,Tag,$ArgType>($prefix$tag: Tag, $ArgumentsType) -> T {
+    typealias Method = (DIContainer,$ArgType) -> Any
+    return resolver.resolve(self, tag: tag, type: T.self){ (\$0 as Method)(self,$ArgParam) }
   }
   " >> $3
 }
@@ -142,6 +107,5 @@ public extension DIContainer {" > $1
 } 
 
 
-registationFile "DIRegistrationBuilder.Params.swift"
 resolveFile "DIContainer.Arg.swift"
 typeResolveFile "DIContainer.TypeArg.swift"

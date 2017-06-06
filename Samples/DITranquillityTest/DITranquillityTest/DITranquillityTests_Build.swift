@@ -97,6 +97,10 @@ class DITranquillityTests_Build: XCTestCase {
       .set(.default)
       .initial(TestClass2.init)
     
+    
+    builder.register(type: TestClass1.self)
+      .initial(init)
+    
     do {
       try builder.build()
     } catch DIError.build(let errors) {

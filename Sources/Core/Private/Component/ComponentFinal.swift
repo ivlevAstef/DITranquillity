@@ -1,20 +1,27 @@
 //
-//  RTypeFinal.swift
+//  ComponentFinal.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 18/07/16.
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-class RTypeFinal: RTypeBase {
+class ComponentFinal: _Component {
   typealias MethodKey = String
   
-  init(typeInfo: DITypeInfo, initials: [MethodKey: Any], injections: [(_: DIContainer, _: Any) -> ()], names: Set<String>, isDefault: Bool, lifeTime: DILifeTime) {
+  init(typeInfo: DITypeInfo,
+       initials: [MethodKey: Any],
+       injections: [(_: DIContainer, _: Any) -> ()],
+       names: Set<String>, isDefault: Bool,
+       lifeTime: DILifeTime,
+       access: DIAccess
+    ) {
     self.initials = initials
     self.injections = injections
     self.names = names
     self.isDefault = isDefault
     self.lifeTime = lifeTime
+    self.access = access
     super.init(typeInfo: typeInfo)
   }
   
@@ -26,6 +33,8 @@ class RTypeFinal: RTypeBase {
   func has(name: String) -> Bool {
     return names.contains(name)
   }
+  
+  let access: DIAccess
   
   let lifeTime: DILifeTime
   let isDefault: Bool
