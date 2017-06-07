@@ -1,3 +1,6 @@
+# v2.3.2
+* Hot fix. incorrect work cache for specific case.
+
 # v2.3.1
 * Fix bug. Supported recursive resolve ViewControllers.
 

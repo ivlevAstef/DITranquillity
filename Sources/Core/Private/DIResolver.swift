@@ -221,7 +221,7 @@ class DIResolver {
     case .perScope:
       return try resolvePerScope(container, pair: pair, getter: getter)
     case .perDependency:
-      return try resolvePerDependency(container, pair: pair, getter: getter)
+      return try resolvePerDependency(container, pair: pair, getter: getter).obj
     }
   }
 
@@ -251,7 +251,7 @@ class DIResolver {
   }
   
   private func _resolveUniversal<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>,
-                                 get: (_: RType.UniqueKey)->Any?, set: (_:RType.UniqueKey, _:T)->(), cacheName: String) throws -> T {
+                                 get: (_: RType.UniqueKey)->Any?, set: (_:RType.UniqueKey, _:Any)->(), cacheName: String) throws -> T {
     if let obj = get(pair.uniqueKey) as? T {
       /// suspending ignore injection for new object
       guard case .object(let realObj) = getter else {
@@ -266,13 +266,13 @@ class DIResolver {
       }
     }
     
-    let obj: T = try resolvePerDependency(container, pair: pair, getter: getter)
-    set(pair.uniqueKey, obj)
+    let (obj, original): (T, Any) = try resolvePerDependency(container, pair: pair, getter: getter)
+    set(pair.uniqueKey, original)
     log(.cached, msg: "Add object: \(obj) in cache \(cacheName)")
     return obj
   }
 
-  private func resolvePerDependency<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
+	private func resolvePerDependency<T, M>(_ container: DIContainer, pair: RTypeWithName, getter: Getter<T, M>) throws -> (obj: T, original: Any) {
     if recursiveInitializer.contains(pair.uniqueKey) {
       let diError = DIError.recursiveInitial(typeInfo: pair.rType.typeInfo)
       log(.error(diError), msg: "Recursive initial for type info: \(pair.rType.typeInfo)")
@@ -286,7 +286,7 @@ class DIResolver {
     let insertIndex = circular.objects.endIndex
 
     circular.recursive.append(pair.uniqueKey)
-    let obj: T = try getObject(pair: pair, getter: getter)
+    let (obj, original): (T, Any) = try getObject(pair: pair, getter: getter)
     circular.recursive.removeLast()
 
     if !circular.objects.contains(where: { $0.1 as AnyObject === obj as AnyObject }) {
@@ -297,7 +297,7 @@ class DIResolver {
       try setupAllInjections(container)
     }
 
-    return obj
+    return (obj, original)
   }
 
   private func setupInjections(_ container: DIContainer, pair: RTypeWithName, obj: Any) throws {
@@ -335,26 +335,28 @@ class DIResolver {
     circular.clean()
   }
 
-  private func getObject<T, M>(pair: RTypeWithName, getter: Getter<T, M>) throws -> T {
+  private func getObject<T, M>(pair: RTypeWithName, getter: Getter<T, M>) throws -> (obj: T, original: Any) {
     if circular.isCycle(pair: pair), let obj = circular.objMap[pair.uniqueKey] {
       log(.resolve(.cache), msg: "Resolve object: \(obj) use circular cache")
-      return obj as! T
+      return (obj as! T, obj)
     }
 
     let finalObj: T
+		let original: Any
     switch getter {
     case .object(let obj):
       finalObj = obj
+			original = obj
       log(.resolve(.use), msg: "Use object: \(obj)")
       
     case .method(let method):
       recursiveInitializer.insert(pair.uniqueKey)
-      let objAny = try pair.rType.new(method)
+      original = try pair.rType.new(method)
       recursiveInitializer.remove(pair.uniqueKey)
       
-      guard let obj = objAny as? T else {
-        let diError = DIError.incorrectType(requestedType: T.self, realType: type(of: objAny), typeInfo: pair.typeInfo)
-        log(.error(diError), msg: "incorrect type. requested type: \(T.self); real type: \(type(of: objAny))")
+      guard let obj = original as? T else {
+        let diError = DIError.incorrectType(requestedType: T.self, realType: type(of: original), typeInfo: pair.typeInfo)
+        log(.error(diError), msg: "incorrect type. requested type: \(T.self); real type: \(type(of: original))")
         throw diError
       }
       
@@ -364,7 +366,7 @@ class DIResolver {
 
     circular.objMap[pair.uniqueKey] = finalObj
 
-    return finalObj
+    return (finalObj, original)
   }
   
   private let rTypeContainer: RTypeContainerFinal
