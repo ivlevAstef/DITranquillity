@@ -9,7 +9,7 @@
 public extension DIRegistrationBuilder {
   @discardableResult
   public func initial<P0>(_ closure: @escaping (P0) -> Impl) -> Self {
-    component.append(initial: { (c: DIContainer) -> Any in closure(*c) })
+    component.append(initial: closure)
     return self
   }
 

@@ -36,11 +36,6 @@ public final class DIContainer {
   internal init(resolver: Resolver) {
     self.resolver = resolver
   }
-
-  // for single initial
-  internal func resolve(Component rType: ComponentFinal) -> Any {
-    return resolver.resolve(self, rType: rType) { (initial: Method) in initial(self) }
-  }
   
   internal let resolver: Resolver
   internal private(set) var scope = Scope<Any>()
@@ -64,9 +59,14 @@ extension DIContainer {
   }
 }
 
-/// for runtime resolve
 extension DIContainer {
+  /// for runtime resolve
   public func resolve<T>(byTypeOf obj: T) -> T {
     return resolver.resolve(self, type: type(of: obj)) { (initial: Method) in initial(self) }
+  }
+  
+  // for single initial
+  internal func resolve(component: ComponentFinal) {
+    resolver.resolve(self, component: component) { (initial: Method) in initial(self) }
   }
 }

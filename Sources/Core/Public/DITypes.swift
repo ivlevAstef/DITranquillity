@@ -15,7 +15,7 @@ public struct DITypeInfo: Equatable {
   public let file: String
   public let line: Int
   
-  public static func==(lhs: DITypeInfo, rhs: DITypeInfo) -> Bool {
+  public static func ==(lhs: DITypeInfo, rhs: DITypeInfo) -> Bool {
     return lhs.type == rhs.type && lhs.line == rhs.line && lhs.file == rhs.file
   }
 }
@@ -43,9 +43,23 @@ public enum DILifeTime: Equatable {
   static var `default`: DILifeTime { return DISetting.Defaults.lifeTime }
 }
 
-public enum DIResolveStyle {
+public enum DIResolveStyle: Equatable {
   case arg
   case name(String)
-  case tag(Any)
-  case value(Any)
+  case tag(AnyObject)
+  case value(AnyObject)
+  case neutral
+  
+  static var `default`: DIResolveStyle { return .neutral }
+  
+  public static func ==(lhs: DIResolveStyle, rhs: DIResolveStyle) -> Bool {
+    switch (lhs, rhs) {
+    case (.arg, .arg): return true
+    case (.name(let n1),.name(let n2)): return n1 == n2
+    case (.tag(let t1), .tag(let t2)): return t1 === t2
+    case (.value(let v1), .value(let v2)): return v1 === v2
+    case (.neutral, .neutral): return true
+    default: return false
+    }
+  }
 }

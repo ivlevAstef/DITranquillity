@@ -9,7 +9,7 @@
 
 class TypeKey: Hashable {
   let type: DIType
-  private let unique: String
+  let unique: String
   
   init(_ type: DIType) {
     self.type = type

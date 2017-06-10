@@ -116,7 +116,7 @@ extension DIContainerBuilder {
     defer { log(.createSingle(.end), msg: "End resolve singletons") }
     
     for rType in singleComponents {
-      _ = container.resolve(Component: rType)
+      container.resolve(Component: rType)
     }
   }
 }

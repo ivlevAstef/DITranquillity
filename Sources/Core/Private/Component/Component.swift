@@ -7,8 +7,6 @@
 //
 
 class Component: _Component {
-  typealias MethodKey = String
-  
   func copyFinal() -> ComponentFinal {
     return ComponentFinal(typeInfo: typeInfo,
       initials: self.initials,
@@ -25,24 +23,24 @@ class Component: _Component {
   var injectionsCount: Int { return injections.count }
   
   var lifeTime = DILifeTime.default
-  var initialNotNecessary: Bool = false
   var names: Set<String> = []
   var isDefault: Bool = false
   var isProtocol: Bool = false
 
-  fileprivate(set) var initials: [MethodKey: Any] = [:] // method type to method
-  fileprivate(set) var injections: [(_: DIContainer, _: Any) -> ()] = []
+  fileprivate(set) var initials: [MethodSignature: Method] = [:]
+  fileprivate(set) var injections: [(MethodSignature, Method)] = []
   
   var postInit: ((_: DIContainer, _: Any) -> ())? = nil
 }
 
 extension Component {
-  // this method signature: (DIContainer,...) -> Any
-  func append<Method>(initial method: Method) {
-    initials[MethodKey(describing: Method.self)] = method
+  // this method signature: (P1,P2,P3,P4...) -> Any?
+  func append(initial method: Any, for signature: MethodSignature) {
+    initials[signature] = method
   }
   
-  func append<T>(injection method: @escaping (_: DIContainer, _: T) -> ()) {
+  // this method signature: (Any, P1,P2,P3,P4...) -> ()
+  func append<T>(injection method: Any) {
     injections.append{ method($0, $1 as! T) }
   }  
 }
