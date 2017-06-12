@@ -55,7 +55,7 @@ extension DIRegistrationBuilder {
 extension DIRegistrationBuilder {
   @discardableResult
   public func initial(_ closure: @escaping () -> Impl) -> Self {
-    component.append(initial: { (_: DIContainer) -> Any in closure() })
+    component.append(initial: MethodMaker.make(by: closure))
     return self
   }
 }
@@ -64,20 +64,25 @@ extension DIRegistrationBuilder {
 extension DIRegistrationBuilder {
   @discardableResult
   public func injection(_ method: @escaping (Impl) -> ()) -> Self {
-    component.append(injection: { _, obj in method(obj) })
+    component.append(initial: MethodMaker.make(by: method, styles: [.neutral]))
     return self
   }
 
   @discardableResult
   public func injection<Inject>(_ method: @escaping (Impl, Inject) -> ()) -> Self {
-    component.append(injection: { c, o in method(o, *c) })
+    component.append(injection: MethodMaker.make(by: method, styles: [.neutral, .neutral]))
     return self
   }
-
   
   @discardableResult
-  public func postInit(_ method: @escaping (DIContainer, Impl) -> ()) -> Self {
-    component.postInit = { method($0, $1 as! Impl) }
+  public func injection<Inject>(_ style: DIResolveStyle, _ method: @escaping (Impl, Inject) -> ()) -> Self {
+    component.append(injection: MethodMaker.make(by: method, styles: [.neutral, style]))
+    return self
+  }
+  
+  @discardableResult
+  public func postInit(_ method: @escaping (Impl) -> ()) -> Self {
+    component.postInit = { method($0 as! Impl) }
     return self
   }
 }
@@ -93,12 +98,6 @@ extension DIRegistrationBuilder {
   @discardableResult
   public func access(_ access: DIAccess) -> Self {
     component.access = access
-    return self
-  }
-  
-  @discardableResult
-  public func initialNotNecessary() -> Self {
-    component.initialNotNecessary = true
     return self
   }
 }
@@ -126,9 +125,6 @@ public final class DIRegistrationBuilder<Impl> {
       }
       if component.hasInitial {
         msg += "  Has one or more initials.\n"
-      }
-      if component.initialNotNecessary {
-        msg += "  Also initial not necessary.\n"
       }
       if 0 < component.injectionsCount {
         msg += "  Has \(component.injectionsCount) injections.\n"

@@ -30,17 +30,15 @@ class Component: _Component {
   fileprivate(set) var initials: [MethodSignature: Method] = [:]
   fileprivate(set) var injections: [(MethodSignature, Method)] = []
   
-  var postInit: ((_: DIContainer, _: Any) -> ())? = nil
+  var postInit: Method? = nil
 }
 
 extension Component {
-  // this method signature: (P1,P2,P3,P4...) -> Any?
-  func append(initial method: Any, for signature: MethodSignature) {
-    initials[signature] = method
+  func append(initial makeResult: MethodMaker.Result) {
+    initials[makeResult.signature] = makeResult.method
   }
   
-  // this method signature: (Any, P1,P2,P3,P4...) -> ()
-  func append<T>(injection method: Any) {
-    injections.append{ method($0, $1 as! T) }
+  func append(injection makeResult: MethodMaker.Result) {
+    injections.append((makeResult.signature, makeResult.method))
   }  
 }

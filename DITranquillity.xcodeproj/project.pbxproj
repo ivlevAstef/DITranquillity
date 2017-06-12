@@ -133,12 +133,12 @@
 		D55369181EE6E2AE00015926 /* ModuleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55369171EE6E2AE00015926 /* ModuleContainer.swift */; };
 		D55369191EE6E2AE00015926 /* ModuleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55369171EE6E2AE00015926 /* ModuleContainer.swift */; };
 		D553691A1EE6E2AE00015926 /* ModuleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55369171EE6E2AE00015926 /* ModuleContainer.swift */; };
-		D553691C1EEC215200015926 /* MethodSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553691B1EEC215200015926 /* MethodSignature.swift */; };
-		D553691D1EEC215200015926 /* MethodSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553691B1EEC215200015926 /* MethodSignature.swift */; };
-		D553691E1EEC215200015926 /* MethodSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553691B1EEC215200015926 /* MethodSignature.swift */; };
-		D55369201EEC231600015926 /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553691F1EEC231600015926 /* Method.swift */; };
-		D55369211EEC231600015926 /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553691F1EEC231600015926 /* Method.swift */; };
-		D55369221EEC231600015926 /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553691F1EEC231600015926 /* Method.swift */; };
+		D55AFCB41EEEA48D00527D27 /* MethodMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55AFCB31EEEA48D00527D27 /* MethodMaker.swift */; };
+		D55AFCB51EEEA48D00527D27 /* MethodMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55AFCB31EEEA48D00527D27 /* MethodMaker.swift */; };
+		D55AFCB61EEEA48D00527D27 /* MethodMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55AFCB31EEEA48D00527D27 /* MethodMaker.swift */; };
+		D55AFCB81EEEA97400527D27 /* MethodSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55AFCB71EEEA97400527D27 /* MethodSignature.swift */; };
+		D55AFCB91EEEA97400527D27 /* MethodSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55AFCB71EEEA97400527D27 /* MethodSignature.swift */; };
+		D55AFCBA1EEEA97400527D27 /* MethodSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55AFCB71EEEA97400527D27 /* MethodSignature.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -194,8 +194,8 @@
 		D553690B1EE657E100015926 /* NamedComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamedComponent.swift; sourceTree = "<group>"; };
 		D553690F1EE658EA00015926 /* TypeKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeKey.swift; sourceTree = "<group>"; };
 		D55369171EE6E2AE00015926 /* ModuleContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleContainer.swift; sourceTree = "<group>"; };
-		D553691B1EEC215200015926 /* MethodSignature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodSignature.swift; sourceTree = "<group>"; };
-		D553691F1EEC231600015926 /* Method.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Method.swift; sourceTree = "<group>"; };
+		D55AFCB31EEEA48D00527D27 /* MethodMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodMaker.swift; sourceTree = "<group>"; };
+		D55AFCB71EEEA97400527D27 /* MethodSignature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodSignature.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -309,8 +309,8 @@
 				115C24C71E6527CA00CC8BC7 /* Synchronize.swift */,
 				D553690F1EE658EA00015926 /* TypeKey.swift */,
 				D55369171EE6E2AE00015926 /* ModuleContainer.swift */,
-				D553691B1EEC215200015926 /* MethodSignature.swift */,
-				D553691F1EEC231600015926 /* Method.swift */,
+				D55AFCB31EEEA48D00527D27 /* MethodMaker.swift */,
+				D55AFCB71EEEA97400527D27 /* MethodSignature.swift */,
 			);
 			path = Private;
 			sourceTree = "<group>";
@@ -566,6 +566,8 @@
 				D55368FD1EE656AC00015926 /* Component.swift in Sources */,
 				D55369091EE656AC00015926 /* ComponentContainerFinal.swift in Sources */,
 				169C0DC41DA3501F001F0AD5 /* DIRegistrationBuilder.swift in Sources */,
+				D55AFCB91EEEA97400527D27 /* MethodSignature.swift in Sources */,
+				D55AFCB51EEEA48D00527D27 /* MethodMaker.swift in Sources */,
 				D553690D1EE657E100015926 /* NamedComponent.swift in Sources */,
 				16D7BCBE1DB086B900A29A9F /* DIScanComponent.swift in Sources */,
 				169C0DCB1DA3501F001F0AD5 /* DIContainerBuilder.Register.swift in Sources */,
@@ -581,13 +583,11 @@
 				1105F2401E72533200CFC043 /* DIComponentScope.swift in Sources */,
 				169C0DD11DA3501F001F0AD5 /* Resolver.swift in Sources */,
 				D55369191EE6E2AE00015926 /* ModuleContainer.swift in Sources */,
-				D553691D1EEC215200015926 /* MethodSignature.swift in Sources */,
 				169C0DD31DA3501F001F0AD5 /* DIContainer.swift in Sources */,
 				119F4FD11E56069200B2DFA1 /* DIContainerBuilder.Register.Arg.swift in Sources */,
 				16D7BCBB1DB086B500A29A9F /* DIScan.swift in Sources */,
 				169C0DD41DA3501F001F0AD5 /* Helpers.swift in Sources */,
 				169C0DD51DA3501F001F0AD5 /* DIContainerBuilder.swift in Sources */,
-				D55369211EEC231600015926 /* Method.swift in Sources */,
 				D512552E1EE06F010067796B /* DISettings.swift in Sources */,
 				169C0DD61DA3501F001F0AD5 /* DIContainer.ShortSyntax.swift in Sources */,
 				D55368F31EE5BD3600015926 /* Log.swift in Sources */,
@@ -615,6 +615,8 @@
 				D55368FE1EE656AC00015926 /* Component.swift in Sources */,
 				D553690A1EE656AC00015926 /* ComponentContainerFinal.swift in Sources */,
 				169C0E2A1DA35CBE001F0AD5 /* DIRegistrationBuilder.swift in Sources */,
+				D55AFCBA1EEEA97400527D27 /* MethodSignature.swift in Sources */,
+				D55AFCB61EEEA48D00527D27 /* MethodMaker.swift in Sources */,
 				D553690E1EE657E100015926 /* NamedComponent.swift in Sources */,
 				16D7BCC01DB086B900A29A9F /* DIScanComponent.swift in Sources */,
 				169C0E301DA35CBE001F0AD5 /* DIContainerBuilder.Register.swift in Sources */,
@@ -630,13 +632,11 @@
 				1105F2411E72533200CFC043 /* DIComponentScope.swift in Sources */,
 				169C0E371DA35CBE001F0AD5 /* Resolver.swift in Sources */,
 				D553691A1EE6E2AE00015926 /* ModuleContainer.swift in Sources */,
-				D553691E1EEC215200015926 /* MethodSignature.swift in Sources */,
 				169C0E391DA35CBE001F0AD5 /* DIContainer.swift in Sources */,
 				119F4FD21E56069200B2DFA1 /* DIContainerBuilder.Register.Arg.swift in Sources */,
 				16D7BCBC1DB086B600A29A9F /* DIScan.swift in Sources */,
 				169C0E3A1DA35CBE001F0AD5 /* Helpers.swift in Sources */,
 				169C0E3B1DA35CBE001F0AD5 /* DIContainerBuilder.swift in Sources */,
-				D55369221EEC231600015926 /* Method.swift in Sources */,
 				D512552F1EE06F010067796B /* DISettings.swift in Sources */,
 				169C0E3C1DA35CBE001F0AD5 /* DIContainer.ShortSyntax.swift in Sources */,
 				D55368F41EE5BD3600015926 /* Log.swift in Sources */,
@@ -664,6 +664,8 @@
 				D55368FC1EE656AC00015926 /* Component.swift in Sources */,
 				D55369081EE656AC00015926 /* ComponentContainerFinal.swift in Sources */,
 				16640A851D9E1E7B00707BFC /* DIRegistrationBuilder.swift in Sources */,
+				D55AFCB81EEEA97400527D27 /* MethodSignature.swift in Sources */,
+				D55AFCB41EEEA48D00527D27 /* MethodMaker.swift in Sources */,
 				D553690C1EE657E100015926 /* NamedComponent.swift in Sources */,
 				16D7BCBA1DB086B000A29A9F /* DIScanComponent.swift in Sources */,
 				165F614F1D9E78DD00F6126E /* DIContainerBuilder.Register.swift in Sources */,
@@ -679,13 +681,11 @@
 				1109FD7A1E724EF9002BC40A /* DIComponentScope.swift in Sources */,
 				163DDDC61DB9C84E0003DE54 /* DITypes.swift in Sources */,
 				D55369181EE6E2AE00015926 /* ModuleContainer.swift in Sources */,
-				D553691C1EEC215200015926 /* MethodSignature.swift in Sources */,
 				16640A741D9E1E7B00707BFC /* Resolver.swift in Sources */,
 				119F4FD01E56069200B2DFA1 /* DIContainerBuilder.Register.Arg.swift in Sources */,
 				16640A871D9E1E7B00707BFC /* DIContainer.swift in Sources */,
 				16D7BCB81DB086B000A29A9F /* DIScan.swift in Sources */,
 				16640A751D9E1E7B00707BFC /* Helpers.swift in Sources */,
-				D55369201EEC231600015926 /* Method.swift in Sources */,
 				D512552D1EE06F010067796B /* DISettings.swift in Sources */,
 				119F4FB41E5603EC00B2DFA1 /* DIDescriptions.swift in Sources */,
 				D55368F21EE5BD3300015926 /* Log.swift in Sources */,

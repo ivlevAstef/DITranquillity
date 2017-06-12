@@ -47,7 +47,7 @@ public enum DIResolveStyle: Equatable {
   case arg
   case name(String)
   case tag(AnyObject)
-  case value(AnyObject)
+  case value(AnyObject?)
   case neutral
   
   static var `default`: DIResolveStyle { return .neutral }

@@ -2,7 +2,7 @@
 //  MethodSignature.swift
 //  DITranquillity
 //
-//  Created by Alexander Ivlev on 10/06/2017.
+//  Created by Alexander Ivlev on 12/06/2017.
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
@@ -11,7 +11,11 @@ class MethodSignature: Hashable {
   let parameters: [Parameter]
   let unique: String
   
-  init(styles: [DIResolveStyle], types: [Any.Type]) {
+  convenience init(styles: [DIResolveStyle], types: [Any.Type]) {
+    self.init(styles, types)
+  }
+  
+  init(_ styles: [DIResolveStyle], _ types: [Any.Type]) {
     assert(styles.count == types.count || 0 == styles.count)
     var parameters: [Parameter] = []
     for i in 0..<types.count {
