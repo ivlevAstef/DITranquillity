@@ -67,18 +67,6 @@ extension DIRegistrationBuilder {
     component.append(initial: MethodMaker.make(by: method, styles: [.neutral]))
     return self
   }
-
-  @discardableResult
-  public func injection<Inject>(_ method: @escaping (Impl, Inject) -> ()) -> Self {
-    component.append(injection: MethodMaker.make(by: method, styles: [.neutral, .neutral]))
-    return self
-  }
-  
-  @discardableResult
-  public func injection<Inject>(_ style: DIResolveStyle, _ method: @escaping (Impl, Inject) -> ()) -> Self {
-    component.append(injection: MethodMaker.make(by: method, styles: [.neutral, style]))
-    return self
-  }
   
   @discardableResult
   public func postInit(_ method: @escaping (Impl) -> ()) -> Self {
@@ -103,6 +91,8 @@ extension DIRegistrationBuilder {
 }
 
 public final class DIRegistrationBuilder<Impl> {
+  public typealias RS = DIResolveStyle // for short syntax
+  
   init(container: DIContainerBuilder, typeInfo: DITypeInfo) {
     self.component = Component(typeInfo: typeInfo)
     self.componentContainer = container.componentContainer
