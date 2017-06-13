@@ -7,14 +7,13 @@
 //
 
 class Component: _Component {
-  func copyFinal() -> ComponentFinal {
+  func finalize() -> ComponentFinal {
     return ComponentFinal(typeInfo: typeInfo,
       initials: self.initials,
       injections: self.injections + (postInit.map{ [$0] } ?? []), /// append post init to end
       names: self.names,
       isDefault: self.isDefault,
-      lifeTime: self.lifeTime,
-      access: self.access)
+      lifeTime: self.lifeTime)
   }
   
   var access: DIAccess = DIAccess.default
@@ -28,9 +27,9 @@ class Component: _Component {
   var isProtocol: Bool = false
 
   fileprivate(set) var initials: [MethodSignature: Method] = [:]
-  fileprivate(set) var injections: [(MethodSignature, Method)] = []
+  fileprivate(set) var injections: [(signature: MethodSignature, method: Method)] = []
   
-  var postInit: Method? = nil
+  var postInit: (signature: MethodSignature, method: Method)? = nil
 }
 
 extension Component {

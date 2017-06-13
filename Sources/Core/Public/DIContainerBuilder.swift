@@ -45,6 +45,130 @@ public final class DIContainerBuilder {
 
 
 extension DIContainerBuilder {
+  fileprivate func createGraph() -> Bool {
+    var success: Bool = true
+    func _log(_ parameter: MethodSignature.Parameter, msg: String) {
+      let level: DILogLevel = parameter.optional ? .warning : .error
+      log(level, msg: msg)
+      success = success && parameter.optional
+    }
+    
+    func _by(parameter: MethodSignature.Parameter, name: String, in candidates: [ComponentFinal]) -> ComponentFinal? {
+      let filterCandidates = candidates.filter{ $0.has(name: name) }
+      if filterCandidates.isEmpty {
+        _log(parameter, msg: "Not found component for type: \(parameter.type) with name: \(name)")
+        return nil
+      }
+      if filterCandidates.count > 1 {
+        _log(parameter, msg: "Ambiguous type: \(parameter.type) with name: \(name) contains in: \(filterCandidates.map{$0.typeInfo})")
+        return nil
+      }
+      return filterCandidates.first
+    }
+    
+    func _by(parameter: MethodSignature.Parameter, tag: AnyObject, in candidates: [ComponentFinal]) -> ComponentFinal? {
+      let name = toString(tag: tag)
+      let filterCandidates = candidates.filter{ $0.has(name: name) }
+      if filterCandidates.isEmpty {
+        _log(parameter, msg: "Not found component for type: \(parameter.type) with tag: \(tag)")
+        return nil
+      }
+      if filterCandidates.count > 1 {
+        _log(parameter, msg: "Ambiguous type: \(parameter.type) with tag: \(tag) contains in: \(filterCandidates.map{$0.typeInfo})")
+        return nil
+      }
+      return filterCandidates.first
+    }
+    
+    func _by(parameter: MethodSignature.Parameter, in candidates: [ComponentFinal]) -> ComponentFinal? {
+      if candidates.isEmpty {
+        _log(parameter, msg: "Not found component for type: \(parameter.type)")
+        return nil
+      }
+      let defaults = candidates.filter{ $0.isDefault }
+      if defaults.count > 1 || (defaults.isEmpty && candidates.count > 1) {
+        _log(parameter, msg: "Ambiguous type: \(parameter.type) contains in: \(candidates.map{$0.typeInfo})")
+        return nil
+      }
+      
+      return defaults.first ?? candidates.first
+    }
+    
+    var finalized: [Component: ComponentFinal] = [:]
+    for component in componentContainer.data.flatMap({ $0.value }) {
+      finalized[component] = component.finalize()
+    }
+    
+    for (_, final) in finalized {
+      let signatures = final.initials.map{ $0.key } + final.injections.map{ $0.signature }
+      let parameters = Set(signatures.flatMap{ $0.parameters })
+      
+      for parameter in parameters {
+        
+        let candidates = componentContainer[parameter.type].map{ finalized[$0]! }
+        // TODO: and filter by modules
+        
+        let candidate: ComponentFinal?
+        switch parameter.style {
+        case .arg:
+          candidate = nil
+        case .value(_):
+          candidate = nil
+        case .name(let name):
+          candidate = _by(parameter: parameter, name: name, in: candidates)
+        case .tag(let tag):
+          candidate = _by(parameter: parameter, tag: tag, in: candidates)
+        case .neutral:
+          candidate = _by(parameter: parameter, in: candidates)
+        }
+        
+        if let candidate = candidate {
+          final.add(component: candidate, for: parameter)
+        }
+      }
+      
+    }
+    
+    return success
+  }
+  
+  func checkLogProtocol() { // TODO: moved
+    for (_, components) in map.dict {
+      /// all it's protocol
+      if !components.contains{ !$0.isProtocol } {
+        for component in components {
+          log(.warning, msg: "Not found implementation for protocol: \(component.typeInfo)")
+        }
+      }
+    }
+  }
+  
+  func copyFinal() -> ComponentContainerFinal {
+    checkLogProtocol()
+    
+    var cache: [Component: ComponentFinal] = [:]
+    var result: [TypeKey: [ComponentFinal]] = [:]
+    
+    for (key, components) in map.dict {
+      let protocolModules = components.filter{ $0.isProtocol }.flatMap{ $0.availability }
+      
+      for component in components.filter({ !$0.isProtocol }) {
+        let final = cache[component] ?? component.copyFinal()
+        final.add(modules: component.availability.union(protocolModules), for: data.key.value)
+        cache[component] = final // additional operation, but simple syntax
+        
+        result[key] = result[key].map{ $0 + [final] } ?? [final]
+      }
+    }
+    
+    return ComponentContainerFinal(values: result)
+  }
+  
+  
+  
+  
+  
+  
   fileprivate func validate() throws {
     var errors: [DIError] = []
 

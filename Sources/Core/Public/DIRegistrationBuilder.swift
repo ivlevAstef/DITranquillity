@@ -70,7 +70,7 @@ extension DIRegistrationBuilder {
   
   @discardableResult
   public func postInit(_ method: @escaping (Impl) -> ()) -> Self {
-    component.postInit = { method($0 as! Impl) }
+    component.postInit = MethodMaker.make(by: method, styles: [.neutral])
     return self
   }
 }

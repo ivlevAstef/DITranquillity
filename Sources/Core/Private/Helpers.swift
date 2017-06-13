@@ -28,6 +28,14 @@ func removeTypeWrappers(_ type: Any.Type) -> Any.Type {
   return type
 }
 
+
+protocol IsOptional {}
+extension Optional: IsOptional { }
+
+func isOptional(_ type: Any.Type) -> Bool {
+  return type is IsOptional
+}
+
 protocol OptionalMake {
   static func make(by obj: Any?) -> Self
 }

@@ -10,36 +10,34 @@ class ComponentFinal: _Component {
   typealias MethodKey = String
   
   init(typeInfo: DITypeInfo,
-       initials: [MethodKey: Any],
-       injections: [(_: DIContainer, _: Any) -> ()],
+       initials: [MethodSignature: Method],
+       injections: [(signature: MethodSignature, method: Method)],
        names: Set<String>, isDefault: Bool,
-       lifeTime: DILifeTime,
-       access: DIAccess
+       lifeTime: DILifeTime
     ) {
     self.initials = initials
     self.injections = injections
     self.names = names
     self.isDefault = isDefault
     self.lifeTime = lifeTime
-    self.access = access
     super.init(typeInfo: typeInfo)
-  }
-  
-  func new<Method, T>(_ method: (Method) -> T) -> T {
-    let initializer = initials[MethodKey(describing: Method.self)] as! Method
-    return method(initializer)
   }
   
   func has(name: String) -> Bool {
     return names.contains(name)
   }
   
-  let access: DIAccess
+  func add(component: ComponentFinal, for parameter: MethodSignature.Parameter) {
+    fastResolveMap[parameter] = component
+  }
+  
+  let initials: [MethodSignature: Method]
+  let injections: [(signature: MethodSignature, method: Method)]
+  
+  let names: Set<String>
+  let isDefault: Bool
   
   let lifeTime: DILifeTime
-  let isDefault: Bool
-  let injections: [(_: DIContainer, _: Any) -> ()]
   
-  private let initials: [MethodKey: Any]
-  private let names: Set<String>
+  private var fastResolveMap: [MethodSignature.Parameter: ComponentFinal] = [:]
 }

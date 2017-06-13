@@ -7,7 +7,21 @@
 //
 
 class MethodSignature: Hashable {
-  typealias Parameter = (type: Any.Type, style: DIResolveStyle)
+  struct Parameter: Hashable {
+    let type: Any.Type
+    let style: DIResolveStyle
+    
+    var hashValue: Int {
+      return "\(type)\(style)".hashValue
+    }
+    
+    static func ==(lhs: Parameter, rhs: Parameter) -> Bool {
+      return lhs.type == rhs.type && lhs.style == rhs.style
+    }
+    
+    var optional: Bool { return isOptional(self.type) }
+  }
+  
   let parameters: [Parameter]
   let unique: String
   
@@ -20,7 +34,7 @@ class MethodSignature: Hashable {
     var parameters: [Parameter] = []
     for i in 0..<types.count {
       let style = i < styles.count ? styles[i] : DIResolveStyle.default
-      parameters.append((types[i], style))
+      parameters.append(Parameter(type: types[i], style: style))
     }
     self.parameters = parameters
     
