@@ -170,6 +170,7 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 * [Swinject](https://github.com/Swinject/Swinject)
 * [DIP](https://github.com/AliSoftware/Dip)
 * [Cleanse](https://github.com/square/Cleanse)
+* [EasyDi](https://github.com/AndreyZarembo/EasyDi)
 
 ## Feedback
 
