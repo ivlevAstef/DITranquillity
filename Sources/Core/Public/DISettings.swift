@@ -8,8 +8,7 @@
 
 public struct DISetting {
   public struct Defaults {
-    public static var lifeTime: DILifeTime = .perScope
-    public static var access: DIAccess = .internal
+    public static var lifeTime: DILifeTime = .perDependency
   }
   
   public struct Log {

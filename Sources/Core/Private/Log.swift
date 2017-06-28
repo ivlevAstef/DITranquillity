@@ -36,7 +36,7 @@ internal func log(_ level: DILogLevel, msg: String, brace: LogBrace = .neutral) 
   logFunc(level, tabulation + msg)
 }
 
-extension LogLevel {
+extension DILogLevel {
   fileprivate var priority: Int {
     switch self {
     case .info:

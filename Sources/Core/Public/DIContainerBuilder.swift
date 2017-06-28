@@ -23,24 +23,21 @@ public final class DIContainerBuilder {
     return container
   }
   
-  convenience init(by old: DIContainerBuilder, module: Module? = nil, access: DIAccess? = nil) {
+  convenience init(by old: DIContainerBuilder, module: Module? = nil) {
     self.init(componentContainer: old.componentContainer,
               moduleContainer: old.moduleContainer,
-              module: module ?? old.currentModule,
-              access: access ?? old.access)
+              module: module ?? old.currentModule)
   }
   
-  init(componentContainer: ComponentContainer, moduleContainer: ModuleContainer, module: Module? = nil, access: DIAccess = DIAccess.default) {
+  init(componentContainer: ComponentContainer, moduleContainer: ModuleContainer, module: Module? = nil) {
     self.componentContainer = componentContainer
     self.moduleContainer = moduleContainer
     self.currentModule = module
-    self.access = access
   }
   
   let componentContainer: ComponentContainer
   let moduleContainer: ModuleContainer
   let currentModule: Module?
-  let access: DIAccess
 }
 
 

@@ -7,9 +7,9 @@
 //
 
 // as...
-public enum DIAsSelf { case `self` }
-
 extension DIRegistrationBuilder {
+  public enum DIAsSelf { case `self` }
+  
   @discardableResult
   public func `as`(_: DIAsSelf) -> Self {
     DIRegistrationAlternativeType<Impl, Impl>(builder: self).unsafe()
@@ -28,8 +28,6 @@ extension DIRegistrationBuilder {
   }
 }
 
-public enum DISetDefault { case `default` }
-
 // set...
 extension DIRegistrationBuilder {
   @discardableResult
@@ -37,13 +35,7 @@ extension DIRegistrationBuilder {
     component.names.insert(name)
     return self
   }
-  
-  @discardableResult
-  public func set(_: DISetDefault) -> Self {
-    component.isDefault = true
-    return self
-  }
-  
+
   @discardableResult
   public func set<T>(tag: T) -> Self {
     component.names.insert(toString(tag: tag))
@@ -84,8 +76,8 @@ extension DIRegistrationBuilder {
   }
   
   @discardableResult
-  public func access(_ access: DIAccess) -> Self {
-    component.access = access
+  public func `default`() -> Self {
+    component.isDefault = true
     return self
   }
 }
@@ -103,25 +95,17 @@ public final class DIRegistrationBuilder<Impl> {
       self.as(.self)
     }
     
-    if component.isProtocol {
-      log(.info, msg: "Registration protocol: \(component.typeInfo)")
-    } else {
-      var msg = component.isDefault ? "Default r" : "R"
-      msg += "egistration: \(component.typeInfo).\n"
-      
-      msg += "  With lifetime: \(component.lifeTime).\n"
-      if !component.names.isEmpty {
-        msg += "  Has names: \(component.names).\n"
-      }
-      if component.hasInitial {
-        msg += "  Has one or more initials.\n"
-      }
-      if 0 < component.injectionsCount {
-        msg += "  Has \(component.injectionsCount) injections.\n"
-      }
-      
-      log(.info, msg: msg)
-    }
+    var msg = component.isDefault ? "default " : ""
+    msg += "registration: \(component.typeInfo)\n"
+    msg += "\(DISetting.Log.tab)initials: \(component.initials.count)\n"
+    
+    msg += "\(DISetting.Log.tab)lifetime: \(component.lifeTime)\n"
+    msg += "\(DISetting.Log.tab)names: \(component.names)\n"
+    msg += "\(DISetting.Log.tab)is default: \(component.isDefault)\n"
+    
+    msg += "\(DISetting.Log.tab)injections: \(component.injections.count)\n"
+    
+    log(.info, msg: msg)
   }
   
   var isTypeSet: Bool = false

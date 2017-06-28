@@ -7,17 +7,11 @@
 //
 
 public protocol DIComponent {
-  static var access: DIAccess { get }
-  
   static func load(builder: DIContainerBuilder)
-}
-
-public extension DIComponent {
-  static var access: DIAccess { return .default }
 }
 
 public extension DIContainerBuilder {
   public func register(component: DIComponent.Type) {
-    component.load(builder: DIContainerBuilder(by: self, access: component.access))
+    component.load(builder: self)
   }
 }

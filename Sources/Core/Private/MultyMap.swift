@@ -6,6 +6,7 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
+//TODO: max fasted
 struct Multimap<Key: Hashable, Value: Equatable> {
   init() { }
 

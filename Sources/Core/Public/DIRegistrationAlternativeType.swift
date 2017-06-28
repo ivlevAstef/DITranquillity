@@ -30,4 +30,3 @@ public class DIRegistrationAlternativeType<Impl, Parent> {
   
   private let builder: DIRegistrationBuilder<Impl>
 }
-

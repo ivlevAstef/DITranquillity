@@ -6,7 +6,8 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-
+// TODO: cache hashValue
+// TODO: validate - maybe two type from difference module has difference description (remove Bundle?)
 class TypeKey: Hashable {
   let type: DIType
   let unique: String

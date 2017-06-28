@@ -6,6 +6,7 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
+// TODO: type key for append create once
 class ComponentContainer {
   func append(key: DIType, value: Component) {
     if !contains(key: key, value: value) {

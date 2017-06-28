@@ -7,10 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1105F2401E72533200CFC043 /* DIComponentScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1109FD791E724EF9002BC40A /* DIComponentScope.swift */; };
-		1105F2411E72533200CFC043 /* DIComponentScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1109FD791E724EF9002BC40A /* DIComponentScope.swift */; };
 		110917121E4A43120078A5AE /* DIModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110917111E4A43120078A5AE /* DIModule.swift */; };
-		1109FD7A1E724EF9002BC40A /* DIComponentScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1109FD791E724EF9002BC40A /* DIComponentScope.swift */; };
 		1123CD7E1E647CC1004D52F9 /* LateBindingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1123CD7D1E647CC1004D52F9 /* LateBindingExtensions.swift */; };
 		1123CD7F1E647CC1004D52F9 /* LateBindingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1123CD7D1E647CC1004D52F9 /* LateBindingExtensions.swift */; };
 		1123CD801E647CC1004D52F9 /* LateBindingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1123CD7D1E647CC1004D52F9 /* LateBindingExtensions.swift */; };
@@ -149,7 +146,6 @@
 
 /* Begin PBXFileReference section */
 		110917111E4A43120078A5AE /* DIModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIModule.swift; sourceTree = "<group>"; };
-		1109FD791E724EF9002BC40A /* DIComponentScope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIComponentScope.swift; sourceTree = "<group>"; };
 		1123CD7D1E647CC1004D52F9 /* LateBindingExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LateBindingExtensions.swift; sourceTree = "<group>"; };
 		11404C8C1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIRegistrationAlternativeType.swift; sourceTree = "<group>"; };
 		115C24C71E6527CA00CC8BC7 /* Synchronize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synchronize.swift; sourceTree = "<group>"; };
@@ -233,7 +229,6 @@
 		110917101E4A43120078A5AE /* Module */ = {
 			isa = PBXGroup;
 			children = (
-				1109FD791E724EF9002BC40A /* DIComponentScope.swift */,
 				110917111E4A43120078A5AE /* DIModule.swift */,
 				1123CD7D1E647CC1004D52F9 /* LateBindingExtensions.swift */,
 			);
@@ -333,8 +328,8 @@
 				16640A691D9E1E7B00707BFC /* DIContainer.ShortSyntax.swift */,
 				16640A681D9E1E7B00707BFC /* DIRegistrationBuilder.swift */,
 				11404C8C1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift */,
-				16640A651D9E1E7B00707BFC /* DIContainerBuilder.swift */,
 				165F614E1D9E78DD00F6126E /* DIContainerBuilder.Register.swift */,
+				16640A651D9E1E7B00707BFC /* DIContainerBuilder.swift */,
 				D512552C1EE06F010067796B /* DISettings.swift */,
 			);
 			path = Public;
@@ -597,7 +592,6 @@
 				169C0E1B1DA352D2001F0AD5 /* DIStoryboardBase.m in Sources */,
 				11404C8E1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift in Sources */,
 				163DDDC71DB9C84E0003DE54 /* DITypes.swift in Sources */,
-				1105F2401E72533200CFC043 /* DIComponentScope.swift in Sources */,
 				169C0DD11DA3501F001F0AD5 /* Resolver.swift in Sources */,
 				D55369191EE6E2AE00015926 /* ModuleContainer.swift in Sources */,
 				169C0DD31DA3501F001F0AD5 /* DIContainer.swift in Sources */,
@@ -645,7 +639,6 @@
 				169C0E351DA35CBE001F0AD5 /* DIStoryboardBase.m in Sources */,
 				11404C8F1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift in Sources */,
 				163DDDC81DB9C84E0003DE54 /* DITypes.swift in Sources */,
-				1105F2411E72533200CFC043 /* DIComponentScope.swift in Sources */,
 				169C0E371DA35CBE001F0AD5 /* Resolver.swift in Sources */,
 				D553691A1EE6E2AE00015926 /* ModuleContainer.swift in Sources */,
 				169C0E391DA35CBE001F0AD5 /* DIContainer.swift in Sources */,
@@ -693,7 +686,6 @@
 				16640A831D9E1E7B00707BFC /* DIError.swift in Sources */,
 				11404C8D1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift in Sources */,
 				169C0E171DA352C7001F0AD5 /* DIStoryboardBase.m in Sources */,
-				1109FD7A1E724EF9002BC40A /* DIComponentScope.swift in Sources */,
 				163DDDC61DB9C84E0003DE54 /* DITypes.swift in Sources */,
 				D55369181EE6E2AE00015926 /* ModuleContainer.swift in Sources */,
 				16640A741D9E1E7B00707BFC /* Resolver.swift in Sources */,

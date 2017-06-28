@@ -36,7 +36,6 @@ class ComponentFinal: _Component {
   
   let names: Set<String>
   let isDefault: Bool
-  
   let lifeTime: DILifeTime
   
   private var fastResolveMap: [MethodSignature.Parameter: ComponentFinal] = [:]

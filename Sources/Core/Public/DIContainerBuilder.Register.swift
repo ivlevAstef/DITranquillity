@@ -16,7 +16,6 @@ public extension DIContainerBuilder {
 extension DIContainerBuilder {
   internal func registrationBuilder<T>(file: String, line: Int) -> DIRegistrationBuilder<T> {
     let builder = DIRegistrationBuilder<T>(container: self, typeInfo: DITypeInfo(type: T.self, file: file, line: line))
-      .access(self.access)
     
     moduleContainer.register(component: builder.component, for: currentModule)
     

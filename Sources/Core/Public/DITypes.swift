@@ -26,18 +26,10 @@ public enum DILogLevel: Equatable {
   case info
 }
 
-public enum DIAccess: Equatable {
-  case `public`
-  case `internal`
-  
-  static var `default`: DIAccess { return DISetting.Defaults.access }
-}
-
 public enum DILifeTime: Equatable {
   case single
   case lazySingle
   case weakSingle
-  case perScope
   case perDependency
   
   static var `default`: DILifeTime { return DISetting.Defaults.lifeTime }
@@ -48,6 +40,7 @@ public enum DIResolveStyle: Equatable {
   case name(String)
   case tag(AnyObject)
   case value(AnyObject?)
+  case many
   case neutral
   
   static var `default`: DIResolveStyle { return .neutral }
@@ -58,6 +51,7 @@ public enum DIResolveStyle: Equatable {
     case (.name(let n1),.name(let n2)): return n1 == n2
     case (.tag(let t1), .tag(let t2)): return t1 === t2
     case (.value(let v1), .value(let v2)): return v1 === v2
+    case (.many, .many): return true
     case (.neutral, .neutral): return true
     default: return false
     }
