@@ -1,3 +1,6 @@
+# v2.3.3
+* Fix. improve speed scanner.
+
 # v2.3.2
 * Hot fix. incorrect work cache for specific case.
 

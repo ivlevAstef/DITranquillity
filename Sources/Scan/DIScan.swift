@@ -71,26 +71,34 @@ open class DIScan<T: AnyObject> {
   private let bundle: Bundle?
 }
 
+private var cacheTypes: [String: [Any.Type]] = [:]
+
 fileprivate func getAllTypes<T>(by supertype: T.Type) -> [T.Type] {
-  let expectedClassCount = objc_getClassList(nil, 0)
-  let allClasses = UnsafeMutablePointer<AnyClass?>.allocate(capacity: Int(expectedClassCount))
-  let autoreleasingAllClasses = AutoreleasingUnsafeMutablePointer<AnyClass?>(allClasses)
-  let actualClassCount:Int32 = objc_getClassList(autoreleasingAllClasses, expectedClassCount)
-
-  var result: [T.Type] = []
-  for i in 0 ..< actualClassCount {
-    guard let cls: AnyClass = allClasses[Int(i)] else {
-      continue
-    }
-    
-    if isSuperClass(cls, for: supertype) {
-      result.append(cls as! T.Type)
-    }
-  }
-
-  allClasses.deallocate(capacity: Int(expectedClassCount))
-
-  return result
+	let typeKey = String(describing: supertype)
+	if let types = cacheTypes[typeKey] {
+		return types.map{ $0 as! T.Type }
+	}
+	
+	let expectedClassCount = objc_getClassList(nil, 0)
+	let allClasses = UnsafeMutablePointer<AnyClass?>.allocate(capacity: Int(expectedClassCount))
+	let autoreleasingAllClasses = AutoreleasingUnsafeMutablePointer<AnyClass?>(allClasses)
+	let actualClassCount:Int32 = objc_getClassList(autoreleasingAllClasses, expectedClassCount)
+	
+	var result: [T.Type] = []
+	for i in 0 ..< actualClassCount {
+		guard let cls: AnyClass = allClasses[Int(i)] else {
+			continue
+		}
+		
+		if isSuperClass(cls, for: supertype) {
+			result.append(cls as! T.Type)
+		}
+	}
+	
+	allClasses.deallocate(capacity: Int(expectedClassCount))
+	
+	cacheTypes[typeKey] = result
+	return result
 }
 
 fileprivate func isSuperClass<T>(_ cls: AnyClass, for type: T.Type) -> Bool {
