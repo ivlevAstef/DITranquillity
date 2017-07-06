@@ -26,3 +26,9 @@ extension Component {
     injections.append((makeResult.signature, makeResult.method))
   }  
 }
+
+extension Component {
+  func has(name: String) -> Bool {
+    return names.contains(name)
+  }
+}

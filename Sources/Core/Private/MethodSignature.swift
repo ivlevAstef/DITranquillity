@@ -7,7 +7,7 @@
 //
 
 final class MethodSignature: Hashable {
-  final struct Parameter: Hashable {
+  struct Parameter: Hashable {
     let type: Any.Type
     let style: DIResolveStyle
     
@@ -40,7 +40,7 @@ final class MethodSignature: Hashable {
     
     self.unique = parameters
       .filter{ $0.style == .arg }
-      .map{ TypeKey($0.type).unique }
+      .map{ TypeKey(by: $0.type) }
       .joined()
   }
   

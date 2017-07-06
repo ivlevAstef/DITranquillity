@@ -17,10 +17,6 @@ final class BundleContainer {
       imports[hbundle] = [himportBundle]
     }
   }
-  
-  final func dependency<T: AnyObject & DIModule>(bundle: Bundle, import importModule: T.Type) {
-    dependency(bundle: bundle, import: Bundle(for: importModule))
-  }
 }
 
 private final class HashableBundle: Hashable {

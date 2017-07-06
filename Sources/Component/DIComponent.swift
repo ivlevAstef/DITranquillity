@@ -6,7 +6,7 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public protocol DIComponent {
+public protocol DIComponent: class {
   static func load(builder: DIContainerBuilder)
 }
 

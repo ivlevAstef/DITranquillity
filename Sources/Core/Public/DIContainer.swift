@@ -28,17 +28,12 @@ public final class DIContainer {
   public func resolve<T>(_ object: T) {
     _ = resolver.resolve(self, obj: object)
   }
-  
-  public func newLifeTimeScope() -> DIContainer {
-    return DIContainer(resolver: self.resolver)
-  }
 
   internal init(resolver: Resolver) {
     self.resolver = resolver
   }
   
   internal let resolver: Resolver
-  internal private(set) var scope = Scope<Any>()
 }
 
 extension DIContainer {
@@ -66,7 +61,7 @@ extension DIContainer {
   }
   
   // for single initial
-  internal func resolve(component: ComponentFinal) {
+  internal func resolve(component: Component) {
     resolver.resolve(self, component: component) { (initial: Method) in initial(self) }
   }
 }

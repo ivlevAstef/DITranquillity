@@ -100,9 +100,6 @@
 		D55368FF1EE656AC00015926 /* _Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F71EE656AC00015926 /* _Component.swift */; };
 		D55369001EE656AC00015926 /* _Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F71EE656AC00015926 /* _Component.swift */; };
 		D55369011EE656AC00015926 /* _Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F71EE656AC00015926 /* _Component.swift */; };
-		D55369051EE656AC00015926 /* ComponentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368FA1EE656AC00015926 /* ComponentContainer.swift */; };
-		D55369061EE656AC00015926 /* ComponentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368FA1EE656AC00015926 /* ComponentContainer.swift */; };
-		D55369071EE656AC00015926 /* ComponentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368FA1EE656AC00015926 /* ComponentContainer.swift */; };
 		D553690C1EE657E100015926 /* NamedComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553690B1EE657E100015926 /* NamedComponent.swift */; };
 		D553690D1EE657E100015926 /* NamedComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553690B1EE657E100015926 /* NamedComponent.swift */; };
 		D553690E1EE657E100015926 /* NamedComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553690B1EE657E100015926 /* NamedComponent.swift */; };
@@ -128,6 +125,7 @@
 		D55AFCC51EEEB88500527D27 /* init_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCC31EEEB88500527D27 /* init_autogenerate.sh */; };
 		D55AFCC61EEEB88500527D27 /* init_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCC31EEEB88500527D27 /* init_autogenerate.sh */; };
 		D55BB8441F0D3B1F001481DF /* DIModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55BB8431F0D3B1F001481DF /* DIModule.swift */; };
+		D55BB84A1F0DEDC3001481DF /* ComponentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55BB8491F0DEDC3001481DF /* ComponentContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -171,7 +169,6 @@
 		D55368F11EE5BD3300015926 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		D55368F61EE656AC00015926 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		D55368F71EE656AC00015926 /* _Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Component.swift; sourceTree = "<group>"; };
-		D55368FA1EE656AC00015926 /* ComponentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentContainer.swift; sourceTree = "<group>"; };
 		D553690B1EE657E100015926 /* NamedComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamedComponent.swift; sourceTree = "<group>"; };
 		D553690F1EE658EA00015926 /* TypeKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeKey.swift; sourceTree = "<group>"; };
 		D55369171EE6E2AE00015926 /* BundleContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleContainer.swift; sourceTree = "<group>"; };
@@ -181,6 +178,7 @@
 		D55AFCBF1EEEB4AD00527D27 /* inject_autogenerate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = inject_autogenerate.sh; sourceTree = "<group>"; };
 		D55AFCC31EEEB88500527D27 /* init_autogenerate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = init_autogenerate.sh; sourceTree = "<group>"; };
 		D55BB8431F0D3B1F001481DF /* DIModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIModule.swift; sourceTree = "<group>"; };
+		D55BB8491F0DEDC3001481DF /* ComponentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,7 +273,6 @@
 			children = (
 				D55AFCBB1EEEB0E200527D27 /* make_autogenerate.sh */,
 				D55368F51EE656AC00015926 /* Component */,
-				D55368F91EE656AC00015926 /* ComponentContainer */,
 				D55368F11EE5BD3300015926 /* Log.swift */,
 				16640A521D9E1E7B00707BFC /* MultyMap.swift */,
 				16640A531D9E1E7B00707BFC /* Resolver.swift */,
@@ -369,19 +366,12 @@
 		D55368F51EE656AC00015926 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				D55BB8491F0DEDC3001481DF /* ComponentContainer.swift */,
 				D55368F71EE656AC00015926 /* _Component.swift */,
 				D55368F61EE656AC00015926 /* Component.swift */,
 				D553690B1EE657E100015926 /* NamedComponent.swift */,
 			);
 			path = Component;
-			sourceTree = "<group>";
-		};
-		D55368F91EE656AC00015926 /* ComponentContainer */ = {
-			isa = PBXGroup;
-			children = (
-				D55368FA1EE656AC00015926 /* ComponentContainer.swift */,
-			);
-			path = ComponentContainer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -577,7 +567,6 @@
 				D55369111EE658EA00015926 /* TypeKey.swift in Sources */,
 				1651E7061E86373D00E967B4 /* DIRegistrationBuilder.Injection.Methods.swift in Sources */,
 				169C0E241DA357CA001F0AD5 /* DIStoryboard.swift in Sources */,
-				D55369061EE656AC00015926 /* ComponentContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -619,7 +608,6 @@
 				D55369121EE658EA00015926 /* TypeKey.swift in Sources */,
 				1651E7071E86373D00E967B4 /* DIRegistrationBuilder.Injection.Methods.swift in Sources */,
 				169C0E421DA35CBE001F0AD5 /* DIStoryboard.swift in Sources */,
-				D55369071EE656AC00015926 /* ComponentContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -648,6 +636,7 @@
 				16640A741D9E1E7B00707BFC /* Resolver.swift in Sources */,
 				16640A871D9E1E7B00707BFC /* DIContainer.swift in Sources */,
 				16D7BCB81DB086B000A29A9F /* DIScan.swift in Sources */,
+				D55BB84A1F0DEDC3001481DF /* ComponentContainer.swift in Sources */,
 				16640A751D9E1E7B00707BFC /* Helpers.swift in Sources */,
 				D512552D1EE06F010067796B /* DISettings.swift in Sources */,
 				119F4FB41E5603EC00B2DFA1 /* DIDescriptions.swift in Sources */,
@@ -662,7 +651,6 @@
 				D55369101EE658EA00015926 /* TypeKey.swift in Sources */,
 				1651E7041E8631A900E967B4 /* DIRegistrationBuilder.Injection.Methods.swift in Sources */,
 				169C0E211DA357C3001F0AD5 /* DIStoryboard.swift in Sources */,
-				D55369051EE656AC00015926 /* ComponentContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

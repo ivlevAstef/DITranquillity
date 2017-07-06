@@ -10,15 +10,15 @@ public extension DIContainerBuilder {
   public func register<T>(type: T.Type, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
     return registrationBuilder(file: file, line: line)
   }
+  
+  public func `import`<IMPORT: DIModule, TO: DIModule>(_ module: IMPORT.Type, to: TO.Type) {
+    bundleContainer.dependency(bundle: Bundle(for: to), import: Bundle(for: module))
+  }
 }
 
 /// Internal
 extension DIContainerBuilder {
   internal func registrationBuilder<T>(file: String, line: Int) -> DIRegistrationBuilder<T> {
-    let builder = DIRegistrationBuilder<T>(container: self, typeInfo: DITypeInfo(type: T.self, file: file, line: line))
-    
-    moduleContainer.register(component: builder.component, for: currentModule)
-    
-    return builder
+    return DIRegistrationBuilder<T>(container: self, typeInfo: DITypeInfo(type: T.self, file: file, line: line))
   }
 }

@@ -90,9 +90,9 @@ class Resolver {
   private func getComponent<T>(by type: T.Type, name: String) -> Component? {
     return getComponents(by: type).first(where: { $0.has(name: name) })
   }
-  private func getComponents<T>(by type: T.Type) -> [Component] {
+  private func getComponents<T>(by type: T.Type) -> Set<Component> {
     let unwraptype = removeTypeWrappers(type)
-    return componentContainer[unwraptype] ?? []
+    return componentContainer[unwraptype]
   }
   
   /// Super function

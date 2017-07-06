@@ -7,36 +7,21 @@
 //
 
 public final class DIContainerBuilder {
-  public convenience init() {
-    self.init(componentContainer: ComponentContainer(), moduleContainer: ModuleContainer())
-  }
+  public init() {}
   
   @discardableResult
   public func build(f: String = #file, l: Int = #line) throws -> DIContainer {    
     try validate()
 
-    let finalComponentContainer = componentContainer.copyFinal()
-    let container = DIContainer(resolver: Resolver(rTypeContainer: finalComponentContainer))
+    //let container = DIContainer(resolver: Resolver(rTypeContainer: finalComponentContainer))
     
-    initSingleLifeTime(rTypeContainer: finalComponentContainer, container: container)
+    //initSingleLifeTime(rTypeContainer: finalComponentContainer, container: container)
 
     return container
   }
   
-  convenience init(by old: DIContainerBuilder, module: Module? = nil) {
-    self.init(componentContainer: old.componentContainer,
-              moduleContainer: old.moduleContainer,
-              module: module ?? old.currentModule)
-  }
-  
-  init(componentContainer: ComponentContainer, moduleContainer: ModuleContainer, module: Module? = nil) {
-    self.componentContainer = componentContainer
-    self.moduleContainer = moduleContainer
-    self.currentModule = module
-  }
-  
-  let componentContainer: ComponentContainer
-  let moduleContainer: ModuleContainer
+  let componentContainer = ComponentContainer()
+  let bundleContainer = BundleContainer()
   let currentModule: Module?
 }
 

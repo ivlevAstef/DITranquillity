@@ -9,7 +9,11 @@
 // Reference
 final class ComponentContainer {
   final func insert(key: DIType, value: Component) {
-    map.insert(key: TypeKey(key), value: value)
+    map.insert(key: TypeKey(by: key), value: value)
+  }
+  
+  subscript(_ key: DIType) -> Set<Component> {
+    return data[TypeKey(by: key)] ?? []
   }
 
   final var data: [TypeKey: Set<Component>] { return map.dict }
