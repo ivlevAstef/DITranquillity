@@ -7,14 +7,6 @@
 //
 
 final class Component: _Component {
-  func finalize() -> ComponentFinal {
-    return ComponentFinal(typeInfo: typeInfo,
-      initials: self.initials,
-      injections: self.injections + (postInit.map{ [$0] } ?? []), /// append post init to end
-      names: self.names, isDefault: isDefault,
-      lifeTime: self.lifeTime)
-  }
-
   var lifeTime = DILifeTime.default
   var names: Set<String> = [] //TODO: maybe array? he fasted for append
   var isDefault: Bool = false

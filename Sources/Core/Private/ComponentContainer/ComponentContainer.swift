@@ -6,21 +6,13 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-// TODO: type key for append create once
-class ComponentContainer {
-  func append(key: DIType, value: Component) {
-    if !contains(key: key, value: value) {
-      map.append(key: TypeKey(key), value: value)
-    }    
+// Reference
+final class ComponentContainer {
+  final func insert(key: DIType, value: Component) {
+    map.insert(key: TypeKey(key), value: value)
   }
 
-  func contains(key: DIType, value: Component) -> Bool {
-    return map.contains(key: TypeKey(key), value: value)
-  }
-
-  subscript(key: DIType) -> [Component] { return map[TypeKey(key)] }
-
-  var data: [TypeKey: [Component]] { return map.dict }
+  final var data: [TypeKey: Set<Component>] { return map.dict }
 
   private var map = Multimap<TypeKey, Component>()
 }

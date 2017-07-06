@@ -6,24 +6,45 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-open class DIScanned {
-  public required init() {
+public protocol DIScanned {}
+
+open class DIScan<T> {
+  public typealias PredicateByType = (_ type: T.Type)->(Bool)
+  public typealias PredicateByName = (_ name: String)->(Bool)
+  
+  open class var predicateByType: PredicateByType? {
+    get { return nil }
+  }
+  
+  open class var predicateByName: PredicateByName? {
+    get { return nil }
+  }
+  
+  open class var bundle: Bundle? {
+    get { return nil }
+  }
+  
+  public static var types: [T.Type] {
+    let sbpath = bundle?.bundlePath ?? ""
+    let spredicate = predicateByType ?? predicateByName.map{ p in { p(name(by: $0)) } } ?? { _ in true }
+    
+    var result: [T.Type] = []
+    for (type, bpath) in scanned {
+      if let type = type as? T.Type, bpath == sbpath, spredicate(type) {
+        result.append(type)
+      }
+    }
+    return result
   }
 }
 
-open class DIScanWithInitializer<T: DIScanned>: DIScan<T> {
-  public final func getObjects() -> [T] {
-    return getTypes().map{ $0.init() }
-  }
-}
-
-func genericName<T: AnyObject>(_ type: T.Type) -> String {
+private func name<T>(by type: T.Type) -> String {
   var fullName: String = "\(type)"
   
   if "(" == fullName[fullName.startIndex] {
     fullName.remove(at: fullName.startIndex)
   }
-
+  
   let range = fullName.range(of: " in")
   if let range = range {
     return fullName.substring(to: range.lowerBound)
@@ -31,71 +52,20 @@ func genericName<T: AnyObject>(_ type: T.Type) -> String {
   return fullName
 }
 
-open class DIScan<T: AnyObject> {
-  public typealias PredicateByType = (_ type: T.Type)->(Bool)
-  public typealias PredicateByName = (_ name: String)->(Bool)
-  
-  public init(predicateByType: @escaping PredicateByType) {
-    self.predicate = predicateByType
-    self.bundle = nil
-  }
-  
-  public init(predicateByType: @escaping PredicateByType, in bundle: Bundle) {
-    self.predicate = predicateByType
-    self.bundle = bundle
-  }
-  
-  public init(predicateByName: @escaping PredicateByName) {
-    self.predicate = { predicateByName(genericName($0)) }
-    self.bundle = nil
-  }
-  
-  public init(predicateByName: @escaping PredicateByName, in bundle: Bundle) {
-    self.predicate = { predicateByName(genericName($0)) }
-    self.bundle = bundle
-  }
-  
-  public final func getTypes() -> [T.Type] {
-    let allTypes = getAllTypes(by: T.self)
-    let filterTypes = allTypes.filter{ self.predicate($0) }
-    
-    guard let bundle = self.bundle else {
-      return filterTypes
-    }
-    
-    
-    return filterTypes.filter{ Bundle(for: $0).bundlePath == bundle.bundlePath }
-  }
-  
-  private let predicate: PredicateByType
-  private let bundle: Bundle?
-}
-
-fileprivate func getAllTypes<T>(by supertype: T.Type) -> [T.Type] {
+private let scanned: [(type: DIScanned.Type, bpath: String)] = {
   let expectedClassCount = objc_getClassList(nil, 0)
   let allClasses = UnsafeMutablePointer<AnyClass?>.allocate(capacity: Int(expectedClassCount))
   let autoreleasingAllClasses = AutoreleasingUnsafeMutablePointer<AnyClass?>(allClasses)
-  let actualClassCount:Int32 = objc_getClassList(autoreleasingAllClasses, expectedClassCount)
+  let actualClassCount = Int(objc_getClassList(autoreleasingAllClasses, expectedClassCount))
 
-  var result: [T.Type] = []
-  for i in 0 ..< actualClassCount {
-    guard let cls: AnyClass = allClasses[Int(i)] else {
-      continue
-    }
-    
-    if isSuperClass(cls, for: supertype) {
-      result.append(cls as! T.Type)
+  var result: [(type: DIScanned.Type, bpath: String)] = []
+  for i in 0..<actualClassCount {
+    if let cls = allClasses[i], let type = cls as? DIScanned.Type {
+      result.append((type, Bundle(for: cls).bundlePath))
     }
   }
 
   allClasses.deallocate(capacity: Int(expectedClassCount))
 
   return result
-}
-
-fileprivate func isSuperClass<T>(_ cls: AnyClass, for type: T.Type) -> Bool {
-  if let superClass = class_getSuperclass(cls) {
-    return superClass == T.self || isSuperClass(superClass, for: type)
-  }
-  return false
-}
+}()

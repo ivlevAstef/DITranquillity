@@ -6,15 +6,15 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-class NamedComponent {
+final class NamedComponent {
   typealias UniqueKey = String
   
-  let component: ComponentFinal
+  let component: Component
   let name: String
   let uniqueKey: UniqueKey
   var typeInfo: DITypeInfo { return component.typeInfo }
   
-  init(_ component: ComponentFinal, _ name: String = "") {
+  init(_ component: Component, _ name: String = "") {
     self.component = component
     self.name = name
     self.uniqueKey = component.uniqueKey + name

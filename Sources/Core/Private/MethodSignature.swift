@@ -6,8 +6,8 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-class MethodSignature: Hashable {
-  struct Parameter: Hashable {
+final class MethodSignature: Hashable {
+  final struct Parameter: Hashable {
     let type: Any.Type
     let style: DIResolveStyle
     

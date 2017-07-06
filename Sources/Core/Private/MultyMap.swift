@@ -6,36 +6,24 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-//TODO: max fasted
-struct Multimap<Key: Hashable, Value: Equatable> {
-  init() { }
-
-  subscript(key: Key) -> [Value] {
-    if let values = dict[key] {
-      return values
-    }
-    return []
+struct Multimap<Key: Hashable, Value: Hashable> {
+  subscript(key: Key) -> Set<Value> {
+    return dict[key] ?? []
   }
 
-  mutating func append(key: Key, value: Value) {
-    let list = dict[key] ?? []
-
-    if !list.contains(value) {
-      dict[key] = list + [value]
+  mutating func insert(key: Key, value: Value) {
+    if nil == dict[key]?.insert(value) {
+      dict[key] = [value]
     }
   }
 
   func contains(key: Key, value: Value) -> Bool {
-    guard let values = dict[key] else {
-      return false
-    }
-
-    return values.contains(value)
+    return dict[key]?.contains(value) ?? false
   }
 
   mutating func removeAll(keepCapacity keep: Bool = true) {
     dict.removeAll(keepingCapacity: keep)
   }
 
-  private(set) var dict: [Key: [Value]] = [:]
+  private(set) var dict: [Key: Set<Value>] = [:]
 }

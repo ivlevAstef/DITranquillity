@@ -8,7 +8,7 @@
 
 // TODO: cache hashValue
 // TODO: validate - maybe two type from difference module has difference description (remove Bundle?)
-class TypeKey: Hashable {
+final class TypeKey: Hashable {
   let type: DIType
   let unique: String
   

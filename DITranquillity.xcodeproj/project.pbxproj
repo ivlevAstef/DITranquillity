@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		110917121E4A43120078A5AE /* DIModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110917111E4A43120078A5AE /* DIModule.swift */; };
-		1123CD7E1E647CC1004D52F9 /* LateBindingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1123CD7D1E647CC1004D52F9 /* LateBindingExtensions.swift */; };
-		1123CD7F1E647CC1004D52F9 /* LateBindingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1123CD7D1E647CC1004D52F9 /* LateBindingExtensions.swift */; };
-		1123CD801E647CC1004D52F9 /* LateBindingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1123CD7D1E647CC1004D52F9 /* LateBindingExtensions.swift */; };
 		11404C8D1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11404C8C1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift */; };
 		11404C8E1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11404C8C1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift */; };
 		11404C8F1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11404C8C1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift */; };
@@ -20,11 +16,6 @@
 		118DBCCC1E4100BF003A7D1F /* DIStoryboardResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCCB1E4100BF003A7D1F /* DIStoryboardResolver.swift */; };
 		118DBCCF1E4100CA003A7D1F /* DIStoryboardResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCCD1E4100C5003A7D1F /* DIStoryboardResolver.swift */; };
 		118DBCD01E4100CD003A7D1F /* DIStoryboardResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCCB1E4100BF003A7D1F /* DIStoryboardResolver.swift */; };
-		118F09061E4B688900C1ED5E /* DIModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110917111E4A43120078A5AE /* DIModule.swift */; };
-		118F09071E4B688900C1ED5E /* DIModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110917111E4A43120078A5AE /* DIModule.swift */; };
-		119F4FAA1E56014000B2DFA1 /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FA91E56014000B2DFA1 /* Scope.swift */; };
-		119F4FAB1E56014400B2DFA1 /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FA91E56014000B2DFA1 /* Scope.swift */; };
-		119F4FAC1E56014400B2DFA1 /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FA91E56014000B2DFA1 /* Scope.swift */; };
 		119F4FAF1E5603A400B2DFA1 /* DIComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FAE1E5603A400B2DFA1 /* DIComponent.swift */; };
 		119F4FB01E5603A400B2DFA1 /* DIComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FAE1E5603A400B2DFA1 /* DIComponent.swift */; };
 		119F4FB11E5603A400B2DFA1 /* DIComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FAE1E5603A400B2DFA1 /* DIComponent.swift */; };
@@ -109,24 +100,18 @@
 		D55368FF1EE656AC00015926 /* _Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F71EE656AC00015926 /* _Component.swift */; };
 		D55369001EE656AC00015926 /* _Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F71EE656AC00015926 /* _Component.swift */; };
 		D55369011EE656AC00015926 /* _Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F71EE656AC00015926 /* _Component.swift */; };
-		D55369021EE656AC00015926 /* ComponentFinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F81EE656AC00015926 /* ComponentFinal.swift */; };
-		D55369031EE656AC00015926 /* ComponentFinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F81EE656AC00015926 /* ComponentFinal.swift */; };
-		D55369041EE656AC00015926 /* ComponentFinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F81EE656AC00015926 /* ComponentFinal.swift */; };
 		D55369051EE656AC00015926 /* ComponentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368FA1EE656AC00015926 /* ComponentContainer.swift */; };
 		D55369061EE656AC00015926 /* ComponentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368FA1EE656AC00015926 /* ComponentContainer.swift */; };
 		D55369071EE656AC00015926 /* ComponentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368FA1EE656AC00015926 /* ComponentContainer.swift */; };
-		D55369081EE656AC00015926 /* ComponentContainerFinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368FB1EE656AC00015926 /* ComponentContainerFinal.swift */; };
-		D55369091EE656AC00015926 /* ComponentContainerFinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368FB1EE656AC00015926 /* ComponentContainerFinal.swift */; };
-		D553690A1EE656AC00015926 /* ComponentContainerFinal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368FB1EE656AC00015926 /* ComponentContainerFinal.swift */; };
 		D553690C1EE657E100015926 /* NamedComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553690B1EE657E100015926 /* NamedComponent.swift */; };
 		D553690D1EE657E100015926 /* NamedComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553690B1EE657E100015926 /* NamedComponent.swift */; };
 		D553690E1EE657E100015926 /* NamedComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553690B1EE657E100015926 /* NamedComponent.swift */; };
 		D55369101EE658EA00015926 /* TypeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553690F1EE658EA00015926 /* TypeKey.swift */; };
 		D55369111EE658EA00015926 /* TypeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553690F1EE658EA00015926 /* TypeKey.swift */; };
 		D55369121EE658EA00015926 /* TypeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553690F1EE658EA00015926 /* TypeKey.swift */; };
-		D55369181EE6E2AE00015926 /* ModuleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55369171EE6E2AE00015926 /* ModuleContainer.swift */; };
-		D55369191EE6E2AE00015926 /* ModuleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55369171EE6E2AE00015926 /* ModuleContainer.swift */; };
-		D553691A1EE6E2AE00015926 /* ModuleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55369171EE6E2AE00015926 /* ModuleContainer.swift */; };
+		D55369181EE6E2AE00015926 /* BundleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55369171EE6E2AE00015926 /* BundleContainer.swift */; };
+		D55369191EE6E2AE00015926 /* BundleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55369171EE6E2AE00015926 /* BundleContainer.swift */; };
+		D553691A1EE6E2AE00015926 /* BundleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55369171EE6E2AE00015926 /* BundleContainer.swift */; };
 		D55AFCB41EEEA48D00527D27 /* MethodMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55AFCB31EEEA48D00527D27 /* MethodMaker.swift */; };
 		D55AFCB51EEEA48D00527D27 /* MethodMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55AFCB31EEEA48D00527D27 /* MethodMaker.swift */; };
 		D55AFCB61EEEA48D00527D27 /* MethodMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55AFCB31EEEA48D00527D27 /* MethodMaker.swift */; };
@@ -142,16 +127,14 @@
 		D55AFCC41EEEB88500527D27 /* init_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCC31EEEB88500527D27 /* init_autogenerate.sh */; };
 		D55AFCC51EEEB88500527D27 /* init_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCC31EEEB88500527D27 /* init_autogenerate.sh */; };
 		D55AFCC61EEEB88500527D27 /* init_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCC31EEEB88500527D27 /* init_autogenerate.sh */; };
+		D55BB8441F0D3B1F001481DF /* DIModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55BB8431F0D3B1F001481DF /* DIModule.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		110917111E4A43120078A5AE /* DIModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIModule.swift; sourceTree = "<group>"; };
-		1123CD7D1E647CC1004D52F9 /* LateBindingExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LateBindingExtensions.swift; sourceTree = "<group>"; };
 		11404C8C1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIRegistrationAlternativeType.swift; sourceTree = "<group>"; };
 		115C24C71E6527CA00CC8BC7 /* Synchronize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synchronize.swift; sourceTree = "<group>"; };
 		118DBCCB1E4100BF003A7D1F /* DIStoryboardResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIStoryboardResolver.swift; sourceTree = "<group>"; };
 		118DBCCD1E4100C5003A7D1F /* DIStoryboardResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIStoryboardResolver.swift; sourceTree = "<group>"; };
-		119F4FA91E56014000B2DFA1 /* Scope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scope.swift; sourceTree = "<group>"; };
 		119F4FAE1E5603A400B2DFA1 /* DIComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIComponent.swift; sourceTree = "<group>"; };
 		119F4FB31E5603EC00B2DFA1 /* DIDescriptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIDescriptions.swift; sourceTree = "<group>"; };
 		119F4FB81E5604C500B2DFA1 /* autogenerate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = autogenerate.sh; sourceTree = "<group>"; };
@@ -188,17 +171,16 @@
 		D55368F11EE5BD3300015926 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		D55368F61EE656AC00015926 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		D55368F71EE656AC00015926 /* _Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Component.swift; sourceTree = "<group>"; };
-		D55368F81EE656AC00015926 /* ComponentFinal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentFinal.swift; sourceTree = "<group>"; };
 		D55368FA1EE656AC00015926 /* ComponentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentContainer.swift; sourceTree = "<group>"; };
-		D55368FB1EE656AC00015926 /* ComponentContainerFinal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentContainerFinal.swift; sourceTree = "<group>"; };
 		D553690B1EE657E100015926 /* NamedComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamedComponent.swift; sourceTree = "<group>"; };
 		D553690F1EE658EA00015926 /* TypeKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeKey.swift; sourceTree = "<group>"; };
-		D55369171EE6E2AE00015926 /* ModuleContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleContainer.swift; sourceTree = "<group>"; };
+		D55369171EE6E2AE00015926 /* BundleContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleContainer.swift; sourceTree = "<group>"; };
 		D55AFCB31EEEA48D00527D27 /* MethodMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodMaker.swift; sourceTree = "<group>"; };
 		D55AFCB71EEEA97400527D27 /* MethodSignature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodSignature.swift; sourceTree = "<group>"; };
 		D55AFCBB1EEEB0E200527D27 /* make_autogenerate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = make_autogenerate.sh; sourceTree = "<group>"; };
 		D55AFCBF1EEEB4AD00527D27 /* inject_autogenerate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = inject_autogenerate.sh; sourceTree = "<group>"; };
 		D55AFCC31EEEB88500527D27 /* init_autogenerate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = init_autogenerate.sh; sourceTree = "<group>"; };
+		D55BB8431F0D3B1F001481DF /* DIModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIModule.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,18 +208,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		110917101E4A43120078A5AE /* Module */ = {
-			isa = PBXGroup;
-			children = (
-				110917111E4A43120078A5AE /* DIModule.swift */,
-				1123CD7D1E647CC1004D52F9 /* LateBindingExtensions.swift */,
-			);
-			path = Module;
-			sourceTree = "<group>";
-		};
 		119F4FAD1E5603A400B2DFA1 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				D55BB8431F0D3B1F001481DF /* DIModule.swift */,
 				119F4FAE1E5603A400B2DFA1 /* DIComponent.swift */,
 			);
 			path = Component;
@@ -279,7 +253,6 @@
 				119F4FB21E5603EC00B2DFA1 /* Descriptions */,
 				119F4FAD1E5603A400B2DFA1 /* Component */,
 				16640A6D1D9E1E7B00707BFC /* Storyboard */,
-				110917101E4A43120078A5AE /* Module */,
 				16D7BCB41DB086B000A29A9F /* Scan */,
 				119F4FB71E5604C500B2DFA1 /* RuntimeArgs */,
 				169C0E1C1DA355A6001F0AD5 /* Info.plist */,
@@ -304,14 +277,13 @@
 				D55368F51EE656AC00015926 /* Component */,
 				D55368F91EE656AC00015926 /* ComponentContainer */,
 				D55368F11EE5BD3300015926 /* Log.swift */,
-				119F4FA91E56014000B2DFA1 /* Scope.swift */,
 				16640A521D9E1E7B00707BFC /* MultyMap.swift */,
 				16640A531D9E1E7B00707BFC /* Resolver.swift */,
 				16640A541D9E1E7B00707BFC /* Helpers.swift */,
 				16640A5E1D9E1E7B00707BFC /* Weak.swift */,
 				115C24C71E6527CA00CC8BC7 /* Synchronize.swift */,
 				D553690F1EE658EA00015926 /* TypeKey.swift */,
-				D55369171EE6E2AE00015926 /* ModuleContainer.swift */,
+				D55369171EE6E2AE00015926 /* BundleContainer.swift */,
 				D55AFCB31EEEA48D00527D27 /* MethodMaker.swift */,
 				D55AFCB71EEEA97400527D27 /* MethodSignature.swift */,
 			);
@@ -399,7 +371,6 @@
 			children = (
 				D55368F71EE656AC00015926 /* _Component.swift */,
 				D55368F61EE656AC00015926 /* Component.swift */,
-				D55368F81EE656AC00015926 /* ComponentFinal.swift */,
 				D553690B1EE657E100015926 /* NamedComponent.swift */,
 			);
 			path = Component;
@@ -409,7 +380,6 @@
 			isa = PBXGroup;
 			children = (
 				D55368FA1EE656AC00015926 /* ComponentContainer.swift */,
-				D55368FB1EE656AC00015926 /* ComponentContainerFinal.swift */,
 			);
 			path = ComponentContainer;
 			sourceTree = "<group>";
@@ -573,10 +543,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				119F4FAC1E56014400B2DFA1 /* Scope.swift in Sources */,
 				119F4FD71E56069200B2DFA1 /* DIRegistrationBuilder.Arg.swift in Sources */,
 				D55368FD1EE656AC00015926 /* Component.swift in Sources */,
-				D55369091EE656AC00015926 /* ComponentContainerFinal.swift in Sources */,
 				169C0DC41DA3501F001F0AD5 /* DIRegistrationBuilder.swift in Sources */,
 				D55AFCB91EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				D55AFCB51EEEA48D00527D27 /* MethodMaker.swift in Sources */,
@@ -593,7 +561,7 @@
 				11404C8E1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift in Sources */,
 				163DDDC71DB9C84E0003DE54 /* DITypes.swift in Sources */,
 				169C0DD11DA3501F001F0AD5 /* Resolver.swift in Sources */,
-				D55369191EE6E2AE00015926 /* ModuleContainer.swift in Sources */,
+				D55369191EE6E2AE00015926 /* BundleContainer.swift in Sources */,
 				169C0DD31DA3501F001F0AD5 /* DIContainer.swift in Sources */,
 				16D7BCBB1DB086B500A29A9F /* DIScan.swift in Sources */,
 				169C0DD41DA3501F001F0AD5 /* Helpers.swift in Sources */,
@@ -603,13 +571,10 @@
 				D55368F31EE5BD3600015926 /* Log.swift in Sources */,
 				119F4FB51E5603EC00B2DFA1 /* DIDescriptions.swift in Sources */,
 				119F4FC01E5604C500B2DFA1 /* DIContainer.Arg.swift in Sources */,
-				118F09061E4B688900C1ED5E /* DIModule.swift in Sources */,
 				D55369001EE656AC00015926 /* _Component.swift in Sources */,
 				119F4FC31E5604C500B2DFA1 /* DIContainer.TypeArg.swift in Sources */,
 				16D7BCBD1DB086B900A29A9F /* DIScanModule.swift in Sources */,
-				D55369031EE656AC00015926 /* ComponentFinal.swift in Sources */,
 				D55369111EE658EA00015926 /* TypeKey.swift in Sources */,
-				1123CD7F1E647CC1004D52F9 /* LateBindingExtensions.swift in Sources */,
 				1651E7061E86373D00E967B4 /* DIRegistrationBuilder.Injection.Methods.swift in Sources */,
 				169C0E241DA357CA001F0AD5 /* DIStoryboard.swift in Sources */,
 				D55369061EE656AC00015926 /* ComponentContainer.swift in Sources */,
@@ -620,10 +585,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				119F4FAB1E56014400B2DFA1 /* Scope.swift in Sources */,
 				119F4FD81E56069200B2DFA1 /* DIRegistrationBuilder.Arg.swift in Sources */,
 				D55368FE1EE656AC00015926 /* Component.swift in Sources */,
-				D553690A1EE656AC00015926 /* ComponentContainerFinal.swift in Sources */,
 				169C0E2A1DA35CBE001F0AD5 /* DIRegistrationBuilder.swift in Sources */,
 				D55AFCBA1EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				D55AFCB61EEEA48D00527D27 /* MethodMaker.swift in Sources */,
@@ -640,7 +603,7 @@
 				11404C8F1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift in Sources */,
 				163DDDC81DB9C84E0003DE54 /* DITypes.swift in Sources */,
 				169C0E371DA35CBE001F0AD5 /* Resolver.swift in Sources */,
-				D553691A1EE6E2AE00015926 /* ModuleContainer.swift in Sources */,
+				D553691A1EE6E2AE00015926 /* BundleContainer.swift in Sources */,
 				169C0E391DA35CBE001F0AD5 /* DIContainer.swift in Sources */,
 				16D7BCBC1DB086B600A29A9F /* DIScan.swift in Sources */,
 				169C0E3A1DA35CBE001F0AD5 /* Helpers.swift in Sources */,
@@ -650,13 +613,10 @@
 				D55368F41EE5BD3600015926 /* Log.swift in Sources */,
 				119F4FB61E5603EC00B2DFA1 /* DIDescriptions.swift in Sources */,
 				119F4FC11E5604C500B2DFA1 /* DIContainer.Arg.swift in Sources */,
-				118F09071E4B688900C1ED5E /* DIModule.swift in Sources */,
 				D55369011EE656AC00015926 /* _Component.swift in Sources */,
 				119F4FC41E5604C500B2DFA1 /* DIContainer.TypeArg.swift in Sources */,
 				16D7BCBF1DB086B900A29A9F /* DIScanModule.swift in Sources */,
-				D55369041EE656AC00015926 /* ComponentFinal.swift in Sources */,
 				D55369121EE658EA00015926 /* TypeKey.swift in Sources */,
-				1123CD801E647CC1004D52F9 /* LateBindingExtensions.swift in Sources */,
 				1651E7071E86373D00E967B4 /* DIRegistrationBuilder.Injection.Methods.swift in Sources */,
 				169C0E421DA35CBE001F0AD5 /* DIStoryboard.swift in Sources */,
 				D55369071EE656AC00015926 /* ComponentContainer.swift in Sources */,
@@ -667,10 +627,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				119F4FAA1E56014000B2DFA1 /* Scope.swift in Sources */,
 				119F4FD61E56069200B2DFA1 /* DIRegistrationBuilder.Arg.swift in Sources */,
 				D55368FC1EE656AC00015926 /* Component.swift in Sources */,
-				D55369081EE656AC00015926 /* ComponentContainerFinal.swift in Sources */,
 				16640A851D9E1E7B00707BFC /* DIRegistrationBuilder.swift in Sources */,
 				D55AFCB81EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				D55AFCB41EEEA48D00527D27 /* MethodMaker.swift in Sources */,
@@ -681,13 +639,12 @@
 				16640A731D9E1E7B00707BFC /* MultyMap.swift in Sources */,
 				16640A7D1D9E1E7B00707BFC /* Weak.swift in Sources */,
 				119F4FAF1E5603A400B2DFA1 /* DIComponent.swift in Sources */,
-				110917121E4A43120078A5AE /* DIModule.swift in Sources */,
 				115C24C81E6527CA00CC8BC7 /* Synchronize.swift in Sources */,
 				16640A831D9E1E7B00707BFC /* DIError.swift in Sources */,
 				11404C8D1E50DE1200A6C356 /* DIRegistrationAlternativeType.swift in Sources */,
 				169C0E171DA352C7001F0AD5 /* DIStoryboardBase.m in Sources */,
 				163DDDC61DB9C84E0003DE54 /* DITypes.swift in Sources */,
-				D55369181EE6E2AE00015926 /* ModuleContainer.swift in Sources */,
+				D55369181EE6E2AE00015926 /* BundleContainer.swift in Sources */,
 				16640A741D9E1E7B00707BFC /* Resolver.swift in Sources */,
 				16640A871D9E1E7B00707BFC /* DIContainer.swift in Sources */,
 				16D7BCB81DB086B000A29A9F /* DIScan.swift in Sources */,
@@ -697,13 +654,12 @@
 				D55368F21EE5BD3300015926 /* Log.swift in Sources */,
 				16640A821D9E1E7B00707BFC /* DIContainerBuilder.swift in Sources */,
 				119F4FBF1E5604C500B2DFA1 /* DIContainer.Arg.swift in Sources */,
+				D55BB8441F0D3B1F001481DF /* DIModule.swift in Sources */,
 				16640A861D9E1E7B00707BFC /* DIContainer.ShortSyntax.swift in Sources */,
 				D55368FF1EE656AC00015926 /* _Component.swift in Sources */,
 				119F4FC21E5604C500B2DFA1 /* DIContainer.TypeArg.swift in Sources */,
 				16D7BCB91DB086B000A29A9F /* DIScanModule.swift in Sources */,
-				D55369021EE656AC00015926 /* ComponentFinal.swift in Sources */,
 				D55369101EE658EA00015926 /* TypeKey.swift in Sources */,
-				1123CD7E1E647CC1004D52F9 /* LateBindingExtensions.swift in Sources */,
 				1651E7041E8631A900E967B4 /* DIRegistrationBuilder.Injection.Methods.swift in Sources */,
 				169C0E211DA357C3001F0AD5 /* DIStoryboard.swift in Sources */,
 				D55369051EE656AC00015926 /* ComponentContainer.swift in Sources */,

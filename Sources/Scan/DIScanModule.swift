@@ -6,12 +6,11 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-#if ENABLE_DI_MODULE
-public final class DIScanModule: DIScanWithInitializer<DIScanned>, DIModule, DIIgnoreModule {
-  public final var components: [DIComponent] { return [] }
-  
-  public final var dependencies: [DIModule] { 
-    return getObjects().flatMap{ $0 as? DIModule }
+final public class DIScanModule: DIScan<DIModule>, DIModule {
+  public static func load(builder: DIContainerBuilder) {
+    for module in types {
+      builder.register(component: module as! DIModule.Type)
+    }
   }
 }
-#endif
+

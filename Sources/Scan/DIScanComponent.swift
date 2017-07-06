@@ -6,15 +6,16 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-#if ENABLE_DI_COMPONENT
-public final class DIScanComponent: DIScanWithInitializer<DIScanned>, DIComponent {
-  #if ENABLE_DI_MODULE
-  public let scope: DIComponentScope = .public
-  #endif
-  public final func load(builder: DIContainerBuilder) {
-    for component in getObjects().flatMap({ $0 as? DIComponent }) {
-      builder.register(component: component)
+final public class DIScanComponent: DIScan<DIComponent>, DIComponent {
+  public static func load(builder: DIContainerBuilder) {
+    for component in types {
+      builder.register(component: component as! DIComponent.Type)
     }
   }
 }
-#endif
+/*
+class ScanTest: DIScanComponent {
+  override class var predicateByType: PredicateByType? { get { return { _ in true } } }
+  override class var bundle: Bundle? { get { return Bundle(for: self) } }
+}
+*/

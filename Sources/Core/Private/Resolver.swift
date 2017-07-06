@@ -13,7 +13,7 @@ class Resolver {
     case method(Method<M>)
   }
   
-  init(componentContainer: ComponentContainerFinal) {
+  init(componentContainer: ComponentContainer) {
     self.componentContainer = componentContainer
   }
   
@@ -75,7 +75,7 @@ class Resolver {
     return getComponents(by: type).flatMap{ resolve(container, $0, "", .method(method)) }.map{ make(by: $0) }
   }
 
-  func resolve<M>(_ container: DIContainer, component: ComponentFinal, method: @escaping Method<M>) {
+  func resolve<M>(_ container: DIContainer, component: Component, method: @escaping Method<M>) {
     log(.info, msg: "Begin resolve by type info: \(component.typeInfo)", brace: .begin)
     defer { log(.info, msg: "End resolve by type info: \(component.typeInfo)", brace: .end) }
     
@@ -83,21 +83,21 @@ class Resolver {
   }
   
 
-  private func getDefaultComponent<T>(by type: T.Type) -> ComponentFinal? {
+  private func getDefaultComponent<T>(by type: T.Type) -> Component? {
     let components = getComponents(by: type)
     return 1 == components.count ? components.first : components.first(where: { $0.isDefault })
   }
-  private func getComponent<T>(by type: T.Type, name: String) -> ComponentFinal? {
+  private func getComponent<T>(by type: T.Type, name: String) -> Component? {
     return getComponents(by: type).first(where: { $0.has(name: name) })
   }
-  private func getComponents<T>(by type: T.Type) -> [ComponentFinal] {
+  private func getComponents<T>(by type: T.Type) -> [Component] {
     let unwraptype = removeTypeWrappers(type)
     return componentContainer[unwraptype] ?? []
   }
   
   /// Super function
   @discardableResult
-  private func resolve<M>(_ container: DIContainer, _ component: ComponentFinal, _ name: String, _ getter: Getter<M>) -> Any? {
+  private func resolve<M>(_ container: DIContainer, _ component: Component, _ name: String, _ getter: Getter<M>) -> Any? {
     log(.info, msg: "Found type info: \(component.typeInfo)")
     
     let uniqueKey = component.uniqueKey + name
@@ -108,8 +108,6 @@ class Resolver {
         return resolveSingle()
       case .weakSingle:
         return resolveWeakSingle()
-      case .perScope:
-        return resolvePerScope()
       case .perDependency:
         return resolvePerDependency()
       }
@@ -122,16 +120,13 @@ class Resolver {
     }
     
     func resolveWeakSingle() -> Any? {
-      Cache.weakSingle.clean()
+      for data in Cache.weakSingle.filter({ $0.value.value == nil }) {
+        Cache.weakSingle.removeValue(forKey: data.key)
+      }
+      
       return _resolveUniversal(cacheName: "weak single",
                                get: Cache.weakSingle[uniqueKey]?.value,
                                set: { Cache.weakSingle[uniqueKey] = Weak(value: $0) })
-    }
-    
-    func resolvePerScope() -> Any? {
-      return _resolveUniversal(cacheName: "perScope",
-                               get: container.scope[uniqueKey],
-                               set: { container.scope[uniqueKey] = $0 })
     }
     
     func _resolveUniversal(cacheName: String, get: Any?, set: (Any)->()) -> Any? {
@@ -222,7 +217,7 @@ class Resolver {
     circular.clean()
   }
   
-  private func setupInjections(container: DIContainer, component: ComponentFinal, uniqueKey: String, obj: Any) {
+  private func setupInjections(container: DIContainer, component: Component, uniqueKey: String, obj: Any) {
     if component.injections.isEmpty {
       return
     }
@@ -241,7 +236,7 @@ class Resolver {
   }
 
  
-  private let componentContainer: ComponentContainerFinal
+  private let componentContainer: ComponentContainer
   private static let monitor = NSObject()
   
   /// Storage
@@ -249,7 +244,7 @@ class Resolver {
   var recursive: Set<Component.UniqueKey> = []
   
   class Circular {
-    var objects: [(ComponentFinal, String, Any)] = []
+    var objects: [(Component, String, Any)] = []
     var recursive: [Component.UniqueKey] = []
     var dependencies = Multimap<Component.UniqueKey, Component.UniqueKey>()
     var objMap: [Component.UniqueKey: Any] = [:]
@@ -266,6 +261,8 @@ class Resolver {
   }
   
   class Cache {
+    typealias Scope<T> = [Component.UniqueKey: T]
+    
     static var single = Scope<Any>()
     static var weakSingle = Scope<Weak>()
   }
