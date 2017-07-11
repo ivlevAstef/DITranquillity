@@ -25,7 +25,7 @@ public class DIRegistrationAlternativeType<Impl, Parent> {
   
   private func register() {
     builder.isTypeSet = true
-    builder.componentContainer.append(key: Parent.self, value: builder.component)
+    builder.componentContainer.insert(key: Parent.self, value: builder.component)
   }
   
   private let builder: DIRegistrationBuilder<Impl>

@@ -22,7 +22,9 @@ public final class DIContainerBuilder {
   
   let componentContainer = ComponentContainer()
   let bundleContainer = BundleContainer()
-  let currentModule: Module?
+  // non thread safe!
+  var ignoredComponents: Set<String> = []
+  var currentBundle: Bundle? = nil
 }
 
 

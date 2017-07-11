@@ -11,7 +11,14 @@ public protocol DIComponent: class {
 }
 
 public extension DIContainerBuilder {
-  public func register(component: DIComponent.Type) {
-    component.load(builder: self)
+  public func register(component: DIComponent.Type, file: String = #file, line: Int = #line) {
+    let key = "\(line)\(file)"
+    // Optimization build
+    if !ignoredComponents.contains(key) {
+      ignoredComponents.insert(key)
+      
+      self.currentBundle = Bundle(for: component)
+      component.load(builder: self)
+    }
   }
 }
