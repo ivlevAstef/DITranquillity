@@ -17,10 +17,18 @@ final class BundleContainer {
       imports[hbundle] = [himportBundle]
     }
   }
+  
+  func childs(for bundle: Bundle) -> [Bundle] {
+    return imports[HashableBundle(bundle: bundle)]?.map{ $0.bundle } ?? []
+  }
+  
+  static func compare(_ bundle1: Bundle, _ bundle2: Bundle) -> Bool {
+    return HashableBundle(bundle: bundle1) == HashableBundle(bundle: bundle2)
+  }
 }
 
 private final class HashableBundle: Hashable {
-  private let bundle: Bundle
+  fileprivate let bundle: Bundle
   private let identifier: String
   
   init(bundle: Bundle) {

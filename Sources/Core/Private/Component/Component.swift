@@ -15,6 +15,10 @@ final class Component: _Component {
   fileprivate(set) var injections: [(signature: MethodSignature, method: Method)] = []
   
   var postInit: (signature: MethodSignature, method: Method)? = nil
+  
+  var bundle: Bundle? {
+    return (typeInfo.type as? AnyClass).map{ Bundle(for: $0) }
+  }
 }
 
 extension Component {
@@ -30,5 +34,11 @@ extension Component {
 extension Component {
   func has(name: String) -> Bool {
     return names.contains(name)
+  }
+}
+
+extension Component {
+  var signatures: [MethodSignature] {
+    return initials.map{ $0.key } + injections.map{ $0.signature } + (postInit.map{ [$0.signature] } ?? [])
   }
 }

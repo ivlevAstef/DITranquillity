@@ -7,16 +7,14 @@
 //
 
 final class MethodSignature: Hashable {
-  struct Parameter: Hashable {
+  final class Parameter {
     let type: Any.Type
     let style: DIResolveStyle
+    var links: [Component] = []
     
-    var hashValue: Int {
-      return "\(type)\(style)".hashValue
-    }
-    
-    static func ==(lhs: Parameter, rhs: Parameter) -> Bool {
-      return lhs.type == rhs.type && lhs.style == rhs.style
+    init(type: Any.Type, style: DIResolveStyle) {
+      self.type = type
+      self.style = style
     }
     
     var optional: Bool { return isOptional(self.type) }

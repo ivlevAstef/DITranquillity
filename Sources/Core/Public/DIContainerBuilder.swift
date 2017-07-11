@@ -31,86 +31,148 @@ public final class DIContainerBuilder {
 extension DIContainerBuilder {
   fileprivate func createGraph() -> Bool {
     var success: Bool = true
-    func _log(_ parameter: MethodSignature.Parameter, msg: String) {
+    func checkLog(_ parameter: MethodSignature.Parameter, msg: String) {
       let level: DILogLevel = parameter.optional ? .warning : .error
       log(level, msg: msg)
       success = success && parameter.optional
     }
     
-    func _by(parameter: MethodSignature.Parameter, name: String, in candidates: [ComponentFinal]) -> ComponentFinal? {
-      let filterCandidates = candidates.filter{ $0.has(name: name) }
-      if filterCandidates.isEmpty {
-        _log(parameter, msg: "Not found component for type: \(parameter.type) with name: \(name)")
-        return nil
-      }
-      if filterCandidates.count > 1 {
-        _log(parameter, msg: "Ambiguous type: \(parameter.type) with name: \(name) contains in: \(filterCandidates.map{$0.typeInfo})")
-        return nil
-      }
-      return filterCandidates.first
+    func filter(byName name: String, _ components: [Component]) -> [Component] {
+      return components.filter{ $0.has(name: name) }
     }
     
-    func _by(parameter: MethodSignature.Parameter, tag: AnyObject, in candidates: [ComponentFinal]) -> ComponentFinal? {
+    func filter(byTag tag: AnyObject, _ components: [Component]) -> [Component] {
       let name = toString(tag: tag)
-      let filterCandidates = candidates.filter{ $0.has(name: name) }
-      if filterCandidates.isEmpty {
-        _log(parameter, msg: "Not found component for type: \(parameter.type) with tag: \(tag)")
-        return nil
-      }
-      if filterCandidates.count > 1 {
-        _log(parameter, msg: "Ambiguous type: \(parameter.type) with tag: \(tag) contains in: \(filterCandidates.map{$0.typeInfo})")
-        return nil
-      }
-      return filterCandidates.first
+      return components.filter{ $0.has(name: name) }
     }
     
-    func _by(parameter: MethodSignature.Parameter, in candidates: [ComponentFinal]) -> ComponentFinal? {
-      if candidates.isEmpty {
-        _log(parameter, msg: "Not found component for type: \(parameter.type)")
-        return nil
-      }
-      let defaults = candidates.filter{ $0.isDefault }
-      if defaults.count > 1 || (defaults.isEmpty && candidates.count > 1) {
-        _log(parameter, msg: "Ambiguous type: \(parameter.type) contains in: \(candidates.map{$0.typeInfo})")
-        return nil
+    func filter(_ components: [Component]) -> [Component] {
+      let filtering = components.filter{ $0.isDefault }
+      return filtering.isEmpty ? components : filtering
+    }
+    
+    func filter(byBundle bundle: Bundle?, _ components: [Component]) -> [Component] {
+      if components.count <= 1 {
+        return components
       }
       
-      return defaults.first ?? candidates.first
+      // BFS by depth
+      var queue: ArraySlice<Bundle> = bundle.map{ [$0] } ?? []
+      
+      while !queue.isEmpty {
+        var contents: [Bundle] = []
+        var filtered: [Component] = []
+        
+        while let bundle = queue.popLast() {
+          let filteredByBundle = components.filter{ $0.bundle.map{ BundleContainer.compare(bundle, $0) } ?? true }
+          filtered.append(contentsOf: filteredByBundle)
+          contents.append(contentsOf: bundleContainer.childs(for: bundle))
+        }
+        
+        if 1 == filtered.count {
+          return filtered
+        }
+        queue.append(contentsOf: contents)
+      }
+      
+      return components
     }
     
-    var finalized: [Component: ComponentFinal] = [:]
-    for component in componentContainer.data.flatMap({ $0.value }) {
-      finalized[component] = component.finalize()
-    }
+//    if filterCandidates.isEmpty {
+//      _log(parameter, msg: "Not found component for type: \(parameter.type) with name: \(name)")
+//      return nil
+//    }
+//    if filterCandidates.count > 1 {
+//      _log(parameter, msg: "Ambiguous type: \(parameter.type) with name: \(name) contains in: \(filterCandidates.map{$0.typeInfo})")
+//      return nil
+//    }
+    //
+    //      if filterCandidates.isEmpty {
+    //        _log(parameter, msg: "Not found component for type: \(parameter.type) with tag: \(tag)")
+    //        return nil
+    //      }
+    //      if filterCandidates.count > 1 {
+    //        _log(parameter, msg: "Ambiguous type: \(parameter.type) with tag: \(tag) contains in: \(filterCandidates.map{$0.typeInfo})")
+    //        return nil
+    //      }
+    //
+    //      if candidates.isEmpty {
+    //        _log(parameter, msg: "Not found component for type: \(parameter.type)")
+    //        return nil
+    //      }
+    //      let defaults = candidates.filter{ $0.isDefault }
+    //      if defaults.count > 1 || (defaults.isEmpty && candidates.count > 1) {
+    //        _log(parameter, msg: "Ambiguous type: \(parameter.type) contains in: \(candidates.map{$0.typeInfo})")
+    //        return nil
+    //      }
+    //      
+    //      return defaults.first ?? candidates.first
+    //    }
     
-    for (_, final) in finalized {
-      let signatures = final.initials.map{ $0.key } + final.injections.map{ $0.signature }
-      let parameters = Set(signatures.flatMap{ $0.parameters })
+    func filter(use parameter: MethodSignature.Parameter, _ components: [Component], from bundle: Bundle?) -> [Component] {
+      switch parameter.style {
+      case .arg:
+        return []
+      case .value(_):
+        return []
+      case .name(let name):
+        return filter(byBundle: bundle, filter(byName: name, components))
+      case .tag(let tag):
+        return filter(byBundle: bundle, filter(byTag: tag, components))
+      case .neutral:
+        return filter(byBundle: bundle, filter(components))
+      case .many:
+        return components
+      }
+    }
+
+    
+    let anyComponents: Set<Component> = {
+      var res: Set<Component> = []
+      componentContainer.data.values.forEach{ res.formUnion($0) }
+      return res
+    }()
+    
+    
+    for component in anyComponents {
+      let signatures = component.signatures
+      let parameters = signatures.flatMap{ $0.parameters }
+      
+      let bundle = (component.typeInfo.type as? AnyClass).map{ Bundle(for: $0) }
       
       for parameter in parameters {
+        let candidates = Array(componentContainer[parameter.type])
+        let filtered = filter(use: parameter, candidates, from: bundle)
         
-        let candidates = componentContainer[parameter.type].map{ finalized[$0]! }
-        // TODO: and filter by modules
-        
-        let candidate: ComponentFinal?
-        switch parameter.style {
-        case .arg:
-          candidate = nil
-        case .value(_):
-          candidate = nil
-        case .name(let name):
-          candidate = _by(parameter: parameter, name: name, in: candidates)
-        case .tag(let tag):
-          candidate = _by(parameter: parameter, tag: tag, in: candidates)
-        case .neutral:
-          candidate = _by(parameter: parameter, in: candidates)
+        if filtered.isEmpty {
+          switch parameter.style {
+          case .name(let name):
+            checkLog(parameter, msg: "Not found component for type: \(parameter.type) with name: \(name)")
+          case .tag(let tag):
+            checkLog(parameter, msg: "Not found component for type: \(parameter.type) with tag: \(tag)")
+          case .neutral:
+            checkLog(parameter, msg: "Not found component for type: \(parameter.type)")
+          case .arg, .value(_), .many:
+            break
+          }
         }
         
-        if let candidate = candidate {
-          final.add(component: candidate, for: parameter)
+        if filtered.count >= 1 {
+          let typeInfos = filtered.map{ $0.typeInfo }
+          switch parameter.style {
+          case .name(let name):
+            checkLog(parameter, msg: "Ambiguous type: \(parameter.type) with name: \(name) contains in: \(typeInfos)")
+          case .tag(let tag):
+            checkLog(parameter, msg: "Ambiguous type: \(parameter.type) with tag: \(tag) contains in: \(typeInfos)")
+          case .neutral:
+            checkLog(parameter, msg: "Ambiguous type: \(parameter.type) contains in: \(typeInfos)")
+          case .arg, .value(_), .many:
+            break
+          }
         }
+        //TODO: if error then set empty
+        parameter.links = filtered
       }
-      
     }
     
     return success
