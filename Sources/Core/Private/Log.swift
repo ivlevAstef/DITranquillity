@@ -12,7 +12,7 @@ enum LogBrace {
 
 private var tabulation = ""
 
-internal func log(_ level: DILogLevel, msg: String, brace: LogBrace = .neutral) {
+internal func log(_ level: DILogLevel, msg: @autoclosure ()->String, brace: LogBrace = .neutral) {
   guard let logFunc = DISetting.Log.fun else {
     return
   }
@@ -27,13 +27,11 @@ internal func log(_ level: DILogLevel, msg: String, brace: LogBrace = .neutral) 
   case .neutral:
     break
   case .end:
-    // it's swift :)
-    let positiveOffset = DISetting.Log.tab.characters.count
-    //let index = tabulation.index(tabulation.endIndex, offsetBy: -positiveOffset, limitedBy: 0)
-    //tabulation = tabulation.substring(to: index)
+    assert(tabulation.characters.count >= DISetting.Log.tab.characters.count)
+    tabulation.characters.removeLast(DISetting.Log.tab.characters.count)
   }
   
-  logFunc(level, tabulation + msg)
+  logFunc(level, tabulation + msg())
 }
 
 extension DILogLevel {
