@@ -7,17 +7,16 @@
 //
 
 class Resolver {
-  typealias Method<M> = (M) -> Any
-  private enum Getter<M> {
+  private enum Getter {
     case object(Any)
-    case method(Method<M>)
+    case method([Any.Type])
   }
   
   init(componentContainer: ComponentContainer) {
     self.componentContainer = componentContainer
   }
   
-  func resolve<T, M>(_ container: DIContainer, type: T.Type, method: @escaping Method<M>) -> T {
+  func resolve<T>(_ container: DIContainer, type: T.Type = T.self, args: [Any.Type] = []) -> T {
     log(.info, msg: "Begin resolve type: \(type)", brace: .begin)
     defer { log(.info, msg: "End resolve type: \(type)", brace: .end) }
     
@@ -26,10 +25,10 @@ class Resolver {
       return make(by: nil)
     }
     
-    return make(by: resolve(container, component, "", .method(method)))
+    return make(by: resolve(container, component, .method(args)))
   }
   
-  func resolve<T, M>(_ container: DIContainer, name: String, type: T.Type, method: @escaping Method<M>) -> T {
+  func resolve<T>(_ container: DIContainer, name: String, type: T.Type = T.self, args: [Any.Type] = []) -> T {
     log(.info, msg: "Begin resolve type: \(type) with name: \(name)", brace: .begin)
     defer { log(.info, msg: "End resolve type: \(type) with name: \(name)", brace: .end) }
     
@@ -38,10 +37,10 @@ class Resolver {
       return make(by: nil)
     }
     
-    return make(by: resolve(container, component, name, .method(method)))
+    return make(by: resolve(container, component, .method(args), name: name))
   }
   
-  func resolve<T, M, Tag>(_ container: DIContainer, tag: Tag, type: T.Type, method: @escaping Method<M>) -> T {
+  func resolve<T, Tag>(_ container: DIContainer, tag: Tag, type: T.Type = T.self, args: [Any.Type] = []) -> T {
     let name = toString(tag: tag)
     
     log(.info, msg: "Begin resolve type: \(type) with tag: \(name)", brace: .begin)
@@ -52,7 +51,7 @@ class Resolver {
       return make(by: nil)
     }
     
-    return make(by: resolve(container, component, name, .method(method)))
+    return make(by: resolve(container, component, .method(args), name: name))
   }
   
   func resolve<T>(_ container: DIContainer, obj: T) {
@@ -65,21 +64,23 @@ class Resolver {
       return
     }
     
-    resolve(container, component, "", .object(obj) as Getter<Void>)
+    resolve(container, component, .object(obj))
   }
 
-  func resolveMany<T, M>(_ container: DIContainer, type: T.Type, method: @escaping Method<M>) -> [T] {
+  func resolveMany<T>(_ container: DIContainer, type: T.Type = T.self, args: [Any.Type] = []) -> [T] {
     log(.info, msg: "Begin resolve many type: \(type)", brace: .begin)
     defer { log(.info, msg: "End resolve many type: \(type)", brace: .end) }
     
-    return getComponents(by: type).flatMap{ resolve(container, $0, "", .method(method)) }.map{ make(by: $0) }
+    return getComponents(by: type)
+      .flatMap{ resolve(container, $0, .method(args)) }
+      .map{ make(by: $0) }
   }
 
-  func resolve<M>(_ container: DIContainer, component: Component, method: @escaping Method<M>) {
+  func resolve(_ container: DIContainer, component: Component, args: [Any.Type] = []) {
     log(.info, msg: "Begin resolve by type info: \(component.typeInfo)", brace: .begin)
     defer { log(.info, msg: "End resolve by type info: \(component.typeInfo)", brace: .end) }
     
-    resolve(container, component, "", .method(method))
+    resolve(container, component, .method(args))
   }
   
 
@@ -97,7 +98,7 @@ class Resolver {
   
   /// Super function
   @discardableResult
-  private func resolve<M>(_ container: DIContainer, _ component: Component, _ name: String, _ getter: Getter<M>) -> Any? {
+  private func resolve(_ container: DIContainer, _ component: Component, _ getter: Getter, name: String = "") -> Any? {
     log(.info, msg: "Found type info: \(component.typeInfo)")
     
     let uniqueKey = component.uniqueKey + name
@@ -192,8 +193,10 @@ class Resolver {
         finalObj = obj
         log(.info, msg: "Use object: \(finalObj)")
         
-      case .method(let method):
+      case .method(let args):
         recursive.insert(uniqueKey)
+        //TODO: first found signatures by args
+        //Call method by signature, with parameters use links (if empty -> return nil)
         finalObj = component.new(method)
         recursive.remove(uniqueKey)
         

@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 protocol TypeGetter {
   static var type: Any.Type { get }
 }
@@ -27,6 +28,7 @@ func removeTypeWrappers(_ type: Any.Type) -> Any.Type {
   
   return type
 }
+
 
 
 protocol IsOptional {}
@@ -56,6 +58,8 @@ func make<T>(by obj: Any?) -> T {
   
   return obj as! T // can crash, but it's normally
 }
+
+
 
 func toString(tag: Any) -> String {
   let type = String(describing: type(of: tag))

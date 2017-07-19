@@ -57,3 +57,8 @@ public enum DIResolveStyle: Equatable {
     }
   }
 }
+
+
+public struct DIBuildError: Error {
+  let message: String = "Can't build. Use DISetting.Log.fun for more information"
+}

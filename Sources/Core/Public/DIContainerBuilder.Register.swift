@@ -11,7 +11,7 @@ public extension DIContainerBuilder {
     return registrationBuilder(file: file, line: line)
   }
   
-  public func `import`<IMPORT: DIModule>(_ module: IMPORT.Type) {
+  public func `import`<IMPORT: DIFramework>(_ module: IMPORT.Type) {
     guard let currentBundle = self.currentBundle else {
       log(.warning, msg: "Please, use import only into Component or Module")
       return

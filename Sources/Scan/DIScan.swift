@@ -9,14 +9,12 @@
 public protocol DIScanned {}
 
 open class DIScan<T> {
-  public typealias PredicateByType = (_ type: T.Type)->(Bool)
-  public typealias PredicateByName = (_ name: String)->(Bool)
-  
-  open class var predicateByType: PredicateByType? {
-    get { return nil }
+  public enum Predicate {
+    case type((T.Type)->Bool)
+    case name((String)->Bool)
   }
   
-  open class var predicateByName: PredicateByName? {
+  open class var predicate: Predicate? {
     get { return nil }
   }
   
@@ -24,9 +22,19 @@ open class DIScan<T> {
     get { return nil }
   }
   
-  public static var types: [T.Type] {
+  
+  static var types: [T.Type] {
     let sbpath = bundle?.bundlePath ?? ""
-    let spredicate = predicateByType ?? predicateByName.map{ p in { p(name(by: $0)) } } ?? { _ in true }
+  
+    let spredicate: (T.Type)->Bool
+    switch predicate {
+    case .some(.type(let p)):
+      spredicate = p
+    case .some(.name(let p)):
+      spredicate = { p(name(by: $0)) }
+    case .none:
+      spredicate = { _ in true }
+    }
     
     var result: [T.Type] = []
     for (type, bpath) in scanned {
@@ -38,18 +46,27 @@ open class DIScan<T> {
   }
 }
 
+// Type - for one public/internal
+// Type - for class in class (bug?)
+// Framework.Type for more public/internal
+// (Type in _HASH) for private
+// (Type #1) for func class
+
+private let pubCharacters = CharacterSet(charactersIn: ".")
+private let inCharacters = CharacterSet(charactersIn: " ()")
 private func name<T>(by type: T.Type) -> String {
-  var fullName: String = "\(type)"
-  
-  if "(" == fullName[fullName.startIndex] {
-    fullName.remove(at: fullName.startIndex)
+  let name: String = "\(type)"
+  let pubComponents = name.components(separatedBy: pubCharacters)
+  if pubComponents.count > 1 {
+    return pubComponents.last!
   }
   
-  let range = fullName.range(of: " in")
-  if let range = range {
-    return fullName.substring(to: range.lowerBound)
+  let inComponents = name.components(separatedBy: inCharacters)
+  if inComponents.count > 1 {
+    return inComponents[1]
   }
-  return fullName
+  
+  return name
 }
 
 private let scanned: [(type: DIScanned.Type, bpath: String)] = {

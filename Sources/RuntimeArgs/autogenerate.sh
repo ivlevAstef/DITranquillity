@@ -87,25 +87,4 @@ public extension DIContainer {" > $1
   echo "}" >> $1
 } 
 
-typeResolveFile() { #file
-  echo "//
-//  DIContainer.TypeArg.swift
-//  DITranquillity
-//
-//  Created by Alexander Ivlev on 11/07/16.
-//  Copyright © 2017 Alexander Ivlev. All rights reserved.
-//
-
-public extension DIContainer {" > $1
-
-  for argcount in `seq 0 $argmax`; do
-    resolveFunctions $argcount "_: T.Type,§" $1
-    resolveNameFunctions $argcount "_: T.Type,§" $1
-    resolveTagFunctions $argcount "_: T.Type,§" $1
-  done
-  echo "}" >> $1
-} 
-
-
 resolveFile "DIContainer.Arg.swift"
-typeResolveFile "DIContainer.TypeArg.swift"
