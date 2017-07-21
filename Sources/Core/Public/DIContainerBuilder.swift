@@ -11,7 +11,13 @@ public final class DIContainerBuilder {
   
   @discardableResult
   public func build(f: String = #file, l: Int = #line) throws -> DIContainer {
-    if !createGraph() {
+    let components: Set<Component> = { // reduce is very slow
+      var res: Set<Component> = [] // for uniques
+      componentContainer.data.values.forEach{ res.formUnion($0) }
+      return res
+    }()
+    
+    if !createGraph(components: components) {
       throw DIBuildError()
     }
     
@@ -30,15 +36,7 @@ public final class DIContainerBuilder {
 
 
 extension DIContainerBuilder {
-  fileprivate func createGraph() -> Bool {
-    var success: Bool = true
-    var allSuccess: Bool = true
-    func checkLog(_ parameter: MethodSignature.Parameter, msg: String) {
-      let level: DILogLevel = parameter.optional ? .warning : .error
-      log(level, msg: msg)
-      success = success && parameter.optional
-    }
-    
+  private func filter(use parameter: MethodSignature.Parameter, _ components: [Component], from bundle: Bundle?) -> [Component] {
     func filter(byName name: String, _ components: [Component]) -> [Component] {
       return components.filter{ $0.has(name: name) }
     }
@@ -53,7 +51,7 @@ extension DIContainerBuilder {
       return filtering.isEmpty ? components : filtering
     }
     
-    func filter(byBundle bundle: Bundle?, _ components: [Component]) -> [Component] {
+    func filter(by bundle: Bundle?, _ components: [Component]) -> [Component] {
       if components.count <= 1 {
         return components
       }
@@ -80,32 +78,32 @@ extension DIContainerBuilder {
       return components
     }
     
-    func filter(use parameter: MethodSignature.Parameter, _ components: [Component], from bundle: Bundle?) -> [Component] {
-      switch parameter.style {
-      case .arg:
-        return []
-      case .value(_):
-        return []
-      case .name(let name):
-        return filter(byBundle: bundle, filter(byName: name, components))
-      case .tag(let tag):
-        return filter(byBundle: bundle, filter(byTag: tag, components))
-      case .neutral:
-        return filter(byBundle: bundle, filter(components))
-      case .many:
-        return components
-      }
+    switch parameter.style {
+    case .arg:
+      return []
+    case .value(_):
+      return []
+    case .name(let name):
+      return filter(by: bundle, filter(byName: name, components))
+    case .tag(let tag):
+      return filter(by: bundle, filter(byTag: tag, components))
+    case .neutral:
+      return filter(by: bundle, filter(components))
+    case .many:
+      return components
     }
-
+  }
+  
+  fileprivate func createGraph(components: Set<Component>) -> Bool {
+    var success: Bool = true
+    var allSuccess: Bool = true
+    func checkLog(_ parameter: MethodSignature.Parameter, msg: String) {
+      let level: DILogLevel = parameter.optional ? .warning : .error
+      log(level, msg: msg)
+      success = success && parameter.optional
+    }
     
-    let anyComponents: Set<Component> = {
-      var res: Set<Component> = []
-      componentContainer.data.values.forEach{ res.formUnion($0) }
-      return res
-    }()
-    
-    
-    for component in anyComponents {
+    for component in components {
       let signatures = component.signatures
       let parameters = signatures.flatMap{ $0.parameters }
       
@@ -142,6 +140,10 @@ extension DIContainerBuilder {
           case .arg, .value(_), .many:
             break
           }
+        }
+        
+        if filtered.contains(component) {
+          checkLog(parameter, msg: "Recursive self initialization: \(component.typeInfo)")
         }
         
         parameter.links = success ? filtered : []

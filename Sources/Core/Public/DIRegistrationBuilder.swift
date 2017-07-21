@@ -12,19 +12,19 @@ extension DIRegistrationBuilder {
   
   @discardableResult
   public func `as`(_: DIAsSelf) -> Self {
-    DIRegistrationAlternativeType<Impl, Impl>(builder: self).unsafe()
-    return self
+    return self.as(Impl.self)
   }
   
-  public func `as`<Parent>(_ parentType: Parent.Type) -> DIRegistrationAlternativeType<Impl, Parent> {
-    return DIRegistrationAlternativeType<Impl, Parent>(builder: self)
-  }
-  
-  ///short
   @discardableResult
-  public func `as`<Parent>(_ pType: Parent.Type, check: (Impl)->Parent) -> Self {
-    DIRegistrationAlternativeType<Impl, Parent>(builder: self).check(check)
+  public func `as`<Parent>(_ pType: Parent.Type) -> Self {
+    isTypeSet = true
+    componentContainer.insert(key: pType, value: component)
     return self
+  }
+  
+  @discardableResult
+  public func `as`<Parent>(check pType: Parent.Type, _ check: (Impl)->Parent) -> Self {
+    return self.as(Impl.self)
   }
 }
 
