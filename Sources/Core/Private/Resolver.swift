@@ -9,14 +9,14 @@
 class Resolver {
   private enum Getter {
     case object(Any)
-    case method([Any.Type])
+    case method
   }
   
   init(componentContainer: ComponentContainer) {
     self.componentContainer = componentContainer
   }
   
-  func resolve<T>(_ container: DIContainer, type: T.Type = T.self, args: [Any.Type] = []) -> T {
+  func resolve<T>(_ container: DIContainer, type: T.Type = T.self) -> T {
     log(.info, msg: "Begin resolve type: \(type)", brace: .begin)
     defer { log(.info, msg: "End resolve type: \(type)", brace: .end) }
     
@@ -25,10 +25,10 @@ class Resolver {
       return make(by: nil)
     }
     
-    return make(by: resolve(container, component, .method(args)))
+    return make(by: resolve(container, component, .method))
   }
   
-  func resolve<T>(_ container: DIContainer, name: String, type: T.Type = T.self, args: [Any.Type] = []) -> T {
+  func resolve<T>(_ container: DIContainer, name: String, type: T.Type = T.self) -> T {
     log(.info, msg: "Begin resolve type: \(type) with name: \(name)", brace: .begin)
     defer { log(.info, msg: "End resolve type: \(type) with name: \(name)", brace: .end) }
     
@@ -37,10 +37,10 @@ class Resolver {
       return make(by: nil)
     }
     
-    return make(by: resolve(container, component, .method(args), name: name))
+    return make(by: resolve(container, component, .method, name: name))
   }
   
-  func resolve<T, Tag>(_ container: DIContainer, tag: Tag, type: T.Type = T.self, args: [Any.Type] = []) -> T {
+  func resolve<T, Tag>(_ container: DIContainer, tag: Tag.Type, type: T.Type = T.self) -> T {
     let name = toString(tag: tag)
     
     log(.info, msg: "Begin resolve type: \(type) with tag: \(name)", brace: .begin)
@@ -51,7 +51,7 @@ class Resolver {
       return make(by: nil)
     }
     
-    return make(by: resolve(container, component, .method(args), name: name))
+    return make(by: resolve(container, component, .method, name: name))
   }
   
   func resolve<T>(_ container: DIContainer, obj: T) {
@@ -67,20 +67,20 @@ class Resolver {
     resolve(container, component, .object(obj))
   }
 
-  func resolveMany<T>(_ container: DIContainer, type: T.Type = T.self, args: [Any.Type] = []) -> [T] {
+  func resolveMany<T>(_ container: DIContainer, type: T.Type = T.self) -> [T] {
     log(.info, msg: "Begin resolve many type: \(type)", brace: .begin)
     defer { log(.info, msg: "End resolve many type: \(type)", brace: .end) }
     
     return getComponents(by: type)
-      .flatMap{ resolve(container, $0, .method(args)) }
+      .flatMap{ resolve(container, $0, .method) }
       .map{ make(by: $0) }
   }
 
-  func resolve(_ container: DIContainer, component: Component, args: [Any.Type] = []) {
+  func resolve(_ container: DIContainer, component: Component) {
     log(.info, msg: "Begin resolve by type info: \(component.typeInfo)", brace: .begin)
     defer { log(.info, msg: "End resolve by type info: \(component.typeInfo)", brace: .end) }
     
-    resolve(container, component, .method(args))
+    resolve(container, component, .method)
   }
   
 
@@ -104,6 +104,15 @@ class Resolver {
     let uniqueKey = component.uniqueKey + name
     
     return synchronize(Resolver.monitor) {
+      circular.stack.append(component)
+      
+      defer {
+        circular.stack.removeLast()
+        if circular.stack.isEmpty {
+          setupCircular()
+        }
+      }
+      
       switch component.lifeTime {
       case .single, .lazySingle:
         return resolveSingle()
@@ -153,91 +162,55 @@ class Resolver {
       return nil
     }
     
-    // VERY COMPLEX CODE
+    
     func resolvePerDependency() -> Any? {
-      if recursive.contains(uniqueKey) {
-        log(.error, msg: "Recursive initial for type info: \(component.typeInfo)")
-        return nil
-      }
-      
-      for uniqueKey in circular.recursive {
-        circular.dependencies.append(key: uniqueKey, value: uniqueKey)
-      }
-      
-      let insertIndex = circular.objects.endIndex
-      
-      circular.recursive.append(uniqueKey)
       let obj = getObject()
-      circular.recursive.removeLast()
-      
-      if let fObj = obj, circular.objects.contains(where: { $0.1 as AnyObject === fObj as AnyObject }) {
-        circular.objects.insert((component, uniqueKey, fObj), at: insertIndex)
-      }
-      
-      if circular.recursive.isEmpty {
-        setupInjections(container: container)
-      }
       
       return obj
     }
     
     func getObject() -> Any? {
-      if circular.isCycle(uniqueKey: uniqueKey), let obj = circular.objMap[uniqueKey] {
-        log(.info, msg: "Resolve object: \(obj) use circular cache")
+      switch getter {
+      case .object(let obj):
+        log(.info, msg: "Use object: \(obj)")
+        return obj
+        
+      case .method(let args):
+        guard let (signature, method) = component.initial else {
+          fatalError("Can't found initial method in \(component.typeInfo), for args: \(args)")
+        }
+        
+        let obj = initial(signature: signature, method: method)
+        log(.info, msg: "Create object: \(String(describing: obj))")
+        return obj
+      }
+    }
+    
+    func initial(signature: MethodSignature, method: Method) -> Any? {
+      var valid: Bool = true
+      func check(_ parameter: MethodSignature.Parameter, _ obj: Any?) -> Any? {
+        valid = valid && (parameter.optional || nil != obj)
         return obj
       }
       
-      let finalObj: Any
-      switch getter {
-      case .object(let obj):
-        finalObj = obj
-        log(.info, msg: "Use object: \(finalObj)")
-        
-      case .method(let args):
-        recursive.insert(uniqueKey)
-        //TODO: first found signatures by args
-        //Call method by signature, with parameters use links (if empty -> return nil)
-        finalObj = component.new(method)
-        recursive.remove(uniqueKey)
-        
-        log(.info, msg: "Create object: \(finalObj)")
+      let objects: [Any?] = signature.parameters.map {
+        switch $0.style {
+        case .value(let obj):
+          return check($0, obj)
+        case .neutral, .name(_), .tag(_):
+          return check($0, resolve(container, $0.links.first!, .method))
+        case .many:
+          return check($0, $0.links.flatMap{ resolve(container, $0, .method) })
+        }
       }
       
-      circular.objMap[uniqueKey] = finalObj
-      
-      return finalObj
-    }
-  }
-  
-  private func setupInjections(container: DIContainer) {
-    repeat {
-      for (component, uniqueKey, obj) in circular.objects {
-        setupInjections(container: container, component: component, uniqueKey: uniqueKey, obj: obj)
-        circular.objects.removeFirst()
+      if !valid {
+        return nil
       }
-    } while (!circular.objects.isEmpty) // because setupInjections can added into objects
-    
-    circular.clean()
-  }
-  
-  private func setupInjections(container: DIContainer, component: Component, uniqueKey: String, obj: Any) {
-    if component.injections.isEmpty {
-      return
-    }
-    
-    log(.info, msg: "Begin injections in object: \(obj) with typeInfo: \(component.typeInfo)", brace: .begin)
-    defer { log(.info, msg: "End injections in object: \(obj) with typeInfo: \(component.typeInfo)", brace: .end) }
-    
-    circular.recursive.append(uniqueKey)
-    defer { circular.recursive.removeLast() }
-    
-    let mapSave = circular.objMap
-    for index in 0..<component.injections.count {
-      circular.objMap = mapSave
-      component.injections[index](container, obj)
+      
+      return method(objects)
     }
   }
-
  
   private let componentContainer: ComponentContainer
   private static let monitor = NSObject()
@@ -247,19 +220,13 @@ class Resolver {
   var recursive: Set<Component.UniqueKey> = []
   
   class Circular {
-    var objects: [(Component, String, Any)] = []
-    var recursive: [Component.UniqueKey] = []
-    var dependencies = Multimap<Component.UniqueKey, Component.UniqueKey>()
-    var objMap: [Component.UniqueKey: Any] = [:]
+    var stack: [Component] = [] // stack objects for make
+    var cache: [Component: Any] = [:] // created objects
     
-    func clean() {
-      objects.removeAll()
-      dependencies.removeAll()
-      objMap.removeAll()
-    }
+    var oldestInjections: [MethodSignature] = [] // injections for set after stack changed to empty
     
-    func isCycle(uniqueKey: String) -> Bool {
-      return recursive.contains { dependencies[$0].contains(uniqueKey) }
+    func isOldestInjection(component: Component) -> Bool {
+      return nil == cache[component] && stack.contains(component)
     }
   }
   

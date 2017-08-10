@@ -11,6 +11,11 @@ public final class DIContainerBuilder {
   
   @discardableResult
   public func build(f: String = #file, l: Int = #line) throws -> DIContainer {
+    let container = DIContainer(resolver: Resolver(componentContainer: componentContainer))
+    self.register(type: DIContainer.self)
+      .initial{ container }
+      .lifetime(.perDependency)
+    
     let components: Set<Component> = { // reduce is very slow
       var res: Set<Component> = [] // for uniques
       componentContainer.data.values.forEach{ res.formUnion($0) }
@@ -21,13 +26,12 @@ public final class DIContainerBuilder {
       throw DIBuildError()
     }
     
-    let container = DIContainer(resolver: Resolver(componentContainer: componentContainer))
     initSingleLifeTime(container: container)
 
     return container
   }
   
-  let componentContainer = ComponentContainer()
+  var components: Set<Component> = []
   let bundleContainer = BundleContainer()
   // non thread safe!
   var ignoredComponents: Set<String> = []
@@ -79,8 +83,6 @@ extension DIContainerBuilder {
     }
     
     switch parameter.style {
-    case .arg:
-      return []
     case .value(_):
       return []
     case .name(let name):
@@ -95,6 +97,10 @@ extension DIContainerBuilder {
   }
   
   fileprivate func createGraph(components: Set<Component>) -> Bool {
+    func removeEmptyInitial(_ components: [Component]) -> [Component] {
+      return components.filter { nil != $0.initial }
+    }
+    
     var success: Bool = true
     var allSuccess: Bool = true
     func checkLog(_ parameter: MethodSignature.Parameter, msg: String) {
@@ -104,6 +110,7 @@ extension DIContainerBuilder {
     }
     
     for component in components {
+      let initialSignature = component.initial?.signature
       let signatures = component.signatures
       let parameters = signatures.flatMap{ $0.parameters }
       
@@ -113,9 +120,10 @@ extension DIContainerBuilder {
         success = true
         
         let candidates = Array(componentContainer[parameter.type])
-        let filtered = filter(use: parameter, candidates, from: bundle)
+        let preFiltered = filter(use: parameter, candidates, from: bundle)
+        let filtered = removeEmptyInitial(preFiltered)
         
-        if filtered.isEmpty {
+        if preFiltered.isEmpty {
           switch parameter.style {
           case .name(let name):
             checkLog(parameter, msg: "Not found component for type: \(parameter.type) with name: \(name)")
@@ -123,7 +131,14 @@ extension DIContainerBuilder {
             checkLog(parameter, msg: "Not found component for type: \(parameter.type) with tag: \(tag)")
           case .neutral:
             checkLog(parameter, msg: "Not found component for type: \(parameter.type)")
-          case .arg, .value(_), .many:
+          case .value(_), .many:
+            break
+          }
+        } else if filtered.isEmpty {
+          switch parameter.style {
+          case .name(_),.tag(_),.neutral:
+            checkLog(parameter, msg: "Not found component for type: \(parameter.type) and simply method signature")
+          case .value(_), .many:
             break
           }
         }
@@ -137,14 +152,18 @@ extension DIContainerBuilder {
             checkLog(parameter, msg: "Ambiguous type: \(parameter.type) with tag: \(tag) contains in: \(typeInfos)")
           case .neutral:
             checkLog(parameter, msg: "Ambiguous type: \(parameter.type) contains in: \(typeInfos)")
-          case .arg, .value(_), .many:
+          case .value(_), .many:
             break
           }
         }
         
-        if filtered.contains(component) {
-          checkLog(parameter, msg: "Recursive self initialization: \(component.typeInfo)")
-        }
+        /// Recursive initialization can A(B) , B(A) - need show initialSignature
+//        if filtered.contains(component) {
+//          let isInitial = initialSignature?.parameters.contains{ $0 === parameter } ?? false
+//          if isInitial {
+//            checkLog(parameter, msg: "Recursive self initialization: \(component.typeInfo)")
+//          }
+//        }
         
         parameter.links = success ? filtered : []
         

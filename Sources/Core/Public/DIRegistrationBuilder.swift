@@ -8,38 +8,26 @@
 
 // as...
 extension DIRegistrationBuilder {
-  public enum DIAsSelf { case `self` }
-  
   @discardableResult
-  public func `as`(_: DIAsSelf) -> Self {
-    return self.as(Impl.self)
-  }
-  
-  @discardableResult
-  public func `as`<Parent>(_ pType: Parent.Type) -> Self {
-    isTypeSet = true
-    componentContainer.insert(key: pType, value: component)
+  public func `as`<Parent>(_ type: Parent.Type) -> Self {
+    component.names.insert(TypeKey(by: type))
     return self
   }
   
   @discardableResult
-  public func `as`<Parent>(check pType: Parent.Type, _ check: (Impl)->Parent) -> Self {
-    return self.as(Impl.self)
-  }
-}
-
-// set...
-extension DIRegistrationBuilder {
-  @discardableResult
-  public func set(name: String) -> Self {
-    component.names.insert(name)
+  public func `as`<Parent, Tag>(_ type: Parent.Type, tag: Tag.Type) -> Self {
+    component.names.insert(TypeKey(by: type, and: tag))
     return self
   }
-
+  
   @discardableResult
-  public func set<T>(tag: T) -> Self {
-    component.names.insert(toString(tag: tag))
-    return self
+  public func `as`<Parent>(check type: Parent.Type, _ check: (Impl)->Parent) -> Self {
+    return self.as(type)
+  }
+  
+  @discardableResult
+  public func `as`<Parent, Tag>(check type: Parent.Type, tag: Tag.Type, _ check: (Impl)->Parent) -> Self {
+    return self.as(type, tag: tag)
   }
 }
 
@@ -47,7 +35,7 @@ extension DIRegistrationBuilder {
 extension DIRegistrationBuilder {
   @discardableResult
   public func initial(_ closure: @escaping () -> Impl) -> Self {
-    component.append(initial: MethodMaker.make(by: closure))
+    component.set(initial: MethodMaker.make(by: closure))
     return self
   }
 }
@@ -56,7 +44,7 @@ extension DIRegistrationBuilder {
 extension DIRegistrationBuilder {
   @discardableResult
   public func injection(_ method: @escaping (Impl) -> ()) -> Self {
-    component.append(initial: MethodMaker.make(by: method, styles: [.neutral]))
+    component.append(injection: MethodMaker.make(by: method, styles: [.neutral]))
     return self
   }
   
@@ -70,7 +58,7 @@ extension DIRegistrationBuilder {
 // Other
 extension DIRegistrationBuilder {
   @discardableResult
-  public func lifetime(_ lifetime: DILifeTime) -> Self {
+  public func lifetime(_ lifetime: DI.LifeTime) -> Self {
     component.lifeTime = lifetime
     return self
   }
@@ -83,32 +71,24 @@ extension DIRegistrationBuilder {
 }
 
 public final class DIRegistrationBuilder<Impl> {
-  public typealias RS = DIResolveStyle // for short syntax
-  
-  init(container: DIContainerBuilder, typeInfo: DITypeInfo) {
-    self.component = Component(typeInfo: typeInfo)
-    self.componentContainer = container.componentContainer
+  init(container: DIContainerBuilder, componentInfo: DI.ComponentInfo) {
+    self.component = Component(componentInfo: componentInfo)
+    container.components.insert(component)
   }
   
   deinit {
-    if !isTypeSet {
-      self.as(.self)
-    }
-    
     var msg = component.isDefault ? "default " : ""
-    msg += "registration: \(component.typeInfo)\n"
-    msg += "\(DISetting.Log.tab)initials: \(component.initials.count)\n"
+    msg += "registration: \(component.componentInfo)\n"
+    msg += "\(DI.Setting.Log.tab)initial: \(nil != component.initial)\n"
     
-    msg += "\(DISetting.Log.tab)lifetime: \(component.lifeTime)\n"
-    msg += "\(DISetting.Log.tab)names: \(component.names)\n"
-    msg += "\(DISetting.Log.tab)is default: \(component.isDefault)\n"
+    msg += "\(DI.Setting.Log.tab)lifetime: \(component.lifeTime)\n"
+    msg += "\(DI.Setting.Log.tab)names: \(component.names)\n"
+    msg += "\(DI.Setting.Log.tab)is default: \(component.isDefault)\n"
     
-    msg += "\(DISetting.Log.tab)injections: \(component.injections.count)\n"
+    msg += "\(DI.Setting.Log.tab)injections: \(component.injections.count)\n"
     
     log(.info, msg: msg)
   }
   
-  var isTypeSet: Bool = false
   let component: Component
-  let componentContainer: ComponentContainer
 }

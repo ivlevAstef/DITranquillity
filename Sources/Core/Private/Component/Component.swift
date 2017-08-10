@@ -7,23 +7,23 @@
 //
 
 final class Component: _Component {
-  var lifeTime = DILifeTime.default
-  var names: Set<String> = [] //TODO: maybe array? he fasted for append
+  var lifeTime = DI.LifeTime.default
+  var names: Set<TypeKey> = [] //TODO: maybe array? he fasted for append
   var isDefault: Bool = false
   
-  fileprivate(set) var initials: [MethodSignature: Method] = [:] // TODO: remove more initial semantic?
+  fileprivate(set) var initial: (signature: MethodSignature, method: Method)?
   fileprivate(set) var injections: [(signature: MethodSignature, method: Method)] = []
   
   var postInit: (signature: MethodSignature, method: Method)? = nil
   
   var bundle: Bundle? {
-    return (typeInfo.type as? AnyClass).map{ Bundle(for: $0) }
+    return (componentInfo.type as? AnyClass).map{ Bundle(for: $0) }
   }
 }
 
 extension Component {
-  func append(initial makeResult: MethodMaker.Result) {
-    initials[makeResult.signature] = makeResult.method
+  func set(initial makeResult: MethodMaker.Result) {
+    initial = (makeResult.signature, makeResult.method)
   }
   
   func append(injection makeResult: MethodMaker.Result) {
@@ -39,6 +39,6 @@ extension Component {
 
 extension Component {
   var signatures: [MethodSignature] {
-    return initials.map{ $0.key } + injections.map{ $0.signature } + (postInit.map{ [$0.signature] } ?? [])
+    return (initial?.signature.map{ [$0] } ?? []) + injections.map{ $0.signature } + (postInit.map{ [$0.signature] } ?? [])
   }
 }

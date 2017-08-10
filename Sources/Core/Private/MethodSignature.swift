@@ -6,7 +6,7 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-final class MethodSignature: Hashable {
+final class MethodSignature {
   final class Parameter {
     let type: Any.Type
     let style: DIResolveStyle
@@ -21,7 +21,6 @@ final class MethodSignature: Hashable {
   }
   
   let parameters: [Parameter]
-  let unique: String
   
   convenience init(styles: [DIResolveStyle], types: [Any.Type]) {
     self.init(styles, types)
@@ -35,15 +34,6 @@ final class MethodSignature: Hashable {
       parameters.append(Parameter(type: types[i], style: style))
     }
     self.parameters = parameters
-    
-    self.unique = parameters
-      .filter{ $0.style == .arg }
-      .map{ TypeKey(by: $0.type) }
-      .joined()
   }
   
-  var hashValue: Int { return unique.hashValue }
-  static func ==(lhs: MethodSignature, rhs: MethodSignature) -> Bool {
-    return lhs.unique == rhs.unique
-  }
 }

@@ -9,12 +9,12 @@
 class _Component {
   typealias UniqueKey = String
   
-  init(typeInfo: DITypeInfo) {
-    self.typeInfo = typeInfo
-    self.uniqueKey = "\(typeInfo.type)\(typeInfo.file)\(typeInfo.line)"
+  init(componentInfo: DI.ComponentInfo) {
+    self.componentInfo = componentInfo
+    self.uniqueKey = "\(componentInfo.type)\(componentInfo.file)\(componentInfo.line)"
   }
 
-  let typeInfo: DITypeInfo
+  let componentInfo: DI.ComponentInfo
   let uniqueKey: UniqueKey
 }
 

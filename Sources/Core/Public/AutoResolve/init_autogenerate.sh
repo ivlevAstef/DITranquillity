@@ -24,7 +24,7 @@ local Styles=$(join ',' $(replaceToArg numbers[@] "s;I"))
 
 echo "  @discardableResult
   public func initial<$PType>($PStyles,_ c: @escaping ($PType) -> Impl) -> Self {
-    component.append(initial: MethodMaker.make(by: c, styles: [$Styles]))
+    component.set(initial: MethodMaker.make(by: c, styles: [$Styles]))
     return self
   }
 " >> $2

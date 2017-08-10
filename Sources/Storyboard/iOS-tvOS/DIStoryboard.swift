@@ -31,7 +31,6 @@ public extension DIContainerBuilder {
   public func register<T: UIViewController>(vc type: T.Type, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
     return registrationBuilder(file: file, line: line)
       .as(.self)
-      .initialNotNecessary()
   }
 }
 
@@ -39,20 +38,13 @@ public extension DIContainerBuilder {
 public extension DIRegistrationBuilder where Impl: UIViewController {
   @discardableResult
   public func initial<T: UIViewController>(nib type: T.Type) -> Self {
-    rType.append(initial: { (_:DIContainer) -> Any in UIViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T })
-    return self
+    assert(Impl.self == type)
+    return initial{ UIViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! Impl }
   }
   
   @discardableResult
   public func initial(useStoryboard storyboard: UIStoryboard, identifier: String) -> Self {
-    rType.append(initial: { (_:DIContainer) -> Any in storyboard.instantiateViewController(withIdentifier: identifier) })
-    return self
-  }
-  
-  @discardableResult
-  public func initial(useStoryboard closure: @escaping (DIContainer) -> UIStoryboard, identifier: String) -> Self {
-    rType.append(initial: { c -> Any in try closure(c).instantiateViewController(withIdentifier: identifier) })
-    return self
+    return initial{ storyboard.instantiateViewController(withIdentifier: identifier) as! Impl }
   }
 }
 
@@ -60,8 +52,7 @@ public extension DIRegistrationBuilder where Impl: UIViewController {
 public extension DIRegistrationBuilder where Impl: UIStoryboard {
   @discardableResult
   public func initial(name: String, bundle storyboardBundleOrNil: Bundle?) -> Self {
-    self.initial { c -> Impl in DIStoryboard(name: name, bundle: storyboardBundleOrNil, container: c) as! Impl }
-    return self
+    return initial{ DIStoryboard(name: name, bundle: storyboardBundleOrNil, container: $0) as! Impl }
   }
 }
 

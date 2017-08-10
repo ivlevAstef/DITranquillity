@@ -9,8 +9,13 @@
 typealias TypeKey = String
 
 extension String {
-  init(by type: DIType) {
+  init(by type: DI.AType) {
     let bundle = Bundle(for: type as! AnyClass)
     self = "\(type)_\(bundle.bundleIdentifier ?? bundle.bundlePath)"
+  }
+  
+  init(by type: DI.AType, and tag: DI.Tag) {
+    let bundle = Bundle(for: type as! AnyClass)
+    self = "\(type)_\(bundle.bundleIdentifier ?? bundle.bundlePath)_\(tag)"
   }
 }
