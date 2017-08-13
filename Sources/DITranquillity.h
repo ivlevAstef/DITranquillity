@@ -6,8 +6,12 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-#ifdef ENABLE_DI_STORYBOARD
+#import <Foundation/Foundation.h>
+
+//! Project version number for DITranquillity.
+FOUNDATION_EXPORT double DITranquillityVersionNumber;
+
+//! Project version string for DITranquillity.
+FOUNDATION_EXPORT const unsigned char DITranquillityVersionString[];
 
 #import <DITranquillity/DIStoryboardBase.h>
-
-#endif
