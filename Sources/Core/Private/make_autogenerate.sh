@@ -23,8 +23,8 @@ local MArg=$(join ',' $(replaceToArg numbers[@] "m(\$0[;I])"))
 local PSType=$(join ',' $(replaceToArg numbers[@] "P;I.self"))
 
 
-echo "  static func make<$PType,R>(by f: @escaping ($PType)->R, styles s: [DIResolveStyle]) -> Result {
-    return ({f($MArg)}, MS(s, [$PSType]))
+echo "  static func make<$PType,R>(by f: @escaping ($PType)->R) -> MethodSignature {
+    return MS([$PSType], {f($MArg)})
   }
 " >> $2
 }
@@ -38,16 +38,13 @@ echo "//
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-typealias Method = ([Any?])->Any?
-
 // for short write MethodMaker
 private func m<T>(_ obj: Any?) ->T { return make(by: obj) }
 private typealias MS = MethodSignature
 struct MethodMaker {
-  typealias Result = (method: Method, signature: MethodSignature)
 
-  static func make<R>(by f: @escaping ()->R) -> Result {
-    return ({_ in f()}, MS([], []))
+  static func make<R>(by f: @escaping ()->R) -> MethodSignature {
+    return MS([], {_ in f()})
   }
 " > $1
 

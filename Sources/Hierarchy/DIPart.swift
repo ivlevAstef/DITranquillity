@@ -7,10 +7,10 @@
 //
 
 public protocol DIPart: class {
-  static func load(builder: DIContainerBuilder)
+  static func load(builder: DI.ContainerBuilder)
 }
 
-public extension DIContainerBuilder {
+public extension DI.ContainerBuilder {
   public func register(part: DIPart.Type, file: String = #file, line: Int = #line) {
     let key = "\(line)\(file)"
     // Optimization build

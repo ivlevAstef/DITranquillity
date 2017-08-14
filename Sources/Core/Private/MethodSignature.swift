@@ -7,33 +7,26 @@
 //
 
 final class MethodSignature {
+  typealias Call = ([Any?])->Any?
+  
   final class Parameter {
-    let type: Any.Type
-    let style: DIResolveStyle
+    let type: DI.AType
     var links: [Component] = []
     
-    init(type: Any.Type, style: DIResolveStyle) {
+    init(type: DI.AType) {
       self.type = type
-      self.style = style
     }
     
     var optional: Bool { return isOptional(self.type) }
+    var taggedType: IsTag.Type? { return self.type as? IsTag.Type }
+    var many: Bool { return isMany(self.type) }
   }
   
   let parameters: [Parameter]
+  let call: Call
   
-  convenience init(styles: [DIResolveStyle], types: [Any.Type]) {
-    self.init(styles, types)
+  init(_ types: [DI.AType], _ call: @escaping Call) {
+    self.parameters = types.map{ Parameter(type: $0) }
+    self.call = call
   }
-  
-  init(_ styles: [DIResolveStyle], _ types: [Any.Type]) {
-    assert(styles.count == types.count || 0 == styles.count)
-    var parameters: [Parameter] = []
-    for i in 0..<types.count {
-      let style = i < styles.count ? styles[i] : DIResolveStyle.default
-      parameters.append(Parameter(type: types[i], style: style))
-    }
-    self.parameters = parameters
-  }
-  
 }

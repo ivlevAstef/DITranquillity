@@ -8,6 +8,9 @@
 
 
 /// Namespace
+/// All public classes are in this namespace
+/// But a protocols have prefix 'DI' and are not part of the namespace
+/// protocols: DIPart, DIFramework, DIScanned
 public struct DI {}
 
 public extension DI {

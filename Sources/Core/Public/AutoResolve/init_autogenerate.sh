@@ -19,28 +19,31 @@ registrationInitFunction() { #argcount file
 local numbers=($(seq 0 $1))
 
 local PType=$(join ',' ${numbers[@]/#/P})
-local PStyles=$(join ',' $(replaceToArg numbers[@] "_s;I:RS=d")); PStyles=${PStyles//_s/_ s}
-local Styles=$(join ',' $(replaceToArg numbers[@] "s;I"))
 
 echo "  @discardableResult
-  public func initial<$PType>($PStyles,_ c: @escaping ($PType) -> Impl) -> Self {
-    component.set(initial: MethodMaker.make(by: c, styles: [$Styles]))
-    return self
+  public func initial<$PType>(_ c: @escaping ($PType) -> Impl) -> Self {
+    return set(initial: MM.make(by: c))
   }
 " >> $2
 }
 
 registationInitFile() { #file
 echo "//
-//  DIRegistrationBuilder.Arg.swift
+//  DI.ComponentBuilder.Init.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 27/01/2017.
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-private let d=DIResolveStyle.neutral
-public extension DIRegistrationBuilder {
+private typealias MM = MethodMaker
+
+public extension DI.ComponentBuilder {
+
+  private func set(initial signature: MethodSignature) -> Self {
+    component.set(initial: signature)
+    return self
+  }
 " > $1
 
 for argcount in `seq 0 $argmax`; do
@@ -49,4 +52,4 @@ done
 echo "}" >> $1
 }
 
-registationInitFile "DIRegistrationBuilder.Arg.swift"
+registationInitFile "DI.ComponentBuilder.Init.swift"

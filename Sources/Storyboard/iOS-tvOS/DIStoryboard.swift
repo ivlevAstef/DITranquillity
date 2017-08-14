@@ -8,29 +8,24 @@
 
 import UIKit
 
-public final class DIStoryboard: UIStoryboard {
-  public required init(name: String, bundle storyboardBundleOrNil: Bundle?, container: DIContainer) {
-    storyboard = _DIStoryboardBase.create(name, bundle: storyboardBundleOrNil)
-    super.init()
-    storyboard.resolver = DIStoryboardResolver(container: container)
-  }
+extension DI {
 
-  public override func instantiateInitialViewController() -> UIViewController? {
-    return storyboard.instantiateInitialViewController()
-  }
+  public final class Storyboard: UIStoryboard {
+    public required init(name: String, bundle storyboardBundleOrNil: Bundle?, container: DI.Container) {
+      storyboard = _DIStoryboardBase.create(name, bundle: storyboardBundleOrNil)
+      super.init()
+      storyboard.resolver = StoryboardResolver(container: container)
+    }
 
-  public override func instantiateViewController(withIdentifier identifier: String) -> UIViewController {
-    return storyboard.instantiateViewController(withIdentifier: identifier)
-  }
+    public override func instantiateInitialViewController() -> UIViewController? {
+      return storyboard.instantiateInitialViewController()
+    }
 
-  private let storyboard: _DIStoryboardBase
-}
+    public override func instantiateViewController(withIdentifier identifier: String) -> UIViewController {
+      return storyboard.instantiateViewController(withIdentifier: identifier)
+    }
 
-public extension DIContainerBuilder {
-  @discardableResult
-  public func register<T: UIViewController>(vc type: T.Type, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
-    return registrationBuilder(file: file, line: line)
-      .as(.self)
+    private let storyboard: _DIStoryboardBase
   }
 }
 
@@ -52,7 +47,7 @@ public extension DIRegistrationBuilder where Impl: UIViewController {
 public extension DIRegistrationBuilder where Impl: UIStoryboard {
   @discardableResult
   public func initial(name: String, bundle storyboardBundleOrNil: Bundle?) -> Self {
-    return initial{ DIStoryboard(name: name, bundle: storyboardBundleOrNil, container: $0) as! Impl }
+    return initial{ DI.Storyboard(name: name, bundle: storyboardBundleOrNil, container: $0) as! Impl }
   }
 }
 

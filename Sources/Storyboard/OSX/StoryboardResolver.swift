@@ -1,5 +1,5 @@
 //
-//  DIStoryboardResolver.swift
+//  StoryboardResolver.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 05/01/17.
@@ -8,8 +8,8 @@
 
 import Cocoa
 
-final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
-  init(container: DIContainer) {
+final class StoryboardResolver: NSObject, _DIStoryboardBaseResolver {
+  init(container: DI.Container) {
     self.container = container
   }
 
@@ -33,5 +33,5 @@ final class DIStoryboardResolver: NSObject, _DIStoryboardBaseResolver {
     _ = self.container.resolve(vc)
   }
 
-  private let container: DIContainer
+  private let container: DI.Container
 }

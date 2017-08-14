@@ -8,8 +8,19 @@
 
 public protocol DIFramework: DIPart { }
 
-public extension DIContainerBuilder {
+public extension DI.ContainerBuilder {
   public func register(framework: DIFramework.Type, file: String = #file, line: Int = #line) {
     register(part: framework, file: file, line: line)
+  }
+}
+
+
+public extension DI.ContainerBuilder {
+  public func `import`<IMPORT: DIFramework>(_ module: IMPORT.Type) {
+    guard let currentBundle = self.currentBundle else {
+      log(.warning, msg: "Please, use import only into Component or Module")
+      return
+    }
+    bundleContainer.dependency(bundle: currentBundle, import: Bundle(for: module))
   }
 }

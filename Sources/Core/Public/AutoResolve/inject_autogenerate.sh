@@ -19,28 +19,31 @@ registrationInjectFunction() { #argcount file
 local numbers=($(seq 0 $1))
 
 local PType=$(join ',' ${numbers[@]/#/P})
-local PStyles=$(join ',' $(replaceToArg numbers[@] "_s;I:RS=d")); PStyles=${PStyles//_s/_ s}
-local Styles=$(join ',' $(replaceToArg numbers[@] "s;I"))
 
 echo "  @discardableResult
-  public func injection<$PType>($PStyles,_ m: @escaping (Impl,$PType) -> ()) -> Self {
-    component.append(injection: MethodMaker.make(by: m, styles: [.neutral, $Styles]))
-    return self
+  public func injection<$PType>(_ m: @escaping (Impl,$PType) -> ()) -> Self {
+    return append(injection: MM.make(by: m))
   }
 " >> $2
 }
 
 registationInjectFile() { #file
 echo "//
-//  DIRegistrationBuilder.Injection.Methods.swift
+//  DI.ComponentBuilder.Injection.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 03/02/2017.
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-private let d=DIResolveStyle.neutral
-public extension DIRegistrationBuilder {
+private typealias MM = MethodMaker
+
+public extension DI.ComponentBuilder {
+
+  private func append(injection signature: MethodSignature) -> Self {
+    component.append(injection: signature)
+    return self
+  }
 " > $1
 
 for argcount in `seq 0 $argmax`; do
@@ -49,4 +52,4 @@ done
 echo "}" >> $1
 }
 
-registationInjectFile "DIRegistrationBuilder.Injection.Methods.swift"
+registationInjectFile "DI.ComponentBuilder.Injection.swift"

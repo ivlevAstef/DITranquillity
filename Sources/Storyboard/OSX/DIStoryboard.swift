@@ -8,31 +8,26 @@
 
 import Cocoa
 
-public final class DIStoryboard: NSStoryboard {
-  public required init(name: String, bundle storyboardBundleOrNil: Bundle?, container: DIContainer) {
-    storyboard = _DIStoryboardBase.create(name, bundle: storyboardBundleOrNil)
-    super.init()
-    storyboard.resolver = DIStoryboardResolver(container: container)
-  }
+extension DI {
 
-  public override func instantiateInitialController() -> Any? {
-    return storyboard.instantiateInitialController()
-  }
+  public final class DIStoryboard: NSStoryboard {
+    public required init(name: String, bundle storyboardBundleOrNil: Bundle?, container: DI.Container) {
+      storyboard = _DIStoryboardBase.create(name, bundle: storyboardBundleOrNil)
+      super.init()
+      storyboard.resolver = StoryboardResolver(container: container)
+    }
 
-  public override func instantiateController(withIdentifier identifier: String) -> Any {
-    return storyboard.instantiateController(withIdentifier: identifier)
-  }
-  
-  private let storyboard: _DIStoryboardBase
-}
+    public override func instantiateInitialController() -> Any? {
+      return storyboard.instantiateInitialController()
+    }
 
-public extension DIContainerBuilder {
-  @discardableResult
-  public func register<T: AnyObject>(vc type: T.Type, file: String = #file, line: Int = #line) -> DIRegistrationBuilder<T> {
-    return registrationBuilder(file: file, line: line)
-      .as(.self)
-      .initialNotNecessary()
+    public override func instantiateController(withIdentifier identifier: String) -> Any {
+      return storyboard.instantiateController(withIdentifier: identifier)
+    }
+    
+    private let storyboard: _DIStoryboardBase
   }
+    
 }
 
 // ViewController
@@ -60,7 +55,7 @@ public extension DIRegistrationBuilder where Impl: NSViewController {
 public extension DIRegistrationBuilder where Impl: NSStoryboard {
   @discardableResult
   public func initial(name: String, bundle storyboardBundleOrNil: Bundle?) -> Self {
-    self.initial { c -> Impl in DIStoryboard(name: name, bundle: storyboardBundleOrNil, container: c) as! Impl }
+    self.initial { c -> Impl in DI.Storyboard(name: name, bundle: storyboardBundleOrNil, container: c) as! Impl }
     return self
   }
 }

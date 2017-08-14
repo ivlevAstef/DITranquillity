@@ -10,11 +10,11 @@ class _Component {
   typealias UniqueKey = String
   
   init(componentInfo: DI.ComponentInfo) {
-    self.componentInfo = componentInfo
+    self.info = componentInfo
     self.uniqueKey = "\(componentInfo.type)\(componentInfo.file)\(componentInfo.line)"
   }
 
-  let componentInfo: DI.ComponentInfo
+  let info: DI.ComponentInfo
   let uniqueKey: UniqueKey
 }
 

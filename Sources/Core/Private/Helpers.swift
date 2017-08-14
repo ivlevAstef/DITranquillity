@@ -8,23 +8,40 @@
 
 import Foundation
 
+protocol IsMany { }
+
+extension Array: IsMany { }
+extension Set: IsMany { }
+
+func isMany(_ type: Any.Type) -> Bool {
+  return type is IsMany.Type
+}
 
 protocol TypeGetter {
   static var type: Any.Type { get }
 }
 
 extension ImplicitlyUnwrappedOptional: TypeGetter {
-  static var type: Any.Type { return Wrapped.self  }
+  static var type: Any.Type { return Wrapped.self }
 }
 
 extension Optional: TypeGetter {
-  static var type: Any.Type { return Wrapped.self  }
+  static var type: Any.Type { return Wrapped.self }
+}
+
+extension Array: TypeGetter {
+  static var type: Any.Type { return Element.self }
+}
+
+extension Set: TypeGetter {
+  static var type: Any.Type { return Element.self }
 }
 
 func removeTypeWrappers(_ type: Any.Type) -> Any.Type {
   if let typeGetter = type as? TypeGetter.Type {
     return removeTypeWrappers(typeGetter.type)
   }
+  
   
   return type
 }
@@ -35,7 +52,7 @@ protocol IsOptional {}
 extension Optional: IsOptional { }
 
 func isOptional(_ type: Any.Type) -> Bool {
-  return type is IsOptional
+  return type is IsOptional.Type
 }
 
 protocol OptionalMake {
