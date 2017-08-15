@@ -111,9 +111,9 @@
 		D55AFCC51EEEB88500527D27 /* init_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCC31EEEB88500527D27 /* init_autogenerate.sh */; };
 		D55AFCC61EEEB88500527D27 /* init_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCC31EEEB88500527D27 /* init_autogenerate.sh */; };
 		D55BB84A1F0DEDC3001481DF /* ComponentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55BB8491F0DEDC3001481DF /* ComponentContainer.swift */; };
-		D5E3C7D21F3C0C5A0022DD43 /* ByTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3C7D11F3C0C5A0022DD43 /* ByTag.swift */; };
-		D5E3C7D31F3C0C5A0022DD43 /* ByTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3C7D11F3C0C5A0022DD43 /* ByTag.swift */; };
-		D5E3C7D41F3C0C5A0022DD43 /* ByTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3C7D11F3C0C5A0022DD43 /* ByTag.swift */; };
+		D5E3C7D21F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3C7D11F3C0C5A0022DD43 /* ByTagAndMany.swift */; };
+		D5E3C7D31F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3C7D11F3C0C5A0022DD43 /* ByTagAndMany.swift */; };
+		D5E3C7D41F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3C7D11F3C0C5A0022DD43 /* ByTagAndMany.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -161,7 +161,7 @@
 		D55AFCBF1EEEB4AD00527D27 /* inject_autogenerate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = inject_autogenerate.sh; sourceTree = "<group>"; };
 		D55AFCC31EEEB88500527D27 /* init_autogenerate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = init_autogenerate.sh; sourceTree = "<group>"; };
 		D55BB8491F0DEDC3001481DF /* ComponentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentContainer.swift; sourceTree = "<group>"; };
-		D5E3C7D11F3C0C5A0022DD43 /* ByTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByTag.swift; sourceTree = "<group>"; };
+		D5E3C7D11F3C0C5A0022DD43 /* ByTagAndMany.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByTagAndMany.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,7 +238,7 @@
 				D55369171EE6E2AE00015926 /* BundleContainer.swift */,
 				D55AFCB31EEEA48D00527D27 /* MethodMaker.swift */,
 				D55AFCB71EEEA97400527D27 /* MethodSignature.swift */,
-				D5E3C7D11F3C0C5A0022DD43 /* ByTag.swift */,
+				D5E3C7D11F3C0C5A0022DD43 /* ByTagAndMany.swift */,
 			);
 			path = Private;
 			sourceTree = "<group>";
@@ -530,7 +530,7 @@
 				D55369001EE656AC00015926 /* _Component.swift in Sources */,
 				16D7BCBD1DB086B900A29A9F /* DIScanFramework.swift in Sources */,
 				D55369111EE658EA00015926 /* TypeKey.swift in Sources */,
-				D5E3C7D31F3C0C5A0022DD43 /* ByTag.swift in Sources */,
+				D5E3C7D31F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */,
 				1651E7061E86373D00E967B4 /* DI.ComponentBuilder.Injection.swift in Sources */,
 				169C0E241DA357CA001F0AD5 /* DIStoryboard.swift in Sources */,
 			);
@@ -567,7 +567,7 @@
 				D55369011EE656AC00015926 /* _Component.swift in Sources */,
 				16D7BCBF1DB086B900A29A9F /* DIScanFramework.swift in Sources */,
 				D55369121EE658EA00015926 /* TypeKey.swift in Sources */,
-				D5E3C7D41F3C0C5A0022DD43 /* ByTag.swift in Sources */,
+				D5E3C7D41F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */,
 				1651E7071E86373D00E967B4 /* DI.ComponentBuilder.Injection.swift in Sources */,
 				169C0E421DA35CBE001F0AD5 /* DIStoryboard.swift in Sources */,
 			);
@@ -582,7 +582,7 @@
 				16640A851D9E1E7B00707BFC /* DI.ComponentBuilder.swift in Sources */,
 				D55AFCB81EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				D55AFCB41EEEA48D00527D27 /* MethodMaker.swift in Sources */,
-				D5E3C7D21F3C0C5A0022DD43 /* ByTag.swift in Sources */,
+				D5E3C7D21F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */,
 				16D7BCBA1DB086B000A29A9F /* DIScanPart.swift in Sources */,
 				D51667071F1FC145001AD9F5 /* DIError.swift in Sources */,
 				118DBCCC1E4100BF003A7D1F /* StoryboardResolver.swift in Sources */,

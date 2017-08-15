@@ -9,15 +9,15 @@
 // Reference
 final class ComponentContainer {
   final func insert(type: DI.AType, value: Component) {
-    map.insert(key: TypeKey(type: type), value: value)
+    map.insert(key: TypeKey(by: type), value: value)
   }
   
   final func insert(typekey: TypeKey, value: Component) {
     map.insert(key: typekey, value: value)
   }
   
-  subscript(_ key: DI.AType) -> Set<Component> {
-    return data[TypeKey(auto: key)] ?? []
+  subscript(_ type: DI.AType) -> Set<Component> {
+    return data[TypeKey(by: type)] ?? []
   }
 
   final var data: [TypeKey: Set<Component>] { return map.dict }

@@ -19,7 +19,7 @@ final class MethodSignature {
     
     var optional: Bool { return isOptional(self.type) }
     var taggedType: IsTag.Type? { return self.type as? IsTag.Type }
-    var many: Bool { return isMany(self.type) }
+    var many: Bool { return self.type is IsMany.Type }
   }
   
   let parameters: [Parameter]

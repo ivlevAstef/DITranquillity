@@ -41,12 +41,12 @@ private typealias MM = MethodMaker
 public extension DI.ComponentBuilder {
 
   private func append(injection signature: MethodSignature) -> Self {
-    component.append(injection: signature)
+    component.append(injection: signature, cycle: false)
     return self
   }
 " > $1
 
-for argcount in `seq 0 $argmax`; do
+for argcount in `seq 1 $argmax`; do
 registrationInjectFunction $argcount $1
 done
 echo "}" >> $1

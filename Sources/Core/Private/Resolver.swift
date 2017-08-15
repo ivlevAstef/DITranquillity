@@ -12,104 +12,135 @@ class Resolver {
     case method
   }
   
-  init(componentContainer: ComponentContainer) {
+  init(componentContainer: ComponentContainer, bundleContainer: BundleContainer) {
     self.componentContainer = componentContainer
+    self.bundleContainer = bundleContainer
   }
   
-  func resolve<T>(_ container: DIContainer, type: T.Type = T.self) -> T {
-    log(.info, msg: "Begin resolve type: \(type)", brace: .begin)
-    defer { log(.info, msg: "End resolve type: \(type)", brace: .end) }
+  func resolve<T>(_ container: DI.Container, type: T.Type = T.self) -> T {
+    log(.info, msg: "Begin resolve \(description(type: type))", brace: .begin)
+    defer { log(.info, msg: "End resolve \(description(type: type))", brace: .end) }
     
-    guard let component = getDefaultComponent(by: type) else {
+    return resolve(container, type: type, .method)
+  }
+  
+  func injection<T>(_ container: DI.Container, obj: T) {
+    log(.info, msg: "Begin injection in obj: \(obj)", brace: .begin)
+    defer { log(.info, msg: "End injection in obj: \(obj)", brace: .end) }
+    
+    _ = resolve(container, type: type(of: obj), .object(obj)) as T
+  }
+
+  func singleResolve(_ container: DI.Container, component: Component) {
+    log(.info, msg: "Begin resolve by component info: \(component.info)", brace: .begin)
+    defer { log(.info, msg: "End resolve by component info: \(component.info)", brace: .end) }
+    
+    _ = resolve(container, component, .method)
+  }
+  
+  /// Finds the most suitable components that satisfy the types
+  ///
+  /// - Parameters:
+  ///   - type: a type
+  ///   - bundle: bundle from whic the call is made
+  /// - Returns: components
+  func findComponents(by type: DI.AType, from bundle: Bundle?) -> [Component] {
+    func filter(_ components: [Component]) -> [Component] {
+      let filtering = components.filter{ $0.isDefault }
+      return filtering.isEmpty ? components : filtering
+    }
+    
+    func filter(by bundle: Bundle?, _ components: [Component]) -> [Component] {
+      if components.count <= 1 {
+        return components
+      }
+      
+      // BFS by depth
+      var queue: ArraySlice<Bundle> = bundle.map{ [$0] } ?? []
+      
+      while !queue.isEmpty {
+        var contents: [Bundle] = []
+        var filtered: [Component] = []
+        
+        while let bundle = queue.popLast() {
+          let filteredByBundle = components.filter{ $0.bundle.map{ BundleContainer.compare(bundle, $0) } ?? true }
+          filtered.append(contentsOf: filteredByBundle)
+          contents.append(contentsOf: bundleContainer.childs(for: bundle))
+        }
+        
+        if 1 == filtered.count {
+          return filtered
+        }
+        queue.append(contentsOf: contents)
+      }
+      
+      return components
+    }
+    
+    if let manyType = type as? IsMany.Type {
+      return Array(componentContainer[manyType.type])
+    }
+    
+    let components: [Component]
+    if let taggedType = type as? IsTag.Type {
+      components = componentContainer[taggedType.type].filter{ $0.has(tag: taggedType.tag) }
+    } else {
+      components = Array(componentContainer[type])
+    }
+    
+    return filter(by: bundle, filter(components))
+  }
+  
+  /// Remove components who doesn't have initialization method
+  ///
+  /// - Parameter components: Components from which will be removed
+  /// - Returns: components Having a initialization method
+  func removeWhoDoesNotHaveInitialMethod(components: [Component]) -> [Component] {
+    return components.filter { nil != $0.initial }
+  }
+  
+  /// Validate a components that they are valid for a type
+  ///
+  /// - Parameters:
+  ///   - components: components for validation
+  ///   - type: a type
+  /// - Returns: `true` if components is valid
+  func validate(components: [Component], for type: DI.AType) -> Bool {
+     return 1 == components.count || type is IsMany.Type
+  }
+  
+  
+  private func resolve<T>(_ container: DI.Container, type: T.Type = T.self, _ getter: Getter) -> T {
+    let candidates = findComponents(by: type, from: nil)
+    let components = removeWhoDoesNotHaveInitialMethod(components: candidates)
+    
+    if !validate(components: components, for: type) {
       log(.warning, msg: "Not found type: \(type)")
-      return make(by: nil)
+      return gmake(by: nil) // if this type optional, then not crash
     }
     
-    return make(by: resolve(container, component, .method))
-  }
-  
-  func resolve<T>(_ container: DIContainer, name: String, type: T.Type = T.self) -> T {
-    log(.info, msg: "Begin resolve type: \(type) with name: \(name)", brace: .begin)
-    defer { log(.info, msg: "End resolve type: \(type) with name: \(name)", brace: .end) }
-    
-    guard let component = getComponent(by: type, name: name) else {
-      log(.warning, msg: "Not found type: \(type) with name: \(name)")
-      return make(by: nil)
+    if 1 == components.count {
+      return gmake(by: resolve(container, components[0], getter))
     }
     
-    return make(by: resolve(container, component, .method, name: name))
-  }
-  
-  func resolve<T, Tag>(_ container: DIContainer, tag: Tag.Type, type: T.Type = T.self) -> T {
-    let name = toString(tag: tag)
-    
-    log(.info, msg: "Begin resolve type: \(type) with tag: \(name)", brace: .begin)
-    defer { log(.info, msg: "End resolve type: \(type) with tag: \(name)", brace: .end) }
-    
-    guard let component = getComponent(by: type, name: name) else {
-      log(.warning, msg: "Not found type: \(type) with tag: \(name)")
-      return make(by: nil)
-    }
-    
-    return make(by: resolve(container, component, .method, name: name))
-  }
-  
-  func resolve<T>(_ container: DIContainer, obj: T) {
-    log(.info, msg: "Begin resolve obj: \(obj)", brace: .begin)
-    defer { log(.info, msg: "End resolve obj: \(obj)", brace: .end) }
-    
-    let type = type(of: obj)
-    guard let component = getDefaultComponent(by: type) else {
-      log(.warning, msg: "Not found type: \(type)")
-      return
-    }
-    
-    resolve(container, component, .object(obj))
-  }
-
-  func resolveMany<T>(_ container: DIContainer, type: T.Type = T.self) -> [T] {
-    log(.info, msg: "Begin resolve many type: \(type)", brace: .begin)
-    defer { log(.info, msg: "End resolve many type: \(type)", brace: .end) }
-    
-    return getComponents(by: type)
-      .flatMap{ resolve(container, $0, .method) }
-      .map{ make(by: $0) }
-  }
-
-  func resolve(_ container: DIContainer, component: Component) {
-    log(.info, msg: "Begin resolve by type info: \(component.typeInfo)", brace: .begin)
-    defer { log(.info, msg: "End resolve by type info: \(component.typeInfo)", brace: .end) }
-    
-    resolve(container, component, .method)
-  }
-  
-
-  private func getDefaultComponent<T>(by type: T.Type) -> Component? {
-    let components = getComponents(by: type)
-    return 1 == components.count ? components.first : components.first(where: { $0.isDefault })
-  }
-  private func getComponent<T>(by type: T.Type, name: String) -> Component? {
-    return getComponents(by: type).first(where: { $0.has(name: name) })
-  }
-  private func getComponents<T>(by type: T.Type) -> Set<Component> {
-    let unwraptype = removeTypeWrappers(type)
-    return componentContainer[unwraptype]
+    let objs = components.flatMap{ resolve(container, $0, getter) }
+    return gmake(by: objs)
   }
   
   /// Super function
-  @discardableResult
-  private func resolve(_ container: DIContainer, _ component: Component, _ getter: Getter, name: String = "") -> Any? {
-    log(.info, msg: "Found type info: \(component.typeInfo)")
+  private func resolve(_ container: DI.Container, _ component: Component, _ getter: Getter) -> Any? {
+    log(.info, msg: "Found component info: \(component.info)")
     
-    let uniqueKey = component.uniqueKey + name
+    let uniqueKey = component.uniqueKey
     
     return synchronize(Resolver.monitor) {
-      circular.stack.append(component)
+      depth += 1
       
       defer {
-        circular.stack.removeLast()
-        if circular.stack.isEmpty {
-          setupCircular()
+        depth -= 1
+        if 0 == depth {
+          cache.graph.removeAll()
+          //cache.cycleInjectionStack
         }
       }
       
@@ -118,7 +149,9 @@ class Resolver {
         return resolveSingle()
       case .weakSingle:
         return resolveWeakSingle()
-      case .perDependency:
+      case .objectGraph:
+        return resolvePerDependency()
+      case .prototype:
         return resolvePerDependency()
       }
     }
@@ -127,6 +160,12 @@ class Resolver {
       return _resolveUniversal(cacheName: "single",
                                get: Cache.single[uniqueKey],
                                set: { Cache.single[uniqueKey] = $0 })
+    }
+    
+    func resolveObjectGraph() -> Any? {
+      return _resolveUniversal(cacheName: "objectGraph",
+                               get: cache.graph[uniqueKey],
+                               set: { cache.graph[uniqueKey] = $0 })
     }
     
     func resolveWeakSingle() -> Any? {
@@ -177,7 +216,7 @@ class Resolver {
         
       case .method(let args):
         guard let (signature, method) = component.initial else {
-          fatalError("Can't found initial method in \(component.typeInfo), for args: \(args)")
+          fatalError("Can't found initial method in \(component.info), for args: \(args)")
         }
         
         let obj = initial(signature: signature, method: method)
@@ -213,27 +252,19 @@ class Resolver {
   }
  
   private let componentContainer: ComponentContainer
+  private let bundleContainer: BundleContainer
   private static let monitor = NSObject()
   
-  /// Storage
-  let circular = Circular()
-  var recursive: Set<Component.UniqueKey> = []
-  
-  class Circular {
-    var stack: [Component] = [] // stack objects for make
-    var cache: [Component: Any] = [:] // created objects
-    
-    var oldestInjections: [MethodSignature] = [] // injections for set after stack changed to empty
-    
-    func isOldestInjection(component: Component) -> Bool {
-      return nil == cache[component] && stack.contains(component)
-    }
-  }
+  let cache = Cache()
+  var depth: Int = 0
   
   class Cache {
     typealias Scope<T> = [Component.UniqueKey: T]
     
     static var single = Scope<Any>()
     static var weakSingle = Scope<Weak>()
+    
+    var graph = Scope<Any>()
+    var cycleInjectionStack: [Injection] = []
   }
 }

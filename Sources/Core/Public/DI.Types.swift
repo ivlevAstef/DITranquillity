@@ -23,13 +23,16 @@ public extension DI {
   /// Type of function for logging
   public typealias LogFunc = (LogLevel, String)->()
 
-  /// TODO: REMOVE
-  public typealias MethodSignature = Any
-
   /// Special class for resolve object by type with tag
-  public class ByTag<Tag, T>: InternalByTag<Tag, T> {
+  public final class ByTag<Tag, T>: InternalByTag<Tag, T> {
     /// Resolved object
     public var object: T { return _object }
+  }
+  
+  /// Special class for resolve many object
+  public final class ByMany<T>: InternalByMany<T> {
+    /// Resolved objects
+    public var objects: [T] { return _objects }
   }
 
   /// Short information about component. Needed for good log

@@ -33,7 +33,7 @@ public extension DI {
     ///
     /// - Parameter object: object in which injections will be introduced
     public func inject<T>(into object: T) {
-      _ = resolver.resolve(self, obj: object)
+      _ = resolver.injection(self, obj: object)
     }
 
     internal init(resolver: Resolver) {
@@ -41,10 +41,5 @@ public extension DI {
     }
     
     internal let resolver: Resolver
-    
-    // for fasted initial
-    internal func resolve(component: Component) {
-      resolver.resolve(self, component: component)
-    }
   }
 }

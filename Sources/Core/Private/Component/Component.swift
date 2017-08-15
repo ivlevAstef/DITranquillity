@@ -6,13 +6,18 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
+struct Injection {
+  let signature: MethodSignature
+  let cycle: Bool
+}
+
 final class Component: _Component {
   var lifeTime = DI.LifeTime.default
   var names: Set<TypeKey> = [] //TODO: maybe array? he fasted for append
   var isDefault: Bool = false
   
   fileprivate(set) var initial: MethodSignature?
-  fileprivate(set) var injections: [MethodSignature] = []
+  fileprivate(set) var injections: [Injection] = []
   
   var postInit:  MethodSignature?
   
@@ -26,14 +31,14 @@ extension Component {
     initial = signature
   }
   
-  func append(injection signature: MethodSignature) {
-    injections.append(signature)
+  func append(injection signature: MethodSignature, cycle: Bool) {
+    injections.append(Injection(signature: signature, cycle: cycle))
   }  
 }
 
 extension Component {
-  func has(name: String) -> Bool {
-    return names.contains(name)
+  func has(tag: DI.Tag) -> Bool {
+    return names.contains(TypeKey(type: info.type, tag: name))
   }
 }
 
@@ -45,7 +50,9 @@ extension Component {
       result.append(initial)
     }
     
-    result.append(contentsOf: injections)
+    for injection in injections {
+      result.append(injection.signature)
+    }
     
     if let postInit = self.postInit {
       result.append(postInit)

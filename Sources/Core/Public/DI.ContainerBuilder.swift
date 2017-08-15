@@ -38,14 +38,15 @@ public extension DI {
     @discardableResult
     public func build(isValidateCycles: Bool = true) throws -> DI.Container {
       let componentContainer = ComponentContainer()
-      let container = DI.Container(resolver: Resolver(componentContainer: componentContainer))
+      let resolver = Resolver(componentContainer: componentContainer, bundleContainer: bundleContainer)
+      let container = DI.Container(resolver: resolver)
       self.register(DI.Container.self)
         .initial{ [unowned container] in container }
         .lifetime(.prototype)
       
       fillComponentContainer(componentContainer)
       
-      if !createGraph(container: componentContainer) {
+      if !createGraph(resolver: resolver) {
         throw DI.BuildError()
       }
       
@@ -83,68 +84,7 @@ extension DI.ContainerBuilder {
 
 
 extension DI.ContainerBuilder {
-  private func filter(use parameter: MethodSignature.Parameter, _ components: [Component], from bundle: Bundle?) -> [Component] {
-    func filter(byName name: String, _ components: [Component]) -> [Component] {
-      return components.filter{ $0.has(name: name) }
-    }
-    
-    func filter(byTag tag: DI.Tag, _ components: [Component]) -> [Component] {
-      let name = toString(tag: tag)
-      return components.filter{ $0.has(name: name) }
-    }
-    
-    func filter(_ components: [Component]) -> [Component] {
-      let filtering = components.filter{ $0.isDefault }
-      return filtering.isEmpty ? components : filtering
-    }
-    
-    func filter(by bundle: Bundle?, _ components: [Component]) -> [Component] {
-      if components.count <= 1 {
-        return components
-      }
-      
-      // BFS by depth
-      var queue: ArraySlice<Bundle> = bundle.map{ [$0] } ?? []
-      
-      while !queue.isEmpty {
-        var contents: [Bundle] = []
-        var filtered: [Component] = []
-        
-        while let bundle = queue.popLast() {
-          let filteredByBundle = components.filter{ $0.bundle.map{ BundleContainer.compare(bundle, $0) } ?? true }
-          filtered.append(contentsOf: filteredByBundle)
-          contents.append(contentsOf: bundleContainer.childs(for: bundle))
-        }
-        
-        if 1 == filtered.count {
-          return filtered
-        }
-        queue.append(contentsOf: contents)
-      }
-      
-      return components
-    }
-    
-    if parameter.many {
-      return components
-    }
-    
-    return filter(by: bundle, filter(components))
-  }
-  
-  fileprivate func createGraph(container: ComponentContainer) -> Bool {
-    func removeEmptyInitial(_ components: [Component]) -> [Component] {
-      return components.filter { nil != $0.initial }
-    }
-    
-    func description(for parameter: MethodSignature.Parameter) -> String {
-      if let taggedType = parameter.taggedType {
-        return "type: \(taggedType.type) with tag: \(taggedType.tag)"
-      } else {
-        return "type: \(parameter.type)"
-      }
-    }
-    
+  fileprivate func createGraph(resolver: Resolver) -> Bool {
     func plog(_ parameter: MethodSignature.Parameter, msg: String) {
       let level: DI.LogLevel = parameter.optional ? .warning : .error
       log(level, msg: msg)
@@ -159,11 +99,10 @@ extension DI.ContainerBuilder {
       
       for parameter in parameters {
         
-        let candidates = Array(container[parameter.type])
-        let preFiltered = filter(use: parameter, candidates, from: bundle)
-        let filtered = removeEmptyInitial(preFiltered)
+        let candidates = resolver.findComponents(by: parameter.type, from: bundle)
+        let filtered = resolver.removeWhoDoesNotHaveInitialMethod(components: candidates)
         
-        let correct = parameter.many || 1 == filtered.count
+        let correct = resolver.validate(components: filtered, for: parameter.type)
         parameter.links = correct ? filtered : []
         
         let success = correct || parameter.optional
@@ -171,13 +110,14 @@ extension DI.ContainerBuilder {
         
         // Log
         if !correct {
-          if preFiltered.isEmpty {
-            plog(parameter, msg: "Not found component for \(description(for: parameter))")
+          if candidates.isEmpty {
+            plog(parameter, msg: "Not found component for \(description(type: parameter.type))")
           } else if filtered.isEmpty {
-            plog(parameter, msg: "Not found component for \(description(for: parameter)) and simply method signature")
+            let infos = candidates.map{ $0.info }
+            plog(parameter, msg: "Not found component for \(description(type: parameter.type)) that would have initialization methods. Were found: \(infos)")
           } else if filtered.count >= 1 {
             let infos = filtered.map{ $0.info }
-            plog(parameter, msg: "Ambiguous \(description(for: parameter)) contains in: \(infos)")
+            plog(parameter, msg: "Ambiguous \(description(type: parameter.type)) contains in: \(infos)")
           }
         }
       }
@@ -187,6 +127,7 @@ extension DI.ContainerBuilder {
   }
   
   fileprivate func validateCycles() -> Bool {
+    //TODO: write cycles validation
     return true
   }
 }
@@ -200,11 +141,11 @@ extension DI.ContainerBuilder {
       return
     }
     
-    log(.info, msg: "Begin resolve type: \(singleComponents.count) singletons", brace: .begin)
-    defer { log(.info, msg: "End resolve singletons", brace: .end) }
+    log(.info, msg: "Begin resolving \(singleComponents.count) singletons", brace: .begin)
+    defer { log(.info, msg: "End resolving singletons", brace: .end) }
     
     for component in singleComponents {
-      container.resolve(component: component)
+      container.resolver.singleResolve(container, component: component)
     }
   }
 }

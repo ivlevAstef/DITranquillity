@@ -21,3 +21,18 @@ public class InternalByTag<Tag, T>: IsTag {
     self._object = object
   }
 }
+
+
+internal protocol IsMany: class {
+  static var type: DI.AType { get }
+}
+
+public class InternalByMany<T>: IsMany {
+  internal let _objects: [T]
+  
+  internal static var type: DI.AType { return T.self }
+  
+  internal init(objects: [T]) {
+    self._objects = objects
+  }
+}

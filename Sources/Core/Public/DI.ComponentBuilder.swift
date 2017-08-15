@@ -135,7 +135,20 @@ public extension DI.ComponentBuilder {
   /// builder.register(YourClass.self)
   ///   .injection{ $0.yourClassProperty = YourValue }
   /// ```
-  /// OR if you use function with parameters
+  /// Also see: `injection<Property>(cycle:_:)`
+  ///
+  /// - Parameter method: Injection method. First input argument is the always created object
+  /// - Returns: Self
+  @discardableResult
+  public func injection(_ method: @escaping (Impl) -> ()) -> Self {
+    component.append(injection: MethodMaker.make(by: method), cycle: false)
+    return self
+  }
+  
+  /// Function for appending an injection method
+  /// In addition, builder has a set of functions with a different number of parameters
+  ///
+  /// Using:
   /// ```
   /// builder.register(YourClass.self)
   ///   .injection{ $0.yourClassProperty = $1 }
@@ -145,12 +158,19 @@ public extension DI.ComponentBuilder {
   /// builder.register(YourClass.self)
   ///   .injection{ yourClass, property in yourClass.property = property }
   /// ```
+  /// OR if the injection participates in a cycle
+  /// ```
+  /// builder.register(YourClass.self)
+  ///   .injection(cycle: true) { $0.yourClassProperty = $1 }
+  /// ```
   ///
-  /// - Parameter method: Injection method. First input argument is the always created object
+  /// - Parameters:
+  ///   - cycle: true if the injection participates in a cycle. default false
+  ///   - method: Injection method. First input argument is the always created object
   /// - Returns: Self
   @discardableResult
-  public func injection(_ method: @escaping (Impl) -> ()) -> Self {
-    component.append(injection: MethodMaker.make(by: method))
+  public func injection<Property>(cycle: Bool = false, _ method: @escaping (Impl,Property) -> ()) -> Self {
+    component.append(injection: MethodMaker.make(by: method), cycle: cycle)
     return self
   }
   

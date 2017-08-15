@@ -8,40 +8,25 @@
 
 import Foundation
 
-protocol IsMany { }
-
-extension Array: IsMany { }
-extension Set: IsMany { }
-
-func isMany(_ type: Any.Type) -> Bool {
-  return type is IsMany.Type
-}
-
 protocol TypeGetter {
-  static var type: Any.Type { get }
+  static var type: DI.AType { get }
 }
 
 extension ImplicitlyUnwrappedOptional: TypeGetter {
-  static var type: Any.Type { return Wrapped.self }
+  static var type: DI.AType { return Wrapped.self }
 }
 
 extension Optional: TypeGetter {
-  static var type: Any.Type { return Wrapped.self }
+  static var type: DI.AType { return Wrapped.self }
 }
 
-extension Array: TypeGetter {
-  static var type: Any.Type { return Element.self }
-}
-
-extension Set: TypeGetter {
-  static var type: Any.Type { return Element.self }
-}
+extension InternalByMany: TypeGetter { }
+extension InternalByTag: TypeGetter { }
 
 func removeTypeWrappers(_ type: Any.Type) -> Any.Type {
   if let typeGetter = type as? TypeGetter.Type {
     return removeTypeWrappers(typeGetter.type)
   }
-  
   
   return type
 }
@@ -54,6 +39,8 @@ extension Optional: IsOptional { }
 func isOptional(_ type: Any.Type) -> Bool {
   return type is IsOptional.Type
 }
+
+
 
 protocol OptionalMake {
   static func make(by obj: Any?) -> Self
@@ -68,7 +55,19 @@ extension Optional: OptionalMake {
   }
 }
 
-func make<T>(by obj: Any?) -> T {
+extension DI.ByTag: OptionalMake {
+  static func make(by obj: Any?) -> DI.ByTag<Tag, T> {
+    return DI.ByTag<Tag, T>(object: gmake(by: obj) as T)
+  }
+}
+
+extension DI.ByMany: OptionalMake {
+  static func make(by obj: Any?) -> DI.ByMany<T> {
+    return DI.ByMany<T>(objects: gmake(by: obj) as [T])
+  }
+}
+
+func gmake<T>(by obj: Any?) -> T {
   if let opt = T.self as? OptionalMake.Type {
     return opt.make(by: obj) as! T // it's always valid
   }
@@ -77,15 +76,11 @@ func make<T>(by obj: Any?) -> T {
 }
 
 
-
-func toString(tag: Any) -> String {
-  let type = String(describing: type(of: tag))
-  let mirror = Mirror(reflecting: tag)
-  
-  if .enum == mirror.displayStyle {
-    return "\(type).\(tag)"
+func description(type: DI.AType) -> ()->String {
+  if let taggedType = type as? IsTag.Type {
+    return { "type: \(taggedType.type) with tag: \(taggedType.tag)" }
+  } else if let manyType = type as? IsMany.Type {
+    return { "many with type: \(manyType.type)" }
   }
-  
-  let address = String(describing: Unmanaged.passUnretained(tag as AnyObject).toOpaque())
-  return "\(address)_\(type)"
+  return { "type: \(type)" }
 }
