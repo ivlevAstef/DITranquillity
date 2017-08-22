@@ -17,21 +17,21 @@ class Resolver {
     self.bundleContainer = bundleContainer
   }
   
-  func resolve<T>(_ container: DI.Container, type: T.Type = T.self) -> T {
+  func resolve<T>(_ container: DIContainer, type: T.Type = T.self) -> T {
     log(.info, msg: "Begin resolve \(description(type: type))", brace: .begin)
     defer { log(.info, msg: "End resolve \(description(type: type))", brace: .end) }
     
     return resolve(container, type: type, .method)
   }
   
-  func injection<T>(_ container: DI.Container, obj: T) {
+  func injection<T>(_ container: DIContainer, obj: T) {
     log(.info, msg: "Begin injection in obj: \(obj)", brace: .begin)
     defer { log(.info, msg: "End injection in obj: \(obj)", brace: .end) }
     
     _ = resolve(container, type: type(of: obj), .object(obj)) as T
   }
 
-  func singleResolve(_ container: DI.Container, component: Component) {
+  func singleResolve(_ container: DIContainer, component: Component) {
     log(.info, msg: "Begin resolve by component info: \(component.info)", brace: .begin)
     defer { log(.info, msg: "End resolve by component info: \(component.info)", brace: .end) }
     
@@ -44,7 +44,7 @@ class Resolver {
   ///   - type: a type
   ///   - bundle: bundle from whic the call is made
   /// - Returns: components
-  func findComponents(by type: DI.AType, from bundle: Bundle?) -> [Component] {
+  func findComponents(by type: DIAType, from bundle: Bundle?) -> [Component] {
     func filter(_ components: [Component]) -> [Component] {
       let filtering = components.filter{ $0.isDefault }
       return filtering.isEmpty ? components : filtering
@@ -105,31 +105,34 @@ class Resolver {
   ///   - components: components for validation
   ///   - type: a type
   /// - Returns: `true` if components is valid
-  func validate(components: [Component], for type: DI.AType) -> Bool {
+  func validate(components: [Component], for type: DIAType) -> Bool {
      return 1 == components.count || type is IsMany.Type
   }
   
   
-  private func resolve<T>(_ container: DI.Container, type: T.Type = T.self, _ getter: Getter) -> T {
+  private func resolve<T>(_ container: DIContainer, type: T.Type = T.self, _ getter: Getter) -> T {
+    return gmake(by: untypeResolve(container, type: type, getter))
+  }
+  
+  private func untypeResolve(_ container: DIContainer, type: DIAType, _ getter: Getter) -> Any? {
     let candidates = findComponents(by: type, from: nil)
     let components = removeWhoDoesNotHaveInitialMethod(components: candidates)
     
     if !validate(components: components, for: type) {
       log(.warning, msg: "Not found type: \(type)")
-      return gmake(by: nil) // if this type optional, then not crash
+      return nil
     }
     
     if 1 == components.count {
-      return gmake(by: resolve(container, components[0], getter))
+      return resolve(container, components[0], getter)
     }
     
-    let objs = components.flatMap{ resolve(container, $0, getter) }
-    return gmake(by: objs)
+    return components.flatMap{ resolve(container, $0, getter) }
   }
   
   /// Super function
-  private func resolve(_ container: DI.Container, _ component: Component, _ getter: Getter) -> Any? {
-    log(.info, msg: "Found component info: \(component.info)")
+  private func resolve(_ container: DIContainer, _ component: Component, _ getter: Getter) -> Any? {
+    log(.info, msg: "Found component: \(component.info)")
     
     let uniqueKey = component.uniqueKey
     
@@ -139,8 +142,7 @@ class Resolver {
       defer {
         depth -= 1
         if 0 == depth {
-          cache.graph.removeAll()
-          //cache.cycleInjectionStack
+          endResolving()
         }
       }
       
@@ -150,9 +152,9 @@ class Resolver {
       case .weakSingle:
         return resolveWeakSingle()
       case .objectGraph:
-        return resolvePerDependency()
+        return resolveObjectGraph()
       case .prototype:
-        return resolvePerDependency()
+        return resolvePrototype()
       }
     }
     
@@ -193,7 +195,7 @@ class Resolver {
         }
       }
       
-      if let obj = resolvePerDependency() {
+      if let obj = resolvePrototype() {
         set(obj)
         log(.info, msg: "Add object: \(obj) in cache \(cacheName)")
         return obj
@@ -201,9 +203,15 @@ class Resolver {
       return nil
     }
     
-    
-    func resolvePerDependency() -> Any? {
+    func resolvePrototype() -> Any? {
       let obj = getObject()
+      
+      let cycleInjections = component.injections.filter{ $0.cycle }
+      cache.cycleInjectionStack.append(contentsOf: cycleInjections)
+      
+      for injection in component.injections.filter({ !$0.cycle }) {
+        _ = use(signature: injection.signature)
+      }
       
       return obj
     }
@@ -214,40 +222,40 @@ class Resolver {
         log(.info, msg: "Use object: \(obj)")
         return obj
         
-      case .method(let args):
-        guard let (signature, method) = component.initial else {
-          fatalError("Can't found initial method in \(component.info), for args: \(args)")
+      case .method:
+        guard let signature = component.initial else {
+          fatalError("Can't found initial method in \(component.info)")
         }
         
-        let obj = initial(signature: signature, method: method)
+        let obj = use(signature: signature)
         log(.info, msg: "Create object: \(String(describing: obj))")
         return obj
       }
     }
     
-    func initial(signature: MethodSignature, method: Method) -> Any? {
+    func endResolving() {
+      cache.graph.removeAll()
+      
+      while !cache.cycleInjectionStack.isEmpty {
+        let injection = cache.cycleInjectionStack.removeFirst()
+        _ = use(signature: injection.signature)
+      }
+    }
+    
+    func use(signature: MethodSignature) -> Any? {
       var valid: Bool = true
-      func check(_ parameter: MethodSignature.Parameter, _ obj: Any?) -> Any? {
+      
+      let objects: [Any?] = signature.parameters.map { parameter in
+        let obj = untypeResolve(container, type: parameter.type, .method)
         valid = valid && (parameter.optional || nil != obj)
         return obj
-      }
-      
-      let objects: [Any?] = signature.parameters.map {
-        switch $0.style {
-        case .value(let obj):
-          return check($0, obj)
-        case .neutral, .name(_), .tag(_):
-          return check($0, resolve(container, $0.links.first!, .method))
-        case .many:
-          return check($0, $0.links.flatMap{ resolve(container, $0, .method) })
-        }
       }
       
       if !valid {
         return nil
       }
       
-      return method(objects)
+      return signature.call(objects)
     }
   }
  

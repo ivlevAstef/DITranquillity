@@ -9,7 +9,7 @@
 import Cocoa
 
 final class StoryboardResolver: NSObject, _DIStoryboardBaseResolver {
-  init(container: DI.Container) {
+  init(container: DIContainer) {
     self.container = container
   }
 
@@ -33,5 +33,5 @@ final class StoryboardResolver: NSObject, _DIStoryboardBaseResolver {
     _ = self.container.resolve(vc)
   }
 
-  private let container: DI.Container
+  private let container: DIContainer
 }

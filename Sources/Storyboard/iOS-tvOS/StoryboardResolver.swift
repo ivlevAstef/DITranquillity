@@ -9,7 +9,7 @@
 import UIKit
 
 final class StoryboardResolver: NSObject, _DIStoryboardBaseResolver {
-  init(container: DI.Container) {
+  init(container: DIContainer) {
     self.container = container
   }
 
@@ -24,8 +24,8 @@ final class StoryboardResolver: NSObject, _DIStoryboardBaseResolver {
   }
   
   private func resolve(_ vc: UIViewController) {
-    _ = self.container.resolve(vc)
+    _ = self.container.inject(into: vc)
   }
 
-  private let container: DI.Container
+  private let container: DIContainer
 }

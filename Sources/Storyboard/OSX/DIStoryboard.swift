@@ -8,30 +8,26 @@
 
 import Cocoa
 
-extension DI {
-
-  public final class DIStoryboard: NSStoryboard {
-    public required init(name: String, bundle storyboardBundleOrNil: Bundle?, container: DI.Container) {
-      storyboard = _DIStoryboardBase.create(name, bundle: storyboardBundleOrNil)
-      super.init()
-      storyboard.resolver = StoryboardResolver(container: container)
-    }
-
-    public override func instantiateInitialController() -> Any? {
-      return storyboard.instantiateInitialController()
-    }
-
-    public override func instantiateController(withIdentifier identifier: String) -> Any {
-      return storyboard.instantiateController(withIdentifier: identifier)
-    }
-    
-    private let storyboard: _DIStoryboardBase
+public final class DIStoryboard: NSStoryboard {
+  public required init(name: String, bundle storyboardBundleOrNil: Bundle?, container: DIContainer) {
+    storyboard = _DIStoryboardBase.create(name, bundle: storyboardBundleOrNil)
+    super.init()
+    storyboard.resolver = StoryboardResolver(container: container)
   }
-    
+
+  public override func instantiateInitialController() -> Any? {
+    return storyboard.instantiateInitialController()
+  }
+
+  public override func instantiateController(withIdentifier identifier: String) -> Any {
+    return storyboard.instantiateController(withIdentifier: identifier)
+  }
+  
+  private let storyboard: _DIStoryboardBase
 }
 
 // ViewController
-public extension DIRegistrationBuilder where Impl: NSViewController {
+public extension DIComponentBuilder where Impl: NSViewController {
   @discardableResult
   public func initial<T: NSViewController>(nib type: T.Type) -> Self {
     rType.append(initial: { (_:DIContainer) -> Any in NSViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! T })
@@ -52,10 +48,10 @@ public extension DIRegistrationBuilder where Impl: NSViewController {
 }
 
 // Storyboard
-public extension DIRegistrationBuilder where Impl: NSStoryboard {
+public extension DIComponentBuilder where Impl: NSStoryboard {
   @discardableResult
   public func initial(name: String, bundle storyboardBundleOrNil: Bundle?) -> Self {
-    self.initial { c -> Impl in DI.Storyboard(name: name, bundle: storyboardBundleOrNil, container: c) as! Impl }
+    self.initial { c -> Impl in DIStoryboard(name: name, bundle: storyboardBundleOrNil, container: c) as! Impl }
     return self
   }
 }

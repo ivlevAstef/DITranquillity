@@ -9,15 +9,15 @@
 import Foundation
 
 protocol TypeGetter {
-  static var type: DI.AType { get }
+  static var type: DIAType { get }
 }
 
 extension ImplicitlyUnwrappedOptional: TypeGetter {
-  static var type: DI.AType { return Wrapped.self }
+  static var type: DIAType { return Wrapped.self }
 }
 
 extension Optional: TypeGetter {
-  static var type: DI.AType { return Wrapped.self }
+  static var type: DIAType { return Wrapped.self }
 }
 
 extension InternalByMany: TypeGetter { }
@@ -76,7 +76,7 @@ func gmake<T>(by obj: Any?) -> T {
 }
 
 
-func description(type: DI.AType) -> ()->String {
+func description(type: DIAType) -> ()->String {
   if let taggedType = type as? IsTag.Type {
     return { "type: \(taggedType.type) with tag: \(taggedType.tag)" }
   } else if let manyType = type as? IsMany.Type {

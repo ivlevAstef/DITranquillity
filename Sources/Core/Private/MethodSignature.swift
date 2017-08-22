@@ -10,10 +10,10 @@ final class MethodSignature {
   typealias Call = ([Any?])->Any?
   
   final class Parameter {
-    let type: DI.AType
+    let type: DIAType
     var links: [Component] = []
     
-    init(type: DI.AType) {
+    init(type: DIAType) {
       self.type = type
     }
     
@@ -25,7 +25,7 @@ final class MethodSignature {
   let parameters: [Parameter]
   let call: Call
   
-  init(_ types: [DI.AType], _ call: @escaping Call) {
+  init(_ types: [DIAType], _ call: @escaping Call) {
     self.parameters = types.map{ Parameter(type: $0) }
     self.call = call
   }

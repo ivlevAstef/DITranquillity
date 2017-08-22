@@ -29,7 +29,7 @@ echo "  @discardableResult
 
 registationInitFile() { #file
 echo "//
-//  DI.ComponentBuilder.Init.swift
+//  DIComponentBuilder.Init.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 27/01/2017.
@@ -38,7 +38,7 @@ echo "//
 
 private typealias MM = MethodMaker
 
-public extension DI.ComponentBuilder {
+public extension DIComponentBuilder {
 
   private func set(initial signature: MethodSignature) -> Self {
     component.set(initial: signature)
@@ -52,4 +52,4 @@ done
 echo "}" >> $1
 }
 
-registationInitFile "DI.ComponentBuilder.Init.swift"
+registationInitFile "DIComponentBuilder.Init.swift"

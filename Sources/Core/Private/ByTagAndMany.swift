@@ -7,15 +7,15 @@
 //
 
 internal protocol IsTag: class {
-  static var tag: DI.Tag { get }
-  static var type: DI.AType { get }
+  static var tag: DITag { get }
+  static var type: DIAType { get }
 }
 
 public class InternalByTag<Tag, T>: IsTag {
   internal let _object: T
   
-  internal static var tag: DI.Tag { return Tag.self }
-  internal static var type: DI.AType { return T.self }
+  internal static var tag: DITag { return Tag.self }
+  internal static var type: DIAType { return T.self }
   
   internal init(object: T) {
     self._object = object
@@ -24,13 +24,13 @@ public class InternalByTag<Tag, T>: IsTag {
 
 
 internal protocol IsMany: class {
-  static var type: DI.AType { get }
+  static var type: DIAType { get }
 }
 
 public class InternalByMany<T>: IsMany {
   internal let _objects: [T]
   
-  internal static var type: DI.AType { return T.self }
+  internal static var type: DIAType { return T.self }
   
   internal init(objects: [T]) {
     self._objects = objects

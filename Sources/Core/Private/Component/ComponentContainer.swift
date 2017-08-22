@@ -8,7 +8,7 @@
 
 // Reference
 final class ComponentContainer {
-  final func insert(type: DI.AType, value: Component) {
+  final func insert(type: DIAType, value: Component) {
     map.insert(key: TypeKey(by: type), value: value)
   }
   
@@ -16,7 +16,7 @@ final class ComponentContainer {
     map.insert(key: typekey, value: value)
   }
   
-  subscript(_ type: DI.AType) -> Set<Component> {
+  subscript(_ type: DIAType) -> Set<Component> {
     return data[TypeKey(by: type)] ?? []
   }
 

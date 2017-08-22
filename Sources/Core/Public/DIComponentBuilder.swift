@@ -1,41 +1,39 @@
 //
-//  DI.ComponentBuilder.swift
+//  DIComponentBuilder.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 10/06/16.
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-public extension DI {
-  /// Component Builder.
-  /// To create a used function `register(_:)` in class `ContainerBuilder`
-  /// The class allows you to configure all the necessary properties for the component
-  public final class ComponentBuilder<Impl> {
-    init(container: ContainerBuilder, componentInfo: ComponentInfo) {
-      self.component = Component(componentInfo: componentInfo)
-      container.components.insert(component)
-    }
-    
-    deinit {
-      var msg = component.isDefault ? "default " : ""
-      msg += "registration: \(component.info)\n"
-      msg += "\(DI.Setting.Log.tab)initial: \(nil != component.initial)\n"
-      
-      msg += "\(DI.Setting.Log.tab)lifetime: \(component.lifeTime)\n"
-      msg += "\(DI.Setting.Log.tab)names: \(component.names)\n"
-      msg += "\(DI.Setting.Log.tab)is default: \(component.isDefault)\n"
-      
-      msg += "\(DI.Setting.Log.tab)injections: \(component.injections.count)\n"
-      
-      log(.info, msg: msg)
-    }
-    
-    let component: Component
+/// Component Builder.
+/// To create a used function `register(_:)` in class `ContainerBuilder`
+/// The class allows you to configure all the necessary properties for the component
+public final class DIComponentBuilder<Impl> {
+  init(container: DIContainerBuilder, componentInfo: DIComponentInfo) {
+    self.component = Component(componentInfo: componentInfo)
+    container.components.insert(component)
   }
+  
+  deinit {
+    var msg = component.isDefault ? "default " : ""
+    msg += "registration: \(component.info)\n"
+    msg += "\(DISetting.Log.tab)initial: \(nil != component.initial)\n"
+    
+    msg += "\(DISetting.Log.tab)lifetime: \(component.lifeTime)\n"
+    msg += "\(DISetting.Log.tab)names: \(component.names)\n"
+    msg += "\(DISetting.Log.tab)is default: \(component.isDefault)\n"
+    
+    msg += "\(DISetting.Log.tab)injections: \(component.injections.count)\n"
+    
+    log(.info, msg: msg)
+  }
+  
+  let component: Component
 }
 
 // MARK: - contains `as` functions
-public extension DI.ComponentBuilder {
+public extension DIComponentBuilder {
   /// Function allows you to specify a type by which the component will be available
   /// Using:
   /// ```
@@ -106,7 +104,7 @@ public extension DI.ComponentBuilder {
 
 
 // MARK: - contains `initial`, `injection`, `postInit` functions
-public extension DI.ComponentBuilder {
+public extension DIComponentBuilder {
   /// Function for declaring initialization method
   /// In addition, builder has a set of functions with a different number of parameters
   /// Using:
@@ -193,7 +191,7 @@ public extension DI.ComponentBuilder {
 
 
 // MARK: - contains `lifetime` and `default` functions
-public extension DI.ComponentBuilder {
+public extension DIComponentBuilder {
   /// Function to set lifetime of an object
   /// Using:
   /// ```
@@ -201,10 +199,10 @@ public extension DI.ComponentBuilder {
   ///   .lifetime(.prototype)
   /// ```
   ///
-  /// - Parameter lifetime: LifeTime. for more information seeing enum `DI.LifeTime`
+  /// - Parameter lifetime: LifeTime. for more information seeing enum `DILifeTime`
   /// - Returns: Self
   @discardableResult
-  public func lifetime(_ lifetime: DI.LifeTime) -> Self {
+  public func lifetime(_ lifetime: DILifeTime) -> Self {
     component.lifeTime = lifetime
     return self
   }

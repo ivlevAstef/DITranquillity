@@ -7,6 +7,6 @@
 //
 
 prefix operator *
-public prefix func *<T>(container: DI.Container) -> T {
+public prefix func *<T>(container: DIContainer) -> T {
   return container.resolve()
 }

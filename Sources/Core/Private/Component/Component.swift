@@ -12,7 +12,7 @@ struct Injection {
 }
 
 final class Component: _Component {
-  var lifeTime = DI.LifeTime.default
+  var lifeTime = DILifeTime.default
   var names: Set<TypeKey> = [] //TODO: maybe array? he fasted for append
   var isDefault: Bool = false
   
@@ -37,8 +37,8 @@ extension Component {
 }
 
 extension Component {
-  func has(tag: DI.Tag) -> Bool {
-    return names.contains(TypeKey(type: info.type, tag: name))
+  func has(tag: DITag) -> Bool {
+    return names.contains(TypeKey(by: info.type, and: tag))
   }
 }
 

@@ -1,5 +1,5 @@
 //
-//  DI.ComponentBuilder.Init.swift
+//  DIComponentBuilder.Init.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 27/01/2017.
@@ -8,7 +8,7 @@
 
 private typealias MM = MethodMaker
 
-public extension DI.ComponentBuilder {
+public extension DIComponentBuilder {
 
   private func set(initial signature: MethodSignature) -> Self {
     component.set(initial: signature)

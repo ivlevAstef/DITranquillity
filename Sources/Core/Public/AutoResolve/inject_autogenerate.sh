@@ -29,7 +29,7 @@ echo "  @discardableResult
 
 registationInjectFile() { #file
 echo "//
-//  DI.ComponentBuilder.Injection.swift
+//  DIComponentBuilder.Injection.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 03/02/2017.
@@ -38,7 +38,7 @@ echo "//
 
 private typealias MM = MethodMaker
 
-public extension DI.ComponentBuilder {
+public extension DIComponentBuilder {
 
   private func append(injection signature: MethodSignature) -> Self {
     component.append(injection: signature, cycle: false)
@@ -52,4 +52,4 @@ done
 echo "}" >> $1
 }
 
-registationInjectFile "DI.ComponentBuilder.Injection.swift"
+registationInjectFile "DIComponentBuilder.Injection.swift"
