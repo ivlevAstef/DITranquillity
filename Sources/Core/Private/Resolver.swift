@@ -28,7 +28,7 @@ class Resolver {
     log(.info, msg: "Begin injection in obj: \(obj)", brace: .begin)
     defer { log(.info, msg: "End injection in obj: \(obj)", brace: .end) }
     
-    _ = resolve(container, type: type(of: obj), .object(obj)) as T
+    _ = untypeResolve(container, type: type(of: obj), .object(obj))
   }
 
   func singleResolve(_ container: DIContainer, component: Component) {
@@ -118,7 +118,12 @@ class Resolver {
   
   private func untypeResolve(_ container: DIContainer, type: DIAType, _ getter: Getter) -> Any? {
     let candidates = findComponents(by: type, from: nil)
-    let components = removeWhoDoesNotHaveInitialMethod(components: candidates)
+    let components: [Component]
+    
+    switch getter {
+      case .object(_): components = candidates
+      case .method: components = removeWhoDoesNotHaveInitialMethod(components: candidates)
+    }
     
     if !validate(components: components, for: type) {
       log(.warning, msg: "Not found type: \(type)")
@@ -129,7 +134,9 @@ class Resolver {
       return resolve(container, components[0], getter)
     }
     
-    return components.flatMap{ resolve(container, $0, getter) }
+    // Remove objects contains in stack
+    let filterComponents = components.filter{ !stack.contains($0.uniqueKey) }
+    return filterComponents.flatMap{ resolve(container, $0, getter) }
   }
   
   /// Super function
@@ -187,10 +194,10 @@ class Resolver {
       let obj = getObject()
       
       let cycleInjections = component.injections.filter{ $0.cycle }
-      cache.cycleInjectionStack.append(contentsOf: cycleInjections)
+      cache.cycleInjectionStack.append(contentsOf: cycleInjections.map{ (obj, $0) })
       
       for injection in component.injections.filter({ !$0.cycle }) {
-        _ = use(signature: injection.signature)
+        _ = use(signature: injection.signature, obj: obj)
       }
       
       return obj
@@ -207,29 +214,30 @@ class Resolver {
           fatalError("Can't found initial method in \(component.info)")
         }
         
-        let obj = use(signature: signature)
+        let obj = use(signature: signature, obj: nil)
         log(.info, msg: "Create object: \(String(describing: obj))")
         return obj
       }
     }
     
     func endResolving() {
-      cache.graph.removeAll()
-      
       while !cache.cycleInjectionStack.isEmpty {
-        let injection = cache.cycleInjectionStack.removeFirst()
-        _ = use(signature: injection.signature)
+        let data = cache.cycleInjectionStack.removeFirst()
+        _ = use(signature: data.injection.signature, obj: data.obj)
       }
+      
+      cache.graph.removeAll()
     }
     
-    func use(signature: MethodSignature) -> Any? {
+    func use(signature: MethodSignature, obj: Any?) -> Any? {
       var valid: Bool = true
       
-      let objects: [Any?] = signature.parameters.map { parameter in
-        let obj = untypeResolve(container, type: parameter.type, .method)
-        valid = valid && (parameter.optional || nil != obj)
-        return obj
-      }
+      let objects: [Any?] = (signature.specificFirst ? [obj] : []) +
+        signature.parameters.map { parameter in
+          let obj = untypeResolve(container, type: parameter.type, .method)
+          valid = valid && (parameter.optional || nil != obj)
+          return obj
+        }
       
       if !valid {
         return nil
@@ -239,11 +247,11 @@ class Resolver {
     }
     
     return synchronize(Resolver.monitor) {
-      depth += 1
+      stack.append(component.uniqueKey)
       
       defer {
-        depth -= 1
-        if 0 == depth {
+        stack.removeLast()
+        if stack.isEmpty {
           endResolving()
         }
       }
@@ -266,7 +274,7 @@ class Resolver {
   private static let monitor = NSObject()
   
   let cache = Cache()
-  var depth: Int = 0
+  var stack: [Component.UniqueKey] = []
   
   class Cache {
     typealias Scope<T> = [Component.UniqueKey: T]
@@ -275,6 +283,6 @@ class Resolver {
     static var weakSingle = Scope<Weak>()
     
     var graph = Scope<Any>()
-    var cycleInjectionStack: [Injection] = []
+    var cycleInjectionStack: [(obj: Any?, injection: Injection)] = []
   }
 }

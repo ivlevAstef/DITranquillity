@@ -93,23 +93,10 @@ class Animal {
   }
 }
 
-class Params {
-  internal let param1: String
-  internal let param2: Int
-  internal let param3: Int?
-  
-  init(p1: String, p2: Int) {
-    self.param1 = p1
-    self.param2 = p2
-    self.param3 = nil
-  }
-  
-  init(p1: String, p2: Int, p3: Int) {
-    self.param1 = p1
-    self.param2 = p2
-    self.param3 = p3
-  }
-}
+typealias CatTag = Animal
+typealias DogTag = Animal
+typealias BearTag = Animal
+
 
 class Circular1 {
   let ref: Circular2
@@ -132,113 +119,75 @@ class Circular2 {
 }
 
 
-class SampleComponent : DIComponent {
-  init(useBarService: Bool) {
-    self.useBarService = useBarService
-  }
-  
-  func load(builder: DIContainerBuilder) {
+class SamplePart: DIPart {
+  static func load(builder: DIContainerBuilder) {
 		builder.register{ 10 }.lifetime(.lazySingle)
     
-    builder.register(type: ServiceProtocol.self)
-      .as(.self)
-      .lifetime(.perDependency)
-      .initial {
-        if self.useBarService {
-          return BarService()
-        }
-        return FooService()
-			}
+    builder.register(BarService.init)
+      .as(ServiceProtocol.self)
+      .lifetime(.prototype)
 
-    builder.register(type: LoggerAll.self)
-      .set(.default)
-      .as(LoggerProtocol.self).check{$0}
+    builder.register{ LoggerAll(loggers: ($0 as DI.ByMany).objects) }
+      .as(check: LoggerProtocol.self){$0}
+      .default()
       .lifetime(.single)
-      .initial{ container in try LoggerAll.init(loggers: **container) }
-      .postInit { (container, self) in try self.loggersFull = **container }
+      .injection(cycle: true){ $0.loggersFull = ($1 as DI.ByMany).objects }
 
 		builder.register{ Logger() }
-      .as(LoggerProtocol.self).check{$0}
+      .as(check: LoggerProtocol.self){$0}
       .lifetime(.single)
     
     builder.register{ Logger2() }
-      .as(.self)
-      .as(LoggerProtocol.self).check{$0}
+      .as(check: LoggerProtocol.self){$0}
       .lifetime(.lazySingle)
     
-    builder.register(type: Inject.self)
-      .as(.self)
-      .lifetime(.perDependency)
-      .initial(Inject.init(service:logger:test:))
-      .injection { $0.service2 = $1 }
-      .postInit { (container, obj) in obj.logger2 = try container.resolve(Logger2.self) }
+    builder.register(Inject.init)
+      .lifetime(.prototype)
+      .injection{ $0.service2 = $1 }
+      .injection{ $0.logger2 = $1 }
     
-    builder.register(type: InjectMany.self)
-      .as(.self)
-      .lifetime(.perDependency)
-      .initial { container in try InjectMany(loggers: **container) }
+    builder.register{ InjectMany(loggers: ($0 as DI.ByMany).objects) }
+      .lifetime(.prototype)
     
     //Animals
 		builder.register{ Animal(name: "Cat") }
-      .as(.self)
-      .set(name: "Cat")
+      .as(Animal.self, tag: CatTag.self)
     
     builder.register{ Animal(name: "Dog") }
-      .as(.self)
-      .set(name: "Dog")
-      .set(.default)
+      .as(Animal.self, tag: DogTag.self)
+      .default()
 
     builder.register{ Animal(name: "Bear") }
-      .as(.self)
-      .set(name: "Bear")
-    
-    builder.register(type: Animal.self)
-      .as(.self)
-      .set(name: "Custom")
-      .initialWithArg { Animal(name: $1) }
-    
-    builder.register(type: Params.self)
-      .as(.self)
-      .lifetime(.perDependency)
-      .initialWithArg { (_, p1, p2) in Params(p1: p1, p2: p2) }
-      .initialWithArg { Params(p1: $1, p2: $2, p3: $3) }
+      .as(Animal.self, tag: BearTag.self)
     
     //circular
     
-    builder.register(type: Circular1.self)
-      .as(.self)
-      .lifetime(.perDependency)
-      .initial { c in try Circular1(ref: *c) }
+    builder.register(Circular1.init)
+      .lifetime(.objectGraph)
     
-    builder.register(type: Circular2.self)
-      .as(.self)
-      .lifetime(.perDependency)
-      .initial { Circular2() }
-      .postInit { (s, obj) in try obj.ref = *s }
+    builder.register(Circular2.init)
+      .lifetime(.objectGraph)
+      .injection(cycle: true) { $0.ref = $1 }
   }
-  
-  private let useBarService: Bool
 }
 
-class SampleStartupComponent : DIComponent {
-  func load(builder: DIContainerBuilder) {
-		builder.register(component: SampleComponent(useBarService: true))
+class SampleStartupPart : DIPart {
+  static func load(builder: DIContainerBuilder) {
+		builder.append(part: SamplePart.self)
     
-		builder.register(vc: ViewController.self)
+		builder.register(ViewController.self)
       .injection { $0.injectGlobal = $1 }
-      .postInit { container, vc in vc.container = container }
+      .injection { $0.container = $1 }
 		
 		
-    builder.register(vc: ViewController2.self)
+    builder.register(ViewController2.self)
       .injection { $0.inject = $1 }
       .injection { $0.logger = $1 }
 
     
-    builder.register(type: UIView.self)
-      .as(.self)
-      .as(UIAppearance.self).check{$0}
-      .lifetime(.perDependency)
-      .initial { UIButton() }
-    //.initial { UISwitch() }
+    builder.register(UIButton.init)
+      .as(check: UIAppearance.self){$0}
+      .as(check: UIView.self){$0}
+      .lifetime(.prototype)
   }
 }

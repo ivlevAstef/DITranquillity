@@ -22,7 +22,7 @@ local PType=$(join ',' ${numbers[@]/#/P})
 
 echo "  @discardableResult
   public func injection<$PType>(_ m: @escaping (Impl,$PType) -> ()) -> Self {
-    return append(injection: MM.make(by: m))
+    return append(injection: MM.make(true, by: m))
   }
 " >> $2
 }

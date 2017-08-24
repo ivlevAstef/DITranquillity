@@ -88,11 +88,11 @@ func gmake<T>(by obj: Any?) -> T {
 
 ////// For simple log
 
-func description(type: DIAType) -> ()->String {
+func description(type: DIAType) -> String {
   if let taggedType = type as? IsTag.Type {
-    return { "type: \(taggedType.type) with tag: \(taggedType.tag)" }
+    return "type: \(taggedType.type) with tag: \(taggedType.tag)"
   } else if let manyType = type as? IsMany.Type {
-    return { "many with type: \(manyType.type)" }
+    return "many with type: \(manyType.type)"
   }
-  return { "type: \(type)" }
+  return "type: \(type)"
 }

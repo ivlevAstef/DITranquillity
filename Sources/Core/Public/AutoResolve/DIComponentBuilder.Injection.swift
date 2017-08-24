@@ -17,47 +17,47 @@ public extension DIComponentBuilder {
 
   @discardableResult
   public func injection<P0,P1>(_ m: @escaping (Impl,P0,P1) -> ()) -> Self {
-    return append(injection: MM.make(by: m))
+    return append(injection: MM.make(true, by: m))
   }
 
   @discardableResult
   public func injection<P0,P1,P2>(_ m: @escaping (Impl,P0,P1,P2) -> ()) -> Self {
-    return append(injection: MM.make(by: m))
+    return append(injection: MM.make(true, by: m))
   }
 
   @discardableResult
   public func injection<P0,P1,P2,P3>(_ m: @escaping (Impl,P0,P1,P2,P3) -> ()) -> Self {
-    return append(injection: MM.make(by: m))
+    return append(injection: MM.make(true, by: m))
   }
 
   @discardableResult
   public func injection<P0,P1,P2,P3,P4>(_ m: @escaping (Impl,P0,P1,P2,P3,P4) -> ()) -> Self {
-    return append(injection: MM.make(by: m))
+    return append(injection: MM.make(true, by: m))
   }
 
   @discardableResult
   public func injection<P0,P1,P2,P3,P4,P5>(_ m: @escaping (Impl,P0,P1,P2,P3,P4,P5) -> ()) -> Self {
-    return append(injection: MM.make(by: m))
+    return append(injection: MM.make(true, by: m))
   }
 
   @discardableResult
   public func injection<P0,P1,P2,P3,P4,P5,P6>(_ m: @escaping (Impl,P0,P1,P2,P3,P4,P5,P6) -> ()) -> Self {
-    return append(injection: MM.make(by: m))
+    return append(injection: MM.make(true, by: m))
   }
 
   @discardableResult
   public func injection<P0,P1,P2,P3,P4,P5,P6,P7>(_ m: @escaping (Impl,P0,P1,P2,P3,P4,P5,P6,P7) -> ()) -> Self {
-    return append(injection: MM.make(by: m))
+    return append(injection: MM.make(true, by: m))
   }
 
   @discardableResult
   public func injection<P0,P1,P2,P3,P4,P5,P6,P7,P8>(_ m: @escaping (Impl,P0,P1,P2,P3,P4,P5,P6,P7,P8) -> ()) -> Self {
-    return append(injection: MM.make(by: m))
+    return append(injection: MM.make(true, by: m))
   }
 
   @discardableResult
   public func injection<P0,P1,P2,P3,P4,P5,P6,P7,P8,P9>(_ m: @escaping (Impl,P0,P1,P2,P3,P4,P5,P6,P7,P8,P9) -> ()) -> Self {
-    return append(injection: MM.make(by: m))
+    return append(injection: MM.make(true, by: m))
   }
 
 }

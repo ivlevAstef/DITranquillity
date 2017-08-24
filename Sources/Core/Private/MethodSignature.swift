@@ -24,9 +24,12 @@ final class MethodSignature {
   
   let parameters: [Parameter]
   let call: Call
+  let specificFirst: Bool
   
-  init(_ types: [DIAType], _ call: @escaping Call) {
-    self.parameters = types.map{ Parameter(type: $0) }
+  init(_ types: [DIAType], _ specificFirst: Bool, _ call: @escaping Call) {
+    let params = types.map{ Parameter(type: $0) }
+    self.specificFirst = specificFirst
+    self.parameters = specificFirst ? Array(params.dropFirst()) : params
     self.call = call
   }
 }

@@ -18,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow(frame: UIScreen.main.bounds)
 
 		let builder = DIContainerBuilder()
-		builder.register(module: Module1())
-		builder.register(component: SampleStartupComponent())
+		builder.append(framework: Framework1.self)
+		builder.append(part: SampleStartupPart.self)
 		
 		let container = try! builder.build()
 		

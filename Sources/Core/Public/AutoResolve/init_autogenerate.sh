@@ -22,7 +22,7 @@ local PType=$(join ',' ${numbers[@]/#/P})
 
 echo "  @discardableResult
   public func register<Impl,$PType>(file: String = #file, line: Int = #line, _ c: @escaping ($PType) -> Impl) -> DIComponentBuilder<Impl> {
-    return register(file, line, MM.make(by: c))
+    return register(file, line, MM.make(false, by: c))
   }
 " >> $2
 

@@ -10,12 +10,18 @@ typealias TypeKey = String
 
 extension String {
   init(by type: DIAType) {
-    let bundle = Bundle(for: type as! AnyClass)
-    self = "\(type)_\(bundle.bundleIdentifier ?? bundle.bundlePath)"
+    self = "\(type)_\(bundleString(for: type))"
   }
   
   init(by type: DIAType, and tag: DITag) {
-    let bundle = Bundle(for: type as! AnyClass)
-    self = "\(type)_\(bundle.bundleIdentifier ?? bundle.bundlePath)_\(tag)"
+    self = "\(type)_\(bundleString(for: type))_\(tag)"
   }
+}
+
+private func bundleString(for type: DIAType) -> String {
+  if let clazz = type as? AnyClass {
+    let bundle = Bundle(for: clazz)
+    return bundle.bundleIdentifier ?? bundle.bundlePath
+  }
+  return "unbundle"
 }

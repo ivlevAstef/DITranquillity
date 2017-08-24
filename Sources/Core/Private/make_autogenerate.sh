@@ -23,8 +23,8 @@ local MArg=$(join ',' $(replaceToArg numbers[@] "m(\$0[;I])"))
 local PSType=$(join ',' $(replaceToArg numbers[@] "P;I.self"))
 
 
-echo "  static func make<$PType,R>(by f: @escaping ($PType)->R) -> MethodSignature {
-    return MS([$PSType], {f($MArg)})
+echo "  static func make<$PType,R>(_ sp: Bool, by f: @escaping ($PType)->R) -> MethodSignature {
+    return MS([$PSType], sp, {f($MArg)})
   }
 " >> $2
 }

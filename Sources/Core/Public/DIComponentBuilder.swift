@@ -118,7 +118,7 @@ public extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func injection(_ method: @escaping (Impl) -> ()) -> Self {
-    component.append(injection: MethodMaker.make(by: method), cycle: false)
+    component.append(injection: MethodMaker.make(true, by: method), cycle: false)
     return self
   }
   
@@ -147,7 +147,7 @@ public extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func injection<Property>(cycle: Bool = false, _ method: @escaping (Impl,Property) -> ()) -> Self {
-    component.append(injection: MethodMaker.make(by: method), cycle: cycle)
+    component.append(injection: MethodMaker.make(true, by: method), cycle: cycle)
     return self
   }
   
@@ -163,7 +163,7 @@ public extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func postInit(_ method: @escaping (Impl) -> ()) -> Self {
-    component.postInit = MethodMaker.make(by: method)
+    component.postInit = MethodMaker.make(true, by: method)
     return self
   }
 }
