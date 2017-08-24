@@ -7,33 +7,73 @@
 //
 
 
-/// Namespace
-/// Special hack for Swift. 
-/// If class with generic whthin another structure, then it can be partially specialized
-//public struct DI {
-  /// Special class for resolve object by type with tag
+/// Short syntax for get object by tag
+/// Using:
+/// ```
+/// let object: YourType = di_byTag(YourTag.self, *container)
+/// ```
+/// also can using in injection or init:
+/// ```
+/// .injection{ $0 = di_byTag(YourTag.self, $1) }
+/// ```
+///
+/// - Parameters:
+///   - tag: a tag
+///   - obj: resolving object
+/// - Returns: resolved object
+public func di_byTag<Tag,T>(_ tag: Tag.Type, _ obj: DIByTag<Tag,T>) -> T {
+  return obj.o
+}
+
+/// Special class for resolve object by type with tag
+/// Using:
+/// ```
+/// let object: YourType = (*container as DIByTag)[YourTag.self].object
+/// ```
+///
 public final class DIByTag<Tag, T>: InternalByTag<Tag, T> {
-    /// Method for installing tag
-    ///
-    /// - Parameter tag: a Tag
-    public subscript(_ tag: Tag.Type) -> DIByTag<Tag, T> { return self }
-    
-    /// Resolved object
-    public var object: T { return _object }
+  /// Method for installing a tag
+  ///
+  /// - Parameter tag: a tag
+  public subscript(_ tag: Tag.Type) -> DIByTag<Tag, T> { return self }
   
-    /// Resolved object, short syntax
-    public var o: T { return _object }
-  }
+  /// Resolved object
+  public var object: T { return _object }
+
+  /// Resolved object, short syntax
+  public var o: T { return _object }
+}
+
+
+/// Short syntax for get many objects
+/// Using:
+/// ```
+/// let objects: [YourType] = di_byMany(*container)
+/// ```
+/// also can using in injection or init:
+/// ```
+/// .injection{ $0 = di_byMany($1) }
+/// ```
+///
+/// - Parameter obj: resolving objects
+/// - Returns: resolved objects
+public func di_many<T>(_ obj: DIMany<T>) -> [T] {
+  return obj.o
+}
   
-  /// Special class for resolve many object
-  public final class DIMany<T>: InternalByMany<T> {
-    /// Resolved objects
-    public var objects: [T] { return _objects }
-    
-    /// Resolved objects, short syntax
-    public var o: [T] { return _objects }
-  }
-//}
+/// Special class for resolve many object
+/// Using:
+/// ```
+/// let objects: [YourType] = (*container as DIMany).objects
+/// ```
+public final class DIMany<T>: InternalByMany<T> {
+  /// Resolved objects
+  public var objects: [T] { return _objects }
+  
+  /// Resolved objects, short syntax
+  public var o: [T] { return _objects }
+}
+
 
 /// Any type that can be in the application
 public typealias DIAType = Any.Type

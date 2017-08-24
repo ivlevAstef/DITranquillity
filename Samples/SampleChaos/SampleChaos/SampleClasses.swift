@@ -128,11 +128,11 @@ class SamplePart: DIPart {
       .as(ServiceProtocol.self)
       .lifetime(.prototype)
 
-    builder.register{ LoggerAll(loggers: ($0 as DIMany).objects) }
+    builder.register{ LoggerAll(loggers: di_many($0)) }
       .as(check: LoggerProtocol.self){$0}
       .default()
       .lifetime(.single)
-      .injection(cycle: true){ $0.loggersFull = ($1 as DIMany).objects }
+      .injection(cycle: true){ $0.loggersFull = di_many($1) }
 
 		builder.register{ Logger() }
       .as(check: LoggerProtocol.self){$0}
@@ -147,7 +147,7 @@ class SamplePart: DIPart {
       .injection{ $0.service2 = $1 }
       .injection{ $0.logger2 = $1 }
     
-    builder.register{ InjectMany(loggers: ($0 as DIMany).objects) }
+    builder.register{ InjectMany(loggers: di_many($0)) }
       .lifetime(.prototype)
     
     //Animals

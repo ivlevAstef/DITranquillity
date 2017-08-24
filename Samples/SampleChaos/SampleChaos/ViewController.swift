@@ -36,12 +36,17 @@ class ViewController: UIViewController {
     
     print("Create injectGlobal: \(injectGlobal)")
     
-    //Animals
+    // Optional
+    let fooOpt: FooService? = *container
+    let barOpt: BarService? = *container
+    print("Optional Foo:\(fooOpt) Optional Bar: \(barOpt)" )
     
-    let cat: Animal = (*container as DIByTag)[CatTag.self].o
-    let dog: Animal = (*container as DIByTag)[DogTag.self].object
+    // Animals
+    
+    let cat: Animal = di_byTag(CatTag.self, *container)
+    let dog: Animal = di_byTag(DogTag.self, *container)
     let bear: Animal = container.resolve(tag: BearTag.self)
-    let many: [Animal] = (*container as DIMany).objects
+    let many: [Animal] = di_many(*container)
     print(many.map{ $0.name })
     
     let defaultAnimal: Animal = *container
