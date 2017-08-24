@@ -8,20 +8,30 @@
 
 import Foundation
 
+////// Weak reference
+
+class Weak {
+  private(set) weak var value: AnyObject?
+  
+  init<T>(value: T) {
+    self.value = value as AnyObject
+  }
+}
+
+
+////// For remove optional type
+
 protocol TypeGetter {
-  static var type: DI.AType { get }
+  static var type: DIAType { get }
 }
 
 extension ImplicitlyUnwrappedOptional: TypeGetter {
-  static var type: DI.AType { return Wrapped.self }
+  static var type: DIAType { return Wrapped.self }
 }
 
 extension Optional: TypeGetter {
-  static var type: DI.AType { return Wrapped.self }
+  static var type: DIAType { return Wrapped.self }
 }
-
-extension InternalByMany: TypeGetter { }
-extension InternalByTag: TypeGetter { }
 
 func removeTypeWrappers(_ type: Any.Type) -> Any.Type {
   if let typeGetter = type as? TypeGetter.Type {
@@ -32,6 +42,7 @@ func removeTypeWrappers(_ type: Any.Type) -> Any.Type {
 }
 
 
+////// For optional check
 
 protocol IsOptional {}
 extension Optional: IsOptional { }
@@ -40,7 +51,7 @@ func isOptional(_ type: Any.Type) -> Bool {
   return type is IsOptional.Type
 }
 
-
+////// For optional make
 
 protocol OptionalMake {
   static func make(by obj: Any?) -> Self
@@ -75,8 +86,9 @@ func gmake<T>(by obj: Any?) -> T {
   return obj as! T // can crash, but it's normally
 }
 
+////// For simple log
 
-func description(type: DI.AType) -> ()->String {
+func description(type: DIAType) -> ()->String {
   if let taggedType = type as? IsTag.Type {
     return { "type: \(taggedType.type) with tag: \(taggedType.tag)" }
   } else if let manyType = type as? IsMany.Type {

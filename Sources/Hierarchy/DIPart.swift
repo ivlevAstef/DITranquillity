@@ -7,11 +7,11 @@
 //
 
 public protocol DIPart: class {
-  static func load(builder: DI.ContainerBuilder)
+  static func load(builder: DIContainerBuilder)
 }
 
-public extension DI.ContainerBuilder {
-  public func register(part: DIPart.Type, file: String = #file, line: Int = #line) {
+public extension DIContainerBuilder {
+  public func append(part: DIPart.Type, file: String = #file, line: Int = #line) {
     let key = "\(line)\(file)"
     // Optimization build
     if !ignoredComponents.contains(key) {

@@ -21,15 +21,16 @@ local numbers=($(seq 0 $1))
 local PType=$(join ',' ${numbers[@]/#/P})
 
 echo "  @discardableResult
-  public func initial<$PType>(_ c: @escaping ($PType) -> Impl) -> Self {
-    return set(initial: MM.make(by: c))
+  public func register<Impl,$PType>(file: String = #file, line: Int = #line, _ c: @escaping ($PType) -> Impl) -> DIComponentBuilder<Impl> {
+    return register(file, line, MM.make(by: c))
   }
 " >> $2
+
 }
 
 registationInitFile() { #file
 echo "//
-//  DI.ComponentBuilder.Init.swift
+//  DIContainerBuilder.Reg.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 27/01/2017.
@@ -38,12 +39,7 @@ echo "//
 
 private typealias MM = MethodMaker
 
-public extension DI.ComponentBuilder {
-
-  private func set(initial signature: MethodSignature) -> Self {
-    component.set(initial: signature)
-    return self
-  }
+public extension DIContainerBuilder {
 " > $1
 
 for argcount in `seq 0 $argmax`; do
@@ -52,4 +48,4 @@ done
 echo "}" >> $1
 }
 
-registationInitFile "DI.ComponentBuilder.Init.swift"
+registationInitFile "DIContainerBuilder.Reg.swift"

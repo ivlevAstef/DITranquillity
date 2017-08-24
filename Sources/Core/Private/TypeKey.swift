@@ -9,20 +9,12 @@
 typealias TypeKey = String
 
 extension String {
-  init(auto type: DI.AType) {
-    if let taggedType = type as? IsTag.Type {
-      self.init(by: taggedType.type, and: taggedType.tag)
-    } else {
-      self.init(by: type)
-    }
-  }
-  
-  init(by type: DI.AType) {
+  init(by type: DIAType) {
     let bundle = Bundle(for: type as! AnyClass)
     self = "\(type)_\(bundle.bundleIdentifier ?? bundle.bundlePath)"
   }
   
-  init(by type: DI.AType, and tag: DI.Tag) {
+  init(by type: DIAType, and tag: DITag) {
     let bundle = Bundle(for: type as! AnyClass)
     self = "\(type)_\(bundle.bundleIdentifier ?? bundle.bundlePath)_\(tag)"
   }

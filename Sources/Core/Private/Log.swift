@@ -12,29 +12,29 @@ enum LogBrace {
 
 private var tabulation = ""
 
-internal func log(_ level: DI.LogLevel, msg: @autoclosure ()->String, brace: LogBrace = .neutral) {
-  guard let logFunc = DI.Setting.Log.fun else {
+internal func log(_ level: DILogLevel, msg: @autoclosure ()->String, brace: LogBrace = .neutral) {
+  guard let logFunc = DISetting.Log.fun else {
     return
   }
   
-  if level.priority < DI.Setting.Log.level.priority {
+  if level.priority < DISetting.Log.level.priority {
     return
   }
   
   switch brace {
   case .begin:
-    tabulation += DI.Setting.Log.tab
+    tabulation += DISetting.Log.tab
   case .neutral:
     break
   case .end:
-    assert(tabulation.characters.count >= DI.Setting.Log.tab.characters.count)
-    tabulation.characters.removeLast(DI.Setting.Log.tab.characters.count)
+    assert(tabulation.characters.count >= DISetting.Log.tab.characters.count)
+    tabulation.characters.removeLast(DISetting.Log.tab.characters.count)
   }
   
   logFunc(level, tabulation + msg())
 }
 
-extension DI.LogLevel {
+extension DILogLevel {
   fileprivate var priority: Int {
     switch self {
     case .none:

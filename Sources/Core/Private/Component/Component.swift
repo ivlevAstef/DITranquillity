@@ -12,8 +12,8 @@ struct Injection {
 }
 
 final class Component: _Component {
-  var lifeTime = DI.LifeTime.default
-  var names: Set<TypeKey> = [] //TODO: maybe array? he fasted for append
+  var lifeTime = DILifeTime.default
+  var names: Set<TypeKey> = []
   var isDefault: Bool = false
   
   fileprivate(set) var initial: MethodSignature?
@@ -33,12 +33,6 @@ extension Component {
   
   func append(injection signature: MethodSignature, cycle: Bool) {
     injections.append(Injection(signature: signature, cycle: cycle))
-  }  
-}
-
-extension Component {
-  func has(tag: DI.Tag) -> Bool {
-    return names.contains(TypeKey(type: info.type, tag: name))
   }
 }
 

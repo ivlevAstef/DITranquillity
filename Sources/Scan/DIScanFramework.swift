@@ -9,7 +9,7 @@
 open class DIScanFramework: DIScan<DIFramework>, DIFramework {
   public static func load(builder: DIContainerBuilder) {
     for framework in types {
-      builder.register(framework: framework as! DIFramework.Type)
+      builder.append(framework: framework as! DIFramework.Type)
     }
   }
 }

@@ -9,7 +9,7 @@
 open class DIScanPart: DIScan<DIPart>, DIPart {
   public static func load(builder: DIContainerBuilder) {
     for part in types {
-      builder.register(part: part as! DIPart.Type)
+      builder.append(part: part as! DIPart.Type)
     }
   }
 }

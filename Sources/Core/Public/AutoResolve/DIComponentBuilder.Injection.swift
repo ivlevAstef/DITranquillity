@@ -1,5 +1,5 @@
 //
-//  DI.ComponentBuilder.Injection.swift
+//  DIComponentBuilder.Injection.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 03/02/2017.
@@ -8,7 +8,7 @@
 
 private typealias MM = MethodMaker
 
-public extension DI.ComponentBuilder {
+public extension DIComponentBuilder {
 
   private func append(injection signature: MethodSignature) -> Self {
     component.append(injection: signature, cycle: false)

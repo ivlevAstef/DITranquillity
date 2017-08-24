@@ -8,46 +8,42 @@
 
 import UIKit
 
-extension DI {
-
-  public final class Storyboard: UIStoryboard {
-    public required init(name: String, bundle storyboardBundleOrNil: Bundle?, container: DI.Container) {
-      storyboard = _DIStoryboardBase.create(name, bundle: storyboardBundleOrNil)
-      super.init()
-      storyboard.resolver = StoryboardResolver(container: container)
-    }
-
-    public override func instantiateInitialViewController() -> UIViewController? {
-      return storyboard.instantiateInitialViewController()
-    }
-
-    public override func instantiateViewController(withIdentifier identifier: String) -> UIViewController {
-      return storyboard.instantiateViewController(withIdentifier: identifier)
-    }
-
-    private let storyboard: _DIStoryboardBase
+public final class DIStoryboard: UIStoryboard {
+  public required init(name: String, bundle storyboardBundleOrNil: Bundle?, container: DIContainer) {
+    storyboard = _DIStoryboardBase.create(name, bundle: storyboardBundleOrNil)
+    super.init()
+    storyboard.resolver = StoryboardResolver(container: container)
   }
+
+  public override func instantiateInitialViewController() -> UIViewController? {
+    return storyboard.instantiateInitialViewController()
+  }
+
+  public override func instantiateViewController(withIdentifier identifier: String) -> UIViewController {
+    return storyboard.instantiateViewController(withIdentifier: identifier)
+  }
+
+  private let storyboard: _DIStoryboardBase
 }
 
 // ViewController
-public extension DIRegistrationBuilder where Impl: UIViewController {
+public extension DIContainerBuilder {
   @discardableResult
-  public func initial<T: UIViewController>(nib type: T.Type) -> Self {
-    assert(Impl.self == type)
-    return initial{ UIViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! Impl }
+  public func register<Impl: UIViewController>(nib type: Impl.Type) -> DIComponentBuilder<Impl> {
+    return register{ UIViewController(nibName: String(describing: type), bundle: Bundle(for: type)) as! Impl }
   }
   
   @discardableResult
-  public func initial(useStoryboard storyboard: UIStoryboard, identifier: String) -> Self {
-    return initial{ storyboard.instantiateViewController(withIdentifier: identifier) as! Impl }
+  public func register<Impl: UIViewController>(_ type: Impl.Type, from storyboard: UIStoryboard, identifier: String) -> DIComponentBuilder<Impl> {
+    return register{ storyboard.instantiateViewController(withIdentifier: identifier) as! Impl }
   }
 }
 
 // Storyboard
-public extension DIRegistrationBuilder where Impl: UIStoryboard {
+public extension DIContainerBuilder {
   @discardableResult
-  public func initial(name: String, bundle storyboardBundleOrNil: Bundle?) -> Self {
-    return initial{ DI.Storyboard(name: name, bundle: storyboardBundleOrNil, container: $0) as! Impl }
+  public func register(storyboard name: String, bundle storyboardBundleOrNil: Bundle?) -> DIComponentBuilder<UIStoryboard> {
+    return register{ DIStoryboard(name: name, bundle: storyboardBundleOrNil, container: $0) as UIStoryboard }
   }
 }
 
