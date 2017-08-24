@@ -52,6 +52,7 @@ class LoggerAll: LoggerProtocol {
 
   init(loggers: [LoggerProtocol]) {
     self.loggers = loggers
+    print(loggers)
   }
 
   func log(_ msg: String) {
@@ -127,11 +128,11 @@ class SamplePart: DIPart {
       .as(ServiceProtocol.self)
       .lifetime(.prototype)
 
-    builder.register{ LoggerAll(loggers: ($0 as DI.ByMany).objects) }
+    builder.register{ LoggerAll(loggers: ($0 as DIMany).objects) }
       .as(check: LoggerProtocol.self){$0}
       .default()
       .lifetime(.single)
-      .injection(cycle: true){ $0.loggersFull = ($1 as DI.ByMany).objects }
+      .injection(cycle: true){ $0.loggersFull = ($1 as DIMany).objects }
 
 		builder.register{ Logger() }
       .as(check: LoggerProtocol.self){$0}
@@ -146,7 +147,7 @@ class SamplePart: DIPart {
       .injection{ $0.service2 = $1 }
       .injection{ $0.logger2 = $1 }
     
-    builder.register{ InjectMany(loggers: ($0 as DI.ByMany).objects) }
+    builder.register{ InjectMany(loggers: ($0 as DIMany).objects) }
       .lifetime(.prototype)
     
     //Animals

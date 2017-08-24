@@ -10,19 +10,30 @@
 /// Namespace
 /// Special hack for Swift. 
 /// If class with generic whthin another structure, then it can be partially specialized
-public struct DI {
+//public struct DI {
   /// Special class for resolve object by type with tag
-  public final class ByTag<Tag, T>: InternalByTag<Tag, T> {
+public final class DIByTag<Tag, T>: InternalByTag<Tag, T> {
+    /// Method for installing tag
+    ///
+    /// - Parameter tag: a Tag
+    public subscript(_ tag: Tag.Type) -> DIByTag<Tag, T> { return self }
+    
     /// Resolved object
     public var object: T { return _object }
+  
+    /// Resolved object, short syntax
+    public var o: T { return _object }
   }
   
   /// Special class for resolve many object
-  public final class ByMany<T>: InternalByMany<T> {
+  public final class DIMany<T>: InternalByMany<T> {
     /// Resolved objects
     public var objects: [T] { return _objects }
+    
+    /// Resolved objects, short syntax
+    public var o: [T] { return _objects }
   }
-}
+//}
 
 /// Any type that can be in the application
 public typealias DIAType = Any.Type

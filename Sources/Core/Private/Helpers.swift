@@ -66,15 +66,15 @@ extension Optional: OptionalMake {
   }
 }
 
-extension DI.ByTag: OptionalMake {
-  static func make(by obj: Any?) -> DI.ByTag<Tag, T> {
-    return DI.ByTag<Tag, T>(object: gmake(by: obj) as T)
+extension DIByTag: OptionalMake {
+  static func make(by obj: Any?) -> DIByTag<Tag, T> {
+    return DIByTag<Tag, T>(object: gmake(by: obj) as T)
   }
 }
 
-extension DI.ByMany: OptionalMake {
-  static func make(by obj: Any?) -> DI.ByMany<T> {
-    return DI.ByMany<T>(objects: gmake(by: obj) as [T])
+extension DIMany: OptionalMake {
+  static func make(by obj: Any?) -> DIMany<T> {
+    return DIMany<T>(objects: gmake(by: obj) as [T])
   }
 }
 

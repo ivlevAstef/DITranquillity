@@ -28,7 +28,7 @@ public final class DIContainer {
   /// - Parameter tag: resolve tag
   /// - Returns: Object for the specified type with tag, or nil (see description)
   public func resolve<T, Tag>(tag: Tag.Type) -> T {
-    return (resolver.resolve(self) as DI.ByTag<Tag, T>).object
+    return (resolver.resolve(self) as DIByTag<Tag, T>).object
   }
   
   /// Injected all dependencies into object

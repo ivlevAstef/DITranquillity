@@ -38,9 +38,11 @@ class ViewController: UIViewController {
     
     //Animals
     
-    let cat = (*container as DI.ByTag<CatTag, Animal>).object
-    let dog = (*container as DI.ByTag<DogTag, Animal>).object
-    let bear = (*container as DI.ByTag<BearTag, Animal>).object
+    let cat: Animal = (*container as DIByTag)[CatTag.self].o
+    let dog: Animal = (*container as DIByTag)[DogTag.self].object
+    let bear: Animal = container.resolve(tag: BearTag.self)
+    let many: [Animal] = (*container as DIMany).objects
+    print(many.map{ $0.name })
     
     let defaultAnimal: Animal = *container
     
