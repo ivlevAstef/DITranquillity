@@ -70,7 +70,7 @@ public extension DIComponentBuilder {
   /// Using:
   /// ```
   /// builder.register(YourClass.self)
-  ///   .as(YourProtocol.self){$0}
+  ///   .as(check: YourProtocol.self){$0}
   /// ```
   /// WHERE YourClass implements YourProtocol
   ///
@@ -87,7 +87,7 @@ public extension DIComponentBuilder {
   /// Using:
   /// ```
   /// builder.register(YourClass.self)
-  ///   .as(YourProtocol.self, tag: YourTag.self){$0}
+  ///   .as(check: YourProtocol.self, tag: YourTag.self){$0}
   /// ```
   /// WHERE YourClass implements YourProtocol
   ///

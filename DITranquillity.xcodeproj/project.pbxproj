@@ -71,12 +71,6 @@
 		D55368F21EE5BD3300015926 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F11EE5BD3300015926 /* Log.swift */; };
 		D55368F31EE5BD3600015926 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F11EE5BD3300015926 /* Log.swift */; };
 		D55368F41EE5BD3600015926 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F11EE5BD3300015926 /* Log.swift */; };
-		D55368FC1EE656AC00015926 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F61EE656AC00015926 /* Component.swift */; };
-		D55368FD1EE656AC00015926 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F61EE656AC00015926 /* Component.swift */; };
-		D55368FE1EE656AC00015926 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F61EE656AC00015926 /* Component.swift */; };
-		D55368FF1EE656AC00015926 /* _Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F71EE656AC00015926 /* _Component.swift */; };
-		D55369001EE656AC00015926 /* _Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F71EE656AC00015926 /* _Component.swift */; };
-		D55369011EE656AC00015926 /* _Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55368F71EE656AC00015926 /* _Component.swift */; };
 		D55369101EE658EA00015926 /* TypeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553690F1EE658EA00015926 /* TypeKey.swift */; };
 		D55369111EE658EA00015926 /* TypeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553690F1EE658EA00015926 /* TypeKey.swift */; };
 		D55369121EE658EA00015926 /* TypeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D553690F1EE658EA00015926 /* TypeKey.swift */; };
@@ -98,7 +92,10 @@
 		D55AFCC41EEEB88500527D27 /* init_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCC31EEEB88500527D27 /* init_autogenerate.sh */; };
 		D55AFCC51EEEB88500527D27 /* init_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCC31EEEB88500527D27 /* init_autogenerate.sh */; };
 		D55AFCC61EEEB88500527D27 /* init_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCC31EEEB88500527D27 /* init_autogenerate.sh */; };
-		D55BB84A1F0DEDC3001481DF /* ComponentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55BB8491F0DEDC3001481DF /* ComponentContainer.swift */; };
+		D57961621F4FC7440079DE8C /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961611F4FC7440079DE8C /* Component.swift */; };
+		D57961641F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961631F4FC7F40079DE8C /* DIByTagAndMany.swift */; };
+		D57961651F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961631F4FC7F40079DE8C /* DIByTagAndMany.swift */; };
+		D57961661F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961631F4FC7F40079DE8C /* DIByTagAndMany.swift */; };
 		D5E3C7D21F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3C7D11F3C0C5A0022DD43 /* ByTagAndMany.swift */; };
 		D5E3C7D31F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3C7D11F3C0C5A0022DD43 /* ByTagAndMany.swift */; };
 		D5E3C7D41F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3C7D11F3C0C5A0022DD43 /* ByTagAndMany.swift */; };
@@ -135,8 +132,6 @@
 		D51666FA1F1FBFAA001AD9F5 /* DIPart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIPart.swift; sourceTree = "<group>"; };
 		D51A6D4A1F415E6000904EB4 /* DIContainerBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainerBuilder.swift; sourceTree = "<group>"; };
 		D55368F11EE5BD3300015926 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
-		D55368F61EE656AC00015926 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
-		D55368F71EE656AC00015926 /* _Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Component.swift; sourceTree = "<group>"; };
 		D553690F1EE658EA00015926 /* TypeKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeKey.swift; sourceTree = "<group>"; };
 		D55369171EE6E2AE00015926 /* BundleContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleContainer.swift; sourceTree = "<group>"; };
 		D55AFCB31EEEA48D00527D27 /* MethodMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodMaker.swift; sourceTree = "<group>"; };
@@ -144,7 +139,8 @@
 		D55AFCBB1EEEB0E200527D27 /* make_autogenerate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = make_autogenerate.sh; sourceTree = "<group>"; };
 		D55AFCBF1EEEB4AD00527D27 /* inject_autogenerate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = inject_autogenerate.sh; sourceTree = "<group>"; };
 		D55AFCC31EEEB88500527D27 /* init_autogenerate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = init_autogenerate.sh; sourceTree = "<group>"; };
-		D55BB8491F0DEDC3001481DF /* ComponentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentContainer.swift; sourceTree = "<group>"; };
+		D57961611F4FC7440079DE8C /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
+		D57961631F4FC7F40079DE8C /* DIByTagAndMany.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIByTagAndMany.swift; sourceTree = "<group>"; };
 		D5E3C7D11F3C0C5A0022DD43 /* ByTagAndMany.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByTagAndMany.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -209,8 +205,8 @@
 		16640A511D9E1E7B00707BFC /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				D57961611F4FC7440079DE8C /* Component.swift */,
 				D55AFCBB1EEEB0E200527D27 /* make_autogenerate.sh */,
-				D55368F51EE656AC00015926 /* Component */,
 				D55368F11EE5BD3300015926 /* Log.swift */,
 				16640A521D9E1E7B00707BFC /* MultyMap.swift */,
 				16640A531D9E1E7B00707BFC /* Resolver.swift */,
@@ -234,6 +230,7 @@
 				16640A681D9E1E7B00707BFC /* DIComponentBuilder.swift */,
 				D51A6D4A1F415E6000904EB4 /* DIContainerBuilder.swift */,
 				D512552C1EE06F010067796B /* DISettings.swift */,
+				D57961631F4FC7F40079DE8C /* DIByTagAndMany.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -304,16 +301,6 @@
 				D51666FA1F1FBFAA001AD9F5 /* DIPart.swift */,
 			);
 			path = Hierarchy;
-			sourceTree = "<group>";
-		};
-		D55368F51EE656AC00015926 /* Component */ = {
-			isa = PBXGroup;
-			children = (
-				D55BB8491F0DEDC3001481DF /* ComponentContainer.swift */,
-				D55368F71EE656AC00015926 /* _Component.swift */,
-				D55368F61EE656AC00015926 /* Component.swift */,
-			);
-			path = Component;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -476,8 +463,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				119F4FD71E56069200B2DFA1 /* DIContainerBuilder.Reg.swift in Sources */,
-				D55368FD1EE656AC00015926 /* Component.swift in Sources */,
 				169C0DC41DA3501F001F0AD5 /* DIComponentBuilder.swift in Sources */,
+				D57961651F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */,
 				D55AFCB91EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				D55AFCB51EEEA48D00527D27 /* MethodMaker.swift in Sources */,
 				16D7BCBE1DB086B900A29A9F /* DIScanPart.swift in Sources */,
@@ -495,7 +482,6 @@
 				D512552E1EE06F010067796B /* DISettings.swift in Sources */,
 				D51666FC1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */,
 				D55368F31EE5BD3600015926 /* Log.swift in Sources */,
-				D55369001EE656AC00015926 /* _Component.swift in Sources */,
 				16D7BCBD1DB086B900A29A9F /* DIScanFramework.swift in Sources */,
 				D55369111EE658EA00015926 /* TypeKey.swift in Sources */,
 				D5E3C7D31F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */,
@@ -509,8 +495,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				119F4FD81E56069200B2DFA1 /* DIContainerBuilder.Reg.swift in Sources */,
-				D55368FE1EE656AC00015926 /* Component.swift in Sources */,
 				169C0E2A1DA35CBE001F0AD5 /* DIComponentBuilder.swift in Sources */,
+				D57961661F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */,
 				D55AFCBA1EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				D55AFCB61EEEA48D00527D27 /* MethodMaker.swift in Sources */,
 				16D7BCC01DB086B900A29A9F /* DIScanPart.swift in Sources */,
@@ -528,7 +514,6 @@
 				D512552F1EE06F010067796B /* DISettings.swift in Sources */,
 				D51666FD1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */,
 				D55368F41EE5BD3600015926 /* Log.swift in Sources */,
-				D55369011EE656AC00015926 /* _Component.swift in Sources */,
 				16D7BCBF1DB086B900A29A9F /* DIScanFramework.swift in Sources */,
 				D55369121EE658EA00015926 /* TypeKey.swift in Sources */,
 				D5E3C7D41F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */,
@@ -542,7 +527,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				119F4FD61E56069200B2DFA1 /* DIContainerBuilder.Reg.swift in Sources */,
-				D55368FC1EE656AC00015926 /* Component.swift in Sources */,
 				16640A851D9E1E7B00707BFC /* DIComponentBuilder.swift in Sources */,
 				D55AFCB81EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				D55AFCB41EEEA48D00527D27 /* MethodMaker.swift in Sources */,
@@ -550,6 +534,7 @@
 				16D7BCBA1DB086B000A29A9F /* DIScanPart.swift in Sources */,
 				118DBCCC1E4100BF003A7D1F /* StoryboardResolver.swift in Sources */,
 				16640A731D9E1E7B00707BFC /* MultyMap.swift in Sources */,
+				D57961641F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */,
 				115C24C81E6527CA00CC8BC7 /* Synchronize.swift in Sources */,
 				169C0E171DA352C7001F0AD5 /* DIStoryboardBase.m in Sources */,
 				163DDDC61DB9C84E0003DE54 /* DITypes.swift in Sources */,
@@ -557,14 +542,13 @@
 				16640A741D9E1E7B00707BFC /* Resolver.swift in Sources */,
 				16640A871D9E1E7B00707BFC /* DIContainer.swift in Sources */,
 				16D7BCB81DB086B000A29A9F /* DIScan.swift in Sources */,
-				D55BB84A1F0DEDC3001481DF /* ComponentContainer.swift in Sources */,
 				16640A751D9E1E7B00707BFC /* Helpers.swift in Sources */,
 				D512552D1EE06F010067796B /* DISettings.swift in Sources */,
 				D51666FB1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */,
 				D55368F21EE5BD3300015926 /* Log.swift in Sources */,
+				D57961621F4FC7440079DE8C /* Component.swift in Sources */,
 				D51666FE1F1FBFAA001AD9F5 /* DIPart.swift in Sources */,
 				D51A6D4B1F415E6000904EB4 /* DIContainerBuilder.swift in Sources */,
-				D55368FF1EE656AC00015926 /* _Component.swift in Sources */,
 				16D7BCB91DB086B000A29A9F /* DIScanFramework.swift in Sources */,
 				D55369101EE658EA00015926 /* TypeKey.swift in Sources */,
 				1651E7041E8631A900E967B4 /* DIComponentBuilder.Injection.swift in Sources */,

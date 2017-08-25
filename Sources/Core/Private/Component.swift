@@ -6,12 +6,25 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-struct Injection {
-  let signature: MethodSignature
-  let cycle: Bool
+typealias Injection = (signature: MethodSignature, cycle: Bool)
+
+// Reference
+final class ComponentContainer {
+  var map = Multimap<TypeKey, Component>()
 }
 
-final class Component: _Component {
+
+final class Component {
+  typealias UniqueKey = String
+  
+  init(componentInfo: DIComponentInfo) {
+    self.info = componentInfo
+    self.uniqueKey = "\(componentInfo.type)\(componentInfo.file)\(componentInfo.line)"
+  }
+  
+  let info: DIComponentInfo
+  let uniqueKey: UniqueKey
+  
   var lifeTime = DILifeTime.default
   var names: Set<TypeKey> = []
   var isDefault: Bool = false
@@ -26,6 +39,15 @@ final class Component: _Component {
   }
 }
 
+extension Component: Hashable {
+  var hashValue: Int { return uniqueKey.hash }
+  
+  static func ==(lhs: Component, rhs: Component) -> Bool {
+    return lhs.uniqueKey == rhs.uniqueKey
+  }
+}
+
+
 extension Component {
   func set(initial signature: MethodSignature) {
     initial = signature
@@ -33,25 +55,5 @@ extension Component {
   
   func append(injection signature: MethodSignature, cycle: Bool) {
     injections.append(Injection(signature: signature, cycle: cycle))
-  }
-}
-
-extension Component {
-  var signatures: [MethodSignature] {
-    var result: [MethodSignature] = []
-    
-    if let initial = self.initial {
-      result.append(initial)
-    }
-    
-    for injection in injections {
-      result.append(injection.signature)
-    }
-    
-    if let postInit = self.postInit {
-      result.append(postInit)
-    }
-    
-    return result
   }
 }

@@ -169,3 +169,24 @@ extension DIContainerBuilder {
     }
   }
 }
+
+
+extension Component {
+  fileprivate var signatures: [MethodSignature] {
+    var result: [MethodSignature] = []
+    
+    if let initial = self.initial {
+      result.append(initial)
+    }
+    
+    for injection in injections {
+      result.append(injection.signature)
+    }
+    
+    if let postInit = self.postInit {
+      result.append(postInit)
+    }
+    
+    return result
+  }
+}

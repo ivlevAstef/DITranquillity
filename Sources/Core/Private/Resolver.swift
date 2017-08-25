@@ -130,13 +130,13 @@ class Resolver {
       return nil
     }
     
-    if 1 == components.count {
-      return resolve(container, components[0], getter)
+    if type is IsMany.Type {
+      // Remove objects contains in stack
+      let filterComponents = components.filter{ !stack.contains($0.uniqueKey) }
+      return filterComponents.flatMap{ resolve(container, $0, getter) }
     }
     
-    // Remove objects contains in stack
-    let filterComponents = components.filter{ !stack.contains($0.uniqueKey) }
-    return filterComponents.flatMap{ resolve(container, $0, getter) }
+    return resolve(container, components[0], getter)
   }
   
   /// Super function

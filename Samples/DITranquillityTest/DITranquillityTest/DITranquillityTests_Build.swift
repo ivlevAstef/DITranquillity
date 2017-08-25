@@ -19,32 +19,13 @@ private func equals(_ t1: Any, _ t2: Any) -> Bool {
   return String(describing: t1) == String(describing: t2)
 }
 
-extension DITypeInfo {
+extension DIComponentInfo {
   init(type: DIType, file: String, line: Int) {
     self.type = type
     self.file = file
     self.line = line
   }
-  
 }
-
-extension DIError: Equatable {
-  public static func == (a: DIError, b: DIError) -> Bool {
-    switch (a, b) {
-      
-    case (.typeNotFound(let t1), .typeNotFound(let t2)) where equals(t1, t2): return true
-    case (.noSpecifiedInitialMethod(let t1), .noSpecifiedInitialMethod(let t2)) where equals(t1, t2): return true
-    case (.pluralDefaultAd(let t1, let c1), .pluralDefaultAd(let t2, let c2)) where equals(t1, t2) && c1 == c2: return true
-    case (.ambiguousType(let t1, let c1), .ambiguousType(let t2, let c2)) where equals(t1, t2) && c1 == c2: return true
-      
-    case (.incorrectType(let t1, let rt1, let c1), .incorrectType(let t2, let rt2, let c2)) where equals(t1, t2) && equals(rt1, rt2) && c1 == c2: return true
-    case (.build(let errs1), .build(let errs2)) where errs1 == errs2: return true
-      
-    default: return false
-    }
-  }
-}
-
 
 class DITranquillityTests_Build: XCTestCase {
   var file: String { return #file }
@@ -53,35 +34,19 @@ class DITranquillityTests_Build: XCTestCase {
     super.setUp()
   }
 
-  func test01_NotSetInitializer() {
+  /*func test01_NotSetInitializer() {
     let builder = DIContainerBuilder()
     
-    let _ = builder.register(type: TestProtocol.self); let line = #line
+    let _ = builder.register(TestProtocol.self); let line = #line
     
     do {
       try builder.build()
     } catch DIError.build(let errors) {
-      XCTAssertEqual(errors, [
-        DIError.noSpecifiedInitialMethod(typeInfo: DITypeInfo(type: TestProtocol.self, file: file, line: line))
-      ])
       return
     } catch {
       XCTFail("Catched error: \(error)")
     }
     XCTFail("No try exceptions")
-  }
-  
-  func test02_NotInitializerForWithOutInitializer() {
-    let builder = DIContainerBuilder()
-    
-    builder.register(type: TestProtocol.self)
-      .initialNotNecessary()
-    
-    do {
-      try builder.build()
-    } catch {
-      XCTFail("Catched error: \(error)")
-    }
   }
   
   func test03_MultiplyRegistrateTypeWithMultyDefault() {
@@ -226,5 +191,5 @@ class DITranquillityTests_Build: XCTestCase {
     print(type) // ignore
   }
 
-  
+  */
 }

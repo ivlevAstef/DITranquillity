@@ -10,25 +10,25 @@ import DITranquillity
 
 public class DuMole1Type { }
 
-public class  ScannedOnent1: DIScanned, DIComponent {
-  public var scope: DIComponentScope { return .public }
-  
-	public func load(builder: DIContainerBuilder) {
-    builder.register(type: DuMole1Type.init)
-	}
+public class ScannedPrt1: DIScanned, DIPart {
+  static func load(builder: DIContainerBuilder) {
+    builder.register(DuMole1Type.init)
+  }
 }
 
 public class DuMole2Type { }
 
-public class  ScannedOnent2: DIScanned, DIComponent {
-  public var scope: DIComponentScope { return .public }
-  
-	public func load(builder: DIContainerBuilder) {
-    builder.register(type: DuMole2Type.init)
+public class ScannedPrt2: DIScanned, DIPart {
+	static func load(builder: DIContainerBuilder) {
+    builder.register(DuMole2Type.init)
 	}
 }
 
-public class ScannedModule2: DIScanned, DIModule {
-	public var components: [DIComponent] = [  ScannedOnent1(),  ScannedOnent2() ]
-	public var dependencies: [DIModule] = []
+// Assemblies
+
+public class ScannedFramework2: DIScanned, DIFramework {
+  static func load(builder: DIContainerBuilder) {
+    builder.append(part: ScannedPrt1.self)
+    builder.append(part: ScannedPrt2.self)
+  }
 }

@@ -19,12 +19,25 @@ registrationInjectFunction() { #argcount file
 local numbers=($(seq 0 $1))
 
 local PType=$(join ',' ${numbers[@]/#/P})
+local params=$(join ', ' ${numbers[@]/#/p})
+local quote='```'
 
-echo "  @discardableResult
+echo "
+  /// Function for appending an injection method
+  ///
+  /// Using:
+  /// $quote
+  /// builder.register(YourClass.self)
+  ///   .injection{ yourClass, $params in yourClass.yourMethod($params) }
+  /// $quote
+  ///
+  /// - Parameters:
+  ///   - m: Injection method. First input argument is the always created object
+  /// - Returns: Self
+  @discardableResult
   public func injection<$PType>(_ m: @escaping (Impl,$PType) -> ()) -> Self {
     return append(injection: MM.make(true, by: m))
-  }
-" >> $2
+  }" >> $2
 }
 
 registationInjectFile() { #file

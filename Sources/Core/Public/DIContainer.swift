@@ -7,10 +7,20 @@
 //
 
 prefix operator *
+/// Short syntax for resolve
+/// Using:
+/// ```
+/// let yourObj: YourClass = *container
+/// ```
+///
+/// - Parameter container: A container
+/// - Returns: Created object
 public prefix func *<T>(container: DIContainer) -> T {
   return container.resolve()
 }
 
+/// A container holding all registered components
+/// and allows you to receive objects by type
 public final class DIContainer {
   /// Resolve object by type
   /// Can crash application, if can't found the type.
@@ -28,7 +38,14 @@ public final class DIContainer {
   /// - Parameter tag: resolve tag
   /// - Returns: Object for the specified type with tag, or nil (see description)
   public func resolve<T, Tag>(tag: Tag.Type) -> T {
-    return (resolver.resolve(self) as DIByTag<Tag, T>).object
+    return by(tag: tag, on: resolver.resolve(self))
+  }
+  
+  /// Resolve many objects by type
+  ///
+  /// - Returns: Objects for the specified type
+  public func resolveMany<T>() -> [T] {
+    return many(resolver.resolve(self))
   }
   
   /// Injected all dependencies into object

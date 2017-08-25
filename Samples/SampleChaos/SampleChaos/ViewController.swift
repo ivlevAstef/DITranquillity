@@ -41,13 +41,23 @@ class ViewController: UIViewController {
     let barOpt: BarService? = *container
     print("Optional Foo:\(fooOpt) Optional Bar: \(barOpt)" )
     
+    // Optional Tag
+    let fooTagOpt: FooService? = by(tag: CatTag.self, on: *container)
+    let barTagOpt: BarService? = by(tag: DogTag.self, on: *container)
+    print("Optional tag Foo:\(fooTagOpt) Optional tag Bar: \(barTagOpt)" )
+    
+    // Many
+    let fooMany: [FooService] = many(*container)
+    let barMany: [BarService] = many(*container)
+    print("Many Foo:\(fooMany) Many Bar: \(barMany)" )
+    
     // Animals
     
-    let cat: Animal = di_byTag(CatTag.self, *container)
-    let dog: Animal = di_byTag(DogTag.self, *container)
+    let cat: Animal = by(tag: CatTag.self, on: *container)
+    let dog: Animal = by(tag: DogTag.self, on: *container)
     let bear: Animal = container.resolve(tag: BearTag.self)
-    let many: [Animal] = di_many(*container)
-    print(many.map{ $0.name })
+    let animals: [Animal] = many(*container)
+    print(animals.map{ $0.name })
     
     let defaultAnimal: Animal = *container
     
