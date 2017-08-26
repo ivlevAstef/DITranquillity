@@ -49,11 +49,11 @@ public final class DIContainerBuilder {
   /// Function for build a container
   ///
   /// - Parameters:
-  ///   - isValidateCycles: Check the graph for the presence of infinite cycles. For faster performance, set false
+  ///   - isValidate: Validate the graph by checking various conditions. For faster performance, set false
   /// - Returns: A container that allows you to create objects
   /// - Throws: `DIBuildError` if validation failed
   @discardableResult
-  public func build(isValidateCycles: Bool = true) throws -> DIContainer {
+  public func build(isValidate: Bool = true) throws -> DIContainer {
     let componentContainer = ComponentContainer()
     let resolver = Resolver(componentContainer: componentContainer, bundleContainer: bundleContainer)
     let container = DIContainer(resolver: resolver)
@@ -62,12 +62,14 @@ public final class DIContainerBuilder {
     
     fillComponentContainer(componentContainer)
     
-    if !createGraph(resolver: resolver) {
-      throw DIBuildError()
-    }
-    
-    if isValidateCycles && !validateCycles() {
-      throw DIBuildError()
+    if isValidate {
+      if !checkGraph(resolver: resolver) {
+        throw DIBuildError()
+      }
+      
+      if !checkGraphCycles(resolver: resolver) {
+        throw DIBuildError()
+      }
     }
     
     initSingleLifeTime(container: container)
@@ -104,18 +106,22 @@ extension DIContainerBuilder {
 
 
 extension DIContainerBuilder {
-  fileprivate func createGraph(resolver: Resolver) -> Bool {
-    func plog(_ parameter: MethodSignature.Parameter, msg: String) {
-      let level: DILogLevel = parameter.optional ? .warning : .error
-      log(level, msg: msg)
-    }
+  private func plog(_ parameter: MethodSignature.Parameter, msg: String) {
+    let level: DILogLevel = parameter.optional ? .warning : .error
+    log(level, msg: msg)
+  }
+  
+  /// Check graph on presence of all necessary objects. That is, to reach the specified vertices from any vertex
+  ///
+  /// - Parameter resolver: resolver for use functions from him
+  /// - Returns: true if graph is valid, false otherwire
+  fileprivate func checkGraph(resolver: Resolver) -> Bool {
+    var successfull: Bool = true
     
-    var allSuccess: Bool = true
     for component in components {
       let signatures = component.signatures
       let parameters = signatures.flatMap{ $0.parameters }
-      
-      let bundle = (component.info.type as? AnyClass).map{ Bundle(for: $0) }
+      let bundle = component.bundle
       
       for parameter in parameters {
         
@@ -123,10 +129,8 @@ extension DIContainerBuilder {
         let filtered = resolver.removeWhoDoesNotHaveInitialMethod(components: candidates)
         
         let correct = resolver.validate(components: filtered, for: parameter.type)
-        parameter.links = correct ? filtered : []
-        
         let success = correct || parameter.optional
-        allSuccess = allSuccess && success
+        successfull = successfull && success
         
         // Log
         if !correct {
@@ -143,12 +147,90 @@ extension DIContainerBuilder {
       }
     }
     
-    return allSuccess
+    return successfull
   }
 
-  fileprivate func validateCycles() -> Bool {
-    //TODO: write cycles validation
-    return true
+  fileprivate func checkGraphCycles(resolver: Resolver) -> Bool {
+    var success: Bool = true
+    var glovalVisited: Set<Component> = [] // for optimization
+    
+    typealias Stack = (component: Component, initial: Bool, cycle: Bool, many: Bool)
+    func dfs(for component: Component, visited: Set<Component>, stack: [Stack]) {
+      glovalVisited.insert(component)
+      
+      // it's cycle
+      if visited.contains(component) {
+        let components = stack.map{ $0.component.info }
+        
+        let allInitials = !stack.contains{ !($0.initial && !$0.many) }
+        if allInitials {
+          log(.error, msg: "You have a cycle: \(components) consisting entirely of initialization methods.")
+          success = false
+          return
+        }
+        
+        let hasGap = stack.contains{ $0.cycle || ($0.initial && $0.many) }
+        if !hasGap {
+          log(.error, msg: "Cycle has no discontinuities. Please install at least one explosion in the cycle: \(components) using `injection(cycle: true) { ... }`")
+          success = false
+          return
+        }
+        
+        let allPrototypes = !stack.contains{ $0.component.lifeTime != .prototype }
+        if allPrototypes {
+          log(.error, msg: "You cycle: \(components) consists only of object with lifetime - prototype. Please change at least one object lifetime to another.")
+          success = false
+          return
+        }
+        
+        let containsPrototype = stack.contains{ $0.component.lifeTime == .prototype }
+        if containsPrototype {
+          log(.warning, msg: "You cycle: \(components) contains an object with lifetime - prototype. In some cases this can lead to an udesirable effect.")
+        }
+        
+        return
+      }
+      
+      let bundle = component.bundle
+      
+      var visited = visited
+      visited.insert(component)
+      
+      
+      func callDfs(by parameters: [MethodSignature.Parameter], initial: Bool, cycle: Bool) {
+        for parameter in parameters {
+          let many = parameter.many
+          let candidates = resolver.findComponents(by: parameter.type, from: bundle)
+          let filtered = resolver.removeWhoDoesNotHaveInitialMethod(components: candidates)
+          
+          for subcomponent in filtered {
+            var stack = stack
+            stack.append((subcomponent, initial, cycle, many))
+            dfs(for: subcomponent, visited: visited, stack: stack)
+          }
+        }
+      }
+      
+      if let initial = component.initial {
+        callDfs(by: initial.parameters, initial: true, cycle: false)
+      }
+      
+      for injection in component.injections {
+        callDfs(by: injection.signature.parameters, initial: false, cycle: injection.cycle)
+      }
+    }
+    
+    
+    for component in components {
+      if glovalVisited.contains(component) {
+        continue
+      }
+      
+      let stack = [(component, false, false, false)]
+      dfs(for: component, visited: [], stack: stack)
+    }
+    
+    return success
   }
 }
 
@@ -181,10 +263,6 @@ extension Component {
     
     for injection in injections {
       result.append(injection.signature)
-    }
-    
-    if let postInit = self.postInit {
-      result.append(postInit)
     }
     
     return result

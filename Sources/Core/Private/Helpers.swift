@@ -47,10 +47,6 @@ func removeTypeWrappers(_ type: Any.Type) -> Any.Type {
 protocol IsOptional {}
 extension Optional: IsOptional { }
 
-func isOptional(_ type: Any.Type) -> Bool {
-  return type is IsOptional.Type
-}
-
 ////// For optional make
 
 protocol OptionalMake {
