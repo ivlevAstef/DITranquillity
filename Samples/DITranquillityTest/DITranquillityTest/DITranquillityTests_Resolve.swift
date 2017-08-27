@@ -182,7 +182,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     let serviceFoo2: ServiceProtocol = container.resolve(tag: BarService.self)
     XCTAssertEqual(serviceFoo2.foo(), "foo")
     
-    XCTAssertNotEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceFoo2 as AnyObject).toOpaque())
+    XCTAssertEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceFoo2 as AnyObject).toOpaque())
   }
   
   func test12_ResolveMultiplyMany() {

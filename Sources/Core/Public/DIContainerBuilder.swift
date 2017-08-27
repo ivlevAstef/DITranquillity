@@ -72,9 +72,10 @@ public final class DIContainerBuilder {
       }
     }
     
+    StoryboardContainerMap.instance.build(builder: self, to: container)
+    
     initSingleLifeTime(container: container)
 
-    StoryboardContainerMap.instance.build(builder: self, to: container)
     return container
   }
   

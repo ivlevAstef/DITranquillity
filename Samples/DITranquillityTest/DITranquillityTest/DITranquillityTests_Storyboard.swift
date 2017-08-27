@@ -157,7 +157,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .injection { $0.service = $1 }
     
     builder.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
-      .lifetime(.single)
+      .lifetime(.weakSingle)
     
     let container = try! builder.build()
     let storyboard: UIStoryboard = *container
@@ -183,7 +183,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
 			.injection { $0.service = $1 }
 		
 		builder.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
-			.lifetime(.single)
+			.lifetime(.weakSingle)
 		
 		var storyboard: UIStoryboard!
 		autoreleasepool {
@@ -215,10 +215,10 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     builder.register(TestViewController.self)
       .injection{ $0.service = $1 }
-      .lifetime(.lazySingle)
+      .lifetime(.weakSingle)
     
     builder.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
-      .lifetime(.single)
+      .lifetime(.weakSingle)
     
     let container = try! builder.build()
     let storyboard: UIStoryboard = *container
@@ -246,13 +246,13 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     builder.register(TestViewController.self)
       .injection { $0.service = $1 }
-      .lifetime(.lazySingle)
+      .lifetime(.weakSingle)
     
     builder.register(TestViewContainerVC.self)
       .injection { $0.service = $1 }
     
     builder.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
-      .lifetime(.single)
+      .lifetime(.weakSingle)
     
     
     let container = try! builder.build()
@@ -279,7 +279,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .injection{ $0.service = $1 }
     
     builder.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
-      .lifetime(.single)
+      .lifetime(.weakSingle)
     
     let container = try! builder.build()
     
@@ -347,6 +347,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .injection{ $0.service = $1 }
     
     builder.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+      .default()
     builder.registerStoryboard(name: "TestReferenceStoryboard", bundle: Bundle(for: type(of: self)))
     
     let container = try! builder.build()

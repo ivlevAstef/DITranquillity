@@ -95,8 +95,8 @@ public extension DIContainerBuilder {
   ///   - storyboardBundleOrNil: The bundle containing the storyboard file and its resources. Specify nil to use the main bundle.
   /// - Returns: component builder, to configure the component
   @discardableResult
-  public func registerStoryboard(name: String, bundle storyboardBundleOrNil: Bundle?) -> DIComponentBuilder<UIStoryboard> {
-    let builder = register{ DIStoryboard.create(name: name, bundle: storyboardBundleOrNil, container: $0) as UIStoryboard }
+  public func registerStoryboard(name: String, bundle storyboardBundleOrNil: Bundle?, file: String = #file, line: Int = #line) -> DIComponentBuilder<UIStoryboard> {
+    let builder = register(file: file, line: line){ DIStoryboard.create(name: name, bundle: storyboardBundleOrNil, container: $0) as UIStoryboard }
       .as(UIStoryboard.self, name: name)
     StoryboardContainerMap.instance.append(name: name, bundle: storyboardBundleOrNil, component: builder.component, in: self)
     return builder
