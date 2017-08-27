@@ -19,6 +19,7 @@ registrationInjectFunction() { #argcount file
 local numbers=($(seq 0 $1))
 
 local PType=$(join ',' ${numbers[@]/#/P})
+local PSType=$(join ',' $(replaceToArg numbers[@] "P;I.self"))
 local params=$(join ', ' ${numbers[@]/#/p})
 local quote='```'
 
@@ -36,7 +37,7 @@ echo "
   /// - Returns: Self
   @discardableResult
   public func injection<$PType>(_ m: @escaping (Impl,$PType) -> ()) -> Self {
-    return append(injection: MM.make(true, by: m))
+    return append(injection: MM.make([UseObject.self,$PSType], by: m))
   }" >> $2
 }
 

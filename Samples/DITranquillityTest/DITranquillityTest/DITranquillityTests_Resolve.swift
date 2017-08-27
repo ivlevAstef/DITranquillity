@@ -274,7 +274,7 @@ class DITranquillityTests_Resolve: XCTestCase {
       .injection(cycle: true) { a, b2 in a.b2 = b2 }
     
     builder.register(CircularDouble2B.init)
-      .lifetime(.objectGraph)
+      .lifetime(.prototype)
     
     let container = try! builder.build()
     
@@ -310,7 +310,7 @@ class DITranquillityTests_Resolve: XCTestCase {
       .lifetime(.objectGraph)
     
     do {
-      let container = try builder.build()
+      _ = try builder.build()
       XCTAssert(true)
     } catch {
       
@@ -320,12 +320,12 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test17_DependencyIntoDependency() {
     let builder = DIContainerBuilder()
     
-    builder.register(type: DependencyA.init)
+    builder.register(DependencyA.init)
     
-    builder.register(type: DependencyB.init)
+    builder.register(DependencyB.init)
       .injection { $0.a = $1 }
     
-    builder.register(type: DependencyC.init)
+    builder.register(DependencyC.init)
       .injection { $0.b = $1 }
     
     let container = try! builder.build()

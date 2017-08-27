@@ -19,10 +19,11 @@ registrationInitFunction() { #argcount file
 local numbers=($(seq 0 $1))
 
 local PType=$(join ',' ${numbers[@]/#/P})
+local PSType=$(join ',' $(replaceToArg numbers[@] "P;I.self"))
 
 echo "  @discardableResult
   public func register<Impl,$PType>(file: String = #file, line: Int = #line, _ c: @escaping ($PType) -> Impl) -> DIComponentBuilder<Impl> {
-    return register(file, line, MM.make(false, by: c))
+    return register(file, line, MM.make([$PSType], by: c))
   }
 " >> $2
 

@@ -20,12 +20,10 @@ local numbers=($(seq 0 $1))
 
 local PType=$(join ',' ${numbers[@]/#/P})
 local MArg=$(join ',' $(replaceToArg numbers[@] "m(\$0[;I])"))
-local PSType=$(join ',' $(replaceToArg numbers[@] "P;I.self"))
 
-
-echo "  static func make<$PType,R>(_ sp: Bool, by f: @escaping ($PType)->R) -> MethodSignature {
-    return MS([$PSType], sp, {f($MArg)})
-  }
+echo "  static func make<$PType,R>(_ types: [DIAType], _ names: [String?]? = nil, by f: @escaping ($PType)->R) -> MethodSignature {
+return MS(types, names){f($MArg)}
+}
 " >> $2
 }
 
@@ -44,7 +42,7 @@ private typealias MS = MethodSignature
 struct MethodMaker {
 
   static func make<R>(by f: @escaping ()->R) -> MethodSignature {
-    return MS([], {_ in f()})
+    return MS([]){_ in f()}
   }
 " > $1
 

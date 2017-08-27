@@ -8,14 +8,12 @@
 
 #if os(iOS) || os(tvOS)
   import UIKit
-#endif
-
-#if os(OSX)
+#elseif os(OSX)
   import Cocoa
 #endif
-
 #if os(iOS) || os(tvOS) || os(OSX)
 
+/// The class responsible for injecting dependencies in the view/window controller.
 final class StoryboardResolver {
   init(container: DIContainer) {
     self.container = container
@@ -23,7 +21,7 @@ final class StoryboardResolver {
 
   #if os(iOS) || os(tvOS)
   
-  public func inject(into viewController: UIViewController) {
+  func inject(into viewController: UIViewController) {
     pinject(into: viewController)
     
     for childVC in viewController.childViewControllers {
@@ -33,7 +31,7 @@ final class StoryboardResolver {
   
   #elseif os(OSX)
   
-  public func inject(into viewController: Any) {
+  func inject(into viewController: Any) {
     pinject(into: viewController)
     
     if let windowController = viewController as? NSWindowController, let viewController = windowController.contentViewController {

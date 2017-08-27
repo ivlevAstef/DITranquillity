@@ -7,13 +7,13 @@
 //
 
 /// Main class.
-/// Class allows you to register new components, parts, frameworks
+/// Class allows you to register new components, parts, frameworks.
 /// After all register the class allows to build them into a single object for further use.
-/// During build, the validity of registered components is checked
+/// During build, the validity of registered components is checked.
 public final class DIContainerBuilder {
   public init() {}
   
-  /// Function for registering a new component without initial
+  /// Registering a new component without initial.
   /// Using:
   /// ```
   /// builder.register(YourClass.self)
@@ -21,15 +21,15 @@ public final class DIContainerBuilder {
   /// ```
   ///
   /// - Parameters:
-  ///   - type: A type of new component
-  /// - Returns: component builder, to configure the component
+  ///   - type: A type of new component.
+  /// - Returns: component builder, to configure the component.
   @discardableResult
   public func register<Impl>(_ type: Impl.Type, file: String = #file, line: Int = #line) -> DIComponentBuilder<Impl> {
     return DIComponentBuilder(container: self, componentInfo: DIComponentInfo(type: Impl.self, file: file, line: line))
   }
   
-  /// Function for declaring a new component with initial
-  /// In addition, builder has a set of functions with a different number of parameters
+  /// Declaring a new component with initial.
+  /// In addition, builder has a set of functions with a different number of parameters.
   /// Using:
   /// ```
   /// builder.register(YourClass.init)
@@ -39,19 +39,19 @@ public final class DIContainerBuilder {
   /// builder.register{ YourClass(p1: $0, p2: $1 as SpecificType, p3: $2) }
   /// ```
   ///
-  /// - Parameter initial: initial method. Must return type declared at registration
-  /// - Returns: component builder, to configure the component
+  /// - Parameter initial: initial method. Must return type declared at registration.
+  /// - Returns: component builder, to configure the component.
   @discardableResult
   public func register<Impl>(file: String = #file, line: Int = #line, _ c: @escaping () -> Impl) -> DIComponentBuilder<Impl> {
     return register(file, line, MethodMaker.make(by: c))
   }
   
-  /// Function for build a container
+  /// Create a container instance. To do this, it processes all registrations in the builder.
   ///
   /// - Parameters:
-  ///   - isValidate: Validate the graph by checking various conditions. For faster performance, set false
-  /// - Returns: A container that allows you to create objects
-  /// - Throws: `DIBuildError` if validation failed
+  ///   - isValidate: Validate the graph by checking various conditions. For faster performance, set false.
+  /// - Returns: A container that allows you to create objects.
+  /// - Throws: `DIBuildError` if validation failed.
   @discardableResult
   public func build(isValidate: Bool = true) throws -> DIContainer {
     let componentContainer = ComponentContainer()
@@ -74,6 +74,7 @@ public final class DIContainerBuilder {
     
     initSingleLifeTime(container: container)
 
+    StoryboardContainerMap.instance.build(builder: self, to: container)
     return container
   }
   
@@ -119,13 +120,15 @@ extension DIContainerBuilder {
     var successfull: Bool = true
     
     for component in components {
-      let signatures = component.signatures
-      let parameters = signatures.flatMap{ $0.parameters }
+      let parameters = component.signatures.flatMap{ $0.parameters }
       let bundle = component.bundle
       
       for parameter in parameters {
+        if parameter.type is UseObject.Type {
+          continue
+        }
         
-        let candidates = resolver.findComponents(by: parameter.type, from: bundle)
+        let candidates = resolver.findComponents(by: parameter.type, name: parameter.name, from: bundle)
         let filtered = resolver.removeWhoDoesNotHaveInitialMethod(components: candidates)
         
         let correct = resolver.validate(components: filtered, for: parameter.type)

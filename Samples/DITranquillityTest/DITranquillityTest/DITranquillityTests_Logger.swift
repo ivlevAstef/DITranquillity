@@ -9,20 +9,20 @@
 import XCTest
 import DITranquillity
 
-private class MyLogger: DILogger {
-  var logs: [DILogEvent] = []
-  
-  func log(_ event: DILogEvent, msg: String) {
-    logs.append(event)
-  }
-}
+//private class MyLogger: DILogger {
+//  var logs: [DILogEvent] = []
+//  
+//  func log(_ event: DILogEvent, msg: String) {
+//    logs.append(event)
+//  }
+//}
 
 // Tests
 
 let file = #file
 class DITranquillityTests_Logger: XCTestCase {
   
-  func test01_AddLogger() {
+/*  func test01_AddLogger() {
     let myLogger = MyLogger()
     if !DILoggerComposite.add(logger: myLogger) {
       XCTFail("Can't add logger")
@@ -188,5 +188,5 @@ class DITranquillityTests_Logger: XCTestCase {
       
       .resolving(.end),
       ])
-  }
+  }*/
 }

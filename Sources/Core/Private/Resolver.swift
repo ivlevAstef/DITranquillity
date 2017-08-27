@@ -17,18 +17,18 @@ class Resolver {
     self.bundleContainer = bundleContainer
   }
   
-  func resolve<T>(_ container: DIContainer, type: T.Type = T.self) -> T {
+  func resolve<T>(_ container: DIContainer, type: T.Type = T.self, name: String? = nil) -> T {
     log(.info, msg: "Begin resolve \(description(type: type))", brace: .begin)
     defer { log(.info, msg: "End resolve \(description(type: type))", brace: .end) }
     
-    return resolve(container, type: type, .method)
+    return gmake(by: untypeResolve(container, type: type, name: name, .method))
   }
   
   func injection<T>(_ container: DIContainer, obj: T) {
     log(.info, msg: "Begin injection in obj: \(obj)", brace: .begin)
     defer { log(.info, msg: "End injection in obj: \(obj)", brace: .end) }
     
-    _ = untypeResolve(container, type: type(of: (obj as Any)), .object(obj))
+    _ = untypeResolve(container, type: type(of: (obj as Any)), name: nil, .object(obj))
   }
 
   
@@ -46,13 +46,14 @@ class Resolver {
     return gmake(by: resolve(container, component, .method))
   }
   
-  /// Finds the most suitable components that satisfy the types
+  /// Finds the most suitable components that satisfy the types.
   ///
   /// - Parameters:
   ///   - type: a type
+  ///   - name: a name
   ///   - bundle: bundle from whic the call is made
   /// - Returns: components
-  func findComponents(by type: DIAType, from bundle: Bundle?) -> [Component] {
+  func findComponents(by type: DIAType, name: String? = nil, from bundle: Bundle?) -> [Component] {
     func filter(_ components: [Component]) -> [Component] {
       let filtering = components.filter{ $0.isDefault }
       return filtering.isEmpty ? components : filtering
@@ -95,7 +96,11 @@ class Resolver {
       components = Array(componentContainer.map[TypeKey(by: realType, and: taggedType.tag)])
     } else {
       let realType = removeTypeWrappers(type)
-      components = Array(componentContainer.map[TypeKey(by: realType)])
+      if let name = name {
+        components = Array(componentContainer.map[TypeKey(by: realType, and: name)])
+      } else {
+        components = Array(componentContainer.map[TypeKey(by: realType)])
+      }
     }
     
     return filter(by: bundle, filter(components))
@@ -119,13 +124,8 @@ class Resolver {
      return 1 == components.count || type is IsMany.Type
   }
   
-  
-  private func resolve<T>(_ container: DIContainer, type: T.Type = T.self, _ getter: Getter) -> T {
-    return gmake(by: untypeResolve(container, type: type, getter))
-  }
-  
-  private func untypeResolve(_ container: DIContainer, type: DIAType, _ getter: Getter) -> Any? {
-    let candidates = findComponents(by: type, from: nil)
+  private func untypeResolve(_ container: DIContainer, type: DIAType, name: String?, _ getter: Getter) -> Any? {
+    let candidates = findComponents(by: type, name: name, from: nil)
     let components: [Component]
     
     switch getter {
@@ -240,12 +240,15 @@ class Resolver {
     func use(signature: MethodSignature, obj: Any?) -> Any? {
       var valid: Bool = true
       
-      let objects: [Any?] = (signature.specificFirst ? [obj] : []) +
-        signature.parameters.map { parameter in
-          let obj = untypeResolve(container, type: parameter.type, .method)
-          valid = valid && (parameter.optional || nil != obj)
+      let objects = signature.parameters.map{ parameter -> Any? in
+        if parameter.type is UseObject.Type {
           return obj
         }
+        
+        let obj = untypeResolve(container, type: parameter.type, name: parameter.name, .method)
+        valid = valid && (parameter.optional || nil != obj)
+        return obj
+      }
       
       if !valid {
         return nil

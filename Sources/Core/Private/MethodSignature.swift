@@ -6,15 +6,20 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
+/// Specific type for resolve parameter with current object.
+class UseObject {}
+
 final class MethodSignature {
   typealias Call = ([Any?])->Any?
   
   final class Parameter {
     let type: DIAType
+    let name: String?
     var links: [Component] = []
     
-    init(type: DIAType) {
+    init(type: DIAType, name: String?) {
       self.type = type
+      self.name = name
     }
     
     var optional: Bool { return self.type is IsOptional.Type }
@@ -24,12 +29,12 @@ final class MethodSignature {
   
   let parameters: [Parameter]
   let call: Call
-  let specificFirst: Bool
   
-  init(_ types: [DIAType], _ specificFirst: Bool, _ call: @escaping Call) {
-    let params = types.map{ Parameter(type: $0) }
-    self.specificFirst = specificFirst
-    self.parameters = specificFirst ? Array(params.dropFirst()) : params
+  init(_ types: [DIAType], _ names: [String?]? = nil, _ call: @escaping Call) {
+    let initializatedNames = names ?? [String?](repeating: nil, count: types.count)
+    assert(initializatedNames.count == types.count)
+    
+    self.parameters = zip(types, initializatedNames).map{ Parameter(type: $0, name: $1) }
     self.call = call
   }
 }

@@ -20,7 +20,7 @@ private func equals(_ t1: Any, _ t2: Any) -> Bool {
 }
 
 extension DIComponentInfo {
-  init(type: DIType, file: String, line: Int) {
+  init(type: DIAType, file: String, line: Int) {
     self.type = type
     self.file = file
     self.line = line

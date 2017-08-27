@@ -21,14 +21,14 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
     
     let container = try! builder.build()
     
-    let service: FooService = try! *container
+    let service: FooService = *container
     XCTAssertEqual(service.foo(), "foo")
   }
   
   func test02_UseRegisterWithProtocol() {
     let builder = DIContainerBuilder()
     
-    builder.register(type: FooService.init)
+    builder.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
     let container = try! builder.build()
@@ -42,7 +42,7 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
     
     builder.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
-      .set(.default)
+      .default()
     
     builder.register(BarService.init)
       .as(check: ServiceProtocol.self){$0}
@@ -61,7 +61,7 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
     builder.register{ true as Bool }
     builder.register{ "test" as String }
     
-    builder.register(type: Params.init(number:str:bool:))
+    builder.register(Params.init(number:str:bool:))
       .lifetime(.prototype)
     
     let container = try! builder.build()
