@@ -28,14 +28,22 @@ class Resolver {
     log(.info, msg: "Begin injection in obj: \(obj)", brace: .begin)
     defer { log(.info, msg: "End injection in obj: \(obj)", brace: .end) }
     
-    _ = untypeResolve(container, type: type(of: obj), .object(obj))
+    _ = untypeResolve(container, type: type(of: (obj as Any)), .object(obj))
   }
 
+  
   func singleResolve(_ container: DIContainer, component: Component) {
-    log(.info, msg: "Begin resolve by component info: \(component.info)", brace: .begin)
-    defer { log(.info, msg: "End resolve by component info: \(component.info)", brace: .end) }
+    log(.info, msg: "Begin resolve by component: \(component.info)", brace: .begin)
+    defer { log(.info, msg: "End resolve by component: \(component.info)", brace: .end) }
     
     _ = resolve(container, component, .method)
+  }
+  
+  func resolve<T>(_ container: DIContainer, type: T.Type = T.self, component: Component) -> T {
+    log(.info, msg: "Begin resolve \(description(type: type)) by component: \(component.info)", brace: .begin)
+    defer { log(.info, msg: "End resolve \(description(type: type)) by component: \(component.info)", brace: .end) }
+    
+    return gmake(by: resolve(container, component, .method))
   }
   
   /// Finds the most suitable components that satisfy the types
@@ -280,7 +288,7 @@ class Resolver {
     typealias Scope<T> = [Component.UniqueKey: T]
     
     static var single = Scope<Any>()
-    static var weakSingle = Scope<Weak>()
+    static var weakSingle = Scope<Weak<Any>>()
     
     var graph = Scope<Any>()
     var cycleInjectionStack: [(obj: Any?, injection: Injection)] = []

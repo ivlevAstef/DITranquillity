@@ -23,9 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		let container = try! builder.build()
 		
-    let storyboard = DIStoryboard(name: "Main", bundle: nil, container: container)
+    let storyboard = DIStoryboard.create(name: "Main", bundle: nil, container: container)
     window!.rootViewController = storyboard.instantiateInitialViewController()
-
     window!.makeKeyAndVisible()
   }
 }

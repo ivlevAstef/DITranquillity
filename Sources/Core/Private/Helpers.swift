@@ -10,11 +10,13 @@ import Foundation
 
 ////// Weak reference
 
-class Weak {
-  private(set) weak var value: AnyObject?
+class Weak<T> {
+  private weak var _value: AnyObject?
   
-  init<T>(value: T) {
-    self.value = value as AnyObject
+  var value: T? { return _value as? T }
+  
+  init(value: T) {
+    self._value = value as AnyObject
   }
 }
 

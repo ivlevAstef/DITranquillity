@@ -10,9 +10,6 @@
 		115C24C81E6527CA00CC8BC7 /* Synchronize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C24C71E6527CA00CC8BC7 /* Synchronize.swift */; };
 		115C24C91E6527CA00CC8BC7 /* Synchronize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C24C71E6527CA00CC8BC7 /* Synchronize.swift */; };
 		115C24CA1E6527CA00CC8BC7 /* Synchronize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C24C71E6527CA00CC8BC7 /* Synchronize.swift */; };
-		118DBCCC1E4100BF003A7D1F /* StoryboardResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCCB1E4100BF003A7D1F /* StoryboardResolver.swift */; };
-		118DBCCF1E4100CA003A7D1F /* StoryboardResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCCD1E4100C5003A7D1F /* StoryboardResolver.swift */; };
-		118DBCD01E4100CD003A7D1F /* StoryboardResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCCB1E4100BF003A7D1F /* StoryboardResolver.swift */; };
 		119F4FD61E56069200B2DFA1 /* DIContainerBuilder.Reg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FCC1E56069200B2DFA1 /* DIContainerBuilder.Reg.swift */; };
 		119F4FD71E56069200B2DFA1 /* DIContainerBuilder.Reg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FCC1E56069200B2DFA1 /* DIContainerBuilder.Reg.swift */; };
 		119F4FD81E56069200B2DFA1 /* DIContainerBuilder.Reg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FCC1E56069200B2DFA1 /* DIContainerBuilder.Reg.swift */; };
@@ -34,21 +31,12 @@
 		169C0DD31DA3501F001F0AD5 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A6A1D9E1E7B00707BFC /* DIContainer.swift */; };
 		169C0DD41DA3501F001F0AD5 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A541D9E1E7B00707BFC /* Helpers.swift */; };
 		169C0DDF1DA3501F001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		169C0E161DA352C7001F0AD5 /* DIStoryboardBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 169C0E111DA352C7001F0AD5 /* DIStoryboardBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		169C0E171DA352C7001F0AD5 /* DIStoryboardBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 169C0E121DA352C7001F0AD5 /* DIStoryboardBase.m */; };
-		169C0E1A1DA352CF001F0AD5 /* DIStoryboardBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 169C0E141DA352C7001F0AD5 /* DIStoryboardBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		169C0E1B1DA352D2001F0AD5 /* DIStoryboardBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 169C0E151DA352C7001F0AD5 /* DIStoryboardBase.m */; };
-		169C0E211DA357C3001F0AD5 /* DIStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169C0E201DA357C3001F0AD5 /* DIStoryboard.swift */; };
-		169C0E241DA357CA001F0AD5 /* DIStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169C0E221DA357C8001F0AD5 /* DIStoryboard.swift */; };
 		169C0E2A1DA35CBE001F0AD5 /* DIComponentBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A681D9E1E7B00707BFC /* DIComponentBuilder.swift */; };
 		169C0E311DA35CBE001F0AD5 /* MultyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A521D9E1E7B00707BFC /* MultyMap.swift */; };
-		169C0E351DA35CBE001F0AD5 /* DIStoryboardBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 169C0E121DA352C7001F0AD5 /* DIStoryboardBase.m */; };
 		169C0E371DA35CBE001F0AD5 /* Resolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A531D9E1E7B00707BFC /* Resolver.swift */; };
 		169C0E391DA35CBE001F0AD5 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A6A1D9E1E7B00707BFC /* DIContainer.swift */; };
 		169C0E3A1DA35CBE001F0AD5 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A541D9E1E7B00707BFC /* Helpers.swift */; };
-		169C0E421DA35CBE001F0AD5 /* DIStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169C0E201DA357C3001F0AD5 /* DIStoryboard.swift */; };
 		169C0E451DA35CBE001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		169C0E461DA35CBE001F0AD5 /* DIStoryboardBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 169C0E111DA352C7001F0AD5 /* DIStoryboardBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		16D7BCB81DB086B000A29A9F /* DIScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB51DB086B000A29A9F /* DIScan.swift */; };
 		16D7BCB91DB086B000A29A9F /* DIScanFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB61DB086B000A29A9F /* DIScanFramework.swift */; };
 		16D7BCBA1DB086B000A29A9F /* DIScanPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB71DB086B000A29A9F /* DIScanPart.swift */; };
@@ -96,6 +84,24 @@
 		D57961641F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961631F4FC7F40079DE8C /* DIByTagAndMany.swift */; };
 		D57961651F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961631F4FC7F40079DE8C /* DIByTagAndMany.swift */; };
 		D57961661F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961631F4FC7F40079DE8C /* DIByTagAndMany.swift */; };
+		D57961691F526FBA0079DE8C /* StoryboardContainerMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961681F526FBA0079DE8C /* StoryboardContainerMap.swift */; };
+		D579616A1F526FBA0079DE8C /* StoryboardContainerMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961681F526FBA0079DE8C /* StoryboardContainerMap.swift */; };
+		D579616B1F526FBA0079DE8C /* StoryboardContainerMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961681F526FBA0079DE8C /* StoryboardContainerMap.swift */; };
+		D579616E1F52BA160079DE8C /* DIStoryboardBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D579616C1F52BA160079DE8C /* DIStoryboardBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D57961701F52BA160079DE8C /* DIStoryboardBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D579616C1F52BA160079DE8C /* DIStoryboardBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D57961711F52BA160079DE8C /* DIStoryboardBase.m in Sources */ = {isa = PBXBuildFile; fileRef = D579616D1F52BA160079DE8C /* DIStoryboardBase.m */; };
+		D57961731F52BA160079DE8C /* DIStoryboardBase.m in Sources */ = {isa = PBXBuildFile; fileRef = D579616D1F52BA160079DE8C /* DIStoryboardBase.m */; };
+		D579617B1F52BA5D0079DE8C /* DIStoryboardBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D57961781F52BA5D0079DE8C /* DIStoryboardBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D579617E1F52BA5D0079DE8C /* DIStoryboardBase.m in Sources */ = {isa = PBXBuildFile; fileRef = D57961791F52BA5D0079DE8C /* DIStoryboardBase.m */; };
+		D57961821F52C2BD0079DE8C /* DIStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961801F52C2BD0079DE8C /* DIStoryboard.swift */; };
+		D57961831F52C2BD0079DE8C /* DIStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961801F52C2BD0079DE8C /* DIStoryboard.swift */; };
+		D57961841F52C2BD0079DE8C /* DIStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961801F52C2BD0079DE8C /* DIStoryboard.swift */; };
+		D57961851F52C2BD0079DE8C /* StoryboardResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961811F52C2BD0079DE8C /* StoryboardResolver.swift */; };
+		D57961861F52C2BD0079DE8C /* StoryboardResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961811F52C2BD0079DE8C /* StoryboardResolver.swift */; };
+		D57961871F52C2BD0079DE8C /* StoryboardResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961811F52C2BD0079DE8C /* StoryboardResolver.swift */; };
+		D57961891F52C4BC0079DE8C /* UIStoryboard+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = D57961881F52C4BC0079DE8C /* UIStoryboard+Swizzling.m */; };
+		D579618A1F52C4BC0079DE8C /* UIStoryboard+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = D57961881F52C4BC0079DE8C /* UIStoryboard+Swizzling.m */; };
+		D57961941F52D37E0079DE8C /* NSStoryboard+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = D57961911F52D36F0079DE8C /* NSStoryboard+Swizzling.m */; };
 		D5E3C7D21F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3C7D11F3C0C5A0022DD43 /* ByTagAndMany.swift */; };
 		D5E3C7D31F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3C7D11F3C0C5A0022DD43 /* ByTagAndMany.swift */; };
 		D5E3C7D41F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3C7D11F3C0C5A0022DD43 /* ByTagAndMany.swift */; };
@@ -103,8 +109,6 @@
 
 /* Begin PBXFileReference section */
 		115C24C71E6527CA00CC8BC7 /* Synchronize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synchronize.swift; sourceTree = "<group>"; };
-		118DBCCB1E4100BF003A7D1F /* StoryboardResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardResolver.swift; sourceTree = "<group>"; };
-		118DBCCD1E4100C5003A7D1F /* StoryboardResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardResolver.swift; sourceTree = "<group>"; };
 		119F4FCC1E56069200B2DFA1 /* DIContainerBuilder.Reg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainerBuilder.Reg.swift; sourceTree = "<group>"; };
 		163DDDC51DB9C84E0003DE54 /* DITypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITypes.swift; sourceTree = "<group>"; };
 		1651E7031E8631A900E967B4 /* DIComponentBuilder.Injection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIComponentBuilder.Injection.swift; sourceTree = "<group>"; };
@@ -115,13 +119,7 @@
 		16640A6A1D9E1E7B00707BFC /* DIContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		16640A6B1D9E1E7B00707BFC /* DITranquillity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DITranquillity.h; sourceTree = "<group>"; };
 		169C0DE51DA3501F001F0AD5 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		169C0E111DA352C7001F0AD5 /* DIStoryboardBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DIStoryboardBase.h; sourceTree = "<group>"; };
-		169C0E121DA352C7001F0AD5 /* DIStoryboardBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIStoryboardBase.m; sourceTree = "<group>"; };
-		169C0E141DA352C7001F0AD5 /* DIStoryboardBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIStoryboardBase.h; sourceTree = "<group>"; };
-		169C0E151DA352C7001F0AD5 /* DIStoryboardBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIStoryboardBase.m; sourceTree = "<group>"; };
 		169C0E1C1DA355A6001F0AD5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		169C0E201DA357C3001F0AD5 /* DIStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIStoryboard.swift; sourceTree = "<group>"; };
-		169C0E221DA357C8001F0AD5 /* DIStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIStoryboard.swift; sourceTree = "<group>"; };
 		169C0E4B1DA35CBE001F0AD5 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		16D7BCB51DB086B000A29A9F /* DIScan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScan.swift; sourceTree = "<group>"; };
 		16D7BCB61DB086B000A29A9F /* DIScanFramework.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScanFramework.swift; sourceTree = "<group>"; };
@@ -141,6 +139,15 @@
 		D55AFCC31EEEB88500527D27 /* init_autogenerate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = init_autogenerate.sh; sourceTree = "<group>"; };
 		D57961611F4FC7440079DE8C /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		D57961631F4FC7F40079DE8C /* DIByTagAndMany.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIByTagAndMany.swift; sourceTree = "<group>"; };
+		D57961681F526FBA0079DE8C /* StoryboardContainerMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardContainerMap.swift; sourceTree = "<group>"; };
+		D579616C1F52BA160079DE8C /* DIStoryboardBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIStoryboardBase.h; sourceTree = "<group>"; };
+		D579616D1F52BA160079DE8C /* DIStoryboardBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIStoryboardBase.m; sourceTree = "<group>"; };
+		D57961781F52BA5D0079DE8C /* DIStoryboardBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIStoryboardBase.h; sourceTree = "<group>"; };
+		D57961791F52BA5D0079DE8C /* DIStoryboardBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIStoryboardBase.m; sourceTree = "<group>"; };
+		D57961801F52C2BD0079DE8C /* DIStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIStoryboard.swift; sourceTree = "<group>"; };
+		D57961811F52C2BD0079DE8C /* StoryboardResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardResolver.swift; sourceTree = "<group>"; };
+		D57961881F52C4BC0079DE8C /* UIStoryboard+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIStoryboard+Swizzling.m"; sourceTree = "<group>"; };
+		D57961911F52D36F0079DE8C /* NSStoryboard+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSStoryboard+Swizzling.m"; sourceTree = "<group>"; };
 		D5E3C7D11F3C0C5A0022DD43 /* ByTagAndMany.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByTagAndMany.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -238,6 +245,9 @@
 		16640A6D1D9E1E7B00707BFC /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
+				D57961801F52C2BD0079DE8C /* DIStoryboard.swift */,
+				D57961811F52C2BD0079DE8C /* StoryboardResolver.swift */,
+				D57961681F526FBA0079DE8C /* StoryboardContainerMap.swift */,
 				169C0E101DA352C7001F0AD5 /* iOS-tvOS */,
 				169C0E131DA352C7001F0AD5 /* OSX */,
 			);
@@ -247,10 +257,9 @@
 		169C0E101DA352C7001F0AD5 /* iOS-tvOS */ = {
 			isa = PBXGroup;
 			children = (
-				118DBCCB1E4100BF003A7D1F /* StoryboardResolver.swift */,
-				169C0E201DA357C3001F0AD5 /* DIStoryboard.swift */,
-				169C0E111DA352C7001F0AD5 /* DIStoryboardBase.h */,
-				169C0E121DA352C7001F0AD5 /* DIStoryboardBase.m */,
+				D579616C1F52BA160079DE8C /* DIStoryboardBase.h */,
+				D579616D1F52BA160079DE8C /* DIStoryboardBase.m */,
+				D57961881F52C4BC0079DE8C /* UIStoryboard+Swizzling.m */,
 			);
 			path = "iOS-tvOS";
 			sourceTree = "<group>";
@@ -258,10 +267,9 @@
 		169C0E131DA352C7001F0AD5 /* OSX */ = {
 			isa = PBXGroup;
 			children = (
-				118DBCCD1E4100C5003A7D1F /* StoryboardResolver.swift */,
-				169C0E221DA357C8001F0AD5 /* DIStoryboard.swift */,
-				169C0E141DA352C7001F0AD5 /* DIStoryboardBase.h */,
-				169C0E151DA352C7001F0AD5 /* DIStoryboardBase.m */,
+				D57961911F52D36F0079DE8C /* NSStoryboard+Swizzling.m */,
+				D57961781F52BA5D0079DE8C /* DIStoryboardBase.h */,
+				D57961791F52BA5D0079DE8C /* DIStoryboardBase.m */,
 			);
 			path = OSX;
 			sourceTree = "<group>";
@@ -311,7 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				169C0DDF1DA3501F001F0AD5 /* DITranquillity.h in Headers */,
-				169C0E1A1DA352CF001F0AD5 /* DIStoryboardBase.h in Headers */,
+				D579617B1F52BA5D0079DE8C /* DIStoryboardBase.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				169C0E451DA35CBE001F0AD5 /* DITranquillity.h in Headers */,
-				169C0E461DA35CBE001F0AD5 /* DIStoryboardBase.h in Headers */,
+				D57961701F52BA160079DE8C /* DIStoryboardBase.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,7 +337,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				16640A881D9E1E7B00707BFC /* DITranquillity.h in Headers */,
-				169C0E161DA352C7001F0AD5 /* DIStoryboardBase.h in Headers */,
+				D579616E1F52BA160079DE8C /* DIStoryboardBase.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,9 +407,15 @@
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Alexander Ivlev";
 				TargetAttributes = {
+					169C0DC11DA3501F001F0AD5 = {
+						LastSwiftMigration = 0830;
+					};
+					169C0E271DA35CBE001F0AD5 = {
+						LastSwiftMigration = 0830;
+					};
 					A58875531D0944AE00D6DE92 = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -467,14 +481,14 @@
 				D57961651F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */,
 				D55AFCB91EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				D55AFCB51EEEA48D00527D27 /* MethodMaker.swift in Sources */,
+				D57961831F52C2BD0079DE8C /* DIStoryboard.swift in Sources */,
 				16D7BCBE1DB086B900A29A9F /* DIScanPart.swift in Sources */,
-				118DBCCF1E4100CA003A7D1F /* StoryboardResolver.swift in Sources */,
 				169C0DCC1DA3501F001F0AD5 /* MultyMap.swift in Sources */,
 				115C24C91E6527CA00CC8BC7 /* Synchronize.swift in Sources */,
-				169C0E1B1DA352D2001F0AD5 /* DIStoryboardBase.m in Sources */,
 				D51666FF1F1FBFAA001AD9F5 /* DIPart.swift in Sources */,
 				163DDDC71DB9C84E0003DE54 /* DITypes.swift in Sources */,
 				169C0DD11DA3501F001F0AD5 /* Resolver.swift in Sources */,
+				D579617E1F52BA5D0079DE8C /* DIStoryboardBase.m in Sources */,
 				D55369191EE6E2AE00015926 /* BundleContainer.swift in Sources */,
 				169C0DD31DA3501F001F0AD5 /* DIContainer.swift in Sources */,
 				16D7BCBB1DB086B500A29A9F /* DIScan.swift in Sources */,
@@ -482,11 +496,13 @@
 				D512552E1EE06F010067796B /* DISettings.swift in Sources */,
 				D51666FC1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */,
 				D55368F31EE5BD3600015926 /* Log.swift in Sources */,
+				D57961941F52D37E0079DE8C /* NSStoryboard+Swizzling.m in Sources */,
 				16D7BCBD1DB086B900A29A9F /* DIScanFramework.swift in Sources */,
+				D579616A1F526FBA0079DE8C /* StoryboardContainerMap.swift in Sources */,
 				D55369111EE658EA00015926 /* TypeKey.swift in Sources */,
 				D5E3C7D31F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */,
+				D57961861F52C2BD0079DE8C /* StoryboardResolver.swift in Sources */,
 				1651E7061E86373D00E967B4 /* DIComponentBuilder.Injection.swift in Sources */,
-				169C0E241DA357CA001F0AD5 /* DIStoryboard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,14 +515,14 @@
 				D57961661F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */,
 				D55AFCBA1EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				D55AFCB61EEEA48D00527D27 /* MethodMaker.swift in Sources */,
+				D57961841F52C2BD0079DE8C /* DIStoryboard.swift in Sources */,
 				16D7BCC01DB086B900A29A9F /* DIScanPart.swift in Sources */,
-				118DBCD01E4100CD003A7D1F /* StoryboardResolver.swift in Sources */,
 				169C0E311DA35CBE001F0AD5 /* MultyMap.swift in Sources */,
 				115C24CA1E6527CA00CC8BC7 /* Synchronize.swift in Sources */,
-				169C0E351DA35CBE001F0AD5 /* DIStoryboardBase.m in Sources */,
 				D51667001F1FBFAA001AD9F5 /* DIPart.swift in Sources */,
 				163DDDC81DB9C84E0003DE54 /* DITypes.swift in Sources */,
 				169C0E371DA35CBE001F0AD5 /* Resolver.swift in Sources */,
+				D57961731F52BA160079DE8C /* DIStoryboardBase.m in Sources */,
 				D553691A1EE6E2AE00015926 /* BundleContainer.swift in Sources */,
 				169C0E391DA35CBE001F0AD5 /* DIContainer.swift in Sources */,
 				16D7BCBC1DB086B600A29A9F /* DIScan.swift in Sources */,
@@ -515,10 +531,12 @@
 				D51666FD1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */,
 				D55368F41EE5BD3600015926 /* Log.swift in Sources */,
 				16D7BCBF1DB086B900A29A9F /* DIScanFramework.swift in Sources */,
+				D579616B1F526FBA0079DE8C /* StoryboardContainerMap.swift in Sources */,
 				D55369121EE658EA00015926 /* TypeKey.swift in Sources */,
 				D5E3C7D41F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */,
+				D57961871F52C2BD0079DE8C /* StoryboardResolver.swift in Sources */,
+				D579618A1F52C4BC0079DE8C /* UIStoryboard+Swizzling.m in Sources */,
 				1651E7071E86373D00E967B4 /* DIComponentBuilder.Injection.swift in Sources */,
-				169C0E421DA35CBE001F0AD5 /* DIStoryboard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -528,18 +546,20 @@
 			files = (
 				119F4FD61E56069200B2DFA1 /* DIContainerBuilder.Reg.swift in Sources */,
 				16640A851D9E1E7B00707BFC /* DIComponentBuilder.swift in Sources */,
+				D57961851F52C2BD0079DE8C /* StoryboardResolver.swift in Sources */,
 				D55AFCB81EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				D55AFCB41EEEA48D00527D27 /* MethodMaker.swift in Sources */,
 				D5E3C7D21F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */,
 				16D7BCBA1DB086B000A29A9F /* DIScanPart.swift in Sources */,
-				118DBCCC1E4100BF003A7D1F /* StoryboardResolver.swift in Sources */,
+				D57961711F52BA160079DE8C /* DIStoryboardBase.m in Sources */,
 				16640A731D9E1E7B00707BFC /* MultyMap.swift in Sources */,
 				D57961641F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */,
 				115C24C81E6527CA00CC8BC7 /* Synchronize.swift in Sources */,
-				169C0E171DA352C7001F0AD5 /* DIStoryboardBase.m in Sources */,
 				163DDDC61DB9C84E0003DE54 /* DITypes.swift in Sources */,
 				D55369181EE6E2AE00015926 /* BundleContainer.swift in Sources */,
+				D57961691F526FBA0079DE8C /* StoryboardContainerMap.swift in Sources */,
 				16640A741D9E1E7B00707BFC /* Resolver.swift in Sources */,
+				D57961821F52C2BD0079DE8C /* DIStoryboard.swift in Sources */,
 				16640A871D9E1E7B00707BFC /* DIContainer.swift in Sources */,
 				16D7BCB81DB086B000A29A9F /* DIScan.swift in Sources */,
 				16640A751D9E1E7B00707BFC /* Helpers.swift in Sources */,
@@ -552,7 +572,7 @@
 				16D7BCB91DB086B000A29A9F /* DIScanFramework.swift in Sources */,
 				D55369101EE658EA00015926 /* TypeKey.swift in Sources */,
 				1651E7041E8631A900E967B4 /* DIComponentBuilder.Injection.swift in Sources */,
-				169C0E211DA357C3001F0AD5 /* DIStoryboard.swift in Sources */,
+				D57961891F52C4BC0079DE8C /* UIStoryboard+Swizzling.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
