@@ -17,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		register(builder: builder)
 		let container = try! builder.build()
 		
-		let storyboard: NSStoryboard = try! *container
+		let storyboard: NSStoryboard = *container
 		
 		let viewController = storyboard.instantiateInitialController() as! NSViewController
 		
@@ -26,13 +26,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	}	
 	
 	private func register(builder: DIContainerBuilder) {
-    builder.register(type: NSStoryboard.self)
-			.initial { DIStoryboard(name: "ViewControllers", bundle: nil, container: $0) }
+    builder.registerStoryboard(name: "ViewControllers", bundle: nil)
 		
-		builder.register(vc: ViewController.self)
+		builder.register(ViewController.self)
 			.injection { $0.buttonName = "Next" }
 		
-		builder.register(vc: NextViewController.self)
+		builder.register(NextViewController.self)
 			.injection { $0.inject = 10 }
 		
 	}
