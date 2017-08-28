@@ -49,6 +49,10 @@
 		D512552D1EE06F010067796B /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512552C1EE06F010067796B /* DISettings.swift */; };
 		D512552E1EE06F010067796B /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512552C1EE06F010067796B /* DISettings.swift */; };
 		D512552F1EE06F010067796B /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512552C1EE06F010067796B /* DISettings.swift */; };
+		D515626C1F5472300036919C /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961611F4FC7440079DE8C /* Component.swift */; };
+		D515626D1F5472300036919C /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961611F4FC7440079DE8C /* Component.swift */; };
+		D515626E1F54724D0036919C /* DIContainerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51A6D4A1F415E6000904EB4 /* DIContainerBuilder.swift */; };
+		D515626F1F54724D0036919C /* DIContainerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51A6D4A1F415E6000904EB4 /* DIContainerBuilder.swift */; };
 		D51666FB1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51666F91F1FBFAA001AD9F5 /* DIFramework.swift */; };
 		D51666FC1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51666F91F1FBFAA001AD9F5 /* DIFramework.swift */; };
 		D51666FD1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51666F91F1FBFAA001AD9F5 /* DIFramework.swift */; };
@@ -71,15 +75,6 @@
 		D55AFCB81EEEA97400527D27 /* MethodSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55AFCB71EEEA97400527D27 /* MethodSignature.swift */; };
 		D55AFCB91EEEA97400527D27 /* MethodSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55AFCB71EEEA97400527D27 /* MethodSignature.swift */; };
 		D55AFCBA1EEEA97400527D27 /* MethodSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55AFCB71EEEA97400527D27 /* MethodSignature.swift */; };
-		D55AFCBC1EEEB0E200527D27 /* make_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCBB1EEEB0E200527D27 /* make_autogenerate.sh */; };
-		D55AFCBD1EEEB0E200527D27 /* make_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCBB1EEEB0E200527D27 /* make_autogenerate.sh */; };
-		D55AFCBE1EEEB0E200527D27 /* make_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCBB1EEEB0E200527D27 /* make_autogenerate.sh */; };
-		D55AFCC01EEEB4AD00527D27 /* inject_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCBF1EEEB4AD00527D27 /* inject_autogenerate.sh */; };
-		D55AFCC11EEEB4AD00527D27 /* inject_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCBF1EEEB4AD00527D27 /* inject_autogenerate.sh */; };
-		D55AFCC21EEEB4AD00527D27 /* inject_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCBF1EEEB4AD00527D27 /* inject_autogenerate.sh */; };
-		D55AFCC41EEEB88500527D27 /* init_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCC31EEEB88500527D27 /* init_autogenerate.sh */; };
-		D55AFCC51EEEB88500527D27 /* init_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCC31EEEB88500527D27 /* init_autogenerate.sh */; };
-		D55AFCC61EEEB88500527D27 /* init_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = D55AFCC31EEEB88500527D27 /* init_autogenerate.sh */; };
 		D57961621F4FC7440079DE8C /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961611F4FC7440079DE8C /* Component.swift */; };
 		D57961641F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961631F4FC7F40079DE8C /* DIByTagAndMany.swift */; };
 		D57961651F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961631F4FC7F40079DE8C /* DIByTagAndMany.swift */; };
@@ -443,9 +438,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D55AFCBD1EEEB0E200527D27 /* make_autogenerate.sh in Resources */,
-				D55AFCC11EEEB4AD00527D27 /* inject_autogenerate.sh in Resources */,
-				D55AFCC51EEEB88500527D27 /* init_autogenerate.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,9 +445,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D55AFCBE1EEEB0E200527D27 /* make_autogenerate.sh in Resources */,
-				D55AFCC21EEEB4AD00527D27 /* inject_autogenerate.sh in Resources */,
-				D55AFCC61EEEB88500527D27 /* init_autogenerate.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,9 +452,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D55AFCBC1EEEB0E200527D27 /* make_autogenerate.sh in Resources */,
-				D55AFCC01EEEB4AD00527D27 /* inject_autogenerate.sh in Resources */,
-				D55AFCC41EEEB88500527D27 /* init_autogenerate.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,11 +463,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				119F4FD71E56069200B2DFA1 /* DIContainerBuilder.Reg.swift in Sources */,
+				D515626C1F5472300036919C /* Component.swift in Sources */,
 				169C0DC41DA3501F001F0AD5 /* DIComponentBuilder.swift in Sources */,
 				D57961651F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */,
 				D55AFCB91EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				D55AFCB51EEEA48D00527D27 /* MethodMaker.swift in Sources */,
 				D57961831F52C2BD0079DE8C /* DIStoryboard.swift in Sources */,
+				D515626E1F54724D0036919C /* DIContainerBuilder.swift in Sources */,
 				16D7BCBE1DB086B900A29A9F /* DIScanPart.swift in Sources */,
 				169C0DCC1DA3501F001F0AD5 /* MultyMap.swift in Sources */,
 				115C24C91E6527CA00CC8BC7 /* Synchronize.swift in Sources */,
@@ -511,11 +499,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				119F4FD81E56069200B2DFA1 /* DIContainerBuilder.Reg.swift in Sources */,
+				D515626D1F5472300036919C /* Component.swift in Sources */,
 				169C0E2A1DA35CBE001F0AD5 /* DIComponentBuilder.swift in Sources */,
 				D57961661F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */,
 				D55AFCBA1EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				D55AFCB61EEEA48D00527D27 /* MethodMaker.swift in Sources */,
 				D57961841F52C2BD0079DE8C /* DIStoryboard.swift in Sources */,
+				D515626F1F54724D0036919C /* DIContainerBuilder.swift in Sources */,
 				16D7BCC01DB086B900A29A9F /* DIScanPart.swift in Sources */,
 				169C0E311DA35CBE001F0AD5 /* MultyMap.swift in Sources */,
 				115C24CA1E6527CA00CC8BC7 /* Synchronize.swift in Sources */,

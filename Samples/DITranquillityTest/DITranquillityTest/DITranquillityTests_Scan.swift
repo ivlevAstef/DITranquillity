@@ -158,72 +158,82 @@ class DITranquillityTests_Scan: XCTestCase {
     XCTAssertNil(type3)
     XCTAssertNil(type4)
   }
-//
-//  func test06_ScanAssemblyUseAssembly3() {
-//    let builder = DIContainerBuilder()
-//    builder.register(module: ModuleWithScan3())
-//    
-//    let container =  try! builder.build()
-//    
-//    let type1: Module1Type? = *?container
-//    let type2: Module2Type? = *?container
-//    
-//    let type3: DuMole1Type? = *?container
-//    let type4: DuMole2Type? = *?container
-//    
-//    XCTAssertNil(type1)
-//    XCTAssertNil(type2)
-//    XCTAssertNotNil(type3)
-//    XCTAssertNotNil(type4)
-//  }
-//	
-//	func test07_ScanModulesInBundleSubProject1() {
-//		let builder = DIContainerBuilder()
-//		builder.register(component: DIScanComponent(predicateByName: { _ in true }, in: Bundle(for: ScannedModule1.self)))
-//		
-//		let container =  try! builder.build()
-//		
-//		let type1: Module1Type? = *?container
-//		let type2: Module2Type? = *?container
-//		
-//		let type3: DuMole1Type? = *?container
-//		let type4: DuMole2Type? = *?container
-//		
-//		XCTAssertNotNil(type1)
-//		XCTAssertNotNil(type2)
-//		XCTAssertNil(type3)
-//		XCTAssertNil(type4)
-//	}
-//	
-//	func test07_ScanModulesInBundleSubProject2() {
-//		let builder = DIContainerBuilder()
-//		builder.register(component: DIScanComponent(predicateByName: { _ in true }, in: Bundle(for: ScannedModule2.self)))
-//		
-//		let container =  try! builder.build()
-//		
-//		let type1: Module1Type? = *?container
-//		let type2: Module2Type? = *?container
-//		
-//		let type3: DuMole1Type? = *?container
-//		let type4: DuMole2Type? = *?container
-//		
-//		XCTAssertNil(type1)
-//		XCTAssertNil(type2)
-//		XCTAssertNotNil(type3)
-//		XCTAssertNotNil(type4)
-//	}
-//
-//	func test08_ScanModulesPredicateByType() {
-//		let builder = DIContainerBuilder()
-//		builder.register(component: DIScanComponent(predicateByType: { type in type.init() is ScannedRecursiveBase }))
-//		
-//		let container =  try! builder.build()
-//		
-//		let type1: RecursiveComponent1Type? = *?container
-//		let type2: RecursiveComponent2Type? = *?container
-//
-//		XCTAssertNotNil(type1)
-//		XCTAssertNotNil(type2)
-//	}
-//	
+
+  func test06_ScanFrameworkUseFramework3() {
+    let builder = DIContainerBuilder()
+    builder.append(framework: FrameworkWithScan3.self)
+    
+    let container =  try! builder.build()
+    
+    let type1: Module1Type? = *container
+    let type2: Module2Type? = *container
+    
+    let type3: DuMole1Type? = *container
+    let type4: DuMole2Type? = *container
+    
+    XCTAssertNil(type1)
+    XCTAssertNil(type2)
+    XCTAssertNotNil(type3)
+    XCTAssertNotNil(type4)
+  }
+
+	func test07_ScanFrameworksInBundleSubProject1() {
+    class ScanPart: DIScanPart {
+      override class var bundle: Bundle? { return Bundle(for: ScannedFramework1.self) }
+    }
+		let builder = DIContainerBuilder()
+		builder.append(part: ScanPart.self)
+		
+		let container =  try! builder.build()
+		
+		let type1: Module1Type? = *container
+		let type2: Module2Type? = *container
+		
+		let type3: DuMole1Type? = *container
+		let type4: DuMole2Type? = *container
+		
+		XCTAssertNotNil(type1)
+		XCTAssertNotNil(type2)
+		XCTAssertNil(type3)
+		XCTAssertNil(type4)
+	}
+
+	func test07_ScanFrameworksInBundleSubProject2() {
+    class ScanPart: DIScanPart {
+      override class var bundle: Bundle? { return Bundle(for: ScannedFramework2.self) }
+    }
+		let builder = DIContainerBuilder()
+    builder.append(part: ScanPart.self)
+		
+		let container =  try! builder.build()
+		
+		let type1: Module1Type? = *container
+		let type2: Module2Type? = *container
+		
+		let type3: DuMole1Type? = *container
+		let type4: DuMole2Type? = *container
+		
+		XCTAssertNil(type1)
+		XCTAssertNil(type2)
+		XCTAssertNotNil(type3)
+		XCTAssertNotNil(type4)
+	}
+
+	func test08_ScanFrameworksPredicateByType() {
+    class ScanPart: DIScanPart {
+      override class var predicate: Predicate? { return .type({ $0 is ScannedRecursiveBase.Type }) }
+    }
+    
+		let builder = DIContainerBuilder()
+    builder.append(part: ScanPart.self)
+		
+		let container =  try! builder.build()
+		
+		let type1: RecursivePart1Type? = *container
+		let type2: RecursivePart2Type? = *container
+
+		XCTAssertNotNil(type1)
+		XCTAssertNotNil(type2)
+	}
+	
 }
