@@ -8,38 +8,22 @@
 
 public protocol DIScanned {}
 
-open class DIScan<T> {
-  public enum Predicate {
-    case type((T.Type)->Bool)
-    case name((String)->Bool)
-  }
-  
-  open class var predicate: Predicate? {
-    get { return nil }
-  }
-  
-  open class var bundle: Bundle? {
-    get { return nil }
-  }
-  
-  
-  static var types: [T.Type] {
-    let sbpath = bundle?.bundlePath ?? ""
-  
-    let spredicate: (T.Type)->Bool
-    switch predicate {
-    case .some(.type(let p)):
-      spredicate = p
-    case .some(.name(let p)):
-      spredicate = { p(name(by: $0)) }
-    case .none:
-      spredicate = { _ in true }
-    }
+open class DIScan {  
+  static func types(_ valid: (AnyClass)->Bool, _ predicate: (AnyClass)->Bool, _ bundle: Bundle?) -> [AnyClass] {
+    let bpathOpt = bundle?.bundlePath
     
-    var result: [T.Type] = []
-    for (type, bpath) in scanned {
-      if let type = type as? T.Type, bpath == sbpath, spredicate(type) {
-        result.append(type)
+    var result: [AnyClass] = []
+    for (cls, bpath) in scanned {
+      if !valid(cls) {
+        continue
+      }
+      
+      if let sbpath = bpathOpt, bpath != sbpath {
+        continue
+      }
+      
+      if predicate(cls) {
+        result.append(cls)
       }
     }
     return result
@@ -54,8 +38,8 @@ open class DIScan<T> {
 
 private let pubCharacters = CharacterSet(charactersIn: ".")
 private let inCharacters = CharacterSet(charactersIn: " ()")
-private func name<T>(by type: T.Type) -> String {
-  let name: String = "\(type)"
+func name(by cls: AnyClass) -> String {
+  let name: String = "\(cls)"
   let pubComponents = name.components(separatedBy: pubCharacters)
   if pubComponents.count > 1 {
     return pubComponents.last!
@@ -69,16 +53,16 @@ private func name<T>(by type: T.Type) -> String {
   return name
 }
 
-private let scanned: [(type: DIScanned.Type, bpath: String)] = {
+private let scanned: [(cls: AnyClass, bpath: String)] = {
   let expectedClassCount = objc_getClassList(nil, 0)
   let allClasses = UnsafeMutablePointer<AnyClass?>.allocate(capacity: Int(expectedClassCount))
   let autoreleasingAllClasses = AutoreleasingUnsafeMutablePointer<AnyClass?>(allClasses)
   let actualClassCount = Int(objc_getClassList(autoreleasingAllClasses, expectedClassCount))
 
-  var result: [(type: DIScanned.Type, bpath: String)] = []
+  var result: [(cls: AnyClass, bpath: String)] = []
   for i in 0..<actualClassCount {
-    if let cls = allClasses[i], let type = cls as? DIScanned.Type {
-      result.append((type, Bundle(for: cls).bundlePath))
+    if let cls = allClasses[i], cls is DIScanned.Type {
+      result.append((cls, Bundle(for: cls).bundlePath))
     }
   }
 

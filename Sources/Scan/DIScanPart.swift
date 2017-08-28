@@ -6,16 +6,30 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-open class DIScanPart: DIScan<DIPart>, DIPart {
+open class DIScanPart: DIScan, DIPart {
+  public enum Predicate {
+    case type((DIPart.Type)->Bool)
+    case name((String)->Bool)
+  }
+  
+  open class var predicate: Predicate? { return nil }
+  open class var bundle: Bundle? { return nil }
+  
   public static func load(builder: DIContainerBuilder) {
-    for part in types {
-      builder.append(part: part as! DIPart.Type)
+    let inpredicate: (AnyClass)->Bool
+    switch predicate {
+    case .some(.type(let p)):
+      inpredicate = { p($0 as! DIPart.Type) }
+    case .some(.name(let p)):
+      inpredicate = { p(name(by: $0 as! DIPart.Type)) }
+    case .none:
+      inpredicate = { _ in return true }
+    }
+    
+    for part in types({ $0 is DIPart.Type && !($0 is DIFramework.Type) }, inpredicate, bundle) {
+      let part = part as! DIPart.Type
+      builder.currentBundle = Bundle(for: part)
+      part.load(builder: builder)
     }
   }
 }
-/*
-class ScanTest: DIScanComponent {
-  override class var predicateByType: PredicateByType? { get { return { _ in true } } }
-  override class var bundle: Bundle? { get { return Bundle(for: self) } }
-}
-*/

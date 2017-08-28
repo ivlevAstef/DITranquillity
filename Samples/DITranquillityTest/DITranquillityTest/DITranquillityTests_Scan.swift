@@ -13,122 +13,152 @@ import SubProject1
 import SubProject2
 
 
-//public class ScannedRecursiveBase: DIScanned {}
-//
-//public class RecursiveComponent1Type { }
-//public class ScannedRecursiveComponent_1: ScannedRecursiveBase, DIComponent {
-//	public func load(builder: DIContainerBuilder) {
-//    builder.register(type: RecursiveComponent1Type.init)
-//	}
-//}
-//
-//public class RecursiveComponent2Type { }
-//public class ScannedRecursiveComponent_2: ScannedRecursiveBase, DIComponent {
-//	public func load(builder: DIContainerBuilder) {
-//		builder.register(type: RecursiveComponent2Type.init)
-//	}
-//}
-//
-//
-//class ModuleWithScan1: DIModule {
-//  public var components: [DIComponent] = []
-//  public var dependencies: [DIModule] = [ DIScanModule(predicateByName: { $0.contains("Module") }) ]
-//}
-//
-//class ModuleWithScan2: DIModule {
-//  public var components: [DIComponent] = [ DIScanComponent(predicateByName: { $0.contains("Component") }) ]
-//  public var dependencies: [DIModule] = []
-//}
-//
-//class ModuleWithScan3: DIModule {
-//  public var components: [DIComponent] = [ DIScanComponent(predicateByName: { $0.contains("Onent") }) ]
-//  public var dependencies: [DIModule] = []
-//}
+public class ScannedRecursiveBase: DIScanned {}
+
+public class RecursivePart1Type { }
+public class ScannedRecursivePart_1: ScannedRecursiveBase, DIPart {
+	public static func load(builder: DIContainerBuilder) {
+    builder.register(RecursivePart1Type.init)
+	}
+}
+
+public class RecursivePart2Type { }
+public class ScannedRecursivePart_2: ScannedRecursiveBase, DIPart {
+	public static func load(builder: DIContainerBuilder) {
+		builder.register(RecursivePart2Type.init)
+	}
+}
+
+private class ScanFramework: DIScanFramework {
+  override class var predicate: Predicate? { return .name({ $0.contains("Framework") }) }
+}
+
+class FrameworkWithScan1: DIFramework {
+  private class ScanFramework: DIScanFramework {
+    override class var predicate: Predicate? { return .name({ $0.contains("Framework") }) }
+  }
+  
+  public static func load(builder: DIContainerBuilder) {
+    builder.append(framework: ScanFramework.self)
+  }
+}
+
+class FrameworkWithScan2: DIFramework {
+  private class ScanPart: DIScanPart {
+    override class var predicate: Predicate? { return .name({ $0.contains("Part") }) }
+  }
+  
+  public static func load(builder: DIContainerBuilder) {
+    builder.append(part: ScanPart.self)
+  }
+}
+
+class FrameworkWithScan3: DIFramework {
+  private class ScanPrt: DIScanPart {
+    override class var predicate: Predicate? { return .name({ $0.contains("Prt") }) }
+  }
+  
+  public static func load(builder: DIContainerBuilder) {
+    builder.append(part: ScanPrt.self)
+  }
+}
 
 // Tests
 
 class DITranquillityTests_Scan: XCTestCase {
-//  
-//  func test01_ScanModule() {
-//    let builder = DIContainerBuilder()
-//    builder.register(component: DIScanComponent(predicateByName: { $0.contains("Component") }))
-//    
-//    let container =  try! builder.build()
-//    
-//    let type1: Module1Type? = *?container
-//    let type2: Module2Type? = *?container
-//    
-//    XCTAssertNotNil(type1)
-//    XCTAssertNotNil(type2)
-//  }
+  
+  func test01_ScanParts() {
+    class ScanPart: DIScanPart {
+      override class var predicate: Predicate? { return .name({ $0.contains("Part") }) }
+    }
+    
+    let builder = DIContainerBuilder()
+    builder.append(part: ScanPart.self)
+    
+    let container =  try! builder.build()
+    
+    let type1: Module1Type? = *container
+    let type2: Module2Type? = *container
+    
+    XCTAssertNotNil(type1)
+    XCTAssertNotNil(type2)
+  }
+
+  func test02_ScanPrts() {
+    class ScanPrt: DIScanPart {
+      override class var predicate: Predicate? { return .name({ $0.contains("Prt") }) }
+    }
+    
+    let builder = DIContainerBuilder()
+    builder.append(part: ScanPrt.self)
+    
+    let container =  try! builder.build()
+    
+    let type1: DuMole1Type? = *container
+    let type2: DuMole2Type? = *container
+    
+    XCTAssertNotNil(type1)
+    XCTAssertNotNil(type2)
+  }
+
+  func test03_ScanFramework() {
+    class ScanFramework: DIScanFramework {
+      override class var predicate: Predicate? { return .name({ $0.contains("ScannedFramework") }) }
+    }
+
+    let builder = DIContainerBuilder()
+    builder.append(framework: ScanFramework.self)
+    
+    let container =  try! builder.build()
+    
+    let type1: Module1Type? = *container
+    let type2: Module2Type? = *container
+    
+    let type3: DuMole1Type? = *container
+    let type4: DuMole2Type? = *container
+    
+    XCTAssertNotNil(type1)
+    XCTAssertNotNil(type2)
+    XCTAssertNotNil(type3)
+    XCTAssertNotNil(type4)
+  }
+  
+  func test04_ScanFrameworkUseFramework1() {
+    let builder = DIContainerBuilder()
+    builder.append(framework: FrameworkWithScan1.self)
+    
+    let container =  try! builder.build()
+    
+    let type1: Module1Type? = *container
+    let type2: Module2Type? = *container
+    
+    let type3: DuMole1Type? = *container
+    let type4: DuMole2Type? = *container
+    
+    XCTAssertNotNil(type1)
+    XCTAssertNotNil(type2)
+    XCTAssertNotNil(type3)
+    XCTAssertNotNil(type4)
+  }
+
+  func test05_ScanFrameworkUseFramework2() {
+    let builder = DIContainerBuilder()
+    builder.append(framework: FrameworkWithScan2.self)
+    
+    let container =  try! builder.build()
+    
+    let type1: Module1Type? = *container
+    let type2: Module2Type? = *container
+    
+    let type3: DuMole1Type? = *container
+    let type4: DuMole2Type? = *container
+    
+    XCTAssertNotNil(type1)
+    XCTAssertNotNil(type2)
+    XCTAssertNil(type3)
+    XCTAssertNil(type4)
+  }
 //
-//  func test02_ScanDuMole() {
-//    let builder = DIContainerBuilder()
-//    builder.register(component: DIScanComponent(predicateByName: { $0.contains("Onent") }))
-//    
-//    let container =  try! builder.build()
-//    
-//    let type1: DuMole1Type? = *?container
-//    let type2: DuMole2Type? = *?container
-//    
-//    XCTAssertNotNil(type1)
-//    XCTAssertNotNil(type2)
-//  }
-//  
-//  func test03_ScanAssembly() {
-//    let builder = DIContainerBuilder()
-//    builder.register(module: DIScanModule(predicateByName: { $0.contains("ScannedModule") }))
-//    
-//    let container =  try! builder.build()
-//    
-//    let type1: Module1Type? = *?container
-//    let type2: Module2Type? = *?container
-//    
-//    let type3: DuMole1Type? = *?container
-//    let type4: DuMole2Type? = *?container
-//    
-//    XCTAssertNotNil(type1)
-//    XCTAssertNotNil(type2)
-//    XCTAssertNotNil(type3)
-//    XCTAssertNotNil(type4)
-//  }
-//  
-//  func test04_ScanAssemblyUseAssembly1() {
-//    let builder = DIContainerBuilder()
-//    builder.register(module: ModuleWithScan1())
-//    
-//    let container =  try! builder.build()
-//    
-//    let type1: Module1Type? = *?container
-//    let type2: Module2Type? = *?container
-//    
-//    let type3: DuMole1Type? = *?container
-//    let type4: DuMole2Type? = *?container
-//    
-//    XCTAssertNotNil(type1)
-//    XCTAssertNotNil(type2)
-//    XCTAssertNotNil(type3)
-//    XCTAssertNotNil(type4)
-//  }
-//  
-//  func test05_ScanAssemblyUseAssembly2() {
-//    let builder = DIContainerBuilder()
-//    builder.register(module: ModuleWithScan2())
-//    
-//    let container =  try! builder.build()
-//    
-//    let type1: Module1Type? = *?container
-//    let type2: Module2Type? = *?container
-//    
-//    let type3: DuMole1Type? = *?container
-//    let type4: DuMole2Type? = *?container
-//    
-//    XCTAssertNotNil(type1)
-//    XCTAssertNotNil(type2)
-//    XCTAssertNil(type3)
-//    XCTAssertNil(type4)
-//  }
-//  
 //  func test06_ScanAssemblyUseAssembly3() {
 //    let builder = DIContainerBuilder()
 //    builder.register(module: ModuleWithScan3())

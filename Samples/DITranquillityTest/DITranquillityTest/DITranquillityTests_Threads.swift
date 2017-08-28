@@ -14,7 +14,7 @@ class DITranquillityTests_Threads: XCTestCase {
     super.setUp()
   }
   
-  func test01_ResolvePerDependency() {
+  func test01_ResolvePrototype() {
     let builder = DIContainerBuilder()
     
     builder.register(FooService.init)
@@ -44,11 +44,44 @@ class DITranquillityTests_Threads: XCTestCase {
     }
   }
   
-  func test02_ResolvePerSingle() {
+  func test02_ResolveLazySingle() {
     let builder = DIContainerBuilder()
     
     builder.register(FooService.init)
       .lifetime(.lazySingle)
+    
+    let container = try! builder.build()
+    
+    let singleService: FooService = *container
+    XCTAssertEqual(singleService.foo(), "foo")
+    
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
+      for _ in 0..<32768 {
+        let service: FooService = *container
+        XCTAssert(service === singleService)
+      }
+    }
+    
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
+      for _ in 0..<16384 {
+        let service: FooService = *container
+        XCTAssert(service === singleService)
+      }
+    }
+    
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+      for _ in 0..<8192 {
+        let service: FooService = *container
+        XCTAssert(service === singleService)
+      }
+    }
+  }
+  
+  func test03_ResolveSingle() {
+    let builder = DIContainerBuilder()
+    
+    builder.register(FooService.init)
+      .lifetime(.single)
     
     let container = try! builder.build()
     
