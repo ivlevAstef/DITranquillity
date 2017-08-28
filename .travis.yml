@@ -1,7 +1,7 @@
 language: objective-c
-osx_image: xcode8
+osx_image: xcode8.3
 env:
-  global: 
+  global:
     - LC_CTYPE=en_US.UTF-8
     - LANG=en_US.UTF-8
     - PROJECT=DITranquillity.xcodeproj
@@ -17,13 +17,13 @@ env:
     - DESTINATION="OS=10.0,name=Apple TV 1080p" SCHEME="DITranquillity-tvOS" SDK="$TVOS_SDK" PLATFORM="tvOS"
 before_install:
   - brew update
-  - brew outdated carthage || brew upgrade carthage  
+  - brew outdated carthage || brew upgrade carthage
 before_deploy:
   - carthage build --no-skip-current
   - carthage archive $FRAMEWORK_NAME
 script:
   - open -b com.apple.iphonesimulator # Workaround https://github.com/travis-ci/travis-ci/issues/3040
-  - xcodebuild -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" 
+  - xcodebuild -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION"
     -configuration Release ONLY_ACTIVE_ARCH=NO build
   - pod lib lint --quick;
 notifications:
