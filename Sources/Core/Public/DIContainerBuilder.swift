@@ -156,42 +156,46 @@ extension DIContainerBuilder {
 
   fileprivate func checkGraphCycles(resolver: Resolver) -> Bool {
     var success: Bool = true
-    var glovalVisited: Set<Component> = [] // for optimization
     
     typealias Stack = (component: Component, initial: Bool, cycle: Bool, many: Bool)
     func dfs(for component: Component, visited: Set<Component>, stack: [Stack]) {
-      glovalVisited.insert(component)
-      
       // it's cycle
       if visited.contains(component) {
-        let components = stack.map{ $0.component.info }
-        
-        let allInitials = !stack.contains{ !($0.initial && !$0.many) }
-        if allInitials {
-          log(.error, msg: "You have a cycle: \(components) consisting entirely of initialization methods.")
-          success = false
-          return
+        func isValidCycle() -> Bool {
+          if stack.first!.component != component {
+            // but inside -> will find in a another dfs call.
+            return true
+          }
+          
+          let components = stack.map{ $0.component.info }
+          
+          let allInitials = !stack.contains{ !($0.initial && !$0.many) }
+          if allInitials {
+            log(.error, msg: "You have a cycle: \(components) consisting entirely of initialization methods.")
+            return false
+          }
+          
+          let hasGap = stack.contains{ $0.cycle || ($0.initial && $0.many) }
+          if !hasGap {
+            log(.error, msg: "Cycle has no discontinuities. Please install at least one explosion in the cycle: \(components) using `injection(cycle: true) { ... }`")
+            return false
+          }
+          
+          let allPrototypes = !stack.contains{ $0.component.lifeTime != .prototype }
+          if allPrototypes {
+            log(.error, msg: "You cycle: \(components) consists only of object with lifetime - prototype. Please change at least one object lifetime to another.")
+            return false
+          }
+          
+          let containsPrototype = stack.contains{ $0.component.lifeTime == .prototype }
+          if containsPrototype {
+            log(.warning, msg: "You cycle: \(components) contains an object with lifetime - prototype. In some cases this can lead to an udesirable effect.")
+          }
+          
+          return true
         }
         
-        let hasGap = stack.contains{ $0.cycle || ($0.initial && $0.many) }
-        if !hasGap {
-          log(.error, msg: "Cycle has no discontinuities. Please install at least one explosion in the cycle: \(components) using `injection(cycle: true) { ... }`")
-          success = false
-          return
-        }
-        
-        let allPrototypes = !stack.contains{ $0.component.lifeTime != .prototype }
-        if allPrototypes {
-          log(.error, msg: "You cycle: \(components) consists only of object with lifetime - prototype. Please change at least one object lifetime to another.")
-          success = false
-          return
-        }
-        
-        let containsPrototype = stack.contains{ $0.component.lifeTime == .prototype }
-        if containsPrototype {
-          log(.warning, msg: "You cycle: \(components) contains an object with lifetime - prototype. In some cases this can lead to an udesirable effect.")
-        }
-        
+        success = isValidCycle() && success
         return
       }
       
@@ -226,10 +230,6 @@ extension DIContainerBuilder {
     
     
     for component in components {
-      if glovalVisited.contains(component) {
-        continue
-      }
-      
       let stack = [(component, false, false, false)]
       dfs(for: component, visited: [], stack: stack)
     }

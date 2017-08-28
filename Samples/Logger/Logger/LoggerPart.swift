@@ -1,5 +1,5 @@
 //
-//  LoggerComponent.swift
+//  LoggerPart.swift
 //  Logger
 //
 //  Created by Alexander Ivlev on 26/09/16.
@@ -8,25 +8,23 @@
 
 import DITranquillity
 
-class LoggerComponent: DIComponent {
-  var scope: DIComponentScope { return .public }
-  
-  func load(builder: DIContainerBuilder) {
+class LoggerPart: DIPart {
+  static func load(builder: DIContainerBuilder) {
     builder.register{ ConsoleLogger() }
-      .as(Logger.self).check{$0}
+      .as(check: Logger.self){$0}
       .lifetime(.single)
     
     builder.register{ FileLogger(file: "file.log") }
-      .as(Logger.self).check{$0}
+      .as(check: Logger.self){$0}
       .lifetime(.single)
     
     builder.register{ ServerLogger(server: "http://server.com/") }
-      .as(Logger.self).check{$0}
+      .as(check: Logger.self){$0}
       .lifetime(.single)
     
-    builder.register{ try MainLogger(loggers: **$0) }
-      .as(Logger.self).check{$0}
-      .set(.default)
+    builder.register{ MainLogger(loggers: many($0)) }
+      .as(check: Logger.self){$0}
+      .default()
       .lifetime(.single)
   }
 }
