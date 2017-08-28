@@ -125,13 +125,7 @@ class Resolver {
   }
   
   private func untypeResolve(_ container: DIContainer, type: DIAType, name: String?, _ getter: Getter) -> Any? {
-    let candidates = findComponents(by: type, name: name, from: nil)
-    let components: [Component]
-    
-    switch getter {
-      case .object(_): components = candidates
-      case .method: components = removeWhoDoesNotHaveInitialMethod(components: candidates)
-    }
+    let components = findComponents(by: type, name: name, from: nil)
     
     if !validate(components: components, for: type) {
       log(.warning, msg: "Not found type: \(type)")
@@ -199,16 +193,18 @@ class Resolver {
     }
     
     func resolvePrototype() -> Any? {
-      let obj = getObject()
-      
-      let cycleInjections = component.injections.filter{ $0.cycle }
-      cache.cycleInjectionStack.append(contentsOf: cycleInjections.map{ (obj, $0) })
-      
-      for injection in component.injections.filter({ !$0.cycle }) {
-        _ = use(signature: injection.signature, obj: obj)
+      if let obj = getObject() {
+        let cycleInjections = component.injections.filter{ $0.cycle }
+        cache.cycleInjectionStack.append(contentsOf: cycleInjections.map{ (obj, $0) })
+        
+        for injection in component.injections.filter({ !$0.cycle }) {
+          _ = use(signature: injection.signature, obj: obj)
+        }
+        
+        return obj
       }
       
-      return obj
+      return nil
     }
     
     func getObject() -> Any? {
@@ -219,7 +215,8 @@ class Resolver {
         
       case .method:
         guard let signature = component.initial else {
-          fatalError("Can't found initial method in \(component.info)")
+          log(.warning, msg: "Can't found initial method in \(component.info)")
+          return nil
         }
         
         let obj = use(signature: signature, obj: nil)

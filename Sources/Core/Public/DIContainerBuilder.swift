@@ -141,8 +141,14 @@ extension DIContainerBuilder {
           if candidates.isEmpty {
             plog(parameter, msg: "Not found component for \(description(type: parameter.type))")
           } else if filtered.isEmpty {
+            let allPrototypes = !candidates.contains{ $0.lifeTime != .prototype }
             let infos = candidates.map{ $0.info }
-            plog(parameter, msg: "Not found component for \(description(type: parameter.type)) that would have initialization methods. Were found: \(infos)")
+            
+            if allPrototypes {
+              plog(parameter, msg: "Not found component for \(description(type: parameter.type)) that would have initialization methods. Were found: \(infos)")
+            } else {
+              log(.warning, msg: "Not found component for \(description(type: parameter.type)) that would have initialization methods, but object can maked from cache. Were found: \(infos)")
+            }
           } else if filtered.count >= 1 {
             let infos = filtered.map{ $0.info }
             plog(parameter, msg: "Ambiguous \(description(type: parameter.type)) contains in: \(infos)")

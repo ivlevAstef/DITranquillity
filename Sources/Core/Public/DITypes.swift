@@ -37,15 +37,15 @@ public struct DIComponentInfo: Equatable, CustomStringConvertible {
   
 /// Log levels. Needed for a better understanding of logs, and clipping
 ///
+/// - none: disable all logs
 /// - error: After an error, a application can not be executable
 /// - warning: Warning should pe paid attention and analyzed
 /// - info: Information is needed to understand what is happening
-/// - none: disable all logs
 public enum DILogLevel: Equatable {
+  case none
   case error
   case warning
   case info
-  case none
 }
   
 

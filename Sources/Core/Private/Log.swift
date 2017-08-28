@@ -21,30 +21,29 @@ internal func log(_ level: DILogLevel, msg: @autoclosure ()->String, brace: LogB
     return
   }
   
-  switch brace {
-  case .begin:
-    tabulation += DISetting.Log.tab
-  case .neutral:
-    break
-  case .end:
+  if .end == brace {
     assert(tabulation.characters.count >= DISetting.Log.tab.characters.count)
     tabulation.characters.removeLast(DISetting.Log.tab.characters.count)
   }
   
   logFunc(level, tabulation + msg())
+  
+  if .begin == brace {
+    tabulation += DISetting.Log.tab
+  }
 }
 
 extension DILogLevel {
   fileprivate var priority: Int {
     switch self {
-    case .none:
-      return 0
     case .info:
       return 10
     case .warning:
       return 20
     case .error:
       return 30
+    case .none:
+      return 40
     }
   }
 }
