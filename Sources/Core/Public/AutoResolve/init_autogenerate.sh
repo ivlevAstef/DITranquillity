@@ -20,8 +20,19 @@ local numbers=($(seq 0 $1))
 
 local PType=$(join ',' ${numbers[@]/#/P})
 local PSType=$(join ',' $(replaceToArg numbers[@] "P;I.self"))
+local PComment=$(join ',' $(replaceToArg numbers[@] "p;I:$;I"))
+local quote='```'
 
-echo "  @discardableResult
+echo "
+  /// Declaring a new component with initial.
+  /// Using:
+  /// $quote
+  /// builder.register{ YourClass($PComment) }
+  /// $quote
+  ///
+  /// - Parameter c: initial method. Must return type declared at registration.
+  /// - Returns: component builder, to configure the component.
+  @discardableResult
   public func register<Impl,$PType>(file: String = #file, line: Int = #line, _ c: @escaping ($PType) -> Impl) -> DIComponentBuilder<Impl> {
     return register(file, line, MM.make([$PSType], by: c))
   }

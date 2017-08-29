@@ -6,8 +6,11 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
+/// Protocol to indicate which classes should be included in scan.
+/// Don't use this opportunity thoughtlessly - use it only if you don't know in advance number of parts or frameworks in the application.
 public protocol DIScanned {}
 
+/// Base class for scan. It doesn't make much sense to inherit from it. see: `DIScanFramework` and `DIScanPart`
 open class DIScan {  
   static func types(_ valid: (AnyClass)->Bool, _ predicate: (AnyClass)->Bool, _ bundle: Bundle?) -> [AnyClass] {
     let bpathOpt = bundle?.bundlePath
