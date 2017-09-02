@@ -35,12 +35,12 @@ class DITranquillityTests_Build: XCTestCase {
   }
 
   /*func test01_NotSetInitializer() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    let _ = builder.register(TestProtocol.self); let line = #line
+    let _ = container.register(TestProtocol.self); let line = #line
     
     do {
-      try builder.build()
+      try container.build()
     } catch DIError.build(let errors) {
       return
     } catch {
@@ -50,24 +50,24 @@ class DITranquillityTests_Build: XCTestCase {
   }
   
   func test03_MultiplyRegistrateTypeWithMultyDefault() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    let lineClass1 = #line; builder.register(type: TestClass1.self)
+    let lineClass1 = #line; container.register(type: TestClass1.self)
       .as(TestProtocol.self).check{$0}
       .set(.default)
       .initial{ TestClass1() }
     
-    let lineClass2 = #line; builder.register(type: TestClass2.self)
+    let lineClass2 = #line; container.register(type: TestClass2.self)
       .as(TestProtocol.self).check{$0}
       .set(.default)
       .initial(TestClass2.init)
     
     
-    builder.register(type: TestClass1.self)
+    container.register(type: TestClass1.self)
       .initial(init)
     
     do {
-      try builder.build()
+      try container.build()
     } catch DIError.build(let errors) {
       XCTAssertEqual(errors, [
         DIError.pluralDefaultAd(type: TestProtocol.self, typesInfo: [
@@ -83,53 +83,53 @@ class DITranquillityTests_Build: XCTestCase {
   }
   
   func test04_MultiplyRegistrateTypeWithOneDefault() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(type: TestClass1.self)
+    container.register(type: TestClass1.self)
       .as(TestProtocol.self).check{$0}
       .set(.default)
       .initial(TestClass1.init)
     
-    builder.register(type: TestClass2.self)
+    container.register(type: TestClass2.self)
       .as(TestProtocol.self).check{$0}
       .initial{ TestClass2() }
     
     do {
-      try builder.build()
+      try container.build()
     } catch {
       XCTFail("Catched error: \(error)")
     }
   }
   
   func test05_MultiplyRegistrateTypeWithNames() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(type: TestClass1.self)
+    container.register(type: TestClass1.self)
       .as(TestProtocol.self).check{$0}
       .set(name: "foo")
       .initial{ TestClass1() }
     
-    builder.register(type: TestClass2.self)
+    container.register(type: TestClass2.self)
       .as(TestProtocol.self).check{$0}
       .set(name: "bar")
       .initial{ TestClass2() }
     
     do {
-      try builder.build()
+      try container.build()
     } catch {
       XCTFail("Catched error: \(error)")
     }
   }
   
 //  func test06_IncorrectRegistrateType() {
-//    let builder = DIContainerBuilder()
+//    let container = DIContainer()
 //    
-//    let line = #line; builder.register(type: TestClass1.self)
+//    let line = #line; container.register(type: TestClass1.self)
 //      .as(Test2Protocol.self).check{$0} //<---- Swift not supported static check
 //      .initial{ TestClass1() }
 //    
 //    do {
-//      let container = try builder.build()
+//      let container = try container.build()
 //     
 //      do {
 //        let type: Test2Protocol = try container.resolve()
@@ -149,14 +149,14 @@ class DITranquillityTests_Build: XCTestCase {
 //  }
   
   func test07_RegistrationByProtocolAndGetByClass() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(type: TestClass1.self)
+    container.register(type: TestClass1.self)
       .as(TestProtocol.self).unsafe()
       .initial(TestClass1.init)
     
     do {
-      let container = try builder.build()
+      let container = try container.build()
       
       
       do {
@@ -175,17 +175,17 @@ class DITranquillityTests_Build: XCTestCase {
     }
   }
   
-  func registerForTest(builder: DIContainerBuilder) {
-    builder.register(type: TestClass1.init)
+  func registerForTest(container: DIContainer) {
+    container.register(type: TestClass1.init)
   }
   
   func test08_DoubleRegistrationOneLine() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
     registerForTest(builder: builder)
     registerForTest(builder: builder)
     
-    let container = try! builder.build()
+    let container = try! container.build()
     
     let type: TestClass1 = try! container.resolve()
     print(type) // ignore

@@ -14,24 +14,23 @@ public protocol DIPart: class {
   /// It's worth combining the components for some reason.
   /// And call a class implementing the protocol according to this characteristics.
   ///
-  /// - Parameter builder: A container builder. Don't call the method yourself, but leave it to the method `append(...)` into container builder.
-  static func load(builder: DIContainerBuilder)
+  /// - Parameter container: A container. Don't call the method yourself, but leave it to the method `append(...)` into container.
+  static func load(container: DIContainer)
 }
 
-public extension DIContainerBuilder {
-  /// Registers a part in the builder.
+public extension DIContainer {
+  /// Registers a part in the container.
   /// Registration means inclusion of all components indicated within.
   ///
   /// - Parameters:
   ///   - path: the part type
   public func append(part: DIPart.Type, file: String = #file, line: Int = #line) {
-    let key = "\(line)\(file)"
-    // Optimization build
-    if !ignoredComponents.contains(key) {
-      ignoredComponents.insert(key)
+    let key = "\(line)\(part)\(file)"
+    if !includedParts.contains(key) {
+      includedParts.insert(key)
       
       self.currentBundle = Bundle(for: part)
-      part.load(builder: self)
+      part.load(container: self)
     }
   }
 }

@@ -277,8 +277,8 @@ class Resolver {
     }
   }
  
-  private let componentContainer: ComponentContainer
-  private let bundleContainer: BundleContainer
+  internal let componentContainer: ComponentContainer
+  internal let bundleContainer: BundleContainer
   private static let monitor = NSObject()
   
   let cache = Cache()

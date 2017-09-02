@@ -11,6 +11,12 @@ typealias Injection = (signature: MethodSignature, cycle: Bool)
 // Reference
 final class ComponentContainer {
   var map = Multimap<TypeKey, Component>()
+	
+	func insert(_ key: TypeKey, _ component: Component) {
+		map.insert(key: key, value: component)
+	}
+	
+	var components: [Component] { return map.dict.values.flatMap{ $0 } }
 }
 
 
@@ -26,7 +32,6 @@ final class Component {
   let uniqueKey: UniqueKey
   
   var lifeTime = DILifeTime.default
-  var names: Set<TypeKey> = []
   var isDefault: Bool = false
   
   fileprivate(set) var initial: MethodSignature?

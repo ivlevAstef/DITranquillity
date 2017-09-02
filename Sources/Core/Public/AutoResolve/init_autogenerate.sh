@@ -27,7 +27,7 @@ echo "
   /// Declaring a new component with initial.
   /// Using:
   /// $quote
-  /// builder.register{ YourClass($PComment) }
+  /// container.register{ YourClass($PComment) }
   /// $quote
   ///
   /// - Parameter c: initial method. Must return type declared at registration.
@@ -42,7 +42,7 @@ echo "
 
 registationInitFile() { #file
 echo "//
-//  DIContainerBuilder.Reg.swift
+//  DIContainer.Reg.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 27/01/2017.
@@ -51,7 +51,7 @@ echo "//
 
 private typealias MM = MethodMaker
 
-public extension DIContainerBuilder {
+public extension DIContainer {
 " > $1
 
 for argcount in `seq 0 $argmax`; do
@@ -60,4 +60,4 @@ done
 echo "}" >> $1
 }
 
-registationInitFile "DIContainerBuilder.Reg.swift"
+registationInitFile "DIContainer.Reg.swift"

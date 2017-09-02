@@ -11,8 +11,8 @@
 /// It isn't necessary to create several such classses on one framework - it willn't be convenient.
 public protocol DIFramework: DIPart { }
 
-public extension DIContainerBuilder {
-  /// Registers a framework in the builder.
+public extension DIContainer {
+  /// Registers a framework in the container.
   /// Registration means inclusion of all components indicated within.
   ///
   /// - Parameters:
@@ -23,9 +23,9 @@ public extension DIContainerBuilder {
 }
 
 
-public extension DIContainerBuilder {
+public extension DIContainer {
   /// Allows you to specify dependencies between frameworks.
-  /// The method should be used only within the implementation of the `load(builder:)` inside framework.
+  /// The method should be used only within the implementation of the `load(container:)` inside framework.
   ///
   /// - Parameter framework: A framework that is imported into the current one. Import means communication designation, and not inclusion of all components.
   public func `import`<IMPORT: DIFramework>(_ framework: IMPORT.Type) {
@@ -33,6 +33,6 @@ public extension DIContainerBuilder {
       log(.warning, msg: "Please, use import only into Component or Module")
       return
     }
-    bundleContainer.dependency(bundle: currentBundle, import: Bundle(for: framework))
+    resolver.bundleContainer.dependency(bundle: currentBundle, import: Bundle(for: framework))
   }
 }

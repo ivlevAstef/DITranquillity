@@ -34,7 +34,7 @@ open class DIScanFramework: DIScan, DIFramework {
   open class var predicate: Predicate? { return nil }
   
   /// implementation of the function for scan.
-  public static func load(builder: DIContainerBuilder) {
+  public static func load(container: DIContainer) {
     let inpredicate: (AnyClass)->Bool
     switch predicate {
     case .some(.type(let p)):
@@ -47,8 +47,8 @@ open class DIScanFramework: DIScan, DIFramework {
     
     for framework in types({ $0 is DIFramework.Type }, inpredicate, nil) {
       let framework = framework as! DIFramework.Type
-      builder.currentBundle = Bundle(for: framework)
-      framework.load(builder: builder)
+      container.currentBundle = Bundle(for: framework)
+      framework.load(container: container)
     }
   }
 }

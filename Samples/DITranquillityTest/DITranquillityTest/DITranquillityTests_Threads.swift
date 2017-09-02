@@ -15,12 +15,10 @@ class DITranquillityTests_Threads: XCTestCase {
   }
   
   func test01_ResolvePrototype() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(FooService.init)
+    container.register(FooService.init)
       .lifetime(.prototype)
-    
-    let container = try! builder.build()
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
       for _ in 0..<32768 {
@@ -45,12 +43,10 @@ class DITranquillityTests_Threads: XCTestCase {
   }
   
   func test02_ResolveLazySingle() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(FooService.init)
+    container.register(FooService.init)
       .lifetime(.lazySingle)
-    
-    let container = try! builder.build()
     
     let singleService: FooService = *container
     XCTAssertEqual(singleService.foo(), "foo")
@@ -78,12 +74,10 @@ class DITranquillityTests_Threads: XCTestCase {
   }
   
   func test03_ResolveSingle() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(FooService.init)
+    container.register(FooService.init)
       .lifetime(.single)
-    
-    let container = try! builder.build()
     
     let singleService: FooService = *container
     XCTAssertEqual(singleService.foo(), "foo")

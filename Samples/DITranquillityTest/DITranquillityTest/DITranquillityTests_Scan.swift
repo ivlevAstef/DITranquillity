@@ -17,15 +17,15 @@ public class ScannedRecursiveBase: DIScanned {}
 
 public class RecursivePart1Type { }
 public class ScannedRecursivePart_1: ScannedRecursiveBase, DIPart {
-	public static func load(builder: DIContainerBuilder) {
-    builder.register(RecursivePart1Type.init)
+	public static func load(container: DIContainer) {
+    container.register(RecursivePart1Type.init)
 	}
 }
 
 public class RecursivePart2Type { }
 public class ScannedRecursivePart_2: ScannedRecursiveBase, DIPart {
-	public static func load(builder: DIContainerBuilder) {
-		builder.register(RecursivePart2Type.init)
+	public static func load(container: DIContainer) {
+		container.register(RecursivePart2Type.init)
 	}
 }
 
@@ -38,8 +38,8 @@ class FrameworkWithScan1: DIFramework {
     override class var predicate: Predicate? { return .name({ $0.contains("Framework") }) }
   }
   
-  public static func load(builder: DIContainerBuilder) {
-    builder.append(framework: ScanFramework.self)
+  public static func load(container: DIContainer) {
+    container.append(framework: ScanFramework.self)
   }
 }
 
@@ -48,8 +48,8 @@ class FrameworkWithScan2: DIFramework {
     override class var predicate: Predicate? { return .name({ $0.contains("Part") }) }
   }
   
-  public static func load(builder: DIContainerBuilder) {
-    builder.append(part: ScanPart.self)
+  public static func load(container: DIContainer) {
+    container.append(part: ScanPart.self)
   }
 }
 
@@ -58,8 +58,8 @@ class FrameworkWithScan3: DIFramework {
     override class var predicate: Predicate? { return .name({ $0.contains("Prt") }) }
   }
   
-  public static func load(builder: DIContainerBuilder) {
-    builder.append(part: ScanPrt.self)
+  public static func load(container: DIContainer) {
+    container.append(part: ScanPrt.self)
   }
 }
 
@@ -72,10 +72,8 @@ class DITranquillityTests_Scan: XCTestCase {
       override class var predicate: Predicate? { return .name({ $0.contains("Part") }) }
     }
     
-    let builder = DIContainerBuilder()
-    builder.append(part: ScanPart.self)
-    
-    let container =  try! builder.build()
+    let container = DIContainer()
+    container.append(part: ScanPart.self)
     
     let type1: Module1Type? = *container
     let type2: Module2Type? = *container
@@ -89,10 +87,8 @@ class DITranquillityTests_Scan: XCTestCase {
       override class var predicate: Predicate? { return .name({ $0.contains("Prt") }) }
     }
     
-    let builder = DIContainerBuilder()
-    builder.append(part: ScanPrt.self)
-    
-    let container =  try! builder.build()
+    let container = DIContainer()
+    container.append(part: ScanPrt.self)
     
     let type1: DuMole1Type? = *container
     let type2: DuMole2Type? = *container
@@ -106,11 +102,9 @@ class DITranquillityTests_Scan: XCTestCase {
       override class var predicate: Predicate? { return .name({ $0.contains("ScannedFramework") }) }
     }
 
-    let builder = DIContainerBuilder()
-    builder.append(framework: ScanFramework.self)
-    
-    let container =  try! builder.build()
-    
+    let container = DIContainer()
+    container.append(framework: ScanFramework.self)
+		
     let type1: Module1Type? = *container
     let type2: Module2Type? = *container
     
@@ -124,11 +118,9 @@ class DITranquillityTests_Scan: XCTestCase {
   }
   
   func test04_ScanFrameworkUseFramework1() {
-    let builder = DIContainerBuilder()
-    builder.append(framework: FrameworkWithScan1.self)
-    
-    let container =  try! builder.build()
-    
+    let container = DIContainer()
+    container.append(framework: FrameworkWithScan1.self)
+		
     let type1: Module1Type? = *container
     let type2: Module2Type? = *container
     
@@ -142,11 +134,9 @@ class DITranquillityTests_Scan: XCTestCase {
   }
 
   func test05_ScanFrameworkUseFramework2() {
-    let builder = DIContainerBuilder()
-    builder.append(framework: FrameworkWithScan2.self)
-    
-    let container =  try! builder.build()
-    
+    let container = DIContainer()
+    container.append(framework: FrameworkWithScan2.self)
+		
     let type1: Module1Type? = *container
     let type2: Module2Type? = *container
     
@@ -160,11 +150,9 @@ class DITranquillityTests_Scan: XCTestCase {
   }
 
   func test06_ScanFrameworkUseFramework3() {
-    let builder = DIContainerBuilder()
-    builder.append(framework: FrameworkWithScan3.self)
-    
-    let container =  try! builder.build()
-    
+    let container = DIContainer()
+    container.append(framework: FrameworkWithScan3.self)
+		
     let type1: Module1Type? = *container
     let type2: Module2Type? = *container
     
@@ -181,10 +169,8 @@ class DITranquillityTests_Scan: XCTestCase {
     class ScanPart: DIScanPart {
       override class var bundle: Bundle? { return Bundle(for: ScannedFramework1.self) }
     }
-		let builder = DIContainerBuilder()
-		builder.append(part: ScanPart.self)
-		
-		let container =  try! builder.build()
+		let container = DIContainer()
+		container.append(part: ScanPart.self)
 		
 		let type1: Module1Type? = *container
 		let type2: Module2Type? = *container
@@ -202,10 +188,8 @@ class DITranquillityTests_Scan: XCTestCase {
     class ScanPart: DIScanPart {
       override class var bundle: Bundle? { return Bundle(for: ScannedFramework2.self) }
     }
-		let builder = DIContainerBuilder()
-    builder.append(part: ScanPart.self)
-		
-		let container =  try! builder.build()
+		let container = DIContainer()
+    container.append(part: ScanPart.self)
 		
 		let type1: Module1Type? = *container
 		let type2: Module2Type? = *container
@@ -224,10 +208,8 @@ class DITranquillityTests_Scan: XCTestCase {
       override class var predicate: Predicate? { return .type({ $0 is ScannedRecursiveBase.Type }) }
     }
     
-		let builder = DIContainerBuilder()
-    builder.append(part: ScanPart.self)
-		
-		let container =  try! builder.build()
+		let container = DIContainer()
+    container.append(part: ScanPart.self)
 		
 		let type1: RecursivePart1Type? = *container
 		let type2: RecursivePart2Type? = *container

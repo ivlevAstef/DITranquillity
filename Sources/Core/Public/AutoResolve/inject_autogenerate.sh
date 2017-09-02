@@ -28,7 +28,7 @@ echo "
   ///
   /// Using:
   /// $quote
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .injection{ yourClass, $params in yourClass.yourMethod($params) }
   /// $quote
   ///

@@ -43,15 +43,14 @@ class DITranquillityTests_Storyboard: XCTestCase {
   }
   
   func test01_InitialViewController() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(FooService.init)
+    container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-		builder.register(TestViewController.self)
+		container.register(TestViewController.self)
       .injection{ $0.service = $1 }
-    
-    let container = try! builder.build()
+
     let storyboard = DIStoryboard.create(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: container)
 
 		let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
@@ -65,15 +64,14 @@ class DITranquillityTests_Storyboard: XCTestCase {
   }
   
   func test02_ViewControllerByIdentity() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(FooService.init)
+    container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-		builder.register(TestViewController2.self)
+		container.register(TestViewController2.self)
       .injection{ $0.service = $1 }
-    
-    let container = try! builder.build()
+		
     let storyboard = DIStoryboard.create(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: container)
     
     let viewController = storyboard.instantiateViewController(withIdentifier: "TestVC2")
@@ -87,9 +85,8 @@ class DITranquillityTests_Storyboard: XCTestCase {
   }
   
   func test03_ViewControllerNotRegistered() {
-    let builder = DIContainerBuilder()
-    
-    let container = try! builder.build()
+    let container = DIContainer()
+		
     let storyboard = DIStoryboard.create(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: container)
     
     let viewController = storyboard.instantiateViewController(withIdentifier: "TestVC2")
@@ -97,18 +94,17 @@ class DITranquillityTests_Storyboard: XCTestCase {
   }
   
   func test04_ViewControllerSequence() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(FooService.init)
+    container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-		builder.register(TestViewController.self)
+		container.register(TestViewController.self)
       .injection { vc, service in vc.service = service }
     
-		builder.register(TestViewController2.self)
+		container.register(TestViewController2.self)
       .injection { vc, service in vc.service = service }
 
-    let container = try! builder.build()
     let storyboard = DIStoryboard.create(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: container)
     
 		let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
@@ -126,15 +122,14 @@ class DITranquillityTests_Storyboard: XCTestCase {
   }
   
   func test05_ViewControllerShortRegister() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(FooService.init)
+    container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-    builder.register(TestViewController2.self)
+    container.register(TestViewController2.self)
       .injection{ $0.service = $1 }
-    
-    let container = try! builder.build()
+		
     let storyboard = DIStoryboard.create(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: container)
     
     let viewController = storyboard.instantiateViewController(withIdentifier: "TestVC2")
@@ -148,18 +143,17 @@ class DITranquillityTests_Storyboard: XCTestCase {
   }
   
   func test06_UIStoryboard() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(FooService.init)
+    container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-		builder.register(TestViewController.self)
+		container.register(TestViewController.self)
       .injection { $0.service = $1 }
     
-    builder.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+    container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
       .lifetime(.weakSingle)
-    
-    let container = try! builder.build()
+		
     let storyboard: UIStoryboard = *container
     
 		let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
@@ -174,22 +168,18 @@ class DITranquillityTests_Storyboard: XCTestCase {
   }
 	
 	func test07_issue69_getViewControllerAfterDelay() {
-		let builder = DIContainerBuilder()
+		let container = DIContainer()
 		
-    builder.register(FooService.init)
+    container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
 		
-		builder.register(TestViewController.self)
+		container.register(TestViewController.self)
 			.injection { $0.service = $1 }
 		
-		builder.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+		container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
 			.lifetime(.weakSingle)
 		
-		var storyboard: UIStoryboard!
-		autoreleasepool {
-			let container = try! builder.build()
-			storyboard = container.resolve(name: "TestStoryboard")
-		}
+		let storyboard: UIStoryboard = container.resolve(name: "TestStoryboard")
 		
 		let semaphore = DispatchSemaphore(value: 0)
 		DispatchQueue.global(qos: .userInteractive).asyncAfter(wallDeadline: .now() + 1) {
@@ -208,19 +198,18 @@ class DITranquillityTests_Storyboard: XCTestCase {
 	}
   
   func test08_doubleVCfromStoryboard() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(FooService.init)
+    container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-    builder.register(TestViewController.self)
+    container.register(TestViewController.self)
       .injection{ $0.service = $1 }
       .lifetime(.weakSingle)
     
-    builder.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+    container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
       .lifetime(.weakSingle)
-    
-    let container = try! builder.build()
+		
     let storyboard: UIStoryboard = *container
     
     let navigation1: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
@@ -239,23 +228,21 @@ class DITranquillityTests_Storyboard: XCTestCase {
   }
   
   func test09_containerViewController() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(FooService.init)
+    container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-    builder.register(TestViewController.self)
+    container.register(TestViewController.self)
       .injection { $0.service = $1 }
       .lifetime(.weakSingle)
     
-    builder.register(TestViewContainerVC.self)
+    container.register(TestViewContainerVC.self)
       .injection { $0.service = $1 }
     
-    builder.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+    container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
       .lifetime(.weakSingle)
-    
-    
-    let container = try! builder.build()
+		
     let storyboard: UIStoryboard = *container
     
     let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
@@ -270,19 +257,17 @@ class DITranquillityTests_Storyboard: XCTestCase {
   }
   
   func test10_issue98_getVCByTypeFromDIStoryboard() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(FooService.init)
+    container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-    builder.register{ ($0 as UIStoryboard).instantiateViewController(withIdentifier: "testID") as! TestViewController }
+    container.register{ ($0 as UIStoryboard).instantiateViewController(withIdentifier: "testID") as! TestViewController }
       .injection{ $0.service = $1 }
     
-    builder.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+    container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
       .lifetime(.weakSingle)
-    
-    let container = try! builder.build()
-    
+
     let vc: TestViewController = container.resolve()
     _ = vc.view // for call viewDidLoad() and full initialization
     
@@ -290,16 +275,14 @@ class DITranquillityTests_Storyboard: XCTestCase {
   }
   
   func test11_getVCByTypeFromDIStoryboardManual() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     let storyboard = DIStoryboard.create(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
     
-    builder.register(FooService.init)
+    container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-    builder.register{ storyboard.instantiateViewController(withIdentifier: "testID") as! TestViewController }
+    container.register{ storyboard.instantiateViewController(withIdentifier: "testID") as! TestViewController }
       .injection{ $0.service = $1 }
-    
-    let container = try! builder.build()
     
     let vc: TestViewController = container.resolve()
     _ = vc.view // for call viewDidLoad() and full initialization
@@ -308,20 +291,19 @@ class DITranquillityTests_Storyboard: XCTestCase {
   }
   
   func test13_storyboardReference() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(TestViewController.self)
+    container.register(TestViewController.self)
       .injection{ $0.service = $1 }
     
-    builder.register(FooService.init)
+    container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-    builder.register(TestReferenceVC.self)
+    container.register(TestReferenceVC.self)
       .injection{ $0.service = $1 }
     
-    builder.registerStoryboard(name: "TestReferenceStoryboard", bundle: Bundle(for: type(of: self)))
-    
-    let container = try! builder.build()
+    container.registerStoryboard(name: "TestReferenceStoryboard", bundle: Bundle(for: type(of: self)))
+		
     let storyboard = DIStoryboard.create(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: container)
     
     let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
@@ -334,24 +316,22 @@ class DITranquillityTests_Storyboard: XCTestCase {
   }
   
   func test14_twoStoryboardReference() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(FooService.init)
+    container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-    builder.register(TestViewController.self)
+    container.register(TestViewController.self)
       .injection{ $0.service = $1 }
       .default()
     
-    builder.register(TestReferenceVC.self)
+    container.register(TestReferenceVC.self)
       .injection{ $0.service = $1 }
     
-    builder.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+    container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
       .default()
-    builder.registerStoryboard(name: "TestReferenceStoryboard", bundle: Bundle(for: type(of: self)))
-    
-    let container = try! builder.build()
-    
+    container.registerStoryboard(name: "TestReferenceStoryboard", bundle: Bundle(for: type(of: self)))
+		
     let storyboard: UIStoryboard = *container
     
     let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController

@@ -20,7 +20,7 @@ public extension DIComponentBuilder {
   ///
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .injection{ yourClass, p0, p1 in yourClass.yourMethod(p0, p1) }
   /// ```
   ///
@@ -36,7 +36,7 @@ public extension DIComponentBuilder {
   ///
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .injection{ yourClass, p0, p1, p2 in yourClass.yourMethod(p0, p1, p2) }
   /// ```
   ///
@@ -52,7 +52,7 @@ public extension DIComponentBuilder {
   ///
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .injection{ yourClass, p0, p1, p2, p3 in yourClass.yourMethod(p0, p1, p2, p3) }
   /// ```
   ///
@@ -68,7 +68,7 @@ public extension DIComponentBuilder {
   ///
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .injection{ yourClass, p0, p1, p2, p3, p4 in yourClass.yourMethod(p0, p1, p2, p3, p4) }
   /// ```
   ///
@@ -84,7 +84,7 @@ public extension DIComponentBuilder {
   ///
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .injection{ yourClass, p0, p1, p2, p3, p4, p5 in yourClass.yourMethod(p0, p1, p2, p3, p4, p5) }
   /// ```
   ///
@@ -100,7 +100,7 @@ public extension DIComponentBuilder {
   ///
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .injection{ yourClass, p0, p1, p2, p3, p4, p5, p6 in yourClass.yourMethod(p0, p1, p2, p3, p4, p5, p6) }
   /// ```
   ///
@@ -116,7 +116,7 @@ public extension DIComponentBuilder {
   ///
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .injection{ yourClass, p0, p1, p2, p3, p4, p5, p6, p7 in yourClass.yourMethod(p0, p1, p2, p3, p4, p5, p6, p7) }
   /// ```
   ///
@@ -132,7 +132,7 @@ public extension DIComponentBuilder {
   ///
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .injection{ yourClass, p0, p1, p2, p3, p4, p5, p6, p7, p8 in yourClass.yourMethod(p0, p1, p2, p3, p4, p5, p6, p7, p8) }
   /// ```
   ///
@@ -148,7 +148,7 @@ public extension DIComponentBuilder {
   ///
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .injection{ yourClass, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9 in yourClass.yourMethod(p0, p1, p2, p3, p4, p5, p6, p7, p8, p9) }
   /// ```
   ///

@@ -51,7 +51,7 @@ public enum DILogLevel: Equatable {
 
 /// A object life time
 ///
-/// - single: The object is only one in the application. Initialization during executed `DIContainerBuilder.build()`
+/// - single: The object is only one in the application. Initialization by call `DIContainer.initializeSingletonObjects()`
 /// - lazySingle: The object is only one in the application. Initialization when first accessed
 /// - weakSingle: The object is only one in the application. Initialization when first accessed, and the library doesn't hold it
 /// - objectGraph: The object is created every time, but during the creation will be created once
@@ -65,10 +65,4 @@ public enum DILifeTime: Equatable {
   
   /// Default life time. Is taken from the settings. see: `DISetting.Defaults.lifeTime`
   static var `default`: DILifeTime { return DISetting.Defaults.lifeTime }
-}
-
-
-/// Error that can occur at build time - during executed `DIContainerBuilder.build()`
-public struct DIBuildError: Error {
-  let message: String = "Can't build. Use DISetting.Log.fun for more information"
 }

@@ -34,11 +34,10 @@ class StoryboardContainerMap {
   private var containerMap: [StoryboardInformation: Weak<DIContainer>] = [:]
   private var componentMap: [StoryboardInformation: Weak<Component>] = [:]
   
-  private var builderMap: [StoryboardInformation: Weak<DIContainerBuilder>] = [:]
-  
-  func append(name: String, bundle: Bundle?, component: Component, in builder: DIContainerBuilder) {
+  func append(name: String, bundle: Bundle?, component: Component, in container: DIContainer) {
+		clean()
     let info = StoryboardInformation(name: name, bundle: bundle)
-    builderMap[info] = Weak(value: builder)
+		containerMap[info] = Weak(value: container)
     componentMap[info] = Weak(value: component)
   }
   
@@ -48,19 +47,6 @@ class StoryboardContainerMap {
   
   func findComponent(by name: String, bundle: Bundle?) -> Component? {
     return componentMap[StoryboardInformation(name: name, bundle: bundle)]?.value
-  }
-  
-  func build(builder: DIContainerBuilder, to container: DIContainer) {
-    clean()
-    
-    let weakContainer = Weak(value: container)
-    
-    for (info, weakBuilder) in builderMap {
-      if let iterBuilder = weakBuilder.value, iterBuilder === builder {
-        containerMap[info] = weakContainer
-        builderMap.removeValue(forKey: info)
-      }
-    }
   }
   
   private func clean() {
@@ -73,12 +59,6 @@ class StoryboardContainerMap {
     for (info, component) in componentMap {
       if nil == component.value {
         componentMap.removeValue(forKey: info)
-      }
-    }
-    
-    for (info, builder) in builderMap {
-      if nil == builder.value {
-        builderMap.removeValue(forKey: info)
       }
     }
   }

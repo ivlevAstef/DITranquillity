@@ -40,7 +40,7 @@ open class DIScanPart: DIScan, DIPart {
   open class var bundle: Bundle? { return nil }
   
   /// implementation of the function for scan.
-  public static func load(builder: DIContainerBuilder) {
+  public static func load(container: DIContainer) {
     let inpredicate: (AnyClass)->Bool
     switch predicate {
     case .some(.type(let p)):
@@ -53,8 +53,8 @@ open class DIScanPart: DIScan, DIPart {
     
     for part in types({ $0 is DIPart.Type && !($0 is DIFramework.Type) }, inpredicate, bundle) {
       let part = part as! DIPart.Type
-      builder.currentBundle = Bundle(for: part)
-      part.load(builder: builder)
+      container.currentBundle = Bundle(for: part)
+      part.load(container: container)
     }
   }
 }

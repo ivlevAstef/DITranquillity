@@ -11,23 +11,23 @@ import DITranquillity
 public class Module1Type { }
 
 public class ScannedPart1: DIScanned, DIPart {
-	public static func load(builder: DIContainerBuilder) {
-    builder.register(Module1Type.init)
+	public static func load(container: DIContainer) {
+    container.register(Module1Type.init)
 	}
 }
 
 public class Module2Type { }
 
 public class ScannedPart2: DIScanned, DIPart {
-	public static func load(builder: DIContainerBuilder) {
-    builder.register(Module2Type.init)
+	public static func load(container: DIContainer) {
+    container.register(Module2Type.init)
 	}
 }
 // Assemblies
 
 public class ScannedFramework1: DIScanned, DIFramework {
-  public static func load(builder: DIContainerBuilder) {
-    builder.append(part: ScannedPart1.self)
-    builder.append(part: ScannedPart2.self)
+  public static func load(container: DIContainer) {
+    container.append(part: ScannedPart1.self)
+    container.append(part: ScannedPart2.self)
   }
 }

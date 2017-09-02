@@ -10,9 +10,10 @@
 /// To create a used function `register(_:)` in class `ContainerBuilder`.
 /// The class allows you to configure all the necessary properties for the component.
 public final class DIComponentBuilder<Impl> {
-  init(container: DIContainerBuilder, componentInfo: DIComponentInfo) {
+  init(container: ComponentContainer, componentInfo: DIComponentInfo) {
     self.component = Component(componentInfo: componentInfo)
-    container.components.insert(component)
+		self.container = container
+		container.insert(TypeKey(by: Impl.self), component)
   }
   
   deinit {
@@ -21,7 +22,6 @@ public final class DIComponentBuilder<Impl> {
     msg += "\(DISetting.Log.tab)initial: \(nil != component.initial)\n"
     
     msg += "\(DISetting.Log.tab)lifetime: \(component.lifeTime)\n"
-    msg += "\(DISetting.Log.tab)names: \(component.names)\n"
     msg += "\(DISetting.Log.tab)is default: \(component.isDefault)\n"
     
     msg += "\(DISetting.Log.tab)injections: \(component.injections.count)\n"
@@ -30,6 +30,7 @@ public final class DIComponentBuilder<Impl> {
   }
   
   let component: Component
+	let container: ComponentContainer
 }
 
 // MARK: - contains `as` functions
@@ -37,7 +38,7 @@ public extension DIComponentBuilder {
   /// Function allows you to specify a type by which the component will be available.
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .as(YourProtocol.self)
   /// ```
   ///
@@ -45,14 +46,14 @@ public extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func `as`<Parent>(_ type: Parent.Type) -> Self {
-    component.names.insert(TypeKey(by: type))
+    container.insert(TypeKey(by: type), component)
     return self
   }
   
   /// Function allows you to specify a type with tag by which the component will be available.
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .as(YourProtocol.self, tag: YourTag.self)
   /// ```
   ///
@@ -62,7 +63,7 @@ public extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func `as`<Parent, Tag>(_ type: Parent.Type, tag: Tag.Type) -> Self {
-    component.names.insert(TypeKey(by: type, and: tag))
+    container.insert(TypeKey(by: type, and: tag), component)
     return self
   }
   
@@ -71,7 +72,7 @@ public extension DIComponentBuilder {
   /// Inside initialization method, you cann't specify name for get an object. Use tags if necessary.
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .as(YourProtocol.self, name: "YourKey")
   /// ```
   ///
@@ -81,14 +82,14 @@ public extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func `as`<Parent>(_ type: Parent.Type, name: String) -> Self {
-    component.names.insert(TypeKey(by: type, and: name))
+    container.insert(TypeKey(by: type, and: name), component)
     return self
   }
   
   /// Function allows you to specify a type with tag by which the component will be available.
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .as(check: YourProtocol.self){$0}
   /// ```
   /// WHERE YourClass implements YourProtocol
@@ -105,7 +106,7 @@ public extension DIComponentBuilder {
   /// Function allows you to specify a type with tag by which the component will be available.
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .as(check: YourProtocol.self, tag: YourTag.self){$0}
   /// ```
   /// WHERE YourClass implements YourProtocol
@@ -125,7 +126,7 @@ public extension DIComponentBuilder {
   /// Inside initialization method, you cann't specify name for get an object. Use tags if necessary.
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .as(YourProtocol.self, name: "YourKey")
   /// ```
   /// WHERE YourClass implements YourProtocol
@@ -145,10 +146,10 @@ public extension DIComponentBuilder {
 // MARK: - contains `injection`, `postInit` functions
 public extension DIComponentBuilder {
   /// Function for appending an injection method.
-  /// In addition, builder has a set of functions with a different number of parameters.
+  /// In addition, container has a set of functions with a different number of parameters.
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .injection{ $0.yourClassProperty = YourValue }
   /// ```
   /// Also see: `injection<Property>(cycle:_:)`
@@ -165,17 +166,17 @@ public extension DIComponentBuilder {
   ///
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .injection{ $0.yourClassProperty = $1 }
   /// ```
   /// OR
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .injection{ yourClass, property in yourClass.property = property }
   /// ```
   /// OR if the injection participates in a cycle
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .injection(cycle: true) { $0.yourClassProperty = $1 }
   /// ```
   ///
@@ -193,17 +194,17 @@ public extension DIComponentBuilder {
   ///
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .injection(name: "key") { $0.yourClassProperty = $1 }
   /// ```
   /// OR
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .injection(name: "key") { yourClass, property in yourClass.property = property }
   /// ```
   /// OR if the injection participates in a cycle
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .injection(name: "key", cycle: true) { $0.yourClassProperty = $1 }
   /// ```
   ///
@@ -221,7 +222,7 @@ public extension DIComponentBuilder {
   /// Function for appending an injection method which is always executed at end of a object creation.
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   . ...
   ///   .postInit{ $0.postInitActions() }
   /// ```
@@ -241,7 +242,7 @@ public extension DIComponentBuilder {
   /// Function to set lifetime of an object.
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .lifetime(.prototype)
   /// ```
   ///
@@ -257,7 +258,7 @@ public extension DIComponentBuilder {
   /// This is necessary to resolve uncertainties if several components are availagle in the same type.
   /// Using:
   /// ```
-  /// builder.register(YourClass.self)
+  /// container.register(YourClass.self)
   ///   .default()
   /// ```
   ///

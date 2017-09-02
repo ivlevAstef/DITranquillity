@@ -1,5 +1,5 @@
 //
-//  DIContainerBuilder.Reg.swift
+//  DIContainer.Reg.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 27/01/2017.
@@ -8,13 +8,13 @@
 
 private typealias MM = MethodMaker
 
-public extension DIContainerBuilder {
+public extension DIContainer {
 
 
   /// Declaring a new component with initial.
   /// Using:
   /// ```
-  /// builder.register{ YourClass(p0:$0) }
+  /// container.register{ YourClass(p0:$0) }
   /// ```
   ///
   /// - Parameter c: initial method. Must return type declared at registration.
@@ -28,7 +28,7 @@ public extension DIContainerBuilder {
   /// Declaring a new component with initial.
   /// Using:
   /// ```
-  /// builder.register{ YourClass(p0:$0,p1:$1) }
+  /// container.register{ YourClass(p0:$0,p1:$1) }
   /// ```
   ///
   /// - Parameter c: initial method. Must return type declared at registration.
@@ -42,7 +42,7 @@ public extension DIContainerBuilder {
   /// Declaring a new component with initial.
   /// Using:
   /// ```
-  /// builder.register{ YourClass(p0:$0,p1:$1,p2:$2) }
+  /// container.register{ YourClass(p0:$0,p1:$1,p2:$2) }
   /// ```
   ///
   /// - Parameter c: initial method. Must return type declared at registration.
@@ -56,7 +56,7 @@ public extension DIContainerBuilder {
   /// Declaring a new component with initial.
   /// Using:
   /// ```
-  /// builder.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3) }
+  /// container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3) }
   /// ```
   ///
   /// - Parameter c: initial method. Must return type declared at registration.
@@ -70,7 +70,7 @@ public extension DIContainerBuilder {
   /// Declaring a new component with initial.
   /// Using:
   /// ```
-  /// builder.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4) }
+  /// container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4) }
   /// ```
   ///
   /// - Parameter c: initial method. Must return type declared at registration.
@@ -84,7 +84,7 @@ public extension DIContainerBuilder {
   /// Declaring a new component with initial.
   /// Using:
   /// ```
-  /// builder.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5) }
+  /// container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5) }
   /// ```
   ///
   /// - Parameter c: initial method. Must return type declared at registration.
@@ -98,7 +98,7 @@ public extension DIContainerBuilder {
   /// Declaring a new component with initial.
   /// Using:
   /// ```
-  /// builder.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6) }
+  /// container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6) }
   /// ```
   ///
   /// - Parameter c: initial method. Must return type declared at registration.
@@ -112,7 +112,7 @@ public extension DIContainerBuilder {
   /// Declaring a new component with initial.
   /// Using:
   /// ```
-  /// builder.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6,p7:$7) }
+  /// container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6,p7:$7) }
   /// ```
   ///
   /// - Parameter c: initial method. Must return type declared at registration.
@@ -126,7 +126,7 @@ public extension DIContainerBuilder {
   /// Declaring a new component with initial.
   /// Using:
   /// ```
-  /// builder.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6,p7:$7,p8:$8) }
+  /// container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6,p7:$7,p8:$8) }
   /// ```
   ///
   /// - Parameter c: initial method. Must return type declared at registration.
@@ -140,7 +140,7 @@ public extension DIContainerBuilder {
   /// Declaring a new component with initial.
   /// Using:
   /// ```
-  /// builder.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6,p7:$7,p8:$8,p9:$9) }
+  /// container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6,p7:$7,p8:$8,p9:$9) }
   /// ```
   ///
   /// - Parameter c: initial method. Must return type declared at registration.

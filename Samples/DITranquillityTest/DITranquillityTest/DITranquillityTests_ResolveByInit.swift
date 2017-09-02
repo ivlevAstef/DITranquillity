@@ -15,39 +15,33 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
   }
   
   func test01_UseRegister() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(FooService.init)
-    
-    let container = try! builder.build()
+    container.register(FooService.init)
     
     let service: FooService = *container
     XCTAssertEqual(service.foo(), "foo")
   }
   
   func test02_UseRegisterWithProtocol() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(FooService.init)
+    container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
-    
-    let container = try! builder.build()
-    
+		
     let service: ServiceProtocol = *container
     XCTAssertEqual(service.foo(), "foo")
   }
   
   func test03_ResolveMultiplyMany() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(FooService.init)
+    container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
       .default()
     
-    builder.register(BarService.init)
+    container.register(BarService.init)
       .as(check: ServiceProtocol.self){$0}
-    
-    let container = try! builder.build()
     
     let services: [ServiceProtocol] = container.resolveMany()
     XCTAssertEqual(services.count, 2)
@@ -55,16 +49,14 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
   }
   
   func test04_RegisterAllParams() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register{ 15 as Int }
-    builder.register{ true as Bool }
-    builder.register{ "test" as String }
+    container.register{ 15 as Int }
+    container.register{ true as Bool }
+    container.register{ "test" as String }
     
-    builder.register(Params.init(number:str:bool:))
+    container.register(Params.init(number:str:bool:))
       .lifetime(.prototype)
-    
-    let container = try! builder.build()
     
     let p1: Params = container.resolve()
     XCTAssert(p1.number == 15 && p1.str == "test" && p1.bool == true)
