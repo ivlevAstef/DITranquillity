@@ -33,6 +33,6 @@ public extension DIContainer {
       log(.warning, msg: "Please, use import only into Component or Module")
       return
     }
-    resolver.bundleContainer.dependency(bundle: currentBundle, import: Bundle(for: framework))
+    bundleContainer.dependency(bundle: currentBundle, import: Bundle(for: framework))
   }
 }

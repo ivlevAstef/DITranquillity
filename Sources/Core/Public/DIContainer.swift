@@ -24,11 +24,16 @@ public prefix func *<T>(container: DIContainer) -> T {
 /// allows you to receive objects by type.
 public final class DIContainer {
 	public init() {
+		resolver = Resolver(container: self)
 		register{ [unowned self] in self }
 			.lifetime(.prototype)
 	}
 	
-	internal let resolver = Resolver(componentContainer: ComponentContainer(), bundleContainer: BundleContainer())
+	
+	internal let componentContainer = ComponentContainer()
+	internal let bundleContainer = BundleContainer()
+	internal private(set) var resolver: Resolver!
+	
 	// non thread safe!
 	internal var includedParts: Set<String> = []
 	internal var currentBundle: Bundle? = nil
@@ -48,8 +53,7 @@ public extension DIContainer {
 	/// - Returns: component builder, to configure the component.
 	@discardableResult
 	public func register<Impl>(_ type: Impl.Type, file: String = #file, line: Int = #line) -> DIComponentBuilder<Impl> {
-		return DIComponentBuilder(container: resolver.componentContainer,
-		                          componentInfo: DIComponentInfo(type: Impl.self, file: file, line: line))
+		return DIComponentBuilder(container: self, componentInfo: DIComponentInfo(type: Impl.self, file: file, line: line))
 	}
 	
 	/// Declaring a new component with initial.
@@ -70,6 +74,7 @@ public extension DIContainer {
 		return register(file, line, MethodMaker.make(by: c))
 	}
 	
+	
 	internal func register<Impl>(_ file: String, _ line: Int, _ signature: MethodSignature) -> DIComponentBuilder<Impl> {
 		let builder = register(Impl.self, file: file, line: line)
 		builder.component.set(initial: signature)
@@ -85,7 +90,7 @@ public extension DIContainer {
   ///
   /// - Returns: Object for the specified type, or nil (see description).
   public func resolve<T>() -> T {
-    return resolver.resolve(self)
+    return resolver.resolve()
   }
   
   /// Resolve object by type with tag.
@@ -95,7 +100,7 @@ public extension DIContainer {
   /// - Parameter tag: Resolve tag.
   /// - Returns: Object for the specified type with tag, or nil (see description).
   public func resolve<T, Tag>(tag: Tag.Type) -> T {
-    return by(tag: tag, on: resolver.resolve(self))
+    return by(tag: tag, on: resolver.resolve())
   }
   
   /// Resolve object by type with name.
@@ -105,14 +110,14 @@ public extension DIContainer {
   /// - Parameter name: Resolve name.
   /// - Returns: Object for the specified type with name, or nil (see description).
   public func resolve<T>(name: String) -> T {
-    return resolver.resolve(self)
+    return resolver.resolve()
   }
   
   /// Resolve many objects by type.
   ///
   /// - Returns: Objects for the specified type.
   public func resolveMany<T>() -> [T] {
-    return many(resolver.resolve(self))
+    return many(resolver.resolve())
   }
   
   /// Injected all dependencies into object.
@@ -120,11 +125,11 @@ public extension DIContainer {
   ///
   /// - Parameter object: object in which injections will be introduced.
   public func inject<T>(into object: T) {
-    _ = resolver.injection(self, obj: object)
+    _ = resolver.injection(obj: object)
   }
 	
 	public func initializeSingletonObjects() {
-		let singleComponents = resolver.componentContainer.components.filter{ .single == $0.lifeTime }
+		let singleComponents = componentContainer.components.filter{ .single == $0.lifeTime }
 		
 		if singleComponents.isEmpty { // for ignore log
 			return
@@ -134,7 +139,7 @@ public extension DIContainer {
 		defer { log(.info, msg: "End resolving singletons", brace: .end) }
 		
 		for component in singleComponents {
-			resolver.singleResolve(self, component: component)
+			resolver.resolveSingleton(component: component)
 		}
 	}
 }
@@ -146,7 +151,7 @@ public extension DIContainer {
 	/// - Returns: true if validation success.
 	@discardableResult
 	public func validate() -> Bool {
-		let components = resolver.componentContainer.components
+		let components = componentContainer.components
 		return checkGraph(components) && checkGraphCycles(components)
 	}
 }
@@ -175,7 +180,7 @@ extension DIContainer {
 					continue
 				}
 				
-				let candidates = resolver.findComponents(by: parameter.type, name: parameter.name, from: bundle)
+				let candidates = resolver.findComponents(by: parameter.type, with: parameter.name, from: bundle)
 				let filtered = resolver.removeWhoDoesNotHaveInitialMethod(components: candidates)
 				
 				let correct = resolver.validate(components: filtered, for: parameter.type)
@@ -260,7 +265,7 @@ extension DIContainer {
 			func callDfs(by parameters: [MethodSignature.Parameter], initial: Bool, cycle: Bool) {
 				for parameter in parameters {
 					let many = parameter.many
-					let candidates = resolver.findComponents(by: parameter.type, from: bundle)
+					let candidates = resolver.findComponents(by: parameter.type, with: parameter.name, from: bundle)
 					let filtered = resolver.removeWhoDoesNotHaveInitialMethod(components: candidates)
 					
 					for subcomponent in filtered {

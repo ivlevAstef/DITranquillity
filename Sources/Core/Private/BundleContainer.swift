@@ -29,16 +29,14 @@ final class BundleContainer {
 
 private final class HashableBundle: Hashable {
   fileprivate let bundle: Bundle
-  private let identifier: String
-  
-  init(bundle: Bundle) {
-    self.bundle = bundle
-    self.identifier = bundle.bundleIdentifier ?? bundle.bundlePath
-  }
-  
-  var hashValue: Int {
-    return identifier.hashValue
-  }
+	private var identifier: String
+	
+	fileprivate init(bundle: Bundle) {
+		self.bundle = bundle
+		self.identifier = bundle.bundleIdentifier ?? bundle.bundlePath
+	}
+	
+  var hashValue: Int { return identifier.hashValue }
   
   static func ==(lhs: HashableBundle, rhs: HashableBundle) -> Bool {
     return lhs.identifier == rhs.identifier

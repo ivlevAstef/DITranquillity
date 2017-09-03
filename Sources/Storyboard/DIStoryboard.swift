@@ -30,7 +30,7 @@ public final class DIStoryboard: _DIStoryboardBase {
     let scm = StoryboardContainerMap.instance
     if let container = scm.findContainer(by: name, bundle: storyboardBundleOrNil) {
       if let component = scm.findComponent(by: name, bundle: storyboardBundleOrNil) {
-        return container.resolver.resolve(container, type: DIStoryboard.self, component: component)
+        return container.resolver.resolve(type: DIStoryboard.self, component: component)
       }
       
       return create(name: name, bundle: storyboardBundleOrNil, container: container)

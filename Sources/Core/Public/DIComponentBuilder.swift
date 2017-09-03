@@ -10,10 +10,10 @@
 /// To create a used function `register(_:)` in class `ContainerBuilder`.
 /// The class allows you to configure all the necessary properties for the component.
 public final class DIComponentBuilder<Impl> {
-  init(container: ComponentContainer, componentInfo: DIComponentInfo) {
-    self.component = Component(componentInfo: componentInfo)
-		self.container = container
-		container.insert(TypeKey(by: Impl.self), component)
+  init(container: DIContainer, componentInfo: DIComponentInfo) {
+		self.component = Component(componentInfo: componentInfo, in: container.currentBundle)
+		self.componentContainer = container.componentContainer
+		componentContainer.insert(TypeKey(by: Impl.self), component)
   }
   
   deinit {
@@ -30,7 +30,7 @@ public final class DIComponentBuilder<Impl> {
   }
   
   let component: Component
-	let container: ComponentContainer
+	let componentContainer: ComponentContainer
 }
 
 // MARK: - contains `as` functions
@@ -46,7 +46,7 @@ public extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func `as`<Parent>(_ type: Parent.Type) -> Self {
-    container.insert(TypeKey(by: type), component)
+    componentContainer.insert(TypeKey(by: type), component)
     return self
   }
   
@@ -63,7 +63,7 @@ public extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func `as`<Parent, Tag>(_ type: Parent.Type, tag: Tag.Type) -> Self {
-    container.insert(TypeKey(by: type, and: tag), component)
+    componentContainer.insert(TypeKey(by: type, and: tag), component)
     return self
   }
   
@@ -82,7 +82,7 @@ public extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func `as`<Parent>(_ type: Parent.Type, name: String) -> Self {
-    container.insert(TypeKey(by: type, and: name), component)
+    componentContainer.insert(TypeKey(by: type, and: name), component)
     return self
   }
   

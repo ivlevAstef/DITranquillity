@@ -23,13 +23,15 @@ final class ComponentContainer {
 final class Component {
   typealias UniqueKey = String
   
-  init(componentInfo: DIComponentInfo) {
+	init(componentInfo: DIComponentInfo, in frameworkBundle: Bundle?) {
     self.info = componentInfo
     self.uniqueKey = "\(componentInfo.type)\(componentInfo.file)\(componentInfo.line)"
+		self.bundle = (componentInfo.type as? AnyClass).map{ Bundle(for: $0) } ?? frameworkBundle
   }
   
   let info: DIComponentInfo
   let uniqueKey: UniqueKey
+	let bundle: Bundle?
   
   var lifeTime = DILifeTime.default
   var isDefault: Bool = false
@@ -38,10 +40,6 @@ final class Component {
   fileprivate(set) var injections: [Injection] = []
   
   var postInit:  MethodSignature?
-  
-  var bundle: Bundle? {
-    return (info.type as? AnyClass).map{ Bundle(for: $0) }
-  }
 }
 
 extension Component: Hashable {

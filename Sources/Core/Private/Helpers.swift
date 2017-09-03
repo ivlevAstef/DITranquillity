@@ -35,7 +35,7 @@ extension Optional: TypeGetter {
   static var type: DIAType { return Wrapped.self }
 }
 
-func removeTypeWrappers(_ type: Any.Type) -> Any.Type {
+func removeTypeWrappers(_ type: DIAType) -> DIAType {
   if let typeGetter = type as? TypeGetter.Type {
     return removeTypeWrappers(typeGetter.type)
   }
@@ -57,10 +57,7 @@ protocol OptionalMake {
 
 extension Optional: OptionalMake {
   static func make(by obj: Any?) -> Optional<Wrapped> {
-    if let typeObj = obj as? Wrapped {
-      return typeObj
-    }
-    return nil
+    return obj as? Wrapped
   }
 }
 

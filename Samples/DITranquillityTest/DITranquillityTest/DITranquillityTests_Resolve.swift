@@ -237,7 +237,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(c.a.b !== b)
   }
   
-  func test15_ResolveCircularDouble2() {
+  func test15_ResolveCircularDouble2A() {
     let container = DIContainer()
     
     container.register(CircularDouble2A.init)
@@ -248,26 +248,34 @@ class DITranquillityTests_Resolve: XCTestCase {
     container.register(CircularDouble2B.init)
       .lifetime(.prototype)
 		
-    //b1 !== b2
+    //b1 !== b2 because prototype
     let a: CircularDouble2A = *container
     XCTAssert(a.b1 !== a.b2)
     XCTAssert(a === a.b1.a)
     XCTAssert(a.b1 === a.b1.a.b1)
     XCTAssert(a === a.b2.a)
     XCTAssert(a.b2 === a.b2.a.b2)
-    
-    //!!! is not symmetric, b1 === b2 === b
-    let b: CircularDouble2B = *container
-    XCTAssert(b === b.a.b1)
-    XCTAssert(b === b.a.b2)
-    XCTAssert(b.a === b.a.b1.a)
-    XCTAssert(b.a === b.a.b2.a)
-    
-    XCTAssert(a !== b.a)
-    XCTAssert(a.b1 !== b)
-    XCTAssert(a.b2 !== b)
   }
-  
+	
+	func test15_ResolveCircularDouble2B() {
+		let container = DIContainer()
+		
+		container.register(CircularDouble2A.init)
+			.lifetime(.objectGraph)
+			.injection(cycle: true) { $0.b1 = $1 }
+			.injection(cycle: true) { a, b2 in a.b2 = b2 }
+		
+		container.register(CircularDouble2B.init)
+			.lifetime(.objectGraph)
+		
+		//!!! b1 === b2 === b because objectGraph
+		let b: CircularDouble2B = *container
+		XCTAssert(b === b.a.b1)
+		XCTAssert(b === b.a.b2)
+		XCTAssert(b.a === b.a.b1.a)
+		XCTAssert(b.a === b.a.b2.a)
+	}
+	
   func test16_ResolveCircularDoubleOneDependency2_WithoutCycle() {
     let container = DIContainer()
     

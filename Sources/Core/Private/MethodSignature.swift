@@ -12,18 +12,11 @@ class UseObject {}
 final class MethodSignature {
   typealias Call = ([Any?])->Any?
   
-  final class Parameter {
+  struct Parameter {
     let type: DIAType
     let name: String?
-    var links: [Component] = []
-    
-    init(type: DIAType, name: String?) {
-      self.type = type
-      self.name = name
-    }
-    
+		
     var optional: Bool { return self.type is IsOptional.Type }
-    var taggedType: IsTag.Type? { return self.type as? IsTag.Type }
     var many: Bool { return self.type is IsMany.Type }
   }
   

@@ -17,13 +17,5 @@ struct Multimap<Key: Hashable, Value: Hashable> {
     }
   }
 
-  func contains(key: Key, value: Value) -> Bool {
-    return dict[key]?.contains(value) ?? false
-  }
-
-  mutating func removeAll(keepCapacity keep: Bool = true) {
-    dict.removeAll(keepingCapacity: keep)
-  }
-
   private(set) var dict: [Key: Set<Value>] = [:]
 }
