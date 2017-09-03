@@ -7,7 +7,7 @@
 ## Описание изменений
 Благодаря этому обновлению стала возможным сделать отрисовку графа зависимостей вашего приложения. На текущий момент весь граф хранится только в памяти, но после перехода на swift4 все силы будут направлены на отдельный проект и добавление функционала, для сохранения и визуализации графа зависимостей.
 
-В силу написанных ниже изменений, стало не удобно использовать регистрацию/получение по имени, но при этом теги стали неоемлимой частью библиотеки. У тегов есть преимущество - сложнее допустить опечатку, но и минус - этот тип в приложении, а значит к этому типу должны иметь доступ в разных местах системы.
+В силу написанных ниже изменений, стало не удобно использовать регистрацию/получение по имени, но при этом теги стали неотъемлимой частью библиотеки. У тегов есть преимущество - сложнее допустить опечатку, но и минус - этот тип в приложении, а значит к этому типу должны иметь доступ в разных местах системы.
 
 ### DIComponentBuilder + DIComponent = DIComponent
 * Произошло слияние DIComponent и DIComponentBuilder. Теперь для регистрации и для получения объекта используется один и тотже объект. Сделано это в рамках упрощения синтаксиса, а также ускорения работы библиотеки. Но в отличии от других библиотек эти действия не защищены от многопоточности. Одновременная регистрация и получение объекта может послужить причиной падения приложения. Также это слияние дает возможность во время исполнения легко подключать дополнительный код.
@@ -19,7 +19,7 @@
 
 ### DIComponentBuilder
 * Удалилось разделение указание типа, имени, тега. Теперь это одна функция, которая принимает на вход: тип, тип+имя, тип+тег. Причина: На старом синтаксисе было не понятно, как связываются теги, имена и типы между собой. Теперь это явно очевидно.
-* Убрано обязательное условие на использование `check` у оператора `as`. Тем немении я настоятельно рекомендую его использовать.
+* Убрано обязательное условие на использование `check` у оператора `as`. Но я настоятельно рекомендую его использовать, чтобы обезопасить себя.
 * `setDefault()` переименован в `default()`
 * Убраны методы: `initial`. В этом месте произошло понижение возможностей - теперь можно указать только один метод инициализации, и он указывается при вызове функции `register`. Это позволило сократить избыточность синтаксиса, и сделать его более кратким, правда в обмен на одну мало нужную возможность.
 * Убрана возможность передачи runtime аргументов. Эта возможность мало используемая, но при этом очень не продуманная: например мне нужно передать аргументы через 3 инициализации в DI, что становится невозможным. Проблема с мульти инициализацией и передачи аргументов будет решена в дальнейшем не стандартным решением.
@@ -63,5 +63,239 @@
 * `prototype` - не зависимо ни от чего объект будет создаваться всегда новый.
 * `objectGraph` - объект также всегда создается новый, но единожды в рамках одного разрешения зависимостей. Это время жизни стоит указывать в случае циклов, на те объект с которых будет начинаться цикл. В случае если у вас есть цикл состоящий из объектов с разными временами жизни, и есть хотябы один объект с `objectGraph`, то будет написано всеголишь предупреждение, что возможны проблемы.
 
-## Примеры изменений синтаксиса
+### Cocoapods
+* Теперь вся библиотека идет целиком - нету деления на части. Это позволило сократить код, и улучшить производительность
 
+## Примеры изменений синтаксиса
+Дальше будут примеры как было раньше и как стало:
+
+### Общий вид
+БЫЛО:
+```
+let builder = DIContainerBuilder()
+builder.register(type: YourType.self)
+  .initial(YourType.init)
+  .injection{ $0.parameter = $1 }
+
+builder.register(module: YourModule())
+builder.register(component: YourComponent())
+
+let container = try! builder.build()
+```
+СТАЛО:
+```
+let container = DIContainer()
+builder.register(YourType.init)
+  .injection{ $0.parameter = $1 }
+
+container.append(framework: YourFramework.self)
+container.append(part: YourPart.self)
+
+if !container.valid() { // можно проверять только в дебаге, а в релизе упустить для экономии времени загрузки 
+  fatalError("Your write incorrect dependencies graph")  
+}
+```
+
+### Компонент без метода инициализации
+
+БЫЛО:
+```
+builder.register(type: YourType.self)
+.initialNotNecessary()
+
+builder.register(vc: YourViewControllerType.self)
+```
+СТАЛО:
+```
+container.register(YourType.self)
+
+container.register(YourViewControllerType.self)
+```
+
+### Множественная и по тегу
+
+БЫЛО:
+```
+builder.register(type: YourType.self)
+  .initial{ YourType(pTag: $0.resolve(tag: yourTag), pMany: $0.resolveMany()) }
+  .injection(.manual) { $1.parameterTag = $0.resolve(tag: yourTag) }
+  .injection(.manual) { $1.parameterMany = $0.resolveMany() }
+
+```
+СТАЛО:
+```
+container.register{ YourType(pTag: by(tag: YourTag.self, on: $0), pMany: many($1)) }
+  .injection { $0.parameterTag = by(tag: YourTag.self, on: $1) }
+  .injection { $0.parameterMany = many($1) }
+```
+
+### По имени
+
+БЫЛО:
+```
+builder.register(type: YourType.self)
+  .initial{ YourType(pName: $0.resolve(name: "yourName")) }
+
+builder.register(type: YourTypeParameter.self)
+  .injection(.manual) { $1.parameterName = $0.resolve(name: "YourName") }
+
+```
+СТАЛО:
+```
+// Регистрация с указанием имени в методе инициализации не поддерживаем. Но есть Теги.
+
+container.register(YourTypeParameter.self)
+  .injection(name: "YourName") { $0.parameterName = $1 }
+```
+
+### Опционалы
+
+БЫЛО:
+```
+builder.register(type: YourType.self)
+  .initial{ YourType(pOptional: try? $0.resolve()) }
+  .injection(.optional) { $0.parameterOpt = $1 }
+
+builder.register(type: YourType2.self)
+  .initial{ YourType(pOptional: try? $0.resolve()) }
+  .injection(.manual) { $1.parameterOpt = try? $0.resolver() }
+
+```
+СТАЛО:
+```
+container.register(YourType.init)
+  .injection { $0.parameterOpt = $1 }
+
+container.register{ YourType2(pOptional: $0) }
+  .injection { $0.parameterOpt = $1 }
+```
+
+### Указание альтернативного имени
+
+БЫЛО:
+```
+builder.register(type: YourType.self)
+  .as(YourProtocol.self).unsafe()
+  .as(YourProtocol.self).check{$0}
+  .as(YourPorotocl.self){$0}
+
+```
+СТАЛО:
+```
+container.register(YourType.self)
+  .as(YourProtocol.self)
+  .as(check: YourProtocol.self){$0}
+```
+
+### Указание имени или тега
+
+БЫЛО:
+```
+builder.register(type: YourType.self)
+  .as(YourProtocol.self)
+  .as(YourProtocol2.self)
+  .set(name: "YourName")
+  .set(tag: yourTag)
+  // Данный синтаксис генерировал все возможные варианты, то есть: YourProtocol+"YourName", YourProtocol+yourTag, YourProtocol2+"YourName", YourProtocol2+yourTag
+  // В большинстве случае это не совсем то чего хочется, поэтому синтаксис был переделан, на более однозначный
+```
+СТАЛО:
+```
+container.register(YourType.self)
+  .as(YourProtocol.self, name: "YourName")
+  .as(YourProtocol2.self, tag: YourTag.self)
+  // тут мы явно написали две пары, хотя можем написать еще пару строчек, и создать еще варианты, но скорей всего этого не требуется.
+```
+
+### DIComponent/DIModule = DIPart/DIFramework
+
+БЫЛО:
+```
+class YourComponent: DIComponent {
+  func load(builder: DIContainerBuilder) { ... }
+}
+
+class YourModule: DIModule {
+  var components: [DIComponent] = { return [ YourComponent() ] }
+  var dependencies: [DIModule] = { return [YourOtherModule() ] }
+}
+```
+СТАЛО:
+```
+class YourPart: DIPart {
+  static func load(container: DIContainer) { ... }
+}
+
+class YourFramework: DIFramework {
+  static func load(container: DIContainer) {
+    container.append(part: YourPart.self)
+    container.append(framework: YourOtherFramework.self) // возможно эта строчка и не нужна - достаточно чтобы ктото один раз прикрепил загрузку framework
+    container.import(YourOtherFramework.self) 
+  }
+}
+```
+
+### Цикл
+
+БЫЛО:
+```
+builder.register(A.init(b:))
+
+builder.register(B.init)
+  .injection{ $0.a = $1 }
+```
+СТАЛО:
+```
+builder.register(A.init(b:))
+  .lifeTime(.objectGraph)
+
+builder.register(B.init)
+  .injection(cycle: true) { $0.a = $1 }
+  .lifeTime(.objectGraph)
+```
+Усложнение синтаксиса было сделано из-за ускорения работы библиотеки.
+
+### Сканирование
+БЫЛО:
+```
+builder.register(component: DIScanComponent(predicateByName: { $0.contains("component") }, in: Bundle(for: YourClass.self)))
+```
+СТАЛО:
+```
+class YourScanPart: DIScanPart {
+  override class var predicate: Predicate? { return .name({ $0.contains("part") }) }
+  override class var bundle: Bundle? { return Bundle(for: YourClass.self) }
+}
+container.append(part: YourScanPart.self)
+```
+
+### Получение объектов
+БЫЛО:
+```
+let obj1: Obj1Type = try! container.resolver()
+let obj1Opt: Obj1Type? = try? container.resolver()
+
+let obj2: Obj2Type = *container
+let obj2Opt: Obj2Type? = *?container
+
+let obj3: Obj3Type = try! container.resolve(tag: yourTag)
+let obj4: Obj4Type = try! container.resolve(name: "name")
+let objs: [ObjType] = try! container.resolveMany()
+```
+СТАЛО:
+```
+let obj1: Obj1Type = container.resolver()
+let obj1Opt: Obj1Type? = container.resolver()
+
+let obj2: Obj2Type = *container
+let obj2Opt: Obj2Type? = *container
+
+let obj3: Obj3Type = container.resolve(tag: YourTag.self) // by(tag: YourTag.self, on: *container)
+let obj4: Obj4Type = container.resolve(name: "name")
+let objs: [ObjType] = container.resolveMany() // many(*container)
+```
+
+## Что дальше?
+Более подробно об новом синтаксисе и возможностях можно почитать в [документации](main.md).
+
+Чтобы установить и начать использовать новую версию, обновите библиотеку до версии выше или равной 3.0.0.
