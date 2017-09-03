@@ -70,8 +70,8 @@
 Дальше будут примеры как было раньше и как стало:
 
 ### Общий вид
-БЫЛО:
-```
+**БЫЛО:**
+```Swift
 let builder = DIContainerBuilder()
 builder.register(type: YourType.self)
   .initial(YourType.init)
@@ -82,8 +82,8 @@ builder.register(component: YourComponent())
 
 let container = try! builder.build()
 ```
-СТАЛО:
-```
+**СТАЛО:**
+```Swift
 let container = DIContainer()
 builder.register(YourType.init)
   .injection{ $0.parameter = $1 }
@@ -98,15 +98,15 @@ if !container.valid() { // можно проверять только в деб�
 
 ### Компонент без метода инициализации
 
-БЫЛО:
-```
+**БЫЛО:**
+```Swift
 builder.register(type: YourType.self)
 .initialNotNecessary()
 
 builder.register(vc: YourViewControllerType.self)
 ```
-СТАЛО:
-```
+**СТАЛО:**
+```Swift
 container.register(YourType.self)
 
 container.register(YourViewControllerType.self)
@@ -114,16 +114,16 @@ container.register(YourViewControllerType.self)
 
 ### Множественная и по тегу
 
-БЫЛО:
-```
+**БЫЛО:**
+```Swift
 builder.register(type: YourType.self)
   .initial{ YourType(pTag: $0.resolve(tag: yourTag), pMany: $0.resolveMany()) }
   .injection(.manual) { $1.parameterTag = $0.resolve(tag: yourTag) }
   .injection(.manual) { $1.parameterMany = $0.resolveMany() }
 
 ```
-СТАЛО:
-```
+**СТАЛО:**
+```Swift
 container.register{ YourType(pTag: by(tag: YourTag.self, on: $0), pMany: many($1)) }
   .injection { $0.parameterTag = by(tag: YourTag.self, on: $1) }
   .injection { $0.parameterMany = many($1) }
@@ -131,8 +131,8 @@ container.register{ YourType(pTag: by(tag: YourTag.self, on: $0), pMany: many($1
 
 ### По имени
 
-БЫЛО:
-```
+**БЫЛО:**
+```Swift
 builder.register(type: YourType.self)
   .initial{ YourType(pName: $0.resolve(name: "yourName")) }
 
@@ -140,8 +140,8 @@ builder.register(type: YourTypeParameter.self)
   .injection(.manual) { $1.parameterName = $0.resolve(name: "YourName") }
 
 ```
-СТАЛО:
-```
+**СТАЛО:**
+```Swift
 // Регистрация с указанием имени в методе инициализации не поддерживаем. Но есть Теги.
 
 container.register(YourTypeParameter.self)
@@ -150,8 +150,8 @@ container.register(YourTypeParameter.self)
 
 ### Опционалы
 
-БЫЛО:
-```
+**БЫЛО:**
+```Swift
 builder.register(type: YourType.self)
   .initial{ YourType(pOptional: try? $0.resolve()) }
   .injection(.optional) { $0.parameterOpt = $1 }
@@ -161,8 +161,8 @@ builder.register(type: YourType2.self)
   .injection(.manual) { $1.parameterOpt = try? $0.resolver() }
 
 ```
-СТАЛО:
-```
+**СТАЛО:**
+```Swift
 container.register(YourType.init)
   .injection { $0.parameterOpt = $1 }
 
@@ -172,16 +172,16 @@ container.register{ YourType2(pOptional: $0) }
 
 ### Указание альтернативного имени
 
-БЫЛО:
-```
+**БЫЛО:**
+```Swift
 builder.register(type: YourType.self)
   .as(YourProtocol.self).unsafe()
   .as(YourProtocol.self).check{$0}
   .as(YourPorotocl.self){$0}
 
 ```
-СТАЛО:
-```
+**СТАЛО:**
+```Swift
 container.register(YourType.self)
   .as(YourProtocol.self)
   .as(check: YourProtocol.self){$0}
@@ -189,8 +189,8 @@ container.register(YourType.self)
 
 ### Указание имени или тега
 
-БЫЛО:
-```
+**БЫЛО:**
+```Swift
 builder.register(type: YourType.self)
   .as(YourProtocol.self)
   .as(YourProtocol2.self)
@@ -199,8 +199,8 @@ builder.register(type: YourType.self)
   // Данный синтаксис генерировал все возможные варианты, то есть: YourProtocol+"YourName", YourProtocol+yourTag, YourProtocol2+"YourName", YourProtocol2+yourTag
   // В большинстве случае это не совсем то чего хочется, поэтому синтаксис был переделан, на более однозначный
 ```
-СТАЛО:
-```
+**СТАЛО:**
+```Swift
 container.register(YourType.self)
   .as(YourProtocol.self, name: "YourName")
   .as(YourProtocol2.self, tag: YourTag.self)
@@ -209,8 +209,8 @@ container.register(YourType.self)
 
 ### DIComponent/DIModule = DIPart/DIFramework
 
-БЫЛО:
-```
+**БЫЛО:**
+```Swift
 class YourComponent: DIComponent {
   func load(builder: DIContainerBuilder) { ... }
 }
@@ -220,8 +220,8 @@ class YourModule: DIModule {
   var dependencies: [DIModule] = { return [YourOtherModule() ] }
 }
 ```
-СТАЛО:
-```
+**СТАЛО:**
+```Swift
 class YourPart: DIPart {
   static func load(container: DIContainer) { ... }
 }
@@ -237,15 +237,15 @@ class YourFramework: DIFramework {
 
 ### Цикл
 
-БЫЛО:
-```
+**БЫЛО:**
+```Swift
 builder.register(A.init(b:))
 
 builder.register(B.init)
   .injection{ $0.a = $1 }
 ```
-СТАЛО:
-```
+**СТАЛО:**
+```Swift
 builder.register(A.init(b:))
   .lifeTime(.objectGraph)
 
@@ -256,12 +256,12 @@ builder.register(B.init)
 Усложнение синтаксиса было сделано из-за ускорения работы библиотеки.
 
 ### Сканирование
-БЫЛО:
-```
+**БЫЛО:**
+```Swift
 builder.register(component: DIScanComponent(predicateByName: { $0.contains("component") }, in: Bundle(for: YourClass.self)))
 ```
-СТАЛО:
-```
+**СТАЛО:**
+```Swift
 class YourScanPart: DIScanPart {
   override class var predicate: Predicate? { return .name({ $0.contains("part") }) }
   override class var bundle: Bundle? { return Bundle(for: YourClass.self) }
@@ -270,8 +270,8 @@ container.append(part: YourScanPart.self)
 ```
 
 ### Получение объектов
-БЫЛО:
-```
+**БЫЛО:**
+```Swift
 let obj1: Obj1Type = try! container.resolver()
 let obj1Opt: Obj1Type? = try? container.resolver()
 
@@ -282,8 +282,8 @@ let obj3: Obj3Type = try! container.resolve(tag: yourTag)
 let obj4: Obj4Type = try! container.resolve(name: "name")
 let objs: [ObjType] = try! container.resolveMany()
 ```
-СТАЛО:
-```
+**СТАЛО:**
+```Swift
 let obj1: Obj1Type = container.resolver()
 let obj1Opt: Obj1Type? = container.resolver()
 
