@@ -23,6 +23,10 @@ open class DIScan {
       valid(cls) && predicate(cls) ? cls : nil
     }
   }
+  
+  static func resetCache() {
+    cache.removeAll()
+  }
 }
 
 // Type - for one public/internal
@@ -48,20 +52,22 @@ func name(by cls: AnyClass) -> String {
   return name
 }
 
-private let scanned: [(cls: AnyClass, bpath: String)] = {
-  let expectedClassCount = objc_getClassList(nil, 0)
-  let allClasses = UnsafeMutablePointer<AnyClass?>.allocate(capacity: Int(expectedClassCount))
-  let autoreleasingAllClasses = AutoreleasingUnsafeMutablePointer<AnyClass?>(allClasses)
-  let actualClassCount = Int(objc_getClassList(autoreleasingAllClasses, expectedClassCount))
-
-  var result: [(cls: AnyClass, bpath: String)] = []
-  for i in 0..<actualClassCount {
-    if let cls = allClasses[i], cls is DIScanned.Type {
-      result.append((cls, Bundle(for: cls).bundlePath))
+private var cache: [(cls: AnyClass, bpath: String)] = []
+private var scanned: [(cls: AnyClass, bpath: String)] {
+  if cache.isEmpty {
+    let expectedClassCount = objc_getClassList(nil, 0)
+    let allClasses = UnsafeMutablePointer<AnyClass?>.allocate(capacity: Int(expectedClassCount))
+    let autoreleasingAllClasses = AutoreleasingUnsafeMutablePointer<AnyClass?>(allClasses)
+    let actualClassCount = Int(objc_getClassList(autoreleasingAllClasses, expectedClassCount))
+    
+    for i in 0..<actualClassCount {
+      if let cls = allClasses[i], cls is DIScanned.Type {
+        cache.append((cls, Bundle(for: cls).bundlePath))
+      }
     }
+    
+    allClasses.deallocate(capacity: Int(expectedClassCount))
   }
 
-  allClasses.deallocate(capacity: Int(expectedClassCount))
-
-  return result
-}()
+  return cache
+}
