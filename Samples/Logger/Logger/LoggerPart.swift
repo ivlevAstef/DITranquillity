@@ -9,20 +9,20 @@
 import DITranquillity
 
 class LoggerPart: DIPart {
-  static func load(builder: DIContainerBuilder) {
-    builder.register{ ConsoleLogger() }
+  static func load(container: DIContainer) {
+    container.register{ ConsoleLogger() }
       .as(check: Logger.self){$0}
       .lifetime(.single)
     
-    builder.register{ FileLogger(file: "file.log") }
+    container.register{ FileLogger(file: "file.log") }
       .as(check: Logger.self){$0}
       .lifetime(.single)
     
-    builder.register{ ServerLogger(server: "http://server.com/") }
+    container.register{ ServerLogger(server: "http://server.com/") }
       .as(check: Logger.self){$0}
       .lifetime(.single)
     
-    builder.register{ MainLogger(loggers: many($0)) }
+    container.register{ MainLogger(loggers: many($0)) }
       .as(check: Logger.self){$0}
       .default()
       .lifetime(.single)

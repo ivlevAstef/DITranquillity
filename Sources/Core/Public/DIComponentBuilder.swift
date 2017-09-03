@@ -11,9 +11,9 @@
 /// The class allows you to configure all the necessary properties for the component.
 public final class DIComponentBuilder<Impl> {
   init(container: DIContainer, componentInfo: DIComponentInfo) {
-		self.component = Component(componentInfo: componentInfo, in: container.currentBundle)
-		self.componentContainer = container.componentContainer
-		componentContainer.insert(TypeKey(by: Impl.self), component)
+    self.component = Component(componentInfo: componentInfo, in: container.currentBundle)
+    self.componentContainer = container.componentContainer
+    componentContainer.insert(TypeKey(by: Impl.self), component)
   }
   
   deinit {
@@ -30,7 +30,7 @@ public final class DIComponentBuilder<Impl> {
   }
   
   let component: Component
-	let componentContainer: ComponentContainer
+  let componentContainer: ComponentContainer
 }
 
 // MARK: - contains `as` functions

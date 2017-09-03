@@ -19,9 +19,9 @@ public class ScannedPrt1: DIScanned, DIPart {
 public class DuMole2Type { }
 
 public class ScannedPrt2: DIScanned, DIPart {
-	public static func load(container: DIContainer) {
+  public static func load(container: DIContainer) {
     container.register(DuMole2Type.init)
-	}
+  }
 }
 
 // Assemblies

@@ -28,7 +28,7 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
     
     container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
-		
+    
     let service: ServiceProtocol = *container
     XCTAssertEqual(service.foo(), "foo")
   }

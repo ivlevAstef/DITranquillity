@@ -9,8 +9,8 @@
 import DITranquillity
 
 public final class LoggerFramework: DIFramework {
-  public static func load(builder: DIContainerBuilder) {
-    builder.append(part: LoggerPart.self)
+  public static func load(container: DIContainer) {
+    container.append(part: LoggerPart.self)
   }
 }
 

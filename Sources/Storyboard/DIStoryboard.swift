@@ -96,8 +96,10 @@ public extension DIContainer {
   /// - Returns: component builder, to configure the component
   @discardableResult
   public func registerStoryboard(name: String, bundle storyboardBundleOrNil: Bundle?, file: String = #file, line: Int = #line) -> DIComponentBuilder<UIStoryboard> {
-    let builder = register(file: file, line: line){ DIStoryboard.create(name: name, bundle: storyboardBundleOrNil, container: $0) as UIStoryboard }
-      .as(UIStoryboard.self, name: name)
+    let builder = register(file: file, line: line) {
+      DIStoryboard.create(name: name, bundle: storyboardBundleOrNil, container: $0) as UIStoryboard
+    } .as(UIStoryboard.self, name: name)
+    
     StoryboardContainerMap.instance.append(name: name, bundle: storyboardBundleOrNil, component: builder.component, in: self)
     return builder
   }
@@ -113,8 +115,10 @@ public extension DIContainer {
   /// - Returns: component builder, to configure the component
   @discardableResult
   public func registerStoryboard(name: String, bundle storyboardBundleOrNil: Bundle?, file: String = #file, line: Int = #line) -> DIComponentBuilder<NSStoryboard> {
-    let builder = register(file: file, line: line){ DIStoryboard.create(name: name, bundle: storyboardBundleOrNil, container: $0) as NSStoryboard }
-      .as(NSStoryboard.self, name: name)
+    let builder = register(file: file, line: line) {
+      DIStoryboard.create(name: name, bundle: storyboardBundleOrNil, container: $0) as NSStoryboard
+    } .as(NSStoryboard.self, name: name)
+  
     StoryboardContainerMap.instance.append(name: name, bundle: storyboardBundleOrNil, component: builder.component, in: self)
     return builder
   }

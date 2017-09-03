@@ -9,8 +9,8 @@
 import DITranquillity
 
 class ServerPart: DIPart {
-  static func load(builder: DIContainerBuilder) {
-    builder.register{ ServerImpl(domain: "https://github.com/") }
+  static func load(container: DIContainer) {
+    container.register{ ServerImpl(domain: "https://github.com/") }
       .as(check: Server.self){$0}
       .lifetime(.single)
       .injection{ $0.logger = $1 }

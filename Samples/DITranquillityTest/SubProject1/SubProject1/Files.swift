@@ -11,17 +11,17 @@ import DITranquillity
 public class Module1Type { }
 
 public class ScannedPart1: DIScanned, DIPart {
-	public static func load(container: DIContainer) {
+  public static func load(container: DIContainer) {
     container.register(Module1Type.init)
-	}
+  }
 }
 
 public class Module2Type { }
 
 public class ScannedPart2: DIScanned, DIPart {
-	public static func load(container: DIContainer) {
+  public static func load(container: DIContainer) {
     container.register(Module2Type.init)
-	}
+  }
 }
 // Assemblies
 

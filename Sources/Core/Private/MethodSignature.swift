@@ -15,7 +15,7 @@ final class MethodSignature {
   struct Parameter {
     let type: DIAType
     let name: String?
-		
+    
     var optional: Bool { return self.type is IsOptional.Type }
     var many: Bool { return self.type is IsMany.Type }
   }

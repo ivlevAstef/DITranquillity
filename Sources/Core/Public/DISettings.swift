@@ -21,7 +21,7 @@ public struct DISetting {
     /// Minimum level of logging. Default is `warning`
     public static var level: DILogLevel = .warning
     
-    /// Tabulation for logging. It is necessary to better understand the information log. Default is `	`
+    /// Tabulation for logging. It is necessary to better understand the information log. Default is `  `
     public static var tab: String = String(UnicodeScalar(UInt8(9/*ascii code for tab*/)))
   }
 }

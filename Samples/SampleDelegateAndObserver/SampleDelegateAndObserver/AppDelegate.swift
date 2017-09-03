@@ -27,35 +27,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func registrateAndBuild() -> DIContainer {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
     // Delegate
-		builder.register(ViewController.self)
+    container.register(ViewController.self)
       .lifetime(.weakSingle)
       .as(check: PopUpDelegate.self){$0}
       .as(check: Observer.self){$0} // And Observer
     
-    builder.register(PopUpViewController.self)
+    container.register(PopUpViewController.self)
       .injection { $0.delegate = $1 }
     
     // Observer
-    builder.register(ViewControllerFirstObserver.self)
+    container.register(ViewControllerFirstObserver.self)
       .lifetime(.weakSingle)
       .as(check: Observer.self){$0}
     
-    builder.register(ViewControllerSecondObserver.self)
+    container.register(ViewControllerSecondObserver.self)
       .lifetime(.weakSingle)
       .as(check: Observer.self){$0}
     
-    builder.register(ViewControllerSlider.self)
+    container.register(ViewControllerSlider.self)
       .injection { $0.observers = many($1) }
     
     
     // Storyboard
-    builder.registerStoryboard(name: "Main", bundle: nil)
+    container.registerStoryboard(name: "Main", bundle: nil)
       .lifetime(.single)
-    
-    return try! builder.build()
+
+    if !container.valid() {
+      fatalError()
+    }
+
+    return container
   }
   
 }

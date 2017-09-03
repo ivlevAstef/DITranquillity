@@ -10,10 +10,10 @@ import DITranquillity
 import Logger
 
 public class AppFramework: DIFramework {
-  public static func load(builder: DIContainerBuilder) {
-    builder.append(part: ServerPart.self)
-    builder.append(part: AppPart.self)
+  public static func load(container: DIContainer) {
+    container.append(part: ServerPart.self)
+    container.append(part: AppPart.self)
     
-    builder.append(framework: LoggerFramework.self)
+    container.append(framework: LoggerFramework.self)
   }
 }

@@ -13,15 +13,15 @@ public protocol DIScanned {}
 /// Base class for scan. It doesn't make much sense to inherit from it. see: `DIScanFramework` and `DIScanPart`
 open class DIScan {  
   static func types(_ valid: (AnyClass)->Bool, _ predicate: (AnyClass)->Bool, _ bundle: Bundle?) -> [AnyClass] {
-		if let bpath = bundle?.bundlePath {
-			return scanned.flatMap { cls, clsBPath in
-				valid(cls) && bpath == clsBPath && predicate(cls) ? cls : nil
-			}
-		}
-		
-		return scanned.flatMap { cls, _ in
-			valid(cls) && predicate(cls) ? cls : nil
-		}
+    if let bpath = bundle?.bundlePath {
+      return scanned.flatMap { cls, clsBPath in
+        valid(cls) && bpath == clsBPath && predicate(cls) ? cls : nil
+      }
+    }
+    
+    return scanned.flatMap { cls, _ in
+      valid(cls) && predicate(cls) ? cls : nil
+    }
   }
 }
 

@@ -15,15 +15,15 @@ class Resolver {
     log(.info, msg: "Begin resolve \(description(type: type))", brace: .begin)
     defer { log(.info, msg: "End resolve \(description(type: type))", brace: .end) }
     
-		return gmake(by: make(by: type, with: name, from: nil, use: nil))
+    return gmake(by: make(by: type, with: name, from: nil, use: nil))
   }
   
   func injection<T>(obj: T) {
     log(.info, msg: "Begin injection in obj: \(obj)", brace: .begin)
     defer { log(.info, msg: "End injection in obj: \(obj)", brace: .end) }
-		
-		// swift bug - if T is Any then type(of: obj) return always any. - compile optimization?
-		_ = make(by: type(of: (obj as Any)), with: nil, from: nil, use: obj)
+    
+    // swift bug - if T is Any then type(of: obj) return always any. - compile optimization?
+    _ = make(by: type(of: (obj as Any)), with: nil, from: nil, use: obj)
   }
 
   
@@ -31,14 +31,14 @@ class Resolver {
     log(.info, msg: "Begin resolve singleton by component: \(component.info)", brace: .begin)
     defer { log(.info, msg: "End resolve singleton by component: \(component.info)", brace: .end) }
     
-		_ = makeObject(by: component, use: nil)
+    _ = makeObject(by: component, use: nil)
   }
   
   func resolve<T>(type: T.Type = T.self, component: Component) -> T {
     log(.info, msg: "Begin resolve \(description(type: type)) by component: \(component.info)", brace: .begin)
     defer { log(.info, msg: "End resolve \(description(type: type)) by component: \(component.info)", brace: .end) }
     
-		return gmake(by: makeObject(by: component, use: nil))
+    return gmake(by: makeObject(by: component, use: nil))
   }
   
   /// Finds the most suitable components that satisfy the types.
@@ -119,21 +119,21 @@ class Resolver {
      return 1 == components.count || type is IsMany.Type
   }
   
-	private func make(by type: DIAType, with name: String?, from bundle: Bundle?, use object: Any?) -> Any? {
+  private func make(by type: DIAType, with name: String?, from bundle: Bundle?, use object: Any?) -> Any? {
     let components = findComponents(by: type, with: name, from: bundle)
     
     if type is IsMany.Type {
       let filterComponents = components.filter{ !stack.contains($0.uniqueKey) } // Remove objects contains in stack
-			assert(nil == object, "Many injection not supported")
-			return filterComponents.flatMap{ makeObject(by: $0, use: nil) }
+      assert(nil == object, "Many injection not supported")
+      return filterComponents.flatMap{ makeObject(by: $0, use: nil) }
     }
-		
-		if let component = components.first, 1 == components.count {
-			return makeObject(by: component, use: object)
-		}
-		
-		log(.warning, msg: "Not found type: \(type)")
-		return nil
+    
+    if let component = components.first, 1 == components.count {
+      return makeObject(by: component, use: object)
+    }
+    
+    log(.warning, msg: "Not found type: \(type)")
+    return nil
   }
   
   /// Super function
@@ -155,11 +155,11 @@ class Resolver {
     }
     
     func resolveWeakSingle() -> Any? {
-			for (key, weak) in Cache.weakSingle {
-				if nil == weak.value {
-					Cache.weakSingle.removeValue(forKey: key)
-				}
-			}
+      for (key, weak) in Cache.weakSingle {
+        if nil == weak.value {
+          Cache.weakSingle.removeValue(forKey: key)
+        }
+      }
       
       return makeObject(from: "weak single",
                         get: Cache.weakSingle[uniqueKey]?.value,
@@ -186,44 +186,44 @@ class Resolver {
         log(.info, msg: "Add object: \(makedObject) in cache \(cacheName)")
         return makedObject
       }
-			
+      
       return nil
     }
     
     func resolvePrototype() -> Any? {
       guard let initializedObject = initialObject() else {
-				return nil
-			}
-			
-			let cycleInjections = component.injections.filter{ $0.cycle }
-			cache.cycleInjectionStack.append(contentsOf: cycleInjections.map{ (initializedObject, $0) })
-			
-			for injection in component.injections.filter({ !$0.cycle }) {
-				_ = use(signature: injection.signature, usingObject: initializedObject)
-			}
-			
-			if let signature = component.postInit {
-				_ = use(signature: signature, usingObject: initializedObject)
-			}
-			
-			return initializedObject
+        return nil
+      }
+      
+      let cycleInjections = component.injections.filter{ $0.cycle }
+      cache.cycleInjectionStack.append(contentsOf: cycleInjections.map{ (initializedObject, $0) })
+      
+      for injection in component.injections.filter({ !$0.cycle }) {
+        _ = use(signature: injection.signature, usingObject: initializedObject)
+      }
+      
+      if let signature = component.postInit {
+        _ = use(signature: signature, usingObject: initializedObject)
+      }
+      
+      return initializedObject
     }
     
     func initialObject() -> Any? {
-			if let obj = usingObject {
-				log(.info, msg: "Use object: \(obj)")
-				return obj
-			}
-			
-			
-			if let signature = component.initial {
-				let obj = use(signature: signature, usingObject: nil)
-				log(.info, msg: "Create object: \(String(describing: obj))")
-				return obj
-			}
-			
-			log(.warning, msg: "Can't found initial method in \(component.info)")
-			return nil
+      if let obj = usingObject {
+        log(.info, msg: "Use object: \(obj)")
+        return obj
+      }
+      
+      
+      if let signature = component.initial {
+        let obj = use(signature: signature, usingObject: nil)
+        log(.info, msg: "Create object: \(String(describing: obj))")
+        return obj
+      }
+      
+      log(.warning, msg: "Can't found initial method in \(component.info)")
+      return nil
     }
     
     func endResolving() {
@@ -236,21 +236,21 @@ class Resolver {
     }
     
     func use(signature: MethodSignature, usingObject: Any?) -> Any? {
-			var objects: [Any?] = []
-			for parameter in signature.parameters {
-				let makedObject = parameter.type is UseObject.Type ?
-					usingObject :
-					make(by: parameter.type, with: parameter.name, from: component.bundle, use: nil)
-				
-				if nil != makedObject || parameter.optional {
-					objects.append(makedObject)
-					continue
-				}
-				
-				return nil
-			}
-			
-			return signature.call(objects)
+      var objects: [Any?] = []
+      for parameter in signature.parameters {
+        let makedObject = parameter.type is UseObject.Type ?
+          usingObject :
+          make(by: parameter.type, with: parameter.name, from: component.bundle, use: nil)
+        
+        if nil != makedObject || parameter.optional {
+          objects.append(makedObject)
+          continue
+        }
+        
+        return nil
+      }
+      
+      return signature.call(objects)
     }
     
     return synchronize(Resolver.monitor) {
@@ -276,7 +276,7 @@ class Resolver {
     }
   }
  
-	private unowned let container: DIContainer
+  private unowned let container: DIContainer
   private static let monitor = NSObject()
   
   let cache = Cache()

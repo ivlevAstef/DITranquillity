@@ -14,7 +14,7 @@ func dilog(level: DILogLevel, msg: String) {
   case .error:
     print("ERR: " + msg)
   case .warning:
-    print("WRN:" + msg)
+    print("WRN: " + msg)
   case .info, .none:
     break
   }
@@ -28,9 +28,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   public func applicationDidFinishLaunching(_ application: UIApplication) {
     DISetting.Log.fun = dilog
     
-    let builder = DIContainerBuilder()
-    builder.append(framework: AppFramework.self)
-    let container = try! builder.build()
+    let container = DIContainer()
+    container.append(framework: AppFramework.self)
+
+    if !container.valid() {
+      fatalError()
+    }
     
     window = UIWindow(frame: UIScreen.main.bounds)
 

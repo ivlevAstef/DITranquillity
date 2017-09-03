@@ -35,9 +35,9 @@ class StoryboardContainerMap {
   private var componentMap: [StoryboardInformation: Weak<Component>] = [:]
   
   func append(name: String, bundle: Bundle?, component: Component, in container: DIContainer) {
-		clean()
+    clean()
     let info = StoryboardInformation(name: name, bundle: bundle)
-		containerMap[info] = Weak(value: container)
+    containerMap[info] = Weak(value: container)
     componentMap[info] = Weak(value: component)
   }
   

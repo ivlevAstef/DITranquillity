@@ -121,72 +121,72 @@ class Circular2 {
 
 
 class SamplePart: DIPart {
-  static func load(builder: DIContainerBuilder) {
-		builder.register{ 10 }.lifetime(.lazySingle)
+  static func load(container: DIContainer) {
+    container.register{ 10 }.lifetime(.lazySingle)
     
-    builder.register(BarService.init)
+    container.register(BarService.init)
       .as(ServiceProtocol.self)
       .lifetime(.prototype)
 
-    builder.register{ LoggerAll(loggers: many($0)) }
+    container.register{ LoggerAll(loggers: many($0)) }
       .as(check: LoggerProtocol.self){$0}
       .default()
       .lifetime(.single)
       .injection(cycle: true){ $0.loggersFull = many($1) }
 
-		builder.register{ Logger() }
+    container.register{ Logger() }
       .as(check: LoggerProtocol.self){$0}
       .lifetime(.single)
     
-    builder.register{ Logger2() }
+    container.register{ Logger2() }
       .as(check: LoggerProtocol.self){$0}
       .lifetime(.lazySingle)
     
-    builder.register(Inject.init)
+    container.register(Inject.init)
       .lifetime(.prototype)
       .injection{ $0.service2 = $1 }
       .injection{ $0.logger2 = $1 }
     
-    builder.register{ InjectMany(loggers: many($0)) }
+    container.register{ InjectMany(loggers: many($0)) }
       .lifetime(.prototype)
     
     //Animals
-		builder.register{ Animal(name: "Cat") }
+    container.register{ Animal(name: "Cat") }
       .as(Animal.self, tag: CatTag.self)
     
-    builder.register{ Animal(name: "Dog") }
+    container.register{ Animal(name: "Dog") }
       .as(Animal.self, tag: DogTag.self)
       .default()
 
-    builder.register{ Animal(name: "Bear") }
+    container.register{ Animal(name: "Bear") }
       .as(Animal.self, tag: BearTag.self)
     
     //circular
     
-    builder.register(Circular1.init)
+    container.register(Circular1.init)
       .lifetime(.objectGraph)
     
-    builder.register(Circular2.init)
+    container.register(Circular2.init)
       .lifetime(.objectGraph)
       .injection(cycle: true) { $0.ref = $1 }
   }
 }
 
 class SampleStartupPart : DIPart {
-  static func load(builder: DIContainerBuilder) {
-		builder.append(part: SamplePart.self)
+  static func load(container: DIContainer) {
+    container.append(part: SamplePart.self)
     
-		builder.register(ViewController.self)
+    container.register(ViewController.self)
       .injection { $0.injectGlobal = $1 }
       .injection { $0.container = $1 }
-		
-		
-    builder.register(ViewController2.self)
+
+
+    container.register(ViewController2.self)
       .injection { $0.inject = $1 }
       .injection { $0.logger = $1 }
 
     
-    builder.register(UIButton.init)
+    container.register(UIButton.init)
       .as(check: UIAppearance.self){$0}
       .as(check: UIView.self){$0}
       .lifetime(.prototype)
