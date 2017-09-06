@@ -13,7 +13,7 @@ public final class DIComponentBuilder<Impl> {
   init(container: DIContainer, componentInfo: DIComponentInfo) {
     self.component = Component(componentInfo: componentInfo, in: container.currentBundle)
     self.componentContainer = container.componentContainer
-    componentContainer.insert(TypeKey(by: Impl.self), component)
+    componentContainer.insert(TypeKey(by: Impl.self), type: Impl.self, component)
   }
   
   deinit {
@@ -46,7 +46,7 @@ public extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func `as`<Parent>(_ type: Parent.Type) -> Self {
-    componentContainer.insert(TypeKey(by: type), component)
+    componentContainer.insert(TypeKey(by: type), type: type, component)
     return self
   }
   
@@ -63,7 +63,7 @@ public extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func `as`<Parent, Tag>(_ type: Parent.Type, tag: Tag.Type) -> Self {
-    componentContainer.insert(TypeKey(by: type, and: tag), component)
+    componentContainer.insert(TypeKey(by: type, and: tag), type: type, component)
     return self
   }
   
@@ -82,7 +82,7 @@ public extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func `as`<Parent>(_ type: Parent.Type, name: String) -> Self {
-    componentContainer.insert(TypeKey(by: type, and: name), component)
+    componentContainer.insert(TypeKey(by: type, and: name), type: type, component)
     return self
   }
   

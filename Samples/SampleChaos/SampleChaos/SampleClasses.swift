@@ -94,9 +94,16 @@ class Animal {
   }
 }
 
+class TestCat: Animal {
+  override init(name: String) {
+    super.init(name: name)
+  }
+}
+
 typealias CatTag = Animal
 typealias DogTag = Animal
 typealias BearTag = Animal
+typealias TestCatTag = Animal
 
 
 class Circular1 {
@@ -160,6 +167,10 @@ class SamplePart: DIPart {
 
     container.register{ Animal(name: "Bear") }
       .as(Animal.self, tag: BearTag.self)
+    
+    container.register{ TestCat(name: "Felix") }
+      .as(Animal.self, tag: TestCatTag.self)
+    
     
     //circular
     

@@ -82,7 +82,7 @@ class Resolver {
     }
     
     if let manyType = type as? IsMany.Type {
-      return Array(container.componentContainer.map[TypeKey(by: manyType.type)])
+      return Array(container.componentContainer.manyMap[TypeKey(by: manyType.type)])
     }
     
     let components: [Component]
