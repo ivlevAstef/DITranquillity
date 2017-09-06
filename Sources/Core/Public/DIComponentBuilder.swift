@@ -117,7 +117,7 @@ public extension DIComponentBuilder {
   ///   - check: Validate type function. Always use `{$0}` for type validation.
   /// - Returns: Self
   @discardableResult
-  public func `as`<Parent, Tag>(check type: Parent.Type, tag: Tag.Type, _: (Impl)->Parent) -> Self {
+  public func `as`<Parent, Tag>(check type: Parent.Type, tag: Tag.Type, _ check: (Impl)->Parent) -> Self {
     return self.as(type, tag: tag)
   }
   
