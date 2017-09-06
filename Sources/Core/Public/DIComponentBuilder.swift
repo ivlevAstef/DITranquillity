@@ -96,10 +96,10 @@ public extension DIComponentBuilder {
   ///
   /// - Parameters:
   ///   - type: Type by which the component will be available paired with tag.
-  ///   - check: Validate type function. Always use `{$0}` for type validation.
+  ///   - validator: Validate type function. Always use `{$0}` for type validation.
   /// - Returns: Self
   @discardableResult
-  public func `as`<Parent>(check type: Parent.Type, _ check: (Impl)->Parent) -> Self {
+  public func `as`<Parent>(check type: Parent.Type, _ validator: (Impl)->Parent) -> Self {
     return self.as(type)
   }
   
@@ -114,10 +114,10 @@ public extension DIComponentBuilder {
   /// - Parameters:
   ///   - type: Type by which the component will be available paired with tag.
   ///   - tag: Tag by which the component will be available paired with type.
-  ///   - check: Validate type function. Always use `{$0}` for type validation.
+  ///   - validator: Validate type function. Always use `{$0}` for type validation.
   /// - Returns: Self
   @discardableResult
-  public func `as`<Parent, Tag>(check type: Parent.Type, tag: Tag.Type, _ check: (Impl)->Parent) -> Self {
+  public func `as`<Parent, Tag>(check type: Parent.Type, tag: Tag.Type, _ validator: (Impl)->Parent) -> Self {
     return self.as(type, tag: tag)
   }
   
@@ -134,10 +134,10 @@ public extension DIComponentBuilder {
   /// - Parameters:
   ///   - type: Type by which the component will be available paired with name.
   ///   - name: Name by which the component will be available paired with type.
-  ///   - check: Validate type function. Always use `{$0}` for type validation.
+  ///   - validator: Validate type function. Always use `{$0}` for type validation.
   /// - Returns: Self
   @discardableResult
-  public func `as`<Parent>(check type: Parent.Type, name: String, _ check: (Impl)->Parent) -> Self {
+  public func `as`<Parent>(check type: Parent.Type, name: String, _ validator: (Impl)->Parent) -> Self {
     return self.as(type, name: name)
   }
 }
