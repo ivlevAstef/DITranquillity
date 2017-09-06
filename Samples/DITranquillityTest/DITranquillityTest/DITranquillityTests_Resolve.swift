@@ -306,5 +306,28 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(c.b != nil)
     XCTAssert(c.b.a != nil)
   }
+  
+  func test18_ResolveManyWithNamesTags() {
+    let container = DIContainer()
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self, tag: FooService.self){$0}
+    
+    container.register(BarService.init)
+      .as(check: ServiceProtocol.self, tag: BarService.self){$0}
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self, name: "foo test"){$0}
+    
+    container.register(BarService.init)
+      .as(check: ServiceProtocol.self, name: "bar test"){$0}
+    
+    let services: [ServiceProtocol] = many(*container)
+    XCTAssertEqual(services.count, 5)
+    
+  }
 }
 
