@@ -134,19 +134,60 @@ class DITranquillityTests_Resolve: XCTestCase {
     let container = DIContainer()
     
     container.register(FooService.init)
+      .as(check: ServiceProtocol.self, name: "foo"){$0}
+      .lifetime(.single)
+    
+    container.register(BarService.init)
+      .as(check: ServiceProtocol.self, name: "bar"){$0}
+      .lifetime(.single)
+    
+    let serviceFoo: ServiceProtocol = container.resolve(name: "foo")
+    XCTAssertEqual(serviceFoo.foo(), "foo")
+    
+    let serviceBar: ServiceProtocol = container.resolve(name: "bar")
+    XCTAssertEqual(serviceBar.foo(), "bar")
+    
+    XCTAssertNotEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar as AnyObject).toOpaque())
+  }
+  
+  func test10_ResolveMultiplyByTag() {
+    let container = DIContainer()
+    
+    container.register(FooService.init)
       .as(check: ServiceProtocol.self, tag: FooService.self){$0}
+      .lifetime(.single)
     
     container.register(BarService.init)
       .as(check: ServiceProtocol.self, tag: BarService.self){$0}
+      .lifetime(.single)
     
     let serviceFoo: ServiceProtocol = container.resolve(tag: FooService.self)
     XCTAssertEqual(serviceFoo.foo(), "foo")
     
     let serviceBar: ServiceProtocol = container.resolve(tag: BarService.self)
     XCTAssertEqual(serviceBar.foo(), "bar")
+    
+    XCTAssertNotEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar as AnyObject).toOpaque())
   }
   
   func test11_ResolveMultiplySingleByName() {
+    let container = DIContainer()
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self, name: "foo"){$0}
+      .as(check: ServiceProtocol.self, name: "bar"){$0}
+      .lifetime(.single)
+    
+    let serviceFoo: ServiceProtocol = container.resolve(name: "foo")
+    XCTAssertEqual(serviceFoo.foo(), "foo")
+    
+    let serviceFoo2: ServiceProtocol = container.resolve(name: "bar")
+    XCTAssertEqual(serviceFoo2.foo(), "foo")
+    
+    XCTAssertEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceFoo2 as AnyObject).toOpaque())
+  }
+  
+  func test11_ResolveMultiplySingleByTag() {
     let container = DIContainer()
     
     container.register(FooService.init)

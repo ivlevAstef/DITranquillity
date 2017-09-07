@@ -109,7 +109,7 @@ public extension DIContainer {
   /// - Parameter name: Resolve name.
   /// - Returns: Object for the specified type with name, or nil (see description).
   public func resolve<T>(name: String) -> T {
-    return resolver.resolve()
+    return resolver.resolve(name: name)
   }
   
   /// Resolve many objects by type.
