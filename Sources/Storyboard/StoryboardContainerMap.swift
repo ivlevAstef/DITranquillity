@@ -12,18 +12,29 @@ import Foundation
 
 private struct StoryboardInformation: Hashable {
   let name: String
-  let bundle: Bundle?
+  let bundle: Bundle
+  private var isUniversal: Bool = false
   
-  private var unique: String {
-    return name + (bundle?.bundlePath ?? "unbundle")
+  init(name: String, bundle: Bundle?) {
+    self.name = name
+    self.bundle = bundle ?? Bundle.main
+  }
+  
+  mutating func universal() -> StoryboardInformation {
+    isUniversal = true
+    return self
   }
   
   var hashValue: Int {
-    return unique.hashValue
+    return name.hashValue
   }
   
   static func==(lhs: StoryboardInformation, rhs: StoryboardInformation) -> Bool {
-    return lhs.unique == rhs.unique
+    if lhs.name != rhs.name {
+      return false
+    }
+    
+    return lhs.isUniversal || rhs.isUniversal || lhs.bundle.bundlePath == rhs.bundle.bundlePath
   }
 }
 
@@ -37,16 +48,19 @@ class StoryboardContainerMap {
   func append(name: String, bundle: Bundle?, component: Component, in container: DIContainer) {
     clean()
     let info = StoryboardInformation(name: name, bundle: bundle)
+    
     containerMap[info] = Weak(value: container)
     componentMap[info] = Weak(value: component)
   }
   
   func findContainer(by name: String, bundle: Bundle?) -> DIContainer? {
-    return containerMap[StoryboardInformation(name: name, bundle: bundle)]?.value
+    var info = StoryboardInformation(name: name, bundle: bundle)
+    return containerMap[info]?.value ?? containerMap[info.universal()]?.value
   }
   
   func findComponent(by name: String, bundle: Bundle?) -> Component? {
-    return componentMap[StoryboardInformation(name: name, bundle: bundle)]?.value
+    var info = StoryboardInformation(name: name, bundle: bundle)
+    return componentMap[info]?.value ?? componentMap[info.universal()]?.value
   }
   
   private func clean() {

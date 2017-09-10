@@ -66,9 +66,8 @@ DITranquallity - небольшая библиотека для внедрени
 
 ## [Storyboard](storyboard.md#storyboard)
 * [Регистрация ViewController](storyboard.md#Регистрация-viewcontroller)
-* [Сокращенный синтаксис](storyboard.md#Сокращенный-синтаксис)
 * [Создание Storyboard](storyboard.md#Создание-storyboard)
-* [Простое создание Storyboard](storyboard.md#Простое-создание-storyboard)
+* [StoryboardReference](storyboard.md#StoryboardReference)
 
 
 ## [Поиск](scan.md#Поиск)
