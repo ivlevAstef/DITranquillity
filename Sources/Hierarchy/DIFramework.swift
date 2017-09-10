@@ -30,7 +30,7 @@ public extension DIContainer {
   /// - Parameter framework: A framework that is imported into the current one. Import means communication designation, and not inclusion of all components.
   public func `import`<IMPORT: DIFramework>(_ framework: IMPORT.Type) {
     guard let currentBundle = self.currentBundle else {
-      log(.warning, msg: "Please, use import only into Component or Module")
+      log(.warning, msg: "Please, use import only into Part or Framework")
       return
     }
     bundleContainer.dependency(bundle: currentBundle, import: Bundle(for: framework))
