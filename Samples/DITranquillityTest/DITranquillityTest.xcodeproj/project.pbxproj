@@ -24,6 +24,7 @@
 		A5AD4F041D3CD4CB00A6882C /* DITranquillityTests_Threads.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AD4F031D3CD4CB00A6882C /* DITranquillityTests_Threads.swift */; };
 		A5D918C21D1939A70009F9D4 /* DITranquillityTests_Build.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D918BF1D1939A70009F9D4 /* DITranquillityTests_Build.swift */; };
 		A5D918C41D1939A70009F9D4 /* ResolveTestClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D918C11D1939A70009F9D4 /* ResolveTestClasses.swift */; };
+		D58B11841F66EE1D005010F4 /* DITranquillityTests_Performance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58B11831F66EE1D005010F4 /* DITranquillityTests_Performance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		A5D918BF1D1939A70009F9D4 /* DITranquillityTests_Build.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Build.swift; sourceTree = "<group>"; };
 		A5D918C01D1939A70009F9D4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5D918C11D1939A70009F9D4 /* ResolveTestClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolveTestClasses.swift; sourceTree = "<group>"; };
+		D58B11831F66EE1D005010F4 /* DITranquillityTests_Performance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Performance.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 		A5D918BE1D1939A70009F9D4 /* DITranquillityTest */ = {
 			isa = PBXGroup;
 			children = (
+				D58B11831F66EE1D005010F4 /* DITranquillityTests_Performance.swift */,
 				A5D918C01D1939A70009F9D4 /* Info.plist */,
 				A5D918C11D1939A70009F9D4 /* ResolveTestClasses.swift */,
 				A5AD4EEC1D3CB55900A6882C /* TestStoryboard.storyboard */,
@@ -194,6 +197,7 @@
 				1142C1E41E44F7910000517F /* DITranquillityTests_AutoPropertyInjection.swift in Sources */,
 				A52CE30D1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift in Sources */,
 				A5D918C21D1939A70009F9D4 /* DITranquillityTests_Build.swift in Sources */,
+				D58B11841F66EE1D005010F4 /* DITranquillityTests_Performance.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
