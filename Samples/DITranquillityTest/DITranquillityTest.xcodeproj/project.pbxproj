@@ -21,6 +21,7 @@
 		A5D918C41D1939A70009F9D4 /* ResolveTestClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D918C11D1939A70009F9D4 /* ResolveTestClasses.swift */; };
 		D508D6221F533600001810E4 /* TestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D508D6211F533600001810E4 /* TestStoryboard.storyboard */; };
 		D508D6241F533626001810E4 /* TestReferenceStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D508D6231F533626001810E4 /* TestReferenceStoryboard.storyboard */; };
+		D54AFF4A1F663973006A38F8 /* DITranquillityTests_Performance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54AFF491F663973006A38F8 /* DITranquillityTests_Performance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		A5D918C11D1939A70009F9D4 /* ResolveTestClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolveTestClasses.swift; sourceTree = "<group>"; };
 		D508D6211F533600001810E4 /* TestStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TestStoryboard.storyboard; sourceTree = "<group>"; };
 		D508D6231F533626001810E4 /* TestReferenceStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TestReferenceStoryboard.storyboard; sourceTree = "<group>"; };
+		D54AFF491F663973006A38F8 /* DITranquillityTests_Performance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Performance.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				16D7BCC21DB0875600A29A9F /* DITranquillityTests_Scan.swift */,
 				11046A691E64182B00788015 /* AccessStoryboard1.storyboard */,
 				11046A6A1E64182B00788015 /* AccessStoryboard2.storyboard */,
+				D54AFF491F663973006A38F8 /* DITranquillityTests_Performance.swift */,
 			);
 			path = DITranquillityTest;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 				118DBCB71E40F9E9003A7D1F /* DITranquillityTests_ResolveByInit.swift in Sources */,
 				A5D918C41D1939A70009F9D4 /* ResolveTestClasses.swift in Sources */,
 				16D7BCC31DB0875600A29A9F /* DITranquillityTests_Scan.swift in Sources */,
+				D54AFF4A1F663973006A38F8 /* DITranquillityTests_Performance.swift in Sources */,
 				A52CE30D1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift in Sources */,
 				A5D918C21D1939A70009F9D4 /* DITranquillityTests_Validation.swift in Sources */,
 			);
