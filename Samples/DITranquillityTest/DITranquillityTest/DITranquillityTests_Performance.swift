@@ -25,43 +25,44 @@ private class PerformanceTest {
 class DITranquillityTests_Performance: XCTestCase {
   /*
    register count:
-   1000 = 0.092
-   2000 = 0.190
-   4000 = 0.629
-   8000 = 2.498
+   1000 = 0.057
+   2000 = 0.174
+   4000 = 0.630
+   8000 = 2.520
    not linear!!!
    but 1k classes it's more.
    0.00001 per register
    
-   parameters count:
-   0 = 0.172
-   1 = 0.176
-   2 = 0.177
-   3 = 0.179
-   8 = 0.182
+   parameters count (for 2000):
+   0 = 0.165
+   1 = 0.168
+   2 = 0.171
+   3 = 0.170
+   8 = 0.172
    linear - 0.001 sec or 0.5%
    increase register time on 0.0000005 per parameter
    
-   resolve:
-   prototype = 0.056
-   objectGraph = 0.064
-   single = 0.053
-   0.000005 per resolve with one register
+   resolve (for 50000):
+   prototype = 0.112
+   objectGraph = 0.225
+   single = 0.242
+   0.000004 per resolve with one register
    
-   resolve by register count:
-   1000 = 0.255
-   2000 = 0.523
-   4000 = 1.115
-   8000 = 2.515
+   resolve by register count (for 50000):
+   250 = 0.303
+   500 = 0.564
+   1000 = 1.079
+   2000 = 2.354
    linear
-   resolve type increase on 0.0003 per one register
+   resolve type increase on 0.0011 (for 50000) per one register
+   0.00002 per resolve with 1000 register
    
-   inject count:
+   inject count (for 2000):
    1 = 0.184
    2 = 0.185
    4 = 0.198
    8 = 0.229
-   16 = 0.288
+   16 = 0.271
    not linear, but this is not critical
    increase register time on 0.000025 per injection
    
@@ -166,7 +167,7 @@ class DITranquillityTests_Performance: XCTestCase {
       .lifetime(.prototype)
     
     self.measure {
-      for _ in 0..<10000 {
+      for _ in 0..<50000 {
         _ = container.resolve() as PerformanceTest
       }
     }
@@ -179,7 +180,7 @@ class DITranquillityTests_Performance: XCTestCase {
       .lifetime(.objectGraph)
     
     self.measure {
-      for _ in 0..<10000 {
+      for _ in 0..<50000 {
         _ = container.resolve() as PerformanceTest
       }
     }
@@ -194,7 +195,7 @@ class DITranquillityTests_Performance: XCTestCase {
     container.initializeSingletonObjects()
     
     self.measure {
-      for _ in 0..<10000 {
+      for _ in 0..<50000 {
         _ = container.resolve() as PerformanceTest
       }
     }
@@ -203,13 +204,13 @@ class DITranquillityTests_Performance: XCTestCase {
   func test04_resolveWithMoreRegister() {
     DISetting.Log.fun = nil
     let container = DIContainer()
-    for i in 0..<1000 {
+    for i in 0..<250 {
       container.register(line: i, { PerformanceTest() })
         .lifetime(.prototype)
     }
     
     self.measure {
-      for _ in 0..<10000 {
+      for _ in 0..<50000 {
         _ = container.resolve() as PerformanceTest?
       }
     }
@@ -218,13 +219,13 @@ class DITranquillityTests_Performance: XCTestCase {
   func test04_resolveWithMoreRegisterX2() {
     DISetting.Log.fun = nil
     let container = DIContainer()
-    for i in 0..<2000 {
+    for i in 0..<500 {
       container.register(line: i, { PerformanceTest() })
         .lifetime(.prototype)
     }
     
     self.measure {
-      for _ in 0..<10000 {
+      for _ in 0..<50000 {
         _ = container.resolve() as PerformanceTest?
       }
     }
@@ -233,13 +234,13 @@ class DITranquillityTests_Performance: XCTestCase {
   func test04_resolveWithMoreRegisterX4() {
     DISetting.Log.fun = nil
     let container = DIContainer()
-    for i in 0..<4000 {
+    for i in 0..<1000 {
       container.register(line: i, { PerformanceTest() })
         .lifetime(.prototype)
     }
     
     self.measure {
-      for _ in 0..<10000 {
+      for _ in 0..<50000 {
         _ = container.resolve() as PerformanceTest?
       }
     }
@@ -248,13 +249,13 @@ class DITranquillityTests_Performance: XCTestCase {
   func test04_resolveWithMoreRegisterX8() {
     DISetting.Log.fun = nil
     let container = DIContainer()
-    for i in 0..<8000 {
+    for i in 0..<2000 {
       container.register(line: i, { PerformanceTest() })
         .lifetime(.prototype)
     }
     
     self.measure {
-      for _ in 0..<10000 {
+      for _ in 0..<50000 {
         _ = container.resolve() as PerformanceTest?
       }
     }

@@ -17,7 +17,7 @@ public typealias DITag = Any.Type
 public typealias DILogFunc = (DILogLevel, String)->()
 
 /// Short information about component. Needed for good log
-public struct DIComponentInfo: Equatable, CustomStringConvertible {
+public struct DIComponentInfo: Hashable, CustomStringConvertible {
   /// Any type announced at registration the component
   public let type: DIAType
   /// File where the component is registration
@@ -25,6 +25,10 @@ public struct DIComponentInfo: Equatable, CustomStringConvertible {
   /// Line where the component is registration
   public let line: Int
 
+  public var hashValue: Int {
+    return line ^ file.hashValue ^ ObjectIdentifier(type).hashValue
+  }
+  
   public static func ==(lhs: DIComponentInfo, rhs: DIComponentInfo) -> Bool {
     return lhs.type == rhs.type && lhs.line == rhs.line && lhs.file == rhs.file
   }

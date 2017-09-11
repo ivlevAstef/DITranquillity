@@ -23,16 +23,14 @@ final class ComponentContainer {
 
 
 final class Component {
-  typealias UniqueKey = String
+  typealias UniqueKey = DIComponentInfo
   
   init(componentInfo: DIComponentInfo, in frameworkBundle: Bundle?) {
     self.info = componentInfo
-    self.uniqueKey = "\(componentInfo.type)\(componentInfo.file)\(componentInfo.line)"
     self.bundle = (componentInfo.type as? AnyClass).map{ Bundle(for: $0) } ?? frameworkBundle
   }
   
   let info: DIComponentInfo
-  let uniqueKey: UniqueKey
   let bundle: Bundle?
   
   var lifeTime = DILifeTime.default
@@ -45,10 +43,10 @@ final class Component {
 }
 
 extension Component: Hashable {
-  var hashValue: Int { return uniqueKey.hash }
+  var hashValue: Int { return info.hashValue }
   
   static func ==(lhs: Component, rhs: Component) -> Bool {
-    return lhs.uniqueKey == rhs.uniqueKey
+    return lhs.info == rhs.info
   }
 }
 

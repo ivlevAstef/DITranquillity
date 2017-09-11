@@ -6,26 +6,52 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-typealias TypeKey = String
-
-extension String {
+struct TypeKey: Hashable {
+  private let type: DIAType
+  private let bundle: Bundle
+  private let tag: DITag
+  private let name: String
+  
+  private let typeID: ObjectIdentifier
+  private let tagID: ObjectIdentifier
+  
   init(by type: DIAType) {
-    self = "\(type)_\(bundleString(for: type))"
+    self.init(type: type, tag: Any.self, name: "")
   }
   
   init(by type: DIAType, and tag: DITag) {
-    self = "\(type)_\(bundleString(for: type))_$T_\(tag)"
+    self.init(type: type, tag: tag, name: "")
   }
   
   init(by type: DIAType, and name: String) {
-    self = "\(type)_\(bundleString(for: type))_$N_\(name)"
+    self.init(type: type, tag: Any.self, name: name)
+  }
+  
+  private init(type: DIAType, tag: DITag, name: String) {
+    self.type = type
+    self.bundle = getBundle(for: type)
+    self.tag = tag
+    self.name = name
+    
+    self.typeID = ObjectIdentifier(type)
+    self.tagID = ObjectIdentifier(tag)
+  }
+  
+  var hashValue: Int {
+    return typeID.hashValue ^ name.hashValue ^ tagID.hashValue ^ bundle.hashValue
+  }
+  
+  static func ==(lhs: TypeKey, rhs: TypeKey) -> Bool {
+    return lhs.type == rhs.type && lhs.name == rhs.name && lhs.tag == rhs.tag && lhs.bundle == rhs.bundle
   }
 }
 
-private func bundleString(for type: DIAType) -> String {
+private var defaultBundle = Bundle(for: NSObject.self)
+
+private func getBundle(for type: DIAType) -> Bundle {
   if let clazz = type as? AnyClass {
-    let bundle = Bundle(for: clazz)
-    return bundle.bundleIdentifier ?? bundle.bundlePath
+    return Bundle(for: clazz)
   }
-  return "unbundle"
+  return defaultBundle
 }
+

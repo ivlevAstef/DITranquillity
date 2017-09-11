@@ -13,8 +13,9 @@ class DITranquillityTests_Threads: XCTestCase {
   override func setUp() {
     super.setUp()
   }
+  /// Remove support threads, in next version return new improved thread safe.
   
-  func test01_ResolvePrototype() {
+  /*func test01_ResolvePrototype() {
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -102,5 +103,5 @@ class DITranquillityTests_Threads: XCTestCase {
         XCTAssert(service === singleService)
       }
     }
-  }
+  }*/
 }

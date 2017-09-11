@@ -123,7 +123,7 @@ class Resolver {
     let components = findComponents(by: type, with: name, from: bundle)
     
     if type is IsMany.Type {
-      let filterComponents = components.filter{ !stack.contains($0.uniqueKey) } // Remove objects contains in stack
+      let filterComponents = components.filter{ !stack.contains($0.info) } // Remove objects contains in stack
       assert(nil == object, "Many injection not supported")
       return filterComponents.flatMap{ makeObject(by: $0, use: nil) }
     }
@@ -139,7 +139,7 @@ class Resolver {
   /// Super function
   private func makeObject(by component: Component, use usingObject: Any?) -> Any? {
     log(.info, msg: "Found component: \(component.info)")
-    let uniqueKey = component.uniqueKey
+    let uniqueKey = component.info
     
     
     func resolveSingle() -> Any? {
@@ -253,31 +253,29 @@ class Resolver {
       return signature.call(objects)
     }
     
-    return synchronize(Resolver.monitor) {
-      stack.append(component.uniqueKey)
-      
-      defer {
-        stack.removeLast()
-        if stack.isEmpty {
-          endResolving()
-        }
+    
+    stack.append(component.info)
+    
+    defer {
+      stack.removeLast()
+      if stack.isEmpty {
+        endResolving()
       }
-      
-      switch component.lifeTime {
-      case .single, .lazySingle:
-        return resolveSingle()
-      case .weakSingle:
-        return resolveWeakSingle()
-      case .objectGraph:
-        return resolveObjectGraph()
-      case .prototype:
-        return resolvePrototype()
-      }
+    }
+    
+    switch component.lifeTime {
+    case .single, .lazySingle:
+      return resolveSingle()
+    case .weakSingle:
+      return resolveWeakSingle()
+    case .objectGraph:
+      return resolveObjectGraph()
+    case .prototype:
+      return resolvePrototype()
     }
   }
  
   private unowned let container: DIContainer
-  private static let monitor = NSObject()
   
   let cache = Cache()
   var stack: [Component.UniqueKey] = []
