@@ -11,11 +11,11 @@ typealias Injection = (signature: MethodSignature, cycle: Bool)
 // Reference
 final class ComponentContainer {
   var map = Multimap<TypeKey, Component>()
-  var manyMap = Multimap<TypeKey, Component>() //TypeKeys only by Type without modificators
+  var manyMap = Multimap<ShortTypeKey, Component>()
   
-  func insert(_ key: TypeKey, type: DIAType, _ component: Component) {
+  func insert(_ key: TypeKey, _ component: Component) {
     map.insert(key: key, value: component)
-    manyMap.insert(key: TypeKey(by: type), value: component)
+    manyMap.insert(key: ShortTypeKey(by: key.type), value: component)
   }
   
   var components: [Component] { return map.dict.values.flatMap{ $0 } }
@@ -27,7 +27,7 @@ final class Component {
   
   init(componentInfo: DIComponentInfo, in frameworkBundle: Bundle?) {
     self.info = componentInfo
-    self.bundle = (componentInfo.type as? AnyClass).map{ Bundle(for: $0) } ?? frameworkBundle
+    self.bundle = getBundle(for: componentInfo.type)
   }
   
   let info: DIComponentInfo

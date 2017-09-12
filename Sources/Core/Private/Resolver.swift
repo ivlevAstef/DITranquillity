@@ -82,17 +82,17 @@ class Resolver {
     }
     
     if let manyType = type as? IsMany.Type {
-      return Array(container.componentContainer.manyMap[TypeKey(by: manyType.type)])
+      return Array(container.componentContainer.manyMap[ShortTypeKey(by: manyType.type)])
     }
     
     let components: [Component]
     if let taggedType = type as? IsTag.Type {
       let realType = removeTypeWrappers(taggedType.type)
-      components = Array(container.componentContainer.map[TypeKey(by: realType, and: taggedType.tag)])
+      components = Array(container.componentContainer.map[TypeKey(by: realType, tag: taggedType.tag)])
     } else {
       let realType = removeTypeWrappers(type)
       if let name = name {
-        components = Array(container.componentContainer.map[TypeKey(by: realType, and: name)])
+        components = Array(container.componentContainer.map[TypeKey(by: realType, name: name)])
       } else {
         components = Array(container.componentContainer.map[TypeKey(by: realType)])
       }

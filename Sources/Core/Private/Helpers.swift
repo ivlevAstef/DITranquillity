@@ -91,3 +91,12 @@ func description(type: DIAType) -> String {
   }
   return "type: \(type)"
 }
+
+////// for get bundle by type
+
+func getBundle(for type: DIAType) -> Bundle? {
+  if let clazz = type as? AnyClass {
+    return Bundle(for: clazz)
+  }
+  return nil
+}

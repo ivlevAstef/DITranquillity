@@ -25,13 +25,13 @@ private class PerformanceTest {
 class DITranquillityTests_Performance: XCTestCase {
   /*
    register count:
-   1000 = 0.057
-   2000 = 0.174
-   4000 = 0.630
-   8000 = 2.520
+   1000 = 0.052
+   2000 = 0.168
+   4000 = 0.613
+   8000 = 2.668
    not linear!!!
    but 1k classes it's more.
-   0.00001 per register
+   0.000008 per register
    
    parameters count (for 2000):
    0 = 0.165
@@ -43,28 +43,28 @@ class DITranquillityTests_Performance: XCTestCase {
    increase register time on 0.0000005 per parameter
    
    resolve (for 50000):
-   prototype = 0.112
-   objectGraph = 0.225
-   single = 0.242
-   0.000004 per resolve with one register
+   prototype = 0.083
+   objectGraph = 0.193
+   single = 0.212
+   0.000003 per resolve with one register
    
    resolve by register count (for 50000):
-   250 = 0.303
-   500 = 0.564
-   1000 = 1.079
-   2000 = 2.354
+   250 = 0.272
+   500 = 0.529
+   1000 = 1.029
+   2000 = 2.316
    linear
    resolve type increase on 0.0011 (for 50000) per one register
    0.00002 per resolve with 1000 register
    
    inject count (for 2000):
-   1 = 0.184
-   2 = 0.185
-   4 = 0.198
-   8 = 0.229
-   16 = 0.271
+   1 = 0.169
+   2 = 0.173
+   4 = 0.185
+   8 = 0.218
+   16 = 0.261
    not linear, but this is not critical
-   increase register time on 0.000025 per injection
+   increase register time on 0.000022 per injection
    
    */
   
