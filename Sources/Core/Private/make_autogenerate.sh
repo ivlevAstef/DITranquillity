@@ -1,6 +1,6 @@
 #!/bin/bash
 
-argmax=9
+argmax=16
 
 join() { local d=$1; shift; printf "$1"; shift; printf "%s" "${@/#/$d}"; }
 
@@ -22,8 +22,8 @@ local PType=$(join ',' ${numbers[@]/#/P})
 local MArg=$(join ',' $(replaceToArg numbers[@] "m(\$0[;I])"))
 
 echo "  static func make<$PType,R>(_ types: [DIAType], _ names: [String?]? = nil, by f: @escaping ($PType)->R) -> MethodSignature {
-return MS(types, names){f($MArg)}
-}
+    return MS(types, names){f($MArg)}
+  }
 " >> $2
 }
 

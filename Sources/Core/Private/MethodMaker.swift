@@ -55,4 +55,32 @@ struct MethodMaker {
     return MS(types, names){f(m($0[0]),m($0[1]),m($0[2]),m($0[3]),m($0[4]),m($0[5]),m($0[6]),m($0[7]),m($0[8]),m($0[9]))}
   }
 
+  static func make<P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,R>(_ types: [DIAType], _ names: [String?]? = nil, by f: @escaping (P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10)->R) -> MethodSignature {
+    return MS(types, names){f(m($0[0]),m($0[1]),m($0[2]),m($0[3]),m($0[4]),m($0[5]),m($0[6]),m($0[7]),m($0[8]),m($0[9]),m($0[10]))}
+  }
+
+  static func make<P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,R>(_ types: [DIAType], _ names: [String?]? = nil, by f: @escaping (P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11)->R) -> MethodSignature {
+    return MS(types, names){f(m($0[0]),m($0[1]),m($0[2]),m($0[3]),m($0[4]),m($0[5]),m($0[6]),m($0[7]),m($0[8]),m($0[9]),m($0[10]),m($0[11]))}
+  }
+
+  static func make<P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,R>(_ types: [DIAType], _ names: [String?]? = nil, by f: @escaping (P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12)->R) -> MethodSignature {
+    return MS(types, names){f(m($0[0]),m($0[1]),m($0[2]),m($0[3]),m($0[4]),m($0[5]),m($0[6]),m($0[7]),m($0[8]),m($0[9]),m($0[10]),m($0[11]),m($0[12]))}
+  }
+
+  static func make<P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,R>(_ types: [DIAType], _ names: [String?]? = nil, by f: @escaping (P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13)->R) -> MethodSignature {
+    return MS(types, names){f(m($0[0]),m($0[1]),m($0[2]),m($0[3]),m($0[4]),m($0[5]),m($0[6]),m($0[7]),m($0[8]),m($0[9]),m($0[10]),m($0[11]),m($0[12]),m($0[13]))}
+  }
+
+  static func make<P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,R>(_ types: [DIAType], _ names: [String?]? = nil, by f: @escaping (P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14)->R) -> MethodSignature {
+    return MS(types, names){f(m($0[0]),m($0[1]),m($0[2]),m($0[3]),m($0[4]),m($0[5]),m($0[6]),m($0[7]),m($0[8]),m($0[9]),m($0[10]),m($0[11]),m($0[12]),m($0[13]),m($0[14]))}
+  }
+
+  static func make<P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,R>(_ types: [DIAType], _ names: [String?]? = nil, by f: @escaping (P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15)->R) -> MethodSignature {
+    return MS(types, names){f(m($0[0]),m($0[1]),m($0[2]),m($0[3]),m($0[4]),m($0[5]),m($0[6]),m($0[7]),m($0[8]),m($0[9]),m($0[10]),m($0[11]),m($0[12]),m($0[13]),m($0[14]),m($0[15]))}
+  }
+
+  static func make<P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,R>(_ types: [DIAType], _ names: [String?]? = nil, by f: @escaping (P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16)->R) -> MethodSignature {
+    return MS(types, names){f(m($0[0]),m($0[1]),m($0[2]),m($0[3]),m($0[4]),m($0[5]),m($0[6]),m($0[7]),m($0[8]),m($0[9]),m($0[10]),m($0[11]),m($0[12]),m($0[13]),m($0[14]),m($0[15]),m($0[16]))}
+  }
+
 }
