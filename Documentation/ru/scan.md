@@ -39,7 +39,7 @@ container.append(framework: YourFrameworkScanner.self)
 class YourFramework: YourBaseFramework { ... }
 
 private class YourFrameworkScanner: DIScanFramework {
-override class var predicate: Predicate? { return .type({ $0 is YourBaseFramework.Type }) }
+  override class var predicate: Predicate? { return .type({ $0 is YourBaseFramework.Type }) }
 }
 ```
 

@@ -14,7 +14,7 @@ DITranquallity - небольшая библиотека для внедрени
 * [Краткий синтаксис получения экземпляра клаcса](resolve.md#Разрешение-зависимостей)
 * [Поиск частей, фреймворков](scan.md#Поиск)
 * [Логирование](log.md#Логирование)
-* [Валидация графа зависимостей](validation.md#Валидация)
+* [Валидация графа зависимостей](validation.md#Валидация-контейнера)
 
 # Главы
 
@@ -26,7 +26,6 @@ DITranquallity - небольшая библиотека для внедрени
 * [Что дальше?](quick_start.md#Что-дальше)
 
 ## [Регистрация](registration.md#Регистрация)
-* [Регистрация](registration.md#Регистрация)
 * [Указание сервисов](registration.md#Указание-сервисов)
 * [Разрешение зависимостей при инициализации](registration.md#Разрешение-зависимостей-при-инициализации)
 
@@ -35,8 +34,8 @@ DITranquallity - небольшая библиотека для внедрени
 * [Внедрение циклических зависимостей через свойства](injection.md#Внедрение-циклических-зависимостей-через-свойства)
 
 ## [Валидация контейнера](validation.md#Валидация-контейнера)
-* [Синтаксис](build.md#Синтаксис)
-* [Что проверяется?](build.md#Что-проверяется)
+* [Синтаксис](validation.md#Синтаксис)
+* [Что проверяется?](validation.md#Что-проверяется)
 
 ## [Разрешение зависимостей](resolve.md#Разрешение-зависимостей)
 * [По тегу](resolve.md#По-тегу)
@@ -50,16 +49,15 @@ DITranquallity - небольшая библиотека для внедрени
 * [Теги](modificators.md#Теги)
 * [Имена](modificators.md#Имена)
 * [Множественная](modificators.md#Множественная)
-* [Указание тега](modificators.md#Теги)
 
 ## [Время жизни](lifetime.md#Время-жизни)
 * [Одиночка (single)](lifetime.md#Одиночка-single)
 * [Отложенная одиночка (lazySingle)](lifetime.md#Отложенная-одиночка-lazysingle)
 * [Слабая одиночка (weakSingle)](lifetime.md#Слабая-одиночка-weaksingle)
-* [Единственный в графе (objectGraph)](lifetime.md#Единственный-в-графе-objectGraph)
+* [Единственный в графе (objectGraph)](lifetime.md#Единственный-в-графе-objectgraph)
 * [Всегда новый (prototype)](lifetime.md#Всегда-новый-prototype)
 
-## [Части и Фреймворки](part_framework.md#Части_и_Фреймворки)
+## [Части и Фреймворки](part_framework.md#Части-и-Фреймворки)
 * [Объявление](part_framework.md#Объявление)
 * [Регистрация](part_framework.md#Регистрация)
 * [Импорт](part_framework.md#Импорт)
@@ -67,25 +65,23 @@ DITranquallity - небольшая библиотека для внедрени
 ## [Storyboard](storyboard.md#storyboard)
 * [Регистрация ViewController](storyboard.md#Регистрация-viewcontroller)
 * [Создание Storyboard](storyboard.md#Создание-storyboard)
-* [StoryboardReference](storyboard.md#StoryboardReference)
+* [StoryboardReference](storyboard.md#Storyboardreference)
 
 
 ## [Поиск](scan.md#Поиск)
 * [Предыстория](scan.md#Предыстория)
-* [Поиск модулей](scan.md#Поиск-модулей)
-* [Поиск компонент](scan.md#Поиск-компонент)
-* [Указание Bundle](scan.md#Указание-bundle)
-* [Возможности](scan.md#Возможности)
+* [Поиск фреймворков](scan.md#Поиск-фреймворков)
+* [Поиск частей](scan.md#Поиск-частей)
 
 ## [Логирование](log.md#Логирование)
 * [Использование](log.md#Использование)
-* [События](log.md#События)
 
 ## [Примеры](sample.md#Примеры)
 * [Chaos](sample.md#chaos)
 * [Delegate and Observer](sample.md#delegate-and-observer)
 * [Habr](sample.md#habr)
 * [OSX](sample.md#osx)
+* [Сравнение со swinject](sample.md#сравнение-со-swinject)
 * [~~Big Project~~](sample.md#big-project)
 
 # [Словарик](glossary.md#Словарик)

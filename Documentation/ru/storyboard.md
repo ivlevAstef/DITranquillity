@@ -42,7 +42,7 @@ container.register(YourViewController.self)
 
 При этом обращу внимание на то, что если ViewController создается из кода xib или программы, то его стоит регистрировать вместе с методом инициализации:
 ```Swift
-builder.register{ YourViewController(nibName: "NibName", bundle: Bundle) }
+container.register{ YourViewController(nibName: "NibName", bundle: Bundle) }
   .injection { vc, inject in vc.inject = inject }
 ```
 
@@ -69,7 +69,7 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
   let container = DIContainer()
   // other registrations
 
-  let storyboard = DIStoryboard(name: "Main", bundle: nil, container: container)
+  let storyboard = DIStoryboard.create(name: "Main", bundle: nil, container: container)
 
   let viewController = storyboard.instantiateInitialController() as! NSViewController
 
