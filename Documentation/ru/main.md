@@ -5,13 +5,13 @@ DITranquallity - небольшая библиотека для внедрени
 
 * Поддержка чистых Swift типов
 * Внедрение зависимостей через: [метод инициализации](registration.md#Разрешение-зависимостей-при-инициализации), [свойства, метод](injection.md#Внедрение)
-* [Указание тега](modificators.md#Теги) или [имени](modificators.md#Имена)
+* [Указание тега](modificators.md#Теги), [имени](modificators.md#Имена) и получение [множества](modificators.md#Множественная)
 * [Поддержка указания нескольких сервисов](registration.md#Указание-сервисов)
 * [5 времен жизни: single, lazySingle, weakSingle, objectGraph, prototype](lifetime.md#Время-жизни)
-* [iOS/macOS Storyboard](storyboard.md#storyboard)
+* [iOS/macOS Storyboard и StoryboardReference](storyboard.md#storyboard)
 * [Поддержка циклических зависимостей](injection.md#Внедрение-циклических-зависимостей-через-свойства)
 * Несколько уровней абстракций: тип, [часть](part_framework.md#Части-и-Фреймворки), [фреймворк](part_framework.md#Части-и-Фреймворки)
-* [Краткий синтаксис получения экземпляра клааса](resolve.md#Разрешение-зависимостей)
+* [Краткий синтаксис получения экземпляра клаcса](resolve.md#Разрешение-зависимостей)
 * [Поиск частей, фреймворков](scan.md#Поиск)
 * [Логирование](log.md#Логирование)
 * [Валидация графа зависимостей](validation.md#Валидация)
@@ -86,6 +86,6 @@ DITranquallity - небольшая библиотека для внедрени
 * [Delegate and Observer](sample.md#delegate-and-observer)
 * [Habr](sample.md#habr)
 * [OSX](sample.md#osx)
-* ~~Big Project~~
+* [~~Big Project~~](sample.md#big-project)
 
 # [Словарик](glossary.md#Словарик)
