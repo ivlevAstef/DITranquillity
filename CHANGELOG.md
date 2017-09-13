@@ -14,7 +14,6 @@
 * Single cocoapods spec without subspecs.
 * fixed API. No more global syntax changes.
 * But:
-* Removed thread safe - there will be a new fast implementation.
 * Removed runtime args - there will be a new more powerful concept.
 
 

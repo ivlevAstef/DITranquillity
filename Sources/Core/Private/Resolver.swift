@@ -82,19 +82,19 @@ class Resolver {
     }
     
     if let manyType = type as? IsMany.Type {
-      return Array(container.componentContainer.manyMap[ShortTypeKey(by: manyType.type)])
+      return Array(container.componentContainer[ShortTypeKey(by: manyType.type)])
     }
     
     let components: [Component]
     if let taggedType = type as? IsTag.Type {
       let realType = removeTypeWrappers(taggedType.type)
-      components = Array(container.componentContainer.map[TypeKey(by: realType, tag: taggedType.tag)])
+      components = Array(container.componentContainer[TypeKey(by: realType, tag: taggedType.tag)])
     } else {
       let realType = removeTypeWrappers(type)
       if let name = name {
-        components = Array(container.componentContainer.map[TypeKey(by: realType, name: name)])
+        components = Array(container.componentContainer[TypeKey(by: realType, name: name)])
       } else {
-        components = Array(container.componentContainer.map[TypeKey(by: realType)])
+        components = Array(container.componentContainer[TypeKey(by: realType)])
       }
     }
     
@@ -132,7 +132,14 @@ class Resolver {
       return makeObject(by: component, use: object)
     }
     
-    log(.warning, msg: "Not found type: \(type)")
+    if components.isEmpty {
+      log(.warning, msg: "Not found type: \(description(type: type))")
+    } else {
+      let infos = components.map{ $0.info }
+      log(.warning, msg: "Ambiguous \(description(type: type)) contains in: \(infos)")
+    }
+    
+    
     return nil
   }
   
@@ -253,40 +260,43 @@ class Resolver {
       return signature.call(objects)
     }
     
-    
-    stack.append(component.info)
-    
-    defer {
-      stack.removeLast()
-      if stack.isEmpty {
-        endResolving()
+    return mutex.sync {
+      stack.append(component.info)
+      defer {
+        stack.removeLast()
+        if stack.isEmpty {
+          endResolving()
+        }
       }
-    }
-    
-    switch component.lifeTime {
-    case .single, .lazySingle:
-      return resolveSingle()
-    case .weakSingle:
-      return resolveWeakSingle()
-    case .objectGraph:
-      return resolveObjectGraph()
-    case .prototype:
-      return resolvePrototype()
+      
+      switch component.lifeTime {
+      case .single, .lazySingle:
+        return resolveSingle()
+      case .weakSingle:
+        return resolveWeakSingle()
+      case .objectGraph:
+        return resolveObjectGraph()
+      case .prototype:
+        return resolvePrototype()
+      }
     }
   }
  
   private unowned let container: DIContainer
   
-  let cache = Cache()
-  var stack: [Component.UniqueKey] = []
+  private let mutex = PThreadMutex(recursive: ())
   
-  class Cache {
-    typealias Scope<T> = [Component.UniqueKey: T]
+  private let cache = Cache()
+  private var stack: [Component.UniqueKey] = []
+  
+  private class Cache {
+    fileprivate typealias Scope<T> = [Component.UniqueKey: T]
     
-    static var single = Scope<Any>()
-    static var weakSingle = Scope<Weak<Any>>()
+    fileprivate static var single = Scope<Any>()
+    fileprivate static var weakSingle = Scope<Weak<Any>>()
     
-    var graph = Scope<Any>()
-    var cycleInjectionStack: [(obj: Any?, injection: Injection)] = []
+    fileprivate var graph = Scope<Any>()
+    fileprivate var cycleInjectionStack: [(obj: Any?, injection: Injection)] = []
   }
 }
+

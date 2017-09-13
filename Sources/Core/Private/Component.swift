@@ -10,15 +10,41 @@ typealias Injection = (signature: MethodSignature, cycle: Bool)
 
 // Reference
 final class ComponentContainer {
-  var map = Multimap<TypeKey, Component>()
-  var manyMap = Multimap<ShortTypeKey, Component>()
+  private var map = Dictionary<TypeKey, Set<Component>>()
+  private var manyMap = Dictionary<ShortTypeKey, Set<Component>>()
   
   func insert(_ key: TypeKey, _ component: Component) {
-    map.insert(key: key, value: component)
-    manyMap.insert(key: ShortTypeKey(by: key.type), value: component)
+    let shortKey = ShortTypeKey(by: key.type)
+    mutex.sync {
+      if nil == map[key]?.insert(component) {
+        map[key] = [component]
+      }
+      
+      if nil == manyMap[shortKey]?.insert(component) {
+        manyMap[shortKey] = [component]
+      }
+    }
   }
   
-  var components: [Component] { return map.dict.values.flatMap{ $0 } }
+  subscript(_ key: TypeKey) -> Set<Component> {
+    return mutex.sync {
+      return map[key] ?? []
+    }
+  }
+  
+  subscript(_ key: ShortTypeKey) -> Set<Component> {
+    return mutex.sync {
+      return manyMap[key] ?? []
+    }
+  }
+  
+  var components: [Component] {
+    return mutex.sync {
+      return map.values.flatMap{ $0 }
+    }
+  }
+  
+  private let mutex = PThreadMutex(normal: ())
 }
 
 
@@ -60,3 +86,4 @@ extension Component {
     injections.append(Injection(signature: signature, cycle: cycle))
   }
 }
+

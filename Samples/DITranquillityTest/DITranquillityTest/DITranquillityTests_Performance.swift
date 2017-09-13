@@ -25,8 +25,8 @@ private class PerformanceTest {
 class DITranquillityTests_Performance: XCTestCase {
   /*
    register count:
-   1000 = 0.052
-   2000 = 0.168
+   1000 = 0.048
+   2000 = 0.165
    4000 = 0.613
    8000 = 2.668
    not linear!!!

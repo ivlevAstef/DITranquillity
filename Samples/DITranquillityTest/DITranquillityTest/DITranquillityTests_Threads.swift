@@ -15,7 +15,7 @@ class DITranquillityTests_Threads: XCTestCase {
   }
   /// Remove support threads, in next version return new improved thread safe.
   
-  /*func test01_ResolvePrototype() {
+  func test01_ResolvePrototype() {
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -103,5 +103,31 @@ class DITranquillityTests_Threads: XCTestCase {
         XCTAssert(service === singleService)
       }
     }
-  }*/
+  }
+  
+  func test04_ResolveRegister() {
+    let container = DIContainer()
+    
+    DISetting.Log.fun = nil
+    
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
+      for i in 0..<32768 {
+        container.register(line: i + 1000, FooService.init).lifetime(.prototype)
+      }
+    }
+    
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
+      for _ in 0..<16384 {
+        let service: FooService? = *container
+        _ = service
+      }
+    }
+    
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+      for _ in 0..<8192 {
+        let service: FooService? = *container
+        _ = service
+      }
+    }
+  }
 }

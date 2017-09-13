@@ -24,6 +24,7 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 * Short resolve syntax
 * Scan Parts/Frameworks
 * Very detail logs
+* Thread safe
 
 ## Usage
 
