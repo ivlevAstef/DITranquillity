@@ -13,10 +13,15 @@ class TestViewController: UIViewController {
   var service: ServiceProtocol!
   
   var containerVC: TestViewContainerVC!
+  var referenceVC: TestReferenceVC!
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if let identifier = segue.identifier, identifier == "container" {
       containerVC = segue.destination as! TestViewContainerVC
+    }
+    
+    if let identifier = segue.identifier, identifier == "ShowReferenceViewController" {
+      referenceVC = segue.destination as! TestReferenceVC
     }
   }
 }
@@ -28,25 +33,28 @@ class TestViewContainerVC: UIViewController {
   var service: ServiceProtocol!
 }
 
+class TestReferenceVC: UIViewController {
+  var service: ServiceProtocol!
+}
+
 class DITranquillityTests_Storyboard: XCTestCase {
   override func setUp() {
     super.setUp()
   }
   
   func test01_InitialViewController() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .initial(FooService.init)
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-		builder.register(vc: TestViewController.self)
+    container.register(TestViewController.self)
       .injection{ $0.service = $1 }
-    
-    let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
 
-		let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
-		let viewController = navigation.childViewControllers[0]
+    let storyboard = DIStoryboard.create(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: container)
+
+    let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
+    let viewController = navigation.childViewControllers[0]
     XCTAssert(viewController is TestViewController)
     guard let testVC = viewController as? TestViewController else {
       XCTFail("incorrect View Controller")
@@ -56,16 +64,15 @@ class DITranquillityTests_Storyboard: XCTestCase {
   }
   
   func test02_ViewControllerByIdentity() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .initial(FooService.init)
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-		builder.register(vc: TestViewController2.self)
-      .injection(.manual) { scope, vc in try vc.service = *scope }
+    container.register(TestViewController2.self)
+      .injection{ $0.service = $1 }
     
-    let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
+    let storyboard = DIStoryboard.create(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: container)
     
     let viewController = storyboard.instantiateViewController(withIdentifier: "TestVC2")
     XCTAssert(viewController is TestViewController2)
@@ -78,31 +85,30 @@ class DITranquillityTests_Storyboard: XCTestCase {
   }
   
   func test03_ViewControllerNotRegistered() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
+    let storyboard = DIStoryboard.create(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: container)
     
     let viewController = storyboard.instantiateViewController(withIdentifier: "TestVC2")
     XCTAssert(viewController is TestViewController2)
   }
   
   func test04_ViewControllerSequence() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .initial{ FooService() }
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-		builder.register(vc: TestViewController.self)
+    container.register(TestViewController.self)
       .injection { vc, service in vc.service = service }
     
-		builder.register(vc: TestViewController2.self)
-      .postInit { scope, vc in try vc.service = *scope }
+    container.register(TestViewController2.self)
+      .injection { vc, service in vc.service = service }
 
-    let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
+    let storyboard = DIStoryboard.create(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: container)
     
-		let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
-		let viewController = navigation.childViewControllers[0]
+    let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
+    let viewController = navigation.childViewControllers[0]
     XCTAssert(viewController is TestViewController)
     guard let testVC = viewController as? TestViewController else {
       XCTFail("incorrect View Controller")
@@ -116,16 +122,15 @@ class DITranquillityTests_Storyboard: XCTestCase {
   }
   
   func test05_ViewControllerShortRegister() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .initial(FooService.init)
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-    builder.register(vc: TestViewController2.self)
-      .injection(.manual) { scope, vc in try vc.service = *scope }
+    container.register(TestViewController2.self)
+      .injection{ $0.service = $1 }
     
-    let storyboard = try! DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: builder.build())
+    let storyboard = DIStoryboard.create(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: container)
     
     let viewController = storyboard.instantiateViewController(withIdentifier: "TestVC2")
     XCTAssert(viewController is TestViewController2)
@@ -138,24 +143,21 @@ class DITranquillityTests_Storyboard: XCTestCase {
   }
   
   func test06_UIStoryboard() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .initial{ FooService() }
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-		builder.register(vc: TestViewController.self)
+    container.register(TestViewController.self)
       .injection { $0.service = $1 }
     
-    builder.register(type: UIStoryboard.self)
-      .lifetime(.single)
-      .initial { DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: $0) }
+    container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+      .lifetime(.weakSingle)
     
-    let container = try! builder.build()
-    let storyboard: UIStoryboard = try! *container
+    let storyboard: UIStoryboard = *container
     
-		let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
-		let viewController = navigation.childViewControllers[0]
+    let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
+    let viewController = navigation.childViewControllers[0]
     XCTAssert(viewController is TestViewController)
     guard let testVC = viewController as? TestViewController else {
       XCTFail("incorrect View Controller")
@@ -164,87 +166,51 @@ class DITranquillityTests_Storyboard: XCTestCase {
     XCTAssertEqual(testVC.service.foo(), "foo")
     
   }
-	
-	func test07_issue69_getViewControllerAfterDelay() {
-		let builder = DIContainerBuilder()
-		
-		builder.register(type: FooService.self)
-			.as(ServiceProtocol.self).check{$0}
-      .initial{ FooService() }
-		
-		builder.register(vc: TestViewController.self)
-			.injection(.manual) { scope, vc in try vc.service = *scope }
-		
-		builder.register(type: UIStoryboard.self)
-			.lifetime(.single)
-			.initial { DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: $0) }
-		
-		var storyboard: UIStoryboard!
-		autoreleasepool {
-			let container = try! builder.build()
-			storyboard = try! *container
-		}
-		
-		let semaphore = DispatchSemaphore(value: 0)
-		DispatchQueue.global(qos: .userInteractive).asyncAfter(wallDeadline: .now() + 1) {
-			defer { semaphore.signal() }
-			let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
-			let viewController = navigation.childViewControllers[0]
-			XCTAssert(viewController is TestViewController)
-			guard let testVC = viewController as? TestViewController else {
-				XCTFail("incorrect View Controller")
-				return
-			}
-			
-			XCTAssertEqual(testVC.service.foo(), "foo")
-		}
-		semaphore.wait()
-	}
   
-  func test08_shortSyntaxInitialStoryboard() {
-    let builder = DIContainerBuilder()
+  func test07_issue69_getViewControllerAfterDelay() {
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .initial{ FooService() }
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-    builder.register(vc: TestViewController.self)
+    container.register(TestViewController.self)
       .injection { $0.service = $1 }
     
-    builder.register(type: UIStoryboard.self)
-      .lifetime(.single)
-      .initial(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+    container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+      .lifetime(.weakSingle)
     
-    let container = try! builder.build()
-    let storyboard: UIStoryboard = try! *container
+    let storyboard: UIStoryboard = container.resolve(name: "TestStoryboard")
     
-		let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
-		let viewController = navigation.childViewControllers[0]
-    XCTAssert(viewController is TestViewController)
-    guard let testVC = viewController as? TestViewController else {
-      XCTFail("incorrect View Controller")
-      return
+    let semaphore = DispatchSemaphore(value: 0)
+    DispatchQueue.global(qos: .userInteractive).asyncAfter(wallDeadline: .now() + 1) {
+      defer { semaphore.signal() }
+      let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
+      let viewController = navigation.childViewControllers[0]
+      XCTAssert(viewController is TestViewController)
+      guard let testVC = viewController as? TestViewController else {
+        XCTFail("incorrect View Controller")
+        return
+      }
+      
+      XCTAssertEqual(testVC.service.foo(), "foo")
     }
-    XCTAssertEqual(testVC.service.foo(), "foo")
+    semaphore.wait()
   }
   
-  func test09_doubleVCfromStoryboard() {
-    let builder = DIContainerBuilder()
+  func test08_doubleVCfromStoryboard() {
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .initial{ FooService() }
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-    builder.register(vc: TestViewController.self)
-      .injection { $0.service = $1 }
-      .lifetime(.lazySingle)
+    container.register(TestViewController.self)
+      .injection{ $0.service = $1 }
+      .lifetime(.weakSingle)
     
-    builder.register(type: UIStoryboard.self)
-      .lifetime(.single)
-      .initial(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+    container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+      .lifetime(.weakSingle)
     
-    let container = try! builder.build()
-    let storyboard: UIStoryboard = try! *container
+    let storyboard: UIStoryboard = *container
     
     let navigation1: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
     let viewController1 = navigation1.childViewControllers[0]
@@ -261,27 +227,23 @@ class DITranquillityTests_Storyboard: XCTestCase {
     XCTAssertEqual(vc.service.foo(), "foo")
   }
   
-  func test10_containerViewController() {
-    let builder = DIContainerBuilder()
+  func test09_containerViewController() {
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .initial{ FooService() }
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-    builder.register(vc: TestViewController.self)
+    container.register(TestViewController.self)
       .injection { $0.service = $1 }
-      .lifetime(.lazySingle)
+      .lifetime(.weakSingle)
     
-    builder.register(vc: TestViewContainerVC.self)
+    container.register(TestViewContainerVC.self)
       .injection { $0.service = $1 }
     
-    builder.register(type: UIStoryboard.self)
-      .lifetime(.single)
-      .initial(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+    container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+      .lifetime(.weakSingle)
     
-    
-    let container = try! builder.build()
-    let storyboard: UIStoryboard = try! *container
+    let storyboard: UIStoryboard = *container
     
     let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
     let viewController = navigation.childViewControllers[0]
@@ -294,48 +256,90 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
   }
   
-  func test11_issue98_getVCByTypeFromDIStoryboard() {
-    let builder = DIContainerBuilder()
+  func test10_issue98_getVCByTypeFromDIStoryboard() {
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .initial{ FooService() }
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-    builder.register(vc: TestViewController.self)
-      .initial(useStoryboard: { try *$0 }, identifier: "testID")
+    container.register{ ($0 as UIStoryboard).instantiateViewController(withIdentifier: "testID") as! TestViewController }
       .injection{ $0.service = $1 }
     
-    builder.register(type: UIStoryboard.self)
-      .lifetime(.single)
-      .initial(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
-    
-    let container = try! builder.build()
-    
-    let vc: TestViewController = try! container.resolve()
+    container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+      .lifetime(.weakSingle)
+
+    let vc: TestViewController = container.resolve()
     _ = vc.view // for call viewDidLoad() and full initialization
     
     XCTAssertEqual(vc.service.foo(), "foo")
   }
   
-  func test12_getVCByTypeFromDIStoryboardManual() {
-    let builder = DIContainerBuilder()
+  func test11_getVCByTypeFromDIStoryboardManual() {
+    let container = DIContainer()
+    let storyboard = DIStoryboard.create(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
     
-    let scontainer = try! builder.build()
-    let storyboard = DIStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: scontainer)
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .initial{ FooService() }
-    
-    builder.register(vc: TestViewController.self)
-      .initial(useStoryboard: storyboard, identifier: "testID")
+    container.register{ storyboard.instantiateViewController(withIdentifier: "testID") as! TestViewController }
       .injection{ $0.service = $1 }
     
-    let container = try! builder.build()
-    
-    let vc: TestViewController = try! container.resolve()
+    let vc: TestViewController = container.resolve()
     _ = vc.view // for call viewDidLoad() and full initialization
     
     XCTAssertEqual(vc.service.foo(), "foo")
+  }
+  
+  func test13_storyboardReference() {
+    let container = DIContainer()
+    
+    container.register(TestViewController.self)
+      .injection{ $0.service = $1 }
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+    
+    container.register(TestReferenceVC.self)
+      .injection{ $0.service = $1 }
+    
+    container.registerStoryboard(name: "TestReferenceStoryboard", bundle: Bundle(for: type(of: self)))
+    
+    let storyboard = DIStoryboard.create(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: container)
+    
+    let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
+    let vc = navigation.childViewControllers[0] as! TestViewController
+    _ = vc.view // for call viewDidLoad() and full initialization
+    XCTAssertEqual(vc.service.foo(), "foo")
+    
+    vc.performSegue(withIdentifier: "ShowReferenceViewController", sender: nil)
+    XCTAssertEqual(vc.referenceVC!.service.foo(), "foo")
+  }
+  
+  func test14_twoStoryboardReference() {
+    let container = DIContainer()
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+    
+    container.register(TestViewController.self)
+      .injection{ $0.service = $1 }
+      .default()
+    
+    container.register(TestReferenceVC.self)
+      .injection{ $0.service = $1 }
+    
+    container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+      .default()
+    container.registerStoryboard(name: "TestReferenceStoryboard", bundle: Bundle(for: type(of: self)))
+    
+    let storyboard: UIStoryboard = *container
+    
+    let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
+    let vc = navigation.childViewControllers[0] as! TestViewController
+    _ = vc.view // for call viewDidLoad() and full initialization
+    XCTAssertEqual(vc.service.foo(), "foo")
+    
+    vc.performSegue(withIdentifier: "ShowReferenceViewController", sender: nil)
+    XCTAssertEqual(vc.referenceVC!.service.foo(), "foo")
   }
 }

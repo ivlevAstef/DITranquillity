@@ -9,11 +9,14 @@
 import UIKit
 import DITranquillity
 
-class AppLogger: DILogger {
-  func log(_ event: DILogEvent, msg: String) {
-    if case .warning(_) = event {
-      print(msg)
-    }
+func dilog(level: DILogLevel, msg: String) {
+  switch level {
+  case .error:
+    print("ERR: " + msg)
+  case .warning:
+    print("WRN: " + msg)
+  case .info, .none:
+    break
   }
 }
 
@@ -23,15 +26,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
   public func applicationDidFinishLaunching(_ application: UIApplication) {
-    DILoggerComposite.add(logger: AppLogger())
+    DISetting.Log.fun = dilog
     
-    let builder = DIContainerBuilder()
-    builder.register(module: AppModule())
-    let container = try! builder.build()
+    let container = DIContainer()
+    container.append(framework: AppFramework.self)
+
+    if !container.valid() {
+      fatalError()
+    }
     
     window = UIWindow(frame: UIScreen.main.bounds)
 
-    let storyboard: UIStoryboard = try! container.resolve(name: "Main") // Получаем наш Main storyboard
+    let storyboard: UIStoryboard = container.resolve(name: "Main") // Получаем наш Main storyboard
     window!.rootViewController = storyboard.instantiateInitialViewController()
     window!.makeKeyAndVisible()
   }

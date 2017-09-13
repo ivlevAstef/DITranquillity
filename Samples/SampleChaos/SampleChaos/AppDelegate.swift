@@ -17,15 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func applicationDidFinishLaunching(_ application: UIApplication) {
     window = UIWindow(frame: UIScreen.main.bounds)
 
-		let builder = DIContainerBuilder()
-		builder.register(module: Module1())
-		builder.register(component: SampleStartupComponent())
-		
-		let container = try! builder.build()
-		
-    let storyboard = DIStoryboard(name: "Main", bundle: nil, container: container)
-    window!.rootViewController = storyboard.instantiateInitialViewController()
+    let container = DIContainer()
+    container.append(framework: Framework1.self)
+    container.append(part: SampleStartupPart.self)
 
+    if !container.valid() {
+      fatalError("Container not valid")
+    }
+
+    let storyboard = DIStoryboard.create(name: "Main", bundle: nil, container: container)
+    window!.rootViewController = storyboard.instantiateInitialViewController()
     window!.makeKeyAndVisible()
   }
 }

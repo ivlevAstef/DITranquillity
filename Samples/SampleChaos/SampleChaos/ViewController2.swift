@@ -15,7 +15,7 @@ class ViewController2: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    print("Inject: \(inject) + Description: \(inject?.description)")
+    print("Inject: \(inject) + Description: \(inject.description)")
     print("Logger: \(logger)")
   }
 }

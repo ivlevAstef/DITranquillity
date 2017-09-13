@@ -6,104 +6,62 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-open class DIScanned {
-  public required init() {
-  }
-}
+/// Protocol to indicate which classes should be included in scan.
+/// Don't use this opportunity thoughtlessly - use it only if you don't know in advance number of parts or frameworks in the application.
+public protocol DIScanned {}
 
-open class DIScanWithInitializer<T: DIScanned>: DIScan<T> {
-  public final func getObjects() -> [T] {
-    return getTypes().map{ $0.init() }
-  }
-}
-
-func genericName<T: AnyObject>(_ type: T.Type) -> String {
-  var fullName: String = "\(type)"
-  
-  if "(" == fullName[fullName.startIndex] {
-    fullName.remove(at: fullName.startIndex)
-  }
-
-  let range = fullName.range(of: " in")
-  if let range = range {
-    return fullName.substring(to: range.lowerBound)
-  }
-  return fullName
-}
-
-open class DIScan<T: AnyObject> {
-  public typealias PredicateByType = (_ type: T.Type)->(Bool)
-  public typealias PredicateByName = (_ name: String)->(Bool)
-  
-  public init(predicateByType: @escaping PredicateByType) {
-    self.predicate = predicateByType
-    self.bundle = nil
-  }
-  
-  public init(predicateByType: @escaping PredicateByType, in bundle: Bundle) {
-    self.predicate = predicateByType
-    self.bundle = bundle
-  }
-  
-  public init(predicateByName: @escaping PredicateByName) {
-    self.predicate = { predicateByName(genericName($0)) }
-    self.bundle = nil
-  }
-  
-  public init(predicateByName: @escaping PredicateByName, in bundle: Bundle) {
-    self.predicate = { predicateByName(genericName($0)) }
-    self.bundle = bundle
-  }
-  
-  public final func getTypes() -> [T.Type] {
-    let allTypes = getAllTypes(by: T.self)
-    let filterTypes = allTypes.filter{ self.predicate($0) }
-    
-    guard let bundle = self.bundle else {
-      return filterTypes
+/// Base class for scan. It doesn't make much sense to inherit from it. see: `DIScanFramework` and `DIScanPart`
+open class DIScan {  
+  static func types(_ valid: (AnyClass)->Bool, _ predicate: (AnyClass)->Bool, _ bundle: Bundle?) -> [AnyClass] {
+    if let bpath = bundle?.bundlePath {
+      return scanned.flatMap { cls, clsBPath in
+        valid(cls) && bpath == clsBPath && predicate(cls) ? cls : nil
+      }
     }
     
-    
-    return filterTypes.filter{ Bundle(for: $0).bundlePath == bundle.bundlePath }
+    return scanned.flatMap { cls, _ in
+      valid(cls) && predicate(cls) ? cls : nil
+    }
+  }
+}
+
+// Type - for one public/internal
+// Type - for class in class (bug?)
+// Framework.Type for more public/internal
+// (Type in _HASH) for private
+// (Type #1) for func class
+
+private let pubCharacters = CharacterSet(charactersIn: ".")
+private let inCharacters = CharacterSet(charactersIn: " ()")
+func name(by cls: AnyClass) -> String {
+  let name: String = "\(cls)"
+  let pubComponents = name.components(separatedBy: pubCharacters)
+  if pubComponents.count > 1 {
+    return pubComponents.last!
   }
   
-  private let predicate: PredicateByType
-  private let bundle: Bundle?
-}
-
-private var cacheTypes: [String: [Any.Type]] = [:]
-
-fileprivate func getAllTypes<T>(by supertype: T.Type) -> [T.Type] {
-	let typeKey = String(describing: supertype)
-	if let types = cacheTypes[typeKey] {
-		return types.map{ $0 as! T.Type }
-	}
-	
-	let expectedClassCount = objc_getClassList(nil, 0)
-	let allClasses = UnsafeMutablePointer<AnyClass?>.allocate(capacity: Int(expectedClassCount))
-	let autoreleasingAllClasses = AutoreleasingUnsafeMutablePointer<AnyClass?>(allClasses)
-	let actualClassCount:Int32 = objc_getClassList(autoreleasingAllClasses, expectedClassCount)
-	
-	var result: [T.Type] = []
-	for i in 0 ..< actualClassCount {
-		guard let cls: AnyClass = allClasses[Int(i)] else {
-			continue
-		}
-		
-		if isSuperClass(cls, for: supertype) {
-			result.append(cls as! T.Type)
-		}
-	}
-	
-	allClasses.deallocate(capacity: Int(expectedClassCount))
-	
-	cacheTypes[typeKey] = result
-	return result
-}
-
-fileprivate func isSuperClass<T>(_ cls: AnyClass, for type: T.Type) -> Bool {
-  if let superClass = class_getSuperclass(cls) {
-    return superClass == T.self || isSuperClass(superClass, for: type)
+  let inComponents = name.components(separatedBy: inCharacters)
+  if inComponents.count > 1 {
+    return inComponents[1]
   }
-  return false
+  
+  return name
 }
+
+private let scanned: [(cls: AnyClass, bpath: String)] = {
+  let expectedClassCount = objc_getClassList(nil, 0)
+  let allClasses = UnsafeMutablePointer<AnyClass?>.allocate(capacity: Int(expectedClassCount))
+  let autoreleasingAllClasses = AutoreleasingUnsafeMutablePointer<AnyClass?>(allClasses)
+  let actualClassCount = Int(objc_getClassList(autoreleasingAllClasses, expectedClassCount))
+  
+  var result: [(cls: AnyClass, bpath: String)] = []
+  for i in 0..<actualClassCount {
+    if let cls = allClasses[i], cls is DIScanned.Type {
+      result.append((cls, Bundle(for: cls).bundlePath))
+    }
+  }
+  
+  allClasses.deallocate(capacity: Int(expectedClassCount))
+
+  return result
+}()

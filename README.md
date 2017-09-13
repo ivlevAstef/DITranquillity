@@ -3,8 +3,8 @@
 [![CocoaPods Version](https://img.shields.io/cocoapods/v/DITranquillity.svg?style=flat)](http://cocoapods.org/pods/DITranquillity)
 [![License](https://img.shields.io/github/license/ivlevAstef/DITranquillity.svg?maxAge=2592000)](http://cocoapods.org/pods/DITranquillity)
 [![Platform](https://img.shields.io/cocoapods/p/DITranquillity.svg?style=flat)](http://cocoapods.org/pods/DITranquillity)
-[![Swift Version](https://img.shields.io/badge/Swift-3.0--3.1-F16D39.svg?style=flat)](https://developer.apple.com/swift)
-[![Dependency Status](https://www.versioneye.com/objective-c/DITranquillity/2.0.0/badge.svg?style=flat)](https://www.versioneye.com/objective-c/DITranquillity/2.0.0)
+[![Swift Version](https://img.shields.io/badge/Swift-3.0--3.2-F16D39.svg?style=flat)](https://developer.apple.com/swift)
+[![Dependency Status](https://www.versioneye.com/objective-c/DITranquillity/3.0.0/badge.svg?style=flat)](https://www.versioneye.com/objective-c/DITranquillity/3.0.0)
 
 # DITranquillity
 The small library for [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) in applications written on pure Swift for iOS/OSX/tvOS. Despite its size, it solves a large enough range of tasks, including Storyboard support. Its main advantage -  modularity of support, detailed errors description and lots of opportunities.
@@ -17,17 +17,14 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 * Initializer/Property/Method Injections
 * Named and Tags definitions
 * Type forwarding
-* Lifetimes: single, lazySingle, weakSingle, perScope, perDependency
-* iOS/macOS Storyboard
-* Injection with Arguments
+* Lifetimes: single, lazySingle, weakSingle, objectGraph, prototype
+* iOS/macOS Storyboard and StoryboardReference
 * Circular dependencies
-* Three level hierarchy: types, components, modules
-* Late binding and components scopes
+* Three level hierarchy: types, part, framework
 * Short resolve syntax
-* Resolve thread safety
-* Scan Components/Modules
-* 9 types of errors. Errors detailing. Logs
-* Automatic dependency injection through properties for Obj-C types
+* Scan Parts/Frameworks
+* Very detail logs
+* Thread safe
 
 ## Usage
 
@@ -35,25 +32,26 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 <summary>See code</summary>
 
 ```Swift
-// builder - for register your types
-let builder = DIContainerBuilder()
+// container - for register and resolve your types
+let container = DIContainer()
 
-builder.register{ Cat(name: "Felix") }
-  .as(Animal.self).check{$0} // register Cat with name felix by protocol Animal
-  .lifetime(.perScope) // set lifetime
+container.register{ Cat(name: "Felix") }
+  .as(Animal.self) // register Cat with name felix by protocol Animal
+  .lifetime(.prototype) // set lifetime
 
-builder.register(type: PetOwner.init) // register PetOwner
+container.register(PetOwner.init) // register PetOwner
 
-// container - for finished register your types and validation dependencies
-let container = try! builder.build()
+// you can validate you registrations
+if !container.valid() {
+  fatalError("...")
+}
 
 .................................................
 
 // get instance of a types from the container
-let owner = try! container.resolve(PetOwner.self)
-let animal: Animal = try! *container // short syntax
+let owner: PetOwner = container.resolve()
+let animal: Animal = *container // short syntax
 
-/// owner.pet === animal because lifetime perScope
 print(owner.pet.name) // "Felix"
 print(animal.name) // "Felix"
 
@@ -90,15 +88,6 @@ class PetOwner {
 
 To install DITranquillity with CocoaPods, add the following lines to your Podfile: `pod 'DITranquillity'`  
 
-**Also podspec separated on subspecs:**  
-*Core, Description, Component, Module, Storyboard, Scan, Logger, RuntimeArgs*  
-
-**By default included:**  
-*Core, Logger, Description, Component, Storyboard*  
-**Modular** subspec included:  
-*Core, Logger, Description, Component, Module, Storyboard, Scan*  
-**Full** subspec included all subspecs
-
 ###### Via Carthage.
 
 `github "ivlevAstef/DITranquillity"` Swift (iOS8+,macOS10.10+,tvOS9+)
@@ -106,11 +95,12 @@ To install DITranquillity with CocoaPods, add the following lines to your Podfil
 ## Requirements
 iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
 
-* Swift 3.0-3.1: Xcode 8.0-8.3; version >= 0.9.5
+* Swift 3.0-3.2: Xcode 8.0-9.0; version >= 0.9.5
 * Swift 2.3: Xcode 7.0; version < 0.9.5
 
 ## Migration
 * v1.x.x -> v2.x.x [ru](Documentation/ru/migration1to2.md)
+* v2.x.x -> v3.x.x [ru](Documentation/ru/migration2to3.md)
 
 ## Changelog
 See [CHANGELOG.md](CHANGELOG.md) file.
@@ -134,17 +124,15 @@ class ViewController: UIViewController/NSViewController {
 ```
 Create container:
 ```Swift
-  let builder = DIContainerBuilder()
-  builder.register(vc: ViewController.self)
+  let container = DIContainer()
+  container.register(ViewController.self)
     .injection { $0.inject = $1 }
-
-  let container = try! builder.build()
 ```
 Create Storyboard:
 ```Swift
 /// for iOS
 func applicationDidFinishLaunching(_ application: UIApplication) {
-  let storyboard = DIStoryboard(name: "Main", bundle: nil, container: container)
+  let storyboard = DIStoryboard.create(name: "Main", bundle: nil, container: container)
 
   window = UIWindow(frame: UIScreen.main.bounds)
   window!.rootViewController = storyboard.instantiateInitialViewController()
@@ -155,7 +143,7 @@ func applicationDidFinishLaunching(_ application: UIApplication) {
 ```Swift
 /// for OS X
 func applicationDidFinishLaunching(_ aNotification: Notification) {
-  let storyboard = DIStoryboard(name: "Main", bundle: nil, container: container)
+  let storyboard = DIStoryboard.create(name: "Main", bundle: nil, container: container)
 
   let viewController = storyboard.instantiateInitialController() as! NSViewController
   let window = NSApplication.shared().windows.first
@@ -170,7 +158,6 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 * [Swinject](https://github.com/Swinject/Swinject)
 * [DIP](https://github.com/AliSoftware/Dip)
 * [Cleanse](https://github.com/square/Cleanse)
-* [EasyDi](https://github.com/AndreyZarembo/EasyDi)
 
 ## Feedback
 

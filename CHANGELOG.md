@@ -1,11 +1,21 @@
-# v2.3.3
-* Fix. improve speed scanner.
+# v3.0.0
+* Added migration documentation.
+* Added code documentation.
+* Accelerated library work 30 times. Now twice as fast swinject.
+* Reduced library size by 40%, but number of parameters is increased.
+* Supported StoryboardReference. Even with many containers.
+* Removed very old manual syntax. Now the library knows entire dependency graph.
+* Improved graph validation. Removed exceptions.
+* Changed concept - container builder removed. Now only container.
+* The library itself understands what you need - nor any `try?` and `.optional`
+* Changed lifetimes on: `single`, `lazySingle`, `weakSingle`, `objectGraph`, `prototype`
+* A single syntax for creating a hierarchy. Now it is `Framework` and `Part`
+* Logging as part of the library.
+* Single cocoapods spec without subspecs.
+* fixed API. No more global syntax changes.
+* But:
+* Removed runtime args - there will be a new more powerful concept.
 
-# v2.3.2
-* Hot fix. incorrect work cache for specific case.
-
-# v2.3.1
-* Fix bug. Supported recursive resolve ViewControllers.
 
 # v2.3.0
 * Fix bug (issue98) into methods initial(useStoryboard:identifier:) and initial(nib:).

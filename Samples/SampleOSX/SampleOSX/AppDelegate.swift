@@ -13,11 +13,14 @@ import DITranquillity
 class AppDelegate: NSObject, NSApplicationDelegate {
 	
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
-		let builder = DIContainerBuilder()
-		register(builder: builder)
-		let container = try! builder.build()
+		let container = DIContainer()
+		register(container: container)
 		
-		let storyboard: NSStoryboard = try! *container
+		if !container.valid() {
+			fatalError()
+		}
+		
+		let storyboard: NSStoryboard = *container
 		
 		let viewController = storyboard.instantiateInitialController() as! NSViewController
 		
@@ -25,14 +28,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		window?.contentViewController = viewController
 	}	
 	
-	private func register(builder: DIContainerBuilder) {
-    builder.register(type: NSStoryboard.self)
-			.initial { DIStoryboard(name: "ViewControllers", bundle: nil, container: $0) }
+	private func register(container: DIContainer) {
+    container.registerStoryboard(name: "ViewControllers", bundle: nil)
 		
-		builder.register(vc: ViewController.self)
+		container.register(ViewController.self)
 			.injection { $0.buttonName = "Next" }
 		
-		builder.register(vc: NextViewController.self)
+		container.register(NextViewController.self)
 			.injection { $0.inject = 10 }
 		
 	}

@@ -17,57 +17,55 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let container2 = container.newLifeTimeScope()
-    let container3 = container2.newLifeTimeScope()
-    
-    let vc1_1 = try! container2.resolve(UIView.self)
+    let vc1_1: UIView = container.resolve()
     print("Create VC1_1: \(vc1_1)")
     
-    let vc1_2: UIView = try! *container3
+    let vc1_2: UIView = *container
     print("Create VC1_2: \(vc1_2)")
     
-    let vc2_1: UIView = try! *container2
-    print("Create VC2_1: \(vc2_1)")
-    
-    let vc2_2: UIAppearance = try! container.resolve()
+    let vc2_2: UIAppearance = container.resolve()
     print("Create VC2_2: \(vc2_2)")
     
     
-    let inject1: Inject = try! *container
+    let inject1: Inject = *container
     print("Create Inject1: \(inject1.description)")
     
-    let inject2: Inject = try! *container2
-    print("Create Inject2: \(inject2.description)")
-    
-    let injectMany: InjectMany = try! *container
+    let injectMany: InjectMany = *container
     print("Create injectMany: \(injectMany)")
     
     
     print("Create injectGlobal: \(injectGlobal)")
     
-    //Animals
+    // Optional
+    let fooOpt: FooService? = *container
+    let barOpt: BarService? = *container
+    print("Optional Foo:\(fooOpt) Optional Bar: \(barOpt)" )
     
-    let cat: Animal = try! container.resolve(name: "Cat")
-    let dog: Animal = try! container.resolve(Animal.self, name: "Dog")
-    let bear: Animal = try! container.resolve(name: "Bear")
+    // Optional Tag
+    let fooTagOpt: FooService? = by(tag: CatTag.self, on: *container)
+    let barTagOpt: BarService? = by(tag: DogTag.self, on: *container)
+    print("Optional tag Foo:\(fooTagOpt) Optional tag Bar: \(barTagOpt)" )
     
-    let defaultAnimal: Animal = try! container.resolve()
+    // Many
+    let fooMany: [FooService] = many(*container)
+    let barMany: [BarService] = many(*container)
+    print("Many Foo:\(fooMany) Many Bar: \(barMany)" )
+    
+    // Animals
+    
+    let cat: Animal = by(tag: CatTag.self, on: *container)
+    let dog: Animal = by(tag: DogTag.self, on: *container)
+    let bear: Animal = container.resolve(tag: BearTag.self)
+    let animals: [Animal] = many(*container)
+    print(animals.map{ $0.name })
+    
+    let defaultAnimal: Animal = *container
     
     print("Cat: \(cat.name) Dog: \(dog.name) Bear: \(bear.name) Default(Dog): \(defaultAnimal.name)")
     
-    //Params
-    let animal: Animal = try! container.resolve(name: "Custom", arg: "my animal")
-    print("Animal: \(animal.name)")
-    
-    let params2: Params = try! container.resolve(arg: "param1", 10)
-    print("Params p1:\(params2.param1) p2:\(params2.param2) p3:\(params2.param3)")
-    
-    let params3: Params = try! container.resolve(arg: "param1", 10, 15)
-    print("Params p1:\(params3.param1) p2:\(params3.param2) p3:\(params3.param3)")
-    
     //Circular
-    let circularT1: Circular1 = try! *container
-    let circularT2: Circular2 = try! *container
+    let circularT1: Circular1 = *container
+    let circularT2: Circular2 = *container
     
     print("Circular test 1: \(circularT1.description) + \(circularT1.ref.description)")
     print("Circular test 2: \(circularT2.description) + \(circularT2.ref.description)")

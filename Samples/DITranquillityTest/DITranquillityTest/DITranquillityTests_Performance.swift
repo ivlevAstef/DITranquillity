@@ -25,283 +25,289 @@ private class PerformanceTest {
 class DITranquillityTests_Performance: XCTestCase {
   /*
    register count:
-   100 = 0.029
-   200 = 0.071
-   400 = 0.305
-   800 = 1.278
-   1000 = 1.781
-   2000 = 6.381
-   4000 = 27.200
+   1000 = 0.048
+   2000 = 0.165
+   4000 = 0.613
+   8000 = 2.668
    not linear!!!
    but 1k classes it's more.
-   0.0015 per register
+   0.000008 per register
    
-   parameters count (for 800):
-   0 = 1.271
-   1 = 1.276
-   2 = 1.267
-   3 = 1.281
-   8 = 1.274
-   const
+   parameters count (for 2000):
+   0 = 0.165
+   1 = 0.168
+   2 = 0.171
+   3 = 0.170
+   8 = 0.172
+   linear - 0.001 sec or 0.5%
+   increase register time on 0.0000005 per parameter
    
-   resolve (for 10000):
-   perDependency = 0.935
-   perScope = 0.759
-   single = 0.773
-   0.0001 per resolve with one register
+   resolve (for 50000):
+   prototype = 0.083
+   objectGraph = 0.193
+   single = 0.212
+   0.000003 per resolve with one register
    
-   resolve by register count (for 10000):
-   100 = 0.332
-   200 = 0.380
-   400 = 0.485
-   800 = 0.614
+   resolve by register count (for 50000):
+   250 = 0.272
+   500 = 0.529
+   1000 = 1.029
+   2000 = 2.316
    linear
-   resolve type increase on 0.0008 per one register
+   resolve type increase on 0.0011 (for 50000) per one register
+   0.00002 per resolve with 1000 register
    
-   inject count (for 800):
-   1 = 1.274
-   2 = 1.285
-   4 = 1.290
-   8 = 1.297
-   16 =  1.300
-   log
-   increase register time on 0.000003 per injection
+   inject count (for 2000):
+   1 = 0.169
+   2 = 0.173
+   4 = 0.185
+   8 = 0.218
+   16 = 0.261
+   not linear, but this is not critical
+   increase register time on 0.000022 per injection
    
    */
   
   func test01_registerType() {
+    DISetting.Log.fun = nil
     self.measure {
-      let builder = DIContainerBuilder()
-      for i in 0..<100 {
-        builder.register(type: PerformanceTest.self, line: i).initialNotNecessary()
+      let container = DIContainer()
+      for i in 0..<1000 {
+        container.register(PerformanceTest.self, line: i)
       }
-      _ = try! builder.build()
     }
   }
   
   func test01_registerTypeX2() {
+    DISetting.Log.fun = nil
     self.measure {
-      let builder = DIContainerBuilder()
-      for i in 0..<200 {
-        builder.register(type: PerformanceTest.self, line: i).initialNotNecessary()
+      let container = DIContainer()
+      for i in 0..<2000 {
+        container.register(PerformanceTest.self, line: i)
       }
-      _ = try! builder.build()
     }
   }
   
   func test01_registerTypeX4() {
+    DISetting.Log.fun = nil
     self.measure {
-      let builder = DIContainerBuilder()
-      for i in 0..<400 {
-        builder.register(type: PerformanceTest.self, line: i).initialNotNecessary()
+      let container = DIContainer()
+      for i in 0..<4000 {
+        container.register(PerformanceTest.self, line: i)
       }
-      _ = try! builder.build()
     }
   }
   
   func test01_registerTypeX8() {
+    DISetting.Log.fun = nil
     self.measure {
-      let builder = DIContainerBuilder()
-      for i in 0..<800 {
-        builder.register(type: PerformanceTest.self, line: i).initialNotNecessary()
+      let container = DIContainer()
+      for i in 0..<8000 {
+        container.register(PerformanceTest.self, line: i)
       }
-      _ = try! builder.build()
     }
   }
   
   func test02_registerInit() {
+    DISetting.Log.fun = nil
     self.measure {
-      let builder = DIContainerBuilder()
-      for i in 0..<800 {
-        builder.register(line: i) { PerformanceTest() }
+      let container = DIContainer()
+      for i in 0..<2000 {
+        container.register(line: i, { PerformanceTest() })
       }
-      _ = try! builder.build()
     }
   }
   
  // one parameter increase time around 0.01sec / 0.62sec = 1.6%
    
   func test02_registerInitWithOne() {
+    DISetting.Log.fun = nil
     self.measure {
-      let builder = DIContainerBuilder()
-      for i in 0..<800 {
-        builder.register(line: i) { PerformanceTest(withOne: $0) }
+      let container = DIContainer()
+      for i in 0..<2000 {
+        container.register(line: i, { PerformanceTest(withOne: $0) })
       }
-      _ = try! builder.build()
     }
   }
   
   func test02_registerInitWithTwo() {
+    DISetting.Log.fun = nil
     self.measure {
-      let builder = DIContainerBuilder()
-      for i in 0..<800 {
-        builder.register(line: i) { PerformanceTest(withTwo: $0, two: $1) }
+      let container = DIContainer()
+      for i in 0..<2000 {
+        container.register(line: i, { PerformanceTest(withTwo: $0, two: $1) })
       }
-      _ = try! builder.build()
     }
   }
   
   func test02_registerInitWithThree() {
+    DISetting.Log.fun = nil
     self.measure {
-      let builder = DIContainerBuilder()
-      for i in 0..<800 {
-        builder.register(line: i) { PerformanceTest(withThree: $0, two: $1, three: $2) }
+      let container = DIContainer()
+      for i in 0..<2000 {
+        container.register(line: i, { PerformanceTest(withThree: $0, two: $1, three: $2) })
       }
-      _ = try! builder.build()
     }
   }
   
   func test02_registerInitWithEight() {
+    DISetting.Log.fun = nil
     self.measure {
-      let builder = DIContainerBuilder()
-      for i in 0..<800 {
-        builder.register(line: i) { PerformanceTest(withEight: $0, two: $1, three: $2, four: $3, five: $4, six: $5, seven: $6, eight: $7) }
+      let container = DIContainer()
+      for i in 0..<2000 {
+        container.register(line: i, { PerformanceTest(withEight: $0, two: $1, three: $2, four: $3, five: $4, six: $5, seven: $6, eight: $7) })
       }
-      _ = try! builder.build()
     }
   }
   
   func test03_resolvePrototype() {
-    let builder = DIContainerBuilder()
-    builder.register{ PerformanceTest() }
-      .lifetime(.perDependency)
-    let container = try! builder.build()
+    DISetting.Log.fun = nil
+    let container = DIContainer()
+    container.register{ PerformanceTest() }
+      .lifetime(.prototype)
     
     self.measure {
-      for _ in 0..<10000 {
-        _ = try! container.resolve() as PerformanceTest
+      for _ in 0..<50000 {
+        _ = container.resolve() as PerformanceTest
       }
     }
   }
   
   func test03_resolveObjectGraph() {
-    let builder = DIContainerBuilder()
-    builder.register{ PerformanceTest() }
-      .lifetime(.perScope)
-    let container = try! builder.build()
+    DISetting.Log.fun = nil
+    let container = DIContainer()
+    container.register{ PerformanceTest() }
+      .lifetime(.objectGraph)
     
     self.measure {
-      for _ in 0..<10000 {
-        _ = try! container.resolve() as PerformanceTest
+      for _ in 0..<50000 {
+        _ = container.resolve() as PerformanceTest
       }
     }
   }
   
   func test03_resolveSingle() {
-    let builder = DIContainerBuilder()
-    builder.register{ PerformanceTest() }
+    DISetting.Log.fun = nil
+    let container = DIContainer()
+    container.register{ PerformanceTest() }
       .lifetime(.single)
-    let container = try! builder.build()
+    
+    container.initializeSingletonObjects()
     
     self.measure {
-      for _ in 0..<10000 {
-        _ = try! container.resolve() as PerformanceTest
+      for _ in 0..<50000 {
+        _ = container.resolve() as PerformanceTest
       }
     }
   }
   
   func test04_resolveWithMoreRegister() {
-    let builder = DIContainerBuilder()
-    for i in 0..<100 {
-      builder.register(line: i){ PerformanceTest() }
-        .lifetime(.perDependency)
+    DISetting.Log.fun = nil
+    let container = DIContainer()
+    for i in 0..<250 {
+      container.register(line: i, { PerformanceTest() })
+        .lifetime(.prototype)
     }
-    let container = try! builder.build()
     
     self.measure {
-      for _ in 0..<10000 {
-        _ = try? container.resolve() as PerformanceTest
+      for _ in 0..<50000 {
+        _ = container.resolve() as PerformanceTest?
       }
     }
   }
   
   func test04_resolveWithMoreRegisterX2() {
-    let builder = DIContainerBuilder()
-    for i in 0..<200 {
-      builder.register(line: i) { PerformanceTest() }
-        .lifetime(.perDependency)
+    DISetting.Log.fun = nil
+    let container = DIContainer()
+    for i in 0..<500 {
+      container.register(line: i, { PerformanceTest() })
+        .lifetime(.prototype)
     }
-    let container = try! builder.build()
     
     self.measure {
-      for _ in 0..<10000 {
-        _ = try? container.resolve() as PerformanceTest
+      for _ in 0..<50000 {
+        _ = container.resolve() as PerformanceTest?
       }
     }
   }
   
   func test04_resolveWithMoreRegisterX4() {
-    let builder = DIContainerBuilder()
-    for i in 0..<400 {
-      builder.register(line: i) { PerformanceTest() }
-        .lifetime(.perDependency)
+    DISetting.Log.fun = nil
+    let container = DIContainer()
+    for i in 0..<1000 {
+      container.register(line: i, { PerformanceTest() })
+        .lifetime(.prototype)
     }
-    let container = try! builder.build()
     
     self.measure {
-      for _ in 0..<10000 {
-        _ = try? container.resolve() as PerformanceTest
+      for _ in 0..<50000 {
+        _ = container.resolve() as PerformanceTest?
       }
     }
   }
   
   func test04_resolveWithMoreRegisterX8() {
-    let builder = DIContainerBuilder()
-    for i in 0..<800 {
-      builder.register(line: i) { PerformanceTest() }
-        .lifetime(.perDependency)
+    DISetting.Log.fun = nil
+    let container = DIContainer()
+    for i in 0..<2000 {
+      container.register(line: i, { PerformanceTest() })
+        .lifetime(.prototype)
     }
-    let container = try! builder.build()
     
     self.measure {
-      for _ in 0..<10000 {
-        _ = try? container.resolve() as PerformanceTest
+      for _ in 0..<50000 {
+        _ = container.resolve() as PerformanceTest?
       }
     }
   }
   
   func test05_registerInjectX1() {
+    DISetting.Log.fun = nil
+    
     self.measure {
-      let builder = DIContainerBuilder()
-      for i in 0..<800 {
-        builder.register(line: i) { PerformanceTest() }
+      let container = DIContainer()
+      for i in 0..<2000 {
+        container.register(line: i, { PerformanceTest() })
           .injection{ $0.parameter = $1 }
       }
-      _ = try! builder.build()
     }
   }
   
   func test05_registerInjectX2() {
+    DISetting.Log.fun = nil
+    
     self.measure {
-      let builder = DIContainerBuilder()
-      for i in 0..<800 {
-        builder.register(line: i) { PerformanceTest() }
+      let container = DIContainer()
+      for i in 0..<2000 {
+        container.register(line: i, { PerformanceTest() })
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
       }
-      _ = try! builder.build()
     }
   }
   
   func test05_registerInjectX4() {
+    DISetting.Log.fun = nil
+    
     self.measure {
-      let builder = DIContainerBuilder()
-      for i in 0..<800 {
-        builder.register(line: i) { PerformanceTest() }
+      let container = DIContainer()
+      for i in 0..<2000 {
+        container.register(line: i, { PerformanceTest() })
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
       }
-      _ = try! builder.build()
     }
   }
   
   func test05_registerInjectX8() {
+    DISetting.Log.fun = nil
+    
     self.measure {
-      let builder = DIContainerBuilder()
-      for i in 0..<800 {
-        builder.register(line: i) { PerformanceTest() }
+      let container = DIContainer()
+      for i in 0..<2000 {
+        container.register(line: i, { PerformanceTest() })
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
@@ -311,15 +317,16 @@ class DITranquillityTests_Performance: XCTestCase {
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
       }
-      _ = try! builder.build()
     }
   }
   
   func test05_registerInjectX16() {
+    DISetting.Log.fun = nil
+    
     self.measure {
-      let builder = DIContainerBuilder()
-      for i in 0..<800 {
-        let r = builder.register(line: i) { PerformanceTest() }
+      let container = DIContainer()
+      for i in 0..<2000 {
+        let r = container.register(line: i, { PerformanceTest() })
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
@@ -338,7 +345,6 @@ class DITranquillityTests_Performance: XCTestCase {
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
       }
-      _ = try! builder.build()
     }
   }
 }

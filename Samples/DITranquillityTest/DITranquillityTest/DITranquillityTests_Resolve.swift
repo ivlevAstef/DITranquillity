@@ -10,290 +10,229 @@ import XCTest
 import DITranquillity
 
 
-enum TestTags {
-  case t1
-  case t2
-}
-
 class DITranquillityTests_Resolve: XCTestCase {
   override func setUp() {
     super.setUp()
   }
 
   func test01_ResolveByClass() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(.self)
-      .initial{ FooService() }
+    container.register(FooService.init)
     
-    let container = try! builder.build()
-    
-    let service_classIndicate = try! container.resolve(FooService.self)
-    XCTAssertEqual(service_classIndicate.foo(), "foo")
-    
-    let service_auto: FooService = try! container.resolve()
+    let service_auto: FooService = container.resolve()
     XCTAssertEqual(service_auto.foo(), "foo")
     
-    let service_fast: FooService = try! *container
-    XCTAssertEqual(service_fast.foo(), "foo")
-  }
-
-  
-  func test02_ResolveByClass_AutoSetType() {
-    let builder = DIContainerBuilder()
-    
-    builder.register(type: FooService.self)
-      .initial(FooService.init)
-    
-    let container = try! builder.build()
-    
-    let service_classIndicate = try! container.resolve(FooService.self)
-    XCTAssertEqual(service_classIndicate.foo(), "foo")
-    
-    let service_auto: FooService = try! container.resolve()
-    XCTAssertEqual(service_auto.foo(), "foo")
-    
-    let service_fast: FooService = try! *container
+    let service_fast: FooService = *container
     XCTAssertEqual(service_fast.foo(), "foo")
   }
   
-  func test03_ResolveByProtocol() {
-    let builder = DIContainerBuilder()
+  func test02_ResolveByProtocol() {
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .initial{ FooService() }
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-    let container = try! builder.build()
-    
-    let service_classIndicate = try! container.resolve(ServiceProtocol.self)
-    XCTAssertEqual(service_classIndicate.foo(), "foo")
-    
-    let service_auto: ServiceProtocol = try! container.resolve()
+    let service_auto: ServiceProtocol = container.resolve()
     XCTAssertEqual(service_auto.foo(), "foo")
     
-    let service_fast: ServiceProtocol = try! *container
+    let service_fast: ServiceProtocol = *container
     XCTAssertEqual(service_fast.foo(), "foo")
   }
   
-  func test04_ResolveByClassAndProtocol() {
-    let builder = DIContainerBuilder()
+  func test03_ResolveByClassAndProtocol() {
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(.self)
-      .as(ServiceProtocol.self).check{$0}
-      .initial(FooService.init)
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-    let container = try! builder.build()
-    
-    let service_protocol: ServiceProtocol = try! *container
+    let service_protocol: ServiceProtocol = *container
     XCTAssertEqual(service_protocol.foo(), "foo")
     
-    let service_class: FooService = try! *container
+    let service_class: FooService = *container
     XCTAssertEqual(service_class.foo(), "foo")
   }
   
-  func test05_ResolveWithInitializerResolve() {
-    let builder = DIContainerBuilder()
+  func test04_ResolveWithInitializerResolve() {
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .initial{ FooService() }
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-    builder.register(type: Inject.self)
-      .initial{ s in try Inject(service:*s) }
+    container.register(Inject.init)
     
-    let container = try! builder.build()
-    
-    let inject: Inject = try! *container
+    let inject: Inject = *container
     XCTAssertEqual(inject.service.foo(), "foo")
   }
-
+  
   func test05_ResolveWithDependencyResolveOpt() {
-    let builder = DIContainerBuilder()
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .initial{ FooService() }
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-    builder.register(type: InjectOpt.self)
-      .initial(InjectOpt.init)
-      .injection(.manual) { s, obj in try obj.service = *s }
+    container.register(InjectOpt.init)
+      .injection { $0.service = $1 }
     
-    let container = try! builder.build()
-    
-    let inject: InjectOpt = try! *container
+    let inject: InjectOpt = *container
     XCTAssertEqual(inject.service!.foo(), "foo")
   }
   
-  func test05_ResolveWithDependencyResolveImplicitly() {
-    let builder = DIContainerBuilder()
+  func test06_ResolveWithDependencyResolveOptNil() {
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .initial{ FooService() }
-    
-    builder.register(type: InjectImplicitly.self)
-      .initial{ InjectImplicitly() }
+    container.register(InjectOpt.init)
       .injection { $0.service = $1 }
     
-    let container = try! builder.build()
+    let inject: InjectOpt = *container
+    XCTAssert(nil == inject.service)
+  }
+  
+  
+  func test07_ResolveWithDependencyResolveImplicitly() {
+    let container = DIContainer()
     
-    let inject: InjectImplicitly = try! *container
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+    
+    container.register(InjectImplicitly.init)
+      .injection { $0.service = $1 }
+    
+    let inject: InjectImplicitly = *container
     XCTAssertEqual(inject.service.foo(), "foo")
   }
   
-  func test06_ResolveMultiplyWithDefault() {
-    let builder = DIContainerBuilder()
+  func test08_ResolveMultiplyWithDefault() {
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .set(.default)
-      .initial{ FooService() }
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+      .default()
     
-    builder.register(type: BarService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .initial{ BarService() }
+    container.register(BarService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-    let container = try! builder.build()
-    
-    let service: ServiceProtocol = try! *container
+    let service: ServiceProtocol = *container
     XCTAssertEqual(service.foo(), "foo")
   }
   
-  func test06_ResolveMultiplyWithDefault_Reverse() {
-    let builder = DIContainerBuilder()
+  func test09_ResolveMultiplyWithDefault_Reverse() {
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .initial{ FooService() }
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-    builder.register(type: BarService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .set(.default)
-      .initial{ BarService() }
+    container.register(BarService.init)
+      .as(check: ServiceProtocol.self){$0}
+      .default()
     
-    let container = try! builder.build()
-    
-    let service: ServiceProtocol = try! *container
+    let service: ServiceProtocol = *container
     XCTAssertEqual(service.foo(), "bar")
   }
   
-  func test06_ResolveMultiplyByName() {
-    let builder = DIContainerBuilder()
+  func test10_ResolveMultiplyByName() {
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .set(name: "foo")
-      .initial{ FooService() }
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self, name: "foo"){$0}
+      .lifetime(.single)
     
-    builder.register(type: BarService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .set(name: "bar")
-      .initial{ BarService() }
+    container.register(BarService.init)
+      .as(check: ServiceProtocol.self, name: "bar"){$0}
+      .lifetime(.single)
     
-    let container = try! builder.build()
-    
-    let serviceFoo: ServiceProtocol = try! container.resolve(name: "foo")
+    let serviceFoo: ServiceProtocol = container.resolve(name: "foo")
     XCTAssertEqual(serviceFoo.foo(), "foo")
     
-    let serviceBar: ServiceProtocol = try! container.resolve(name: "bar")
+    let serviceBar: ServiceProtocol = container.resolve(name: "bar")
     XCTAssertEqual(serviceBar.foo(), "bar")
+    
+    XCTAssertNotEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar as AnyObject).toOpaque())
   }
   
-  func test06_ResolveMultiplySingleByName() {
-    let builder = DIContainerBuilder()
+  func test10_ResolveMultiplyByTag() {
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .set(name: "foo")
-      .set(name: "foo2")
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self, tag: FooService.self){$0}
       .lifetime(.single)
-      .initial{ FooService() }
     
-    let container = try! builder.build()
+    container.register(BarService.init)
+      .as(check: ServiceProtocol.self, tag: BarService.self){$0}
+      .lifetime(.single)
     
-    let serviceFoo: ServiceProtocol = try! container.resolve(name: "foo")
+    let serviceFoo: ServiceProtocol = container.resolve(tag: FooService.self)
     XCTAssertEqual(serviceFoo.foo(), "foo")
     
-    let serviceFoo2: ServiceProtocol = try! container.resolve(name: "foo2")
+    let serviceBar: ServiceProtocol = container.resolve(tag: BarService.self)
+    XCTAssertEqual(serviceBar.foo(), "bar")
+    
+    XCTAssertNotEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar as AnyObject).toOpaque())
+  }
+  
+  func test11_ResolveMultiplySingleByName() {
+    let container = DIContainer()
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self, name: "foo"){$0}
+      .as(check: ServiceProtocol.self, name: "bar"){$0}
+      .lifetime(.single)
+    
+    let serviceFoo: ServiceProtocol = container.resolve(name: "foo")
+    XCTAssertEqual(serviceFoo.foo(), "foo")
+    
+    let serviceFoo2: ServiceProtocol = container.resolve(name: "bar")
     XCTAssertEqual(serviceFoo2.foo(), "foo")
     
-    XCTAssertNotEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceFoo2 as AnyObject).toOpaque())
+    XCTAssertEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceFoo2 as AnyObject).toOpaque())
   }
   
-  func test06_ResolveMultiplyPerScopeByName() {
-    let builder = DIContainerBuilder()
+  func test11_ResolveMultiplySingleByTag() {
+    let container = DIContainer()
     
-    builder.register(type: BarService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .set(name: "bar")
-      .set(name: "bar2")
-      .lifetime(.perScope)
-      .initial{ BarService() }
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self, tag: FooService.self){$0}
+      .as(check: ServiceProtocol.self, tag: BarService.self){$0}
+      .lifetime(.single)
     
-    let container = try! builder.build()
+    let serviceFoo: ServiceProtocol = by(tag: FooService.self, on: *container)
+    XCTAssertEqual(serviceFoo.foo(), "foo")
     
-    let serviceBar1_1: ServiceProtocol = try! container.resolve(name: "bar")
-    XCTAssertEqual(serviceBar1_1.foo(), "bar")
+    let serviceFoo2: ServiceProtocol = container.resolve(tag: BarService.self)
+    XCTAssertEqual(serviceFoo2.foo(), "foo")
     
-    let serviceBar1_2: ServiceProtocol = try! container.resolve(name: "bar2")
-    XCTAssertEqual(serviceBar1_2.foo(), "bar")
-    
-    XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar1_1 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar1_2 as AnyObject).toOpaque())
-    
-    
-    let container2 = container.newLifeTimeScope()
-    
-    let serviceBar2_1: ServiceProtocol = try! container2.resolve(name: "bar")
-    XCTAssertEqual(serviceBar2_1.foo(), "bar")
-    
-    let serviceBar2_2: ServiceProtocol = try! container2.resolve(name: "bar2")
-    XCTAssertEqual(serviceBar2_2.foo(), "bar")
-    
-    XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar2_1 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar2_2 as AnyObject).toOpaque())
-    
-    XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar1_1 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar2_1 as AnyObject).toOpaque())
-    XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar1_2 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar2_2 as AnyObject).toOpaque())
+    XCTAssertEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceFoo2 as AnyObject).toOpaque())
   }
   
-  func test06_ResolveMultiplyMany() {
-    let builder = DIContainerBuilder()
+  func test12_ResolveMultiplyMany() {
+    let container = DIContainer()
     
-    builder.register(type: FooService.init)
-      .as(ServiceProtocol.self).check{$0}
-      .set(.default)
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-    builder.register(type: BarService.init)
-      .as(ServiceProtocol.self).check{$0}
+    container.register(BarService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-    let container = try! builder.build()
-    
-    let services: [ServiceProtocol] = try! container.resolveMany()
+    let services: [ServiceProtocol] = container.resolveMany()
     XCTAssertEqual(services.count, 2)
     XCTAssertNotEqual(services[0].foo(), services[1].foo())
   }
   
-  func test07_ResolveCircular2() {
-    let builder = DIContainerBuilder()
+  func test13_ResolveCircular2() {
+    let container = DIContainer()
     
-    builder.register(type: Circular2A.self)
-      .lifetime(.perDependency)
-      .initial { s in try  Circular2A(b: *s) }
+    container.register(Circular2A.init)
+      .lifetime(.objectGraph)
     
-    builder.register(type: Circular2B.self)
-      .lifetime(.perDependency)
-      .initial(Circular2B.init)
-      .injection(.manual) { (s, b) in try  b.a = *s }
+    container.register(Circular2B.init)
+      .lifetime(.objectGraph)
+      .injection(cycle: true) { $0.a = $1 }
     
-    let container = try! builder.build()
-    
-    let a: Circular2A = try! *container
+    let a: Circular2A = *container
     XCTAssert(a === a.b.a)
     XCTAssert(a.b === a.b.a.b)
     
-    let b: Circular2B = try! *container
+    let b: Circular2B = *container
     XCTAssert(b === b.a.b)
     XCTAssert(b.a === b.a.b.a)
     
@@ -301,35 +240,30 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(a.b !== b)
   }
   
-  func test07_ResolveCircular3() {
-    let builder = DIContainerBuilder()
+  func test14_ResolveCircular3() {
+    let container = DIContainer()
     
-    builder.register(type: Circular3A.self)
-      .lifetime(.perDependency)
-      .initial(Circular3A.init(b:))
+    container.register(Circular3A.init)
+      .lifetime(.objectGraph)
     
-    builder.register(type: Circular3B.self)
-      .lifetime(.perDependency)
-      .initial(Circular3B.init(c:))
+    container.register(Circular3B.init)
+      .lifetime(.objectGraph)
     
-    builder.register(type: Circular3C.self)
-      .lifetime(.perDependency)
-      .initial{ Circular3C() }
-      .injection { c, a in c.a = a }
+    container.register(Circular3C.init)
+      .lifetime(.objectGraph)
+      .injection(cycle: true) { c, a in c.a = a }
     
-    let container = try! builder.build()
-    
-    let a: Circular3A = try! *container
+    let a: Circular3A = *container
     XCTAssert(a === a.b.c.a)
     XCTAssert(a.b === a.b.c.a.b)
     XCTAssert(a.b.c === a.b.c.a.b.c)
     
-    let b: Circular3B = try! *container
+    let b: Circular3B = *container
     XCTAssert(b === b.c.a.b)
     XCTAssert(b.c === b.c.a.b.c)
     XCTAssert(b.c.a === b.c.a.b.c.a)
     
-    let c: Circular3C = try! *container
+    let c: Circular3C = *container
     XCTAssert(c === c.a.b.c)
     XCTAssert(c.a === c.a.b.c.a)
     XCTAssert(c.a.b === c.a.b.c.a.b)
@@ -344,355 +278,97 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(c.a.b !== b)
   }
   
-  func test07_ResolveCircularDouble2() {
-    let builder = DIContainerBuilder()
+  func test15_ResolveCircularDouble2A() {
+    let container = DIContainer()
     
-    builder.register(type: CircularDouble2A.self)
-      .lifetime(.perDependency)
-      .initial{ CircularDouble2A() }
-      .injection(.manual) { s, a in try a.b1 = *s }
-      .injection { a, b2 in a.b2 = b2 }
+    container.register(CircularDouble2A.init)
+      .lifetime(.objectGraph)
+      .injection(cycle: true) { $0.b1 = $1 }
+      .injection(cycle: true) { a, b2 in a.b2 = b2 }
     
-    builder.register(type: CircularDouble2B.self)
-      .lifetime(.perDependency)
-      .initial { s in try CircularDouble2B(a: *s) }
+    container.register(CircularDouble2B.init)
+      .lifetime(.prototype)
     
-    let container = try! builder.build()
-    
-    //b1 !== b2
-    let a: CircularDouble2A = try! *container
+    //b1 !== b2 because prototype
+    let a: CircularDouble2A = *container
     XCTAssert(a.b1 !== a.b2)
     XCTAssert(a === a.b1.a)
     XCTAssert(a.b1 === a.b1.a.b1)
     XCTAssert(a === a.b2.a)
     XCTAssert(a.b2 === a.b2.a.b2)
+  }
+  
+  func test15_ResolveCircularDouble2B() {
+    let container = DIContainer()
     
-    //!!! is not symmetric, b1 === b2 === b
-    let b: CircularDouble2B = try! *container
+    container.register(CircularDouble2A.init)
+      .lifetime(.objectGraph)
+      .injection(cycle: true) { $0.b1 = $1 }
+      .injection(cycle: true) { a, b2 in a.b2 = b2 }
+    
+    container.register(CircularDouble2B.init)
+      .lifetime(.objectGraph)
+    
+    //!!! b1 === b2 === b because objectGraph
+    let b: CircularDouble2B = *container
     XCTAssert(b === b.a.b1)
     XCTAssert(b === b.a.b2)
     XCTAssert(b.a === b.a.b1.a)
     XCTAssert(b.a === b.a.b2.a)
-    
-    XCTAssert(a !== b.a)
-    XCTAssert(a.b1 !== b)
-    XCTAssert(a.b2 !== b)
   }
   
-  func test07_ResolveCircularDoubleOneDependency2() {
-    let builder = DIContainerBuilder()
+  func test16_ResolveCircularDoubleOneDependency2_WithoutCycle() {
+    let container = DIContainer()
     
-    builder.register(type: CircularDouble2A.self)
-      .lifetime(.perDependency)
-      .initial{ CircularDouble2A() }
-      .postInit { c, a in
-        a.b1 = try *c
-        a.b2 = try *c
-      }
-    
-    builder.register(type: CircularDouble2B.self)
-      .lifetime(.perDependency)
-      .initial(CircularDouble2B.init(a:))
-    
-    let container = try! builder.build()
-    
-    let a: CircularDouble2A = try! *container
-    XCTAssert(a.b1 === a.b2)
-    XCTAssert(a === a.b1.a)
-    XCTAssert(a.b1 === a.b1.a.b1)
-    XCTAssert(a === a.b2.a)
-    XCTAssert(a.b2 === a.b2.a.b2)
-    
-    let b: CircularDouble2B = try! *container
-    XCTAssert(b === b.a.b1)
-    XCTAssert(b === b.a.b2)
-    XCTAssert(b.a === b.a.b1.a)
-    XCTAssert(b.a === b.a.b2.a)
-    
-    XCTAssert(a !== b.a)
-    XCTAssert(a.b1 !== b)
-    XCTAssert(a.b2 !== b)
-  }
-  
-  func test07_ResolveCircularDoubleOneDependency2_OtherStyleInjection() {
-    let builder = DIContainerBuilder()
-    
-    builder.register(type: CircularDouble2A.self)
-      .lifetime(.perDependency)
-      .initial{ CircularDouble2A() }
+    container.register(CircularDouble2A.init)
+      .lifetime(.objectGraph)
       .injection{ $0.set(b1: $1, b2: $2) }
 
     
-    builder.register(type: CircularDouble2B.self)
-      .lifetime(.perDependency)
-      .initial(CircularDouble2B.init(a:))
+    container.register(CircularDouble2B.init)
+      .lifetime(.objectGraph)
     
-    let container = try! builder.build()
-    
-    let a: CircularDouble2A = try! *container
-    XCTAssert(a.b1 === a.b2)
-    XCTAssert(a === a.b1.a)
-    XCTAssert(a.b1 === a.b1.a.b1)
-    XCTAssert(a === a.b2.a)
-    XCTAssert(a.b2 === a.b2.a.b2)
-    
-    let b: CircularDouble2B = try! *container
-    XCTAssert(b === b.a.b1)
-    XCTAssert(b === b.a.b2)
-    XCTAssert(b.a === b.a.b1.a)
-    XCTAssert(b.a === b.a.b2.a)
-    
-    XCTAssert(a !== b.a)
-    XCTAssert(a.b1 !== b)
-    XCTAssert(a.b2 !== b)
+    XCTAssert(!container.valid())
   }
   
-  func test08_DependencyIntoDependency() {
-    let builder = DIContainerBuilder()
+  func test17_DependencyIntoDependency() {
+    let container = DIContainer()
     
-    builder.register(type: DependencyA.self)
-      .initial{ DependencyA() }
+    container.register(DependencyA.init)
     
-    builder.register(type: DependencyB.self)
-      .initial(DependencyB.init)
-      .injection(.manual) { c, b in try b.a = *c }
+    container.register(DependencyB.init)
+      .injection { $0.a = $1 }
     
-    builder.register(type: DependencyC.self)
-      .initial{ DependencyC() }
+    container.register(DependencyC.init)
       .injection { $0.b = $1 }
     
-    let container = try! builder.build()
-    
-    let c: DependencyC = try! *container
+    let c: DependencyC = *container
     
     XCTAssert(c.b != nil)
     XCTAssert(c.b.a != nil)
   }
   
-  func test09_Params() {
-    let builder = DIContainerBuilder()
+  func test18_ResolveManyWithNamesTags() {
+    let container = DIContainer()
     
-    builder.register(type: Params.self)
-      .lifetime(.perDependency)
-      .initial{ Params(number:0) }
-      .initialWithArg{ _, number in return Params(number:number) }
-      .initialWithArg{ _, number, bool in return Params(number:number, bool: bool) }
-      .initialWithArg{ _, number, str in return Params(number:number, str: str) }
-      .initialWithArg{ _, number, str, bool in return Params(number:number, str: str, bool: bool) }
-      .initialWithArg{ _, number, bool, str  in return Params(number:number, str: str, bool: bool) }
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
     
-    let container = try! builder.build()
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self, tag: FooService.self){$0}
     
-    let p1: Params = try! container.resolve()
-    XCTAssert(p1.number == 0 && p1.str == "" && p1.bool == false)
+    container.register(BarService.init)
+      .as(check: ServiceProtocol.self, tag: BarService.self){$0}
     
-    let p2: Params = try! container.resolve(arg: 15)
-    XCTAssert(p2.number == 15 && p2.str == "" && p2.bool == false)
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self, name: "foo test"){$0}
     
-    let p3: Params = try! container.resolve(arg: 25, true)
-    XCTAssert(p3.number == 25 && p3.str == "" && p3.bool == true)
+    container.register(BarService.init)
+      .as(check: ServiceProtocol.self, name: "bar test"){$0}
     
-    let p4: Params = try! container.resolve(arg: 35, "test")
-    XCTAssert(p4.number == 35 && p4.str == "test" && p4.bool == false)
+    let services: [ServiceProtocol] = many(*container)
+    XCTAssertEqual(services.count, 5)
     
-    let p5: Params = try! container.resolve(arg: 45, "test2", true)
-    XCTAssert(p5.number == 45 && p5.str == "test2" && p5.bool == true)
-    
-    let p6: Params = try! container.resolve(arg: 55, true, "test3")
-    XCTAssert(p6.number == 55 && p6.str == "test3" && p6.bool == true)    
-  }
-  
-  func test10_AutoParams() {
-    let builder = DIContainerBuilder()
-    
-    builder.register(type: Params.self)
-      .lifetime(.perDependency)
-      .initial{ Params(number:0) }
-      .initialWithArg{ Params(number:$1) }
-      .initialWithArg{ Params(number:$1, bool: $2) }
-      .initialWithArg{ Params(number:$1, str: $2) }
-      .initialWithArg{ Params(number:$1, str: $2, bool: $3) }
-      .initialWithArg{ Params(number:$1, str: $3, bool: $2) }
-    
-    let container = try! builder.build()
-    
-    let p1: Params = try! container.resolve()
-    XCTAssert(p1.number == 0 && p1.str == "" && p1.bool == false)
-    
-    let p2: Params = try! container.resolve(arg: 15)
-    XCTAssert(p2.number == 15 && p2.str == "" && p2.bool == false)
-    
-    let p3: Params = try! container.resolve(arg: 25, true)
-    XCTAssert(p3.number == 25 && p3.str == "" && p3.bool == true)
-    
-    let p4: Params = try! container.resolve(arg: 35, "test")
-    XCTAssert(p4.number == 35 && p4.str == "test" && p4.bool == false)
-    
-    let p5: Params = try! container.resolve(arg: 45, "test2", true)
-    XCTAssert(p5.number == 45 && p5.str == "test2" && p5.bool == true)
-    
-    let p6: Params = try! container.resolve(arg: 55, true, "test3")
-    XCTAssert(p6.number == 55 && p6.str == "test3" && p6.bool == true)
-  }
-  
-  func test11_ShortRegister() {
-    let builder = DIContainerBuilder()
-    
-    builder.register(type: Params.self)
-      .lifetime(.perDependency)
-      .initial{ Params(number:0) }
-      .initialWithArg{ Params(number: $1) }
-    
-    let container = try! builder.build()
-    
-    let p1: Params = try! container.resolve()
-    XCTAssert(p1.number == 0 && p1.str == "" && p1.bool == false)
-    
-    let p2: Params = try! container.resolve(arg: 15)
-    XCTAssert(p2.number == 15 && p2.str == "" && p2.bool == false)
-  }
-  
-  func test12_ShortParamRegister() {
-    let builder = DIContainerBuilder()
-    
-    builder.register(type: Params.self)
-      .lifetime(.perDependency)
-      .initialWithArg{ Params(number: $1, str: $2, bool: $3) }
-      .initialWithArg{ Params(number: $1, str: $2) }
-    
-    let container = try! builder.build()
-    
-    let p1: Params = try! container.resolve(arg: 45, "test2", true)
-    XCTAssert(p1.number == 45 && p1.str == "test2" && p1.bool == true)
-    
-    let p2: Params = try! container.resolve(arg: 35, "test")
-    XCTAssert(p2.number == 35 && p2.str == "test" && p2.bool == false)
-  }
-
-  
-  func test13_ResolveMultiplyByTag() {
-    let builder = DIContainerBuilder()
-    
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .set(tag: TestTags.t1)
-      .initial{ FooService() }
-    
-    builder.register(type: BarService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .set(tag: TestTags.t2)
-      .initial{ BarService() }
-    
-    let container = try! builder.build()
-    
-    let serviceFoo: ServiceProtocol = try! container.resolve(tag: TestTags.t1)
-    XCTAssertEqual(serviceFoo.foo(), "foo")
-    
-    let serviceBar: ServiceProtocol = try! container.resolve(tag: TestTags.t2)
-    XCTAssertEqual(serviceBar.foo(), "bar")
-  }
-  
-  func test13_ResolveMultiplySingleByTag() {
-    let builder = DIContainerBuilder()
-    
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .set(tag: TestTags.t1)
-      .set(tag: TestTags.t2)
-      .lifetime(.single)
-      .initial{ FooService() }
-    
-    let container = try! builder.build()
-    
-    let serviceFoo: ServiceProtocol = try! container.resolve(tag: TestTags.t1)
-    XCTAssertEqual(serviceFoo.foo(), "foo")
-    
-    let serviceFoo2: ServiceProtocol = try! container.resolve(tag: TestTags.t2)
-    XCTAssertEqual(serviceFoo2.foo(), "foo")
-    
-    XCTAssertNotEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceFoo2 as AnyObject).toOpaque())
-  }
-  
-  func test13_ResolveMultiplyPerScopeByTag() {
-    let builder = DIContainerBuilder()
-    
-    builder.register(type: BarService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .set(tag: TestTags.t1)
-      .set(tag: TestTags.t2)
-      .lifetime(.perScope)
-      .initial{ BarService() }
-    
-    let container = try! builder.build()
-    
-    let serviceBar1_1: ServiceProtocol = try! container.resolve(tag: TestTags.t1)
-    XCTAssertEqual(serviceBar1_1.foo(), "bar")
-    
-    let serviceBar1_2: ServiceProtocol = try! container.resolve(tag: TestTags.t2)
-    XCTAssertEqual(serviceBar1_2.foo(), "bar")
-    
-    XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar1_1 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar1_2 as AnyObject).toOpaque())
-    
-    
-    let container2 = container.newLifeTimeScope()
-    
-    let serviceBar2_1: ServiceProtocol = try! container2.resolve(tag: TestTags.t1)
-    XCTAssertEqual(serviceBar2_1.foo(), "bar")
-    
-    let serviceBar2_2: ServiceProtocol = try! container2.resolve(tag: TestTags.t2)
-    XCTAssertEqual(serviceBar2_2.foo(), "bar")
-    
-    XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar2_1 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar2_2 as AnyObject).toOpaque())
-    
-    XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar1_1 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar2_1 as AnyObject).toOpaque())
-    XCTAssertNotEqual(Unmanaged.passUnretained(serviceBar1_2 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar2_2 as AnyObject).toOpaque())
-  }
-  
-  func test14_ResolveMultiplyByTagObj() {
-    let builder = DIContainerBuilder()
-    
-    let tag1 = NSObject()
-    let tag2 = NSObject()
-    
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .set(tag: tag1)
-      .initial{ FooService() }
-    
-    builder.register(type: BarService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .set(tag: tag2)
-      .initial{ BarService() }
-    
-    let container = try! builder.build()
-    
-    let serviceFoo: ServiceProtocol = try! container.resolve(tag: tag1)
-    XCTAssertEqual(serviceFoo.foo(), "foo")
-    
-    let serviceBar: ServiceProtocol = try! container.resolve(tag: tag2)
-    XCTAssertEqual(serviceBar.foo(), "bar")
-  }
-  
-  func test14_ResolveMultiplyByOneTagObj() {
-    let builder = DIContainerBuilder()
-    
-    let tag = NSObject()
-    
-    builder.register(type: FooService.self)
-      .as(ServiceProtocol.self).check{$0}
-      .set(tag: tag)
-      .initial{ FooService() }
-      .lifetime(.perScope)
-    
-    let container = try! builder.build()
-    
-    let serviceFoo1: ServiceProtocol = try! container.resolve(tag: tag)
-    XCTAssertEqual(serviceFoo1.foo(), "foo")
-    
-    let serviceFoo2: ServiceProtocol = try! container.resolve(tag: tag)
-    XCTAssertEqual(serviceFoo2.foo(), "foo")
-    
-    XCTAssertEqual(Unmanaged.passUnretained(serviceFoo1 as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceFoo2 as AnyObject).toOpaque())
   }
 }
 

@@ -13,113 +13,120 @@ class DITranquillityTests_Threads: XCTestCase {
   override func setUp() {
     super.setUp()
   }
+  /// Remove support threads, in next version return new improved thread safe.
   
-  func test01_ResolvePerDependency() {
-    let builder = DIContainerBuilder()
+  func test01_ResolvePrototype() {
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .lifetime(.perDependency)
-      .initial(FooService.init)
-    
-    let container = try! builder.build()
+    container.register(FooService.init)
+      .lifetime(.prototype)
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
       for _ in 0..<32768 {
-        let service: FooService = try! *container
+        let service: FooService = *container
         XCTAssertEqual(service.foo(), "foo")
       }
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
       for _ in 0..<16384 {
-        let service: FooService = try! *container
+        let service: FooService = *container
         XCTAssertEqual(service.foo(), "foo")
       }
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
       for _ in 0..<8192 {
-        let service: FooService = try! *container
+        let service: FooService = *container
         XCTAssertEqual(service.foo(), "foo")
       }
     }
   }
   
-  func test02_ResolvePerSingle() {
-    let builder = DIContainerBuilder()
+  func test02_ResolveLazySingle() {
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
+    container.register(FooService.init)
       .lifetime(.lazySingle)
-      .initial{ FooService() }
     
-    let container = try! builder.build()
-    
-    let singleService: FooService = try! *container
+    let singleService: FooService = *container
     XCTAssertEqual(singleService.foo(), "foo")
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
       for _ in 0..<32768 {
-        let service: FooService = try! *container
+        let service: FooService = *container
         XCTAssert(service === singleService)
       }
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
       for _ in 0..<16384 {
-        let service: FooService = try! *container
+        let service: FooService = *container
         XCTAssert(service === singleService)
       }
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
       for _ in 0..<8192 {
-        let service: FooService = try! *container
+        let service: FooService = *container
         XCTAssert(service === singleService)
       }
     }
   }
   
-  func test03_ResolvePerScope() {
-    let builder = DIContainerBuilder()
+  func test03_ResolveSingle() {
+    let container = DIContainer()
     
-    builder.register(type: FooService.self)
-      .lifetime(.perScope)
-      .initial{ FooService() }
+    container.register(FooService.init)
+      .lifetime(.single)
     
-    let container = try! builder.build()
-    
-    let scopeService: FooService = try! *container
-    XCTAssertEqual(scopeService.foo(), "foo")
-    
-    let scope = container.newLifeTimeScope()
-    
-    let scopeService2: FooService = try! *scope
-    XCTAssertEqual(scopeService2.foo(), "foo")
+    let singleService: FooService = *container
+    XCTAssertEqual(singleService.foo(), "foo")
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
       for _ in 0..<32768 {
-        let service: FooService = try! *container
-        XCTAssert(service === scopeService)
-        let service2: FooService = try! *scope
-        XCTAssert(service2 === scopeService2)
+        let service: FooService = *container
+        XCTAssert(service === singleService)
       }
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
       for _ in 0..<16384 {
-        let service: FooService = try! *container
-        XCTAssert(service === scopeService)
-        let service2: FooService = try! *scope
-        XCTAssert(service2 === scopeService2)
+        let service: FooService = *container
+        XCTAssert(service === singleService)
       }
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
       for _ in 0..<8192 {
-        let service: FooService = try! *container
-        XCTAssert(service === scopeService)
-        let service2: FooService = try! *scope
-        XCTAssert(service2 === scopeService2)
+        let service: FooService = *container
+        XCTAssert(service === singleService)
+      }
+    }
+  }
+  
+  func test04_ResolveRegister() {
+    let container = DIContainer()
+    
+    DISetting.Log.fun = nil
+    
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
+      for i in 0..<32768 {
+        container.register(line: i + 1000, FooService.init).lifetime(.prototype)
+      }
+    }
+    
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
+      for _ in 0..<16384 {
+        let service: FooService? = *container
+        _ = service
+      }
+    }
+    
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+      for _ in 0..<8192 {
+        let service: FooService? = *container
+        _ = service
       }
     }
   }
