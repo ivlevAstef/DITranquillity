@@ -13,15 +13,52 @@ private protocol TestProtocol { }
 private class TestClass1: TestProtocol { }
 private class TestClass2: TestProtocol { }
 
-private protocol Test2Protocol { }
-
-extension DIComponentInfo {
-  init(type: DIAType, file: String, line: Int) {
-    self.type = type
-    self.file = file
-    self.line = line
+private class InjectedClass {
+  private let test: TestProtocol
+  init(test: TestProtocol) {
+    self.test = test
   }
 }
+
+private class OptionalInjectedClass {
+  init(test: TestProtocol?) {
+  }
+}
+
+private class SelfInit {
+  private let test: SelfInit
+  init(_ test: SelfInit) {
+    self.test = test
+  }
+}
+
+private class RInit1 {
+  init(_ test: RInit2) { }
+}
+
+private class RInit2 {
+  init(_ test: RInit3Protocol) { }
+}
+
+private protocol RInit3Protocol {}
+
+private class RInit3: RInit3Protocol {
+  init(_ test: RInit1) { }
+}
+
+private class RInit3Array: RInit3Protocol {
+  init(_ test: [RInit1]) { }
+}
+
+private class RInit3InjectOptional: RInit3Protocol {
+  var test: RInit1?
+}
+
+private class RInit3Inject {
+  var test: RInit1!
+}
+
+
 
 class DITranquillityTests_Build: XCTestCase {
   var file: String { return #file }
@@ -35,330 +72,185 @@ class DITranquillityTests_Build: XCTestCase {
     super.setUp()
   }
 
-  /*func test01_NotSetInitializer() {
+  func test01_NotSetInitializer() {
     let container = DIContainer()
     
-    let _ = container.register(TestProtocol.self); let line = #line
+    container.register(TestProtocol.self)
+    container.register(InjectedClass.init)
     
-    do {
-      try container.build()
-    } catch DIError.build(let errors) {
-      return
-    } catch {
-      XCTFail("Catched error: \(error)")
-    }
-    XCTFail("No try exceptions")
+    XCTAssert(!container.valid())
   }
   
-  func test03_MultiplyRegistrateTypeWithMultyDefault() {
+  func test01_NotSetProtocol() {
     let container = DIContainer()
     
-    let lineClass1 = #line; container.register(type: TestClass1.self)
-      .as(TestProtocol.self).check{$0}
-      .set(.default)
-      .initial{ TestClass1() }
+    container.register(InjectedClass.init)
     
-    let lineClass2 = #line; container.register(type: TestClass2.self)
-      .as(TestProtocol.self).check{$0}
-      .set(.default)
-      .initial(TestClass2.init)
-    
-    
-    container.register(type: TestClass1.self)
-      .initial(init)
-    
-    do {
-      try container.build()
-    } catch DIError.build(let errors) {
-      XCTAssertEqual(errors, [
-        DIError.pluralDefaultAd(type: TestProtocol.self, typesInfo: [
-          DITypeInfo(type: TestClass1.self, file: file, line: lineClass1),
-          DITypeInfo(type: TestClass2.self, file: file, line: lineClass2)
-        ])
-      ])
-      return
-    } catch {
-      XCTFail("Catched error: \(error)")
-    }
-    XCTFail("No try exceptions")
+    XCTAssert(!container.valid())
   }
   
-  func test04_MultiplyRegistrateTypeWithOneDefault() {
+  func test01_NotSetInitializerForClass() {
     let container = DIContainer()
     
-    container.register(type: TestClass1.self)
-      .as(TestProtocol.self).check{$0}
-      .set(.default)
-      .initial(TestClass1.init)
+    container.register(TestClass1.self)
+    container.register(InjectedClass.init)
     
-    container.register(type: TestClass2.self)
-      .as(TestProtocol.self).check{$0}
-      .initial{ TestClass2() }
-    
-    do {
-      try container.build()
-    } catch {
-      XCTFail("Catched error: \(error)")
-    }
+    XCTAssert(!container.valid())
   }
   
-  func test05_MultiplyRegistrateTypeWithNames() {
+  func test01_RegistrateOnlyRealization() {
     let container = DIContainer()
     
-    container.register(type: TestClass1.self)
-      .as(TestProtocol.self).check{$0}
-      .set(name: "foo")
-      .initial{ TestClass1() }
+    container.register(TestClass1.init)
+    container.register(InjectedClass.init)
     
-    container.register(type: TestClass2.self)
-      .as(TestProtocol.self).check{$0}
-      .set(name: "bar")
-      .initial{ TestClass2() }
-    
-    do {
-      try container.build()
-    } catch {
-      XCTFail("Catched error: \(error)")
-    }
+    XCTAssert(!container.valid())
   }
   
-//  func test06_IncorrectRegistrateType() {
-//    let container = DIContainer()
-//    
-//    let line = #line; container.register(type: TestClass1.self)
-//      .as(Test2Protocol.self).check{$0} //<---- Swift not supported static check
-//      .initial{ TestClass1() }
-//    
-//    do {
-//      let container = try container.build()
-//     
-//      do {
-//        let type: Test2Protocol = try container.resolve()
-//        print("\(type)")
-//      } catch DIError.typeIsIncorrect(let requestedType, let realType, let typeInfo) {
-//        XCTAssert(equals(requestedType, Test2Protocol.self))
-//        XCTAssert(equals(realType, TestClass1.self))
-//        XCTAssertEqual(typeInfo, DITypeInfo(type: TestClass1.self, file: file, line: line))
-//        return
-//      } catch {
-//        XCTFail("Catched error: \(error)")
-//      }
-//      XCTFail("No try exceptions")
-//    } catch {
-//      XCTFail("Catched error: \(error)")
-//    }
-//  }
-  
-  func test07_RegistrationByProtocolAndGetByClass() {
+  func test01_RegistrateWithOptional() {
     let container = DIContainer()
     
-    container.register(type: TestClass1.self)
-      .as(TestProtocol.self).unsafe()
-      .initial(TestClass1.init)
+    container.register(OptionalInjectedClass.init)
     
-    do {
-      let container = try container.build()
-      
-      
-      do {
-        let type: TestClass1 = try container.resolve()
-        print("\(type)")
-      } catch DIError.typeNotFound(let type) {
-          XCTAssert(equals(type, TestClass1.self))
-          return
-      } catch {
-        XCTFail("Catched error: \(error)")
-        return
-      }
-      XCTFail("No try exceptions")
-    } catch {
-      XCTFail("Catched error: \(error)")
-    }
+    XCTAssert(container.valid())
   }
   
-  func registerForTest(container: DIContainer) {
-    container.register(type: TestClass1.init)
-  }
   
-  func test08_DoubleRegistrationOneLine() {
+  func test02_MultiplyRegistrateType() {
     let container = DIContainer()
     
-    registerForTest(builder: builder)
-    registerForTest(builder: builder)
+    container.register(TestClass1.init)
+      .as(check: TestProtocol.self){$0}
     
-    let container = try! container.build()
+    container.register(TestClass2.init)
+      .as(check: TestProtocol.self){$0}
     
-    let type: TestClass1 = try! container.resolve()
-    print(type) // ignore
-  }
-
-  */
-  
-  /*  func test01_AddLogger() {
-  let myLogger = MyLogger()
-  if !DILoggerComposite.add(logger: myLogger) {
-  XCTFail("Can't add logger")
+    container.register(InjectedClass.init)
+    
+    XCTAssert(!container.valid())
   }
   
-  if DILoggerComposite.add(logger: myLogger) {
-  XCTFail("Double add logger")
+  func test02_MultiplyRegistrateTypeWithDefault() {
+    let container = DIContainer()
+    
+    container.register(TestClass1.init)
+      .as(check: TestProtocol.self){$0}
+      .default()
+    
+    container.register(TestClass2.init)
+      .as(check: TestProtocol.self){$0}
+    
+    container.register(InjectedClass.init)
+    
+    XCTAssert(container.valid())
   }
   
-  let myLogger2 = MyLogger()
-  
-  if !DILoggerComposite.add(logger: myLogger2) {
-  XCTFail("Can't add logger two")
+  func test02_MultiplyRegistrateTypeWithName() {
+    let container = DIContainer()
+    
+    container.register(TestClass1.init)
+      .as(check: TestProtocol.self, name: "undefault"){$0}
+    
+    container.register(TestClass2.init)
+      .as(check: TestProtocol.self){$0}
+    
+    container.register(InjectedClass.init)
+    
+    XCTAssert(container.valid())
   }
   
-  if DILoggerComposite.add(logger: myLogger2) {
-  XCTFail("Double add logger two")
-  }
-  }
-  
-  func test02_oneObj() {
-  let myLogger = MyLogger()
-  DILoggerComposite.add(logger: myLogger)
-  
-  let builder = DIContainerBuilder()
-  builder.register(type: FooService.init).lifetime(.perDependency); let line = #line
-  
-  let container = try! builder.build()
-  
-  let service: FooService = try! container.resolve()
-  print(service.foo()) // ignore
-  
-  DILoggerComposite.wait()
-  XCTAssertEqual(myLogger.logs, [
-  .registration,
-  .resolving(.begin),
-  .found(typeInfo: DITypeInfo(type: FooService.self, file: file, line: line)),
-  .resolve(.new),
-  .resolving(.end)
-  ])
+  func test02_MultiplyRegistrateTypeWithTag() {
+    let container = DIContainer()
+    
+    container.register(TestClass1.init)
+      .as(check: TestProtocol.self, tag: TestClass1.self){$0}
+    
+    container.register(TestClass2.init)
+      .as(check: TestProtocol.self){$0}
+    
+    container.register(InjectedClass.init)
+    
+    XCTAssert(container.valid())
   }
   
-  func test03_perScope() {
-  let myLogger = MyLogger()
-  DILoggerComposite.add(logger: myLogger)
-  
-  let builder = DIContainerBuilder()
-  builder.register(type: FooService.init).lifetime(.perScope); let line = #line
-  
-  let container = try! builder.build()
-  
-  let service: FooService = try! container.resolve()
-  print(service.foo()) // ignore
-  
-  DILoggerComposite.wait()
-  XCTAssertEqual(myLogger.logs, [
-  .registration,
-  .resolving(.begin),
-  .found(typeInfo: DITypeInfo(type: FooService.self, file: file, line: line)),
-  .resolve(.new),
-  .cached,
-  .resolving(.end)
-  ])
+  func test04_SelfInit() {
+    let container = DIContainer()
+    container.register(SelfInit.init)
+    
+    XCTAssert(!container.valid())
   }
   
-  
-  func test04_single_double() {
-  let myLogger = MyLogger()
-  DILoggerComposite.add(logger: myLogger)
-  
-  let builder = DIContainerBuilder()
-  builder.register(type: FooService.init).lifetime(.single); let line = #line
-  
-  let container = try! builder.build()
-  
-  
-  let service: FooService = try! container.resolve()
-  print(service.foo()) // ignore
-  
-  DILoggerComposite.wait()
-  XCTAssertEqual(myLogger.logs, [
-  .registration,
-  .createSingle(.begin),
-  .resolving(.begin),
-  .found(typeInfo: DITypeInfo(type: FooService.self, file: file, line: line)),
-  .resolve(.new),
-  .cached,
-  .resolving(.end),
-  .createSingle(.end),
-  
-  .resolving(.begin),
-  .found(typeInfo: DITypeInfo(type: FooService.self, file: file, line: line)),
-  .resolve(.cache),
-  .resolving(.end)
-  ])
+  func test04_RecursiveTripleInit() {
+    let container = DIContainer()
+    container.register(RInit1.init)
+    container.register(RInit2.init)
+    container.register(RInit3.init).as(RInit3Protocol.self)
+    
+    XCTAssert(!container.valid())
   }
   
-  func test05_injection() {
-  let myLogger = MyLogger()
-  DILoggerComposite.add(logger: myLogger)
-  
-  let builder = DIContainerBuilder()
-  builder.register(type: FooService.init).as(ServiceProtocol.self){$0}.lifetime(.perDependency); let fooline = #line
-  builder.register(type: InjectImplicitly.init).injection{ $0.service = $1 }.lifetime(.perDependency); let iline = #line
-  
-  let container = try! builder.build()
-  
-  
-  let inject: InjectImplicitly = try! container.resolve()
-  print(inject.service.foo()) // ignore
-  
-  DILoggerComposite.wait()
-  XCTAssertEqual(myLogger.logs, [
-  .registration,
-  .registration,
-  
-  .resolving(.begin),
-  .found(typeInfo: DITypeInfo(type: InjectImplicitly.self, file: file, line: iline)),
-  .resolve(.new),
-  
-  .injection(.begin),
-  .resolving(.begin),
-  .found(typeInfo: DITypeInfo(type: FooService.self, file: file, line: fooline)),
-  .resolve(.new),
-  .resolving(.end),
-  .injection(.end),
-  
-  .resolving(.end),
-  ])
+  func test04_RecursiveTripleInitArray() {
+    let container = DIContainer()
+    container.register(RInit1.init)
+    container.register(RInit2.init)
+    container.register(RInit3Array.init).as(RInit3Protocol.self)
+    
+    XCTAssert(!container.valid())
   }
   
-  func test07_error() {
-  let myLogger = MyLogger()
-  DILoggerComposite.add(logger: myLogger)
-  
-  let builder = DIContainerBuilder()
-  builder.register(type: InjectImplicitly.init).injection{ $0.service = $1 }.lifetime(.perDependency); let line = #line
-  
-  let container = try! builder.build()
-  
-  
-  do {
-  let inject: InjectImplicitly = try container.resolve()
-  print(inject.service.foo()) // ignore
-  XCTFail("resolve incorrect object")
-  } catch {
-  
+  func test04_RecursiveTripleInitArrayWithCorrectLifetime() {
+    let container = DIContainer()
+    container.register(RInit1.init).lifetime(.objectGraph)
+    container.register(RInit2.init).lifetime(.objectGraph)
+    container.register(RInit3Array.init).as(RInit3Protocol.self).lifetime(.objectGraph)
+    
+    XCTAssert(!container.valid())
   }
   
-  DILoggerComposite.wait()
-  XCTAssertEqual(myLogger.logs, [
-  .registration,
+  func test05_RecursiveTripleInitInject() {
+    let container = DIContainer()
+    container.register(RInit1.init).lifetime(.objectGraph)
+    container.register(RInit2.init).lifetime(.objectGraph)
+    container.register(RInit3Inject.init)
+      .as(RInit3Protocol.self)
+      .injection{ $0.test = $1 }
+      .lifetime(.objectGraph)
+    
+    XCTAssert(!container.valid())
+  }
   
-  .resolving(.begin),
-  .found(typeInfo: DITypeInfo(type: InjectImplicitly.self, file: file, line: line)),
-  .resolve(.new),
+  func test05_RecursiveTripleInitInjectIsCycleButLifetime() {
+    let container = DIContainer()
+    container.register(RInit1.init)
+    container.register(RInit2.init)
+    container.register(RInit3Inject.init)
+      .as(RInit3Protocol.self)
+      .injection{ $0.test = $1 }
+    
+    XCTAssert(!container.valid())
+  }
   
-  .injection(.begin),
-  .resolving(.begin),
-  .error(DIError.typeNotFound(type: ServiceProtocol.self)),
-  .resolving(.end),
-  .injection(.end),
+  func test05_RecursiveTripleInitInjectIsCycle() {
+    let container = DIContainer()
+    container.register(RInit1.init).lifetime(.objectGraph)
+    container.register(RInit2.init).lifetime(.objectGraph)
+    container.register(RInit3Inject.init)
+      .as(RInit3Protocol.self)
+      .injection(cycle: true) { $0.test = $1 }
+      .lifetime(.objectGraph)
+    
+    XCTAssert(container.valid())
+  }
   
-  .resolving(.end),
-  ])
-  }*/
+  func test05_RecursiveTripleInitInjectOptional() {
+    let container = DIContainer()
+    container.register(RInit1.init).lifetime(.objectGraph)
+    container.register(RInit2.init).lifetime(.objectGraph)
+    container.register(RInit3InjectOptional.init)
+      .as(RInit3Protocol.self)
+      .injection{ $0.test = $1 }
+      .lifetime(.objectGraph)
+    
+    XCTAssert(!container.valid())
+  }
 }
