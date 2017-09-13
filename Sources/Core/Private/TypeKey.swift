@@ -7,8 +7,8 @@
 //
 
 struct ShortTypeKey: Hashable {
-  let type: DIAType
-  fileprivate let hash: Int
+  private let type: DIAType
+  private let hash: Int
   
   init(by type: DIAType) {
     self.type = type
@@ -23,9 +23,9 @@ struct ShortTypeKey: Hashable {
 }
 
 struct TypeKey: Hashable {
-  let type: DIAType
-  let tag: DITag
-  let name: String
+  let type: DIAType //need for construct ShortTypeKey...
+  private let tag: DITag
+  private let name: String
   
   private let hash: Int
   
