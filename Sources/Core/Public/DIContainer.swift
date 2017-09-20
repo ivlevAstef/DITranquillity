@@ -32,8 +32,18 @@ public final class DIContainer {
   internal let bundleContainer = BundleContainer()
   internal private(set) var resolver: Resolver!
   
+  final class IncludedParts {
+    private var parts: Set<ObjectIdentifier> = []
+    private let mutex = PThreadMutex(recursive: ())
+    
+    func checkAndInsert(_ part: ObjectIdentifier) -> Bool {
+      return mutex.sync { parts.insert(part).inserted }
+    }
+  }
+  
+  internal var includedParts = IncludedParts()
+  
   // non thread safe!
-  internal var includedParts: Set<String> = []
   internal var currentBundle: Bundle? = nil
 }
 
