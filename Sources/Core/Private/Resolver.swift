@@ -67,7 +67,7 @@ class Resolver {
         var filtered: [Component] = []
         
         while let bundle = queue.popLast() {
-          let filteredByBundle = components.filter{ $0.bundle.map{ BundleContainer.compare(bundle, $0) } ?? true }
+          let filteredByBundle = components.filter{ $0.bundle.map{ bundle == $0 } ?? true }
           filtered.append(contentsOf: filteredByBundle)
           contents.append(contentsOf: container.bundleContainer.childs(for: bundle))
         }

@@ -46,9 +46,7 @@ open class DIScanFramework: DIScan, DIFramework {
     }
     
     for framework in types({ $0 is DIFramework.Type }, inpredicate, nil) {
-      let framework = framework as! DIFramework.Type
-      container.currentBundle = Bundle(for: framework)
-      framework.load(container: container)
+      container.append(framework: framework as! DIFramework.Type)
     }
   }
 }

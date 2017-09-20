@@ -6,6 +6,8 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
+import Foundation
+
 prefix operator *
 /// Short syntax for resolve.
 /// Using:
@@ -32,9 +34,43 @@ public final class DIContainer {
   internal let bundleContainer = BundleContainer()
   internal private(set) var resolver: Resolver!
   
-  // non thread safe!
-  internal var includedParts: Set<String> = []
-  internal var currentBundle: Bundle? = nil
+  ///MARK: Hierarchy
+  final class IncludedParts {
+    private var parts: Set<ObjectIdentifier> = []
+    private let mutex = PThreadMutex(recursive: ())
+    
+    func checkAndInsert(_ part: ObjectIdentifier) -> Bool {
+      return mutex.sync { parts.insert(part).inserted }
+    }
+  }
+  
+  final class BundleStack {
+    private let key = "ThreadSafeCurrentBundle\(UUID().uuidString)"
+    
+    var bundle: Bundle? { return stack?.last }
+    
+    func push(_ bundle: Bundle) {
+      if let stack = self.stack {
+        self.stack = stack + [bundle]
+      } else {
+        self.stack = [bundle]
+      }
+    }
+    
+    func pop() {
+      if let stack = self.stack {
+        self.stack = Array(stack.dropLast())
+      }
+    }
+    
+    private var stack: [Bundle]? {
+      set { return Thread.current.threadDictionary[key] = newValue }
+      get { return Thread.current.threadDictionary[key] as? [Bundle] }
+    }
+  }
+  
+  internal let includedParts = IncludedParts()
+  internal let bundleStack = BundleStack()
 }
 
 // MARK: - register

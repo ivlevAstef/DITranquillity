@@ -1,3 +1,7 @@
+# v3.0.1
+* Now thread safe supported for `append(framework:)`, `append(part:)`, `import()`
+* Now `append(framework:)` also call `import()`
+
 # v3.0.0
 * Added migration documentation.
 * Added code documentation.
