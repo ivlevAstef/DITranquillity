@@ -24,10 +24,11 @@ public extension DIContainer {
   ///
   /// - Parameters:
   ///   - path: the part type
-  public func append(part: DIPart.Type, file: String = #file, line: Int = #line) {
+  public func append(part: DIPart.Type) {
     if includedParts.checkAndInsert(ObjectIdentifier(part)) {
+      bundleStack.push(Bundle(for: part))
+      defer { bundleStack.pop() }
       
-      self.currentBundle = Bundle(for: part)
       part.load(container: self)
     }
   }

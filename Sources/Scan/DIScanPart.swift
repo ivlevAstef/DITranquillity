@@ -51,10 +51,8 @@ open class DIScanPart: DIScan, DIPart {
       inpredicate = { _ in return true }
     }
     
-    for part in types({ $0 is DIPart.Type && !($0 is DIFramework.Type) }, inpredicate, bundle) {
-      let part = part as! DIPart.Type
-      container.currentBundle = Bundle(for: part)
-      part.load(container: container)
+    for part in types({ $0 is DIPart.Type }, inpredicate, bundle) {
+      container.append(part: part as! DIPart.Type)
     }
   }
 }

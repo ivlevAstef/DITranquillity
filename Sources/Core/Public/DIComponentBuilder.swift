@@ -11,7 +11,7 @@
 /// The class allows you to configure all the necessary properties for the component.
 public final class DIComponentBuilder<Impl> {
   init(container: DIContainer, componentInfo: DIComponentInfo) {
-    self.component = Component(componentInfo: componentInfo, in: container.currentBundle)
+    self.component = Component(componentInfo: componentInfo, in: container.bundleStack.bundle)
     self.componentContainer = container.componentContainer
     componentContainer.insert(TypeKey(by: Impl.self), component)
   }
