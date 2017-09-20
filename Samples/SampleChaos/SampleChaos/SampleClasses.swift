@@ -135,11 +135,19 @@ class SamplePart: DIPart {
       .as(ServiceProtocol.self)
       .lifetime(.prototype)
 
+    #if swift(>=4.0)
+    container.register1{ LoggerAll(loggers: many($0)) }
+      .as(check: LoggerProtocol.self){$0}
+      .default()
+      .lifetime(.single)
+      .injection(cycle: true){ $0.loggersFull = many($1) }
+    #else
     container.register{ LoggerAll(loggers: many($0)) }
       .as(check: LoggerProtocol.self){$0}
       .default()
       .lifetime(.single)
       .injection(cycle: true){ $0.loggersFull = many($1) }
+    #endif
 
     container.register{ Logger() }
       .as(check: LoggerProtocol.self){$0}
@@ -154,8 +162,13 @@ class SamplePart: DIPart {
       .injection{ $0.service2 = $1 }
       .injection{ $0.logger2 = $1 }
     
+    #if swift(>=4.0)
+    container.register1{ InjectMany(loggers: many($0)) }
+      .lifetime(.prototype)
+    #else
     container.register{ InjectMany(loggers: many($0)) }
       .lifetime(.prototype)
+    #endif
     
     //Animals
     container.register{ Animal(name: "Cat") }
@@ -173,9 +186,13 @@ class SamplePart: DIPart {
     
     
     //circular
-    
+    #if swift(>=4.0)
+    container.register1(Circular1.init)
+      .lifetime(.objectGraph)
+    #else
     container.register(Circular1.init)
       .lifetime(.objectGraph)
+    #endif
     
     container.register(Circular2.init)
       .lifetime(.objectGraph)

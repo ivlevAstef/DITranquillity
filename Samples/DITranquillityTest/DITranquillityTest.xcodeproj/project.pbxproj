@@ -9,47 +9,39 @@
 /* Begin PBXBuildFile section */
 		11046A6B1E64182B00788015 /* AccessStoryboard1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11046A691E64182B00788015 /* AccessStoryboard1.storyboard */; };
 		11046A6C1E64182B00788015 /* AccessStoryboard2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11046A6A1E64182B00788015 /* AccessStoryboard2.storyboard */; };
-		118DBCB71E40F9E9003A7D1F /* DITranquillityTests_ResolveByInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118DBCB61E40F9E9003A7D1F /* DITranquillityTests_ResolveByInit.swift */; };
 		1699AEC11DCAED8C00962832 /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1699AEC01DCAED8C00962832 /* DITranquillity.framework */; };
 		1699AEC31DCAEDD900962832 /* SubProject1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1699AEC21DCAEDD900962832 /* SubProject1.framework */; };
 		1699AEDC1DCAEE6000962832 /* SubProject2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1699AEDB1DCAEE6000962832 /* SubProject2.framework */; };
-		16D7BCC31DB0875600A29A9F /* DITranquillityTests_Scan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCC21DB0875600A29A9F /* DITranquillityTests_Scan.swift */; };
-		A51CEC561D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51CEC551D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift */; };
-		A52CE30D1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52CE30C1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift */; };
-		A5AD4F041D3CD4CB00A6882C /* DITranquillityTests_Threads.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AD4F031D3CD4CB00A6882C /* DITranquillityTests_Threads.swift */; };
-		A5D918C21D1939A70009F9D4 /* DITranquillityTests_Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D918BF1D1939A70009F9D4 /* DITranquillityTests_Validation.swift */; };
-		A5D918C41D1939A70009F9D4 /* ResolveTestClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D918C11D1939A70009F9D4 /* ResolveTestClasses.swift */; };
-<<<<<<< HEAD
-		D58B11841F66EE1D005010F4 /* DITranquillityTests_Performance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58B11831F66EE1D005010F4 /* DITranquillityTests_Performance.swift */; };
-=======
 		D508D6221F533600001810E4 /* TestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D508D6211F533600001810E4 /* TestStoryboard.storyboard */; };
 		D508D6241F533626001810E4 /* TestReferenceStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D508D6231F533626001810E4 /* TestReferenceStoryboard.storyboard */; };
-		D54AFF4A1F663973006A38F8 /* DITranquillityTests_Performance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54AFF491F663973006A38F8 /* DITranquillityTests_Performance.swift */; };
->>>>>>> reborn
+		D5A3E5181F722F620044CB82 /* DITranquillityTests_ResolveByInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A3E5101F722F620044CB82 /* DITranquillityTests_ResolveByInit.swift */; };
+		D5A3E5191F722F620044CB82 /* DITranquillityTests_Resolve.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A3E5111F722F620044CB82 /* DITranquillityTests_Resolve.swift */; };
+		D5A3E51A1F722F620044CB82 /* DITranquillityTests_Scan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A3E5121F722F620044CB82 /* DITranquillityTests_Scan.swift */; };
+		D5A3E51B1F722F620044CB82 /* ResolveTestClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A3E5131F722F620044CB82 /* ResolveTestClasses.swift */; };
+		D5A3E51C1F722F620044CB82 /* DITranquillityTests_Threads.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A3E5141F722F620044CB82 /* DITranquillityTests_Threads.swift */; };
+		D5A3E51D1F722F620044CB82 /* DITranquillityTests_Performance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A3E5151F722F620044CB82 /* DITranquillityTests_Performance.swift */; };
+		D5A3E51E1F722F620044CB82 /* DITranquillityTests_Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A3E5161F722F620044CB82 /* DITranquillityTests_Validation.swift */; };
+		D5A3E51F1F722F620044CB82 /* DITranquillityTests_Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A3E5171F722F620044CB82 /* DITranquillityTests_Storyboard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		11046A691E64182B00788015 /* AccessStoryboard1.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AccessStoryboard1.storyboard; sourceTree = "<group>"; };
 		11046A6A1E64182B00788015 /* AccessStoryboard2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AccessStoryboard2.storyboard; sourceTree = "<group>"; };
-		118DBCB61E40F9E9003A7D1F /* DITranquillityTests_ResolveByInit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_ResolveByInit.swift; sourceTree = "<group>"; };
 		1699AEC01DCAED8C00962832 /* DITranquillity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DITranquillity.framework; path = "../../build/Debug-iphoneos/DITranquillity.framework"; sourceTree = "<group>"; };
 		1699AEC21DCAEDD900962832 /* SubProject1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SubProject1.framework; path = "SubProject1/build/Debug-iphoneos/SubProject1.framework"; sourceTree = "<group>"; };
 		1699AEDB1DCAEE6000962832 /* SubProject2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SubProject2.framework; path = "SubProject2/build/Debug-iphoneos/SubProject2.framework"; sourceTree = "<group>"; };
-		16D7BCC21DB0875600A29A9F /* DITranquillityTests_Scan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Scan.swift; sourceTree = "<group>"; };
 		A50053221D1931FE00DFD9CF /* DITranquillityTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DITranquillityTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A51CEC551D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Storyboard.swift; sourceTree = "<group>"; };
-		A52CE30C1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Resolve.swift; sourceTree = "<group>"; };
-		A5AD4F031D3CD4CB00A6882C /* DITranquillityTests_Threads.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Threads.swift; sourceTree = "<group>"; };
-		A5D918BF1D1939A70009F9D4 /* DITranquillityTests_Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Validation.swift; sourceTree = "<group>"; };
 		A5D918C01D1939A70009F9D4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A5D918C11D1939A70009F9D4 /* ResolveTestClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolveTestClasses.swift; sourceTree = "<group>"; };
-<<<<<<< HEAD
-		D58B11831F66EE1D005010F4 /* DITranquillityTests_Performance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Performance.swift; sourceTree = "<group>"; };
-=======
 		D508D6211F533600001810E4 /* TestStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TestStoryboard.storyboard; sourceTree = "<group>"; };
 		D508D6231F533626001810E4 /* TestReferenceStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TestReferenceStoryboard.storyboard; sourceTree = "<group>"; };
-		D54AFF491F663973006A38F8 /* DITranquillityTests_Performance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Performance.swift; sourceTree = "<group>"; };
->>>>>>> reborn
+		D5A3E5101F722F620044CB82 /* DITranquillityTests_ResolveByInit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_ResolveByInit.swift; sourceTree = "<group>"; };
+		D5A3E5111F722F620044CB82 /* DITranquillityTests_Resolve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Resolve.swift; sourceTree = "<group>"; };
+		D5A3E5121F722F620044CB82 /* DITranquillityTests_Scan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Scan.swift; sourceTree = "<group>"; };
+		D5A3E5131F722F620044CB82 /* ResolveTestClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolveTestClasses.swift; sourceTree = "<group>"; };
+		D5A3E5141F722F620044CB82 /* DITranquillityTests_Threads.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Threads.swift; sourceTree = "<group>"; };
+		D5A3E5151F722F620044CB82 /* DITranquillityTests_Performance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Performance.swift; sourceTree = "<group>"; };
+		D5A3E5161F722F620044CB82 /* DITranquillityTests_Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Validation.swift; sourceTree = "<group>"; };
+		D5A3E5171F722F620044CB82 /* DITranquillityTests_Storyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Storyboard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,23 +88,19 @@
 		A5D918BE1D1939A70009F9D4 /* DITranquillityTest */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-				D58B11831F66EE1D005010F4 /* DITranquillityTests_Performance.swift */,
-=======
+				D5A3E5151F722F620044CB82 /* DITranquillityTests_Performance.swift */,
+				D5A3E5111F722F620044CB82 /* DITranquillityTests_Resolve.swift */,
+				D5A3E5101F722F620044CB82 /* DITranquillityTests_ResolveByInit.swift */,
+				D5A3E5121F722F620044CB82 /* DITranquillityTests_Scan.swift */,
+				D5A3E5171F722F620044CB82 /* DITranquillityTests_Storyboard.swift */,
+				D5A3E5141F722F620044CB82 /* DITranquillityTests_Threads.swift */,
+				D5A3E5161F722F620044CB82 /* DITranquillityTests_Validation.swift */,
+				D5A3E5131F722F620044CB82 /* ResolveTestClasses.swift */,
 				D508D6211F533600001810E4 /* TestStoryboard.storyboard */,
 				D508D6231F533626001810E4 /* TestReferenceStoryboard.storyboard */,
->>>>>>> reborn
 				A5D918C01D1939A70009F9D4 /* Info.plist */,
-				A5D918C11D1939A70009F9D4 /* ResolveTestClasses.swift */,
-				A5D918BF1D1939A70009F9D4 /* DITranquillityTests_Validation.swift */,
-				118DBCB61E40F9E9003A7D1F /* DITranquillityTests_ResolveByInit.swift */,
-				A52CE30C1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift */,
-				A51CEC551D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift */,
-				A5AD4F031D3CD4CB00A6882C /* DITranquillityTests_Threads.swift */,
-				16D7BCC21DB0875600A29A9F /* DITranquillityTests_Scan.swift */,
 				11046A691E64182B00788015 /* AccessStoryboard1.storyboard */,
 				11046A6A1E64182B00788015 /* AccessStoryboard2.storyboard */,
-				D54AFF491F663973006A38F8 /* DITranquillityTests_Performance.swift */,
 			);
 			path = DITranquillityTest;
 			sourceTree = "<group>";
@@ -144,12 +132,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Alexander Ivlev";
 				TargetAttributes = {
 					A50053211D1931FE00DFD9CF = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 					};
 				};
 			};
@@ -190,19 +178,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5AD4F041D3CD4CB00A6882C /* DITranquillityTests_Threads.swift in Sources */,
-				A51CEC561D3CA3A400C5B60A /* DITranquillityTests_Storyboard.swift in Sources */,
-				118DBCB71E40F9E9003A7D1F /* DITranquillityTests_ResolveByInit.swift in Sources */,
-				A5D918C41D1939A70009F9D4 /* ResolveTestClasses.swift in Sources */,
-				16D7BCC31DB0875600A29A9F /* DITranquillityTests_Scan.swift in Sources */,
-				D54AFF4A1F663973006A38F8 /* DITranquillityTests_Performance.swift in Sources */,
-				A52CE30D1D38C7B600B18BF1 /* DITranquillityTests_Resolve.swift in Sources */,
-<<<<<<< HEAD
-				A5D918C21D1939A70009F9D4 /* DITranquillityTests_Build.swift in Sources */,
-				D58B11841F66EE1D005010F4 /* DITranquillityTests_Performance.swift in Sources */,
-=======
-				A5D918C21D1939A70009F9D4 /* DITranquillityTests_Validation.swift in Sources */,
->>>>>>> reborn
+				D5A3E5181F722F620044CB82 /* DITranquillityTests_ResolveByInit.swift in Sources */,
+				D5A3E51F1F722F620044CB82 /* DITranquillityTests_Storyboard.swift in Sources */,
+				D5A3E51B1F722F620044CB82 /* ResolveTestClasses.swift in Sources */,
+				D5A3E51C1F722F620044CB82 /* DITranquillityTests_Threads.swift in Sources */,
+				D5A3E5191F722F620044CB82 /* DITranquillityTests_Resolve.swift in Sources */,
+				D5A3E51A1F722F620044CB82 /* DITranquillityTests_Scan.swift in Sources */,
+				D5A3E51E1F722F620044CB82 /* DITranquillityTests_Validation.swift in Sources */,
+				D5A3E51D1F722F620044CB82 /* DITranquillityTests_Performance.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,14 +201,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -266,14 +255,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -302,6 +297,7 @@
 		A500532F1D1931FE00DFD9CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SubProject1/build/Debug-iphoneos",
@@ -315,13 +311,15 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillityTestTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
 		A50053301D1931FE00DFD9CF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SubProject1/build/Debug-iphoneos",
@@ -332,7 +330,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillityTestTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

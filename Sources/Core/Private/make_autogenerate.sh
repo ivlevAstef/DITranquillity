@@ -17,11 +17,12 @@ replaceToArg() {
 
 makeFunction() { #argcount file
 local numbers=($(seq 0 $1))
+local n=$((1+$1))
 
 local PType=$(join ',' ${numbers[@]/#/P})
 local MArg=$(join ',' $(replaceToArg numbers[@] "m(\$0[;I])"))
 
-echo "  static func make<$PType,R>(_ types: [DIAType], _ names: [String?]? = nil, by f: @escaping ($PType)->R) -> MethodSignature {
+echo "  static func make$n<$PType,R>(_ types: [DIAType], _ names: [String?]? = nil, by f: @escaping ($PType)->R) -> MethodSignature {
     return MS(types, names){f($MArg)}
   }
 " >> $2
@@ -41,7 +42,7 @@ private func m<T>(_ obj: Any?) ->T { return gmake(by: obj) }
 private typealias MS = MethodSignature
 struct MethodMaker {
 
-  static func make<R>(by f: @escaping ()->R) -> MethodSignature {
+  static func make0<R>(by f: @escaping ()->R) -> MethodSignature {
     return MS([]){_ in f()}
   }
 " > $1

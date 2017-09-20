@@ -50,18 +50,29 @@ func name(by cls: AnyClass) -> String {
 
 private let scanned: [(cls: AnyClass, bpath: String)] = {
   let expectedClassCount = objc_getClassList(nil, 0)
-  let allClasses = UnsafeMutablePointer<AnyClass?>.allocate(capacity: Int(expectedClassCount))
-  let autoreleasingAllClasses = AutoreleasingUnsafeMutablePointer<AnyClass?>(allClasses)
+  #if swift(>=4.0)
+    let allClasses = UnsafeMutablePointer<AnyClass>.allocate(capacity: Int(expectedClassCount))
+    let autoreleasingAllClasses = AutoreleasingUnsafeMutablePointer<AnyClass>(allClasses)
+  #else
+    let allClasses = UnsafeMutablePointer<AnyClass?>.allocate(capacity: Int(expectedClassCount))
+    let autoreleasingAllClasses = AutoreleasingUnsafeMutablePointer<AnyClass?>(allClasses)
+  #endif
   let actualClassCount = Int(objc_getClassList(autoreleasingAllClasses, expectedClassCount))
   
   var result: [(cls: AnyClass, bpath: String)] = []
   for i in 0..<actualClassCount {
-    if let cls = allClasses[i], cls is DIScanned.Type {
+    #if swift(>=4.0)
+      if allClasses[i] is DIScanned.Type {
+        result.append((allClasses[i], Bundle(for: allClasses[i]).bundlePath))
+      }
+    #else
+      if let cls = allClasses[i], cls is DIScanned.Type {
       result.append((cls, Bundle(for: cls).bundlePath))
-    }
+      }
+    #endif
   }
   
   allClasses.deallocate(capacity: Int(expectedClassCount))
-
+  
   return result
 }()
