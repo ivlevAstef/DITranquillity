@@ -49,9 +49,9 @@ class Resolver {
   ///   - bundle: bundle from whic the call is made
   /// - Returns: components
   func findComponents(by type: DIAType, with name: String?, from bundle: Bundle?) -> [Component] {
-    func filter(_ components: [Component]) -> [Component] {
+    func defaults(_ components: [Component]) -> [Component]? {
       let filtering = components.filter{ $0.isDefault }
-      return filtering.isEmpty ? components : filtering
+      return filtering.isEmpty ? nil : filtering
     }
     
     func filter(by bundle: Bundle?, _ components: [Component]) -> [Component] {
@@ -75,10 +75,15 @@ class Resolver {
         if 1 == filtered.count {
           return filtered
         }
+				
+        if let filtered = defaults(filtered) {
+          return filtered
+        }
+				
         queue.append(contentsOf: contents)
       }
       
-      return components
+      return defaults(components) ?? components
     }
     
     if let manyType = type as? IsMany.Type {
@@ -98,7 +103,7 @@ class Resolver {
       }
     }
     
-    return filter(by: bundle, filter(components))
+    return filter(by: bundle, components)
   }
   
   /// Remove components who doesn't have initialization method
