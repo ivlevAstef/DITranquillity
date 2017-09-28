@@ -49,9 +49,9 @@ class Resolver {
   ///   - bundle: bundle from whic the call is made
   /// - Returns: components
   func findComponents(by type: DIAType, with name: String?, from bundle: Bundle?) -> [Component] {
-    func defaults(_ components: [Component]) -> [Component]? {
+    func defaults(_ components: [Component]) -> [Component] {
       let filtering = components.filter{ $0.isDefault }
-      return filtering.isEmpty ? nil : filtering
+      return filtering.isEmpty ? components : filtering
     }
     
     func filter(by bundle: Bundle?, _ components: [Component]) -> [Component] {
@@ -59,31 +59,30 @@ class Resolver {
         return components
       }
       
-      // BFS by depth
-      var queue: ArraySlice<Bundle> = bundle.map{ [$0] } ?? []
-      
-      while !queue.isEmpty {
-        var contents: [Bundle] = []
-        var filtered: [Component] = []
+      /// check into self bundle
+      if let bundle = bundle {
+        /// get all components in bundle
+        let filteredByBundle = components.filter{ $0.bundle.map{ bundle == $0 } ?? false }
         
-        while let bundle = queue.popLast() {
-          let filteredByBundle = components.filter{ $0.bundle.map{ bundle == $0 } ?? true }
-          filtered.append(contentsOf: filteredByBundle)
-          contents.append(contentsOf: container.bundleContainer.childs(for: bundle))
+        func componentsIsNeedReturn(_ components: [Component]) -> [Component]? {
+          let filtered = defaults(components)
+          return 1 == filtered.count ? filtered : nil
         }
         
-        if 1 == filtered.count {
-          return filtered
+        if let components = componentsIsNeedReturn(filteredByBundle) {
+          return components
         }
-				
-        if let filtered = defaults(filtered) {
-          return filtered
+        
+        /// get direct dependencies
+        let childs = container.bundleContainer.childs(for: bundle)
+        let filteredByChilds = components.filter{ $0.bundle.map{ childs.contains($0) } ?? false }
+        
+        if let components = componentsIsNeedReturn(filteredByChilds) {
+          return components
         }
-				
-        queue.append(contentsOf: contents)
       }
       
-      return defaults(components) ?? components
+      return defaults(components)
     }
     
     if let manyType = type as? IsMany.Type {
