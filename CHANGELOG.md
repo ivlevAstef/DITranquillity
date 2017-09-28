@@ -1,3 +1,8 @@
+# v3.0.2
+* Changed hierarchy/default logic. Now component inside framework a upper priority than 'default'
+* Small improve code documentantion
+* Added generated documentation for the code
+
 # v3.0.1
 * Now thread safe supported for `append(framework:)`, `append(part:)`, `import()`
 * Now `append(framework:)` also call `import()`
