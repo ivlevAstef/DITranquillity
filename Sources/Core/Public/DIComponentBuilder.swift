@@ -240,6 +240,7 @@ public extension DIComponentBuilder {
 // MARK: - contains `lifetime` and `default` functions
 public extension DIComponentBuilder {
   /// Function to set lifetime of an object.
+  /// The lifetime of an object determines when it is created and destroyed.
   /// Using:
   /// ```
   /// container.register(YourClass.self)
@@ -255,7 +256,9 @@ public extension DIComponentBuilder {
   }
   
   /// Function declaring that this component will use the default.
-  /// This is necessary to resolve uncertainties if several components are availagle in the same type.
+  /// It's necessary to resolve uncertainties if several components are available on one type.
+  /// Component declared as "default" will be given in the case if there were clarifications that you need.
+  /// But the components belonging to the framework have higher priority than the default components from other frameworks.
   /// Using:
   /// ```
   /// container.register(YourClass.self)

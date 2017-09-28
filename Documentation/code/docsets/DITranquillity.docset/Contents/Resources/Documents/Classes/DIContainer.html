@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>DIContainer Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/DIContainer" class="dashAnchor"></a>
+    <a title="DIContainer Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">DITranquillity Docs</a> (85% documented)</p>
+        <p class="header-right"><a href="https://github.com/ivlevAstef/DITranquillity"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2FivlevAstef%2FDITranquillity%2Fcode%2Fdocsets%2FDITranquillity%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">DITranquillity Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        DIContainer Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DIContainer.html">DIContainer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:14DITranquillity6DIManyC">DIMany</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:14DITranquillity6DIScanC">DIScan</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DIScanFramework.html">DIScanFramework</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DIScanFramework/Predicate.html">– Predicate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DIScanPart.html">DIScanPart</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DIScanPart/Predicate.html">– Predicate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DIStoryboard.html">DIStoryboard</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:14DITranquillity14InternalByManyC">InternalByMany</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:14DITranquillity13InternalByTagC">InternalByTag</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/DILifeTime.html">DILifeTime</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/DILogLevel.html">DILogLevel</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions/*(_:).html">*(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:14DITranquillity2byq_xm3tag_AA7DIByTagCyxq_G2ontr0_lF">by(tag:on:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:14DITranquillity4manySayxGAA6DIManyCyxGlF">many(_:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/DIFramework.html">DIFramework</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/DIPart.html">DIPart</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:14DITranquillity9DIScannedP">DIScanned</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/DIComponentInfo.html">DIComponentInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DISetting.html">DISetting</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DISetting/Defaults.html">– Defaults</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DISetting/Log.html">– Log</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Typealiases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:14DITranquillity7DIATypea">DIAType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:14DITranquillity9DILogFunca">DILogFunc</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:14DITranquillity5DITaga">DITag</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>DIContainer</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">DIContainer</span></code></pre>
+
+                </div>
+              </div>
+            <p>A container holding all registered components,
+allows you to register new components, parts, frameworks and
+allows you to receive objects by type.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerCACycfc"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerCACycfc">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">DIContainer</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L28-L31">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq_ctr0_lF"></a>
+                    <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq_ctr0_lF">register(file:line:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declaring a new component with initial.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register{ YourClass(p0:$0) }
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>initial method. Must return type declared at registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIContainer.Reg.swift#L23-L25">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_tctr1_lF"></a>
+                    <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_tctr1_lF">register(file:line:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declaring a new component with initial.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register{ YourClass(p0:$0,p1:$1) }
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>initial method. Must return type declared at registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIContainer.Reg.swift#L37-L39">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_tctr2_lF"></a>
+                    <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_tctr2_lF">register(file:line:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declaring a new component with initial.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register{ YourClass(p0:$0,p1:$1,p2:$2) }
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>initial method. Must return type declared at registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIContainer.Reg.swift#L51-L53">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_tctr3_lF"></a>
+                    <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_tctr3_lF">register(file:line:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declaring a new component with initial.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3) }
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>initial method. Must return type declared at registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIContainer.Reg.swift#L65-L67">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_tctr4_lF"></a>
+                    <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_tctr4_lF">register(file:line:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declaring a new component with initial.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4) }
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>initial method. Must return type declared at registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIContainer.Reg.swift#L79-L81">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_tctr5_lF"></a>
+                    <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_tctr5_lF">register(file:line:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declaring a new component with initial.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5) }
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>initial method. Must return type declared at registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIContainer.Reg.swift#L93-L95">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_tctr6_lF"></a>
+                    <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_tctr6_lF">register(file:line:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declaring a new component with initial.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6) }
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>initial method. Must return type declared at registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIContainer.Reg.swift#L107-L109">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_tctr7_lF"></a>
+                    <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_tctr7_lF">register(file:line:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declaring a new component with initial.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6,p7:$7) }
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>initial method. Must return type declared at registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIContainer.Reg.swift#L121-L123">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_q7_tctr8_lF"></a>
+                    <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_q7_tctr8_lF">register(file:line:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declaring a new component with initial.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6,p7:$7,p8:$8) }
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>initial method. Must return type declared at registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIContainer.Reg.swift#L135-L137">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_q7_q8_tctr9_lF"></a>
+                    <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_q7_q8_tctr9_lF">register(file:line:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declaring a new component with initial.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6,p7:$7,p8:$8,p9:$9) }
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>initial method. Must return type declared at registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIContainer.Reg.swift#L149-L151">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_tctr10_lF"></a>
+                    <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_tctr10_lF">register(file:line:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declaring a new component with initial.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6,p7:$7,p8:$8,p9:$9,p10:$10) }
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>initial method. Must return type declared at registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIContainer.Reg.swift#L163-L165">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_tctr11_lF"></a>
+                    <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_tctr11_lF">register(file:line:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declaring a new component with initial.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6,p7:$7,p8:$8,p9:$9,p10:$10,p11:$11) }
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>initial method. Must return type declared at registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIContainer.Reg.swift#L177-L179">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_tctr12_lF"></a>
+                    <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_tctr12_lF">register(file:line:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declaring a new component with initial.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6,p7:$7,p8:$8,p9:$9,p10:$10,p11:$11,p12:$12) }
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">,</span><span class="kt">P12</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">,</span><span class="kt">P12</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>initial method. Must return type declared at registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIContainer.Reg.swift#L191-L193">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_q12_tctr13_lF"></a>
+                    <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_q12_tctr13_lF">register(file:line:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declaring a new component with initial.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6,p7:$7,p8:$8,p9:$9,p10:$10,p11:$11,p12:$12,p13:$13) }
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">,</span><span class="kt">P12</span><span class="p">,</span><span class="kt">P13</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">,</span><span class="kt">P12</span><span class="p">,</span><span class="kt">P13</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>initial method. Must return type declared at registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIContainer.Reg.swift#L205-L207">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_q12_q13_tctr14_lF"></a>
+                    <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_q12_q13_tctr14_lF">register(file:line:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declaring a new component with initial.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6,p7:$7,p8:$8,p9:$9,p10:$10,p11:$11,p12:$12,p13:$13,p14:$14) }
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">,</span><span class="kt">P12</span><span class="p">,</span><span class="kt">P13</span><span class="p">,</span><span class="kt">P14</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">,</span><span class="kt">P12</span><span class="p">,</span><span class="kt">P13</span><span class="p">,</span><span class="kt">P14</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>initial method. Must return type declared at registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIContainer.Reg.swift#L219-L221">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_q12_q13_q14_tctr15_lF"></a>
+                    <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_q12_q13_q14_tctr15_lF">register(file:line:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declaring a new component with initial.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6,p7:$7,p8:$8,p9:$9,p10:$10,p11:$11,p12:$12,p13:$13,p14:$14,p15:$15) }
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">,</span><span class="kt">P12</span><span class="p">,</span><span class="kt">P13</span><span class="p">,</span><span class="kt">P14</span><span class="p">,</span><span class="kt">P15</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">,</span><span class="kt">P12</span><span class="p">,</span><span class="kt">P13</span><span class="p">,</span><span class="kt">P14</span><span class="p">,</span><span class="kt">P15</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>initial method. Must return type declared at registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIContainer.Reg.swift#L233-L235">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_q12_q13_q14_q15_tctr16_lF"></a>
+                    <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_q12_q13_q14_q15_tctr16_lF">register(file:line:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declaring a new component with initial.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register{ YourClass(p0:$0,p1:$1,p2:$2,p3:$3,p4:$4,p5:$5,p6:$6,p7:$7,p8:$8,p9:$9,p10:$10,p11:$11,p12:$12,p13:$13,p14:$14,p15:$15,p16:$16) }
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">,</span><span class="kt">P12</span><span class="p">,</span><span class="kt">P13</span><span class="p">,</span><span class="kt">P14</span><span class="p">,</span><span class="kt">P15</span><span class="p">,</span><span class="kt">P16</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">,</span><span class="kt">P12</span><span class="p">,</span><span class="kt">P13</span><span class="p">,</span><span class="kt">P14</span><span class="p">,</span><span class="kt">P15</span><span class="p">,</span><span class="kt">P16</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>c</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>initial method. Must return type declared at registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIContainer.Reg.swift#L247-L249">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC18registerStoryboardAA18DIComponentBuilderCySo12UIStoryboardCGSS4name_So6BundleCSg6bundleSS4fileSi4linetF"></a>
+                    <a name="//apple_ref/swift/Method/registerStoryboard(name:bundle:file:line:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC18registerStoryboardAA18DIComponentBuilderCySo12UIStoryboardCGSS4name_So6BundleCSg6bundleSS4fileSi4linetF">registerStoryboard(name:bundle:file:line:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Registers a new storyboard.
+The storyboard can be created both from the code or use storyboard reference from otherwise a storyboard.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">registerStoryboard</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">bundle</span> <span class="nv">storyboardBundleOrNil</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?,</span> <span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">UIStoryboard</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>name</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the storyboard resource file without the filename extension.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>storyboardBundleOrNil</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The bundle containing the storyboard file and its resources. Specify nil to use the main bundle.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Storyboard/DIStoryboard.swift#L98-L105">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/registerStoryboard(name:bundle:file:line:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">registerStoryboard(name:bundle:file:line:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Registers a new storyboard.
+The storyboard can be created both from the code or use storyboard reference from otherwise a storyboard.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">DIContainer</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGxm_SS4fileSi4linetlF"></a>
+                    <a name="//apple_ref/swift/Method/register(_:file:line:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGxm_SS4fileSi4linetlF">register(_:file:line:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Registering a new component without initial.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register(YourClass.self)
+  . ...
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Impl</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>type</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A type of new component.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L89-L91">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexyctlF"></a>
+                    <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8registerAA18DIComponentBuilderCyxGSS4file_Si4linexyctlF">register(file:line:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Declaring a new component with initial.
+In addition, container has a set of functions with a different number of parameters.
+Using:</p>
+<pre class="highlight plaintext"><code>container.register(YourClass.init)
+</code></pre>
+
+<p>OR</p>
+<pre class="highlight plaintext"><code>container.register{ YourClass(p1: $0, p2: $1 as SpecificType, p3: $2) }
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="err">#</span><span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="err">#</span><span class="n">line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>initial</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>initial method. Must return type declared at registration.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>component builder, to configure the component.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L107-L109">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC7resolvexylF"></a>
+                    <a name="//apple_ref/swift/Method/resolve()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC7resolvexylF">resolve()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Resolve object by type.
+Can crash application, if can&rsquo;t found the type.
+But if the type is optional, then the application will not crash, but it returns nil.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">resolve</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Object for the specified type, or nil (see description).</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L126-L128">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC7resolvexq_m3tag_tr0_lF"></a>
+                    <a name="//apple_ref/swift/Method/resolve(tag:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC7resolvexq_m3tag_tr0_lF">resolve(tag:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Resolve object by type with tag.
+Can crash application, if can&rsquo;t found the type with tag.
+But if the type is optional, then the application will not crash, but it returns nil.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">resolve</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt">Tag</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">tag</span><span class="p">:</span> <span class="kt">Tag</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tag</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Resolve tag.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Object for the specified type with tag, or nil (see description).</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L136-L138">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC7resolvexSS4name_tlF"></a>
+                    <a name="//apple_ref/swift/Method/resolve(name:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC7resolvexSS4name_tlF">resolve(name:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Resolve object by type with name.
+Can crash application, if can&rsquo;t found the type with name.
+But if the type is optional, then the application will not crash, but it returns nil.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">resolve</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>name</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Resolve name.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Object for the specified type with name, or nil (see description).</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L146-L148">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC11resolveManySayxGylF"></a>
+                    <a name="//apple_ref/swift/Method/resolveMany()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC11resolveManySayxGylF">resolveMany()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Resolve many objects by type.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">resolveMany</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">T</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Objects for the specified type.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L153-L155">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC6injectyx4into_tlF"></a>
+                    <a name="//apple_ref/swift/Method/inject(into:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC6injectyx4into_tlF">inject(into:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Injected all dependencies into object.
+If the object type couldn&rsquo;t be found, then in logs there will be a warning, and nothing will happen.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">inject</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">into</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>object</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>object in which injections will be introduced.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L161-L163">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC26initializeSingletonObjectsyyF"></a>
+                    <a name="//apple_ref/swift/Method/initializeSingletonObjects()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC26initializeSingletonObjectsyyF">initializeSingletonObjects()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">DIContainer</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L165-L178">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC5validSbyF"></a>
+                    <a name="//apple_ref/swift/Method/valid()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC5validSbyF">valid()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Validate the graph by checking various conditions. For faster performance, set false.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">valid</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>true if validation success.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L187-L190">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC6appendyAA11DIFramework_pXp9framework_tF"></a>
+                    <a name="//apple_ref/swift/Method/append(framework:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC6appendyAA11DIFramework_pXp9framework_tF">append(framework:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Registers a framework in the container.
+Registration means inclusion of all components indicated within.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">append</span><span class="p">(</span><span class="nv">framework</span><span class="p">:</span> <span class="kt"><a href="../Protocols/DIFramework.html">DIFramework</a></span><span class="o">.</span><span class="k">Type</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>framework</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the framework type</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Hierarchy/DIFramework.swift#L27-L38">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC6importyAA11DIFramework_pXpF"></a>
+                    <a name="//apple_ref/swift/Method/import(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC6importyAA11DIFramework_pXpF">import(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Allows you to specify dependencies between frameworks.
+The method should be used only within the implementation of the <code>load(container:)</code> inside framework.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="kd">import</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">framework</span><span class="p">:</span> <span class="kt"><a href="../Protocols/DIFramework.html">DIFramework</a></span><span class="o">.</span><span class="k">Type</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>framework</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A framework that is imported into the current one. Import means communication designation, and not inclusion of all components.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Hierarchy/DIFramework.swift#L47-L53">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC6appendyAA6DIPart_pXp4part_tF"></a>
+                    <a name="//apple_ref/swift/Method/append(part:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC6appendyAA6DIPart_pXp4part_tF">append(part:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Registers a part in the container.
+Registration means inclusion of all components indicated within.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">append</span><span class="p">(</span><span class="nv">part</span><span class="p">:</span> <span class="kt"><a href="../Protocols/DIPart.html">DIPart</a></span><span class="o">.</span><span class="k">Type</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>path</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the part type</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Hierarchy/DIPart.swift#L27-L34">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2017 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2017-09-28)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
