@@ -328,7 +328,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     container.register(CircularDouble2B.init)
       .lifetime(.objectGraph)
     
-    XCTAssert(!container.valid())
+    XCTAssert(!container.validate())
   }
   
   func test17_DependencyIntoDependency() {

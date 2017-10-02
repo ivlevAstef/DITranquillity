@@ -1,3 +1,9 @@
+# v3.0.3
+* bugfix: Support recursive inject into ViewControllers.
+* bugfix: Fix component bundle source.
+* bugfix: Fix valid method, for hard dependency graph.
+* Rename `valid` to `validate(checkGraphCycles:)`
+
 # v3.0.2
 * Changed hierarchy/default logic. Now component inside framework a upper priority than 'default'
 * Small improve code documentantion
