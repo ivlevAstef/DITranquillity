@@ -217,28 +217,28 @@ extension DIContainer {
         let candidates = resolver.findComponents(by: parameter.type, with: parameter.name, from: bundle)
         let filtered = resolver.removeWhoDoesNotHaveInitialMethod(components: candidates)
         
-        let correct = resolver.validate(components: filtered, for: parameter.type)
-        let success = correct || parameter.optional
+        let correct = 1 == filtered.count || parameter.type is IsMany.Type
+        let allPrototypes = filtered.isEmpty && !candidates.contains{ $0.lifeTime != .prototype }
+        let success = correct || parameter.optional || allPrototypes
         successfull = successfull && success
-        
+
         // Log
-				if !correct {
-					if candidates.isEmpty {
-						plog(parameter, msg: "Not found component for \(description(type: parameter.type)) from \(component.info)")
-					} else if filtered.isEmpty {
-						let allPrototypes = !candidates.contains{ $0.lifeTime != .prototype }
-						let infos = candidates.map{ $0.info }
-						
-						if allPrototypes {
-							plog(parameter, msg: "Not found component for \(description(type: parameter.type)) from \(component.info) that would have initialization methods. Were found: \(infos)")
-						} else {
-							log(.warning, msg: "Not found component for \(description(type: parameter.type)) from \(component.info) that would have initialization methods, but object can maked from cache. Were found: \(infos)")
-						}
-					} else if filtered.count >= 1 {
-						let infos = filtered.map{ $0.info }
-						plog(parameter, msg: "Ambiguous \(description(type: parameter.type)) from \(component.info) contains in: \(infos)")
-					}
-				}
+        if !correct {
+          if candidates.isEmpty {
+            plog(parameter, msg: "Not found component for \(description(type: parameter.type)) from \(component.info)")
+          } else if filtered.isEmpty {
+            let infos = candidates.map{ $0.info }
+
+            if allPrototypes {
+              plog(parameter, msg: "Not found component for \(description(type: parameter.type)) from \(component.info) that would have initialization methods. Were found: \(infos)")
+            } else {
+              log(.warning, msg: "Not found component for \(description(type: parameter.type)) from \(component.info) that would have initialization methods, but object can maked from cache. Were found: \(infos)")
+            }
+          } else if filtered.count >= 1 {
+            let infos = filtered.map{ $0.info }
+            plog(parameter, msg: "Ambiguous \(description(type: parameter.type)) from \(component.info) contains in: \(infos)")
+          }
+        }
       }
     }
 		

@@ -113,16 +113,6 @@ class Resolver {
     return components.filter { nil != $0.initial }
   }
   
-  /// Validate a components that they are valid for a type.
-  ///
-  /// - Parameters:
-  ///   - components: components for validation.
-  ///   - type: a type
-  /// - Returns: `true` if components is valid
-  func validate(components: [Component], for type: DIAType) -> Bool {
-     return 1 == components.count || type is IsMany.Type
-  }
-  
   private func make(by type: DIAType, with name: String?, from bundle: Bundle?, use object: Any?) -> Any? {
     let components = findComponents(by: type, with: name, from: bundle)
     
