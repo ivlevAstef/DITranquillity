@@ -218,8 +218,8 @@ extension DIContainer {
         let filtered = resolver.removeWhoDoesNotHaveInitialMethod(components: candidates)
         
         let correct = 1 == filtered.count || parameter.type is IsMany.Type
-        let allPrototypes = filtered.isEmpty && !candidates.contains{ $0.lifeTime != .prototype }
-        let success = correct || parameter.optional || allPrototypes
+        let hasCachedLifetime = filtered.isEmpty && candidates.contains{ $0.lifeTime != .prototype }
+        let success = correct || parameter.optional || hasCachedLifetime
         successfull = successfull && success
 
         // Log
@@ -229,10 +229,10 @@ extension DIContainer {
           } else if filtered.isEmpty {
             let infos = candidates.map{ $0.info }
 
-            if allPrototypes {
-              plog(parameter, msg: "Not found component for \(description(type: parameter.type)) from \(component.info) that would have initialization methods. Were found: \(infos)")
-            } else {
+            if hasCachedLifetime {
               log(.warning, msg: "Not found component for \(description(type: parameter.type)) from \(component.info) that would have initialization methods, but object can maked from cache. Were found: \(infos)")
+            } else {
+              plog(parameter, msg: "Not found component for \(description(type: parameter.type)) from \(component.info) that would have initialization methods. Were found: \(infos)")
             }
           } else if filtered.count >= 1 {
             let infos = filtered.map{ $0.info }
