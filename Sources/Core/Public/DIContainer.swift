@@ -222,29 +222,29 @@ extension DIContainer {
         successfull = successfull && success
         
         // Log
-        if !correct {
-          if candidates.isEmpty {
-            plog(parameter, msg: "Not found component for \(description(type: parameter.type))")
-          } else if filtered.isEmpty {
-            let allPrototypes = !candidates.contains{ $0.lifeTime != .prototype }
-            let infos = candidates.map{ $0.info }
-            
-            if allPrototypes {
-              plog(parameter, msg: "Not found component for \(description(type: parameter.type)) that would have initialization methods. Were found: \(infos)")
-            } else {
-              log(.warning, msg: "Not found component for \(description(type: parameter.type)) that would have initialization methods, but object can maked from cache. Were found: \(infos)")
-            }
-          } else if filtered.count >= 1 {
-            let infos = filtered.map{ $0.info }
-            plog(parameter, msg: "Ambiguous \(description(type: parameter.type)) contains in: \(infos)")
-          }
-        }
+				if !correct {
+					if candidates.isEmpty {
+						plog(parameter, msg: "Not found component for \(description(type: parameter.type)) from \(component.info)")
+					} else if filtered.isEmpty {
+						let allPrototypes = !candidates.contains{ $0.lifeTime != .prototype }
+						let infos = candidates.map{ $0.info }
+						
+						if allPrototypes {
+							plog(parameter, msg: "Not found component for \(description(type: parameter.type)) from \(component.info) that would have initialization methods. Were found: \(infos)")
+						} else {
+							log(.warning, msg: "Not found component for \(description(type: parameter.type)) from \(component.info) that would have initialization methods, but object can maked from cache. Were found: \(infos)")
+						}
+					} else if filtered.count >= 1 {
+						let infos = filtered.map{ $0.info }
+						plog(parameter, msg: "Ambiguous \(description(type: parameter.type)) from \(component.info) contains in: \(infos)")
+					}
+				}
       }
     }
-    
+		
     return successfull
   }
-  
+	
   fileprivate func checkGraphCycles(_ components: [Component]) -> Bool {
     var success: Bool = true
     
@@ -258,29 +258,29 @@ extension DIContainer {
             return true
           }
           
-          let components = stack.map{ $0.component.info }
+          let infos = stack.map{ $0.component.info }
           
           let allInitials = !stack.contains{ !($0.initial && !$0.many) }
           if allInitials {
-            log(.error, msg: "You have a cycle: \(components) consisting entirely of initialization methods.")
+            log(.error, msg: "You have a cycle: \(infos) consisting entirely of initialization methods.")
             return false
           }
           
           let hasGap = stack.contains{ $0.cycle || ($0.initial && $0.many) }
           if !hasGap {
-            log(.error, msg: "Cycle has no discontinuities. Please install at least one explosion in the cycle: \(components) using `injection(cycle: true) { ... }`")
+            log(.error, msg: "Cycle has no discontinuities. Please install at least one explosion in the cycle: \(infos) using `injection(cycle: true) { ... }`")
             return false
           }
           
           let allPrototypes = !stack.contains{ $0.component.lifeTime != .prototype }
           if allPrototypes {
-            log(.error, msg: "You cycle: \(components) consists only of object with lifetime - prototype. Please change at least one object lifetime to another.")
+            log(.error, msg: "You cycle: \(infos) consists only of object with lifetime - prototype. Please change at least one object lifetime to another.")
             return false
           }
           
           let containsPrototype = stack.contains{ $0.component.lifeTime == .prototype }
           if containsPrototype {
-            log(.warning, msg: "You cycle: \(components) contains an object with lifetime - prototype. In some cases this can lead to an udesirable effect.")
+            log(.warning, msg: "You cycle: \(infos) contains an object with lifetime - prototype. In some cases this can lead to an udesirable effect.")
           }
           
           return true
