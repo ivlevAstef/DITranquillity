@@ -1,3 +1,6 @@
+# v3.0.4
+* bugfix: Improve validate graph cycle, and logs.
+
 # v3.0.3
 * bugfix: Support recursive inject into ViewControllers.
 * bugfix: Fix component bundle source.

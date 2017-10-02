@@ -260,29 +260,30 @@ extension DIContainer {
             return true
           }
           
-          let infos = stack.map{ $0.component.info }
+          let infos = stack.dropLast().map{ $0.component.info }
+          let short = infos.map{ "\($0.type)" }.joined(separator: " - ")
           
           let allInitials = !stack.contains{ !($0.initial && !$0.many) }
           if allInitials {
-            log(.error, msg: "You have a cycle: \(infos) consisting entirely of initialization methods.")
+            log(.error, msg: "You have a cycle: \(short) consisting entirely of initialization methods. Full: \(infos)")
             return false
           }
           
           let hasGap = stack.contains{ $0.cycle || ($0.initial && $0.many) }
           if !hasGap {
-            log(.error, msg: "Cycle has no discontinuities. Please install at least one explosion in the cycle: \(infos) using `injection(cycle: true) { ... }`")
+            log(.error, msg: "Cycle has no discontinuities. Please install at least one explosion in the cycle: \(short) using `injection(cycle: true) { ... }`. Full: \(infos)")
             return false
           }
           
           let allPrototypes = !stack.contains{ $0.component.lifeTime != .prototype }
           if allPrototypes {
-            log(.error, msg: "You cycle: \(infos) consists only of object with lifetime - prototype. Please change at least one object lifetime to another.")
+            log(.error, msg: "You cycle: \(short) consists only of object with lifetime - prototype. Please change at least one object lifetime to another. Full: \(infos)")
             return false
           }
           
           let containsPrototype = stack.contains{ $0.component.lifeTime == .prototype }
           if containsPrototype {
-            log(.warning, msg: "You cycle: \(infos) contains an object with lifetime - prototype. In some cases this can lead to an udesirable effect.")
+            log(.warning, msg: "You cycle: \(short) contains an object with lifetime - prototype. In some cases this can lead to an udesirable effect.  Full: \(infos)")
           }
           
           return true
@@ -300,10 +301,13 @@ extension DIContainer {
       
       func callDfs(by parameters: [MethodSignature.Parameter], initial: Bool, cycle: Bool) {
         for parameter in parameters {
-          let many = parameter.many
           let candidates = resolver.findComponents(by: parameter.type, with: parameter.name, from: bundle)
-          let filtered = resolver.removeWhoDoesNotHaveInitialMethod(components: candidates)
+          if candidates.isEmpty {
+            continue
+          }
           
+          let filtered = candidates.filter{ nil != $0.initial || ($0.lifeTime != .prototype && visited.contains($0)) }
+          let many = parameter.many
           for subcomponent in filtered {
             var stack = stack
             stack.append((subcomponent, initial, cycle, many))
