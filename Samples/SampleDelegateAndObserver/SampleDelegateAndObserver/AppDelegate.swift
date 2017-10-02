@@ -55,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     container.registerStoryboard(name: "Main", bundle: nil)
       .lifetime(.single)
 
-    if !container.valid() {
+    if !container.validate() {
       fatalError()
     }
 

@@ -182,11 +182,13 @@ public extension DIContainer {
 public extension DIContainer {
   
   /// Validate the graph by checking various conditions. For faster performance, set false.
+	///
+	/// - Parameter checkGraphCycles: check cycles in the graph of heavy operation. So it can be disabled
   /// - Returns: true if validation success.
   @discardableResult
-  public func valid() -> Bool {
+	public func validate(checkGraphCycles isCheckGraphCycles: Bool = true) -> Bool {
     let components = componentContainer.components
-    return checkGraph(components) && checkGraphCycles(components)
+    return checkGraph(components) && (!isCheckGraphCycles || checkGraphCycles(components))
   }
 }
 
