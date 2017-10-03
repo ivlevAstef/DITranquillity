@@ -348,4 +348,27 @@ class DITranquillityTests_Storyboard: XCTestCase {
     vc.performSegue(withIdentifier: "ShowReferenceViewController", sender: nil)
     XCTAssertEqual(vc.referenceVC!.service.foo(), "foo")
   }
+  
+  func test15_doubleNavigation_recursive() {
+    let container = DIContainer()
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+    
+    container.register(TestViewController.self)
+      .injection{ $0.service = $1 }
+    
+    container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+      .default()
+    
+    let storyboard: UIStoryboard = *container
+    
+    let navigation: UINavigationController = storyboard.instantiateViewController(withIdentifier: "Double") as! UINavigationController
+    
+    let navigation2: UINavigationController = navigation.childViewControllers[0] as! UINavigationController
+    
+    let vc = navigation2.childViewControllers[0] as! TestViewController
+    _ = vc.view // for call viewDidLoad() and full initialization
+    XCTAssertEqual(vc.service.foo(), "foo")
+  }
 }

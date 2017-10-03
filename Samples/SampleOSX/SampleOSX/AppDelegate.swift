@@ -16,7 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		let container = DIContainer()
 		register(container: container)
 		
-		if !container.valid() {
+		if !container.validate() {
 			fatalError()
 		}
 		

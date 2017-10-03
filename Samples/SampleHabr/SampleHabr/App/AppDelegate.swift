@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let container = DIContainer()
     container.append(framework: AppFramework.self)
 
-    if !container.valid() {
+    if !container.validate() {
       fatalError()
     }
     

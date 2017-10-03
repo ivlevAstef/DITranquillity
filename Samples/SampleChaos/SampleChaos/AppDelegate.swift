@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     container.append(framework: Framework1.self)
     container.append(part: SampleStartupPart.self)
 
-    if !container.valid() {
+    if !container.validate() {
       fatalError("Container not valid")
     }
 

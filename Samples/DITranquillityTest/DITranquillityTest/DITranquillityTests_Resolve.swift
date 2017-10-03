@@ -361,7 +361,7 @@ class DITranquillityTests_Resolve: XCTestCase {
       .lifetime(.objectGraph)
     #endif
     
-    XCTAssert(!container.valid())
+    XCTAssert(!container.validate())
   }
   
   func test17_DependencyIntoDependency() {

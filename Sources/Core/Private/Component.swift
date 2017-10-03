@@ -53,7 +53,7 @@ final class Component {
   
   init(componentInfo: DIComponentInfo, in frameworkBundle: Bundle?) {
     self.info = componentInfo
-    self.bundle = getBundle(for: componentInfo.type)
+    self.bundle = frameworkBundle ?? getBundle(for: componentInfo.type)
   }
   
   let info: DIComponentInfo

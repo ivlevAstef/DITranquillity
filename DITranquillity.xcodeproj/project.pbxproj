@@ -570,7 +570,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				OTHER_SWIFT_FLAGS = "-DENABLE_DI_LOGGER -DENABLE_DI_COMPONENT -DENABLE_DI_MODULE";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillity;
 				PRODUCT_NAME = DITranquillity;
 				SDKROOT = macosx;
@@ -601,7 +601,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				OTHER_SWIFT_FLAGS = "-DENABLE_DI_LOGGER -DENABLE_DI_COMPONENT -DENABLE_DI_MODULE";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillity;
 				PRODUCT_NAME = DITranquillity;
 				SDKROOT = macosx;
@@ -633,7 +633,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				OTHER_SWIFT_FLAGS = "-DENABLE_DI_LOGGER -DENABLE_DI_COMPONENT -DENABLE_DI_MODULE";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillity;
 				PRODUCT_MODULE_NAME = DITranquillity;
 				PRODUCT_NAME = DITranquillity;
@@ -667,7 +667,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				OTHER_SWIFT_FLAGS = "-DENABLE_DI_LOGGER -DENABLE_DI_COMPONENT -DENABLE_DI_MODULE";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillity;
 				PRODUCT_MODULE_NAME = DITranquillity;
 				PRODUCT_NAME = DITranquillity;
@@ -812,7 +812,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				OTHER_SWIFT_FLAGS = "-DENABLE_DI_LOGGER -DENABLE_DI_COMPONENT -DENABLE_DI_MODULE";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillity;
 				PRODUCT_NAME = DITranquillity;
 				SKIP_INSTALL = YES;
@@ -843,7 +843,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				OTHER_SWIFT_FLAGS = "-DENABLE_DI_LOGGER -DENABLE_DI_COMPONENT -DENABLE_DI_MODULE";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillity;
 				PRODUCT_NAME = DITranquillity;
 				SKIP_INSTALL = YES;

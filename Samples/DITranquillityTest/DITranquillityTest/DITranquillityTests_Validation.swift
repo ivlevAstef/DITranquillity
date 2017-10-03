@@ -58,6 +58,12 @@ private class RInit3Inject {
   var test: RInit1!
 }
 
+private class RCycle {
+  init(_ two: RCycle2) {}
+}
+private class RCycle2 {
+  var inject: RCycle!
+}
 
 
 class DITranquillityTests_Build: XCTestCase {
@@ -83,7 +89,7 @@ class DITranquillityTests_Build: XCTestCase {
       container.register(InjectedClass.init)
     #endif
     
-    XCTAssert(!container.valid())
+    XCTAssert(!container.validate())
   }
   
   func test01_NotSetProtocol() {
@@ -95,7 +101,7 @@ class DITranquillityTests_Build: XCTestCase {
       container.register(InjectedClass.init)
     #endif
     
-    XCTAssert(!container.valid())
+    XCTAssert(!container.validate())
   }
   
   func test01_NotSetInitializerForClass() {
@@ -109,7 +115,7 @@ class DITranquillityTests_Build: XCTestCase {
       container.register(InjectedClass.init)
     #endif
     
-    XCTAssert(!container.valid())
+    XCTAssert(!container.validate())
   }
   
   func test01_RegistrateOnlyRealization() {
@@ -123,7 +129,7 @@ class DITranquillityTests_Build: XCTestCase {
       container.register(InjectedClass.init)
     #endif
     
-    XCTAssert(!container.valid())
+    XCTAssert(!container.validate())
   }
   
   func test01_RegistrateWithOptional() {
@@ -135,7 +141,7 @@ class DITranquillityTests_Build: XCTestCase {
       container.register(OptionalInjectedClass.init)
     #endif
     
-    XCTAssert(container.valid())
+    XCTAssert(container.validate())
   }
   
   
@@ -155,7 +161,7 @@ class DITranquillityTests_Build: XCTestCase {
       container.register(InjectedClass.init)
     #endif
     
-    XCTAssert(!container.valid())
+    XCTAssert(!container.validate())
   }
   
   func test02_MultiplyRegistrateTypeWithDefault() {
@@ -175,7 +181,7 @@ class DITranquillityTests_Build: XCTestCase {
       container.register(InjectedClass.init)
     #endif
     
-    XCTAssert(container.valid())
+    XCTAssert(container.validate())
   }
   
   func test02_MultiplyRegistrateTypeWithName() {
@@ -194,7 +200,7 @@ class DITranquillityTests_Build: XCTestCase {
       container.register(InjectedClass.init)
     #endif
     
-    XCTAssert(container.valid())
+    XCTAssert(container.validate())
   }
   
   func test02_MultiplyRegistrateTypeWithTag() {
@@ -213,7 +219,7 @@ class DITranquillityTests_Build: XCTestCase {
       container.register(InjectedClass.init)
     #endif
     
-    XCTAssert(container.valid())
+    XCTAssert(container.validate())
   }
   
   func test04_SelfInit() {
@@ -224,7 +230,7 @@ class DITranquillityTests_Build: XCTestCase {
       container.register(SelfInit.init)
     #endif
     
-    XCTAssert(!container.valid())
+    XCTAssert(!container.validate())
   }
   
   func test04_RecursiveTripleInit() {
@@ -241,7 +247,7 @@ class DITranquillityTests_Build: XCTestCase {
     #endif
     
     
-    XCTAssert(!container.valid())
+    XCTAssert(!container.validate())
   }
   
   func test04_RecursiveTripleInitArray() {
@@ -257,7 +263,7 @@ class DITranquillityTests_Build: XCTestCase {
       container.register(RInit3Array.init).as(RInit3Protocol.self)
     #endif
     
-    XCTAssert(!container.valid())
+    XCTAssert(!container.validate())
   }
   
   func test04_RecursiveTripleInitArrayWithCorrectLifetime() {
@@ -276,7 +282,7 @@ class DITranquillityTests_Build: XCTestCase {
     #endif
     
     
-    XCTAssert(!container.valid())
+    XCTAssert(!container.validate())
   }
   
   func test05_RecursiveTripleInitInject() {
@@ -294,7 +300,7 @@ class DITranquillityTests_Build: XCTestCase {
       .injection{ $0.test = $1 }
       .lifetime(.objectGraph)
     
-    XCTAssert(!container.valid())
+    XCTAssert(!container.validate())
   }
   
   func test05_RecursiveTripleInitInjectIsCycleButLifetime() {
@@ -311,7 +317,7 @@ class DITranquillityTests_Build: XCTestCase {
       .as(RInit3Protocol.self)
       .injection{ $0.test = $1 }
     
-    XCTAssert(!container.valid())
+    XCTAssert(!container.validate())
   }
   
   func test05_RecursiveTripleInitInjectIsCycle() {
@@ -329,7 +335,7 @@ class DITranquillityTests_Build: XCTestCase {
       .injection(cycle: true) { $0.test = $1 }
       .lifetime(.objectGraph)
     
-    XCTAssert(container.valid())
+    XCTAssert(container.validate())
   }
   
   func test05_RecursiveTripleInitInjectOptional() {
@@ -347,6 +353,19 @@ class DITranquillityTests_Build: XCTestCase {
       .injection{ $0.test = $1 }
       .lifetime(.objectGraph)
     
-    XCTAssert(!container.valid())
+    XCTAssert(!container.validate())
+  }
+  
+  func test06_CycleWithoutInit() {
+    let container = DIContainer()
+    
+    container.register(RCycle.init)
+      .lifetime(.prototype)
+      
+    container.register(RCycle2.self)
+      .injection{ $0.inject = $1 }
+      .lifetime(.objectGraph)
+    
+    XCTAssert(!container.validate())
   }
 }

@@ -351,4 +351,18 @@ class DITranquillityTests_Performance: XCTestCase {
       }
     }
   }
+  
+  func test06_scan_append() {
+    DISetting.Log.fun = nil
+    
+    class ScanPart: DIScanPart { }
+    class ScanPart2: DIScanPart { }
+    
+    self.measure {
+      let container = DIContainer()
+      container.append(part: ScanPart.self)
+      container.append(part: ScanPart2.self)
+    }
+  }
+  
 }
