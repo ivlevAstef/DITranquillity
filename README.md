@@ -3,7 +3,7 @@
 [![CocoaPods Version](https://img.shields.io/cocoapods/v/DITranquillity.svg?style=flat)](http://cocoapods.org/pods/DITranquillity)
 [![License](https://img.shields.io/github/license/ivlevAstef/DITranquillity.svg?maxAge=2592000)](http://cocoapods.org/pods/DITranquillity)
 [![Platform](https://img.shields.io/cocoapods/p/DITranquillity.svg?style=flat)](http://cocoapods.org/pods/DITranquillity)
-[![Swift Version](https://img.shields.io/badge/Swift-3.0--3.2-F16D39.svg?style=flat)](https://developer.apple.com/swift)
+[![Swift Version](https://img.shields.io/badge/Swift-3.0--4.0-F16D39.svg?style=flat)](https://developer.apple.com/swift)
 [![Dependency Status](https://www.versioneye.com/objective-c/DITranquillity/3.0.0/badge.svg?style=flat)](https://www.versioneye.com/objective-c/DITranquillity/3.0.0)
 
 # DITranquillity
@@ -96,6 +96,7 @@ To install DITranquillity with CocoaPods, add the following lines to your Podfil
 ## Requirements
 iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
 
+* Swift 4.0: Xcode 9.0; version >= 3.0.5
 * Swift 3.0-3.2: Xcode 8.0-9.0; version >= 0.9.5
 * Swift 2.3: Xcode 7.0; version < 0.9.5
 
