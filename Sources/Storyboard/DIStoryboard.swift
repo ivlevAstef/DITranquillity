@@ -72,7 +72,7 @@ public final class DIStoryboard: _DIStoryboardBase {
   ///
   /// - Parameter identifier: The identifier set in the storyboard file.
   /// - Returns: The instantiated view/window controller with its dependencies injected.
-  public override func instantiateController(withIdentifier identifier: String) -> Any {
+  public override func instantiateController(withIdentifier identifier: NSStoryboard.SceneIdentifier) -> Any {
     let vc = super.instantiateController(withIdentifier: identifier)
     resolver?.inject(into: vc)
     return vc
@@ -96,9 +96,16 @@ public extension DIContainer {
   /// - Returns: component builder, to configure the component
   @discardableResult
   public func registerStoryboard(name: String, bundle storyboardBundleOrNil: Bundle?, file: String = #file, line: Int = #line) -> DIComponentBuilder<UIStoryboard> {
+    #if swift(>=4.0)
+    let builder = register1(file: file, line: line) {
+      DIStoryboard.create(name: name, bundle: storyboardBundleOrNil, container: $0) as UIStoryboard
+    }
+    #else
     let builder = register(file: file, line: line) {
       DIStoryboard.create(name: name, bundle: storyboardBundleOrNil, container: $0) as UIStoryboard
-    } .as(UIStoryboard.self, name: name)
+    }
+    #endif
+    builder.as(UIStoryboard.self, name: name)
     
     StoryboardContainerMap.instance.append(name: name, bundle: storyboardBundleOrNil, component: builder.component, in: self)
     return builder
@@ -115,9 +122,16 @@ public extension DIContainer {
   /// - Returns: component builder, to configure the component
   @discardableResult
   public func registerStoryboard(name: String, bundle storyboardBundleOrNil: Bundle?, file: String = #file, line: Int = #line) -> DIComponentBuilder<NSStoryboard> {
+    #if swift(>=4.0)
+    let builder = register1(file: file, line: line) {
+    DIStoryboard.create(name: name, bundle: storyboardBundleOrNil, container: $0) as NSStoryboard
+    }
+    #else
     let builder = register(file: file, line: line) {
-      DIStoryboard.create(name: name, bundle: storyboardBundleOrNil, container: $0) as NSStoryboard
-    } .as(NSStoryboard.self, name: name)
+    DIStoryboard.create(name: name, bundle: storyboardBundleOrNil, container: $0) as NSStoryboard
+    }
+    #endif
+    builder.as(NSStoryboard.self, name: name)
   
     StoryboardContainerMap.instance.append(name: name, bundle: storyboardBundleOrNil, component: builder.component, in: self)
     return builder

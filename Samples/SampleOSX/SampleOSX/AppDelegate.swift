@@ -24,7 +24,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		
 		let viewController = storyboard.instantiateInitialController() as! NSViewController
 		
-		let window = NSApplication.shared().windows.first
+    #if swift(>=4.0)
+    let window = NSApplication.shared.windows.first
+    #else
+    let window = NSApplication.shared().windows.first
+    #endif
 		window?.contentViewController = viewController
 	}	
 	

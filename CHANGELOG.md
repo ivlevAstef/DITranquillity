@@ -1,3 +1,5 @@
+# v3.0.5
+* swift4 support
 # v3.0.4
 * bugfix: Improve validate graph cycle, and logs.
 

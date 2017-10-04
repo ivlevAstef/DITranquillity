@@ -262,8 +262,14 @@ class DITranquillityTests_Storyboard: XCTestCase {
     container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-    container.register{ ($0 as UIStoryboard).instantiateViewController(withIdentifier: "testID") as! TestViewController }
+    #if swift(>=4.0)
+      container.register1{ ($0 as UIStoryboard).instantiateViewController(withIdentifier: "testID") as! TestViewController }
+        .injection{ $0.service = $1 }
+    #else
+      container.register{ ($0 as UIStoryboard).instantiateViewController(withIdentifier: "testID") as! TestViewController }
       .injection{ $0.service = $1 }
+    #endif
+    
     
     container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
       .lifetime(.weakSingle)

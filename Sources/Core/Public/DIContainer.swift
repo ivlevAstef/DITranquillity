@@ -105,7 +105,7 @@ public extension DIContainer {
   /// - Returns: component builder, to configure the component.
   @discardableResult
   public func register<Impl>(file: String = #file, line: Int = #line, _ c: @escaping () -> Impl) -> DIComponentBuilder<Impl> {
-    return register(file, line, MethodMaker.make(by: c))
+    return register(file, line, MethodMaker.make0(by: c))
   }
   
   

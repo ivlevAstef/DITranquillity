@@ -158,7 +158,7 @@ public extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func injection(_ method: @escaping (Impl) -> ()) -> Self {
-    component.append(injection: MethodMaker.make([UseObject.self], by: method), cycle: false)
+    component.append(injection: MethodMaker.make1([UseObject.self], by: method), cycle: false)
     return self
   }
   
@@ -186,7 +186,7 @@ public extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func injection<Property>(cycle: Bool = false, _ method: @escaping (Impl,Property) -> ()) -> Self {
-    component.append(injection: MethodMaker.make([UseObject.self, Property.self], by: method), cycle: cycle)
+    component.append(injection: MethodMaker.make2([UseObject.self, Property.self], by: method), cycle: cycle)
     return self
   }
   
@@ -215,7 +215,7 @@ public extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func injection<Property>(name: String, cycle: Bool = false, _ method: @escaping (Impl,Property) -> ()) -> Self {
-    component.append(injection: MethodMaker.make([UseObject.self, Property.self], [nil, name], by: method), cycle: cycle)
+    component.append(injection: MethodMaker.make2([UseObject.self, Property.self], [nil, name], by: method), cycle: cycle)
     return self
   }
   
@@ -231,7 +231,7 @@ public extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func postInit(_ method: @escaping (Impl) -> ()) -> Self {
-    component.postInit = MethodMaker.make([UseObject.self], by: method)
+    component.postInit = MethodMaker.make1([UseObject.self], by: method)
     return self
   }
 }
