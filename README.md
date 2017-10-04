@@ -28,9 +28,6 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 
 ## Usage
 
-<details>
-<summary>See code</summary>
-
 ```Swift
 // container - for register and resolve your types
 let container = DIContainer()
@@ -41,8 +38,8 @@ container.register{ Cat(name: "Felix") }
 
 container.register(PetOwner.init) // register PetOwner
 
-// you can validate you registrations
-if !container.valid() {
+// you can validate you registrations graph
+if !container.validate() {
   fatalError("...")
 }
 
@@ -77,9 +74,54 @@ class PetOwner {
 }
 ```
 
+### Storyboard (iOS/OS X)
+
+<details>
+<summary>See code</summary>
+
+Create your ViewController:
+```Swift
+class ViewController: UIViewController/NSViewController {
+  var inject: Inject?
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    print("Inject: \(inject)")
+  }
+}
+```
+Create container:
+```Swift
+let container = DIContainer()
+container.register(ViewController.self)
+  .injection { $0.inject = $1 }
+```
+Create Storyboard:
+```Swift
+/// for iOS
+func applicationDidFinishLaunching(_ application: UIApplication) {
+  let storyboard = DIStoryboard.create(name: "Main", bundle: nil, container: container)
+
+  window = UIWindow(frame: UIScreen.main.bounds)
+  window!.rootViewController = storyboard.instantiateInitialViewController()
+  window!.makeKeyAndVisible()
+}
+```
+
+```Swift
+/// for OS X
+func applicationDidFinishLaunching(_ aNotification: Notification) {
+  let storyboard = DIStoryboard.create(name: "Main", bundle: nil, container: container)
+
+  let viewController = storyboard.instantiateInitialController() as! NSViewController
+  let window = NSApplication.shared().windows.first
+  window?.contentViewController = viewController
+}
+```
+
 </details>
 
-**For more details**:
+### For more details
 * Read the Quick Start [ru](Documentation/ru/quick_start.md#Быстрый-старт) / [~~en~~](Documentation/en/Ups.md)
 * Or documentation [ru](Documentation/ru/main.md) / [~~en~~](Documentation/en/Ups.md)
 * Also see [code documentation](https://htmlpreview.github.io/?https://github.com/ivlevAstef/DITranquillity/blob/master/Documentation/code/index.html)
@@ -106,54 +148,6 @@ iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
 
 ## Changelog
 See [CHANGELOG.md](CHANGELOG.md) file.
-
-
-## Storyboard (iOS/OS X)
-
-<details>
-<summary>See code</summary>
-
-Create your ViewController:
-```Swift
-class ViewController: UIViewController/NSViewController {
-  var inject: Inject?
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    print("Inject: \(inject)")
-  }
-}
-```
-Create container:
-```Swift
-  let container = DIContainer()
-  container.register(ViewController.self)
-    .injection { $0.inject = $1 }
-```
-Create Storyboard:
-```Swift
-/// for iOS
-func applicationDidFinishLaunching(_ application: UIApplication) {
-  let storyboard = DIStoryboard.create(name: "Main", bundle: nil, container: container)
-
-  window = UIWindow(frame: UIScreen.main.bounds)
-  window!.rootViewController = storyboard.instantiateInitialViewController()
-  window!.makeKeyAndVisible()
-}
-```
-
-```Swift
-/// for OS X
-func applicationDidFinishLaunching(_ aNotification: Notification) {
-  let storyboard = DIStoryboard.create(name: "Main", bundle: nil, container: container)
-
-  let viewController = storyboard.instantiateInitialController() as! NSViewController
-  let window = NSApplication.shared().windows.first
-  window?.contentViewController = viewController
-}
-```
-
-</details>
 
 ## Alternative
 * [Typhoon](https://github.com/appsquickly/Typhoon)

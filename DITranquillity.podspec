@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 
   s.homepage     = 'https://github.com/ivlevAstef/DITranquillity'
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
-  s.documentation_url = 'https://github.com/ivlevAstef/DITranquillity'
+  s.documentation_url = 'https://htmlpreview.github.io/?https://github.com/ivlevAstef/DITranquillity/blob/master/Documentation/code/index.html'
 
   s.author       = { 'Alexander.Ivlev' => 'ivlev.stef@gmail.com' }
   s.source       = { :git => 'https://github.com/ivlevAstef/DITranquillity.git', :tag => "v#{s.version}" }

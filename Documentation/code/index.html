@@ -174,35 +174,30 @@
 <li>Thread safe</li>
 </ul>
 <h2 id='usage' class='heading'>Usage</h2>
-
-<details>
-<summary>See code</summary>
-
-&ldquo;`Swift
-// container - for register and resolve your types
+<pre class="highlight plaintext"><code>// container - for register and resolve your types
 let container = DIContainer()
 
-container.register{ Cat(name: &quot;Felix&rdquo;) }
+container.register{ Cat(name: "Felix") }
   .as(Animal.self) // register Cat with name felix by protocol Animal
   .lifetime(.prototype) // set lifetime
 
 container.register(PetOwner.init) // register PetOwner
 
-// you can validate you registrations
-if !container.valid() {
-  fatalError(&ldquo;&hellip;&rdquo;)
+// you can validate you registrations graph
+if !container.validate() {
+  fatalError("...")
 }
 
-&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;.
+.................................................
 
 // get instance of a types from the container
 let owner: PetOwner = container.resolve()
 let animal: Animal = *container // short syntax
 
-print(owner.pet.name) // &ldquo;Felix&rdquo;
-print(animal.name) // &ldquo;Felix&rdquo;
+print(owner.pet.name) // "Felix"
+print(animal.name) // "Felix"
 
-&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;.
+.................................................
 
 // where
 protocol Animal {
@@ -222,11 +217,54 @@ class PetOwner {
     self.pet = pet
   }
 }
+</code></pre>
+<h3 id='storyboard-ios-os-x' class='heading'>Storyboard (iOS/OS X)</h3>
+
+<details>
+<summary>See code</summary>
+
+Create your ViewController:
+&ldquo;`Swift
+class ViewController: UIViewController/NSViewController {
+  var inject: Inject?
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    print(&quot;Inject: \(inject)&rdquo;)
+  }
+}
+&ldquo;`
+Create container:
+&rdquo;`Swift
+let container = DIContainer()
+container.register(ViewController.self)
+  .injection { $0.inject = $1 }
+&ldquo;`
+Create Storyboard:
+&rdquo;`Swift
+/// for iOS
+func applicationDidFinishLaunching(_ application: UIApplication) {
+  let storyboard = DIStoryboard.create(name: &ldquo;Main&rdquo;, bundle: nil, container: container)
+
+  window = UIWindow(frame: UIScreen.main.bounds)
+  window!.rootViewController = storyboard.instantiateInitialViewController()
+  window!.makeKeyAndVisible()
+}
+&ldquo;`
+
+&rdquo;`Swift
+/// for OS X
+func applicationDidFinishLaunching(_ aNotification: Notification) {
+  let storyboard = DIStoryboard.create(name: &ldquo;Main&rdquo;, bundle: nil, container: container)
+
+  let viewController = storyboard.instantiateInitialController() as! NSViewController
+  let window = NSApplication.shared().windows.first
+  window?.contentViewController = viewController
+}
 &ldquo;`
 
 </details>
-
-<p><strong>For more details</strong>:</p>
+<h3 id='for-more-details' class='heading'>For more details</h3>
 
 <ul>
 <li>Read the Quick Start <a href="Documentation/ru/quick_start.md#%D0%91%D1%8B%D1%81%D1%82%D1%80%D1%8B%D0%B9-%D1%81%D1%82%D0%B0%D1%80%D1%82">ru</a> / <a href="Documentation/en/Ups.md"><del>en</del></a></li>
@@ -258,52 +296,6 @@ class PetOwner {
 <h2 id='changelog' class='heading'>Changelog</h2>
 
 <p>See <a href="CHANGELOG.md">CHANGELOG.md</a> file.</p>
-<h2 id='storyboard-ios-os-x' class='heading'>Storyboard (iOS/OS X)</h2>
-
-<details>
-<summary>See code</summary>
-
-Create your ViewController:
-&rdquo;`Swift
-class ViewController: UIViewController/NSViewController {
-  var inject: Inject?
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    print(&ldquo;Inject: \(inject)&rdquo;)
-  }
-}
-&ldquo;`
-Create container:
-&rdquo;`Swift
-  let container = DIContainer()
-  container.register(ViewController.self)
-    .injection { $0.inject = $1 }
-&ldquo;`
-Create Storyboard:
-&rdquo;`Swift
-/// for iOS
-func applicationDidFinishLaunching(_ application: UIApplication) {
-  let storyboard = DIStoryboard.create(name: &ldquo;Main&rdquo;, bundle: nil, container: container)
-
-  window = UIWindow(frame: UIScreen.main.bounds)
-  window!.rootViewController = storyboard.instantiateInitialViewController()
-  window!.makeKeyAndVisible()
-}
-&ldquo;`
-
-&rdquo;`Swift
-/// for OS X
-func applicationDidFinishLaunching(_ aNotification: Notification) {
-  let storyboard = DIStoryboard.create(name: &ldquo;Main&rdquo;, bundle: nil, container: container)
-
-  let viewController = storyboard.instantiateInitialController() as! NSViewController
-  let window = NSApplication.shared().windows.first
-  window?.contentViewController = viewController
-}
-&ldquo;`
-
-</details>
 <h2 id='alternative' class='heading'>Alternative</h2>
 
 <ul>
