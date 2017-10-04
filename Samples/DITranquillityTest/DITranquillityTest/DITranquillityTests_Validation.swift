@@ -359,8 +359,13 @@ class DITranquillityTests_Build: XCTestCase {
   func test06_CycleWithoutInit() {
     let container = DIContainer()
     
+    #if swift(>=4.0)
+    container.register1(RCycle.init)
+      .lifetime(.prototype)
+    #else
     container.register(RCycle.init)
       .lifetime(.prototype)
+    #endif
       
     container.register(RCycle2.self)
       .injection{ $0.inject = $1 }
