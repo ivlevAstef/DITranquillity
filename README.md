@@ -73,6 +73,67 @@ class PetOwner {
   }
 }
 ```
+<details>
+<summary>See More</summary>
+
+```Swift
+let container = DIContainer()
+
+container.register{ Cat(name: "Felix") }
+  .as(Animal.self)
+  
+container.register{ Dog(name: "Rex") }
+  .as(Animal.self)
+  .default()
+
+container.register{ PetOwner(pets: many($0)) }
+  .injection{ $0.home = $1 }
+
+container.register(Home.init)
+  .postInit { $0.address = "City, Street, Number" }
+
+.................................................
+
+let owner: PetOwner = *container
+
+print(owner.pets.map{ $0.name }) // ["Felix", "Rex"]
+print(onwer.home.address) // "City, Street, Number"
+
+.................................................
+
+// where
+protocol Animal {
+  var name: String { get }
+}
+
+class Cat: Animal {
+  let name: String
+  init(name: String) {
+    self.name = name
+  }
+}
+
+class Dog: Animal {
+  let name: String
+  init(name: String) {
+    self.name = name
+  }
+}
+
+class PetOwner {
+  let pets: [Animal]
+  init(pets: [Animal]) {
+    self.pets = pets
+  }
+  
+  var home: Home!
+}
+
+class Home {
+  var address: String!
+}
+```
+</details>
 
 ### Storyboard (iOS/OS X)
 
