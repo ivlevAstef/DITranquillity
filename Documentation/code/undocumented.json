@@ -23,7 +23,7 @@
     },
     {
       "file": "/Users/ivlev/Project/DITranquillity/Sources/Core/Public/DIContainer.swift",
-      "line": 165,
+      "line": 172,
       "symbol": "DIContainer.initializeSingletonObjects()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

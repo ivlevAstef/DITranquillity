@@ -1347,9 +1347,9 @@ Using:</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14DITranquillity11DIContainerC7resolvexylF"></a>
-                    <a name="//apple_ref/swift/Method/resolve()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC7resolvexylF">resolve()</a>
+                    <a name="/s:14DITranquillity11DIContainerC7resolvexSo6BundleCSg4from_tlF"></a>
+                    <a name="//apple_ref/swift/Method/resolve(from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC7resolvexSo6BundleCSg4from_tlF">resolve(from:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1366,16 +1366,35 @@ But if the type is optional, then the application will not crash, but it returns
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">resolve</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">resolve</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">from</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>bundle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Bundle from which to resolve a object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                       <div>
                         <h4>Return Value</h4>
                         <p>Object for the specified type, or nil (see description).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L126-L128">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L127-L129">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1383,9 +1402,9 @@ But if the type is optional, then the application will not crash, but it returns
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14DITranquillity11DIContainerC7resolvexq_m3tag_tr0_lF"></a>
-                    <a name="//apple_ref/swift/Method/resolve(tag:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC7resolvexq_m3tag_tr0_lF">resolve(tag:)</a>
+                    <a name="/s:14DITranquillity11DIContainerC7resolvexq_m3tag_So6BundleCSg4fromtr0_lF"></a>
+                    <a name="//apple_ref/swift/Method/resolve(tag:from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC7resolvexq_m3tag_So6BundleCSg4fromtr0_lF">resolve(tag:from:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1402,7 +1421,7 @@ But if the type is optional, then the application will not crash, but it returns
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">resolve</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt">Tag</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">tag</span><span class="p">:</span> <span class="kt">Tag</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">resolve</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt">Tag</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">tag</span><span class="p">:</span> <span class="kt">Tag</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">from</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
 
                         </div>
                       </div>
@@ -1422,6 +1441,18 @@ But if the type is optional, then the application will not crash, but it returns
                                 </div>
                               </td>
                             </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>bundle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Bundle from which to resolve a object</p>
+                                </div>
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>
@@ -1430,7 +1461,7 @@ But if the type is optional, then the application will not crash, but it returns
                         <p>Object for the specified type with tag, or nil (see description).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L136-L138">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L139-L141">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1438,9 +1469,9 @@ But if the type is optional, then the application will not crash, but it returns
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14DITranquillity11DIContainerC7resolvexSS4name_tlF"></a>
-                    <a name="//apple_ref/swift/Method/resolve(name:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC7resolvexSS4name_tlF">resolve(name:)</a>
+                    <a name="/s:14DITranquillity11DIContainerC7resolvexSS4name_So6BundleCSg4fromtlF"></a>
+                    <a name="//apple_ref/swift/Method/resolve(name:from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC7resolvexSS4name_So6BundleCSg4fromtlF">resolve(name:from:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1457,7 +1488,7 @@ But if the type is optional, then the application will not crash, but it returns
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">resolve</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">resolve</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">from</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
 
                         </div>
                       </div>
@@ -1477,6 +1508,18 @@ But if the type is optional, then the application will not crash, but it returns
                                 </div>
                               </td>
                             </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>bundle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Bundle from which to resolve a object</p>
+                                </div>
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>
@@ -1485,7 +1528,7 @@ But if the type is optional, then the application will not crash, but it returns
                         <p>Object for the specified type with name, or nil (see description).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L146-L148">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L151-L153">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1519,7 +1562,7 @@ But if the type is optional, then the application will not crash, but it returns
                         <p>Objects for the specified type.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L153-L155">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L158-L160">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1527,9 +1570,9 @@ But if the type is optional, then the application will not crash, but it returns
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14DITranquillity11DIContainerC6injectyx4into_tlF"></a>
-                    <a name="//apple_ref/swift/Method/inject(into:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC6injectyx4into_tlF">inject(into:)</a>
+                    <a name="/s:14DITranquillity11DIContainerC6injectyx4into_So6BundleCSg4fromtlF"></a>
+                    <a name="//apple_ref/swift/Method/inject(into:from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC6injectyx4into_So6BundleCSg4fromtlF">inject(into:from:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1545,7 +1588,7 @@ If the object type couldn&rsquo;t be found, then in logs there will be a warning
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">inject</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">into</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">inject</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">into</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="n">from</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1565,11 +1608,23 @@ If the object type couldn&rsquo;t be found, then in logs there will be a warning
                                 </div>
                               </td>
                             </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>bundle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Bundle from which to injection into object</p>
+                                </div>
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L161-L163">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L168-L170">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1599,7 +1654,7 @@ If the object type couldn&rsquo;t be found, then in logs there will be a warning
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L165-L178">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L172-L185">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1656,7 +1711,7 @@ If the object type couldn&rsquo;t be found, then in logs there will be a warning
                         <p>true if validation success.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L189-L192">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIContainer.swift#L196-L199">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
