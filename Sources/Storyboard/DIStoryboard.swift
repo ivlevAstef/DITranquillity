@@ -48,7 +48,7 @@ public final class DIStoryboard: _DIStoryboardBase {
   /// - Returns: The new instane of `DIStoryboard`.
   public class func create(name: String, bundle storyboardBundleOrNil: Bundle?, container: DIContainer) -> DIStoryboard {
     let storyboard = DIStoryboard._create(name, bundle: storyboardBundleOrNil)
-    storyboard.resolver = StoryboardResolver(container: container)
+    storyboard.resolver = StoryboardResolver(container: container, bundle: storyboardBundleOrNil)
     return storyboard
   }
 

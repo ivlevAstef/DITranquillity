@@ -1,3 +1,7 @@
+# v3.0.6
+* feature: You can now pass the bundle from which to retrieve the object
+* bugfix: When created ViewController, library didn't consider storyboard bundle
+
 # v3.0.5
 * swift4 support
 

@@ -122,29 +122,34 @@ public extension DIContainer {
   /// Can crash application, if can't found the type.
   /// But if the type is optional, then the application will not crash, but it returns nil.
   ///
+  /// - Parameter bundle: Bundle from which to resolve a object
   /// - Returns: Object for the specified type, or nil (see description).
-  public func resolve<T>() -> T {
-    return resolver.resolve()
+  public func resolve<T>(from bundle: Bundle? = nil) -> T {
+    return resolver.resolve(from: bundle)
   }
   
   /// Resolve object by type with tag.
   /// Can crash application, if can't found the type with tag.
   /// But if the type is optional, then the application will not crash, but it returns nil.
   ///
-  /// - Parameter tag: Resolve tag.
+  /// - Parameters:
+  ///   - tag: Resolve tag.
+  ///   - bundle: Bundle from which to resolve a object
   /// - Returns: Object for the specified type with tag, or nil (see description).
-  public func resolve<T, Tag>(tag: Tag.Type) -> T {
-    return by(tag: tag, on: resolver.resolve())
+  public func resolve<T, Tag>(tag: Tag.Type, from bundle: Bundle? = nil) -> T {
+    return by(tag: tag, on: resolver.resolve(from: bundle))
   }
   
   /// Resolve object by type with name.
   /// Can crash application, if can't found the type with name.
   /// But if the type is optional, then the application will not crash, but it returns nil.
   ///
-  /// - Parameter name: Resolve name.
+  /// - Parameters:
+  ///   - name: Resolve name.
+  ///   - bundle: Bundle from which to resolve a object
   /// - Returns: Object for the specified type with name, or nil (see description).
-  public func resolve<T>(name: String) -> T {
-    return resolver.resolve(name: name)
+  public func resolve<T>(name: String, from bundle: Bundle? = nil) -> T {
+    return resolver.resolve(name: name, from: bundle)
   }
   
   /// Resolve many objects by type.
@@ -157,9 +162,11 @@ public extension DIContainer {
   /// Injected all dependencies into object.
   /// If the object type couldn't be found, then in logs there will be a warning, and nothing will happen.
   ///
-  /// - Parameter object: object in which injections will be introduced.
-  public func inject<T>(into object: T) {
-    _ = resolver.injection(obj: object)
+  /// - Parameters:
+  ///   - object: object in which injections will be introduced.
+  ///   - bundle: Bundle from which to injection into object
+  public func inject<T>(into object: T, from bundle: Bundle? = nil) {
+    _ = resolver.injection(obj: object, from: bundle)
   }
   
   public func initializeSingletonObjects() {

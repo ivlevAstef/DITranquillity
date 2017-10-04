@@ -11,19 +11,19 @@ class Resolver {
     self.container = container // onowned
   }
   
-  func resolve<T>(type: T.Type = T.self, name: String? = nil) -> T {
+  func resolve<T>(type: T.Type = T.self, name: String? = nil, from bundle: Bundle? = nil) -> T {
     log(.info, msg: "Begin resolve \(description(type: type))", brace: .begin)
     defer { log(.info, msg: "End resolve \(description(type: type))", brace: .end) }
     
-    return gmake(by: make(by: type, with: name, from: nil, use: nil))
+    return gmake(by: make(by: type, with: name, from: bundle, use: nil))
   }
   
-  func injection<T>(obj: T) {
+  func injection<T>(obj: T, from bundle: Bundle? = nil) {
     log(.info, msg: "Begin injection in obj: \(obj)", brace: .begin)
     defer { log(.info, msg: "End injection in obj: \(obj)", brace: .end) }
     
     // swift bug - if T is Any then type(of: obj) return always any. - compile optimization?
-    _ = make(by: type(of: (obj as Any)), with: nil, from: nil, use: obj)
+    _ = make(by: type(of: (obj as Any)), with: nil, from: bundle, use: obj)
   }
 
   
