@@ -22,16 +22,8 @@ public protocol DIFramework: class {
 
 public extension DIFramework {
   public static var bundle: Bundle? { return nil }
-  fileprivate static var pBundle: Bundle { return bundle ?? Bundle(for: self) }
-}
-
-public extension Bundle {
-  public convenience init?(static name: String) {
-    guard let path = Bundle.main.privateFrameworksPath else {
-      return nil
-    }
-    self.init(path: path+"/\(name).framework")
-  }
+	
+  fileprivate static var nonOptionalBundle: Bundle { return bundle ?? Bundle(for: self) }
 }
 
 public extension DIContainer {
@@ -41,13 +33,13 @@ public extension DIContainer {
   /// - Parameters:
   ///   - framework: the framework type
   public func append(framework: DIFramework.Type) {
-    let fBundle = framework.pBundle
+    let frameworkBundle = framework.nonOptionalBundle
     if let bundle = bundleStack.bundle {
-      bundleContainer.dependency(bundle: bundle, import: fBundle)
+      bundleContainer.dependency(bundle: bundle, import: frameworkBundle)
     }
     
     if includedParts.checkAndInsert(ObjectIdentifier(framework)) {
-      bundleStack.push(fBundle)
+      bundleStack.push(frameworkBundle)
       defer { bundleStack.pop() }
       
       framework.load(container: self)
@@ -66,6 +58,6 @@ public extension DIContainer {
       log(.warning, msg: "Please, use import only into Framework")
       return
     }
-    bundleContainer.dependency(bundle: bundle, import: framework.pBundle)
+    bundleContainer.dependency(bundle: bundle, import: framework.nonOptionalBundle)
   }
 }
