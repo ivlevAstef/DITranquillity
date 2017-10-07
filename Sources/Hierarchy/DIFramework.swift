@@ -10,12 +10,28 @@
 /// Allows you to express more expressively the entry point to the framework of you application.
 /// It isn't necessary to create several such classses on one framework - it willn't be convenient.
 public protocol DIFramework: class {
+  static var bundle: Bundle? { get }
+
   /// Method inside of which you can registration a components.
   /// It's worth combining the components for some reason.
   /// And call a class implementing the protocol according to this characteristics.
   ///
   /// - Parameter container: A container. Don't call the method yourself, but leave it to the method `append(...)` into container.
   static func load(container: DIContainer)
+}
+
+public extension DIFramework {
+  public static var bundle: Bundle? { return nil }
+  fileprivate static var pBundle: Bundle { return bundle ?? Bundle(for: self) }
+}
+
+public extension Bundle {
+  public convenience init?(static name: String) {
+    guard let path = Bundle.main.privateFrameworksPath else {
+      return nil
+    }
+    self.init(path: path+"/\(name).framework")
+  }
 }
 
 public extension DIContainer {
@@ -25,12 +41,13 @@ public extension DIContainer {
   /// - Parameters:
   ///   - framework: the framework type
   public func append(framework: DIFramework.Type) {
+    let fBundle = framework.pBundle
     if let bundle = bundleStack.bundle {
-      bundleContainer.dependency(bundle: bundle, import: Bundle(for: framework))
+      bundleContainer.dependency(bundle: bundle, import: fBundle)
     }
     
     if includedParts.checkAndInsert(ObjectIdentifier(framework)) {
-      bundleStack.push(Bundle(for: framework))
+      bundleStack.push(fBundle)
       defer { bundleStack.pop() }
       
       framework.load(container: self)
@@ -46,9 +63,9 @@ public extension DIContainer {
   /// - Parameter framework: A framework that is imported into the current one. Import means communication designation, and not inclusion of all components.
   public func `import`(_ framework: DIFramework.Type) {
     guard let bundle = bundleStack.bundle else {
-      log(.warning, msg: "Please, use import only into Part or Framework")
+      log(.warning, msg: "Please, use import only into Framework")
       return
     }
-    bundleContainer.dependency(bundle: bundle, import: Bundle(for: framework))
+    bundleContainer.dependency(bundle: bundle, import: framework.pBundle)
   }
 }
