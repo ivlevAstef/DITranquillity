@@ -26,9 +26,6 @@ public extension DIContainer {
   ///   - path: the part type
   public func append(part: DIPart.Type) {
     if includedParts.checkAndInsert(ObjectIdentifier(part)) {
-      bundleStack.push(Bundle(for: part))
-      defer { bundleStack.pop() }
-      
       part.load(container: self)
     }
   }

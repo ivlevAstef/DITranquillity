@@ -95,14 +95,15 @@ public extension DIContainer {
   ///   - storyboardBundleOrNil: The bundle containing the storyboard file and its resources. Specify nil to use the main bundle.
   /// - Returns: component builder, to configure the component
   @discardableResult
-  public func registerStoryboard(name: String, bundle storyboardBundleOrNil: Bundle?, file: String = #file, line: Int = #line) -> DIComponentBuilder<UIStoryboard> {
+  public func registerStoryboard(name: String, bundle storyboardBundleOrNil: Bundle? = nil, file: String = #file, line: Int = #line) -> DIComponentBuilder<UIStoryboard> {
+    let bundle = storyboardBundleOrNil ?? self.bundleStack.bundle
     #if swift(>=4.0)
     let builder = register1(file: file, line: line) {
-      DIStoryboard.create(name: name, bundle: storyboardBundleOrNil, container: $0) as UIStoryboard
+      DIStoryboard.create(name: name, bundle: bundle, container: $0) as UIStoryboard
     }
     #else
     let builder = register(file: file, line: line) {
-      DIStoryboard.create(name: name, bundle: storyboardBundleOrNil, container: $0) as UIStoryboard
+      DIStoryboard.create(name: name, bundle: bundle, container: $0) as UIStoryboard
     }
     #endif
     builder.as(UIStoryboard.self, name: name)
@@ -121,14 +122,15 @@ public extension DIContainer {
   ///   - storyboardBundleOrNil: The bundle containing the storyboard file and its resources. Specify nil to use the main bundle.
   /// - Returns: component builder, to configure the component
   @discardableResult
-  public func registerStoryboard(name: String, bundle storyboardBundleOrNil: Bundle?, file: String = #file, line: Int = #line) -> DIComponentBuilder<NSStoryboard> {
+  public func registerStoryboard(name: String, bundle storyboardBundleOrNil: Bundle? = nil, file: String = #file, line: Int = #line) -> DIComponentBuilder<NSStoryboard> {
+    let bundle = storyboardBundleOrNil ?? self.bundleStack.bundle
     #if swift(>=4.0)
     let builder = register1(file: file, line: line) {
-    DIStoryboard.create(name: name, bundle: storyboardBundleOrNil, container: $0) as NSStoryboard
+      DIStoryboard.create(name: name, bundle: bundle, container: $0) as NSStoryboard
     }
     #else
     let builder = register(file: file, line: line) {
-    DIStoryboard.create(name: name, bundle: storyboardBundleOrNil, container: $0) as NSStoryboard
+      DIStoryboard.create(name: name, bundle: bundle, container: $0) as NSStoryboard
     }
     #endif
     builder.as(NSStoryboard.self, name: name)

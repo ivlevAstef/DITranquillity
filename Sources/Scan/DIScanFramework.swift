@@ -20,7 +20,7 @@
 ///   override class var predicate: Predicate? { return .type({ $0 is YourCustomFrameworkBase.Type }) }
 /// }
 /// ```
-open class DIScanFramework: DIScan, DIFramework {
+open class DIScanFramework: DIScan, DIFramework {	
   /// Variants of the predicate on the basis of which these frameworks will be included.
   ///
   /// - type->Bool: Allows you to specify method that will filter a frameworks by type.

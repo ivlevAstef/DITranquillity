@@ -1,3 +1,6 @@
+# v3.1.0
+* Support change bundle for DIFramework. Needed for static library
+
 # v3.0.6
 * feature: You can now pass the bundle from which to retrieve the object
 * bugfix: When created ViewController, library didn't consider storyboard bundle
