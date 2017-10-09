@@ -10,7 +10,14 @@
 /// Allows you to express more expressively the entry point to the framework of you application.
 /// It isn't necessary to create several such classses on one framework - it willn't be convenient.
 public protocol DIFramework: class {
-  static var bundle: Bundle? { get }
+  /// bundle which is a framework. Default picks based on where the class.
+	/// But if the framework is statically link, it can be a problem, as all classes will be in the main bundle.
+	/// To obtain the bundle name framework, used:
+	/// ```
+	/// Bundle(path: Bundle.main.privateFrameworksPath! + "/" + {FRAMEWORK_NAME} + ".framework")
+	/// ```
+	/// This is the unsafe code, but you can rewrite it.
+  static var bundle: Bundle { get }
 
   /// Method inside of which you can registration a components.
   /// It's worth combining the components for some reason.
@@ -21,9 +28,8 @@ public protocol DIFramework: class {
 }
 
 public extension DIFramework {
-  public static var bundle: Bundle? { return nil }
-	
-  fileprivate static var nonOptionalBundle: Bundle { return bundle ?? Bundle(for: self) }
+  /// Default value
+  public static var bundle: Bundle { return Bundle(for: self) }
 }
 
 public extension DIContainer {
@@ -33,13 +39,12 @@ public extension DIContainer {
   /// - Parameters:
   ///   - framework: the framework type
   public func append(framework: DIFramework.Type) {
-    let frameworkBundle = framework.nonOptionalBundle
     if let bundle = bundleStack.bundle {
-      bundleContainer.dependency(bundle: bundle, import: frameworkBundle)
+      bundleContainer.dependency(bundle: bundle, import: framework.bundle)
     }
     
     if includedParts.checkAndInsert(ObjectIdentifier(framework)) {
-      bundleStack.push(frameworkBundle)
+      bundleStack.push(framework.bundle)
       defer { bundleStack.pop() }
       
       framework.load(container: self)
@@ -58,6 +63,6 @@ public extension DIContainer {
       log(.warning, msg: "Please, use import only into Framework")
       return
     }
-    bundleContainer.dependency(bundle: bundle, import: framework.nonOptionalBundle)
+    bundleContainer.dependency(bundle: bundle, import: framework.bundle)
   }
 }
