@@ -1,3 +1,6 @@
+# v3.1.1
+* Improved speed by optimizing logging
+
 # v3.1.0
 * Support change bundle for DIFramework. Needed for static library
 
