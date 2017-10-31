@@ -17,16 +17,17 @@ public final class DIComponentBuilder<Impl> {
   }
   
   deinit {
-    var msg = component.isDefault ? "default " : ""
-    msg += "registration: \(component.info)\n"
-    msg += "\(DISetting.Log.tab)initial: \(nil != component.initial)\n"
-    
-    msg += "\(DISetting.Log.tab)lifetime: \(component.lifeTime)\n"
-    msg += "\(DISetting.Log.tab)is default: \(component.isDefault)\n"
-    
-    msg += "\(DISetting.Log.tab)injections: \(component.injections.count)\n"
-    
-    log(.info, msg: msg)
+    log(.info, msgc: {
+      var msg = component.isDefault ? "default " : ""
+      msg += "registration: \(component.info)\n"
+      msg += "\(DISetting.Log.tab)initial: \(nil != component.initial)\n"
+
+      msg += "\(DISetting.Log.tab)lifetime: \(component.lifeTime)\n"
+      msg += "\(DISetting.Log.tab)is default: \(component.isDefault)\n"
+
+      msg += "\(DISetting.Log.tab)injections: \(component.injections.count)\n"
+      return msg
+    })
   }
   
   let component: Component

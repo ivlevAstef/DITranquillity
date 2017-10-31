@@ -13,6 +13,10 @@ enum LogBrace {
 private var tabulation = ""
 
 internal func log(_ level: DILogLevel, msg: @autoclosure ()->String, brace: LogBrace = .neutral) {
+  log(level, msgc: msg, brace: brace)
+}
+
+internal func log(_ level: DILogLevel, msgc: ()->String, brace: LogBrace = .neutral) {
   guard let logFunc = DISetting.Log.fun else {
     return
   }
@@ -26,7 +30,7 @@ internal func log(_ level: DILogLevel, msg: @autoclosure ()->String, brace: LogB
     tabulation.characters.removeLast(DISetting.Log.tab.characters.count)
   }
   
-  logFunc(level, tabulation + msg())
+  logFunc(level, tabulation + msgc())
   
   if .begin == brace {
     tabulation += DISetting.Log.tab
