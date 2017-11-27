@@ -35,12 +35,32 @@ extension Optional: TypeGetter {
   static var type: DIAType { return Wrapped.self }
 }
 
+/// Remove only Optional or ImplicitlyUnwrappedOptional
+///
+/// - Parameter type: input type
+/// - Returns: type without Optional and ImplicitlyUnwrappedOptional
 func removeTypeWrappers(_ type: DIAType) -> DIAType {
   if let typeGetter = type as? TypeGetter.Type {
     return removeTypeWrappers(typeGetter.type)
   }
   
   return type
+}
+
+/// Remove Optional, ImplicitlyUnwrappedOptional, DIByTag, DIMany
+///
+/// - Parameter type: input type
+/// - Returns: type without Optional, ImplicitlyUnwrappedOptional, DIByTag, DIMany
+func removeTypeWrappersFully(_ type: DIAType) -> DIAType {
+	if let typeGetter = type as? TypeGetter.Type {
+		return removeTypeWrappersFully(typeGetter.type)
+	} else if let manyType = type as? IsMany.Type {
+		return removeTypeWrappersFully(manyType.type)
+	}  else if let tagType = type as? IsTag.Type {
+		return removeTypeWrappersFully(tagType.type)
+	}
+	
+	return type
 }
 
 

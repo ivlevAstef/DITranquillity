@@ -26,8 +26,8 @@ internal func log(_ level: DILogLevel, msgc: ()->String, brace: LogBrace = .neut
   }
   
   if .end == brace {
-    assert(tabulation.characters.count >= DISetting.Log.tab.characters.count)
-    tabulation.characters.removeLast(DISetting.Log.tab.characters.count)
+    assert(tabulation.count >= DISetting.Log.tab.count)
+    tabulation.removeLast(DISetting.Log.tab.count)
   }
   
   logFunc(level, tabulation + msgc())
