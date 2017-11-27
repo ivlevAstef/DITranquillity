@@ -155,6 +155,12 @@ class Resolver {
                         set: { cache.graph[uniqueKey] = $0 })
     }
     
+    func resolvePerContainer() -> Any? {
+      return makeObject(from: "perContainer",
+                        get: cache.perContainer[uniqueKey],
+                        set: { cache.perContainer[uniqueKey] = $0 })
+    }
+    
     func resolveWeakSingle() -> Any? {
       for (key, weak) in Cache.weakSingle {
         if nil == weak.value {
@@ -268,6 +274,8 @@ class Resolver {
         return resolveSingle()
       case .weakSingle:
         return resolveWeakSingle()
+      case .perContainer:
+        return resolvePerContainer()
       case .objectGraph:
         return resolveObjectGraph()
       case .prototype:
@@ -288,6 +296,7 @@ class Resolver {
     
     fileprivate static var single = Scope<Any>()
     fileprivate static var weakSingle = Scope<Weak<Any>>()
+    fileprivate var perContainer = Scope<Any>()
     
     fileprivate var graph = Scope<Any>()
     fileprivate var cycleInjectionStack: [(obj: Any?, injection: Injection)] = []

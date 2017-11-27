@@ -40,31 +40,31 @@ public struct DIComponentInfo: Hashable, CustomStringConvertible {
 }
   
 /// Log levels. Needed for a better understanding of logs, and clipping
-///
-/// - none: disable all logs
-/// - error: After an error, a application can not be executable
-/// - warning: Warning should pe paid attention and analyzed
-/// - info: Information is needed to understand what is happening
 public enum DILogLevel: Equatable {
+  /// disable all logs
   case none
+  /// After an error, a application can not be executable
   case error
+  /// Warning should pe paid attention and analyzed
   case warning
+  /// Information is needed to understand what is happening
   case info
 }
   
 
 /// A object life time
-///
-/// - single: The object is only one in the application. Initialization by call `DIContainer.initializeSingletonObjects()`
-/// - lazySingle: The object is only one in the application. Initialization when first accessed
-/// - weakSingle: The object is only one in the application. Initialization when first accessed, and the library doesn't hold it
-/// - objectGraph: The object is created every time, but during the creation will be created once
-/// - prototype: The object is created every time
 public enum DILifeTime: Equatable {
+  /// The object is only one in the application. Initialization by call `DIContainer.initializeSingletonObjects()`
   case single
+  /// The object is only one in the application. Initialization when first accessed
   case lazySingle
+  /// The object is only one in the application. Initialization when first accessed, and the library doesn't hold it
   case weakSingle
+  /// The object is only one in one container. Initialization when first accessed
+  case perContainer
+  /// The object is created every time, but during the creation will be created once
   case objectGraph
+  /// The object is created every time
   case prototype
   
   /// Default life time. Is taken from the settings. see: `DISetting.Defaults.lifeTime`

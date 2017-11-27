@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>DILifeTime Enumeration Reference</title>
+    <title>DILifeTime Enum Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -11,10 +11,10 @@
   </head>
   <body>
     <a name="//apple_ref/swift/Enum/DILifeTime" class="dashAnchor"></a>
-    <a title="DILifeTime Enumeration Reference"></a>
+    <a title="DILifeTime Enum Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">DITranquillity Docs</a> (85% documented)</p>
+        <p><a href="../index.html">DITranquillity Docs</a> (92% documented)</p>
         <p class="header-right"><a href="https://github.com/ivlevAstef/DITranquillity"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2FivlevAstef%2FDITranquillity%2Fcode%2Fdocsets%2FDITranquillity%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">DITranquillity Reference</a>
         <img id="carat" src="../img/carat.png" />
-        DILifeTime Enumeration Reference
+        DILifeTime Enum Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -71,7 +71,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Enums.html">Enumerations</a>
+            <a href="../Enums.html">Enums</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Enums/DILifeTime.html">DILifeTime</a>
@@ -110,7 +110,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Structs.html">Structures</a>
+            <a href="../Structs.html">Structs</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Structs/DIComponentInfo.html">DIComponentInfo</a>
@@ -127,7 +127,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Typealiases.html">Type Aliases</a>
+            <a href="../Typealiases.html">Typealiases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:14DITranquillity7DIATypea">DIAType</a>
@@ -154,14 +154,6 @@
               </div>
             <p>A object life time</p>
 
-<ul>
-<li>single: The object is only one in the application. Initialization by call <code><a href="../Classes/DIContainer.html#/s:14DITranquillity11DIContainerC26initializeSingletonObjectsyyF">DIContainer.initializeSingletonObjects()</a></code></li>
-<li>lazySingle: The object is only one in the application. Initialization when first accessed</li>
-<li>weakSingle: The object is only one in the application. Initialization when first accessed, and the library doesn&rsquo;t hold it</li>
-<li>objectGraph: The object is created every time, but during the creation will be created once</li>
-<li>prototype: The object is created every time</li>
-</ul>
-
           </section>
           <section class="section task-group-section">
             <div class="task-group">
@@ -179,19 +171,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The object is only one in the application. Initialization by call <code><a href="../Classes/DIContainer.html#/s:14DITranquillity11DIContainerC26initializeSingletonObjectsyyF">DIContainer.initializeSingletonObjects()</a></code></p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">DILifeTime</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
+                          <pre class="highlight"><code><span class="k">case</span> <span class="n">single</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DITypes.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DITypes.swift#L58">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -213,19 +205,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The object is only one in the application. Initialization when first accessed</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">DILifeTime</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
+                          <pre class="highlight"><code><span class="k">case</span> <span class="n">lazySingle</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DITypes.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DITypes.swift#L60">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -247,19 +239,53 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The object is only one in the application. Initialization when first accessed, and the library doesn&rsquo;t hold it</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">DILifeTime</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
+                          <pre class="highlight"><code><span class="k">case</span> <span class="n">weakSingle</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DITypes.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DITypes.swift#L62">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity10DILifeTimeO12perContainerA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/perContainer" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity10DILifeTimeO12perContainerA2CmF">perContainer</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The object is only one in one container. Initialization when first accessed</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">case</span> <span class="n">perContainer</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DITypes.swift#L64">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -281,19 +307,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The object is created every time, but during the creation will be created once</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">DILifeTime</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
+                          <pre class="highlight"><code><span class="k">case</span> <span class="n">objectGraph</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DITypes.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DITypes.swift#L66">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -315,19 +341,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The object is created every time</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">DILifeTime</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
+                          <pre class="highlight"><code><span class="k">case</span> <span class="n">prototype</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DITypes.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DITypes.swift#L68">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -337,8 +363,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2017-10-09)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.4</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2017 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2017-11-27)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

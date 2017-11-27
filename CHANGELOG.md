@@ -1,3 +1,6 @@
+# v3.1.2
+* Add new lifetime `perContainer`
+
 # v3.1.1
 * Improved speed by optimizing logging
 

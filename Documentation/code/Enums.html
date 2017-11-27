@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Enumerations  Reference</title>
+    <title>Enums  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,10 +10,10 @@
     
   </head>
   <body>
-    <a title="Enumerations  Reference"></a>
+    <a title="Enums  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">DITranquillity Docs</a> (85% documented)</p>
+        <p><a href="index.html">DITranquillity Docs</a> (92% documented)</p>
         <p class="header-right"><a href="https://github.com/ivlevAstef/DITranquillity"><img src="img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2FivlevAstef%2FDITranquillity%2Fcode%2Fdocsets%2FDITranquillity%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="index.html">DITranquillity Reference</a>
         <img id="carat" src="img/carat.png" />
-        Enumerations  Reference
+        Enums  Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -70,7 +70,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Enums.html">Enumerations</a>
+            <a href="Enums.html">Enums</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Enums/DILifeTime.html">DILifeTime</a>
@@ -109,7 +109,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Structs.html">Structures</a>
+            <a href="Structs.html">Structs</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Structs/DIComponentInfo.html">DIComponentInfo</a>
@@ -126,7 +126,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Typealiases.html">Type Aliases</a>
+            <a href="Typealiases.html">Typealiases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Typealiases.html#/s:14DITranquillity7DIATypea">DIAType</a>
@@ -144,8 +144,8 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>Enumerations</h1>
-            <p>The following enumerations are available globally.</p>
+            <h1>Enums</h1>
+            <p>The following enums are available globally.</p>
 
           </section>
           <section class="section task-group-section">
@@ -165,14 +165,6 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Log levels. Needed for a better understanding of logs, and clipping</p>
-<li>none: disable all logs</li>
-<li>error: After an error, a application can not be executable</li>
-<div class="aside aside-warning">
-    <p class="aside-title">Warning</p>
-    Warning should pe paid attention and analyzed
-
-</div>
-<li>info: Information is needed to understand what is happening</li>
 
                         <a href="Enums/DILogLevel.html" class="slightly-smaller">See more</a>
                       </div>
@@ -185,7 +177,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DITypes.swift#L48-L53">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DITypes.swift#L43-L52">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -205,14 +197,6 @@
                       <div class="abstract">
                         <p>A object life time</p>
 
-<ul>
-<li>single: The object is only one in the application. Initialization by call <code><a href="Classes/DIContainer.html#/s:14DITranquillity11DIContainerC26initializeSingletonObjectsyyF">DIContainer.initializeSingletonObjects()</a></code></li>
-<li>lazySingle: The object is only one in the application. Initialization when first accessed</li>
-<li>weakSingle: The object is only one in the application. Initialization when first accessed, and the library doesn&rsquo;t hold it</li>
-<li>objectGraph: The object is created every time, but during the creation will be created once</li>
-<li>prototype: The object is created every time</li>
-</ul>
-
                         <a href="Enums/DILifeTime.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
@@ -224,7 +208,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DITypes.swift#L63-L72">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DITypes.swift#L56-L72">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -234,8 +218,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2017-10-09)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.4</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2017 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2017-11-27)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

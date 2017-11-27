@@ -403,5 +403,62 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssertEqual(services.count, 5)
     
   }
+  
+  func test19_resolvePerContainer() {
+    let container1 = DIContainer()
+    let container2 = DIContainer()
+    
+    container1.register(FooService.init)
+      .lifetime(.perContainer)
+    container2.register(FooService.init)
+      .lifetime(.perContainer)
+    
+    
+    let service1_1: FooService = *container1
+    let service1_2: FooService = *container2
+    let service2_1: FooService = *container1
+    let service2_2: FooService = *container2
+    
+    XCTAssertEqual(service1_1.foo(), "foo")
+    XCTAssertEqual(service1_2.foo(), "foo")
+    XCTAssertEqual(service2_1.foo(), "foo")
+    XCTAssertEqual(service2_2.foo(), "foo")
+    
+    XCTAssert(service1_1 === service2_1)
+    XCTAssert(service1_2 === service2_2)
+    
+    XCTAssert(service1_1 !== service1_2)
+    XCTAssert(service2_1 !== service2_2)
+  }
+  
+  func test19_resolvePerContainerUseFunc() {
+    let container1 = DIContainer()
+    let container2 = DIContainer()
+    
+    func register(use container: DIContainer) {
+      container.register(FooService.init)
+        .lifetime(.perContainer)
+    }
+    
+    register(use: container1)
+    register(use: container2)
+    
+    let service1_1: FooService = *container1
+    let service1_2: FooService = *container2
+    let service2_1: FooService = *container1
+    let service2_2: FooService = *container2
+    
+    XCTAssertEqual(service1_1.foo(), "foo")
+    XCTAssertEqual(service1_2.foo(), "foo")
+    XCTAssertEqual(service2_1.foo(), "foo")
+    XCTAssertEqual(service2_2.foo(), "foo")
+    
+    XCTAssert(service1_1 === service2_1)
+    XCTAssert(service1_2 === service2_2)
+    
+    XCTAssert(service1_1 !== service1_2)
+    XCTAssert(service2_1 !== service2_2)
+  }
+  
 }
 
