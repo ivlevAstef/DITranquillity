@@ -9,8 +9,15 @@
     },
     {
       "file": "/Users/ivlev/Project/DITranquillity/Sources/Core/Private/ByTagAndMany.swift",
-      "line": 30,
+      "line": 31,
       "symbol": "InternalByMany",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ivlev/Project/DITranquillity/Sources/Core/Private/ByTagAndMany.swift",
+      "line": 42,
+      "symbol": "InternalByManyInBundle",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },

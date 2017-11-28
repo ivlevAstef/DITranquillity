@@ -25,14 +25,27 @@ public class InternalByTag<Tag, T>: IsTag {
 
 internal protocol IsMany: class {
   static var type: DIAType { get }
+	static var inBundle: Bool { get }
 }
 
 public class InternalByMany<T>: IsMany {
   internal let _objects: [T]
   
   internal static var type: DIAType { return T.self }
+	internal static var inBundle: Bool { return false }
   
   internal init(objects: [T]) {
     self._objects = objects
   }
+}
+
+public class InternalByManyInBundle<T>: IsMany {
+	internal let _objects: [T]
+	
+	internal static var type: DIAType { return T.self }
+	internal static var inBundle: Bool { return true }
+	
+	internal init(objects: [T]) {
+		self._objects = objects
+	}
 }

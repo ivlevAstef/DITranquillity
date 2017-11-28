@@ -1,3 +1,6 @@
+# v3.1.3
+* Support multiply using tag and many
+
 # v3.1.2
 * Add new lifetime `perContainer`
 

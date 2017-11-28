@@ -84,25 +84,49 @@ class Resolver {
       
       return defaults(components)
     }
-    
-    if let manyType = type as? IsMany.Type {
-      return Array(container.componentContainer[ShortTypeKey(by: manyType.type)])
-    }
-    
-    let components: [Component]
-    if let taggedType = type as? IsTag.Type {
-      let realType = removeTypeWrappers(taggedType.type)
-      components = Array(container.componentContainer[TypeKey(by: realType, tag: taggedType.tag)])
-    } else {
-      let realType = removeTypeWrappers(type)
-      if let name = name {
-        components = Array(container.componentContainer[TypeKey(by: realType, name: name)])
-      } else {
-        components = Array(container.componentContainer[TypeKey(by: realType)])
-      }
-    }
-    
-    return filter(by: bundle, components)
+		
+		/// real type without many, tags, optional
+		let simpleType = removeTypeWrappersFully(type)
+		var type: DIAType = removeTypeWrappers(type)
+		var components: Set<Component> = []
+		var first: Bool = true
+		var filterByBundle: Bool = true
+		
+		repeat {
+			let currentComponents = { () -> Set<Component> in
+				if let manyType = type as? IsMany.Type {
+					filterByBundle = filterByBundle && manyType.inBundle
+					return container.componentContainer[ShortTypeKey(by: simpleType)]
+				}
+				
+				if let taggedType = type as? IsTag.Type {
+					return container.componentContainer[TypeKey(by: simpleType, tag: taggedType.tag)]
+				}
+				
+				if let name = name {
+					return container.componentContainer[TypeKey(by: simpleType, name: name)]
+				}
+				return container.componentContainer[TypeKey(by: simpleType)]
+			}()
+			
+			/// it's not equals components.isEmpty !!!
+			components = first ? currentComponents : components.intersection(currentComponents)
+			first = false
+			
+			/// iteration
+			if let manyType = type as? IsMany.Type {
+				type = removeTypeWrappers(manyType.type)
+			} else if let taggedType = type as? IsTag.Type {
+				type = removeTypeWrappers(taggedType.type)
+			}
+			
+		} while ObjectIdentifier(type) != ObjectIdentifier(simpleType)
+		
+		if filterByBundle {
+			return filter(by: bundle, Array(components))
+		}
+		
+		return Array(components)
   }
   
   /// Remove components who doesn't have initialization method
@@ -115,8 +139,19 @@ class Resolver {
   
   private func make(by type: DIAType, with name: String?, from bundle: Bundle?, use object: Any?) -> Any? {
     let components = findComponents(by: type, with: name, from: bundle)
-    
-    if type is IsMany.Type {
+		let hasMany: Bool = {
+			var type = removeTypeWrappers(type)
+			while true {
+				if let taggedType = type as? IsTag.Type {
+					type = removeTypeWrappers(taggedType.type)
+					continue
+				}
+				
+				return type is IsMany.Type
+			}
+		}()
+		
+    if hasMany {
       let filterComponents = components.filter{ !stack.contains($0.info) } // Remove objects contains in stack
       assert(nil == object, "Many injection not supported")
       return filterComponents.flatMap{ makeObject(by: $0, use: nil) }
