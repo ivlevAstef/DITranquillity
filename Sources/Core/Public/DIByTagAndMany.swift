@@ -24,6 +24,43 @@ public func by<Tag,T>(tag: Tag.Type, on obj: DIByTag<Tag,T>) -> T {
   return obj._object
 }
 
+/// Short syntax for get object by two tags
+/// Using:
+/// ```
+/// let object: YourType = by(tags: YourTag.self, YourTag2.self, on: *container)
+/// ```
+/// also can using in injection or init:
+/// ```
+/// .injection{ $0 = by(tags: YourTag.self, YourTag2.self, on: $1) }
+/// ```
+///
+/// - Parameters:
+///   - tag: a tag
+///   - obj: resolving object
+/// - Returns: resolved object
+public func by<Tag1, Tag2, T>(tags: Tag1.Type, _ t: Tag2.Type, on obj: DIByTag<Tag1, DIByTag<Tag2,T>>) -> T {
+  return obj._object._object
+}
+
+/// Short syntax for get object by three tags
+/// Using:
+/// ```
+/// let object: YourType = by(tags: YourTag.self, YourTag2.self, YourTag3.self, on: *container)
+/// ```
+/// also can using in injection or init:
+/// ```
+/// .injection{ $0 = by(tags: YourTag.self, YourTag2.self, YourTag3.self, on: $1) }
+/// ```
+///
+/// - Parameters:
+///   - tag: a tag
+///   - obj: resolving object
+/// - Returns: resolved object
+public func by<Tag1, Tag2, Tag3, T>(tags: Tag1.Type, _ t2: Tag2.Type, _ t3: Tag3.Type, on obj: DIByTag<Tag1, DIByTag<Tag2, DIByTag<Tag3,T>>>) -> T {
+  return obj._object._object._object
+}
+
+
 /// Special class for resolve object by type with tag. see method: `byTag`
 public final class DIByTag<Tag, T>: InternalByTag<Tag, T> {}
 

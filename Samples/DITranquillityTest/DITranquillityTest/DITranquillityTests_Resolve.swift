@@ -484,8 +484,33 @@ class DITranquillityTests_Resolve: XCTestCase {
 		
 		let serviceFooTag2: ServiceProtocol? = by(tag: FooService.self, on: by(tag: BarService.self, on: *container2))
 		XCTAssertEqual(serviceFooTag2?.foo() ?? "", "")
-		
 	}
+  
+  func test20_ResolveByTagAndTagShort() {
+    let container1 = DIContainer()
+    
+    container1.register(FooService.init)
+      .as(check: ServiceProtocol.self, tag: FooService.self){$0}
+      .as(check: ServiceProtocol.self, tag: BarService.self){$0}
+    
+    let container2 = DIContainer()
+    container2.register(FooService.init)
+      .as(check: ServiceProtocol.self, tag: FooService.self){$0}
+    
+    
+    let serviceFoo1: ServiceProtocol? = container1.resolve(tag: FooService.self)
+    XCTAssertEqual(serviceFoo1?.foo() ?? "", "foo")
+    
+    let serviceFoo2: ServiceProtocol? = container2.resolve(tag: FooService.self)
+    XCTAssertEqual(serviceFoo2?.foo() ?? "", "foo")
+    
+    
+    let serviceFooTag1: ServiceProtocol? = by(tags: FooService.self, BarService.self, on: *container1)
+    XCTAssertEqual(serviceFooTag1?.foo() ?? "", "foo")
+    
+    let serviceFooTag2: ServiceProtocol? = by(tags: FooService.self, BarService.self, on: *container2)
+    XCTAssertEqual(serviceFooTag2?.foo() ?? "", "")
+  }
 	
 	func test21_ResolveByTagAndMany() {
 		let container = DIContainer()
@@ -543,6 +568,54 @@ class DITranquillityTests_Resolve: XCTestCase {
 		let servicesByTag3: [ServiceProtocol] = many(by(tag: BarService.self, on: by(tag: FooService.self, on: *container)))
 		XCTAssertEqual(servicesByTag3.count, 1)
 	}
+  
+  func test22_ResolveByTagTagAndManyShort() {
+    let container = DIContainer()
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self, tag: FooService.self){$0}
+    
+    container.register(BarService.init)
+      .as(check: ServiceProtocol.self, tag: FooService.self){$0}
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+    
+    container.register(BarService.init)
+      .as(check: ServiceProtocol.self, tag: BarService.self){$0}
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self, tag: FooService.self){$0}
+      .as(check: ServiceProtocol.self, tag: BarService.self){$0}
+    
+    
+    let services: [ServiceProtocol] = container.resolveMany()
+    XCTAssertEqual(services.count, 5)
+    
+    let servicesByTag1: [ServiceProtocol] = many(by(tag: FooService.self, on: *container))
+    XCTAssertEqual(servicesByTag1.count, 3)
+    
+    let servicesByTag2: [ServiceProtocol] = many(by(tag: BarService.self, on: *container))
+    XCTAssertEqual(servicesByTag2.count, 2)
+    
+    let servicesByTag3: [ServiceProtocol] = many(by(tags: BarService.self, FooService.self, on: *container))
+    XCTAssertEqual(servicesByTag3.count, 1)
+  }
+  
+  func test23_ResolveByTagTagTagShort() {
+    let container = DIContainer()
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self, tag: FooService.self){$0}
+      .as(check: ServiceProtocol.self, tag: BarService.self){$0}
+      .as(check: ServiceProtocol.self, tag: ServiceProtocol.self){$0}
+    
+    let service: ServiceProtocol? = by(tags: FooService.self, BarService.self, ServiceProtocol.self, on: *container)
+    XCTAssertEqual(service?.foo() ?? "", "foo")
+    
+    let serviceNot: ServiceProtocol? = by(tags: FooService.self, BarService.self, Inject.self, on: *container)
+    XCTAssertEqual(serviceNot?.foo() ?? "", "")
+  }
   
 }
 
