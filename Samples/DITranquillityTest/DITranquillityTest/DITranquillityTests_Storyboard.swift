@@ -262,7 +262,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1{ ($0 as UIStoryboard).instantiateViewController(withIdentifier: "testID") as! TestViewController }
         .injection{ $0.service = $1 }
     #else

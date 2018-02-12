@@ -59,7 +59,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(Inject.init)
     #else
       container.register(Inject.init)
@@ -225,7 +225,7 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test13_ResolveCircular2() {
     let container = DIContainer()
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(Circular2A.init)
         .lifetime(.objectGraph)
     #else
@@ -252,7 +252,7 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test14_ResolveCircular3() {
     let container = DIContainer()
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(Circular3A.init)
         .lifetime(.objectGraph)
       
@@ -304,7 +304,7 @@ class DITranquillityTests_Resolve: XCTestCase {
       .injection(cycle: true) { $0.b1 = $1 }
       .injection(cycle: true) { a, b2 in a.b2 = b2 }
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(CircularDouble2B.init)
         .lifetime(.prototype)
     #else
@@ -330,7 +330,7 @@ class DITranquillityTests_Resolve: XCTestCase {
       .injection(cycle: true) { $0.b1 = $1 }
       .injection(cycle: true) { a, b2 in a.b2 = b2 }
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(CircularDouble2B.init)
         .lifetime(.objectGraph)
     #else
@@ -353,7 +353,7 @@ class DITranquillityTests_Resolve: XCTestCase {
       .lifetime(.objectGraph)
       .injection{ $0.set(b1: $1, b2: $2) }
 
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(CircularDouble2B.init)
         .lifetime(.objectGraph)
     #else
@@ -617,6 +617,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssertEqual(serviceNot?.foo() ?? "", "")
   }
   
+  #if swift(>=4.0)
   func test24_ResolveUseKeyPath() {
     let container = DIContainer()
     
@@ -638,7 +639,7 @@ class DITranquillityTests_Resolve: XCTestCase {
       .injection(cycle: true, \.b1)
       .injection(cycle: true, \.b2)
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(CircularDouble2B.init)
         .lifetime(.prototype)
     #else
@@ -671,6 +672,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     let inject: ManyInject = *container
     XCTAssertEqual(inject.a.count, 2)
   }
+  #endif
   
 }
 

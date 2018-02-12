@@ -125,7 +125,7 @@ class DITranquillityTests_Performance: XCTestCase {
     self.measure {
       let container = DIContainer()
       for i in 0..<2000 {
-        #if swift(>=4.0)
+        #if swift(>=3.2)
           container.register1(line: i, { PerformanceTest(withOne: $0) })
         #else
           container.register(line: i, { PerformanceTest(withOne: $0) })

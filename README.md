@@ -22,6 +22,7 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 * Circular dependencies
 * Three level hierarchy: types, part, framework
 * Short resolve syntax
+* keyPath injection (since swift4.0)
 * Scan Parts/Frameworks
 * Very detail logs
 * Thread safe
@@ -143,7 +144,7 @@ class Home {
 Create your ViewController:
 ```Swift
 class ViewController: UIViewController/NSViewController {
-  var inject: Inject?
+  private(set) var inject: Inject?
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -155,7 +156,7 @@ Create container:
 ```Swift
 let container = DIContainer()
 container.register(ViewController.self)
-  .injection { $0.inject = $1 }
+  .injection(\.inject) // since swift4.0 and 3.2.0 lib
 ```
 Create Storyboard:
 ```Swift

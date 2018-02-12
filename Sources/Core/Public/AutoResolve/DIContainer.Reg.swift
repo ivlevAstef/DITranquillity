@@ -19,7 +19,7 @@ public extension DIContainer {
   ///
   /// - Parameter c: initial method. Must return type declared at registration.
   /// - Returns: component builder, to configure the component.
-  #if swift(>=4.0)
+  #if swift(>=3.2)
   /// swift4 bug: https://bugs.swift.org/browse/SR-5112
   @discardableResult
   public func register1<Impl,P0>(file: String = #file, line: Int = #line, _ c: @escaping (P0) -> Impl) -> DIComponentBuilder<Impl> {

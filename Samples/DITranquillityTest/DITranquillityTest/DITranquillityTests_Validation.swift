@@ -83,7 +83,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     container.register(TestProtocol.self)
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(InjectedClass.init)
     #else
       container.register(InjectedClass.init)
@@ -95,7 +95,7 @@ class DITranquillityTests_Build: XCTestCase {
   func test01_NotSetProtocol() {
     let container = DIContainer()
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(InjectedClass.init)
     #else
       container.register(InjectedClass.init)
@@ -109,7 +109,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     container.register(TestClass1.self)
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(InjectedClass.init)
     #else
       container.register(InjectedClass.init)
@@ -123,7 +123,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     container.register(TestClass1.init)
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(InjectedClass.init)
     #else
       container.register(InjectedClass.init)
@@ -135,7 +135,7 @@ class DITranquillityTests_Build: XCTestCase {
   func test01_RegistrateWithOptional() {
     let container = DIContainer()
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(OptionalInjectedClass.init)
     #else
       container.register(OptionalInjectedClass.init)
@@ -155,7 +155,7 @@ class DITranquillityTests_Build: XCTestCase {
       .as(check: TestProtocol.self){$0}
     
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(InjectedClass.init)
     #else
       container.register(InjectedClass.init)
@@ -175,7 +175,7 @@ class DITranquillityTests_Build: XCTestCase {
       .as(check: TestProtocol.self){$0}
     
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(InjectedClass.init)
     #else
       container.register(InjectedClass.init)
@@ -194,7 +194,7 @@ class DITranquillityTests_Build: XCTestCase {
       .as(check: TestProtocol.self){$0}
     
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(InjectedClass.init)
     #else
       container.register(InjectedClass.init)
@@ -213,7 +213,7 @@ class DITranquillityTests_Build: XCTestCase {
       .as(check: TestProtocol.self){$0}
     
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(InjectedClass.init)
     #else
       container.register(InjectedClass.init)
@@ -224,7 +224,7 @@ class DITranquillityTests_Build: XCTestCase {
   
   func test04_SelfInit() {
     let container = DIContainer()
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(SelfInit.init)
     #else
       container.register(SelfInit.init)
@@ -236,7 +236,7 @@ class DITranquillityTests_Build: XCTestCase {
   func test04_RecursiveTripleInit() {
     let container = DIContainer()
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(RInit1.init)
       container.register1(RInit2.init)
       container.register1(RInit3.init).as(RInit3Protocol.self)
@@ -253,7 +253,7 @@ class DITranquillityTests_Build: XCTestCase {
   func test04_RecursiveTripleInitArray() {
     let container = DIContainer()
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(RInit1.init)
       container.register1(RInit2.init)
       container.register1(RInit3Array.init).as(RInit3Protocol.self)
@@ -269,7 +269,7 @@ class DITranquillityTests_Build: XCTestCase {
   func test04_RecursiveTripleInitArrayWithCorrectLifetime() {
     let container = DIContainer()
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(RInit1.init).lifetime(.objectGraph)
       container.register1(RInit2.init).lifetime(.objectGraph)
       
@@ -288,7 +288,7 @@ class DITranquillityTests_Build: XCTestCase {
   func test05_RecursiveTripleInitInject() {
     let container = DIContainer()
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(RInit1.init).lifetime(.objectGraph)
       container.register1(RInit2.init).lifetime(.objectGraph)
     #else
@@ -306,7 +306,7 @@ class DITranquillityTests_Build: XCTestCase {
   func test05_RecursiveTripleInitInjectIsCycleButLifetime() {
     let container = DIContainer()
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(RInit1.init)
       container.register1(RInit2.init)
     #else
@@ -323,7 +323,7 @@ class DITranquillityTests_Build: XCTestCase {
   func test05_RecursiveTripleInitInjectIsCycle() {
     let container = DIContainer()
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(RInit1.init).lifetime(.objectGraph)
       container.register1(RInit2.init).lifetime(.objectGraph)
     #else
@@ -341,7 +341,7 @@ class DITranquillityTests_Build: XCTestCase {
   func test05_RecursiveTripleInitInjectOptional() {
     let container = DIContainer()
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
       container.register1(RInit1.init).lifetime(.objectGraph)
       container.register1(RInit2.init).lifetime(.objectGraph)
     #else
@@ -359,7 +359,7 @@ class DITranquillityTests_Build: XCTestCase {
   func test06_CycleWithoutInit() {
     let container = DIContainer()
     
-    #if swift(>=4.0)
+    #if swift(>=3.2)
     container.register1(RCycle.init)
       .lifetime(.prototype)
     #else

@@ -199,6 +199,7 @@ public extension DIComponentBuilder {
     return self
   }
   
+  #if swift(>=4.0)
   /// Function for appending an injection method.
   /// Your Can use specified name for get an object.
   ///
@@ -257,6 +258,7 @@ public extension DIComponentBuilder {
     injection(name: name, cycle: cycle, { $0[keyPath: keyPath] = $1 })
     return self
   }
+  #endif
   
   
   /// Function for appending an injection method which is always executed at end of a object creation.

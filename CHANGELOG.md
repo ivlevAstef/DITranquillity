@@ -1,3 +1,7 @@
+# v3.2.0
+* support injection by keyPath for swift4
+* small improve logging - add new log level `.verbose`
+
 # v3.1.3
 * Support multiply using tag and many
 

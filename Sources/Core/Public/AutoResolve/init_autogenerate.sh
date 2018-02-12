@@ -37,7 +37,7 @@ echo "
 
 if [ "$n" == 1 ]; then
   echo "
-  #if swift(>=4.0)  /// swift4 bug: https://bugs.swift.org/browse/SR-5112
+  #if swift(>=3.2)  /// swift4 bug: https://bugs.swift.org/browse/SR-5112
   @discardableResult
   public func register1<Impl,P0>(file: String = #file, line: Int = #line, _ c: @escaping (P0) -> Impl) -> DIComponentBuilder<Impl> {
     return register(file, line, MM.make1([P0.self], by: c))
