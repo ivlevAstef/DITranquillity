@@ -617,5 +617,60 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssertEqual(serviceNot?.foo() ?? "", "")
   }
   
+  func test24_ResolveUseKeyPath() {
+    let container = DIContainer()
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+    
+    container.register(InjectImplicitly.init)
+      .injection(\.service)
+    
+    let inject: InjectImplicitly = *container
+    XCTAssertEqual(inject.service.foo(), "foo")
+  }
+  
+  func test24_ResolveUseKeyPathWithCycle() {
+    let container = DIContainer()
+    
+    container.register(CircularDouble2A.init)
+      .lifetime(.objectGraph)
+      .injection(cycle: true, \.b1)
+      .injection(cycle: true, \.b2)
+    
+    #if swift(>=4.0)
+      container.register1(CircularDouble2B.init)
+        .lifetime(.prototype)
+    #else
+      container.register(CircularDouble2B.init)
+      .lifetime(.prototype)
+    #endif
+    
+    
+    //b1 !== b2 because prototype
+    let a: CircularDouble2A = *container
+    XCTAssert(a.b1 !== a.b2)
+    XCTAssert(a === a.b1.a)
+    XCTAssert(a.b1 === a.b1.a.b1)
+    XCTAssert(a === a.b2.a)
+    XCTAssert(a.b2 === a.b2.a.b2)
+  }
+  
+  func test24_ResolveUseKeyPathAndModificators() {
+    let container = DIContainer()
+    
+    container.register(ManyInject.init)
+      .injection(\ManyInject.a) { many($0) }
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+    
+    container.register(BarService.init)
+      .as(check: ServiceProtocol.self){$0}
+    
+    let inject: ManyInject = *container
+    XCTAssertEqual(inject.a.count, 2)
+  }
+  
 }
 

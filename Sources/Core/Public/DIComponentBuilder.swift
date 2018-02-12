@@ -164,42 +164,19 @@ public extension DIComponentBuilder {
   }
   
   /// Function for appending an injection method.
+  /// Your Can use specified name for get an object.
   ///
   /// Using:
   /// ```
   /// container.register(YourClass.self)
-  ///   .injection{ $0.yourClassProperty = $1 }
-  /// ```
-  /// OR
-  /// ```
-  /// container.register(YourClass.self)
-  ///   .injection{ yourClass, property in yourClass.property = property }
-  /// ```
-  /// OR if the injection participates in a cycle
-  /// ```
-  /// container.register(YourClass.self)
-  ///   .injection(cycle: true) { $0.yourClassProperty = $1 }
-  /// ```
-  ///
-  /// - Parameters:
-  ///   - cycle: true if the injection participates in a cycle. default false.
-  ///   - method: Injection method. First input argument is the always created object.
-  /// - Returns: Self
-  @discardableResult
-  public func injection<Property>(cycle: Bool = false, _ method: @escaping (Impl,Property) -> ()) -> Self {
-    component.append(injection: MethodMaker.make2([UseObject.self, Property.self], by: method), cycle: cycle)
-    return self
-  }
-  
-  /// Function for appending an injection method. But for get an object used a specified name.
-  ///
-  /// Using:
-  /// ```
+  ///   .injection { $0.yourClassProperty = $1 }
   /// container.register(YourClass.self)
   ///   .injection(name: "key") { $0.yourClassProperty = $1 }
   /// ```
   /// OR
   /// ```
+  /// container.register(YourClass.self)
+  ///   .injection { yourClass, property in yourClass.property = property }
   /// container.register(YourClass.self)
   ///   .injection(name: "key") { yourClass, property in yourClass.property = property }
   /// ```
@@ -207,18 +184,80 @@ public extension DIComponentBuilder {
   /// ```
   /// container.register(YourClass.self)
   ///   .injection(name: "key", cycle: true) { $0.yourClassProperty = $1 }
+  /// container.register(YourClass.self)
+  ///   .injection(cycle: true) { $0.yourClassProperty = $1 }
   /// ```
   ///
   /// - Parameters:
-  ///   - name: The specified name, for get an object.
+  ///   - name: The specified name, for get an object. or nil.
   ///   - cycle: true if the injection participates in a cycle. default false.
   ///   - method: Injection method. First input argument is the always created object.
   /// - Returns: Self
   @discardableResult
-  public func injection<Property>(name: String, cycle: Bool = false, _ method: @escaping (Impl,Property) -> ()) -> Self {
+  public func injection<Property>(name: String? = nil, cycle: Bool = false, _ method: @escaping (Impl,Property) -> ()) -> Self {
     component.append(injection: MethodMaker.make2([UseObject.self, Property.self], [nil, name], by: method), cycle: cycle)
     return self
   }
+  
+  /// Function for appending an injection method.
+  /// Your Can use specified name for get an object.
+  ///
+  /// Using:
+  /// ```
+  /// container.register(YourClass.self)
+  ///   .injection(\YourClass.yourClassProperty) { many($0) }
+  /// container.register(YourClass.self)
+  ///   .injection(name: "key", \.yourClassProperty) { by(tag: YourTag.self, on: $0) }
+  /// ```
+  /// OR if the injection participates in a cycle
+  /// ```
+  /// container.register(YourClass.self)
+  ///   .injection(name: "key", cycle: true, \.yourClassProperty) { by(tag: YourTag.self, on: $0) }
+  /// container.register(YourClass.self)
+  ///   .injection(cycle: true, \YourClass.yourClassProperty) { many($0) }
+  /// ```
+  ///
+  /// - Parameters:
+  ///   - name: The specified name, for get an object. or nil.
+  ///   - cycle: true if the injection participates in a cycle. default false.
+  ///   - method: Injection method. First input argument is the always created object.
+  ///   - modificator: Need for support set many / tag on property.
+  /// - Returns: Self
+  @discardableResult
+  public func injection<P, Property>(name: String? = nil, cycle: Bool = false, _ keyPath: ReferenceWritableKeyPath<Impl, P>, _ modificator: @escaping (Property) -> P) -> Self {
+    injection(name: name, cycle: cycle, { $0[keyPath: keyPath] = modificator($1) })
+    return self
+  }
+  
+  /// Function for appending an injection method.
+  /// Your Can use specified name for get an object.
+  ///
+  /// Using:
+  /// ```
+  /// container.register(YourClass.self)
+  ///   .injection(\.yourClassProperty)
+  /// container.register(YourClass.self)
+  ///   .injection(name: "key", \YourClass.yourClassProperty)
+  /// ```
+  /// OR if the injection participates in a cycle
+  /// ```
+  /// container.register(YourClass.self)
+  ///   .injection(name: "key", cycle: true, \YourClass.yourClassProperty)
+  /// container.register(YourClass.self)
+  ///   .injection(cycle: true, \.yourClassProperty)
+  /// ```
+  ///
+  /// - Parameters:
+  ///   - name: The specified name, for get an object. or nil.
+  ///   - cycle: true if the injection participates in a cycle. default false.
+  ///   - method: Injection method. First input argument is the always created object.
+  /// - Returns: Self
+  @discardableResult
+  public func injection<Property>(name: String? = nil, cycle: Bool = false, _ keyPath: ReferenceWritableKeyPath<Impl, Property>) -> Self {
+    injection(name: name, cycle: cycle, { $0[keyPath: keyPath] = $1 })
+    return self
+  }
+  
   
   /// Function for appending an injection method which is always executed at end of a object creation.
   /// Using:

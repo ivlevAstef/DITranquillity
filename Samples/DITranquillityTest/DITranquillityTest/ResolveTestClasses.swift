@@ -137,3 +137,7 @@ class Params {
     self.bool = false
   }
 }
+
+class ManyInject {
+  private(set) var a: [ServiceProtocol]!
+}
