@@ -18,8 +18,8 @@ public struct DISetting {
     /// Logging function. Can be nil. Default is `print("\(logLevel): \(message)")`
     public static var fun: DILogFunc? = { print("\($0): \($1)") }
     
-    /// Minimum level of logging. Default is `warning`
-    public static var level: DILogLevel = .warning
+    /// Minimum level of logging. Default is `info`
+    public static var level: DILogLevel = .info
     
     /// Tabulation for logging. It is necessary to better understand the information log. Default is `  `
     public static var tab: String = String(UnicodeScalar(UInt8(9/*ascii code for tab*/)))

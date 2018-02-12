@@ -12,15 +12,15 @@ class Resolver {
   }
   
   func resolve<T>(type: T.Type = T.self, name: String? = nil, from bundle: Bundle? = nil) -> T {
-    log(.info, msg: "Begin resolve \(description(type: type))", brace: .begin)
-    defer { log(.info, msg: "End resolve \(description(type: type))", brace: .end) }
+    log(.verbose, msg: "Begin resolve \(description(type: type))", brace: .begin)
+    defer { log(.verbose, msg: "End resolve \(description(type: type))", brace: .end) }
     
     return gmake(by: make(by: type, with: name, from: bundle, use: nil))
   }
   
   func injection<T>(obj: T, from bundle: Bundle? = nil) {
-    log(.info, msg: "Begin injection in obj: \(obj)", brace: .begin)
-    defer { log(.info, msg: "End injection in obj: \(obj)", brace: .end) }
+    log(.verbose, msg: "Begin injection in obj: \(obj)", brace: .begin)
+    defer { log(.verbose, msg: "End injection in obj: \(obj)", brace: .end) }
     
     // swift bug - if T is Any then type(of: obj) return always any. - compile optimization?
     _ = make(by: type(of: (obj as Any)), with: nil, from: bundle, use: obj)
@@ -28,15 +28,15 @@ class Resolver {
 
   
   func resolveSingleton(component: Component) {
-    log(.info, msg: "Begin resolve singleton by component: \(component.info)", brace: .begin)
-    defer { log(.info, msg: "End resolve singleton by component: \(component.info)", brace: .end) }
+    log(.verbose, msg: "Begin resolve singleton by component: \(component.info)", brace: .begin)
+    defer { log(.verbose, msg: "End resolve singleton by component: \(component.info)", brace: .end) }
     
     _ = makeObject(by: component, use: nil)
   }
   
   func resolve<T>(type: T.Type = T.self, component: Component) -> T {
-    log(.info, msg: "Begin resolve \(description(type: type)) by component: \(component.info)", brace: .begin)
-    defer { log(.info, msg: "End resolve \(description(type: type)) by component: \(component.info)", brace: .end) }
+    log(.verbose, msg: "Begin resolve \(description(type: type)) by component: \(component.info)", brace: .begin)
+    defer { log(.verbose, msg: "End resolve \(description(type: type)) by component: \(component.info)", brace: .end) }
     
     return gmake(by: makeObject(by: component, use: nil))
   }
@@ -174,7 +174,7 @@ class Resolver {
   
   /// Super function
   private func makeObject(by component: Component, use usingObject: Any?) -> Any? {
-    log(.info, msg: "Found component: \(component.info)")
+    log(.verbose, msg: "Found component: \(component.info)")
     let uniqueKey = component.info
     
     
@@ -212,20 +212,20 @@ class Resolver {
       if let cacheObject = get {
         /// suspending ignore injection for new object
         guard let usingObject = usingObject else {
-          log(.info, msg: "Resolve object: \(cacheObject) from cache \(cacheName)")
+          log(.verbose, msg: "Resolve object: \(cacheObject) from cache \(cacheName)")
           return cacheObject
         }
         
         /// suspending double injection
         if cacheObject as AnyObject === usingObject as AnyObject {
-          log(.info, msg: "Resolve object: \(cacheObject) from cache \(cacheName)")
+          log(.verbose, msg: "Resolve object: \(cacheObject) from cache \(cacheName)")
           return cacheObject
         }
       }
       
       if let makedObject = resolvePrototype() {
         set(makedObject)
-        log(.info, msg: "Add object: \(makedObject) in cache \(cacheName)")
+        log(.verbose, msg: "Add object: \(makedObject) in cache \(cacheName)")
         return makedObject
       }
       
@@ -253,14 +253,14 @@ class Resolver {
     
     func initialObject() -> Any? {
       if let obj = usingObject {
-        log(.info, msg: "Use object: \(obj)")
+        log(.verbose, msg: "Use object: \(obj)")
         return obj
       }
       
       
       if let signature = component.initial {
         let obj = use(signature: signature, usingObject: nil)
-        log(.info, msg: "Create object: \(String(describing: obj))")
+        log(.verbose, msg: "Create object: \(String(describing: obj))")
         return obj
       }
       

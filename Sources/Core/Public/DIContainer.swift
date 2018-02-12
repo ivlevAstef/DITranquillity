@@ -176,8 +176,8 @@ public extension DIContainer {
       return
     }
     
-    log(.info, msg: "Begin resolving \(singleComponents.count) singletons", brace: .begin)
-    defer { log(.info, msg: "End resolving singletons", brace: .end) }
+    log(.verbose, msg: "Begin resolving \(singleComponents.count) singletons", brace: .begin)
+    defer { log(.verbose, msg: "End resolving singletons", brace: .end) }
     
     for component in singleComponents {
       resolver.resolveSingleton(component: component)
@@ -239,7 +239,7 @@ extension DIContainer {
             let infos = candidates.map{ $0.info }
 
             if hasCachedLifetime {
-              log(.warning, msg: "Not found component for \(description(type: parameter.type)) from \(component.info) that would have initialization methods, but object can maked from cache. Were found: \(infos)")
+              log(.info, msg: "Not found component for \(description(type: parameter.type)) from \(component.info) that would have initialization methods, but object can maked from cache. Were found: \(infos)")
             } else {
               plog(parameter, msg: "Not found component for \(description(type: parameter.type)) from \(component.info) that would have initialization methods. Were found: \(infos)")
             }

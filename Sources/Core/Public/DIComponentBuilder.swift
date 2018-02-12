@@ -17,7 +17,7 @@ public final class DIComponentBuilder<Impl> {
   }
   
   deinit {
-    log(.info, msgc: {
+    log(.verbose, msgc: {
       var msg = component.isDefault ? "default " : ""
       msg += "registration: \(component.info)\n"
       msg += "\(DISetting.Log.tab)initial: \(nil != component.initial)\n"

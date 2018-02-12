@@ -40,6 +40,8 @@ internal func log(_ level: DILogLevel, msgc: ()->String, brace: LogBrace = .neut
 extension DILogLevel {
   fileprivate var priority: Int {
     switch self {
+    case .verbose:
+      return 5
     case .info:
       return 10
     case .warning:
@@ -48,6 +50,7 @@ extension DILogLevel {
       return 30
     case .none:
       return 40
+    
     }
   }
 }

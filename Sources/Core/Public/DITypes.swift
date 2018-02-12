@@ -47,8 +47,10 @@ public enum DILogLevel: Equatable {
   case error
   /// Warning should pe paid attention and analyzed
   case warning
-  /// Information is needed to understand what is happening
+  /// Information contains possible errors
   case info
+  /// Verbose is needed to understand what is happening
+  case verbose
 }
   
 
