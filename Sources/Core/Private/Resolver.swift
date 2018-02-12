@@ -177,39 +177,13 @@ class Resolver {
     log(.verbose, msg: "Found component: \(component.info)")
     let uniqueKey = component.info
     
-    
-    func resolveSingle() -> Any? {
-      return makeObject(from: "single",
-                        get: Cache.single[uniqueKey],
-                        set: { Cache.single[uniqueKey] = $0 })
-    }
-    
-    func resolveObjectGraph() -> Any? {
-      return makeObject(from: "objectGraph",
-                        get: cache.graph[uniqueKey],
-                        set: { cache.graph[uniqueKey] = $0 })
-    }
-    
-    func resolvePerContainer() -> Any? {
-      return makeObject(from: "perContainer",
-                        get: cache.perContainer[uniqueKey],
-                        set: { cache.perContainer[uniqueKey] = $0 })
-    }
-    
-    func resolveWeakSingle() -> Any? {
-      for (key, weak) in Cache.weakSingle {
-        if nil == weak.value {
-          Cache.weakSingle.removeValue(forKey: key)
-        }
+    func makeObject(from cacheName: StaticString, use category: DILifeTime.Category, scope: inout Cache.Scope<Any>) -> Any? {
+      var cacheObject: Any? = scope[uniqueKey]
+      if let weakRef = cacheObject as? Weak<Any> {
+        cacheObject = weakRef.value
       }
       
-      return makeObject(from: "weak single",
-                        get: Cache.weakSingle[uniqueKey]?.value,
-                        set: { Cache.weakSingle[uniqueKey] = Weak(value: $0) })
-    }
-    
-    func makeObject(from cacheName: String, get: Any?, set: (Any)->()) -> Any? {
-      if let cacheObject = get {
+      if let cacheObject = cacheObject {
         /// suspending ignore injection for new object
         guard let usingObject = usingObject else {
           log(.verbose, msg: "Resolve object: \(cacheObject) from cache \(cacheName)")
@@ -223,8 +197,8 @@ class Resolver {
         }
       }
       
-      if let makedObject = resolvePrototype() {
-        set(makedObject)
+      if let makedObject = makeObject() {
+        scope[uniqueKey] = (.weak == category) ? Weak(value: makedObject) : makedObject
         log(.verbose, msg: "Add object: \(makedObject) in cache \(cacheName)")
         return makedObject
       }
@@ -232,7 +206,7 @@ class Resolver {
       return nil
     }
     
-    func resolvePrototype() -> Any? {
+    func makeObject() -> Any? {
       guard let initializedObject = initialObject() else {
         return nil
       }
@@ -305,16 +279,20 @@ class Resolver {
       }
       
       switch component.lifeTime {
-      case .single, .lazySingle:
-        return resolveSingle()
-      case .weakSingle:
-        return resolveWeakSingle()
-      case .perContainer:
-        return resolvePerContainer()
+      case .single:
+        return makeObject(from: "single", use: .single, scope: &Cache.perApplication)
+      case .perApplication(let category):
+        return makeObject(from: "per application", use: category, scope: &Cache.perApplication)
+      case .perContainer(let category):
+        return makeObject(from: "per container", use: category, scope: &cache.perContainer)
+      case .perFramework(let category):
+        return makeObject(from: "per framework", use: category, scope: &cache.perFramework[component.framework!, default: [:]])
+      case .perPart(let category):
+        return makeObject(from: "per part", use: category, scope: &cache.perPart[component.part!, default: [:]])
       case .objectGraph:
-        return resolveObjectGraph()
+        return makeObject(from: "object graph", use: .single, scope: &cache.graph)
       case .prototype:
-        return resolvePrototype()
+        return makeObject()
       }
     }
   }
@@ -329,9 +307,11 @@ class Resolver {
   private class Cache {
     fileprivate typealias Scope<T> = [Component.UniqueKey: T]
     
-    fileprivate static var single = Scope<Any>()
-    fileprivate static var weakSingle = Scope<Weak<Any>>()
+    // any can by weak, and object
+    fileprivate static var perApplication = Scope<Any>()
     fileprivate var perContainer = Scope<Any>()
+    fileprivate var perFramework: [ObjectIdentifier/*DIFramework*/: Scope<Any>] = [:]
+    fileprivate var perPart: [ObjectIdentifier/*DIPart*/: Scope<Any>] = [:]
     
     fileprivate var graph = Scope<Any>()
     fileprivate var cycleInjectionStack: [(obj: Any?, injection: Injection)] = []

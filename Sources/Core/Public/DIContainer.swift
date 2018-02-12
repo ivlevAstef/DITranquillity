@@ -44,16 +44,16 @@ public final class DIContainer {
     }
   }
   
-  final class BundleStack {
-    private let key = "ThreadSafeCurrentBundle\(UUID().uuidString)"
+  final class Stack<T> {
+    private let key = "DIContainer_Stack_ThreadSafe\(T.self)\(UUID().uuidString)"
     
-    var bundle: Bundle? { return stack?.last }
+    var last: T? { return stack?.last }
     
-    func push(_ bundle: Bundle) {
+    func push(_ element: T) {
       if let stack = self.stack {
-        self.stack = stack + [bundle]
+        self.stack = stack + [element]
       } else {
-        self.stack = [bundle]
+        self.stack = [element]
       }
     }
     
@@ -63,14 +63,16 @@ public final class DIContainer {
       }
     }
     
-    private var stack: [Bundle]? {
+    private var stack: [T]? {
       set { return Thread.current.threadDictionary[key] = newValue }
-      get { return Thread.current.threadDictionary[key] as? [Bundle] }
+      get { return Thread.current.threadDictionary[key] as? [T] }
     }
   }
   
   internal let includedParts = IncludedParts()
-  internal let bundleStack = BundleStack()
+  internal let bundleStack = Stack<Bundle>()
+  internal let partStack = Stack<ObjectIdentifier>()
+  internal let frameworkStack = Stack<ObjectIdentifier>()
 }
 
 // MARK: - register
@@ -215,6 +217,15 @@ extension DIContainer {
     var successfull: Bool = true
     
     for component in components {
+      if case .perPart(_) = component.lifeTime, nil == component.part {
+        log(.error, msg: "Not found part for \(component.info). Use lifetime `perPart` only for components into part")
+        successfull = false
+      }
+      if case .perFramework(_) = component.lifeTime, nil == component.framework {
+        log(.error, msg: "Not found framework for \(component.info). Use lifetime `perFramework` only for components into framework")
+        successfull = false
+      }
+      
       let parameters = component.signatures.flatMap{ $0.parameters }
       let bundle = component.bundle
       

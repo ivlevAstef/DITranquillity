@@ -25,7 +25,11 @@ public extension DIContainer {
   /// - Parameters:
   ///   - path: the part type
   public func append(part: DIPart.Type) {
-    if includedParts.checkAndInsert(ObjectIdentifier(part)) {
+    let partId = ObjectIdentifier(part)
+    if includedParts.checkAndInsert(partId) {
+      partStack.push(partId)
+      defer { partStack.pop() }
+      
       part.load(container: self)
     }
   }

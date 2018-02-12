@@ -11,7 +11,8 @@
 /// The class allows you to configure all the necessary properties for the component.
 public final class DIComponentBuilder<Impl> {
   init(container: DIContainer, componentInfo: DIComponentInfo) {
-    self.component = Component(componentInfo: componentInfo, in: container.bundleStack.bundle)
+    self.component = Component(componentInfo: componentInfo,
+                               in: container.bundleStack.last, container.frameworkStack.last, container.partStack.last)
     self.componentContainer = container.componentContainer
     componentContainer.insert(TypeKey(by: Impl.self), component)
   }
@@ -199,7 +200,7 @@ public extension DIComponentBuilder {
     return self
   }
   
-  #if swift(>=4.0)
+  
   /// Function for appending an injection method.
   /// Your Can use specified name for get an object.
   ///
@@ -225,6 +226,7 @@ public extension DIComponentBuilder {
   ///   - modificator: Need for support set many / tag on property.
   /// - Returns: Self
   @discardableResult
+  @available(swift 4.0)
   public func injection<P, Property>(name: String? = nil, cycle: Bool = false, _ keyPath: ReferenceWritableKeyPath<Impl, P>, _ modificator: @escaping (Property) -> P) -> Self {
     injection(name: name, cycle: cycle, { $0[keyPath: keyPath] = modificator($1) })
     return self
@@ -254,11 +256,11 @@ public extension DIComponentBuilder {
   ///   - method: Injection method. First input argument is the always created object.
   /// - Returns: Self
   @discardableResult
+  @available(swift 4.0)
   public func injection<Property>(name: String? = nil, cycle: Bool = false, _ keyPath: ReferenceWritableKeyPath<Impl, Property>) -> Self {
     injection(name: name, cycle: cycle, { $0[keyPath: keyPath] = $1 })
     return self
   }
-  #endif
   
   
   /// Function for appending an injection method which is always executed at end of a object creation.

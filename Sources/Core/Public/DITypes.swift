@@ -52,18 +52,27 @@ public enum DILogLevel: Equatable {
   /// Verbose is needed to understand what is happening
   case verbose
 }
-  
+
 
 /// A object life time
 public enum DILifeTime: Equatable {
+  public enum Category {
+    /// Initialization when first accessed, and the library doesn't hold it
+    case weak
+    /// Initialization when first accessed
+    case single
+  }
+  
   /// The object is only one in the application. Initialization by call `DIContainer.initializeSingletonObjects()`
   case single
-  /// The object is only one in the application. Initialization when first accessed
-  case lazySingle
-  /// The object is only one in the application. Initialization when first accessed, and the library doesn't hold it
-  case weakSingle
-  /// The object is only one in one container. Initialization when first accessed
-  case perContainer
+  /// The object is only one in the application.
+  case perApplication(Category)
+  /// The object is only one in one container.
+  case perContainer(Category)
+  /// The object is only one in one container, and one inside framework
+  case perFramework(Category)
+  /// The object is only one fin one container, and one inside part
+  case perPart(Category)
   /// The object is created every time, but during the creation will be created once
   case objectGraph
   /// The object is created every time
@@ -71,4 +80,29 @@ public enum DILifeTime: Equatable {
   
   /// Default life time. Is taken from the settings. see: `DISetting.Defaults.lifeTime`
   static var `default`: DILifeTime { return DISetting.Defaults.lifeTime }
+  
+  @available(*, deprecated, message: "use `.perApplication(.single)`")
+  public static var lazySingle: DILifeTime { return .perApplication(.single) }
+  
+  @available(*, deprecated, message: "use `.perApplication(.weak)`")
+  public static var weakSingle: DILifeTime { return .perApplication(.weak) }
+  
+  public static func ==(_ lhs: DILifeTime, rhs: DILifeTime) -> Bool {
+    switch (lhs, rhs) {
+    case (.single, .single),
+         (.objectGraph, .objectGraph),
+         (.prototype, .prototype):
+      return true
+    case (.perApplication(let subLhs), .perApplication(let subRhs)):
+      return subLhs == subRhs
+    case (.perContainer(let subLhs), .perContainer(let subRhs)):
+      return subLhs == subRhs
+    case (.perFramework(let subLhs), .perFramework(let subRhs)):
+      return subLhs == subRhs
+    case (.perPart(let subLhs), .perPart(let subRhs)):
+      return subLhs == subRhs
+    default:
+      return false
+    }
+  }
 }
