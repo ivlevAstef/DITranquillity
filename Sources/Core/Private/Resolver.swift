@@ -129,7 +129,7 @@ class Resolver {
   }
   
   func clean() {
-    mutex.sync { cache.perContainer.removeAll() }
+    mutex.sync { cache.perContainer.data.removeAll() }
   }
   
   func clean(framework: ObjectIdentifier) {
@@ -180,8 +180,8 @@ class Resolver {
     log(.verbose, msg: "Found component: \(component.info)")
     let uniqueKey = component.info
     
-    func makeObject(from cacheName: StaticString, use category: DILifeTime.Category, scope: inout Cache.Scope<Any>) -> Any? {
-      var cacheObject: Any? = scope[uniqueKey]
+    func makeObject(from cacheName: StaticString, use category: DILifeTime.Category, scope: Cache.Scope) -> Any? {
+      var cacheObject: Any? = scope.data[uniqueKey]
       if let weakRef = cacheObject as? Weak<Any> {
         cacheObject = weakRef.value
       }
@@ -201,7 +201,7 @@ class Resolver {
       }
       
       if let makedObject = makeObject() {
-        scope[uniqueKey] = (.weak == category) ? Weak(value: makedObject) : makedObject
+        scope.data[uniqueKey] = (.weak == category) ? Weak(value: makedObject) : makedObject
         log(.verbose, msg: "Add object: \(makedObject) in cache \(cacheName)")
         return makedObject
       }
@@ -252,7 +252,7 @@ class Resolver {
         _ = use(signature: data.injection.signature, usingObject: data.obj)
       }
       
-      cache.graph.removeAll()
+      cache.graph.data.removeAll()
     }
     
     func use(signature: MethodSignature, usingObject: Any?) -> Any? {
@@ -287,17 +287,21 @@ class Resolver {
       
       switch component.lifeTime {
       case .single:
-        return makeObject(from: "single", use: .single, scope: &Cache.perApplication)
+        return makeObject(from: "single", use: .single, scope: Cache.perApplication)
       case .perApplication(let category):
-        return makeObject(from: "per application", use: category, scope: &Cache.perApplication)
+        return makeObject(from: "per application", use: category, scope: Cache.perApplication)
       case .perContainer(let category):
-        return makeObject(from: "per container", use: category, scope: &cache.perContainer)
+        return makeObject(from: "per container", use: category, scope: cache.perContainer)
       case .perFramework(let category):
-        return makeObject(from: "per framework", use: category, scope: &cache.perFramework[component.framework!, default: [:]])
+        let cacheFramework = cache.perFramework[component.framework!] ?? Cache.Scope()
+        cache.perFramework[component.framework!] = cacheFramework
+        return makeObject(from: "per framework", use: category, scope: cacheFramework)
       case .perPart(let category):
-        return makeObject(from: "per part", use: category, scope: &cache.perPart[component.part!, default: [:]])
+        let cachePart = cache.perPart[component.part!] ?? Cache.Scope()
+        cache.perPart[component.part!] = cachePart
+        return makeObject(from: "per part", use: category, scope: cachePart)
       case .objectGraph:
-        return makeObject(from: "object graph", use: .single, scope: &cache.graph)
+        return makeObject(from: "object graph", use: .single, scope: cache.graph)
       case .prototype:
         return makeObject()
       }
@@ -312,15 +316,18 @@ class Resolver {
   private var stack: ContiguousArray<Component.UniqueKey> = []
   
   private class Cache {
-    fileprivate typealias Scope<T> = [Component.UniqueKey: T]
+    // need class for reference type
+    fileprivate class Scope {
+      var data: [Component.UniqueKey: Any] = [:]
+    }
     
     // any can by weak, and object
-    fileprivate static var perApplication = Scope<Any>()
-    fileprivate var perContainer = Scope<Any>()
-    fileprivate var perFramework: [ObjectIdentifier/*DIFramework*/: Scope<Any>] = [:]
-    fileprivate var perPart: [ObjectIdentifier/*DIPart*/: Scope<Any>] = [:]
+    fileprivate static var perApplication = Scope()
+    fileprivate var perContainer = Scope()
+    fileprivate var perFramework: [ObjectIdentifier/*DIFramework*/: Scope] = [:]
+    fileprivate var perPart: [ObjectIdentifier/*DIPart*/: Scope] = [:]
     
-    fileprivate var graph = Scope<Any>()
+    fileprivate var graph = Scope()
     fileprivate var cycleInjectionStack: ContiguousArray<(obj: Any?, injection: Injection)> = []
   }
 }

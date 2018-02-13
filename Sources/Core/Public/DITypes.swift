@@ -59,7 +59,7 @@ public enum DILifeTime: Equatable {
   public enum Category {
     /// Initialization when first accessed, and the library doesn't hold it
     case weak
-    /// Initialization when first accessed
+    /// Initialization when first accessed, and the library hold it
     case single
   }
   

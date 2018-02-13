@@ -409,9 +409,9 @@ class DITranquillityTests_Resolve: XCTestCase {
     let container2 = DIContainer()
     
     container1.register(FooService.init)
-      .lifetime(.perContainer)
+      .lifetime(.perContainer(.single))
     container2.register(FooService.init)
-      .lifetime(.perContainer)
+      .lifetime(.perContainer(.single))
     
     
     let service1_1: FooService = *container1
@@ -437,7 +437,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     func register(use container: DIContainer) {
       container.register(FooService.init)
-        .lifetime(.perContainer)
+        .lifetime(.perContainer(.single))
     }
     
     register(use: container1)

@@ -320,7 +320,7 @@ extension DIContainer {
           
           let containsPrototype = stack.contains{ $0.component.lifeTime == .prototype }
           if containsPrototype {
-            log(.warning, msg: "You cycle: \(short) contains an object with lifetime - prototype. In some cases this can lead to an udesirable effect.  Full: \(infos)")
+            log(.info, msg: "You cycle: \(short) contains an object with lifetime - prototype. In some cases this can lead to an udesirable effect.  Full: \(infos)")
           }
           
           return true

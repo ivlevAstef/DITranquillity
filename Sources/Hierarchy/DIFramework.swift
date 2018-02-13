@@ -38,7 +38,9 @@ public extension DIContainer {
   ///
   /// - Parameters:
   ///   - framework: the framework type
-  public func append(framework: DIFramework.Type) {
+  /// - Returns: self
+  @discardableResult
+  public func append(framework: DIFramework.Type) -> DIContainer {
     if let bundle = bundleStack.last {
       bundleContainer.dependency(bundle: bundle, import: framework.bundle)
     }
@@ -50,6 +52,8 @@ public extension DIContainer {
       
       framework.load(container: self)
     }
+
+    return self
   }
 }
 
