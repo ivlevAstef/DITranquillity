@@ -64,3 +64,7 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 Cartfile.resolved
+Samples/CompareSpeedSwinjectVSTranquillity/Pods
+Podfile.lock
+Samples/CompareSpeedSwinjectVSTranquillity/CompareSpeedSwinjectVSTranquillity.xcodeproj/project.xcworkspace
+Samples/CompareSpeedSwinjectVSTranquillity/CompareSpeedSwinjectVSTranquillity.xcworkspace

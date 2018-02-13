@@ -42,8 +42,12 @@ class PerformanceTest {
   var parameter2: PerformanceParameter4!
 }
 
-private let TestsCount = 100
-private let ResolveCount = 1000
+private let TestsCount = 50
+private let ResolveCount = 600
+/// iPhone 5s
+/// Tranquillity time: 11.087498541
+/// Swinject time: 17.270102625
+/// SwinjectAutoRegistration time: 18.008223375
 
 
 @UIApplicationMain
@@ -101,9 +105,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     container.register(Ref4.init).lifetime(.prototype)
     container.register(Ref4_2.init).lifetime(.prototype)
     
+    #if swift(>=3.2)
+    container.register1(PerformanceParameter1.init)
+      .injection { $0.property = $1 }
+      .lifetime(.prototype)
+    #else
     container.register(PerformanceParameter1.init)
       .injection { $0.property = $1 }
       .lifetime(.prototype)
+    #endif
     
     container.register(PerformanceParameter2.init)
       .lifetime(.prototype)

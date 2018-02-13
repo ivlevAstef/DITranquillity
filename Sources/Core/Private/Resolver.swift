@@ -48,13 +48,13 @@ class Resolver {
   ///   - name: a name
   ///   - bundle: bundle from whic the call is made
   /// - Returns: components
-  func findComponents(by type: DIAType, with name: String?, from bundle: Bundle?) -> [Component] {
-    func defaults(_ components: [Component]) -> [Component] {
-      let filtering = components.filter{ $0.isDefault }
+  func findComponents(by type: DIAType, with name: String?, from bundle: Bundle?) -> Components {
+    func defaults(_ components: Components) -> Components {
+      let filtering = ContiguousArray(components.filter{ $0.isDefault })
       return filtering.isEmpty ? components : filtering
     }
     
-    func filter(by bundle: Bundle?, _ components: [Component]) -> [Component] {
+    func filter(by bundle: Bundle?, _ components: Components) -> Components {
       if components.count <= 1 {
         return components
       }
@@ -62,9 +62,9 @@ class Resolver {
       /// check into self bundle
       if let bundle = bundle {
         /// get all components in bundle
-        let filteredByBundle = components.filter{ $0.bundle.map{ bundle == $0 } ?? false }
+        let filteredByBundle = ContiguousArray(components.filter{ $0.bundle.map{ bundle == $0 } ?? false })
         
-        func componentsIsNeedReturn(_ components: [Component]) -> [Component]? {
+        func componentsIsNeedReturn(_ components: Components) -> Components? {
           let filtered = defaults(components)
           return 1 == filtered.count ? filtered : nil
         }
@@ -75,7 +75,7 @@ class Resolver {
         
         /// get direct dependencies
         let childs = container.bundleContainer.childs(for: bundle)
-        let filteredByChilds = components.filter{ $0.bundle.map{ childs.contains($0) } ?? false }
+        let filteredByChilds = ContiguousArray(components.filter{ $0.bundle.map{ childs.contains($0) } ?? false })
         
         if let components = componentsIsNeedReturn(filteredByChilds) {
           return components
@@ -84,73 +84,76 @@ class Resolver {
       
       return defaults(components)
     }
-		
-		/// real type without many, tags, optional
-		let simpleType = removeTypeWrappersFully(type)
-		var type: DIAType = removeTypeWrappers(type)
-		var components: Set<Component> = []
-		var first: Bool = true
-		var filterByBundle: Bool = true
-		
-		repeat {
-			let currentComponents = { () -> Set<Component> in
-				if let manyType = type as? IsMany.Type {
-					filterByBundle = filterByBundle && manyType.inBundle
-					return container.componentContainer[ShortTypeKey(by: simpleType)]
-				}
-				
-				if let taggedType = type as? IsTag.Type {
-					return container.componentContainer[TypeKey(by: simpleType, tag: taggedType.tag)]
-				}
-				
-				if let name = name {
-					return container.componentContainer[TypeKey(by: simpleType, name: name)]
-				}
-				return container.componentContainer[TypeKey(by: simpleType)]
-			}()
-			
-			/// it's not equals components.isEmpty !!!
-			components = first ? currentComponents : components.intersection(currentComponents)
-			first = false
-			
-			/// iteration
-			if let manyType = type as? IsMany.Type {
-				type = removeTypeWrappers(manyType.type)
-			} else if let taggedType = type as? IsTag.Type {
-				type = removeTypeWrappers(taggedType.type)
-			}
-			
-		} while ObjectIdentifier(type) != ObjectIdentifier(simpleType)
-		
-		if filterByBundle {
-			return filter(by: bundle, Array(components))
-		}
-		
-		return Array(components)
+    
+    /// real type without many, tags, optional
+    var type: DIAType = removeTypeWrappers(type)
+    let simpleType: DIAType = removeTypeWrappersFully(type)
+    var components: Set<Component> = []
+    var filterByBundle: Bool = true
+    
+    var first: Bool = true
+    repeat {
+      let currentComponents: Set<Component>
+      if let manyType = type as? IsMany.Type {
+        currentComponents = container.componentContainer[ShortTypeKey(by: simpleType)]
+        filterByBundle = filterByBundle && manyType.inBundle /// filter
+        type = removeTypeWrappers(manyType.type) /// iteration
+      } else if let taggedType = type as? IsTag.Type {
+        currentComponents = container.componentContainer[TypeKey(by: simpleType, tag: taggedType.tag)]
+        type = removeTypeWrappers(taggedType.type) /// iteration
+      } else if let name = name {
+        currentComponents = container.componentContainer[TypeKey(by: simpleType, name: name)]
+      } else {
+        currentComponents = container.componentContainer[TypeKey(by: simpleType)]
+      }
+      
+      /// it's not equals components.isEmpty !!!
+      components = first ? currentComponents : components.intersection(currentComponents)
+      first = false
+      
+    } while ObjectIdentifier(type) != ObjectIdentifier(simpleType)
+    
+    if filterByBundle {
+      return filter(by: bundle, Components(components))
+    }
+    
+    return Components(components)
   }
   
   /// Remove components who doesn't have initialization method
   ///
   /// - Parameter components: Components from which will be removed
   /// - Returns: components Having a initialization method
-  func removeWhoDoesNotHaveInitialMethod(components: [Component]) -> [Component] {
-    return components.filter { nil != $0.initial }
+  func removeWhoDoesNotHaveInitialMethod(components: Components) -> Components {
+    return Components(components.filter { nil != $0.initial })
+  }
+  
+  func clean() {
+    mutex.sync { cache.perContainer.removeAll() }
+  }
+  
+  func clean(framework: ObjectIdentifier) {
+    mutex.sync { cache.perFramework[framework] = nil }
+  }
+  
+  func clean(part: ObjectIdentifier) {
+    mutex.sync { cache.perPart[part] = nil }
   }
   
   private func make(by type: DIAType, with name: String?, from bundle: Bundle?, use object: Any?) -> Any? {
     let components = findComponents(by: type, with: name, from: bundle)
-		let hasMany: Bool = {
-			var type = removeTypeWrappers(type)
-			while true {
-				if let taggedType = type as? IsTag.Type {
-					type = removeTypeWrappers(taggedType.type)
-					continue
-				}
-				
-				return type is IsMany.Type
-			}
-		}()
-		
+    let hasMany: Bool = {
+      var type = removeTypeWrappers(type)
+      while true {
+        if let taggedType = type as? IsTag.Type {
+          type = removeTypeWrappers(taggedType.type)
+          continue
+        }
+        
+        return type is IsMany.Type
+      }
+    }()
+    
     if hasMany {
       let filterComponents = components.filter{ !stack.contains($0.info) } // Remove objects contains in stack
       assert(nil == object, "Many injection not supported")
@@ -211,11 +214,12 @@ class Resolver {
         return nil
       }
       
-      let cycleInjections = component.injections.filter{ $0.cycle }
-      cache.cycleInjectionStack.append(contentsOf: cycleInjections.map{ (initializedObject, $0) })
-      
-      for injection in component.injections.filter({ !$0.cycle }) {
-        _ = use(signature: injection.signature, usingObject: initializedObject)
+      for injection in component.injections {
+        if injection.cycle {
+          cache.cycleInjectionStack.append((initializedObject, injection))
+        } else {
+          _ = use(signature: injection.signature, usingObject: initializedObject)
+        }
       }
       
       if let signature = component.postInit {
@@ -252,21 +256,24 @@ class Resolver {
     }
     
     func use(signature: MethodSignature, usingObject: Any?) -> Any? {
-      var objects: [Any?] = []
+      var objParameters: [Any?] = []
       for parameter in signature.parameters {
-        let makedObject = parameter.type is UseObject.Type ?
-          usingObject :
-          make(by: parameter.type, with: parameter.name, from: component.bundle, use: nil)
+        let makedObject: Any?
+        if parameter.type is UseObject.Type {
+          makedObject = usingObject
+        } else {
+          makedObject = make(by: parameter.type, with: parameter.name, from: component.bundle, use: nil)
+        }
         
         if nil != makedObject || parameter.optional {
-          objects.append(makedObject)
+          objParameters.append(makedObject)
           continue
         }
         
         return nil
       }
       
-      return signature.call(objects)
+      return signature.call(objParameters)
     }
     
     return mutex.sync {
@@ -302,7 +309,7 @@ class Resolver {
   private let mutex = PThreadMutex(recursive: ())
   
   private let cache = Cache()
-  private var stack: [Component.UniqueKey] = []
+  private var stack: ContiguousArray<Component.UniqueKey> = []
   
   private class Cache {
     fileprivate typealias Scope<T> = [Component.UniqueKey: T]
@@ -314,7 +321,7 @@ class Resolver {
     fileprivate var perPart: [ObjectIdentifier/*DIPart*/: Scope<Any>] = [:]
     
     fileprivate var graph = Scope<Any>()
-    fileprivate var cycleInjectionStack: [(obj: Any?, injection: Injection)] = []
+    fileprivate var cycleInjectionStack: ContiguousArray<(obj: Any?, injection: Injection)> = []
   }
 }
 

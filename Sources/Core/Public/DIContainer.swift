@@ -187,15 +187,34 @@ public extension DIContainer {
   }
 }
 
+// MARK: - Clean
+public extension DIContainer {
+  /// Remove all cached object in container with lifetime `perContainer(_)`
+  public func clean() {
+    resolver.clean()
+  }
+  
+  /// Remove all cached object in container by framework with lifetime `perFramework(_)`
+  public func clean(framework: DIFramework.Type) {
+    resolver.clean(framework: ObjectIdentifier(framework))
+  }
+  
+  /// Remove all cached object in container by part with lifetime `perPart(_)`
+  public func clean(part: DIPart.Type) {
+    resolver.clean(part: ObjectIdentifier(part))
+  }
+}
+
+
 // MARK: - Validation
 public extension DIContainer {
   
   /// Validate the graph by checking various conditions. For faster performance, set false.
-	///
-	/// - Parameter checkGraphCycles: check cycles in the graph of heavy operation. So it can be disabled
+  ///
+  /// - Parameter checkGraphCycles: check cycles in the graph of heavy operation. So it can be disabled
   /// - Returns: true if validation success.
   @discardableResult
-	public func validate(checkGraphCycles isCheckGraphCycles: Bool = true) -> Bool {
+  public func validate(checkGraphCycles isCheckGraphCycles: Bool = true) -> Bool {
     let components = componentContainer.components
     return checkGraph(components) && (!isCheckGraphCycles || checkGraphCycles(components))
   }
@@ -261,10 +280,10 @@ extension DIContainer {
         }
       }
     }
-		
+
     return successfull
   }
-	
+
   fileprivate func checkGraphCycles(_ components: [Component]) -> Bool {
     var success: Bool = true
     

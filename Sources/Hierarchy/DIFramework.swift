@@ -11,12 +11,12 @@
 /// It isn't necessary to create several such classses on one framework - it willn't be convenient.
 public protocol DIFramework: class {
   /// bundle which is a framework. Default picks based on where the class.
-	/// But if the framework is statically link, it can be a problem, as all classes will be in the main bundle.
-	/// To obtain the bundle name framework, used:
-	/// ```
-	/// Bundle(path: Bundle.main.privateFrameworksPath! + "/" + {FRAMEWORK_NAME} + ".framework")
-	/// ```
-	/// This is the unsafe code, but you can rewrite it.
+  /// But if the framework is statically link, it can be a problem, as all classes will be in the main bundle.
+  /// To obtain the bundle name framework, used:
+  /// ```
+  /// Bundle(path: Bundle.main.privateFrameworksPath! + "/" + {FRAMEWORK_NAME} + ".framework")
+  /// ```
+  /// This is the unsafe code, but you can rewrite it.
   static var bundle: Bundle { get }
 
   /// Method inside of which you can registration a components.

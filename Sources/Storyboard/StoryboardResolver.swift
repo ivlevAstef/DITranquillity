@@ -21,31 +21,31 @@ final class StoryboardResolver {
   }
 
   #if os(iOS) || os(tvOS)
-	
+
   func inject(into viewController: UIViewController) {
     self.container.inject(into: viewController, from: bundle)
-	
+
     for childVC in viewController.childViewControllers {
       inject(into: childVC)
     }
   }
-	
+
   #elseif os(OSX)
-	
+
   func inject(into viewController: Any) {
     self.container.inject(into: viewController, from: bundle)
 
     if let windowController = viewController as? NSWindowController, let viewController = windowController.contentViewController {
       inject(into: viewController)
     }
-		
+
     if let nsViewController = viewController as? NSViewController {
       for childVC in nsViewController.childViewControllers {
         inject(into: childVC)
       }
     }
   }
-	
+
   #endif
 
   private let container: DIContainer

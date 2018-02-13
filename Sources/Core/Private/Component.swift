@@ -91,3 +91,4 @@ extension Component {
   }
 }
 
+typealias Components = ContiguousArray<Component>
