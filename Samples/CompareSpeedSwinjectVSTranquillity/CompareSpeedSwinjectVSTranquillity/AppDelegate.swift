@@ -42,55 +42,71 @@ class PerformanceTest {
   var parameter2: PerformanceParameter4!
 }
 
-private let TestsCount = 50
-private let ResolveCount = 600
-/// iPhone 5s
-/// Tranquillity time: 11.087498541
-/// Swinject time: 17.270102625
-/// SwinjectAutoRegistration time: 18.008223375
+private let TestsCount = 200
+private let ResolveCount = 1000
+private let useAsync = false
+/// iPhone 5s, release (tests = 50, resolve = 600, async = false)
+/// Tranquillity time: 9.2 (around)
+/// Swinject time: 17.2 (around)
+/// SwinjectAutoRegistration time: 17.9 (around)
 
+/// iPhoneX simulator, release (tests = 100, resolve = 1000, async = false) on 4x3,24 GHz
+/// Tranquillity time: 5.2
+/// Swinject time: 18.0
+/// SwinjectAutoRegistration time: 14.8
+
+/// iPhoneX simulator, release (tests = 100, resolve = 1000, async = true) on 4x3,24 GHz
+/// Tranquillity: Ok
+/// Swinject: Crash (not always, but often)
+/// """
+/// Swinject: Resolution failed. Expected registration:
+/// { Service: Ref3_inject2, Factory: (Resolver) -> Ref3_inject2 }
+/// Available registrations:
+/// { Service: Ref3_inject2, Factory: (Resolver) -> Ref3_inject2, ObjectScope: transient }
+/// """
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    DISetting.Log.fun = nil // disable logs
     
-    DISetting.Log.fun = nil
-    
-    var start = DispatchTime.now()
-    var end = DispatchTime.now()
-    
-    print("Swinject Start")
-    start = DispatchTime.now()
-    for _ in 0..<TestsCount {
-      useSwinject()
+    DispatchQueue.main.async {
+      var start = DispatchTime.now()
+      var end = DispatchTime.now()
+      
+      print("Swinject Start")
+      start = DispatchTime.now()
+      for _ in 0..<TestsCount {
+        self.useSwinject()
+      }
+      end = DispatchTime.now()
+      let time2 = Double(end.uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000_000.0
+      print("Swinject End")
+      
+      print("Tranquillity Start")
+      start = DispatchTime.now()
+      for _ in 0..<TestsCount {
+        self.useTranquillity()
+      }
+      end = DispatchTime.now()
+      let time1 = Double(end.uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000_000.0
+      print("Tranquillity End")
+      
+      print("SwinjectAuto Start")
+      start = DispatchTime.now()
+      for _ in 0..<TestsCount {
+        self.useSwinjectAuto()
+      }
+      end = DispatchTime.now()
+      let time3 = Double(end.uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000_000.0
+      print("SwinjectAuto End")
+   
+      
+      print("Tranquillity time: \(time1)")
+      print("Swinject time: \(time2)")
+      print("SwinjectAutoRegistration time: \(time3)")
     }
-    end = DispatchTime.now()
-    let time2 = Double(end.uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000_000.0
-    print("Swinject End")
-    
-    print("Tranquillity Start")
-    start = DispatchTime.now()
-    for _ in 0..<TestsCount {
-      useTranquillity()
-    }
-    end = DispatchTime.now()
-    let time1 = Double(end.uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000_000.0
-    print("Tranquillity End")
-    
-    print("SwinjectAuto Start")
-    start = DispatchTime.now()
-    for _ in 0..<TestsCount {
-      useSwinjectAuto()
-    }
-    end = DispatchTime.now()
-    let time3 = Double(end.uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000_000.0
-    print("SwinjectAuto End")
- 
-    
-    print("Tranquillity time: \(time1)")
-    print("Swinject time: \(time2)")
-    print("SwinjectAutoRegistration time: \(time3)")
     
     return true
   }
@@ -131,14 +147,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       .injection { $0.parameter2 = $1 }
       .lifetime(.prototype)
     
-    moreTranquillity(container: container)
     
-    for _ in 0..<ResolveCount {
-      _ = container.resolve() as PerformanceTest
-      _ = container.resolve() as PerformanceParameter1
-      _ = container.resolve() as PerformanceParameter3
+    if useAsync {
+      let group = DispatchGroup()
+      
+      DispatchQueue.global(qos: .userInteractive).async(group: group) {
+        moreTranquillity(container: container)
+      }
+      
+      DispatchQueue.global(qos: .userInitiated).async(group: group) {
+        for _ in 0..<ResolveCount {
+          _ = container.resolve() as PerformanceTest
+        }
+      }
+      
+      DispatchQueue.global(qos: .userInteractive).async(group: group) {
+        for _ in 0..<ResolveCount {
+          _ = container.resolve() as PerformanceParameter1
+        }
+      }
+      
+      DispatchQueue.global(qos: .utility).async(group: group) {
+        for _ in 0..<ResolveCount {
+          _ = container.resolve() as PerformanceParameter3
+        }
+      }
+      
+      group.wait()
+    } else {
+      moreTranquillity(container: container)
+      for _ in 0..<ResolveCount {
+        _ = container.resolve() as PerformanceTest
+        _ = container.resolve() as PerformanceParameter1
+        _ = container.resolve() as PerformanceParameter3
+      }
     }
-    
   }
   
   private func useSwinject() {
@@ -179,12 +222,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       return obj
     }.inObjectScope(.transient)
     
-    moreSwinject(container: container)
     
-    for _ in 0..<ResolveCount {
-      _ = container.resolve(PerformanceTest.self)!
-      _ = container.resolve(PerformanceParameter1.self)!
-      _ = container.resolve(PerformanceParameter3.self)!
+    if useAsync {
+      let group = DispatchGroup()
+      
+      DispatchQueue.global(qos: .userInteractive).async(group: group) {
+        moreSwinject(container: container)
+      }
+      
+      DispatchQueue.global(qos: .userInitiated).async(group: group) {
+        for _ in 0..<ResolveCount {
+          _ = container.resolve(PerformanceTest.self)!
+        }
+      }
+      
+      DispatchQueue.global(qos: .userInteractive).async(group: group) {
+        for _ in 0..<ResolveCount {
+          _ = container.resolve(PerformanceParameter1.self)!
+        }
+      }
+      
+      DispatchQueue.global(qos: .utility).async(group: group) {
+        for _ in 0..<ResolveCount {
+          _ = container.resolve(PerformanceParameter3.self)!
+        }
+      }
+      
+      group.wait()
+    } else {
+      moreSwinject(container: container)
+      for _ in 0..<ResolveCount {
+        _ = container.resolve(PerformanceTest.self)!
+        _ = container.resolve(PerformanceParameter1.self)!
+        _ = container.resolve(PerformanceParameter3.self)!
+      }
     }
   }
   
@@ -222,12 +293,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       }
       .inObjectScope(.transient)
     
-    moreAutoSwinject(container: container)
-    
-    for _ in 0..<ResolveCount {
-      _ = container.resolve(PerformanceTest.self)!
-      _ = container.resolve(PerformanceParameter1.self)!
-      _ = container.resolve(PerformanceParameter3.self)!
+    if useAsync {
+      let group = DispatchGroup()
+      
+      DispatchQueue.global(qos: .userInteractive).async(group: group) {
+        moreAutoSwinject(container: container)
+      }
+      
+      DispatchQueue.global(qos: .userInitiated).async(group: group) {
+        for _ in 0..<ResolveCount {
+          _ = container.resolve(PerformanceTest.self)!
+        }
+      }
+      
+      DispatchQueue.global(qos: .userInteractive).async(group: group) {
+        for _ in 0..<ResolveCount {
+          _ = container.resolve(PerformanceParameter1.self)!
+        }
+      }
+      
+      DispatchQueue.global(qos: .utility).async(group: group) {
+        for _ in 0..<ResolveCount {
+          _ = container.resolve(PerformanceParameter3.self)!
+        }
+      }
+      
+      group.wait()
+    } else {
+      moreAutoSwinject(container: container)
+      for _ in 0..<ResolveCount {
+        _ = container.resolve(PerformanceTest.self)!
+        _ = container.resolve(PerformanceParameter1.self)!
+        _ = container.resolve(PerformanceParameter3.self)!
+      }
     }
   }
 
