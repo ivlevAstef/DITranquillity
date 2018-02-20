@@ -1,3 +1,6 @@
+# v3.3.0
+* add new lifetimes: single, perApplication(weak/single), perContainer(weak/single), perFramework(weak/single), perPart(weak/single), objectGraph, prototype.
+
 # v3.2.0
 * support injection by keyPath for swift4
 * small improve logging - add new log level `.verbose`

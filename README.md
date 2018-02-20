@@ -17,7 +17,7 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 * Initializer/Property/Method Injections
 * Named and Tags definitions
 * Type forwarding
-* Lifetimes: single, lazySingle, weakSingle, objectGraph, prototype
+* Lifetimes: single, perApplication, perContainer, perFramework, perPart, objectGraph, prototype.
 * iOS/macOS Storyboard and StoryboardReference
 * Circular dependencies
 * Three level hierarchy: types, part, framework

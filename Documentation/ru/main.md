@@ -7,7 +7,7 @@ DITranquallity - небольшая библиотека для внедрени
 * Внедрение зависимостей через: [метод инициализации](registration.md#Разрешение-зависимостей-при-инициализации), [свойства, метод](injection.md#Внедрение)
 * [Указание тега](modificators.md#Теги), [имени](modificators.md#Имена) и получение [множества](modificators.md#Множественная)
 * [Поддержка указания нескольких сервисов](registration.md#Указание-сервисов)
-* [5 времен жизни: single, lazySingle, weakSingle, objectGraph, prototype](lifetime.md#Время-жизни)
+* [7 времен жизни: single, perApplication, perContainer, perFramework, perPart, objectGraph, prototype](lifetime.md#Время-жизни)
 * [iOS/macOS Storyboard и StoryboardReference](storyboard.md#storyboard)
 * [Поддержка циклических зависимостей](injection.md#Внедрение-циклических-зависимостей-через-свойства)
 * Несколько уровней абстракций: тип, [часть](part_framework.md#Части-и-Фреймворки), [фреймворк](part_framework.md#Части-и-Фреймворки)
@@ -53,8 +53,10 @@ DITranquallity - небольшая библиотека для внедрени
 
 ## [Время жизни](lifetime.md#Время-жизни)
 * [Одиночка (single)](lifetime.md#Одиночка-single)
-* [Отложенная одиночка (lazySingle)](lifetime.md#Отложенная-одиночка-lazysingle)
-* [Слабая одиночка (weakSingle)](lifetime.md#Слабая-одиночка-weaksingle)
+* [Weak или Single (weak/single)](lifetime.md#Weak-или-Single-weaksingle)
+* [Один на приложение (perApplication)](lifetime.md#Один-на-приложение-perApplication)
+* [Один на контейнер (perContainer)](lifetime.md#Один-на-контейнер-perContainer)
+* [Один на фреймворк или часть (perFramework, perPart)](lifetime.md#Один-на-фреймворк-или-часть-perFramework-perPart)
 * [Единственный в графе (objectGraph)](lifetime.md#Единственный-в-графе-objectgraph)
 * [Всегда новый (prototype)](lifetime.md#Всегда-новый-prototype)
 

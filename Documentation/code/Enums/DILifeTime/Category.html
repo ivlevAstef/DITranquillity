@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Defaults Structure Reference</title>
+    <title>Category Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Struct/Defaults" class="dashAnchor"></a>
-    <a title="Defaults Structure Reference"></a>
+    <a name="//apple_ref/swift/Enum/Category" class="dashAnchor"></a>
+    <a title="Category Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../../index.html">DITranquillity Docs</a> (91% documented)</p>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../../index.html">DITranquillity Reference</a>
         <img id="carat" src="../../img/carat.png" />
-        Defaults Structure Reference
+        Category Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -163,10 +163,10 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>Defaults</h1>
+            <h1>Category</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Defaults</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Category</span></code></pre>
 
                 </div>
               </div>
@@ -179,9 +179,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14DITranquillity9DISettingV8DefaultsV8lifeTimeAA06DILifeE0OvZ"></a>
-                    <a name="//apple_ref/swift/Variable/lifeTime" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity9DISettingV8DefaultsV8lifeTimeAA06DILifeE0OvZ">lifeTime</a>
+                    <a name="/s:14DITranquillity10DILifeTimeO8CategoryO4weakA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/weak" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity10DILifeTimeO8CategoryO4weakA2EmF">weak</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -189,19 +189,53 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Default lifetime of a object</p>
+                        <p>Initialization when first accessed, and the library doesn&rsquo;t hold it</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">lifeTime</span><span class="p">:</span> <span class="kt"><a href="../../Enums/DILifeTime.html">DILifeTime</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">prototype</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="k">weak</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DISettings.swift#L13">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DITypes.swift#L61">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity10DILifeTimeO8CategoryO6singleA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/single" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity10DILifeTimeO8CategoryO6singleA2EmF">single</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialization when first accessed, and the library hold it</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">single</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DITypes.swift#L63">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

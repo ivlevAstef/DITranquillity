@@ -1,75 +1,96 @@
 {
   "warnings": [
     {
-      "file": "/Users/ivlev/Project/DITranquillity/Sources/Core/Private/ByTagAndMany.swift",
+      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Private/ByTagAndMany.swift",
       "line": 14,
       "symbol": "InternalByTag",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/ivlev/Project/DITranquillity/Sources/Core/Private/ByTagAndMany.swift",
+      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Private/ByTagAndMany.swift",
       "line": 31,
       "symbol": "InternalByMany",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/ivlev/Project/DITranquillity/Sources/Core/Private/ByTagAndMany.swift",
+      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Private/ByTagAndMany.swift",
       "line": 42,
       "symbol": "InternalByManyInBundle",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/ivlev/Project/DITranquillity/Sources/Core/Public/DIContainer.swift",
+      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Public/DIContainer.swift",
       "line": 28,
       "symbol": "DIContainer.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/ivlev/Project/DITranquillity/Sources/Core/Public/DIContainer.swift",
-      "line": 172,
+      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Public/DIContainer.swift",
+      "line": 174,
       "symbol": "DIContainer.initializeSingletonObjects()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/ivlev/Project/DITranquillity/Sources/Core/Public/DISettings.swift",
+      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Public/DISettings.swift",
       "line": 11,
       "symbol": "DISetting.Defaults",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/ivlev/Project/DITranquillity/Sources/Scan/DIScanFramework.swift",
+      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Public/DITypes.swift",
+      "line": 59,
+      "symbol": "DILifeTime.Category",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Public/DITypes.swift",
+      "line": 85,
+      "symbol": "DILifeTime.lazySingle",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Public/DITypes.swift",
+      "line": 88,
+      "symbol": "DILifeTime.weakSingle",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Scan/DIScanFramework.swift",
       "line": 29,
       "symbol": "DIScanFramework.Predicate.type",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/ivlev/Project/DITranquillity/Sources/Scan/DIScanFramework.swift",
+      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Scan/DIScanFramework.swift",
       "line": 30,
       "symbol": "DIScanFramework.Predicate.name",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/ivlev/Project/DITranquillity/Sources/Scan/DIScanPart.swift",
+      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Scan/DIScanPart.swift",
       "line": 32,
       "symbol": "DIScanPart.Predicate.type",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/ivlev/Project/DITranquillity/Sources/Scan/DIScanPart.swift",
+      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Scan/DIScanPart.swift",
       "line": 33,
       "symbol": "DIScanPart.Predicate.name",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/ivlev/Project/DITranquillity"
+  "source_directory": "/Users/aivlev/Projects/DITranquillity"
 }
