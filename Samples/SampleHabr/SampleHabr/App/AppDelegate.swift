@@ -15,7 +15,9 @@ func dilog(level: DILogLevel, msg: String) {
     print("ERR: " + msg)
   case .warning:
     print("WRN: " + msg)
-  case .info, .none:
+  case .info:
+    print("INF: " + msg)
+  case .verbose, .none:
     break
   }
 }
