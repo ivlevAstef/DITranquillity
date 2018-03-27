@@ -203,6 +203,11 @@ public extension DIContainer {
   public func clean(part: DIPart.Type) {
     resolver.clean(part: ObjectIdentifier(part))
   }
+
+  /// Remove all cached object in container by name with lifetime `custom(name:)`
+  public func clean(name: String) {
+    resolver.clean(name: name)
+  }
 }
 
 

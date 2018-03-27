@@ -59,6 +59,7 @@ DITranquallity - небольшая библиотека для внедрени
 * [Один на фреймворк или часть (perFramework, perPart)](lifetime.md#Один-на-фреймворк-или-часть-perFramework-perPart)
 * [Единственный в графе (objectGraph)](lifetime.md#Единственный-в-графе-objectgraph)
 * [Всегда новый (prototype)](lifetime.md#Всегда-новый-prototype)
+* [Собственный (сustom)](lifetime.md#Собственный-сustom)
 
 ## [Части и Фреймворки](part_framework.md#Части-и-Фреймворки)
 * [Объявление](part_framework.md#Объявление)

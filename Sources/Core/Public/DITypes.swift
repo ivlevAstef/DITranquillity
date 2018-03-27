@@ -71,12 +71,15 @@ public enum DILifeTime: Equatable {
   case perContainer(Category)
   /// The object is only one in one container, and one inside framework
   case perFramework(Category)
-  /// The object is only one fin one container, and one inside part
+  /// The object is only one in one container, and one inside part
   case perPart(Category)
   /// The object is created every time, but during the creation will be created once
   case objectGraph
   /// The object is created every time
   case prototype
+
+  /// The object is only one in one container, and one by name
+  case custom(name: String)
   
   /// Default life time. Is taken from the settings. see: `DISetting.Defaults.lifeTime`
   static var `default`: DILifeTime { return DISetting.Defaults.lifeTime }
@@ -101,6 +104,8 @@ public enum DILifeTime: Equatable {
       return subLhs == subRhs
     case (.perPart(let subLhs), .perPart(let subRhs)):
       return subLhs == subRhs
+    case (.custom(let lName), .custom(let rName)):
+        return lName == rName
     default:
       return false
     }

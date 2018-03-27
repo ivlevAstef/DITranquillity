@@ -51,14 +51,14 @@
     },
     {
       "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Public/DITypes.swift",
-      "line": 85,
+      "line": 88,
       "symbol": "DILifeTime.lazySingle",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Public/DITypes.swift",
-      "line": 88,
+      "line": 91,
       "symbol": "DILifeTime.weakSingle",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
