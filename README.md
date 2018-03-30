@@ -16,7 +16,7 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 * Pure Swift Type Support
 * Initializer injections [ru](Documentation/ru/registration.md#Разрешение-зависимостей-при-инициализации)
 * Property, Method injections [ru](Documentation/ru/injection.md#Внедрение)
-* Named, Tags definitions and Many [ru](Documentation/ru/rmodificators.md#Модификаторы)
+* Named, Tags definitions and Many [ru](Documentation/ru/modificators.md#Модификаторы)
 * Type forwarding [ru](Documentation/ru/registration.md#Указание-сервисов)
 * Lifetimes: single, perRun(weak/strong), perContainer(weak/strong), objectGraph, prototype [ru](Documentation/ru/lifetime.md#Время-жизни)
 * iOS/macOS Storyboard and StoryboardReference [ru](Documentation/ru/storyboard.md#storyboard)
@@ -25,7 +25,7 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 * Short resolve syntax [ru](Documentation/ru/resolve.md#Разрешение-зависимостей)
 * keyPath injection (since swift4.0) [ru](Documentation/ru/injection.md#Внедрение-зависимостей-через-свойства-используя-keypath)
 * Scan Parts/Frameworks [ru](Documentation/ru/scan.md#Поиск)
-* Very detail logs [ru](log.md#Логирование)
+* Very detail logs [ru](Documentation/ru/log.md#Логирование)
 * Validation at the run app [ru](DocuDocumentation/ru/validation.md#Валидация-контейнера)
 * Thread safe
 
