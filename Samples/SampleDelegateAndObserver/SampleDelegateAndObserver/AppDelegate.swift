@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Delegate
     container.register(ViewController.self)
-      .lifetime(.perApplication(.weak))
+      .lifetime(.perRun(.weak))
       .as(check: PopUpDelegate.self){$0}
       .as(check: Observer.self){$0} // And Observer
     
@@ -40,11 +40,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Observer
     container.register(ViewControllerFirstObserver.self)
-      .lifetime(.perApplication(.weak))
+      .lifetime(.perRun(.weak))
       .as(check: Observer.self){$0}
     
     container.register(ViewControllerSecondObserver.self)
-      .lifetime(.perApplication(.weak))
+      .lifetime(.perRun(.weak))
       .as(check: Observer.self){$0}
     
     container.register(ViewControllerSlider.self)

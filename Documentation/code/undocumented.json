@@ -29,13 +29,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Public/DIContainer.swift",
-      "line": 174,
-      "symbol": "DIContainer.initializeSingletonObjects()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Public/DISettings.swift",
       "line": 11,
       "symbol": "DISetting.Defaults",
@@ -45,20 +38,20 @@
     {
       "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Public/DITypes.swift",
       "line": 59,
-      "symbol": "DILifeTime.Category",
+      "symbol": "DILifeTime.ReferenceCounting",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Public/DITypes.swift",
-      "line": 88,
+      "line": 82,
       "symbol": "DILifeTime.lazySingle",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Public/DITypes.swift",
-      "line": 91,
+      "line": 85,
       "symbol": "DILifeTime.weakSingle",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"

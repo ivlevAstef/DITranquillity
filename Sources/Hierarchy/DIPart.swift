@@ -27,9 +27,8 @@ public extension DIContainer {
   /// - Returns: self
   @discardableResult
   public func append(part: DIPart.Type) -> DIContainer {
-    let partId = ObjectIdentifier(part)
-    if includedParts.checkAndInsert(partId) {
-      partStack.push(partId)
+    if includedParts.checkAndInsert(ObjectIdentifier(part)) {
+      partStack.push(part)
       defer { partStack.pop() }
       
       part.load(container: self)

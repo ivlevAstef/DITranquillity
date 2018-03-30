@@ -41,14 +41,13 @@ public extension DIContainer {
   /// - Returns: self
   @discardableResult
   public func append(framework: DIFramework.Type) -> DIContainer {
-    if let bundle = bundleStack.last {
+    if let bundle = frameworkStack.last?.bundle {
       bundleContainer.dependency(bundle: bundle, import: framework.bundle)
     }
-    
-    let frameworkId = ObjectIdentifier(framework)
-    if includedParts.checkAndInsert(frameworkId) {
-      bundleStack.push(framework.bundle); frameworkStack.push(frameworkId)
-      defer { bundleStack.pop(); frameworkStack.pop() }
+
+    if includedParts.checkAndInsert(ObjectIdentifier(framework)) {
+      frameworkStack.push(framework)
+      defer { frameworkStack.pop() }
       
       framework.load(container: self)
     }
@@ -64,7 +63,7 @@ public extension DIContainer {
   ///
   /// - Parameter framework: A framework that is imported into the current one. Import means communication designation, and not inclusion of all components.
   public func `import`(_ framework: DIFramework.Type) {
-    guard let bundle = bundleStack.last else {
+    guard let bundle = frameworkStack.last?.bundle else {
       log(.warning, msg: "Please, use import only into Framework")
       return
     }

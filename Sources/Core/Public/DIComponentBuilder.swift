@@ -12,7 +12,7 @@
 public final class DIComponentBuilder<Impl> {
   init(container: DIContainer, componentInfo: DIComponentInfo) {
     self.component = Component(componentInfo: componentInfo,
-                               in: container.bundleStack.last, container.frameworkStack.last, container.partStack.last)
+                               in: container.frameworkStack.last, container.partStack.last)
     self.componentContainer = container.componentContainer
     componentContainer.insert(TypeKey(by: Impl.self), component)
   }

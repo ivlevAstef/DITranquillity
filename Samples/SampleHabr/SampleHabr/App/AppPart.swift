@@ -15,11 +15,9 @@ class AppPart: DIPart {
     
     #if swift(>=4.0)
     container.register1(YourPresenter.init)
-      .lifetime(.perApplication(.single))
       .injection { $0.logger = $1 }
     #else
     container.register(YourPresenter.init)
-      .lifetime(.perApplication(.single))
       .injection { $0.logger = $1 }
     #endif
     

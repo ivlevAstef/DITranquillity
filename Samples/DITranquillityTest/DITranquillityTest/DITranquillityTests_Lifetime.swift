@@ -38,38 +38,6 @@ private class D {
 
 }
 
-private class LFramework: DIFramework {
-  static var bundle: Bundle { return Bundle(for: Module1Type.self) }
-
-  static func load(container: DIContainer) {
-    container.register(FooService.init).lifetime(.perFramework(.single))
-
-    container.append(part: LPart.self)
-  }
-}
-
-private class LPart: DIPart {
-  static func load(container: DIContainer) {
-    container.register(BarService.init).lifetime(.perFramework(.single))
-
-    container.register(D.init).lifetime(.perPart(.single))
-  }
-}
-
-private class LFramework2: DIFramework {
-  static var bundle: Bundle { return Bundle(for: DuMole1Type.self) }
-  static func load(container: DIContainer) {
-    container.register(FooService.init).lifetime(.perFramework(.single))
-
-    container.append(part: LPart2.self)
-  }
-}
-
-private class LPart2: DIPart {
-  static func load(container: DIContainer) {
-    container.register(D.init).lifetime(.perPart(.single))
-  }
-}
 
 class DITranquillityTests_Lifetime: XCTestCase {
   override func setUp() {
@@ -103,8 +71,8 @@ class DITranquillityTests_Lifetime: XCTestCase {
     let container1 = DIContainer()
     let container2 = DIContainer()
 
-    container1.register(FooService.init).lifetime(.perApplication(.single))
-    container2.register(FooService.init).lifetime(.perApplication(.single))
+    container1.register(FooService.init).lifetime(.perRun(.strong))
+    container2.register(FooService.init).lifetime(.perRun(.strong))
 
     let service1: FooService = *container1
     XCTAssertEqual(service1.foo(), "foo")
@@ -121,7 +89,7 @@ class DITranquillityTests_Lifetime: XCTestCase {
     container.register { () -> FooService in
       initCount += 1
       return FooService()
-    }.lifetime(.perApplication(.single))
+    }.lifetime(.perRun(.strong))
 
     XCTAssertEqual(initCount, 0)
     container.initializeSingletonObjects()
@@ -144,7 +112,7 @@ class DITranquillityTests_Lifetime: XCTestCase {
     container.register { () -> FooService in
       initCount += 1
       return FooService()
-      }.lifetime(.perApplication(.weak))
+      }.lifetime(.perRun(.weak))
 
     XCTAssertEqual(initCount, 0)
     container.initializeSingletonObjects()
@@ -167,7 +135,7 @@ class DITranquillityTests_Lifetime: XCTestCase {
     container.register { () -> FooService in
       initCount += 1
       return FooService()
-      }.lifetime(.perApplication(.weak))
+      }.lifetime(.perRun(.weak))
 
     XCTAssertEqual(initCount, 0)
     container.initializeSingletonObjects()
@@ -187,8 +155,8 @@ class DITranquillityTests_Lifetime: XCTestCase {
     let container1 = DIContainer()
     let container2 = DIContainer()
 
-    container1.register(FooService.init).lifetime(.perContainer(.single))
-    container2.register(FooService.init).lifetime(.perContainer(.single))
+    container1.register(FooService.init).lifetime(.perContainer(.strong))
+    container2.register(FooService.init).lifetime(.perContainer(.strong))
 
     let service1: FooService = *container1
     XCTAssertEqual(service1.foo(), "foo")
@@ -209,7 +177,7 @@ class DITranquillityTests_Lifetime: XCTestCase {
     container.register { () -> FooService in
       initCount += 1
       return FooService()
-    }.lifetime(.perContainer(.single))
+    }.lifetime(.perContainer(.strong))
 
     XCTAssertEqual(initCount, 0)
 
@@ -272,7 +240,7 @@ class DITranquillityTests_Lifetime: XCTestCase {
     container.register { () -> FooService in
       initCount += 1
       return FooService()
-    }.lifetime(.perContainer(.single))
+    }.lifetime(.perContainer(.strong))
 
     XCTAssertEqual(initCount, 0)
 
@@ -340,79 +308,6 @@ class DITranquillityTests_Lifetime: XCTestCase {
     let a: A = *container
 
     XCTAssert(a.b.d !== a.c.d)
-  }
-
-
-
-  func test07_perFramework() {
-    let container = DIContainer()
-
-    container.append(framework: LFramework.self)
-    container.append(framework: LFramework2.self)
-
-    let fooService1: FooService = container.resolve(from: LFramework.bundle)
-    XCTAssertEqual(fooService1.foo(), "foo")
-
-    let fooService2: FooService = container.resolve(from: LFramework2.bundle)
-    XCTAssertEqual(fooService2.foo(), "foo")
-
-    let barService: BarService = container.resolve(from: LFramework.bundle)
-    XCTAssertEqual(barService.foo(), "bar")
-
-    let fooService11: FooService = container.resolve(from: LFramework.bundle)
-    XCTAssertEqual(fooService1.foo(), "foo")
-
-    XCTAssert(fooService1 !== fooService2)
-    XCTAssert(fooService1 === fooService11)
-
-    container.clean(framework: LFramework.self)
-
-    let t2fooService1: FooService = container.resolve(from: LFramework.bundle)
-    XCTAssertEqual(fooService1.foo(), "foo")
-
-    let t2fooService2: FooService = container.resolve(from: LFramework2.bundle)
-    XCTAssertEqual(fooService2.foo(), "foo")
-
-    let t2barService: BarService = container.resolve(from: LFramework.bundle)
-    XCTAssertEqual(barService.foo(), "bar")
-
-    let t2fooService11: FooService = container.resolve(from: LFramework.bundle)
-    XCTAssertEqual(fooService1.foo(), "foo")
-
-    XCTAssert(t2fooService1 !== t2fooService2)
-    XCTAssert(t2fooService1 === t2fooService11)
-
-    XCTAssert(fooService1 !== t2fooService1)
-    XCTAssert(barService !== t2barService)
-    XCTAssert(fooService11 !== t2fooService11)
-    XCTAssert(fooService2 === t2fooService2)
-  }
-
-  func test07_perPart() {
-    let container = DIContainer()
-
-    container.append(framework: LFramework.self)
-    container.append(framework: LFramework2.self)
-
-    let d1: D = container.resolve(from: LFramework.bundle)
-    let d2: D = container.resolve(from: LFramework2.bundle)
-    let d11: D = container.resolve(from: LFramework.bundle)
-
-    XCTAssert(d1 !== d2)
-    XCTAssert(d1 === d11)
-
-    container.clean(part: LPart2.self)
-
-    let t2d1: D = container.resolve(from: LFramework.bundle)
-    let t2d2: D = container.resolve(from: LFramework2.bundle)
-    let t2d11: D = container.resolve(from: LFramework.bundle)
-
-    XCTAssert(t2d1 !== t2d2)
-    XCTAssert(t2d1 === t2d11)
-
-    XCTAssert(d1 === t2d1)
-    XCTAssert(d11 === t2d11)
-    XCTAssert(d2 !== t2d2)
   }
 
 }

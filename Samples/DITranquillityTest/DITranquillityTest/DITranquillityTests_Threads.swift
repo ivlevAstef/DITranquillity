@@ -47,7 +47,7 @@ class DITranquillityTests_Threads: XCTestCase {
     let container = DIContainer()
     
     container.register(FooService.init)
-      .lifetime(.perApplication(.single))
+      .lifetime(.perRun(.strong))
     
     let singleService: FooService = *container
     XCTAssertEqual(singleService.foo(), "foo")

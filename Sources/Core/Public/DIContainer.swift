@@ -70,9 +70,8 @@ public final class DIContainer {
   }
   
   internal let includedParts = IncludedParts()
-  internal let bundleStack = Stack<Bundle>()
-  internal let partStack = Stack<ObjectIdentifier>()
-  internal let frameworkStack = Stack<ObjectIdentifier>()
+  internal let partStack = Stack<DIPart.Type>()
+  internal let frameworkStack = Stack<DIFramework.Type>()
 }
 
 // MARK: - register
@@ -171,6 +170,7 @@ public extension DIContainer {
     _ = resolver.injection(obj: object, from: bundle)
   }
   
+  /// Initialize registered object with lifetime `.single`
   public func initializeSingletonObjects() {
     let singleComponents = componentContainer.components.filter{ .single == $0.lifeTime }
     
@@ -192,21 +192,6 @@ public extension DIContainer {
   /// Remove all cached object in container with lifetime `perContainer(_)`
   public func clean() {
     resolver.clean()
-  }
-  
-  /// Remove all cached object in container by framework with lifetime `perFramework(_)`
-  public func clean(framework: DIFramework.Type) {
-    resolver.clean(framework: ObjectIdentifier(framework))
-  }
-  
-  /// Remove all cached object in container by part with lifetime `perPart(_)`
-  public func clean(part: DIPart.Type) {
-    resolver.clean(part: ObjectIdentifier(part))
-  }
-
-  /// Remove all cached object in container by name with lifetime `custom(name:)`
-  public func clean(name: String) {
-    resolver.clean(name: name)
   }
 }
 
@@ -241,15 +226,6 @@ extension DIContainer {
     var successfull: Bool = true
     
     for component in components {
-      if case .perPart(_) = component.lifeTime, nil == component.part {
-        log(.error, msg: "Not found part for \(component.info). Use lifetime `perPart` only for components into part")
-        successfull = false
-      }
-      if case .perFramework(_) = component.lifeTime, nil == component.framework {
-        log(.error, msg: "Not found framework for \(component.info). Use lifetime `perFramework` only for components into framework")
-        successfull = false
-      }
-      
       let parameters = component.signatures.flatMap{ $0.parameters }
       let bundle = component.bundle
       

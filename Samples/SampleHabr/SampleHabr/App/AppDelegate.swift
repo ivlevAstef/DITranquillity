@@ -36,6 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if !container.validate() {
       fatalError()
     }
+
+    container.initializeSingletonObjects()
     
     window = UIWindow(frame: UIScreen.main.bounds)
 

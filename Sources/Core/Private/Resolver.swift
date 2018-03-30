@@ -128,20 +128,9 @@ class Resolver {
     return Components(components.filter { nil != $0.initial })
   }
   
+  /// Remove all cache objects in container
   func clean() {
     mutex.sync { cache.perContainer.data.removeAll() }
-  }
-  
-  func clean(framework: ObjectIdentifier) {
-    mutex.sync { cache.perFramework[framework] = nil }
-  }
-  
-  func clean(part: ObjectIdentifier) {
-    mutex.sync { cache.perPart[part] = nil }
-  }
-
-  func clean(name: String) {
-    mutex.sync { cache.custom[name] = nil }
   }
   
   private func make(by type: DIAType, with name: String?, from bundle: Bundle?, use object: Any?) -> Any? {
@@ -184,7 +173,7 @@ class Resolver {
     log(.verbose, msg: "Found component: \(component.info)")
     let uniqueKey = component.info
     
-    func makeObject(from cacheName: StaticString, use category: DILifeTime.Category, scope: Cache.Scope) -> Any? {
+    func makeObject(from cacheName: StaticString, use referenceCounting: DILifeTime.ReferenceCounting, scope: Cache.Scope) -> Any? {
       var cacheObject: Any? = scope.data[uniqueKey]
       if let weakRef = cacheObject as? Weak<Any> {
         cacheObject = weakRef.value
@@ -205,7 +194,7 @@ class Resolver {
       }
       
       if let makedObject = makeObject() {
-        scope.data[uniqueKey] = (.weak == category) ? Weak(value: makedObject) : makedObject
+        scope.data[uniqueKey] = (.weak == referenceCounting) ? Weak(value: makedObject) : makedObject
         log(.verbose, msg: "Add object: \(makedObject) in cache \(cacheName)")
         return makedObject
       }
@@ -291,31 +280,16 @@ class Resolver {
       
       switch component.lifeTime {
       case .single:
-        return makeObject(from: "single", use: .single, scope: Cache.perApplication)
+        return makeObject(from: "single", use: .strong, scope: Cache.perRun)
 
-      case .perApplication(let category):
-        return makeObject(from: "per application", use: category, scope: Cache.perApplication)
+      case .perRun(let referenceCounting):
+        return makeObject(from: "per run", use: referenceCounting, scope: Cache.perRun)
 
-      case .perContainer(let category):
-        return makeObject(from: "per container", use: category, scope: cache.perContainer)
-
-      case .perFramework(let category):
-        let cacheFramework = cache.perFramework[component.framework!] ?? Cache.Scope()
-        cache.perFramework[component.framework!] = cacheFramework
-        return makeObject(from: "per framework", use: category, scope: cacheFramework)
-
-      case .perPart(let category):
-        let cachePart = cache.perPart[component.part!] ?? Cache.Scope()
-        cache.perPart[component.part!] = cachePart
-        return makeObject(from: "per part", use: category, scope: cachePart)
-
-      case .custom(let name):
-        let cacheCustom = cache.custom[name] ?? Cache.Scope()
-        cache.custom[name] = cacheCustom
-        return makeObject(from: "custom", use: .single, scope: cacheCustom)
+      case .perContainer(let referenceCounting):
+        return makeObject(from: "per container", use: referenceCounting, scope: cache.perContainer)
 
       case .objectGraph:
-        return makeObject(from: "object graph", use: .single, scope: cache.graph)
+        return makeObject(from: "object graph", use: .strong, scope: cache.graph)
 
       case .prototype:
         return makeObject()
@@ -337,12 +311,9 @@ class Resolver {
     }
     
     // any can by weak, and object
-    fileprivate static var perApplication = Scope()
+    fileprivate static var perRun = Scope()
     fileprivate var perContainer = Scope()
-    fileprivate var perFramework: [ObjectIdentifier/*DIFramework*/: Scope] = [:]
-    fileprivate var perPart: [ObjectIdentifier/*DIPart*/: Scope] = [:]
-    fileprivate var custom: [String: Scope] = [:]
-    
+
     fileprivate var graph = Scope()
     fileprivate var cycleInjectionStack: ContiguousArray<(obj: Any?, injection: Injection)> = []
   }

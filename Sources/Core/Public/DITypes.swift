@@ -56,39 +56,33 @@ public enum DILogLevel: Equatable {
 
 /// A object life time
 public enum DILifeTime: Equatable {
-  public enum Category {
+  public enum ReferenceCounting {
     /// Initialization when first accessed, and the library doesn't hold it
     case weak
     /// Initialization when first accessed, and the library hold it
-    case single
+    case strong
   }
   
   /// The object is only one in the application. Initialization by call `DIContainer.initializeSingletonObjects()`
   case single
-  /// The object is only one in the application.
-  case perApplication(Category)
+  /// The object is only one in the one run.
+  case perRun(ReferenceCounting)
   /// The object is only one in one container.
-  case perContainer(Category)
-  /// The object is only one in one container, and one inside framework
-  case perFramework(Category)
-  /// The object is only one in one container, and one inside part
-  case perPart(Category)
+  case perContainer(ReferenceCounting)
   /// The object is created every time, but during the creation will be created once
   case objectGraph
   /// The object is created every time
   case prototype
 
-  /// The object is only one in one container, and one by name
-  case custom(name: String)
-  
   /// Default life time. Is taken from the settings. see: `DISetting.Defaults.lifeTime`
   static var `default`: DILifeTime { return DISetting.Defaults.lifeTime }
+
   
-  @available(*, deprecated, message: "use `.perApplication(.single)`")
-  public static var lazySingle: DILifeTime { return .perApplication(.single) }
+  @available(*, deprecated, message: "use `.perRun(.strong).`")
+  public static var lazySingle: DILifeTime { return .perRun(.strong) }
   
-  @available(*, deprecated, message: "use `.perApplication(.weak)`")
-  public static var weakSingle: DILifeTime { return .perApplication(.weak) }
+  @available(*, deprecated, message: "use `.perRun(.weak)`")
+  public static var weakSingle: DILifeTime { return .perRun(.weak) }
   
   public static func ==(_ lhs: DILifeTime, rhs: DILifeTime) -> Bool {
     switch (lhs, rhs) {
@@ -96,16 +90,10 @@ public enum DILifeTime: Equatable {
          (.objectGraph, .objectGraph),
          (.prototype, .prototype):
       return true
-    case (.perApplication(let subLhs), .perApplication(let subRhs)):
+    case (.perRun(let subLhs), .perRun(let subRhs)):
       return subLhs == subRhs
     case (.perContainer(let subLhs), .perContainer(let subRhs)):
       return subLhs == subRhs
-    case (.perFramework(let subLhs), .perFramework(let subRhs)):
-      return subLhs == subRhs
-    case (.perPart(let subLhs), .perPart(let subRhs)):
-      return subLhs == subRhs
-    case (.custom(let lName), .custom(let rName)):
-        return lName == rName
     default:
       return false
     }

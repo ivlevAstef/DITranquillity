@@ -152,7 +152,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .injection { $0.service = $1 }
     
     container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
-      .lifetime(.perApplication(.weak))
+      .lifetime(.perRun(.weak))
     
     let storyboard: UIStoryboard = *container
     
@@ -177,7 +177,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .injection { $0.service = $1 }
     
     container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
-      .lifetime(.perApplication(.weak))
+      .lifetime(.perRun(.weak))
     
     let storyboard: UIStoryboard = container.resolve(name: "TestStoryboard")
     
@@ -205,10 +205,10 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     container.register(TestViewController.self)
       .injection{ $0.service = $1 }
-      .lifetime(.perApplication(.weak))
+      .lifetime(.perRun(.weak))
     
     container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
-      .lifetime(.perApplication(.weak))
+      .lifetime(.perRun(.weak))
     
     let storyboard: UIStoryboard = *container
     
@@ -235,13 +235,13 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     container.register(TestViewController.self)
       .injection { $0.service = $1 }
-      .lifetime(.perApplication(.weak))
+      .lifetime(.perRun(.weak))
     
     container.register(TestViewContainerVC.self)
       .injection { $0.service = $1 }
     
     container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
-      .lifetime(.perApplication(.weak))
+      .lifetime(.perRun(.weak))
     
     let storyboard: UIStoryboard = *container
     
@@ -272,7 +272,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     
     container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
-      .lifetime(.perApplication(.weak))
+      .lifetime(.perRun(.weak))
 
     let vc: TestViewController = container.resolve()
     _ = vc.view // for call viewDidLoad() and full initialization

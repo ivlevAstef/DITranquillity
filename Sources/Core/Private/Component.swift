@@ -51,17 +51,17 @@ final class ComponentContainer {
 final class Component {
   typealias UniqueKey = DIComponentInfo
   
-  init(componentInfo: DIComponentInfo, in bundle: Bundle?, _ framework: ObjectIdentifier?, _ part: ObjectIdentifier?) {
+  init(componentInfo: DIComponentInfo, in framework: DIFramework.Type?, _ part: DIPart.Type?) {
     self.info = componentInfo
-    self.bundle = bundle ?? getBundle(for: componentInfo.type)
+    self.bundle = framework?.bundle ?? getBundle(for: componentInfo.type)
     self.framework = framework
     self.part = part
   }
   
   let info: DIComponentInfo
   let bundle: Bundle?
-  let framework: ObjectIdentifier? // DIFramework.Type
-  let part: ObjectIdentifier? // DIPart.Type
+  let framework: DIFramework.Type?
+  let part: DIPart.Type?
   
   var lifeTime = DILifeTime.default
   var isDefault: Bool = false

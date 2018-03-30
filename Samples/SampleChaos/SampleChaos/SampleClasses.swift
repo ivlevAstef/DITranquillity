@@ -129,7 +129,7 @@ class Circular2 {
 
 class SamplePart: DIPart {
   static func load(container: DIContainer) {
-    container.register{ 10 }.lifetime(.perApplication(.single))
+    container.register{ 10 }.lifetime(.perRun(.strong))
     
     container.register(BarService.init)
       .as(ServiceProtocol.self)
@@ -155,7 +155,7 @@ class SamplePart: DIPart {
     
     container.register{ Logger2() }
       .as(check: LoggerProtocol.self){$0}
-      .lifetime(.perApplication(.single))
+      .lifetime(.perRun(.strong))
     
     container.register(Inject.init)
       .lifetime(.prototype)
