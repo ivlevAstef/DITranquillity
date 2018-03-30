@@ -24,9 +24,16 @@ public extension DIContainer {
   ///
   /// - Parameters:
   ///   - path: the part type
-  public func append(part: DIPart.Type) {
+  /// - Returns: self
+  @discardableResult
+  public func append(part: DIPart.Type) -> DIContainer {
     if includedParts.checkAndInsert(ObjectIdentifier(part)) {
+      partStack.push(part)
+      defer { partStack.pop() }
+      
       part.load(container: self)
     }
+
+    return self
   }
 }

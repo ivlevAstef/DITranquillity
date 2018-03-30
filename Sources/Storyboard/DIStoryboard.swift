@@ -96,7 +96,7 @@ public extension DIContainer {
   /// - Returns: component builder, to configure the component
   @discardableResult
   public func registerStoryboard(name: String, bundle storyboardBundleOrNil: Bundle? = nil, file: String = #file, line: Int = #line) -> DIComponentBuilder<UIStoryboard> {
-    let bundle = storyboardBundleOrNil ?? self.bundleStack.bundle
+    let bundle = storyboardBundleOrNil ?? self.frameworkStack.last?.bundle
     #if swift(>=3.2)
     let builder = register1(file: file, line: line) {
       DIStoryboard.create(name: name, bundle: bundle, container: $0) as UIStoryboard
@@ -123,7 +123,7 @@ public extension DIContainer {
   /// - Returns: component builder, to configure the component
   @discardableResult
   public func registerStoryboard(name: String, bundle storyboardBundleOrNil: Bundle? = nil, file: String = #file, line: Int = #line) -> DIComponentBuilder<NSStoryboard> {
-    let bundle = storyboardBundleOrNil ?? self.bundleStack.bundle
+    let bundle = storyboardBundleOrNil ?? self.frameworkStack.last?.bundle
     #if swift(>=3.2)
     let builder = register1(file: file, line: line) {
       DIStoryboard.create(name: name, bundle: bundle, container: $0) as NSStoryboard

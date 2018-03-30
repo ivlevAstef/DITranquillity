@@ -51,13 +51,17 @@ final class ComponentContainer {
 final class Component {
   typealias UniqueKey = DIComponentInfo
   
-  init(componentInfo: DIComponentInfo, in frameworkBundle: Bundle?) {
+  init(componentInfo: DIComponentInfo, in framework: DIFramework.Type?, _ part: DIPart.Type?) {
     self.info = componentInfo
-    self.bundle = frameworkBundle ?? getBundle(for: componentInfo.type)
+    self.bundle = framework?.bundle ?? getBundle(for: componentInfo.type)
+    self.framework = framework
+    self.part = part
   }
   
   let info: DIComponentInfo
   let bundle: Bundle?
+  let framework: DIFramework.Type?
+  let part: DIPart.Type?
   
   var lifeTime = DILifeTime.default
   var isDefault: Bool = false
@@ -87,3 +91,4 @@ extension Component {
   }
 }
 
+typealias Components = ContiguousArray<Component>

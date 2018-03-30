@@ -15,7 +15,9 @@ func dilog(level: DILogLevel, msg: String) {
     print("ERR: " + msg)
   case .warning:
     print("WRN: " + msg)
-  case .info, .none:
+  case .info:
+    print("INF: " + msg)
+  case .verbose, .none:
     break
   }
 }
@@ -34,6 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if !container.validate() {
       fatalError()
     }
+
+    container.initializeSingletonObjects()
     
     window = UIWindow(frame: UIScreen.main.bounds)
 

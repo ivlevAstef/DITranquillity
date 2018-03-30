@@ -6,7 +6,7 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-internal protocol IsTag: class {
+internal protocol IsTag: class, TypeGetter {
   static var tag: DITag { get }
   static var type: DIAType { get }
 }
@@ -23,16 +23,16 @@ public class InternalByTag<Tag, T>: IsTag {
 }
 
 
-internal protocol IsMany: class {
+internal protocol IsMany: class, TypeGetter {
   static var type: DIAType { get }
-	static var inBundle: Bool { get }
+  static var inBundle: Bool { get }
 }
 
 public class InternalByMany<T>: IsMany {
   internal let _objects: [T]
   
   internal static var type: DIAType { return T.self }
-	internal static var inBundle: Bool { return false }
+  internal static var inBundle: Bool { return false }
   
   internal init(objects: [T]) {
     self._objects = objects
@@ -40,12 +40,12 @@ public class InternalByMany<T>: IsMany {
 }
 
 public class InternalByManyInBundle<T>: IsMany {
-	internal let _objects: [T]
-	
-	internal static var type: DIAType { return T.self }
-	internal static var inBundle: Bool { return true }
-	
-	internal init(objects: [T]) {
-		self._objects = objects
-	}
+  internal let _objects: [T]
+  
+  internal static var type: DIAType { return T.self }
+  internal static var inBundle: Bool { return true }
+  
+  internal init(objects: [T]) {
+    self._objects = objects
+  }
 }

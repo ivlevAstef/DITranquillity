@@ -94,7 +94,7 @@ public func many<T>(_ obj: DIMany<T>) -> [T] {
 /// - Parameter obj: resolving objects
 /// - Returns: resolved objects
 public func manyInBundle<T>(_ obj: DIManyInBundle<T>) -> [T] {
-	return obj._objects
+  return obj._objects
 }
 
 /// Special class for resolve many object. see method: `many`

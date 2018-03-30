@@ -13,7 +13,7 @@
     <a title="Functions  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">DITranquillity Docs</a> (92% documented)</p>
+        <p><a href="index.html">DITranquillity Docs</a> (91% documented)</p>
         <p class="header-right"><a href="https://github.com/ivlevAstef/DITranquillity"><img src="img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2FivlevAstef%2FDITranquillity%2Fcode%2Fdocsets%2FDITranquillity%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -76,10 +76,13 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Enums.html">Enums</a>
+            <a href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Enums/DILifeTime.html">DILifeTime</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/DILifeTime/ReferenceCounting.html">– ReferenceCounting</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/DILogLevel.html">DILogLevel</a>
@@ -90,7 +93,7 @@
             <a href="Functions.html">Functions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Functions/*(_:).html">*(_:)</a>
+                <a href="Functions.html#/s:14DITranquillity1mopxAA11DIContainerClF">*(_:)</a>
               </li>
               <li class="nav-group-task">
                 <a href="Functions.html#/s:14DITranquillity2byq_xm3tag_AA7DIByTagCyxq_G2ontr0_lF">by(tag:on:)</a>
@@ -124,7 +127,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Structs.html">Structs</a>
+            <a href="Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Structs/DIComponentInfo.html">DIComponentInfo</a>
@@ -141,7 +144,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Typealiases.html">Typealiases</a>
+            <a href="Typealiases.html">Type Aliases</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Typealiases.html#/s:14DITranquillity7DIATypea">DIAType</a>
@@ -181,11 +184,11 @@
                       <div class="abstract">
                         <p>Short syntax for get object by tag
 Using:</p>
-<pre class="highlight plaintext"><code>let object: YourType = by(tag: YourTag.self, on: *container)
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">YourType</span> <span class="o">=</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tag</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="o">*</span><span class="n">container</span><span class="p">)</span>
 </code></pre>
 
 <p>also can using in injection or init:</p>
-<pre class="highlight plaintext"><code>.injection{ $0 = by(tag: YourTag.self, on: $1) }
+<pre class="highlight swift"><code><span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="nv">$0</span> <span class="o">=</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tag</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="nv">$1</span><span class="p">)</span> <span class="p">}</span>
 </code></pre>
 
                       </div>
@@ -193,7 +196,7 @@ Using:</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">by</span><span class="o">&lt;</span><span class="kt">Tag</span><span class="p">,</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">tag</span><span class="p">:</span> <span class="kt">Tag</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">on</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag</span><span class="p">,</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">by</span><span class="o">&lt;</span><span class="kt">Tag</span><span class="p">,</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">tag</span><span class="p">:</span> <span class="kt">Tag</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">on</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag</span><span class="p">,</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
 
                         </div>
                       </div>
@@ -253,11 +256,11 @@ Using:</p>
                       <div class="abstract">
                         <p>Short syntax for get object by two tags
 Using:</p>
-<pre class="highlight plaintext"><code>let object: YourType = by(tags: YourTag.self, YourTag2.self, on: *container)
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">YourType</span> <span class="o">=</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">YourTag2</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="o">*</span><span class="n">container</span><span class="p">)</span>
 </code></pre>
 
 <p>also can using in injection or init:</p>
-<pre class="highlight plaintext"><code>.injection{ $0 = by(tags: YourTag.self, YourTag2.self, on: $1) }
+<pre class="highlight swift"><code><span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="nv">$0</span> <span class="o">=</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">YourTag2</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="nv">$1</span><span class="p">)</span> <span class="p">}</span>
 </code></pre>
 
                       </div>
@@ -265,7 +268,7 @@ Using:</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">by</span><span class="o">&lt;</span><span class="kt">Tag1</span><span class="p">,</span> <span class="kt">Tag2</span><span class="p">,</span> <span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">Tag1</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">t</span><span class="p">:</span> <span class="kt">Tag2</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">on</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag1</span><span class="p">,</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag2</span><span class="p">,</span><span class="kt">T</span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">by</span><span class="o">&lt;</span><span class="kt">Tag1</span><span class="p">,</span> <span class="kt">Tag2</span><span class="p">,</span> <span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">Tag1</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">t</span><span class="p">:</span> <span class="kt">Tag2</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">on</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag1</span><span class="p">,</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag2</span><span class="p">,</span><span class="kt">T</span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
 
                         </div>
                       </div>
@@ -325,11 +328,11 @@ Using:</p>
                       <div class="abstract">
                         <p>Short syntax for get object by three tags
 Using:</p>
-<pre class="highlight plaintext"><code>let object: YourType = by(tags: YourTag.self, YourTag2.self, YourTag3.self, on: *container)
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">YourType</span> <span class="o">=</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">YourTag2</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">YourTag3</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="o">*</span><span class="n">container</span><span class="p">)</span>
 </code></pre>
 
 <p>also can using in injection or init:</p>
-<pre class="highlight plaintext"><code>.injection{ $0 = by(tags: YourTag.self, YourTag2.self, YourTag3.self, on: $1) }
+<pre class="highlight swift"><code><span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="nv">$0</span> <span class="o">=</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">YourTag2</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">YourTag3</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="nv">$1</span><span class="p">)</span> <span class="p">}</span>
 </code></pre>
 
                       </div>
@@ -337,7 +340,7 @@ Using:</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">by</span><span class="o">&lt;</span><span class="kt">Tag1</span><span class="p">,</span> <span class="kt">Tag2</span><span class="p">,</span> <span class="kt">Tag3</span><span class="p">,</span> <span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">Tag1</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">t2</span><span class="p">:</span> <span class="kt">Tag2</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">t3</span><span class="p">:</span> <span class="kt">Tag3</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">on</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag1</span><span class="p">,</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag2</span><span class="p">,</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag3</span><span class="p">,</span><span class="kt">T</span><span class="o">&gt;&gt;&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">by</span><span class="o">&lt;</span><span class="kt">Tag1</span><span class="p">,</span> <span class="kt">Tag2</span><span class="p">,</span> <span class="kt">Tag3</span><span class="p">,</span> <span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">Tag1</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">t2</span><span class="p">:</span> <span class="kt">Tag2</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">t3</span><span class="p">:</span> <span class="kt">Tag3</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">on</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag1</span><span class="p">,</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag2</span><span class="p">,</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag3</span><span class="p">,</span><span class="kt">T</span><span class="o">&gt;&gt;&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
 
                         </div>
                       </div>
@@ -397,11 +400,11 @@ Using:</p>
                       <div class="abstract">
                         <p>Short syntax for get many objects
 Using:</p>
-<pre class="highlight plaintext"><code>let objects: [YourType] = many(*container)
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">objects</span><span class="p">:</span> <span class="p">[</span><span class="kt">YourType</span><span class="p">]</span> <span class="o">=</span> <span class="nf">many</span><span class="p">(</span><span class="o">*</span><span class="n">container</span><span class="p">)</span>
 </code></pre>
 
 <p>also can using in injection or init:</p>
-<pre class="highlight plaintext"><code>.injection{ $0 = many($1) }
+<pre class="highlight swift"><code><span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="nv">$0</span> <span class="o">=</span> <span class="nf">many</span><span class="p">(</span><span class="nv">$1</span><span class="p">)</span> <span class="p">}</span>
 </code></pre>
 
                       </div>
@@ -409,7 +412,7 @@ Using:</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">many</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity6DIManyC">DIMany</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">T</span><span class="p">]</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">many</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity6DIManyC">DIMany</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">T</span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>
@@ -457,11 +460,11 @@ Using:</p>
                       <div class="abstract">
                         <p>Short syntax for get many objects in bundle
 Using:</p>
-<pre class="highlight plaintext"><code>let objects: [YourType] = manyInBundle(*container)
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">objects</span><span class="p">:</span> <span class="p">[</span><span class="kt">YourType</span><span class="p">]</span> <span class="o">=</span> <span class="nf">manyInBundle</span><span class="p">(</span><span class="o">*</span><span class="n">container</span><span class="p">)</span>
 </code></pre>
 
 <p>also can using in injection or init:</p>
-<pre class="highlight plaintext"><code>.injection{ $0 = manyInBundle($1) }
+<pre class="highlight swift"><code><span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="nv">$0</span> <span class="o">=</span> <span class="nf">manyInBundle</span><span class="p">(</span><span class="nv">$1</span><span class="p">)</span> <span class="p">}</span>
 </code></pre>
 
                       </div>
@@ -469,7 +472,7 @@ Using:</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">manyInBundle</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity14DIManyInBundleC">DIManyInBundle</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">T</span><span class="p">]</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">manyInBundle</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity14DIManyInBundleC">DIManyInBundle</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">T</span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>
@@ -521,16 +524,15 @@ Using:</p>
                       <div class="abstract">
                         <p>Short syntax for resolve.
 Using:</p>
-<pre class="highlight plaintext"><code>let yourObj: YourClass = *container
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">yourObj</span><span class="p">:</span> <span class="kt">YourClass</span> <span class="o">=</span> <span class="o">*</span><span class="n">container</span>
 </code></pre>
 
-                        <a href="Functions/*(_:).html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">prefix</span> <span class="kd">func</span> <span class="o">*&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">container</span><span class="p">:</span> <span class="kt"><a href="Classes/DIContainer.html">DIContainer</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">prefix</span> <span class="kd">func</span> <span class="o">*&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">container</span><span class="p">:</span> <span class="kt"><a href="Classes/DIContainer.html">DIContainer</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
 
                         </div>
                       </div>
@@ -568,8 +570,8 @@ Using:</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2017-11-28)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2018-03-30)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

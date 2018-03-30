@@ -44,16 +44,16 @@ public final class DIContainer {
     }
   }
   
-  final class BundleStack {
-    private let key = "ThreadSafeCurrentBundle\(UUID().uuidString)"
+  final class Stack<T> {
+    private let key = "DIContainer_Stack_ThreadSafe\(T.self)\(UUID().uuidString)"
     
-    var bundle: Bundle? { return stack?.last }
+    var last: T? { return stack?.last }
     
-    func push(_ bundle: Bundle) {
+    func push(_ element: T) {
       if let stack = self.stack {
-        self.stack = stack + [bundle]
+        self.stack = stack + [element]
       } else {
-        self.stack = [bundle]
+        self.stack = [element]
       }
     }
     
@@ -63,14 +63,15 @@ public final class DIContainer {
       }
     }
     
-    private var stack: [Bundle]? {
+    private var stack: [T]? {
       set { return Thread.current.threadDictionary[key] = newValue }
-      get { return Thread.current.threadDictionary[key] as? [Bundle] }
+      get { return Thread.current.threadDictionary[key] as? [T] }
     }
   }
   
   internal let includedParts = IncludedParts()
-  internal let bundleStack = BundleStack()
+  internal let partStack = Stack<DIPart.Type>()
+  internal let frameworkStack = Stack<DIFramework.Type>()
 }
 
 // MARK: - register
@@ -169,6 +170,7 @@ public extension DIContainer {
     _ = resolver.injection(obj: object, from: bundle)
   }
   
+  /// Initialize registered object with lifetime `.single`
   public func initializeSingletonObjects() {
     let singleComponents = componentContainer.components.filter{ .single == $0.lifeTime }
     
@@ -185,15 +187,24 @@ public extension DIContainer {
   }
 }
 
+// MARK: - Clean
+public extension DIContainer {
+  /// Remove all cached object in container with lifetime `perContainer(_)`
+  public func clean() {
+    resolver.clean()
+  }
+}
+
+
 // MARK: - Validation
 public extension DIContainer {
   
   /// Validate the graph by checking various conditions. For faster performance, set false.
-	///
-	/// - Parameter checkGraphCycles: check cycles in the graph of heavy operation. So it can be disabled
+  ///
+  /// - Parameter checkGraphCycles: check cycles in the graph of heavy operation. So it can be disabled
   /// - Returns: true if validation success.
   @discardableResult
-	public func validate(checkGraphCycles isCheckGraphCycles: Bool = true) -> Bool {
+  public func validate(checkGraphCycles isCheckGraphCycles: Bool = true) -> Bool {
     let components = componentContainer.components
     return checkGraph(components) && (!isCheckGraphCycles || checkGraphCycles(components))
   }
@@ -250,10 +261,10 @@ extension DIContainer {
         }
       }
     }
-		
+
     return successfull
   }
-	
+
   fileprivate func checkGraphCycles(_ components: [Component]) -> Bool {
     var success: Bool = true
     
@@ -290,7 +301,7 @@ extension DIContainer {
           
           let containsPrototype = stack.contains{ $0.component.lifeTime == .prototype }
           if containsPrototype {
-            log(.warning, msg: "You cycle: \(short) contains an object with lifetime - prototype. In some cases this can lead to an udesirable effect.  Full: \(infos)")
+            log(.info, msg: "You cycle: \(short) contains an object with lifetime - prototype. In some cases this can lead to an udesirable effect.  Full: \(infos)")
           }
           
           return true

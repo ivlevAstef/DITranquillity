@@ -11,12 +11,12 @@
 /// It isn't necessary to create several such classses on one framework - it willn't be convenient.
 public protocol DIFramework: class {
   /// bundle which is a framework. Default picks based on where the class.
-	/// But if the framework is statically link, it can be a problem, as all classes will be in the main bundle.
-	/// To obtain the bundle name framework, used:
-	/// ```
-	/// Bundle(path: Bundle.main.privateFrameworksPath! + "/" + {FRAMEWORK_NAME} + ".framework")
-	/// ```
-	/// This is the unsafe code, but you can rewrite it.
+  /// But if the framework is statically link, it can be a problem, as all classes will be in the main bundle.
+  /// To obtain the bundle name framework, used:
+  /// ```
+  /// Bundle(path: Bundle.main.privateFrameworksPath! + "/" + {FRAMEWORK_NAME} + ".framework")
+  /// ```
+  /// This is the unsafe code, but you can rewrite it.
   static var bundle: Bundle { get }
 
   /// Method inside of which you can registration a components.
@@ -38,17 +38,21 @@ public extension DIContainer {
   ///
   /// - Parameters:
   ///   - framework: the framework type
-  public func append(framework: DIFramework.Type) {
-    if let bundle = bundleStack.bundle {
+  /// - Returns: self
+  @discardableResult
+  public func append(framework: DIFramework.Type) -> DIContainer {
+    if let bundle = frameworkStack.last?.bundle {
       bundleContainer.dependency(bundle: bundle, import: framework.bundle)
     }
-    
+
     if includedParts.checkAndInsert(ObjectIdentifier(framework)) {
-      bundleStack.push(framework.bundle)
-      defer { bundleStack.pop() }
+      frameworkStack.push(framework)
+      defer { frameworkStack.pop() }
       
       framework.load(container: self)
     }
+
+    return self
   }
 }
 
@@ -59,7 +63,7 @@ public extension DIContainer {
   ///
   /// - Parameter framework: A framework that is imported into the current one. Import means communication designation, and not inclusion of all components.
   public func `import`(_ framework: DIFramework.Type) {
-    guard let bundle = bundleStack.bundle else {
+    guard let bundle = frameworkStack.last?.bundle else {
       log(.warning, msg: "Please, use import only into Framework")
       return
     }

@@ -27,11 +27,13 @@ protocol TypeGetter {
   static var type: DIAType { get }
 }
 
-extension ImplicitlyUnwrappedOptional: TypeGetter {
+protocol SwiftTypeGetter: TypeGetter {}
+
+extension ImplicitlyUnwrappedOptional: SwiftTypeGetter {
   static var type: DIAType { return Wrapped.self }
 }
 
-extension Optional: TypeGetter {
+extension Optional: SwiftTypeGetter {
   static var type: DIAType { return Wrapped.self }
 }
 
@@ -40,7 +42,7 @@ extension Optional: TypeGetter {
 /// - Parameter type: input type
 /// - Returns: type without Optional and ImplicitlyUnwrappedOptional
 func removeTypeWrappers(_ type: DIAType) -> DIAType {
-  if let typeGetter = type as? TypeGetter.Type {
+  if let typeGetter = type as? SwiftTypeGetter.Type {
     return removeTypeWrappers(typeGetter.type)
   }
   
@@ -52,15 +54,11 @@ func removeTypeWrappers(_ type: DIAType) -> DIAType {
 /// - Parameter type: input type
 /// - Returns: type without Optional, ImplicitlyUnwrappedOptional, DIByTag, DIMany
 func removeTypeWrappersFully(_ type: DIAType) -> DIAType {
-	if let typeGetter = type as? TypeGetter.Type {
-		return removeTypeWrappersFully(typeGetter.type)
-	} else if let manyType = type as? IsMany.Type {
-		return removeTypeWrappersFully(manyType.type)
-	}  else if let tagType = type as? IsTag.Type {
-		return removeTypeWrappersFully(tagType.type)
-	}
-	
-	return type
+  if let typeGetter = type as? TypeGetter.Type {
+    return removeTypeWrappersFully(typeGetter.type)
+  }
+
+  return type
 }
 
 

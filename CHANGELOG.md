@@ -1,3 +1,7 @@
+# v3.2.1
+* rename lifetimes: single, perRun(weak/strong), perContainer(weak/strong), objectGraph, prototype.
+* small improve internal code
+
 # v3.2.0
 * support injection by keyPath for swift4
 * small improve logging - add new log level `.verbose`

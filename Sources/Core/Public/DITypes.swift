@@ -52,23 +52,50 @@ public enum DILogLevel: Equatable {
   /// Verbose is needed to understand what is happening
   case verbose
 }
-  
+
 
 /// A object life time
 public enum DILifeTime: Equatable {
+  public enum ReferenceCounting {
+    /// Initialization when first accessed, and the library doesn't hold it
+    case weak
+    /// Initialization when first accessed, and the library hold it
+    case strong
+  }
+  
   /// The object is only one in the application. Initialization by call `DIContainer.initializeSingletonObjects()`
   case single
-  /// The object is only one in the application. Initialization when first accessed
-  case lazySingle
-  /// The object is only one in the application. Initialization when first accessed, and the library doesn't hold it
-  case weakSingle
-  /// The object is only one in one container. Initialization when first accessed
-  case perContainer
+  /// The object is only one in the one run.
+  case perRun(ReferenceCounting)
+  /// The object is only one in one container.
+  case perContainer(ReferenceCounting)
   /// The object is created every time, but during the creation will be created once
   case objectGraph
   /// The object is created every time
   case prototype
-  
+
   /// Default life time. Is taken from the settings. see: `DISetting.Defaults.lifeTime`
   static var `default`: DILifeTime { return DISetting.Defaults.lifeTime }
+
+  
+  @available(*, deprecated, message: "use `.perRun(.strong).`")
+  public static var lazySingle: DILifeTime { return .perRun(.strong) }
+  
+  @available(*, deprecated, message: "use `.perRun(.weak)`")
+  public static var weakSingle: DILifeTime { return .perRun(.weak) }
+  
+  public static func ==(_ lhs: DILifeTime, rhs: DILifeTime) -> Bool {
+    switch (lhs, rhs) {
+    case (.single, .single),
+         (.objectGraph, .objectGraph),
+         (.prototype, .prototype):
+      return true
+    case (.perRun(let subLhs), .perRun(let subRhs)):
+      return subLhs == subRhs
+    case (.perContainer(let subLhs), .perContainer(let subRhs)):
+      return subLhs == subRhs
+    default:
+      return false
+    }
+  }
 }

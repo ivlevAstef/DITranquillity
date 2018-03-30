@@ -14,17 +14,19 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 <img align="right" src="https://habrastorage.org/files/c6d/c89/5d0/c6dc895d02324b96bc679f41228ab6bf.png" alt="Tranquillity">  
 
 * Pure Swift Type Support
-* Initializer/Property/Method Injections
-* Named and Tags definitions
-* Type forwarding
-* Lifetimes: single, lazySingle, weakSingle, objectGraph, prototype
-* iOS/macOS Storyboard and StoryboardReference
-* Circular dependencies
-* Three level hierarchy: types, part, framework
-* Short resolve syntax
-* keyPath injection (since swift4.0)
-* Scan Parts/Frameworks
-* Very detail logs
+* Initializer injections [ru](Documentation/ru/registration.md#Разрешение-зависимостей-при-инициализации)
+* Property, Method injections [ru](Documentation/ru/injection.md#Внедрение)
+* Named, Tags definitions and Many [ru](Documentation/ru/modificators.md#Модификаторы)
+* Type forwarding [ru](Documentation/ru/registration.md#Указание-сервисов)
+* Lifetimes: single, perRun(weak/strong), perContainer(weak/strong), objectGraph, prototype [ru](Documentation/ru/lifetime.md#Время-жизни)
+* iOS/macOS Storyboard and StoryboardReference [ru](Documentation/ru/storyboard.md#storyboard)
+* Circular dependencies [ru](Documentation/ru/injection.md#Внедрение-циклических-зависимостей-через-свойства)
+* Three level hierarchy: types, part, framework [ru](Documentation/ru/part_framework.md#Части-и-Фреймворки)
+* Short resolve syntax [ru](Documentation/ru/resolve.md#Разрешение-зависимостей)
+* keyPath injection (since swift4.0) [ru](Documentation/ru/injection.md#Внедрение-зависимостей-через-свойства-используя-keypath)
+* Scan Parts/Frameworks [ru](Documentation/ru/scan.md#Поиск)
+* Very detail logs [ru](Documentation/ru/log.md#Логирование)
+* Validation at the run app [ru](DocuDocumentation/ru/validation.md#Валидация-контейнера)
 * Thread safe
 
 ## Usage
@@ -176,7 +178,7 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
   let storyboard = DIStoryboard.create(name: "Main", bundle: nil, container: container)
 
   let viewController = storyboard.instantiateInitialController() as! NSViewController
-  let window = NSApplication.shared().windows.first
+  let window = NSApplication.shared.windows.first
   window?.contentViewController = viewController
 }
 ```

@@ -34,17 +34,17 @@ class ViewController: UIViewController {
     print("Create injectMany: \(injectMany)")
     
     
-    print("Create injectGlobal: \(injectGlobal)")
+    print("Create injectGlobal: \(String(describing: injectGlobal))")
     
     // Optional
     let fooOpt: FooService? = *container
     let barOpt: BarService? = *container
-    print("Optional Foo:\(fooOpt) Optional Bar: \(barOpt)" )
+    print("Optional Foo:\(String(describing: fooOpt)) Optional Bar: \(String(describing: barOpt))" )
     
     // Optional Tag
     let fooTagOpt: FooService? = by(tag: CatTag.self, on: *container)
     let barTagOpt: BarService? = by(tag: DogTag.self, on: *container)
-    print("Optional tag Foo:\(fooTagOpt) Optional tag Bar: \(barTagOpt)" )
+    print("Optional tag Foo:\(String(describing: fooTagOpt)) Optional tag Bar: \(String(describing: barTagOpt))" )
     
     // Many
     let fooMany: [FooService] = many(*container)
