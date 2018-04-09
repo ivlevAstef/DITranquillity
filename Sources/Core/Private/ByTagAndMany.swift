@@ -6,7 +6,7 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-internal protocol IsTag: class, TypeGetter {
+internal protocol IsTag: class, WrappedType {
   static var tag: DITag { get }
   static var type: DIAType { get }
 }
@@ -23,7 +23,7 @@ public class InternalByTag<Tag, T>: IsTag {
 }
 
 
-internal protocol IsMany: class, TypeGetter {
+internal protocol IsMany: class, WrappedType {
   static var type: DIAType { get }
   static var inBundle: Bool { get }
 }

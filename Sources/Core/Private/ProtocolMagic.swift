@@ -1,5 +1,5 @@
 //
-//  Helpers.swift
+//  ProtocolMagic.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 14/06/16.
@@ -20,20 +20,25 @@ class Weak<T> {
   }
 }
 
+/// Delay types (lazy, provider)
+
+protocol DelayMaker: WrappedType {
+  init(_ factory: @escaping () -> Any?)
+}
 
 ////// For remove optional type
 
-protocol TypeGetter {
+protocol WrappedType {
   static var type: DIAType { get }
 }
 
-protocol SwiftTypeGetter: TypeGetter {}
+protocol SwiftWrappedType: WrappedType {}
 
-extension ImplicitlyUnwrappedOptional: SwiftTypeGetter {
+extension ImplicitlyUnwrappedOptional: SwiftWrappedType {
   static var type: DIAType { return Wrapped.self }
 }
 
-extension Optional: SwiftTypeGetter {
+extension Optional: SwiftWrappedType {
   static var type: DIAType { return Wrapped.self }
 }
 
@@ -42,8 +47,8 @@ extension Optional: SwiftTypeGetter {
 /// - Parameter type: input type
 /// - Returns: type without Optional and ImplicitlyUnwrappedOptional
 func removeTypeWrappers(_ type: DIAType) -> DIAType {
-  if let typeGetter = type as? SwiftTypeGetter.Type {
-    return removeTypeWrappers(typeGetter.type)
+  if let subtype = (type as? SwiftWrappedType.Type)?.type {
+    return removeTypeWrappers(subtype)
   }
   
   return type
@@ -54,13 +59,29 @@ func removeTypeWrappers(_ type: DIAType) -> DIAType {
 /// - Parameter type: input type
 /// - Returns: type without Optional, ImplicitlyUnwrappedOptional, DIByTag, DIMany
 func removeTypeWrappersFully(_ type: DIAType) -> DIAType {
-  if let typeGetter = type as? TypeGetter.Type {
-    return removeTypeWrappersFully(typeGetter.type)
+  if let subtype = (type as? WrappedType.Type)?.type {
+    return removeTypeWrappersFully(subtype)
   }
 
   return type
 }
 
+
+/// Check type for contains IsMany, use WrappedType for iteration
+func hasMany(in type: DIAType) -> Bool {
+  var type = removeTypeWrappers(type)
+
+  while !(type is IsMany.Type) {
+    if let subtype = (type as? WrappedType.Type)?.type {
+      type = removeTypeWrappers(subtype)
+      continue
+    }
+
+    return false
+  }
+
+  return true
+}
 
 ////// For optional check
 
