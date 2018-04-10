@@ -47,8 +47,9 @@ extension Optional: SwiftWrappedType {
 /// - Parameter type: input type
 /// - Returns: type without Optional and ImplicitlyUnwrappedOptional
 func removeTypeWrappers(_ type: DIAType) -> DIAType {
-  if let subtype = (type as? SwiftWrappedType.Type)?.type {
-    return removeTypeWrappers(subtype)
+  var type = type
+  while let subtype = (type as? SwiftWrappedType.Type)?.type {
+    type = subtype
   }
   
   return type
@@ -59,21 +60,22 @@ func removeTypeWrappers(_ type: DIAType) -> DIAType {
 /// - Parameter type: input type
 /// - Returns: type without Optional, ImplicitlyUnwrappedOptional, DIByTag, DIMany
 func removeTypeWrappersFully(_ type: DIAType) -> DIAType {
-  if let subtype = (type as? WrappedType.Type)?.type {
-    return removeTypeWrappersFully(subtype)
+  var type = type
+  while let subtype = (type as? WrappedType.Type)?.type {
+    type = subtype
   }
 
   return type
 }
 
 
-/// Check type for contains IsMany, use WrappedType for iteration
-func hasMany(in type: DIAType) -> Bool {
-  var type = removeTypeWrappers(type)
+/// Check type for contains predicate, use WrappedType for iteration
+private func has(in type: DIAType, _ predicate: (DIAType) -> Bool) -> Bool {
+  var type = type
 
-  while !(type is IsMany.Type) {
+  while !predicate(type) {
     if let subtype = (type as? WrappedType.Type)?.type {
-      type = removeTypeWrappers(subtype)
+      type = subtype
       continue
     }
 
@@ -81,6 +83,21 @@ func hasMany(in type: DIAType) -> Bool {
   }
 
   return true
+}
+
+@inline(__always)
+func hasMany(in type: DIAType) -> Bool {
+  return has(in: type) { $0 is IsMany.Type }
+}
+
+@inline(__always)
+func hasOptional(in type: DIAType) -> Bool {
+  return has(in: type) { $0 is IsOptional.Type }
+}
+
+@inline(__always)
+func hasDelayed(in type: DIAType) -> Bool {
+  return has(in: type) { $0 is DelayMaker.Type }
 }
 
 ////// For optional check

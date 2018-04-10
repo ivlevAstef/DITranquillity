@@ -237,7 +237,7 @@ extension DIContainer {
         let candidates = resolver.findComponents(by: parameter.type, with: parameter.name, from: bundle)
         let filtered = resolver.removeWhoDoesNotHaveInitialMethod(components: candidates)
         
-        let correct = 1 == filtered.count || parameter.type is IsMany.Type
+        let correct = 1 == filtered.count || parameter.many
         let hasCachedLifetime = filtered.isEmpty && candidates.contains{ $0.lifeTime != .prototype }
         let success = correct || parameter.optional || hasCachedLifetime
         successfull = successfull && success
@@ -328,7 +328,7 @@ extension DIContainer {
           let many = parameter.many
           for subcomponent in filtered {
             var stack = stack
-            stack.append((subcomponent, initial, cycle, many))
+            stack.append((subcomponent, initial, cycle || parameter.delayed, many))
             dfs(for: subcomponent, visited: visited, stack: stack)
           }
         }

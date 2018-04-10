@@ -60,6 +60,7 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
 
     XCTAssert(service.value === service.value)
   }
+  
 
   func test02_Provide() {
     let container = DIContainer()
@@ -142,6 +143,8 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
       .lifetime(.objectGraph)
     #endif
 
+    XCTAssert(container.validate(checkGraphCycles: true))
+
     let lazyA: LazyCycleA = *container
 
     XCTAssert(lazyA.b.a.description.contains("nil"))
@@ -164,10 +167,40 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
       .lifetime(.objectGraph)
     #endif
 
+    XCTAssert(container.validate(checkGraphCycles: true))
+
     let providerA: ProviderCycleA = *container
 
     XCTAssert(providerA.b.a.value === providerA)
     XCTAssert(providerA.b.a.value === providerA.b.a.value)
+  }
+
+  func test08_LazyOptional() {
+    let container = DIContainer()
+
+    container.register(FooService.init)
+
+    let service: Lazy<FooService?> = *container
+
+    XCTAssert(service.description.contains("nil"))
+
+    XCTAssertEqual(service.value?.foo(), "foo")
+
+    XCTAssert(service.description.contains("FooService"))
+
+    XCTAssert(service.value === service.value)
+  }
+
+  func test08_LazyOptionalNil() {
+    let container = DIContainer()
+
+    let service: Lazy<FooService?> = *container
+
+    XCTAssert(service.description.contains("nil"))
+
+    XCTAssertEqual(service.value?.foo(), nil)
+
+    XCTAssert(service.description.contains("nil"))
   }
 
 }

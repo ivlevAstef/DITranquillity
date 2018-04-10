@@ -16,8 +16,9 @@ final class MethodSignature {
     let type: DIAType
     let name: String?
     
-    var optional: Bool { return self.type is IsOptional.Type }
-    var many: Bool { return self.type is IsMany.Type }
+    var optional: Bool { return hasOptional(in: self.type) }
+    var many: Bool { return hasMany(in: self.type) }
+    var delayed: Bool { return hasDelayed(in: self.type) }
   }
   
   let parameters: [Parameter]
