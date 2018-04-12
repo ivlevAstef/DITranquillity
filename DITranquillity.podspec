@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'DITranquillity'
-  s.version      = '3.2.1'
+  s.version      = '3.2.2'
   s.summary      = 'DITranquillity - Dependency injection for iOS/macOS/tvOS (Swift) '
 
   s.description  = <<-DESC
@@ -31,5 +31,10 @@ Pod::Spec.new do |s|
   s.ios.source_files = core_headers, core_sources, 'Sources/Storyboard/iOS-tvOS/*.{h,m}'
   s.tvos.source_files = core_headers, core_sources, 'Sources/Storyboard/iOS-tvOS/*.{h,m}'
   s.osx.source_files = core_headers, core_sources, 'Sources/Storyboard/OSX/*.{h,m}'
+
+  subspec 'Lazy' do |sp|
+    sp.source_files = 'Sources/Extensions/SwiftLazy.swift'
+    sp.dependency = 'SwiftLazy'
+  end
 
 end

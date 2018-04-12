@@ -24,9 +24,10 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 * Three level hierarchy: types, part, framework [ru](Documentation/ru/part_framework.md#Части-и-Фреймворки)
 * Short resolve syntax [ru](Documentation/ru/resolve.md#Разрешение-зависимостей)
 * keyPath injection (since swift4.0) [ru](Documentation/ru/injection.md#Внедрение-зависимостей-через-свойства-используя-keypath)
-* Scan Parts/Frameworks [ru](Documentation/ru/scan.md#Поиск)
+* Delayed injection [ru](delayed_injection.md#Отложенное-внедрение)
 * Very detail logs [ru](Documentation/ru/log.md#Логирование)
 * Validation at the run app [ru](DocuDocumentation/ru/validation.md#Валидация-контейнера)
+* Scan Parts/Frameworks [ru](Documentation/ru/scan.md#Поиск)
 * Thread safe
 
 ## Usage

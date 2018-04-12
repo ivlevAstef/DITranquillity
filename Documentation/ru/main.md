@@ -16,6 +16,7 @@ DITranquallity - небольшая библиотека для внедрени
 * [Поиск частей, фреймворков](scan.md#Поиск)
 * [Логирование](log.md#Логирование)
 * [Валидация графа зависимостей](validation.md#Валидация-контейнера)
+* [Отложенное внедрение](delayed_injection.md#Отложенное-внедрение)
 * Потокобезопасный
 
 # Главы
@@ -71,6 +72,7 @@ DITranquallity - небольшая библиотека для внедрени
 * [Создание Storyboard](storyboard.md#Создание-storyboard)
 * [StoryboardReference](storyboard.md#Storyboardreference)
 
+## [Отложенное внедрение](delayed_injection.md#Отложенное-внедрение)
 
 ## [Поиск](scan.md#Поиск)
 * [Предыстория](scan.md#Предыстория)
