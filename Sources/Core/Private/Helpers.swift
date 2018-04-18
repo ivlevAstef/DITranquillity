@@ -29,6 +29,13 @@ protocol TypeGetter {
 
 protocol SwiftTypeGetter: TypeGetter {}
 
+#if swift(>=4.1)
+#else
+extension ImplicitlyUnwrappedOptional: SwiftTypeGetter {
+	static var type: DIAType { return Wrapped.self }
+}
+#endif
+
 extension Optional: SwiftTypeGetter {
   static var type: DIAType { return Wrapped.self }
 }
@@ -114,3 +121,12 @@ func getBundle(for type: DIAType) -> Bundle? {
   }
   return nil
 }
+
+#if swift(>=4.1)
+#else
+extension Sequence {
+  func compactMap<ElementOfResult>(_ transform: (Element) throws -> ElementOfResult?) rethrows -> [ElementOfResult] {
+	  return try flatMap(transform)
+  }
+}
+#endif

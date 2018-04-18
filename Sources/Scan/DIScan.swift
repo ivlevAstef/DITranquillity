@@ -71,8 +71,12 @@ private let scanned: [(cls: AnyClass, bpath: String)] = {
       }
     #endif
   }
-  
-  allClasses.deallocate()
+	
+  #if swift(>=4.1)
+	allClasses.deallocate()
+  #else
+	allClasses.deallocate(capacity: Int(expectedClassCount))
+  #endif
   
   return result
 }()
