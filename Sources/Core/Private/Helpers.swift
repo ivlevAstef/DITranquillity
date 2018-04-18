@@ -29,10 +29,6 @@ protocol TypeGetter {
 
 protocol SwiftTypeGetter: TypeGetter {}
 
-extension ImplicitlyUnwrappedOptional: SwiftTypeGetter {
-  static var type: DIAType { return Wrapped.self }
-}
-
 extension Optional: SwiftTypeGetter {
   static var type: DIAType { return Wrapped.self }
 }

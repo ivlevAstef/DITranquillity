@@ -14,12 +14,12 @@ public protocol DIScanned {}
 open class DIScan {  
   static func types(_ valid: (AnyClass)->Bool, _ predicate: (AnyClass)->Bool, _ bundle: Bundle?) -> [AnyClass] {
     if let bpath = bundle?.bundlePath {
-      return scanned.flatMap { cls, clsBPath in
+      return scanned.compactMap { cls, clsBPath in
         valid(cls) && bpath == clsBPath && predicate(cls) ? cls : nil
       }
     }
     
-    return scanned.flatMap { cls, _ in
+    return scanned.compactMap { cls, _ in
       valid(cls) && predicate(cls) ? cls : nil
     }
   }
@@ -72,7 +72,7 @@ private let scanned: [(cls: AnyClass, bpath: String)] = {
     #endif
   }
   
-  allClasses.deallocate(capacity: Int(expectedClassCount))
+  allClasses.deallocate()
   
   return result
 }()
