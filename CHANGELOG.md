@@ -1,3 +1,6 @@
+# v3.2.2
+* support swift4.1 Thanks 'Nekitosss'
+
 # v3.2.1
 * rename lifetimes: single, perRun(weak/strong), perContainer(weak/strong), objectGraph, prototype.
 * small improve internal code

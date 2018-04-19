@@ -32,7 +32,7 @@ protocol SwiftTypeGetter: TypeGetter {}
 #if swift(>=4.1)
 #else
 extension ImplicitlyUnwrappedOptional: SwiftTypeGetter {
-	static var type: DIAType { return Wrapped.self }
+  static var type: DIAType { return Wrapped.self }
 }
 #endif
 
@@ -125,8 +125,9 @@ func getBundle(for type: DIAType) -> Bundle? {
 #if swift(>=4.1)
 #else
 extension Sequence {
+  @inline(__always)
   func compactMap<ElementOfResult>(_ transform: (Element) throws -> ElementOfResult?) rethrows -> [ElementOfResult] {
-	  return try flatMap(transform)
+    return try flatMap(transform)
   }
 }
 #endif
