@@ -150,7 +150,7 @@ class Resolver {
     if hasMany {
       let filterComponents = components.filter{ !stack.contains($0.info) } // Remove objects contains in stack
       assert(nil == object, "Many injection not supported")
-      return filterComponents.flatMap{ makeObject(by: $0, use: nil) }
+		return filterComponents.compactMap{ makeObject(by: $0, use: nil) }
     }
     
     if let component = components.first, 1 == components.count {
