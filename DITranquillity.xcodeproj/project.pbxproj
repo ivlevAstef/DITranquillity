@@ -43,6 +43,8 @@
 		16D7BCBE1DB086B900A29A9F /* DIScanPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB71DB086B000A29A9F /* DIScanPart.swift */; };
 		16D7BCBF1DB086B900A29A9F /* DIScanFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB61DB086B000A29A9F /* DIScanFramework.swift */; };
 		16D7BCC01DB086B900A29A9F /* DIScanPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB71DB086B000A29A9F /* DIScanPart.swift */; };
+		840F04052089D7710035EF74 /* UIViewController+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 840F04042089D7700035EF74 /* UIViewController+Swizzling.m */; };
+		840F040B2089F5190035EF74 /* UITableView+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 840F040A2089F5190035EF74 /* UITableView+Swizzling.m */; };
 		BA9A275B208851C300584CA0 /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58875541D0944AE00D6DE92 /* DITranquillity.framework */; };
 		BA9A279D208851FF00584CA0 /* AccessStoryboard1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA9A2765208851F100584CA0 /* AccessStoryboard1.storyboard */; };
 		BA9A279E208851FF00584CA0 /* AccessStoryboard2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA9A2766208851F100584CA0 /* AccessStoryboard2.storyboard */; };
@@ -138,6 +140,8 @@
 		16D7BCB51DB086B000A29A9F /* DIScan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScan.swift; sourceTree = "<group>"; };
 		16D7BCB61DB086B000A29A9F /* DIScanFramework.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScanFramework.swift; sourceTree = "<group>"; };
 		16D7BCB71DB086B000A29A9F /* DIScanPart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScanPart.swift; sourceTree = "<group>"; };
+		840F04042089D7700035EF74 /* UIViewController+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Swizzling.m"; sourceTree = "<group>"; };
+		840F040A2089F5190035EF74 /* UITableView+Swizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Swizzling.m"; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9A2756208851C300584CA0 /* DITranquillityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DITranquillityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9A2765208851F100584CA0 /* AccessStoryboard1.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AccessStoryboard1.storyboard; sourceTree = "<group>"; };
@@ -297,6 +301,8 @@
 				D579616C1F52BA160079DE8C /* DIStoryboardBase.h */,
 				D579616D1F52BA160079DE8C /* DIStoryboardBase.m */,
 				D57961881F52C4BC0079DE8C /* UIStoryboard+Swizzling.m */,
+				840F04042089D7700035EF74 /* UIViewController+Swizzling.m */,
+				840F040A2089F5190035EF74 /* UITableView+Swizzling.m */,
 			);
 			path = "iOS-tvOS";
 			sourceTree = "<group>";
@@ -660,6 +666,7 @@
 				115C24C81E6527CA00CC8BC7 /* Synchronize.swift in Sources */,
 				163DDDC61DB9C84E0003DE54 /* DITypes.swift in Sources */,
 				D55369181EE6E2AE00015926 /* BundleContainer.swift in Sources */,
+				840F04052089D7710035EF74 /* UIViewController+Swizzling.m in Sources */,
 				D57961691F526FBA0079DE8C /* StoryboardContainerMap.swift in Sources */,
 				16640A741D9E1E7B00707BFC /* Resolver.swift in Sources */,
 				D57961821F52C2BD0079DE8C /* DIStoryboard.swift in Sources */,
@@ -672,6 +679,7 @@
 				D57961621F4FC7440079DE8C /* Component.swift in Sources */,
 				D51666FE1F1FBFAA001AD9F5 /* DIPart.swift in Sources */,
 				16D7BCB91DB086B000A29A9F /* DIScanFramework.swift in Sources */,
+				840F040B2089F5190035EF74 /* UITableView+Swizzling.m in Sources */,
 				D55369101EE658EA00015926 /* TypeKey.swift in Sources */,
 				1651E7041E8631A900E967B4 /* DIComponentBuilder.Injection.swift in Sources */,
 				D57961891F52C4BC0079DE8C /* UIStoryboard+Swizzling.m in Sources */,
@@ -973,6 +981,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
@@ -1004,6 +1013,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALID_ARCHS = "arm64 armv7 armv7s";

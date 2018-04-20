@@ -1,14 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="60K-04-uUT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="60K-04-uUT">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Table View Controller-->
+        <scene sceneID="kTW-Fj-eEY">
+            <objects>
+                <tableViewController storyboardIdentifier="TableViewController1" id="6AH-bz-Ho9" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="wet-HV-oub">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellID" id="r3z-js-ngF" customClass="TestCell" customModule="DITranquillityTests" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="r3z-js-ngF" id="DDM-UX-UAu">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="6AH-bz-Ho9" id="7Fk-Xh-Acw"/>
+                            <outlet property="delegate" destination="6AH-bz-Ho9" id="F71-s2-2vv"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Khg-Sj-tEC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1228" y="-439"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="DvS-66-zy5">
+            <objects>
+                <viewController storyboardIdentifier="TableViewController2" id="61y-S6-pKx" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gYV-FZ-xBZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="U6I-9u-GBM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5YI-J4-MKD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mFa-Q1-nL7">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellID" id="625-TF-b2Y" customClass="TestCell" customModule="DITranquillityTests" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="625-TF-b2Y" id="v9i-o7-o81">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="mFa-Q1-nL7" secondAttribute="trailing" id="Dkm-40-q94"/>
+                            <constraint firstItem="mFa-Q1-nL7" firstAttribute="leading" secondItem="5YI-J4-MKD" secondAttribute="leading" id="tvW-LF-fQj"/>
+                            <constraint firstItem="U6I-9u-GBM" firstAttribute="top" secondItem="mFa-Q1-nL7" secondAttribute="bottom" id="wxA-Pk-DL9"/>
+                            <constraint firstItem="mFa-Q1-nL7" firstAttribute="top" secondItem="gYV-FZ-xBZ" secondAttribute="bottom" id="wyx-bM-5jn"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u2b-RD-oWx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-447" y="-439"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="Gu9-ct-Mct">
             <objects>
@@ -45,7 +113,7 @@
         <!--Test View Controller-->
         <scene sceneID="MIQ-Eb-vd8">
             <objects>
-                <viewController storyboardIdentifier="testID" id="uD5-0H-5pK" customClass="TestViewController" customModule="DITranquillityTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="testID" id="uD5-0H-5pK" customClass="TestViewController" customModule="DITranquillityTests" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MJO-Qs-Nfh"/>
                         <viewControllerLayoutGuide type="bottom" id="4iX-cX-kJE"/>
@@ -77,10 +145,18 @@
                                     <segue destination="iue-Dy-khs" kind="show" identifier="ShowReferenceViewController" id="23c-D4-hEn"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="koy-3W-Psx" customClass="TestView" customModule="DITranquillityTests" customModuleProvider="target">
+                                <rect key="frame" x="67" y="138" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="TDE-iM-SYb"/>
+                    <connections>
+                        <outlet property="testView" destination="koy-3W-Psx" id="Viu-un-gat"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0UM-Fj-VfQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -89,7 +165,7 @@
         <!--Test View Controller2-->
         <scene sceneID="YGb-u0-Ies">
             <objects>
-                <viewController storyboardIdentifier="TestVC2" useStoryboardIdentifierAsRestorationIdentifier="YES" id="s3K-V2-ZD3" customClass="TestViewController2" customModule="DITranquillityTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TestVC2" useStoryboardIdentifierAsRestorationIdentifier="YES" id="s3K-V2-ZD3" customClass="TestViewController2" customModule="DITranquillityTests" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XHO-jL-wmc"/>
                         <viewControllerLayoutGuide type="bottom" id="aoi-zJ-wOH"/>
@@ -107,7 +183,7 @@
         <!--Test View ContainerVC-->
         <scene sceneID="g2f-h5-dKm">
             <objects>
-                <viewController id="Vnf-Oc-1pL" customClass="TestViewContainerVC" customModule="DITranquillityTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Vnf-Oc-1pL" customClass="TestViewContainerVC" customModule="DITranquillityTests" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="b2D-f5-5yf"/>
                         <viewControllerLayoutGuide type="bottom" id="5bt-xQ-YhW"/>

@@ -14,7 +14,7 @@
 #if os(iOS) || os(tvOS) || os(OSX)
 
 /// The class responsible for injecting dependencies in the view/window controller.
-final class StoryboardResolver {
+final public class StoryboardResolver: NSObject {
   init(container: DIContainer, bundle: Bundle?) {
     self.container = container
     self.bundle = bundle ?? Bundle.main
@@ -23,10 +23,28 @@ final class StoryboardResolver {
   #if os(iOS) || os(tvOS)
 
   func inject(into viewController: UIViewController) {
+    setStoryboardResolver(to: viewController)
     self.container.inject(into: viewController, from: bundle)
-
+    
     for childVC in viewController.childViewControllers {
+      setStoryboardResolver(to: childVC)
       inject(into: childVC)
+    }
+  }
+  
+  private func setStoryboardResolver(to object: AnyObject) {
+    objc_setAssociatedObject(object, _DIStoryboardBase.resolver_UNIQUE_VC_KEY(), self, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+  }
+  
+  @objc public func inject(into view: UIView?) {
+    guard let view = view else { return }
+    if view is UITableView {
+      setStoryboardResolver(to: view)
+    }
+    self.container.inject(into: view, from: nil)
+        
+    for subview in view.subviews {
+        inject(into: subview)
     }
   }
 

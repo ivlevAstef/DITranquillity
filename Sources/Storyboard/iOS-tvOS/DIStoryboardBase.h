@@ -12,4 +12,7 @@
 
 + (nonnull instancetype)_create:(nonnull NSString*)name bundle:(nullable NSBundle*)storyboardBundleOrNil;
 
++(const void * _Nonnull) RESOLVER_UNIQUE_TABLEVIEW_KEY;
++(const void * _Nonnull) RESOLVER_UNIQUE_VC_KEY;
+    
 @end

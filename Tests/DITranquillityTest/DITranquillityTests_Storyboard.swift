@@ -9,7 +9,18 @@
 import XCTest
 import DITranquillity
 
+class TestView: UIView {
+  var service: ServiceProtocol!
+}
+
+class TestCell: UITableViewCell {
+  var service: ServiceProtocol!
+}
+
 class TestViewController: UIViewController {
+  
+  @IBOutlet weak var testView: TestView!
+    
   var service: ServiceProtocol!
   
   var containerVC: TestViewContainerVC!
@@ -371,4 +382,82 @@ class DITranquillityTests_Storyboard: XCTestCase {
     _ = vc.view // for call viewDidLoad() and full initialization
     XCTAssertEqual(vc.service.foo(), "foo")
   }
+  
+  
+  func test16_InjectToCellOnUITableViewController() {
+    let container = DIContainer()
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+    
+    container.register(TestViewController.self)
+      .injection { $0.service = $1 }
+    
+    container.register(TestCell.self)
+      .injection(\.service)
+    
+    container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+      .lifetime(.perRun(.weak))
+    
+    let storyboard: UIStoryboard = *container
+    
+    let tableVC: UITableViewController = storyboard.instantiateViewController(withIdentifier: "TableViewController1") as! UITableViewController
+    
+    
+    let testDataSource = TableViewTestDataSource()
+    tableVC.tableView.dataSource = testDataSource
+    tableVC.tableView.dataSource!.tableView(tableVC.tableView, cellForRowAt: .init(row: 0, section: 0))
+    
+    XCTAssertTrue(testDataSource.result)
+  }
+  
+  
+  func test17_InjectToCellOnUITableView() {
+    let container = DIContainer()
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+    
+    container.register(TestViewController.self)
+      .injection { $0.service = $1 }
+    
+    container.register(TestCell.self)
+      .injection(\.service)
+    
+    container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+      .lifetime(.perRun(.weak))
+    
+    let storyboard: UIStoryboard = *container
+    
+    let tableVC = storyboard.instantiateViewController(withIdentifier: "TableViewController2") 
+    let tableView = tableVC.view.subviews[0] as! UITableView
+    
+    let testDataSource = TableViewTestDataSource()
+    tableView.dataSource = testDataSource
+    tableView.dataSource!.tableView(tableView, cellForRowAt: .init(row: 0, section: 0))
+    
+    XCTAssertTrue(testDataSource.result)
+  }
+  
+}
+
+
+class TableViewTestDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
+  
+  var result = false
+  
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return 1
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 10
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "CellID", for: indexPath) as! TestCell
+    result = cell.service != nil
+    return cell
+  }
+  
 }
