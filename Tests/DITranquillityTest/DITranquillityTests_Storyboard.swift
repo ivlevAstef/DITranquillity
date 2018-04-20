@@ -17,6 +17,10 @@ class TestCell: UITableViewCell {
   var service: ServiceProtocol!
 }
 
+class TestCollectionCell: UICollectionViewCell {
+    var service: ServiceProtocol!
+}
+
 class TestViewController: UIViewController {
   
   @IBOutlet weak var testView: TestView!
@@ -439,6 +443,32 @@ class DITranquillityTests_Storyboard: XCTestCase {
     XCTAssertTrue(testDataSource.result)
   }
   
+  
+  func test16_InjectToCellOnCollectionVIewController() {
+    let container = DIContainer()
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+    
+    container.register(TestCollectionCell.self)
+      .injection(\.service)
+    
+    container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+      .lifetime(.perRun(.weak))
+    
+    let storyboard: UIStoryboard = *container
+    
+    let tableVC = storyboard.instantiateViewController(withIdentifier: "CollectionViewStoryboard") as! UICollectionViewController
+    
+    
+    let testDataSource = CollectionViewTestDataSource()
+    tableVC.collectionView!.dataSource = testDataSource
+    tableVC.collectionView!.dataSource?.collectionView(tableVC.collectionView!, cellForItemAt: .init(row: 0, section: 0))
+    
+    XCTAssertTrue(testDataSource.result)
+  }
+  
+  
 }
 
 
@@ -456,6 +486,27 @@ class TableViewTestDataSource: NSObject, UITableViewDataSource, UITableViewDeleg
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "CellID", for: indexPath) as! TestCell
+    result = cell.service != nil
+    return cell
+  }
+  
+}
+
+
+class CollectionViewTestDataSource: NSObject, UICollectionViewDataSource {
+  
+  var result = false
+  
+  func numberOfSections(in collectionView: UICollectionView) -> Int {
+    return 1
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 10
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellID", for: indexPath) as! TestCollectionCell
     result = cell.service != nil
     return cell
   }

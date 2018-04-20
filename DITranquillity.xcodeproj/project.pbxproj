@@ -45,6 +45,7 @@
 		16D7BCC01DB086B900A29A9F /* DIScanPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB71DB086B000A29A9F /* DIScanPart.swift */; };
 		840F04052089D7710035EF74 /* UIViewController+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 840F04042089D7700035EF74 /* UIViewController+Swizzling.m */; };
 		840F040B2089F5190035EF74 /* UITableView+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 840F040A2089F5190035EF74 /* UITableView+Swizzling.m */; };
+		84D86E75208A23AD00AF4A7F /* UICollectionView+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D86E74208A23AD00AF4A7F /* UICollectionView+Swizzling.m */; };
 		BA9A275B208851C300584CA0 /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58875541D0944AE00D6DE92 /* DITranquillity.framework */; };
 		BA9A279D208851FF00584CA0 /* AccessStoryboard1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA9A2765208851F100584CA0 /* AccessStoryboard1.storyboard */; };
 		BA9A279E208851FF00584CA0 /* AccessStoryboard2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA9A2766208851F100584CA0 /* AccessStoryboard2.storyboard */; };
@@ -142,6 +143,7 @@
 		16D7BCB71DB086B000A29A9F /* DIScanPart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScanPart.swift; sourceTree = "<group>"; };
 		840F04042089D7700035EF74 /* UIViewController+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Swizzling.m"; sourceTree = "<group>"; };
 		840F040A2089F5190035EF74 /* UITableView+Swizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Swizzling.m"; sourceTree = "<group>"; };
+		84D86E74208A23AD00AF4A7F /* UICollectionView+Swizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+Swizzling.m"; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9A2756208851C300584CA0 /* DITranquillityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DITranquillityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9A2765208851F100584CA0 /* AccessStoryboard1.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AccessStoryboard1.storyboard; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 				D57961881F52C4BC0079DE8C /* UIStoryboard+Swizzling.m */,
 				840F04042089D7700035EF74 /* UIViewController+Swizzling.m */,
 				840F040A2089F5190035EF74 /* UITableView+Swizzling.m */,
+				84D86E74208A23AD00AF4A7F /* UICollectionView+Swizzling.m */,
 			);
 			path = "iOS-tvOS";
 			sourceTree = "<group>";
@@ -678,6 +681,7 @@
 				D55368F21EE5BD3300015926 /* Log.swift in Sources */,
 				D57961621F4FC7440079DE8C /* Component.swift in Sources */,
 				D51666FE1F1FBFAA001AD9F5 /* DIPart.swift in Sources */,
+				84D86E75208A23AD00AF4A7F /* UICollectionView+Swizzling.m in Sources */,
 				16D7BCB91DB086B000A29A9F /* DIScanFramework.swift in Sources */,
 				840F040B2089F5190035EF74 /* UITableView+Swizzling.m in Sources */,
 				D55369101EE658EA00015926 /* TypeKey.swift in Sources */,

@@ -38,7 +38,7 @@ final public class StoryboardResolver: NSObject {
   
   @objc public func inject(into view: UIView?) {
     guard let view = view else { return }
-    if view is UITableView {
+    if view is UITableView || view is UICollectionView {
       setStoryboardResolver(to: view)
     }
     self.container.inject(into: view, from: nil)
