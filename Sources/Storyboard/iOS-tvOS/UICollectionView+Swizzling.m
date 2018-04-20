@@ -49,15 +49,15 @@
 }
 
 
--(StoryboardResolver *)storyboardResolver {
-    return (StoryboardResolver *)objc_getAssociatedObject(self, [_DIStoryboardBase RESOLVER_UNIQUE_VC_KEY]);
+-(NSDIContainer *)diContainer {
+    return (NSDIContainer *)objc_getAssociatedObject(self, [_DIStoryboardBase RESOLVER_UNIQUE_VC_KEY]);
 }
 
 
 - (__kindof UICollectionViewCell *)di_dequeueReusableCellWithReuseIdentifier:(NSString *)identifier forIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [self di_dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-    [self.storyboardResolver injectInto:cell];
-    return cell;
+  UICollectionViewCell *cell = [self di_dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+  [[self diContainer] injectInto:cell];
+  return cell;
 }
 
 

@@ -46,6 +46,9 @@
 		840F04052089D7710035EF74 /* UIViewController+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 840F04042089D7700035EF74 /* UIViewController+Swizzling.m */; };
 		840F040B2089F5190035EF74 /* UITableView+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 840F040A2089F5190035EF74 /* UITableView+Swizzling.m */; };
 		84D86E75208A23AD00AF4A7F /* UICollectionView+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D86E74208A23AD00AF4A7F /* UICollectionView+Swizzling.m */; };
+		84D86E77208A3B0F00AF4A7F /* NSDIContainerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 84D86E76208A3B0F00AF4A7F /* NSDIContainerProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		84D86E78208A3B0F00AF4A7F /* NSDIContainerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 84D86E76208A3B0F00AF4A7F /* NSDIContainerProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		84D86E79208A3B0F00AF4A7F /* NSDIContainerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 84D86E76208A3B0F00AF4A7F /* NSDIContainerProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA9A275B208851C300584CA0 /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58875541D0944AE00D6DE92 /* DITranquillity.framework */; };
 		BA9A279D208851FF00584CA0 /* AccessStoryboard1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA9A2765208851F100584CA0 /* AccessStoryboard1.storyboard */; };
 		BA9A279E208851FF00584CA0 /* AccessStoryboard2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA9A2766208851F100584CA0 /* AccessStoryboard2.storyboard */; };
@@ -144,6 +147,7 @@
 		840F04042089D7700035EF74 /* UIViewController+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Swizzling.m"; sourceTree = "<group>"; };
 		840F040A2089F5190035EF74 /* UITableView+Swizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Swizzling.m"; sourceTree = "<group>"; };
 		84D86E74208A23AD00AF4A7F /* UICollectionView+Swizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+Swizzling.m"; sourceTree = "<group>"; };
+		84D86E76208A3B0F00AF4A7F /* NSDIContainerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSDIContainerProtocol.h; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9A2756208851C300584CA0 /* DITranquillityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DITranquillityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9A2765208851F100584CA0 /* AccessStoryboard1.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AccessStoryboard1.storyboard; sourceTree = "<group>"; };
@@ -278,6 +282,7 @@
 				119F4FC81E56069200B2DFA1 /* AutoResolve */,
 				163DDDC51DB9C84E0003DE54 /* DITypes.swift */,
 				16640A6A1D9E1E7B00707BFC /* DIContainer.swift */,
+				84D86E76208A3B0F00AF4A7F /* NSDIContainerProtocol.h */,
 				16640A681D9E1E7B00707BFC /* DIComponentBuilder.swift */,
 				D512552C1EE06F010067796B /* DISettings.swift */,
 				D57961631F4FC7F40079DE8C /* DIByTagAndMany.swift */,
@@ -404,6 +409,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84D86E78208A3B0F00AF4A7F /* NSDIContainerProtocol.h in Headers */,
 				169C0DDF1DA3501F001F0AD5 /* DITranquillity.h in Headers */,
 				D579617B1F52BA5D0079DE8C /* DIStoryboardBase.h in Headers */,
 			);
@@ -413,6 +419,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84D86E79208A3B0F00AF4A7F /* NSDIContainerProtocol.h in Headers */,
 				169C0E451DA35CBE001F0AD5 /* DITranquillity.h in Headers */,
 				D57961701F52BA160079DE8C /* DIStoryboardBase.h in Headers */,
 			);
@@ -422,6 +429,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84D86E77208A3B0F00AF4A7F /* NSDIContainerProtocol.h in Headers */,
 				16640A881D9E1E7B00707BFC /* DITranquillity.h in Headers */,
 				D579616E1F52BA160079DE8C /* DIStoryboardBase.h in Headers */,
 			);

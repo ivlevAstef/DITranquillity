@@ -48,13 +48,25 @@
     }
 }
     
--(StoryboardResolver *)storyboardResolver {
-    return (StoryboardResolver *)objc_getAssociatedObject(self, [_DIStoryboardBase RESOLVER_UNIQUE_VC_KEY]);
+-(NSDIContainer *)diContainer {
+    return (NSDIContainer *)objc_getAssociatedObject(self, [_DIStoryboardBase RESOLVER_UNIQUE_VC_KEY]);
 }
     
 - (void)di_loadView {
-    [self di_loadView];
-    [self.storyboardResolver injectInto: [self viewIfLoaded]];
+  [self di_loadView];
+  [self passContainerInto:self.view container:[self diContainer]];
+}
+
+- (void)passContainerInto:(UIView *)view container:(NSDIContainer *)container {
+  [[self diContainer] injectInto:view];
+  if ([view isKindOfClass:[UITableView class]] || [view isKindOfClass:[UICollectionView self]]) {
+    objc_setAssociatedObject(view, [_DIStoryboardBase RESOLVER_UNIQUE_VC_KEY], container, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  }
+  
+  for (int i = 0; i < [view.subviews count]; i++) {
+    UIView *subview = [view.subviews objectAtIndex:i];
+    [self passContainerInto: subview container:container];
+  }
 }
     
 @end

@@ -17,12 +17,7 @@
 +(const void * _Nonnull) RESOLVER_UNIQUE_VC_KEY {
     return &resolverVCKey;
 }
-  
-+(const void * _Nonnull) RESOLVER_UNIQUE_TABLEVIEW_KEY {
-  return &resolverViewKey;
-}
 
 static NSString *resolverVCKey = @"";
-static NSString *resolverViewKey = @"";
     
 @end
