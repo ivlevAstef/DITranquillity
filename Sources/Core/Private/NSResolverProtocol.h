@@ -7,8 +7,10 @@
 //
 
 
-@protocol NSDIContainerProtocol
+@protocol NSResolverProtocol
 
++(const void * _Nonnull) getResolverUniqueAssociatedKey;
+  
 -(void)injectInto:(nonnull id)object;
 
 @end

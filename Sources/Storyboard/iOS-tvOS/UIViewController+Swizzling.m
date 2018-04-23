@@ -48,24 +48,24 @@
     }
 }
     
--(NSDIContainer *)diContainer {
-    return (NSDIContainer *)objc_getAssociatedObject(self, [_DIStoryboardBase RESOLVER_UNIQUE_VC_KEY]);
+-(NSResolver *)nsResolver {
+    return (NSResolver *)objc_getAssociatedObject(self, [NSResolver getResolverUniqueAssociatedKey]);
 }
     
 - (void)di_loadView {
   [self di_loadView];
-  [self passContainerInto:self.view container:[self diContainer]];
+  [self passContainerInto:self.view container:[self nsResolver]];
 }
 
-- (void)passContainerInto:(UIView *)view container:(NSDIContainer *)container {
-  [[self diContainer] injectInto:view];
-  if ([view isKindOfClass:[UITableView class]] || [view isKindOfClass:[UICollectionView self]]) {
-    objc_setAssociatedObject(view, [_DIStoryboardBase RESOLVER_UNIQUE_VC_KEY], container, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)passContainerInto:(UIView *)view container:(NSResolver *)nsResolver {
+  [nsResolver injectInto:view];
+  if ([view isKindOfClass:[UITableView class]] || [view isKindOfClass:[UICollectionView class]]) {
+    objc_setAssociatedObject(view, [NSResolver getResolverUniqueAssociatedKey], nsResolver, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
   }
   
   for (int i = 0; i < [view.subviews count]; i++) {
     UIView *subview = [view.subviews objectAtIndex:i];
-    [self passContainerInto: subview container:container];
+    [self passContainerInto: subview container:nsResolver];
   }
 }
     

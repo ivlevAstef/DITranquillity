@@ -10,6 +10,8 @@
 		115C24C81E6527CA00CC8BC7 /* Synchronize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C24C71E6527CA00CC8BC7 /* Synchronize.swift */; };
 		115C24C91E6527CA00CC8BC7 /* Synchronize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C24C71E6527CA00CC8BC7 /* Synchronize.swift */; };
 		115C24CA1E6527CA00CC8BC7 /* Synchronize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115C24C71E6527CA00CC8BC7 /* Synchronize.swift */; };
+		11759EEB208E5DF0003DE6E1 /* DIComponentBuilder+SubviewsInject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11759EEA208E5DF0003DE6E1 /* DIComponentBuilder+SubviewsInject.swift */; };
+		11759EEC208E5DF0003DE6E1 /* DIComponentBuilder+SubviewsInject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11759EEA208E5DF0003DE6E1 /* DIComponentBuilder+SubviewsInject.swift */; };
 		119F4FD61E56069200B2DFA1 /* DIContainer.Reg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FCC1E56069200B2DFA1 /* DIContainer.Reg.swift */; };
 		119F4FD71E56069200B2DFA1 /* DIContainer.Reg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FCC1E56069200B2DFA1 /* DIContainer.Reg.swift */; };
 		119F4FD81E56069200B2DFA1 /* DIContainer.Reg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F4FCC1E56069200B2DFA1 /* DIContainer.Reg.swift */; };
@@ -46,9 +48,9 @@
 		840F04052089D7710035EF74 /* UIViewController+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 840F04042089D7700035EF74 /* UIViewController+Swizzling.m */; };
 		840F040B2089F5190035EF74 /* UITableView+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 840F040A2089F5190035EF74 /* UITableView+Swizzling.m */; };
 		84D86E75208A23AD00AF4A7F /* UICollectionView+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D86E74208A23AD00AF4A7F /* UICollectionView+Swizzling.m */; };
-		84D86E77208A3B0F00AF4A7F /* NSDIContainerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 84D86E76208A3B0F00AF4A7F /* NSDIContainerProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		84D86E78208A3B0F00AF4A7F /* NSDIContainerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 84D86E76208A3B0F00AF4A7F /* NSDIContainerProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		84D86E79208A3B0F00AF4A7F /* NSDIContainerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 84D86E76208A3B0F00AF4A7F /* NSDIContainerProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		84D86E77208A3B0F00AF4A7F /* NSResolverProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 84D86E76208A3B0F00AF4A7F /* NSResolverProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		84D86E78208A3B0F00AF4A7F /* NSResolverProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 84D86E76208A3B0F00AF4A7F /* NSResolverProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		84D86E79208A3B0F00AF4A7F /* NSResolverProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 84D86E76208A3B0F00AF4A7F /* NSResolverProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA9A275B208851C300584CA0 /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58875541D0944AE00D6DE92 /* DITranquillity.framework */; };
 		BA9A279D208851FF00584CA0 /* AccessStoryboard1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA9A2765208851F100584CA0 /* AccessStoryboard1.storyboard */; };
 		BA9A279E208851FF00584CA0 /* AccessStoryboard2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA9A2766208851F100584CA0 /* AccessStoryboard2.storyboard */; };
@@ -130,6 +132,7 @@
 
 /* Begin PBXFileReference section */
 		115C24C71E6527CA00CC8BC7 /* Synchronize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synchronize.swift; sourceTree = "<group>"; };
+		11759EEA208E5DF0003DE6E1 /* DIComponentBuilder+SubviewsInject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIComponentBuilder+SubviewsInject.swift"; sourceTree = "<group>"; };
 		119F4FCC1E56069200B2DFA1 /* DIContainer.Reg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainer.Reg.swift; sourceTree = "<group>"; };
 		163DDDC51DB9C84E0003DE54 /* DITypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITypes.swift; sourceTree = "<group>"; };
 		1651E7031E8631A900E967B4 /* DIComponentBuilder.Injection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIComponentBuilder.Injection.swift; sourceTree = "<group>"; };
@@ -147,7 +150,7 @@
 		840F04042089D7700035EF74 /* UIViewController+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Swizzling.m"; sourceTree = "<group>"; };
 		840F040A2089F5190035EF74 /* UITableView+Swizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Swizzling.m"; sourceTree = "<group>"; };
 		84D86E74208A23AD00AF4A7F /* UICollectionView+Swizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+Swizzling.m"; sourceTree = "<group>"; };
-		84D86E76208A3B0F00AF4A7F /* NSDIContainerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSDIContainerProtocol.h; sourceTree = "<group>"; };
+		84D86E76208A3B0F00AF4A7F /* NSResolverProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSResolverProtocol.h; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9A2756208851C300584CA0 /* DITranquillityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DITranquillityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9A2765208851F100584CA0 /* AccessStoryboard1.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AccessStoryboard1.storyboard; sourceTree = "<group>"; };
@@ -272,6 +275,7 @@
 				D55AFCB31EEEA48D00527D27 /* MethodMaker.swift */,
 				D55AFCB71EEEA97400527D27 /* MethodSignature.swift */,
 				D5E3C7D11F3C0C5A0022DD43 /* ByTagAndMany.swift */,
+				84D86E76208A3B0F00AF4A7F /* NSResolverProtocol.h */,
 			);
 			path = Private;
 			sourceTree = "<group>";
@@ -282,7 +286,6 @@
 				119F4FC81E56069200B2DFA1 /* AutoResolve */,
 				163DDDC51DB9C84E0003DE54 /* DITypes.swift */,
 				16640A6A1D9E1E7B00707BFC /* DIContainer.swift */,
-				84D86E76208A3B0F00AF4A7F /* NSDIContainerProtocol.h */,
 				16640A681D9E1E7B00707BFC /* DIComponentBuilder.swift */,
 				D512552C1EE06F010067796B /* DISettings.swift */,
 				D57961631F4FC7F40079DE8C /* DIByTagAndMany.swift */,
@@ -294,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				D57961801F52C2BD0079DE8C /* DIStoryboard.swift */,
+				11759EEA208E5DF0003DE6E1 /* DIComponentBuilder+SubviewsInject.swift */,
 				D57961811F52C2BD0079DE8C /* StoryboardResolver.swift */,
 				D57961681F526FBA0079DE8C /* StoryboardContainerMap.swift */,
 				169C0E101DA352C7001F0AD5 /* iOS-tvOS */,
@@ -409,7 +413,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84D86E78208A3B0F00AF4A7F /* NSDIContainerProtocol.h in Headers */,
+				84D86E78208A3B0F00AF4A7F /* NSResolverProtocol.h in Headers */,
 				169C0DDF1DA3501F001F0AD5 /* DITranquillity.h in Headers */,
 				D579617B1F52BA5D0079DE8C /* DIStoryboardBase.h in Headers */,
 			);
@@ -419,7 +423,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84D86E79208A3B0F00AF4A7F /* NSDIContainerProtocol.h in Headers */,
+				84D86E79208A3B0F00AF4A7F /* NSResolverProtocol.h in Headers */,
 				169C0E451DA35CBE001F0AD5 /* DITranquillity.h in Headers */,
 				D57961701F52BA160079DE8C /* DIStoryboardBase.h in Headers */,
 			);
@@ -429,7 +433,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84D86E77208A3B0F00AF4A7F /* NSDIContainerProtocol.h in Headers */,
+				84D86E77208A3B0F00AF4A7F /* NSResolverProtocol.h in Headers */,
 				16640A881D9E1E7B00707BFC /* DITranquillity.h in Headers */,
 				D579616E1F52BA160079DE8C /* DIStoryboardBase.h in Headers */,
 			);
@@ -656,6 +660,7 @@
 				D55369121EE658EA00015926 /* TypeKey.swift in Sources */,
 				D5E3C7D41F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */,
 				D57961871F52C2BD0079DE8C /* StoryboardResolver.swift in Sources */,
+				11759EEC208E5DF0003DE6E1 /* DIComponentBuilder+SubviewsInject.swift in Sources */,
 				D579618A1F52C4BC0079DE8C /* UIStoryboard+Swizzling.m in Sources */,
 				1651E7071E86373D00E967B4 /* DIComponentBuilder.Injection.swift in Sources */,
 			);
@@ -668,6 +673,7 @@
 				119F4FD61E56069200B2DFA1 /* DIContainer.Reg.swift in Sources */,
 				16640A851D9E1E7B00707BFC /* DIComponentBuilder.swift in Sources */,
 				D57961851F52C2BD0079DE8C /* StoryboardResolver.swift in Sources */,
+				11759EEB208E5DF0003DE6E1 /* DIComponentBuilder+SubviewsInject.swift in Sources */,
 				D55AFCB81EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				D55AFCB41EEEA48D00527D27 /* MethodMaker.swift in Sources */,
 				D5E3C7D21F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */,

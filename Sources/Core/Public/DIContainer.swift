@@ -21,20 +21,6 @@ public prefix func *<T>(container: DIContainer) -> T {
   return container.resolve()
 }
 
-public class NSDIContainer: NSObject, NSDIContainerProtocol {
-  
-  public func inject(into object: Any) {
-    self.container.inject(into: object)
-  }
-  
-  private let container: DIContainer
-  
-  fileprivate init(container: DIContainer) {
-    self.container = container
-  }
-  
-}
-
 /// A container holding all registered components,
 /// allows you to register new components, parts, frameworks and
 /// allows you to receive objects by type.
@@ -47,9 +33,6 @@ public final class DIContainer {
   internal let componentContainer = ComponentContainer()
   internal let bundleContainer = BundleContainer()
   internal private(set) var resolver: Resolver!
-  internal var nsDIContainer: NSDIContainer {
-    return NSDIContainer(container: self)
-  }
   
   ///MARK: Hierarchy
   final class IncludedParts {

@@ -6,9 +6,33 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
+/// Class for internal usage.
+public final class NSResolver: NSObject, NSResolverProtocol {
+  public static func getResolverUniqueAssociatedKey() -> UnsafeRawPointer {
+    return withUnsafePointer(to: &resolverAssociatedHandle) { .init($0) }
+  }
+  
+  public func inject(into object: Any) {
+    resolver.injection(obj: object)
+  }
+  
+  private static var resolverAssociatedHandle: UInt8 = 0
+  private unowned let resolver: Resolver
+  
+  fileprivate init(resolver: Resolver) {
+    self.resolver = resolver
+  }
+}
+
 class Resolver {
+  
+  private func setNSResolver(to object: Any) {
+    objc_setAssociatedObject(object, NSResolver.getResolverUniqueAssociatedKey(), self.nsResolver, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+  }
+  
   init(container: DIContainer) {
     self.container = container // onowned
+    self.nsResolver = NSResolver(resolver: self)
   }
   
   func resolve<T>(type: T.Type = T.self, name: String? = nil, from bundle: Bundle? = nil) -> T {
@@ -171,6 +195,8 @@ class Resolver {
   /// Super function
   private func makeObject(by component: Component, use usingObject: Any?) -> Any? {
     log(.verbose, msg: "Found component: \(component.info)")
+    
+    
     let uniqueKey = component.info
     
     func makeObject(from cacheName: StaticString, use referenceCounting: DILifeTime.ReferenceCounting, scope: Cache.Scope) -> Any? {
@@ -225,13 +251,14 @@ class Resolver {
     func initialObject() -> Any? {
       if let obj = usingObject {
         log(.verbose, msg: "Use object: \(obj)")
+        setNSResolverIfNeeded(to: obj)
         return obj
       }
-      
       
       if let signature = component.initial {
         let obj = use(signature: signature, usingObject: nil)
         log(.verbose, msg: "Create object: \(String(describing: obj))")
+        setNSResolverIfNeeded(to: obj)
         return obj
       }
       
@@ -269,6 +296,12 @@ class Resolver {
       return signature.call(objParameters)
     }
     
+    func setNSResolverIfNeeded(to obj: Any?) {
+      if let anObj = obj, component.injectToSubviews {
+        self.setNSResolver(to: anObj)
+      }
+    }
+    
     return mutex.sync {
       stack.append(component.info)
       defer {
@@ -298,6 +331,7 @@ class Resolver {
   }
  
   private unowned let container: DIContainer
+  private var nsResolver: NSResolverProtocol!
   
   private let mutex = PThreadMutex(recursive: ())
   

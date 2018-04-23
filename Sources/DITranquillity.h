@@ -17,6 +17,6 @@ FOUNDATION_EXPORT const unsigned char DITranquillityVersionString[];
 #if TARGET_OS_IOS || TARGET_OS_TV || (!TARGET_OS_WATCH && TARGET_OS_MAC)
 
 #import <DITranquillity/DIStoryboardBase.h>
-#import <DITranquillity/NSDIContainerProtocol.h>
+#import <DITranquillity/NSResolverProtocol.h>
 
 #endif

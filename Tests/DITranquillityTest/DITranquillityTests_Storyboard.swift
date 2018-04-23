@@ -40,8 +40,19 @@ class TestViewController: UIViewController {
     }
   }
 }
+
 class TestViewController2: UIViewController {
   var service: ServiceProtocol!
+}
+
+private class TestViewController3: UIViewController {
+  var service: ServiceProtocol!
+  let testView = TestView()
+  
+  override func loadView() {
+    super.loadView()
+    self.view.addSubview(testView)
+  }
 }
 
 class TestViewContainerVC: UIViewController {
@@ -51,6 +62,9 @@ class TestViewContainerVC: UIViewController {
 class TestReferenceVC: UIViewController {
   var service: ServiceProtocol!
 }
+
+class TestTableViewController: UITableViewController {}
+class TestCollectionViewController: UICollectionViewController {}
 
 class DITranquillityTests_Storyboard: XCTestCase {
   override func setUp() {
@@ -394,8 +408,8 @@ class DITranquillityTests_Storyboard: XCTestCase {
     container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-    container.register(TestViewController.self)
-      .injection { $0.service = $1 }
+    container.register(TestTableViewController.self)
+      .autoInjectToSubviews()
     
     container.register(TestCell.self)
       .injection(\.service)
@@ -422,7 +436,11 @@ class DITranquillityTests_Storyboard: XCTestCase {
     container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
+    container.register(UINavigationController.self)
+      .autoInjectToSubviews()
+    
     container.register(TestViewController.self)
+      .autoInjectToSubviews()
       .injection { $0.service = $1 }
     
     container.register(TestCell.self)
@@ -444,7 +462,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
   }
   
   
-  func test16_InjectToCellOnCollectionVIewController() {
+  func test16_InjectToCellOnCollectionViewController() {
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -452,6 +470,9 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     container.register(TestCollectionCell.self)
       .injection(\.service)
+    
+    container.register(TestCollectionViewController.self)
+      .autoInjectToSubviews()
     
     container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
       .lifetime(.perRun(.weak))
@@ -468,6 +489,23 @@ class DITranquillityTests_Storyboard: XCTestCase {
     XCTAssertTrue(testDataSource.result)
   }
   
+  
+  func test17_InjectToViewOnProgrammaticallyCreatedViewController() {
+    let container = DIContainer()
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+    
+    container.register(TestView.self)
+      .injection(\.service)
+    
+    container.register { TestViewController3.init(nibName: nil, bundle: nil) }
+      .autoInjectToSubviews()
+    
+    let testVC: TestViewController3 = *container
+    _ = testVC.view
+    XCTAssertNil(testVC.testView.service)
+  }
   
 }
 

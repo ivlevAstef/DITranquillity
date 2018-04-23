@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Collection View Controller-->
+        <!--Test Collection View Controller-->
         <scene sceneID="Vhy-I9-w6K">
             <objects>
-                <collectionViewController storyboardIdentifier="CollectionViewStoryboard" id="6Wa-9y-5qD" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="CollectionViewStoryboard" id="6Wa-9y-5qD" customClass="TestCollectionViewController" customModule="DITranquillityTests" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="wbZ-Nz-xck">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -43,10 +43,10 @@
             </objects>
             <point key="canvasLocation" x="-1228" y="-1135.6821589205399"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Test Table View Controller-->
         <scene sceneID="kTW-Fj-eEY">
             <objects>
-                <tableViewController storyboardIdentifier="TableViewController1" id="6AH-bz-Ho9" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TableViewController1" id="6AH-bz-Ho9" customClass="TestTableViewController" customModule="DITranquillityTests" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="wet-HV-oub">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -71,10 +71,10 @@
             </objects>
             <point key="canvasLocation" x="-1228" y="-439"/>
         </scene>
-        <!--View Controller-->
+        <!--Test View Controller-->
         <scene sceneID="DvS-66-zy5">
             <objects>
-                <viewController storyboardIdentifier="TableViewController2" id="61y-S6-pKx" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TableViewController2" id="61y-S6-pKx" customClass="TestViewController" customModule="DITranquillityTests" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gYV-FZ-xBZ"/>
                         <viewControllerLayoutGuide type="bottom" id="U6I-9u-GBM"/>

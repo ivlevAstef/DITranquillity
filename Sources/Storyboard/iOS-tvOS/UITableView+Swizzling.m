@@ -49,14 +49,14 @@
 }
   
 
--(NSDIContainer *)diContainer {
-  return (NSDIContainer *)objc_getAssociatedObject(self, [_DIStoryboardBase RESOLVER_UNIQUE_VC_KEY]);
+-(NSResolver *)nsResolver {
+  return (NSResolver *)objc_getAssociatedObject(self, [NSResolver getResolverUniqueAssociatedKey]);
 }
 
 
 - (__kindof UITableViewCell *)di_dequeueReusableCellWithIdentifier:(NSString *)identifier forIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell *cell = [self di_dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-  [[self diContainer] injectInto: cell];
+  [[self nsResolver] injectInto: cell];
   return cell;
 }
 

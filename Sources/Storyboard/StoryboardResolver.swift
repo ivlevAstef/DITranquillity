@@ -23,17 +23,11 @@ final class StoryboardResolver {
   #if os(iOS) || os(tvOS)
 
   func inject(into viewController: UIViewController) {
-    setStoryboardResolver(to: viewController)
     self.container.inject(into: viewController, from: bundle)
     
     for childVC in viewController.childViewControllers {
-      setStoryboardResolver(to: childVC)
       inject(into: childVC)
     }
-  }
-  
-  private func setStoryboardResolver(to object: AnyObject) {
-    objc_setAssociatedObject(object, _DIStoryboardBase.resolver_UNIQUE_VC_KEY(), self.container.nsDIContainer, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
   }
 
   #elseif os(OSX)
