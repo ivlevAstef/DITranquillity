@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <objc/runtime.h>
 #import <DITranquillity/DITranquillity-Swift.h>
+#import "NSObject+Swizzling.m"
 
 @interface UIViewController (Swizzling)
 @end
@@ -23,31 +24,7 @@
                      swizzledSelector:@selector(di_loadView)];
     });
 }
-    
-    
-+ (void)swizzleOriginalSelector:(SEL)originalSelector swizzledSelector:(SEL)swizzledSelector {
-    
-    Class class = [self class];
-    
-    Method originalMethod = class_getInstanceMethod(class, originalSelector);
-    Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
-    
-    BOOL didAddMethod =
-    class_addMethod(class,
-                    originalSelector,
-                    method_getImplementation(swizzledMethod),
-                    method_getTypeEncoding(swizzledMethod));
-    
-    if (didAddMethod) {
-        class_replaceMethod(class,
-                            swizzledSelector,
-                            method_getImplementation(originalMethod),
-                            method_getTypeEncoding(originalMethod));
-    } else {
-        method_exchangeImplementations(originalMethod, swizzledMethod);
-    }
-}
-    
+
 -(NSResolver *)nsResolver {
     return (NSResolver *)objc_getAssociatedObject(self, [NSResolver getResolverUniqueAssociatedKey]);
 }
@@ -63,8 +40,7 @@
     objc_setAssociatedObject(view, [NSResolver getResolverUniqueAssociatedKey], nsResolver, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
   }
   
-  for (int i = 0; i < [view.subviews count]; i++) {
-    UIView *subview = [view.subviews objectAtIndex:i];
+  for (UIView *subview in view.subviews) {
     [self passContainerInto: subview container:nsResolver];
   }
 }

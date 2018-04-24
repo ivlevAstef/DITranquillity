@@ -51,6 +51,9 @@
 		84D86E77208A3B0F00AF4A7F /* NSResolverProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 84D86E76208A3B0F00AF4A7F /* NSResolverProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84D86E78208A3B0F00AF4A7F /* NSResolverProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 84D86E76208A3B0F00AF4A7F /* NSResolverProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84D86E79208A3B0F00AF4A7F /* NSResolverProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 84D86E76208A3B0F00AF4A7F /* NSResolverProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		84DF1AB8208F0D6600A603F0 /* NSObject+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DF1AB7208F0D6600A603F0 /* NSObject+Swizzling.m */; };
+		84DF1AB9208F0E9A00A603F0 /* NSObject+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DF1AB7208F0D6600A603F0 /* NSObject+Swizzling.m */; };
+		84DF1ABA208F0E9A00A603F0 /* NSObject+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DF1AB7208F0D6600A603F0 /* NSObject+Swizzling.m */; };
 		BA9A275B208851C300584CA0 /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58875541D0944AE00D6DE92 /* DITranquillity.framework */; };
 		BA9A279D208851FF00584CA0 /* AccessStoryboard1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA9A2765208851F100584CA0 /* AccessStoryboard1.storyboard */; };
 		BA9A279E208851FF00584CA0 /* AccessStoryboard2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA9A2766208851F100584CA0 /* AccessStoryboard2.storyboard */; };
@@ -151,6 +154,7 @@
 		840F040A2089F5190035EF74 /* UITableView+Swizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Swizzling.m"; sourceTree = "<group>"; };
 		84D86E74208A23AD00AF4A7F /* UICollectionView+Swizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+Swizzling.m"; sourceTree = "<group>"; };
 		84D86E76208A3B0F00AF4A7F /* NSResolverProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSResolverProtocol.h; sourceTree = "<group>"; };
+		84DF1AB7208F0D6600A603F0 /* NSObject+Swizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Swizzling.m"; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9A2756208851C300584CA0 /* DITranquillityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DITranquillityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9A2765208851F100584CA0 /* AccessStoryboard1.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AccessStoryboard1.storyboard; sourceTree = "<group>"; };
@@ -311,6 +315,7 @@
 			children = (
 				D579616C1F52BA160079DE8C /* DIStoryboardBase.h */,
 				D579616D1F52BA160079DE8C /* DIStoryboardBase.m */,
+				84DF1AB7208F0D6600A603F0 /* NSObject+Swizzling.m */,
 				D57961881F52C4BC0079DE8C /* UIStoryboard+Swizzling.m */,
 				840F04042089D7700035EF74 /* UIViewController+Swizzling.m */,
 				840F040A2089F5190035EF74 /* UITableView+Swizzling.m */,
@@ -604,6 +609,7 @@
 				119F4FD71E56069200B2DFA1 /* DIContainer.Reg.swift in Sources */,
 				D515626C1F5472300036919C /* Component.swift in Sources */,
 				169C0DC41DA3501F001F0AD5 /* DIComponentBuilder.swift in Sources */,
+				84DF1AB9208F0E9A00A603F0 /* NSObject+Swizzling.m in Sources */,
 				D57961651F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */,
 				D55AFCB91EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				D55AFCB51EEEA48D00527D27 /* MethodMaker.swift in Sources */,
@@ -663,6 +669,7 @@
 				11759EEC208E5DF0003DE6E1 /* DIComponentBuilder+SubviewsInject.swift in Sources */,
 				D579618A1F52C4BC0079DE8C /* UIStoryboard+Swizzling.m in Sources */,
 				1651E7071E86373D00E967B4 /* DIComponentBuilder.Injection.swift in Sources */,
+				84DF1ABA208F0E9A00A603F0 /* NSObject+Swizzling.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -673,6 +680,7 @@
 				119F4FD61E56069200B2DFA1 /* DIContainer.Reg.swift in Sources */,
 				16640A851D9E1E7B00707BFC /* DIComponentBuilder.swift in Sources */,
 				D57961851F52C2BD0079DE8C /* StoryboardResolver.swift in Sources */,
+				84DF1AB8208F0D6600A603F0 /* NSObject+Swizzling.m in Sources */,
 				11759EEB208E5DF0003DE6E1 /* DIComponentBuilder+SubviewsInject.swift in Sources */,
 				D55AFCB81EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				D55AFCB41EEEA48D00527D27 /* MethodMaker.swift in Sources */,

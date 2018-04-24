@@ -17,7 +17,7 @@ public final class NSResolver: NSObject, NSResolverProtocol {
   }
   
   private static var resolverAssociatedHandle: UInt8 = 0
-  private unowned let resolver: Resolver
+  private let resolver: Resolver
   
   fileprivate init(resolver: Resolver) {
     self.resolver = resolver
@@ -27,12 +27,11 @@ public final class NSResolver: NSObject, NSResolverProtocol {
 class Resolver {
   
   private func setNSResolver(to object: Any) {
-    objc_setAssociatedObject(object, NSResolver.getResolverUniqueAssociatedKey(), self.nsResolver, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    objc_setAssociatedObject(object, NSResolver.getResolverUniqueAssociatedKey(), NSResolver(resolver: self), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
   }
   
   init(container: DIContainer) {
     self.container = container // onowned
-    self.nsResolver = NSResolver(resolver: self)
   }
   
   func resolve<T>(type: T.Type = T.self, name: String? = nil, from bundle: Bundle? = nil) -> T {
@@ -233,6 +232,10 @@ class Resolver {
         return nil
       }
       
+      if component.injectToSubviews {
+        self.setNSResolver(to: initializedObject)
+      }
+      
       for injection in component.injections {
         if injection.cycle {
           cache.cycleInjectionStack.append((initializedObject, injection))
@@ -251,14 +254,12 @@ class Resolver {
     func initialObject() -> Any? {
       if let obj = usingObject {
         log(.verbose, msg: "Use object: \(obj)")
-        setNSResolverIfNeeded(to: obj)
         return obj
       }
       
       if let signature = component.initial {
         let obj = use(signature: signature, usingObject: nil)
         log(.verbose, msg: "Create object: \(String(describing: obj))")
-        setNSResolverIfNeeded(to: obj)
         return obj
       }
       
@@ -296,12 +297,6 @@ class Resolver {
       return signature.call(objParameters)
     }
     
-    func setNSResolverIfNeeded(to obj: Any?) {
-      if let anObj = obj, component.injectToSubviews {
-        self.setNSResolver(to: anObj)
-      }
-    }
-    
     return mutex.sync {
       stack.append(component.info)
       defer {
@@ -331,7 +326,6 @@ class Resolver {
   }
  
   private unowned let container: DIContainer
-  private var nsResolver: NSResolverProtocol!
   
   private let mutex = PThreadMutex(recursive: ())
   
