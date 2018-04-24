@@ -2,7 +2,7 @@
 //  DIComponentBuilder+SubviewsInject.swift
 //  DITranquillity
 //
-//  Created by Nikita on 23.04.2018.
+//  Created by Nikita Patskov on 23.04.2018.
 //  Copyright © 2018 Alexander Ivlev. All rights reserved.
 //
 

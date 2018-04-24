@@ -2,7 +2,7 @@
 //  NSObject+Swizzling.m
 //  DITranquillity
 //
-//  Created by Admin on 27/08/2017.
+//  Created by Nikita Patskov on 27/08/2017.
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
