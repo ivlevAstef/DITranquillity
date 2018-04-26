@@ -57,14 +57,16 @@ final class Component {
     self.framework = framework
     self.part = part
   }
-  
+	
   let info: DIComponentInfo
   let bundle: Bundle?
+  
   let framework: DIFramework.Type?
   let part: DIPart.Type?
   
   var lifeTime = DILifeTime.default
   var isDefault: Bool = false
+  var injectToSubviews = DISetting.Defaults.injectToSubviews
   
   fileprivate(set) var initial: MethodSignature?
   fileprivate(set) var injections: [Injection] = []

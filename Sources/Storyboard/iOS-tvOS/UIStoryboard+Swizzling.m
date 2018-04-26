@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <objc/runtime.h>
 #import <DITranquillity/DITranquillity-Swift.h>
+#import "NSObject+Swizzling.m"
 
 @interface UIStoryboard (Swizzling)
 @end
@@ -19,25 +20,8 @@
   static dispatch_once_t onceToken;
   
   dispatch_once(&onceToken, ^{
-    Class class = object_getClass((id)self);
-    
-    SEL originalSelector = @selector(storyboardWithName:bundle:);
-    SEL swizzledSelector = @selector(di_storyboardWithName:bundle:);
-    
-    Method originalMethod = class_getClassMethod(class, originalSelector);
-    Method swizzledMethod = class_getClassMethod(class, swizzledSelector);
-    
-    BOOL didAddMethod = class_addMethod(class, originalSelector,
-                    method_getImplementation(swizzledMethod),
-                    method_getTypeEncoding(swizzledMethod));
-    
-    if (didAddMethod) {
-      class_replaceMethod(class, swizzledSelector,
-                          method_getImplementation(originalMethod),
-                          method_getTypeEncoding(originalMethod));
-    } else {
-      method_exchangeImplementations(originalMethod, swizzledMethod);
-    }
+    [self swizzleOriginalSelector:@selector(storyboardWithName:bundle:)
+                 swizzledSelector:@selector(di_storyboardWithName:bundle:)];
   });
 }
 

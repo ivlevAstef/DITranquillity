@@ -6,7 +6,30 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
+/// Class for internal usage.
+public final class NSResolver: NSObject, NSResolverProtocol {
+  public static func getResolverUniqueAssociatedKey() -> UnsafeRawPointer {
+    return withUnsafePointer(to: &resolverAssociatedHandle) { .init($0) }
+  }
+  
+  public func inject(into object: Any) {
+    resolver.injection(obj: object)
+  }
+  
+  private static var resolverAssociatedHandle: UInt8 = 0
+  private let resolver: Resolver
+  
+  fileprivate init(resolver: Resolver) {
+    self.resolver = resolver
+  }
+}
+
 class Resolver {
+  
+  private func setNSResolver(to object: Any) {
+    objc_setAssociatedObject(object, NSResolver.getResolverUniqueAssociatedKey(), NSResolver(resolver: self), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+  }
+  
   init(container: DIContainer) {
     self.container = container // onowned
   }
@@ -171,6 +194,8 @@ class Resolver {
   /// Super function
   private func makeObject(by component: Component, use usingObject: Any?) -> Any? {
     log(.verbose, msg: "Found component: \(component.info)")
+    
+    
     let uniqueKey = component.info
     
     func makeObject(from cacheName: StaticString, use referenceCounting: DILifeTime.ReferenceCounting, scope: Cache.Scope) -> Any? {
@@ -207,6 +232,10 @@ class Resolver {
         return nil
       }
       
+      if component.injectToSubviews {
+        self.setNSResolver(to: initializedObject)
+      }
+      
       for injection in component.injections {
         if injection.cycle {
           cache.cycleInjectionStack.append((initializedObject, injection))
@@ -227,7 +256,6 @@ class Resolver {
         log(.verbose, msg: "Use object: \(obj)")
         return obj
       }
-      
       
       if let signature = component.initial {
         let obj = use(signature: signature, usingObject: nil)

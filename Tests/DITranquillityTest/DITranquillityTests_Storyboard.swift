@@ -9,7 +9,22 @@
 import XCTest
 import DITranquillity
 
+class TestView: UIView {
+  var service: ServiceProtocol!
+}
+
+class TestCell: UITableViewCell {
+  var service: ServiceProtocol!
+}
+
+class TestCollectionCell: UICollectionViewCell {
+    var service: ServiceProtocol!
+}
+
 class TestViewController: UIViewController {
+  
+  @IBOutlet weak var testView: TestView!
+    
   var service: ServiceProtocol!
   
   var containerVC: TestViewContainerVC!
@@ -25,8 +40,19 @@ class TestViewController: UIViewController {
     }
   }
 }
+
 class TestViewController2: UIViewController {
   var service: ServiceProtocol!
+}
+
+private class TestViewController3: UIViewController {
+  var service: ServiceProtocol!
+  let testView = TestView()
+  
+  override func loadView() {
+    super.loadView()
+    self.view.addSubview(testView)
+  }
 }
 
 class TestViewContainerVC: UIViewController {
@@ -36,6 +62,9 @@ class TestViewContainerVC: UIViewController {
 class TestReferenceVC: UIViewController {
   var service: ServiceProtocol!
 }
+
+class TestTableViewController: UITableViewController {}
+class TestCollectionViewController: UICollectionViewController {}
 
 class DITranquillityTests_Storyboard: XCTestCase {
   override func setUp() {
@@ -371,4 +400,153 @@ class DITranquillityTests_Storyboard: XCTestCase {
     _ = vc.view // for call viewDidLoad() and full initialization
     XCTAssertEqual(vc.service.foo(), "foo")
   }
+  
+  
+  func test16_InjectToCellOnUITableViewController() {
+    let container = DIContainer()
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+    
+    container.register(TestTableViewController.self)
+      .autoInjectToSubviews()
+    
+    container.register(TestCell.self)
+      .injection(\.service)
+    
+    container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+      .lifetime(.perRun(.weak))
+    
+    let storyboard: UIStoryboard = *container
+    
+    let tableVC: UITableViewController = storyboard.instantiateViewController(withIdentifier: "TableViewController1") as! UITableViewController
+    
+    
+    let testDataSource = TableViewTestDataSource()
+    tableVC.tableView.dataSource = testDataSource
+    tableVC.tableView.dataSource!.tableView(tableVC.tableView, cellForRowAt: .init(row: 0, section: 0))
+    
+    XCTAssertTrue(testDataSource.result)
+  }
+  
+  
+  func test17_InjectToCellOnUITableView() {
+    let container = DIContainer()
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+    
+    container.register(UINavigationController.self)
+      .autoInjectToSubviews()
+    
+    container.register(TestViewController.self)
+      .autoInjectToSubviews()
+      .injection { $0.service = $1 }
+    
+    container.register(TestCell.self)
+      .injection(\.service)
+    
+    container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+      .lifetime(.perRun(.weak))
+    
+    let storyboard: UIStoryboard = *container
+    
+    let tableVC = storyboard.instantiateViewController(withIdentifier: "TableViewController2") 
+    let tableView = tableVC.view.subviews[0] as! UITableView
+    
+    let testDataSource = TableViewTestDataSource()
+    tableView.dataSource = testDataSource
+    tableView.dataSource!.tableView(tableView, cellForRowAt: .init(row: 0, section: 0))
+    
+    XCTAssertTrue(testDataSource.result)
+  }
+  
+  
+  func test16_InjectToCellOnCollectionViewController() {
+    let container = DIContainer()
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+    
+    container.register(TestCollectionCell.self)
+      .injection(\.service)
+    
+    container.register(TestCollectionViewController.self)
+      .autoInjectToSubviews()
+    
+    container.registerStoryboard(name: "TestStoryboard", bundle: Bundle(for: type(of: self)))
+      .lifetime(.perRun(.weak))
+    
+    let storyboard: UIStoryboard = *container
+    
+    let tableVC = storyboard.instantiateViewController(withIdentifier: "CollectionViewStoryboard") as! UICollectionViewController
+    
+    
+    let testDataSource = CollectionViewTestDataSource()
+    tableVC.collectionView!.dataSource = testDataSource
+    tableVC.collectionView!.dataSource?.collectionView(tableVC.collectionView!, cellForItemAt: .init(row: 0, section: 0))
+    
+    XCTAssertTrue(testDataSource.result)
+  }
+  
+  
+  func test17_InjectToViewOnProgrammaticallyCreatedViewController() {
+    let container = DIContainer()
+    
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+    
+    container.register(TestView.self)
+      .injection(\.service)
+    
+    container.register { TestViewController3.init(nibName: nil, bundle: nil) }
+      .autoInjectToSubviews()
+    
+    let testVC: TestViewController3 = *container
+    _ = testVC.view
+    XCTAssertNil(testVC.testView.service)
+  }
+  
+}
+
+
+class TableViewTestDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
+  
+  var result = false
+  
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return 1
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 10
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "CellID", for: indexPath) as! TestCell
+    result = cell.service != nil
+    return cell
+  }
+  
+}
+
+
+class CollectionViewTestDataSource: NSObject, UICollectionViewDataSource {
+  
+  var result = false
+  
+  func numberOfSections(in collectionView: UICollectionView) -> Int {
+    return 1
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 10
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellID", for: indexPath) as! TestCollectionCell
+    result = cell.service != nil
+    return cell
+  }
+  
 }
