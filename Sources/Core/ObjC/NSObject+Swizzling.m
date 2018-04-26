@@ -2,21 +2,16 @@
 //  NSObject+Swizzling.m
 //  DITranquillity
 //
-//  Created by Nikita Patskov on 27/08/2017.
+//  Created by Alexander Ivlev on 27/08/2017.
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "NSObject+Swizzling.h"
 #import <objc/runtime.h>
-
-@interface NSObject (Swizzling)
-+ (void)swizzleOriginalSelector:(SEL)originalSelector swizzledSelector:(SEL)swizzledSelector; 
-@end
 
 @implementation NSObject (Swizzling)
 
 + (void)swizzleOriginalSelector:(SEL)originalSelector swizzledSelector:(SEL)swizzledSelector {
-  
   Class class = [self class];
   
   Method originalMethod = class_getInstanceMethod(class, originalSelector);

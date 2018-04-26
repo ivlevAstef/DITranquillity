@@ -500,11 +500,14 @@ class DITranquillityTests_Storyboard: XCTestCase {
       .injection(\.service)
     
     container.register { TestViewController3.init(nibName: nil, bundle: nil) }
+      .injection(\.service)
       .autoInjectToSubviews()
     
     let testVC: TestViewController3 = *container
+    XCTAssertEqual(testVC.service.foo(), "foo")
+
     _ = testVC.view
-    XCTAssertNil(testVC.testView.service)
+    XCTAssertEqual(testVC.testView.service.foo(), "foo")
   }
   
 }

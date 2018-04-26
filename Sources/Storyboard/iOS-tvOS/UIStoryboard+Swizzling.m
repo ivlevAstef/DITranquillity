@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <objc/runtime.h>
 #import <DITranquillity/DITranquillity-Swift.h>
-#import "NSObject+Swizzling.m"
+#import "NSObject+Swizzling.h"
 
 @interface UIStoryboard (Swizzling)
 @end

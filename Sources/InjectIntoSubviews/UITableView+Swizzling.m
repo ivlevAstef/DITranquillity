@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <objc/runtime.h>
-#import <DITranquillity/DITranquillity-Swift.h>
-#import "NSObject+Swizzling.m"
+#import "DINSResolver.h"
+#import "NSObject+Swizzling.h"
 
 @interface UITableView (Swizzling)
 @end
@@ -24,15 +23,10 @@
                  swizzledSelector:@selector(di_dequeueReusableCellWithIdentifier:forIndexPath:)];
   });
 }
-  
--(NSResolver *)nsResolver {
-  return (NSResolver *)objc_getAssociatedObject(self, [NSResolver getResolverUniqueAssociatedKey]);
-}
 
-
-- (__kindof UITableViewCell *)di_dequeueReusableCellWithIdentifier:(NSString *)identifier forIndexPath:(NSIndexPath *)indexPath {
-  UITableViewCell *cell = [self di_dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-  [[self nsResolver] injectInto: cell];
+- (__kindof UITableViewCell*)di_dequeueReusableCellWithIdentifier:(NSString*)identifier forIndexPath:(NSIndexPath*)indexPath {
+  UITableViewCell* cell = [self di_dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+  [[_DINSResolver getFrom:self] injectInto:cell];
   return cell;
 }
 

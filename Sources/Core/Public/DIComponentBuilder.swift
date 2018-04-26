@@ -14,7 +14,10 @@ public final class DIComponentBuilder<Impl> {
     self.component = Component(componentInfo: componentInfo,
                                in: container.frameworkStack.last, container.partStack.last)
     self.componentContainer = container.componentContainer
+    self.resolver = container.resolver
     componentContainer.insert(TypeKey(by: Impl.self), component)
+
+    useInjectIntoSubviewComponent()
   }
   
   deinit {
@@ -33,6 +36,7 @@ public final class DIComponentBuilder<Impl> {
   
   let component: Component
   let componentContainer: ComponentContainer
+  let resolver: Resolver
 }
 
 // MARK: - contains `as` functions

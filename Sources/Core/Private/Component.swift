@@ -66,7 +66,6 @@ final class Component {
   
   var lifeTime = DILifeTime.default
   var isDefault: Bool = false
-  var injectToSubviews = DISetting.Defaults.injectToSubviews
   
   fileprivate(set) var initial: MethodSignature?
   fileprivate(set) var injections: [Injection] = []
