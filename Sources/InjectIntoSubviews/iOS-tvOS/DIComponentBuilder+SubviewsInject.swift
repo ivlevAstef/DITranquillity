@@ -6,10 +6,6 @@
 //  Copyright © 2018 Alexander Ivlev. All rights reserved.
 //
 
-internal extension DIComponentBuilder {
-  internal func useInjectIntoSubviewComponent() { }
-}
-
 public extension DIComponentBuilder where Impl: UIViewController {
   internal func useInjectIntoSubviewComponent() {
     if DISetting.Defaults.injectToSubviews {

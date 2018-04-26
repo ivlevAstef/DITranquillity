@@ -1,3 +1,6 @@
+# v3.3.0
+* new feature: inject into subviews, cells, items. Thanks 'Nekitosss'
+
 # v3.2.2
 * support swift4.1 Thanks 'Nekitosss'
 
