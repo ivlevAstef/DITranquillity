@@ -5,6 +5,12 @@
       location = "group:../SwiftLazy/SwiftLazy.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Tests/SubProject2/SubProject2.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Tests/SubProject1/SubProject1.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:DITranquillity.xcodeproj">
    </FileRef>
 </Workspace>

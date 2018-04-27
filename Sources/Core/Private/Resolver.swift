@@ -164,7 +164,7 @@ class Resolver {
   private func make(by type: DIAType, isMany: Bool, components: Components, use object: Any?) -> Any? {
     if isMany {
       assert(nil == object, "Many injection not supported")
-      return components.flatMap{ makeObject(by: $0, use: nil) }
+      return components.compactMap{ makeObject(by: $0, use: nil) }
     }
 
     if let component = components.first, 1 == components.count {

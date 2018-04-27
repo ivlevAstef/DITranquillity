@@ -73,6 +73,10 @@ DITranquallity - небольшая библиотека для внедрени
 * [StoryboardReference](storyboard.md#Storyboardreference)
 
 ## [Отложенное внедрение](delayed_injection.md#Отложенное-внедрение)
+* [Установка](delayed_injection.md#Установка)
+* [Обычное внедрение](delayed_injection.md#Обычное-внедрение)
+* [Lazy](delayed_injection.md#Lazy)
+* [Provider](delayed_injection.md#Provider)
 
 ## [Поиск](scan.md#Поиск)
 * [Предыстория](scan.md#Предыстория)

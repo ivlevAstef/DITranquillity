@@ -156,3 +156,13 @@ func getBundle(for type: DIAType) -> Bundle? {
   }
   return nil
 }
+
+#if swift(>=4.1)
+#else
+extension Sequence {
+  @inline(__always)
+  func compactMap<ElementOfResult>(_ transform: (Element) throws -> ElementOfResult?) rethrows -> [ElementOfResult] {
+    return try flatMap(transform)
+  }
+}
+#endif

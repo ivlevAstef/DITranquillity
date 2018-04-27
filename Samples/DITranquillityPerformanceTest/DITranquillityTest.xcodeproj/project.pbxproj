@@ -8,23 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1699AEC11DCAED8C00962832 /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1699AEC01DCAED8C00962832 /* DITranquillity.framework */; };
-		1699AEC31DCAEDD900962832 /* SubProject1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1699AEC21DCAEDD900962832 /* SubProject1.framework */; };
-		1699AEDC1DCAEE6000962832 /* SubProject2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1699AEDB1DCAEE6000962832 /* SubProject2.framework */; };
-		BA4917C720334F19003FD20E /* DITranquillityTests_Lifetime.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4917C620334F19003FD20E /* DITranquillityTests_Lifetime.swift */; };
-		BA6643FA207BD25A0032B4A7 /* DITranquillityTests_SwiftLazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6643F9207BD25A0032B4A7 /* DITranquillityTests_SwiftLazy.swift */; };
-		BA6643FF207BD2C60032B4A7 /* SwiftLazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA664400207BD2C60032B4A7 /* SwiftLazy.framework */; };
-		D54AEF2E1F72C8D40092BB34 /* AccessStoryboard1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D54AEF211F72C8D40092BB34 /* AccessStoryboard1.storyboard */; };
-		D54AEF2F1F72C8D40092BB34 /* AccessStoryboard2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D54AEF221F72C8D40092BB34 /* AccessStoryboard2.storyboard */; };
 		D54AEF301F72C8D40092BB34 /* DITranquillityTests_Performance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54AEF231F72C8D40092BB34 /* DITranquillityTests_Performance.swift */; };
-		D54AEF311F72C8D40092BB34 /* DITranquillityTests_Resolve.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54AEF241F72C8D40092BB34 /* DITranquillityTests_Resolve.swift */; };
-		D54AEF321F72C8D40092BB34 /* DITranquillityTests_ResolveByInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54AEF251F72C8D40092BB34 /* DITranquillityTests_ResolveByInit.swift */; };
-		D54AEF331F72C8D40092BB34 /* DITranquillityTests_Scan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54AEF261F72C8D40092BB34 /* DITranquillityTests_Scan.swift */; };
-		D54AEF341F72C8D40092BB34 /* DITranquillityTests_Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54AEF271F72C8D40092BB34 /* DITranquillityTests_Storyboard.swift */; };
-		D54AEF351F72C8D40092BB34 /* DITranquillityTests_Threads.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54AEF281F72C8D40092BB34 /* DITranquillityTests_Threads.swift */; };
-		D54AEF361F72C8D40092BB34 /* DITranquillityTests_Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54AEF291F72C8D40092BB34 /* DITranquillityTests_Validation.swift */; };
-		D54AEF381F72C8D40092BB34 /* ResolveTestClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54AEF2B1F72C8D40092BB34 /* ResolveTestClasses.swift */; };
-		D54AEF391F72C8D40092BB34 /* TestReferenceStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D54AEF2C1F72C8D40092BB34 /* TestReferenceStoryboard.storyboard */; };
-		D54AEF3A1F72C8D40092BB34 /* TestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D54AEF2D1F72C8D40092BB34 /* TestStoryboard.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,22 +16,8 @@
 		1699AEC21DCAEDD900962832 /* SubProject1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SubProject1.framework; path = "SubProject1/build/Debug-iphoneos/SubProject1.framework"; sourceTree = "<group>"; };
 		1699AEDB1DCAEE6000962832 /* SubProject2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SubProject2.framework; path = "SubProject2/build/Debug-iphoneos/SubProject2.framework"; sourceTree = "<group>"; };
 		A50053221D1931FE00DFD9CF /* DITranquillityTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DITranquillityTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA4917C620334F19003FD20E /* DITranquillityTests_Lifetime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Lifetime.swift; sourceTree = "<group>"; };
-		BA6643F9207BD25A0032B4A7 /* DITranquillityTests_SwiftLazy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_SwiftLazy.swift; sourceTree = "<group>"; };
-		BA664400207BD2C60032B4A7 /* SwiftLazy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D54AEF211F72C8D40092BB34 /* AccessStoryboard1.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AccessStoryboard1.storyboard; sourceTree = "<group>"; };
-		D54AEF221F72C8D40092BB34 /* AccessStoryboard2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AccessStoryboard2.storyboard; sourceTree = "<group>"; };
 		D54AEF231F72C8D40092BB34 /* DITranquillityTests_Performance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Performance.swift; sourceTree = "<group>"; };
-		D54AEF241F72C8D40092BB34 /* DITranquillityTests_Resolve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Resolve.swift; sourceTree = "<group>"; };
-		D54AEF251F72C8D40092BB34 /* DITranquillityTests_ResolveByInit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_ResolveByInit.swift; sourceTree = "<group>"; };
-		D54AEF261F72C8D40092BB34 /* DITranquillityTests_Scan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Scan.swift; sourceTree = "<group>"; };
-		D54AEF271F72C8D40092BB34 /* DITranquillityTests_Storyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Storyboard.swift; sourceTree = "<group>"; };
-		D54AEF281F72C8D40092BB34 /* DITranquillityTests_Threads.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Threads.swift; sourceTree = "<group>"; };
-		D54AEF291F72C8D40092BB34 /* DITranquillityTests_Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Validation.swift; sourceTree = "<group>"; };
 		D54AEF2A1F72C8D40092BB34 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D54AEF2B1F72C8D40092BB34 /* ResolveTestClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolveTestClasses.swift; sourceTree = "<group>"; };
-		D54AEF2C1F72C8D40092BB34 /* TestReferenceStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TestReferenceStoryboard.storyboard; sourceTree = "<group>"; };
-		D54AEF2D1F72C8D40092BB34 /* TestStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TestStoryboard.storyboard; sourceTree = "<group>"; };
 		D58B11831F66EE1D005010F4 /* DITranquillityTests_Performance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Performance.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -56,9 +26,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA6643FF207BD2C60032B4A7 /* SwiftLazy.framework in Frameworks */,
-				1699AEDC1DCAEE6000962832 /* SubProject2.framework in Frameworks */,
-				1699AEC31DCAEDD900962832 /* SubProject1.framework in Frameworks */,
 				1699AEC11DCAED8C00962832 /* DITranquillity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,7 +36,6 @@
 		1699AEBF1DCAED8C00962832 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BA664400207BD2C60032B4A7 /* SwiftLazy.framework */,
 				1699AEDB1DCAEE6000962832 /* SubProject2.framework */,
 				1699AEC21DCAEDD900962832 /* SubProject1.framework */,
 				1699AEC01DCAED8C00962832 /* DITranquillity.framework */,
@@ -106,21 +72,8 @@
 		D54AEF201F72C8D40092BB34 /* DITranquillityTest */ = {
 			isa = PBXGroup;
 			children = (
-				D54AEF211F72C8D40092BB34 /* AccessStoryboard1.storyboard */,
-				D54AEF221F72C8D40092BB34 /* AccessStoryboard2.storyboard */,
 				D54AEF231F72C8D40092BB34 /* DITranquillityTests_Performance.swift */,
-				D54AEF241F72C8D40092BB34 /* DITranquillityTests_Resolve.swift */,
-				D54AEF251F72C8D40092BB34 /* DITranquillityTests_ResolveByInit.swift */,
-				D54AEF261F72C8D40092BB34 /* DITranquillityTests_Scan.swift */,
-				D54AEF271F72C8D40092BB34 /* DITranquillityTests_Storyboard.swift */,
-				BA6643F9207BD25A0032B4A7 /* DITranquillityTests_SwiftLazy.swift */,
-				D54AEF281F72C8D40092BB34 /* DITranquillityTests_Threads.swift */,
-				D54AEF291F72C8D40092BB34 /* DITranquillityTests_Validation.swift */,
-				BA4917C620334F19003FD20E /* DITranquillityTests_Lifetime.swift */,
 				D54AEF2A1F72C8D40092BB34 /* Info.plist */,
-				D54AEF2B1F72C8D40092BB34 /* ResolveTestClasses.swift */,
-				D54AEF2C1F72C8D40092BB34 /* TestReferenceStoryboard.storyboard */,
-				D54AEF2D1F72C8D40092BB34 /* TestStoryboard.storyboard */,
 			);
 			path = DITranquillityTest;
 			sourceTree = "<group>";
@@ -184,10 +137,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D54AEF2F1F72C8D40092BB34 /* AccessStoryboard2.storyboard in Resources */,
-				D54AEF391F72C8D40092BB34 /* TestReferenceStoryboard.storyboard in Resources */,
-				D54AEF2E1F72C8D40092BB34 /* AccessStoryboard1.storyboard in Resources */,
-				D54AEF3A1F72C8D40092BB34 /* TestStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,16 +147,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D54AEF351F72C8D40092BB34 /* DITranquillityTests_Threads.swift in Sources */,
-				D54AEF311F72C8D40092BB34 /* DITranquillityTests_Resolve.swift in Sources */,
-				BA6643FA207BD25A0032B4A7 /* DITranquillityTests_SwiftLazy.swift in Sources */,
-				D54AEF361F72C8D40092BB34 /* DITranquillityTests_Validation.swift in Sources */,
-				D54AEF331F72C8D40092BB34 /* DITranquillityTests_Scan.swift in Sources */,
-				D54AEF381F72C8D40092BB34 /* ResolveTestClasses.swift in Sources */,
-				D54AEF321F72C8D40092BB34 /* DITranquillityTests_ResolveByInit.swift in Sources */,
 				D54AEF301F72C8D40092BB34 /* DITranquillityTests_Performance.swift in Sources */,
-				BA4917C720334F19003FD20E /* DITranquillityTests_Lifetime.swift in Sources */,
-				D54AEF341F72C8D40092BB34 /* DITranquillityTests_Storyboard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

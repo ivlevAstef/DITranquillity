@@ -1,5 +1,8 @@
-# v3.2.2
+# v3.3.0
 * Support delayed injection. Now have Lazy and Provider injection.
+
+# v3.2.2
+* support swift4.1 Thanks 'Nekitosss'
 
 # v3.2.1
 * rename lifetimes: single, perRun(weak/strong), perContainer(weak/strong), objectGraph, prototype.
