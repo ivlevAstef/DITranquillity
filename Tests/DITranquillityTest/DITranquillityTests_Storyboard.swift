@@ -424,7 +424,9 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     let testDataSource = TableViewTestDataSource()
     tableVC.tableView.dataSource = testDataSource
-    tableVC.tableView.dataSource!.tableView(tableVC.tableView, cellForRowAt: .init(row: 0, section: 0))
+
+    tableVC.tableView.setNeedsLayout()
+    tableVC.tableView.layoutIfNeeded()
     
     XCTAssertTrue(testDataSource.result)
   }
@@ -456,7 +458,9 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     let testDataSource = TableViewTestDataSource()
     tableView.dataSource = testDataSource
-    tableView.dataSource!.tableView(tableView, cellForRowAt: .init(row: 0, section: 0))
+
+    tableView.setNeedsLayout()
+    tableView.layoutIfNeeded()
     
     XCTAssertTrue(testDataSource.result)
   }
@@ -479,12 +483,14 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     let storyboard: UIStoryboard = *container
     
-    let tableVC = storyboard.instantiateViewController(withIdentifier: "CollectionViewStoryboard") as! UICollectionViewController
+    let collectionVC = storyboard.instantiateViewController(withIdentifier: "CollectionViewStoryboard") as! UICollectionViewController
     
     
     let testDataSource = CollectionViewTestDataSource()
-    tableVC.collectionView!.dataSource = testDataSource
-    tableVC.collectionView!.dataSource?.collectionView(tableVC.collectionView!, cellForItemAt: .init(row: 0, section: 0))
+    collectionVC.collectionView!.dataSource = testDataSource
+
+    collectionVC.collectionView!.setNeedsLayout()
+    collectionVC.collectionView!.layoutIfNeeded()
     
     XCTAssertTrue(testDataSource.result)
   }

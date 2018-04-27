@@ -448,9 +448,9 @@
 				BAB897132092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift */,
 				BAB89704209210EF009274F8 /* UICollectionView+Swizzling.m */,
 				BAB89705209210EF009274F8 /* UITableView+Swizzling.m */,
+				BAB89708209210EF009274F8 /* UIViewController+Swizzling.m */,
 				BAB89706209210EF009274F8 /* UIView+Swizzling.h */,
 				BAB89707209210EF009274F8 /* UIView+Swizzling.m */,
-				BAB89708209210EF009274F8 /* UIViewController+Swizzling.m */,
 			);
 			path = "iOS-tvOS";
 			sourceTree = "<group>";

@@ -25,12 +25,7 @@
 
 - (void)di_loadView {
   [self di_loadView];
-
-  _DINSResolver* resolver = [_DINSResolver getFrom:self];
-
-  if (nil != resolver) {
-    [self.view passResolver:resolver];
-  }
+  [self.view safePassResolver:[_DINSResolver getFrom:self]];
 }
 
 

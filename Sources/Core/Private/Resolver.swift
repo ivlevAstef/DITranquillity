@@ -159,7 +159,7 @@ class Resolver {
     }
     
     if components.isEmpty {
-      log(.warning, msg: "Not found type: \(description(type: type))")
+      log(.info, msg: "Not found \(description(type: type))")
     } else {
       let infos = components.map{ $0.info }
       log(.warning, msg: "Ambiguous \(description(type: type)) contains in: \(infos)")

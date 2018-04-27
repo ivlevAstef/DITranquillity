@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DINSResolver.h"
 #import "NSObject+Swizzling.h"
+#import "UIView+Swizzling.h"
 
 @interface UICollectionView (Swizzling)
 @end
@@ -21,15 +22,22 @@
   dispatch_once(&onceToken, ^{
     [self swizzleOriginalSelector:@selector(dequeueReusableCellWithReuseIdentifier:forIndexPath:)
                  swizzledSelector:@selector(di_dequeueReusableCellWithReuseIdentifier:forIndexPath:)];
+
+    [self swizzleOriginalSelector:@selector(dequeueReusableSupplementaryViewOfKind:withReuseIdentifier:forIndexPath:)
+                 swizzledSelector:@selector(di_dequeueReusableSupplementaryViewOfKind:withReuseIdentifier:forIndexPath:)];
   });
 }
 
 - (__kindof UICollectionViewCell*)di_dequeueReusableCellWithReuseIdentifier:(NSString*)identifier forIndexPath:(NSIndexPath*)indexPath {
   UICollectionViewCell* cell = [self di_dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-
-  [[_DINSResolver getFrom:self] injectInto:cell];
+  [cell safePassResolver:[_DINSResolver getFrom:self]];
   return cell;
 }
 
+- (__kindof UICollectionReusableView*)di_dequeueReusableSupplementaryViewOfKind:(NSString*)elementKind withReuseIdentifier:(NSString*)identifier forIndexPath:(NSIndexPath*)indexPath {
+  UICollectionReusableView* view = [self di_dequeueReusableSupplementaryViewOfKind:elementKind withReuseIdentifier:identifier forIndexPath:indexPath];
+  [view safePassResolver:[_DINSResolver getFrom:self]];
+  return view;
+}
 
 @end

@@ -11,6 +11,7 @@
 
 @interface UIView (Swizzling)
 
-- (void)passResolver:(_DINSResolver*)resolver;
+- (void)safePassResolver:(nullable _DINSResolver*)resolver;
+- (void)passResolver:(nonnull _DINSResolver*)resolver;
 
 @end

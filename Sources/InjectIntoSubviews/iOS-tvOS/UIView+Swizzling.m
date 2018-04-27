@@ -23,14 +23,21 @@
 - (void)di_didAddSubview:(UIView*)view {
   [self di_didAddSubview:view];
 
-  _DINSResolver* resolver = [_DINSResolver getFrom:self];
+  [view safePassResolver:[_DINSResolver getFrom:self]];
+}
 
+- (void)safePassResolver:(_DINSResolver*)resolver {
   if (nil != resolver) {
-    [view passResolver:resolver];
+    [self passResolver:resolver];
   }
 }
 
 - (void)passResolver:(_DINSResolver*)resolver {
+  // fix double inject
+  if (nil != [_DINSResolver getFrom:self]) {
+    return;
+  }
+
   [resolver setTo:self];
   [resolver injectInto:self];
 

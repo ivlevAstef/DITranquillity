@@ -15,7 +15,7 @@ public extension DIComponentBuilder where Impl: UIViewController {
 
   /// Function allows injection inside UIViewController view and its subviews.
   /// Setted to *false* by default cause optimization purposes.
-  /// If you want enable injection into ViewController views (e.g. UITableViewCells and UICollectionViewCells), set this property to *true*.
+  /// If you want enable injection into ViewController views, UITableViewCells and UICollectionViewCells, set this property to *true*.
   ///
   /// - Returns: Self
   @discardableResult
@@ -27,3 +27,26 @@ public extension DIComponentBuilder where Impl: UIViewController {
     return self
   }
 }
+
+public extension DIComponentBuilder where Impl: UIView {
+  internal func useInjectIntoSubviewComponent() {
+    if DISetting.Defaults.injectToSubviews {
+      autoInjectToSubviews()
+    }
+  }
+
+  /// Function allows injection inside UIView and its subviews.
+  /// Setted to *false* by default cause optimization purposes.
+  /// If you want enable injection into views, UITableViewCells and UICollectionViewCells, set this property to *true*.
+  ///
+  /// - Returns: Self
+  @discardableResult
+  public func autoInjectToSubviews() -> Self {
+    injection { [resolver] vc in
+      _ = SwiftNSResolver(resolver: resolver, on: vc)
+    }
+
+    return self
+  }
+}
+
