@@ -12,24 +12,24 @@ DITranquillity для этого интегрирован с библиотек�
 ```
 var counter: Int = 0
 container.register { () -> Int in
-	counter += 1
-	print("creating int")
-	return counter
+  counter += 1
+  print("creating int")
+  return counter
 }
 ```
 
 ## Обычное внедрение
 ```
 class DirectInjection {
-  	let value: Int
-	
-	func test()
-	{
-		print("begin")
-		print(value)
-		print(value)
-		print(value)
-	}
+  let value: Int
+
+  func test()
+  {
+    print("begin")
+    print(value)
+    print(value)
+    print(value)
+  }
 }
 
 let container = DIContainer()
@@ -51,15 +51,15 @@ begin
 ## Lazy
 ```
 class LazyInjection {
-  	let value: Lazy<Int>
-	
-	func test()
-	{
-		print("begin")
-		print(value)
-		print(value)
-		print(value)
-	}
+  let value: Lazy<Int>
+
+  func test()
+  {
+    print("begin")
+    print(value)
+    print(value)
+    print(value)
+  }
 }
 
 let container = DIContainer()
@@ -81,15 +81,15 @@ creating int
 ## Provider
 ```
 class ProviderInjection {
-  	let value: Provider<Int>
-	
-	func test()
-	{
-		print("begin")
-		print(value)
-		print(value)
-		print(value)
-	}
+  let value: Provider<Int>
+
+  func test()
+  {
+  print("begin")
+  print(value)
+  print(value)
+  print(value)
+  }
 }
 
 let container = DIContainer()
