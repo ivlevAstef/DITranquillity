@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/github/license/ivlevAstef/DITranquillity.svg?maxAge=2592000)](http://cocoapods.org/pods/DITranquillity)
 [![Platform](https://img.shields.io/cocoapods/p/DITranquillity.svg?style=flat)](http://cocoapods.org/pods/DITranquillity)
 [![Swift Version](https://img.shields.io/badge/Swift-3.0--4.1-F16D39.svg?style=flat)](https://developer.apple.com/swift)
-[![Dependency Status](https://www.versioneye.com/objective-c/DITranquillity/3.2.3/badge.svg?style=flat)](https://www.versioneye.com/objective-c/DITranquillity/3.2.3)
+[![Dependency Status](https://www.versioneye.com/objective-c/DITranquillity/3.3.0/badge.svg?style=flat)](https://www.versioneye.com/objective-c/DITranquillity/3.3.0)
 
 # DITranquillity
 The small library for [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) in applications written on pure Swift for iOS/OSX/tvOS. Despite its size, it solves a large enough range of tasks, including Storyboard support. Its main advantage -  modularity of support, detailed errors description and lots of opportunities.
@@ -28,6 +28,7 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 * Very detail logs [ru](Documentation/ru/log.md#Логирование)
 * Validation at the run app [ru](DocuDocumentation/ru/validation.md#Валидация-контейнера)
 * Scan Parts/Frameworks [ru](Documentation/ru/scan.md#Поиск)
+* Support Delayed injection [ru](Documentation/ru/delayed_injection.md#Отложенное-внедрение)
 * Thread safe
 
 ## Usage
@@ -91,10 +92,10 @@ container.register{ Dog(name: "Rex") }
   .default()
 
 container.register{ PetOwner(pets: many($0)) }
-  .injection{ $0.home = $1 }
+  .injection(\.home) // since swift4.0 and 3.2.0 lib
 
 container.register(Home.init)
-  .postInit { $0.address = "City, Street, Number" }
+  .postInit{ $0.address = "City, Street, Number" }
 
 .................................................
 
@@ -130,7 +131,7 @@ class PetOwner {
     self.pets = pets
   }
   
-  var home: Home!
+  private(set) var home: Home!
 }
 
 class Home {
@@ -159,7 +160,7 @@ Create container:
 ```Swift
 let container = DIContainer()
 container.register(ViewController.self)
-  .injection(\.inject) // since swift4.0 and 3.2.0 lib
+  .injection(\.inject)
 ```
 Create Storyboard:
 ```Swift
