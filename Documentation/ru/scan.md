@@ -65,6 +65,6 @@ container.append(part: YourPartScanner.self)
 
 
 #### [Главная](main.md)
-#### [Предыдущая глава "Storyboard"](storyboard.md#storyboard)
+#### [Предыдущая глава "Отложенное внедрение"](delayed_injection.md#Отложенное_внедрение)
 #### [Следующая глава "Логирование"](log.md#Логирование)
 

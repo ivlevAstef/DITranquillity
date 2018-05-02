@@ -1,5 +1,5 @@
 //
-//  Helpers.swift
+//  ProtocolMagic.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 14/06/16.
@@ -20,20 +20,25 @@ class Weak<T> {
   }
 }
 
+/// Delay types (lazy, provider)
+
+protocol DelayMaker: WrappedType {
+  init(_ factory: @escaping () -> Any?)
+}
 
 ////// For remove optional type
 
-protocol TypeGetter {
+protocol WrappedType {
   static var type: DIAType { get }
 }
 
-protocol SwiftTypeGetter: TypeGetter {}
+protocol SwiftWrappedType: WrappedType {}
 
-extension ImplicitlyUnwrappedOptional: SwiftTypeGetter {
+extension ImplicitlyUnwrappedOptional: SwiftWrappedType {
   static var type: DIAType { return Wrapped.self }
 }
 
-extension Optional: SwiftTypeGetter {
+extension Optional: SwiftWrappedType {
   static var type: DIAType { return Wrapped.self }
 }
 
@@ -42,8 +47,9 @@ extension Optional: SwiftTypeGetter {
 /// - Parameter type: input type
 /// - Returns: type without Optional and ImplicitlyUnwrappedOptional
 func removeTypeWrappers(_ type: DIAType) -> DIAType {
-  if let typeGetter = type as? SwiftTypeGetter.Type {
-    return removeTypeWrappers(typeGetter.type)
+  var type = type
+  while let subtype = (type as? SwiftWrappedType.Type)?.type {
+    type = subtype
   }
   
   return type
@@ -54,13 +60,45 @@ func removeTypeWrappers(_ type: DIAType) -> DIAType {
 /// - Parameter type: input type
 /// - Returns: type without Optional, ImplicitlyUnwrappedOptional, DIByTag, DIMany
 func removeTypeWrappersFully(_ type: DIAType) -> DIAType {
-  if let typeGetter = type as? TypeGetter.Type {
-    return removeTypeWrappersFully(typeGetter.type)
+  var type = type
+  while let subtype = (type as? WrappedType.Type)?.type {
+    type = subtype
   }
 
   return type
 }
 
+
+/// Check type for contains predicate, use WrappedType for iteration
+private func has(in type: DIAType, _ predicate: (DIAType) -> Bool) -> Bool {
+  var type = type
+
+  while !predicate(type) {
+    if let subtype = (type as? WrappedType.Type)?.type {
+      type = subtype
+      continue
+    }
+
+    return false
+  }
+
+  return true
+}
+
+@inline(__always)
+func hasMany(in type: DIAType) -> Bool {
+  return has(in: type) { $0 is IsMany.Type }
+}
+
+@inline(__always)
+func hasOptional(in type: DIAType) -> Bool {
+  return has(in: type) { $0 is IsOptional.Type }
+}
+
+@inline(__always)
+func hasDelayed(in type: DIAType) -> Bool {
+  return has(in: type) { $0 is DelayMaker.Type }
+}
 
 ////// For optional check
 

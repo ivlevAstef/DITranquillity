@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../SwiftLazy/SwiftLazy.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Tests/SubProject2/SubProject2.xcodeproj">
    </FileRef>
    <FileRef
