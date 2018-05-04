@@ -68,6 +68,7 @@
 		BA9A27AD2088529500584CA0 /* SubProject2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9A27AF2088529500584CA0 /* SubProject2.framework */; };
 		BADA3A8C209B2948000F5566 /* ProtocolMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A82209308E2004EF9EF /* ProtocolMagic.swift */; };
 		BADA3A8D209B2948000F5566 /* ProtocolMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A82209308E2004EF9EF /* ProtocolMagic.swift */; };
+		BB77BD89CD4CA2B83AD41BC6 /* Pods_DITranquillityTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6C65290B01B60FD6E682C3 /* Pods_DITranquillityTests.framework */; };
 		D512552D1EE06F010067796B /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512552C1EE06F010067796B /* DISettings.swift */; };
 		D512552E1EE06F010067796B /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512552C1EE06F010067796B /* DISettings.swift */; };
 		D512552F1EE06F010067796B /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512552C1EE06F010067796B /* DISettings.swift */; };
@@ -151,9 +152,12 @@
 		16F8495F1BC11CD842628717 /* Pods-DITranquillity-OSX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DITranquillity-OSX.release.xcconfig"; path = "Pods/Target Support Files/Pods-DITranquillity-OSX/Pods-DITranquillity-OSX.release.xcconfig"; sourceTree = "<group>"; };
 		2FA30781EFE63884515C055E /* Pods_DITranquillity_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DITranquillity_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3913569EE177DF2DC5A9E84E /* Pods-DITranquillity-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DITranquillity-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DITranquillity-tvOS/Pods-DITranquillity-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		5C6C65290B01B60FD6E682C3 /* Pods_DITranquillityTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DITranquillityTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E56CE22032CCACFC24EFCE /* Pods-DITranquillity-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DITranquillity-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-DITranquillity-iOS/Pods-DITranquillity-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		69EB55E69731583BC47189B0 /* Pods-DITranquillityTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DITranquillityTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DITranquillityTests/Pods-DITranquillityTests.release.xcconfig"; sourceTree = "<group>"; };
 		8109C7765E1E60BD81259213 /* Pods_DITranquillity_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DITranquillity_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81DACD006610E1AFB49AA136 /* Pods_DITranquillity_OSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DITranquillity_OSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BFEF6E33DADAA8D77565724 /* Pods-DITranquillityTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DITranquillityTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DITranquillityTests/Pods-DITranquillityTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8BD3B9D0B4F0CEAD71ADF2A /* Pods-DITranquillity-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DITranquillity-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-DITranquillity-tvOS/Pods-DITranquillity-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		BA598A792093086E004EF9EF /* DITranquillityTests_SwiftLazy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_SwiftLazy.swift; sourceTree = "<group>"; };
@@ -239,6 +243,7 @@
 				BA9A27AC2088529500584CA0 /* SubProject1.framework in Frameworks */,
 				BA9A27AD2088529500584CA0 /* SubProject2.framework in Frameworks */,
 				BA9A275B208851C300584CA0 /* DITranquillity.framework in Frameworks */,
+				BB77BD89CD4CA2B83AD41BC6 /* Pods_DITranquillityTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,6 +366,8 @@
 				61E56CE22032CCACFC24EFCE /* Pods-DITranquillity-iOS.release.xcconfig */,
 				3913569EE177DF2DC5A9E84E /* Pods-DITranquillity-tvOS.debug.xcconfig */,
 				A8BD3B9D0B4F0CEAD71ADF2A /* Pods-DITranquillity-tvOS.release.xcconfig */,
+				8BFEF6E33DADAA8D77565724 /* Pods-DITranquillityTests.debug.xcconfig */,
+				69EB55E69731583BC47189B0 /* Pods-DITranquillityTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -435,6 +442,7 @@
 				81DACD006610E1AFB49AA136 /* Pods_DITranquillity_OSX.framework */,
 				8109C7765E1E60BD81259213 /* Pods_DITranquillity_iOS.framework */,
 				2FA30781EFE63884515C055E /* Pods_DITranquillity_tvOS.framework */,
+				5C6C65290B01B60FD6E682C3 /* Pods_DITranquillityTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -490,7 +498,7 @@
 				169C0DDD1DA3501F001F0AD5 /* Frameworks */,
 				169C0DDE1DA3501F001F0AD5 /* Headers */,
 				169C0DE11DA3501F001F0AD5 /* Resources */,
-				EEEBAA98CE7E23B164156279 /* [CP] Copy Pods Resources */,
+				FFDEFEEB66E27F74DE724246 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -510,7 +518,7 @@
 				169C0E431DA35CBE001F0AD5 /* Frameworks */,
 				169C0E441DA35CBE001F0AD5 /* Headers */,
 				169C0E471DA35CBE001F0AD5 /* Resources */,
-				D94629E212A48225DDC99C30 /* [CP] Copy Pods Resources */,
+				F9AF7CA373785D915421C677 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -530,7 +538,7 @@
 				A58875501D0944AE00D6DE92 /* Frameworks */,
 				A58875511D0944AE00D6DE92 /* Headers */,
 				A58875521D0944AE00D6DE92 /* Resources */,
-				FF0F22117C7708AF88BDF422 /* [CP] Copy Pods Resources */,
+				491E49A858DEC97A74358361 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -545,9 +553,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BA9A2760208851C300584CA0 /* Build configuration list for PBXNativeTarget "DITranquillityTests" */;
 			buildPhases = (
+				C344BBD5032448A3F7CB8F63 /* [CP] Check Pods Manifest.lock */,
 				BA9A2752208851C300584CA0 /* Sources */,
 				BA9A2753208851C300584CA0 /* Frameworks */,
 				BA9A2754208851C300584CA0 /* Resources */,
+				BBC5D429CCE28A5CBDC0C9FC /* [CP] Embed Pods Frameworks */,
+				48873BB4328D9DEB301449A2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -678,6 +689,54 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		48873BB4328D9DEB301449A2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillityTests/Pods-DITranquillityTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		491E49A858DEC97A74358361 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillity-iOS/Pods-DITranquillity-iOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BBC5D429CCE28A5CBDC0C9FC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillityTests/Pods-DITranquillityTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SwiftLazy-iOS/SwiftLazy.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftLazy.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillityTests/Pods-DITranquillityTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		C07FDDC05DE2D29CBE1F0F5E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -696,7 +755,25 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D94629E212A48225DDC99C30 /* [CP] Copy Pods Resources */ = {
+		C344BBD5032448A3F7CB8F63 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DITranquillityTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F9AF7CA373785D915421C677 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -711,7 +788,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillity-tvOS/Pods-DITranquillity-tvOS-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EEEBAA98CE7E23B164156279 /* [CP] Copy Pods Resources */ = {
+		FFDEFEEB66E27F74DE724246 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -724,21 +801,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillity-OSX/Pods-DITranquillity-OSX-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FF0F22117C7708AF88BDF422 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillity-iOS/Pods-DITranquillity-iOS-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1190,6 +1252,7 @@
 		};
 		BA9A275E208851C300584CA0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8BFEF6E33DADAA8D77565724 /* Pods-DITranquillityTests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1215,6 +1278,7 @@
 		};
 		BA9A275F208851C300584CA0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 69EB55E69731583BC47189B0 /* Pods-DITranquillityTests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
