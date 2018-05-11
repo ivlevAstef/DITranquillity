@@ -107,6 +107,31 @@ let storyboard: NSStoryboard = container.resolve()
 
 В этом случае проблем не должно возникать.
 
+## Subviews injection
+Есть возможность производить внедрение зависимостей в subviews контроллера и ячейки таблиц (UICollectionView, UITableView). В целях производительности, внедрение зависимостей по умолчанию было отключено и, чтобы оно производилось, необходимо явно это указать при регистрации контроллера.
+
+```Swift
+container.register(YourTableViewCell.self)
+  .injection { cell, inject in cell.inject = inject }
+
+container.register(YourView.self)
+  .injection { view, inject in view.inject = inject }
+
+container.register(YourViewController.self)
+  .injection { vc, inject in vc.inject = inject }
+  .autoInjectToSubviews() // Включает внедрение в дочерние view.
+
+
+class YourViewController {
+  @IBOutlet var myView: YourView!
+  @IBOutlet var tableView: UITableView!
+}
+```
+Также вы можете настроить автоматическое внедрение глобально (*Не рекомендуется*) с помощью DISetting.
+```Swift
+DISetting.Defaults.injectToSubviews = true
+```
+После данной настройки нет необходимости включать внедрение в subviews для каждого контроллера в отдельности.
 
 #### [Главная](main.md)
 #### [Предыдущая глава "Части и Фреймворки"](part_framework.md#Части_и_Фреймворки)
