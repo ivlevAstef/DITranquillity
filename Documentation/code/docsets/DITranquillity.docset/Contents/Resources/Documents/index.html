@@ -168,8 +168,8 @@
 <a href="http://cocoapods.org/pods/DITranquillity"><img src="https://img.shields.io/cocoapods/v/DITranquillity.svg?style=flat" alt="CocoaPods Version"></a>
 <a href="http://cocoapods.org/pods/DITranquillity"><img src="https://img.shields.io/github/license/ivlevAstef/DITranquillity.svg?maxAge=2592000" alt="License"></a>
 <a href="http://cocoapods.org/pods/DITranquillity"><img src="https://img.shields.io/cocoapods/p/DITranquillity.svg?style=flat" alt="Platform"></a>
-<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift-3.0--4.0-F16D39.svg?style=flat" alt="Swift Version"></a>
-<a href="https://www.versioneye.com/objective-c/DITranquillity/3.0.0"><img src="https://www.versioneye.com/objective-c/DITranquillity/3.0.0/badge.svg?style=flat" alt="Dependency Status"></a></p>
+<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift-3.0--4.1-F16D39.svg?style=flat" alt="Swift Version"></a>
+<a href="https://www.versioneye.com/objective-c/DITranquillity/3.3.0"><img src="https://www.versioneye.com/objective-c/DITranquillity/3.3.0/badge.svg?style=flat" alt="Dependency Status"></a></p>
 <h1 id='ditranquillity' class='heading'>DITranquillity</h1>
 
 <p>The small library for <a href="https://en.wikipedia.org/wiki/Dependency_injection">dependency injection</a> in applications written on pure Swift for iOS/OSX/tvOS. Despite its size, it solves a large enough range of tasks, including Storyboard support. Its main advantage -  modularity of support, detailed errors description and lots of opportunities.</p>
@@ -189,9 +189,11 @@
 <li>Three level hierarchy: types, part, framework <a href="Documentation/ru/part_framework.md#%D0%A7%D0%B0%D1%81%D1%82%D0%B8-%D0%B8-%D0%A4%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B8">ru</a></li>
 <li>Short resolve syntax <a href="Documentation/ru/resolve.md#%D0%A0%D0%B0%D0%B7%D1%80%D0%B5%D1%88%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B5%D0%B9">ru</a></li>
 <li>keyPath injection (since swift4.0) <a href="Documentation/ru/injection.md#%D0%92%D0%BD%D0%B5%D0%B4%D1%80%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B5%D0%B9-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-%D1%81%D0%B2%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%B0-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D1%8F-keypath">ru</a></li>
-<li>Scan Parts/Frameworks <a href="Documentation/ru/scan.md#%D0%9F%D0%BE%D0%B8%D1%81%D0%BA">ru</a></li>
+<li>Delayed injection <a href="delayed_injection.md#%D0%9E%D1%82%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%BD%D0%BE%D0%B5-%D0%B2%D0%BD%D0%B5%D0%B4%D1%80%D0%B5%D0%BD%D0%B8%D0%B5">ru</a></li>
 <li>Very detail logs <a href="Documentation/ru/log.md#%D0%9B%D0%BE%D0%B3%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5">ru</a></li>
 <li>Validation at the run app <a href="DocuDocumentation/ru/validation.md#%D0%92%D0%B0%D0%BB%D0%B8%D0%B4%D0%B0%D1%86%D0%B8%D1%8F-%D0%BA%D0%BE%D0%BD%D1%82%D0%B5%D0%B9%D0%BD%D0%B5%D1%80%D0%B0">ru</a></li>
+<li>Scan Parts/Frameworks <a href="Documentation/ru/scan.md#%D0%9F%D0%BE%D0%B8%D1%81%D0%BA">ru</a></li>
+<li>Support Delayed injection <a href="Documentation/ru/delayed_injection.md#%D0%9E%D1%82%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%BD%D0%BE%D0%B5-%D0%B2%D0%BD%D0%B5%D0%B4%D1%80%D0%B5%D0%BD%D0%B8%D0%B5">ru</a></li>
 <li>Thread safe</li>
 </ul>
 <h2 id='usage' class='heading'>Usage</h2>
@@ -254,10 +256,10 @@ container.register{ Dog(name: &ldquo;Rex&rdquo;) }
   .default()
 
 container.register{ PetOwner(pets: many($0)) }
-  .injection{ $0.home = $1 }
+  .injection(.home) // since swift4.0 and 3.2.0 lib
 
 container.register(Home.init)
-  .postInit { $0.address = &ldquo;City, Street, Number&rdquo; }
+  .postInit{ $0.address = &ldquo;City, Street, Number&rdquo; }
 
 &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;.
 
@@ -293,7 +295,7 @@ class PetOwner {
     self.pets = pets
   }
   
-  var home: Home!
+  private(set) var home: Home!
 }
 
 class Home {
@@ -321,7 +323,7 @@ Create container:
 &rdquo;`Swift
 let container = DIContainer()
 container.register(ViewController.self)
-  .injection(.inject) // since swift4.0 and 3.2.0 lib
+  .injection(.inject)
 &ldquo;`
 Create Storyboard:
 &rdquo;`Swift
@@ -366,6 +368,7 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 <p>iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC</p>
 
 <ul>
+<li>Swift 4.1: Xcode 9.3; version &gt;= 3.2.3</li>
 <li>Swift 4.0: Xcode 9.0; version &gt;= 3.0.5</li>
 <li>Swift 3.0-3.2: Xcode 8.0-9.0; version &gt;= 0.9.5</li>
 <li>Swift 2.3: Xcode 7.0; version &lt; 0.9.5</li>
@@ -402,7 +405,7 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2018-03-30)</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2018-05-02)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

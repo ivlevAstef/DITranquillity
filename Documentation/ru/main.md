@@ -17,6 +17,7 @@ DITranquallity - небольшая библиотека для внедрени
 * [Логирование](log.md#Логирование)
 * [Валидация графа зависимостей](validation.md#Валидация-контейнера)
 * [Внедрение в subview и ячейки](storyboard.md#Внедрение-в-subview-и-ячейки)
+* [Отложенное внедрение](delayed_injection.md#Отложенное-внедрение)
 * Потокобезопасный
 
 # Главы
@@ -73,6 +74,11 @@ DITranquallity - небольшая библиотека для внедрени
 * [StoryboardReference](storyboard.md#Storyboardreference)
 * [Внедрение в subview и ячейки](storyboard.md#Внедрение-в-subview-и-ячейки)
 
+## [Отложенное внедрение](delayed_injection.md#Отложенное-внедрение)
+* [Установка](delayed_injection.md#Установка)
+* [Обычное внедрение](delayed_injection.md#Обычное-внедрение)
+* [Lazy](delayed_injection.md#Lazy)
+* [Provider](delayed_injection.md#Provider)
 
 ## [Поиск](scan.md#Поиск)
 * [Предыстория](scan.md#Предыстория)

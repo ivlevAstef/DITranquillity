@@ -24,10 +24,12 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 * Three level hierarchy: types, part, framework [ru](Documentation/ru/part_framework.md#Части-и-Фреймворки)
 * Short resolve syntax [ru](Documentation/ru/resolve.md#Разрешение-зависимостей)
 * keyPath injection (since swift4.0) [ru](Documentation/ru/injection.md#Внедрение-зависимостей-через-свойства-используя-keypath)
-* Scan Parts/Frameworks [ru](Documentation/ru/scan.md#Поиск)
+* Delayed injection [ru](delayed_injection.md#Отложенное-внедрение)
 * Very detail logs [ru](Documentation/ru/log.md#Логирование)
 * Validation at the run app [ru](Documentation/ru/validation.md#Валидация-контейнера)
 * Injection into Subviews and cells [ru](Documentation/ru/storyboard.md#Внедрение-в-subview-и-ячейки)
+* Scan Parts/Frameworks [ru](Documentation/ru/scan.md#Поиск)
+* Support Delayed injection [ru](Documentation/ru/delayed_injection.md#Отложенное-внедрение)
 * Thread safe
 
 ## Usage
@@ -91,10 +93,10 @@ container.register{ Dog(name: "Rex") }
   .default()
 
 container.register{ PetOwner(pets: many($0)) }
-  .injection{ $0.home = $1 }
+  .injection(\.home) // since swift4.0 and 3.2.0 lib
 
 container.register(Home.init)
-  .postInit { $0.address = "City, Street, Number" }
+  .postInit{ $0.address = "City, Street, Number" }
 
 .................................................
 
@@ -130,7 +132,7 @@ class PetOwner {
     self.pets = pets
   }
   
-  var home: Home!
+  private(set) var home: Home!
 }
 
 class Home {
@@ -159,7 +161,7 @@ Create container:
 ```Swift
 let container = DIContainer()
 container.register(ViewController.self)
-  .injection(\.inject) // since swift4.0 and 3.2.0 lib
+  .injection(\.inject)
 ```
 Create Storyboard:
 ```Swift

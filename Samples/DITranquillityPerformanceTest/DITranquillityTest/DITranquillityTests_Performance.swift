@@ -6,6 +6,8 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
+#if !DEBUG
+
 import XCTest
 import DITranquillity
 
@@ -24,45 +26,46 @@ private class PerformanceTest {
 
 class DITranquillityTests_Performance: XCTestCase {
   /*
+   /// time for core i7-6800K in virtual machine
    register count:
-   1000 = 0.048
-   2000 = 0.165
-   4000 = 0.613
-   8000 = 2.668
+   1000 = 0.040
+   2000 = 0.135
+   4000 = 0.532
+   8000 = 2.217
    not linear!!!
    but 1k classes it's more.
    0.000008 per register
    
    parameters count (for 2000):
-   0 = 0.165
-   1 = 0.168
-   2 = 0.171
-   3 = 0.170
-   8 = 0.172
+   0 = 0.131
+   1 = 0.135
+   2 = 0.134
+   3 = 0.137
+   8 = 0.136
    linear - 0.001 sec or 0.5%
    increase register time on 0.0000005 per parameter
    
    resolve (for 50000):
-   prototype = 0.083
-   objectGraph = 0.193
-   single = 0.212
+   prototype = 0.101
+   objectGraph = 0.264
+   single = 0.227
    0.000003 per resolve with one register
    
    resolve by register count (for 50000):
-   250 = 0.272
-   500 = 0.529
-   1000 = 1.029
-   2000 = 2.316
+   250 = 0.419
+   500 = 0.798
+   1000 = 1.607
+   2000 = 3.726
    linear
    resolve type increase on 0.0011 (for 50000) per one register
    0.00002 per resolve with 1000 register
    
    inject count (for 2000):
-   1 = 0.169
-   2 = 0.173
-   4 = 0.185
-   8 = 0.218
-   16 = 0.261
+   1 = 0.137
+   2 = 0.142
+   4 = 0.146
+   8 = 0.163
+   16 = 0.216
    not linear, but this is not critical
    increase register time on 0.000022 per injection
    
@@ -366,3 +369,5 @@ class DITranquillityTests_Performance: XCTestCase {
   }
   
 }
+
+#endif

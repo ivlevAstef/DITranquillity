@@ -30,6 +30,7 @@ before_deploy:
   - carthage archive $FRAMEWORK_NAME
 script:
   - open -b com.apple.iphonesimulator # Workaround https://github.com/travis-ci/travis-ci/issues/3040
+  - pod install
   - xcodebuild "$ACTION" -workspace "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Release ENABLE_TESTABILITY=YES ONLY_ACTIVE_ARCH=NO
   - pod lib lint --quick;
 notifications:

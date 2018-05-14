@@ -98,14 +98,16 @@ class Resolver {
       if let manyType = type as? IsMany.Type {
         currentComponents = container.componentContainer[ShortTypeKey(by: simpleType)]
         filterByBundle = filterByBundle && manyType.inBundle /// filter
-        type = removeTypeWrappers(manyType.type) /// iteration
       } else if let taggedType = type as? IsTag.Type {
         currentComponents = container.componentContainer[TypeKey(by: simpleType, tag: taggedType.tag)]
-        type = removeTypeWrappers(taggedType.type) /// iteration
       } else if let name = name {
         currentComponents = container.componentContainer[TypeKey(by: simpleType, name: name)]
       } else {
         currentComponents = container.componentContainer[TypeKey(by: simpleType)]
+      }
+
+      if let subtype = (type as? WrappedType.Type)?.type {
+        type = removeTypeWrappers(subtype) /// iteration
       }
       
       /// it's not equals components.isEmpty !!!
@@ -135,37 +137,48 @@ class Resolver {
   }
   
   private func make(by type: DIAType, with name: String?, from bundle: Bundle?, use object: Any?) -> Any? {
-    let components = findComponents(by: type, with: name, from: bundle)
-    let hasMany: Bool = {
-      var type = removeTypeWrappers(type)
-      while true {
-        if let taggedType = type as? IsTag.Type {
-          type = removeTypeWrappers(taggedType.type)
-          continue
-        }
-        
-        return type is IsMany.Type
+    let isMany: Bool = hasMany(in: type)
+    var components: Components = findComponents(by: type, with: name, from: bundle)
+
+    return mutex.sync {
+      if isMany {
+          //isManyRemove objects contains in stack for exclude cycle initialization
+          components = components.filter{ !stack.contains($0.info) }
       }
-    }()
-    
-    if hasMany {
-      let filterComponents = components.filter{ !stack.contains($0.info) } // Remove objects contains in stack
-      assert(nil == object, "Many injection not supported")
-		return filterComponents.compactMap{ makeObject(by: $0, use: nil) }
+
+      if let delayMaker = type as? DelayMaker.Type {
+        let saveGraph = cache.graph
+
+        return delayMaker.init({ () -> Any? in
+          return self.mutex.sync {
+            self.cache.graph = saveGraph
+            return self.make(by: type, isMany: isMany, components: components, use: object)
+          }
+        })
+      }
+
+      return make(by: type, isMany: isMany, components: components, use: object)
     }
-    
+  }
+
+  /// isMany for optimization
+  private func make(by type: DIAType, isMany: Bool, components: Components, use object: Any?) -> Any? {
+    if isMany {
+      assert(nil == object, "Many injection not supported")
+      return components.compactMap{ makeObject(by: $0, use: nil) }
+    }
+
     if let component = components.first, 1 == components.count {
       return makeObject(by: component, use: object)
     }
-    
+
     if components.isEmpty {
       log(.info, msg: "Not found \(description(type: type))")
     } else {
       let infos = components.map{ $0.info }
       log(.warning, msg: "Ambiguous \(description(type: type)) contains in: \(infos)")
     }
-    
-    
+
     return nil
   }
   
@@ -247,7 +260,7 @@ class Resolver {
         _ = use(signature: data.injection.signature, usingObject: data.obj)
       }
       
-      cache.graph.data.removeAll()
+      cache.graph = Cache.Scope()
     }
     
     func use(signature: MethodSignature, usingObject: Any?) -> Any? {
@@ -270,32 +283,31 @@ class Resolver {
       
       return signature.call(objParameters)
     }
-    
-    return mutex.sync {
-      stack.append(component.info)
-      defer {
-        stack.removeLast()
-        if stack.isEmpty {
-          endResolving()
-        }
+
+
+    stack.append(component.info)
+    defer {
+      stack.removeLast()
+      if stack.isEmpty {
+        endResolving()
       }
-      
-      switch component.lifeTime {
-      case .single:
-        return makeObject(from: "single", use: .strong, scope: Cache.perRun)
+    }
 
-      case .perRun(let referenceCounting):
-        return makeObject(from: "per run", use: referenceCounting, scope: Cache.perRun)
+    switch component.lifeTime {
+    case .single:
+      return makeObject(from: "single", use: .strong, scope: Cache.perRun)
 
-      case .perContainer(let referenceCounting):
-        return makeObject(from: "per container", use: referenceCounting, scope: cache.perContainer)
+    case .perRun(let referenceCounting):
+      return makeObject(from: "per run", use: referenceCounting, scope: Cache.perRun)
 
-      case .objectGraph:
-        return makeObject(from: "object graph", use: .strong, scope: cache.graph)
+    case .perContainer(let referenceCounting):
+      return makeObject(from: "per container", use: referenceCounting, scope: cache.perContainer)
 
-      case .prototype:
-        return makeObject()
-      }
+    case .objectGraph:
+      return makeObject(from: "object graph", use: .strong, scope: cache.graph)
+
+    case .prototype:
+      return makeObject()
     }
   }
  
