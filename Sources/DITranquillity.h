@@ -19,3 +19,5 @@ FOUNDATION_EXPORT const unsigned char DITranquillityVersionString[];
 #import <DITranquillity/DIStoryboardBase.h>
 
 #endif
+
+#import <DITranquillity/DINSResolver.h>

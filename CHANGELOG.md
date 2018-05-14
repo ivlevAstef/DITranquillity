@@ -1,3 +1,6 @@
+# v3.3.1
+* New feature: inject into subviews, cells, items. Thanks 'Nekitosss'
+
 # v3.3.0
 * Support delayed injection. Now have Lazy and Provider injection.
 

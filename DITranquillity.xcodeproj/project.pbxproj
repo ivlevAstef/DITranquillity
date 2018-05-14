@@ -66,6 +66,34 @@
 		BA9A27AA208851FF00584CA0 /* TestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA9A2772208851F100584CA0 /* TestStoryboard.storyboard */; };
 		BA9A27AC2088529500584CA0 /* SubProject1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9A27AE2088529500584CA0 /* SubProject1.framework */; };
 		BA9A27AD2088529500584CA0 /* SubProject2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9A27AF2088529500584CA0 /* SubProject2.framework */; };
+		BAB896C72091FC41009274F8 /* NSObject+Swizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = BAB896C52091FC41009274F8 /* NSObject+Swizzling.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		BAB896C82091FC41009274F8 /* NSObject+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB896C62091FC41009274F8 /* NSObject+Swizzling.m */; };
+		BAB896C92091FC44009274F8 /* NSObject+Swizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = BAB896C52091FC41009274F8 /* NSObject+Swizzling.h */; };
+		BAB896CA2091FC45009274F8 /* NSObject+Swizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = BAB896C52091FC41009274F8 /* NSObject+Swizzling.h */; };
+		BAB896CB2091FC48009274F8 /* NSObject+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB896C62091FC41009274F8 /* NSObject+Swizzling.m */; };
+		BAB896CD2091FCB8009274F8 /* SwiftNSResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB896CC2091FCB8009274F8 /* SwiftNSResolver.swift */; };
+		BAB896CE2091FCB8009274F8 /* SwiftNSResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB896CC2091FCB8009274F8 /* SwiftNSResolver.swift */; };
+		BAB896CF2091FCB8009274F8 /* SwiftNSResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB896CC2091FCB8009274F8 /* SwiftNSResolver.swift */; };
+		BAB896D52091FD82009274F8 /* DIComponentBuilder+UseInjectIntoSubviewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB896D42091FD82009274F8 /* DIComponentBuilder+UseInjectIntoSubviewComponent.swift */; };
+		BAB896D62091FD82009274F8 /* DIComponentBuilder+UseInjectIntoSubviewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB896D42091FD82009274F8 /* DIComponentBuilder+UseInjectIntoSubviewComponent.swift */; };
+		BAB896D72091FD82009274F8 /* DIComponentBuilder+UseInjectIntoSubviewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB896D42091FD82009274F8 /* DIComponentBuilder+UseInjectIntoSubviewComponent.swift */; };
+		BAB896F62092040E009274F8 /* DINSResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = BAB896F52092040E009274F8 /* DINSResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BAB896F72092040E009274F8 /* DINSResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = BAB896F52092040E009274F8 /* DINSResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BAB896F82092040E009274F8 /* DINSResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = BAB896F52092040E009274F8 /* DINSResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BAB896FA209204B4009274F8 /* DINSResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB896F9209204B4009274F8 /* DINSResolver.m */; };
+		BAB896FB209204B4009274F8 /* DINSResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB896F9209204B4009274F8 /* DINSResolver.m */; };
+		BAB896FC209204B4009274F8 /* DINSResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB896F9209204B4009274F8 /* DINSResolver.m */; };
+		BAB89709209210EF009274F8 /* UICollectionView+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB89704209210EF009274F8 /* UICollectionView+Swizzling.m */; };
+		BAB8970A209210EF009274F8 /* UITableView+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB89705209210EF009274F8 /* UITableView+Swizzling.m */; };
+		BAB8970B209210EF009274F8 /* UIView+Swizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = BAB89706209210EF009274F8 /* UIView+Swizzling.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		BAB8970C209210EF009274F8 /* UIView+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB89707209210EF009274F8 /* UIView+Swizzling.m */; };
+		BAB8970D209210EF009274F8 /* UIViewController+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB89708209210EF009274F8 /* UIViewController+Swizzling.m */; };
+		BAB8970E209210FB009274F8 /* UICollectionView+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB89704209210EF009274F8 /* UICollectionView+Swizzling.m */; };
+		BAB8970F209210FE009274F8 /* UITableView+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB89705209210EF009274F8 /* UITableView+Swizzling.m */; };
+		BAB89710209210FE009274F8 /* UIView+Swizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = BAB89706209210EF009274F8 /* UIView+Swizzling.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		BAB89711209210FE009274F8 /* UIView+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB89707209210EF009274F8 /* UIView+Swizzling.m */; };
+		BAB89712209210FE009274F8 /* UIViewController+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB89708209210EF009274F8 /* UIViewController+Swizzling.m */; };
+		BAB897142092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB897132092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift */; };
 		BADA3A8C209B2948000F5566 /* ProtocolMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A82209308E2004EF9EF /* ProtocolMagic.swift */; };
 		BADA3A8D209B2948000F5566 /* ProtocolMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A82209308E2004EF9EF /* ProtocolMagic.swift */; };
 		BB77BD89CD4CA2B83AD41BC6 /* Pods_DITranquillityTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6C65290B01B60FD6E682C3 /* Pods_DITranquillityTests.framework */; };
@@ -182,6 +210,18 @@
 		BA9A2772208851F100584CA0 /* TestStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TestStoryboard.storyboard; sourceTree = "<group>"; };
 		BA9A27AE2088529500584CA0 /* SubProject1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SubProject1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9A27AF2088529500584CA0 /* SubProject2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SubProject2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BAB896C52091FC41009274F8 /* NSObject+Swizzling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Swizzling.h"; sourceTree = "<group>"; };
+		BAB896C62091FC41009274F8 /* NSObject+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Swizzling.m"; sourceTree = "<group>"; };
+		BAB896CC2091FCB8009274F8 /* SwiftNSResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftNSResolver.swift; sourceTree = "<group>"; };
+		BAB896D42091FD82009274F8 /* DIComponentBuilder+UseInjectIntoSubviewComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DIComponentBuilder+UseInjectIntoSubviewComponent.swift"; sourceTree = "<group>"; };
+		BAB896F52092040E009274F8 /* DINSResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DINSResolver.h; sourceTree = "<group>"; };
+		BAB896F9209204B4009274F8 /* DINSResolver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DINSResolver.m; sourceTree = "<group>"; };
+		BAB89704209210EF009274F8 /* UICollectionView+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+Swizzling.m"; sourceTree = "<group>"; };
+		BAB89705209210EF009274F8 /* UITableView+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Swizzling.m"; sourceTree = "<group>"; };
+		BAB89706209210EF009274F8 /* UIView+Swizzling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Swizzling.h"; sourceTree = "<group>"; };
+		BAB89707209210EF009274F8 /* UIView+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Swizzling.m"; sourceTree = "<group>"; };
+		BAB89708209210EF009274F8 /* UIViewController+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Swizzling.m"; sourceTree = "<group>"; };
+		BAB897132092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DIComponentBuilder+SubviewsInject.swift"; sourceTree = "<group>"; };
 		CA2F896073C111FC22770E6F /* Pods-DITranquillity-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DITranquillity-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DITranquillity-iOS/Pods-DITranquillity-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		D512552C1EE06F010067796B /* DISettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DISettings.swift; sourceTree = "<group>"; };
 		D51666F91F1FBFAA001AD9F5 /* DIFramework.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIFramework.swift; sourceTree = "<group>"; };
@@ -264,6 +304,7 @@
 		16640A4C1D9E1E7B00707BFC /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				BAB896B52091FB81009274F8 /* InjectIntoSubviews */,
 				BA598A84209308F4004EF9EF /* Extensions */,
 				D51666F81F1FBFAA001AD9F5 /* Hierarchy */,
 				16640A501D9E1E7B00707BFC /* Core */,
@@ -278,6 +319,7 @@
 		16640A501D9E1E7B00707BFC /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				BAB896C42091FC41009274F8 /* ObjC */,
 				16640A511D9E1E7B00707BFC /* Private */,
 				16640A5F1D9E1E7B00707BFC /* Public */,
 			);
@@ -447,6 +489,40 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BAB896B52091FB81009274F8 /* InjectIntoSubviews */ = {
+			isa = PBXGroup;
+			children = (
+				BAB896F52092040E009274F8 /* DINSResolver.h */,
+				BAB896F9209204B4009274F8 /* DINSResolver.m */,
+				BAB896CC2091FCB8009274F8 /* SwiftNSResolver.swift */,
+				BAB896D42091FD82009274F8 /* DIComponentBuilder+UseInjectIntoSubviewComponent.swift */,
+				BAB89703209210EF009274F8 /* iOS-tvOS */,
+			);
+			path = InjectIntoSubviews;
+			sourceTree = "<group>";
+		};
+		BAB896C42091FC41009274F8 /* ObjC */ = {
+			isa = PBXGroup;
+			children = (
+				BAB896C52091FC41009274F8 /* NSObject+Swizzling.h */,
+				BAB896C62091FC41009274F8 /* NSObject+Swizzling.m */,
+			);
+			path = ObjC;
+			sourceTree = "<group>";
+		};
+		BAB89703209210EF009274F8 /* iOS-tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				BAB897132092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift */,
+				BAB89704209210EF009274F8 /* UICollectionView+Swizzling.m */,
+				BAB89705209210EF009274F8 /* UITableView+Swizzling.m */,
+				BAB89708209210EF009274F8 /* UIViewController+Swizzling.m */,
+				BAB89706209210EF009274F8 /* UIView+Swizzling.h */,
+				BAB89707209210EF009274F8 /* UIView+Swizzling.m */,
+			);
+			path = "iOS-tvOS";
+			sourceTree = "<group>";
+		};
 		D51666F81F1FBFAA001AD9F5 /* Hierarchy */ = {
 			isa = PBXGroup;
 			children = (
@@ -463,8 +539,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAB896C92091FC44009274F8 /* NSObject+Swizzling.h in Headers */,
 				169C0DDF1DA3501F001F0AD5 /* DITranquillity.h in Headers */,
 				D579617B1F52BA5D0079DE8C /* DIStoryboardBase.h in Headers */,
+				BAB896F72092040E009274F8 /* DINSResolver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,8 +550,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAB89710209210FE009274F8 /* UIView+Swizzling.h in Headers */,
+				BAB896CA2091FC45009274F8 /* NSObject+Swizzling.h in Headers */,
 				169C0E451DA35CBE001F0AD5 /* DITranquillity.h in Headers */,
 				D57961701F52BA160079DE8C /* DIStoryboardBase.h in Headers */,
+				BAB896F82092040E009274F8 /* DINSResolver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,8 +562,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAB8970B209210EF009274F8 /* UIView+Swizzling.h in Headers */,
 				16640A881D9E1E7B00707BFC /* DITranquillity.h in Headers */,
+				BAB896C72091FC41009274F8 /* NSObject+Swizzling.h in Headers */,
 				D579616E1F52BA160079DE8C /* DIStoryboardBase.h in Headers */,
+				BAB896F62092040E009274F8 /* DINSResolver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -813,7 +897,9 @@
 				119F4FD71E56069200B2DFA1 /* DIContainer.Reg.swift in Sources */,
 				D515626C1F5472300036919C /* Component.swift in Sources */,
 				169C0DC41DA3501F001F0AD5 /* DIComponentBuilder.swift in Sources */,
+				BAB896CB2091FC48009274F8 /* NSObject+Swizzling.m in Sources */,
 				D57961651F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */,
+				BAB896CE2091FCB8009274F8 /* SwiftNSResolver.swift in Sources */,
 				D55AFCB91EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				D55AFCB51EEEA48D00527D27 /* MethodMaker.swift in Sources */,
 				D57961831F52C2BD0079DE8C /* DIStoryboard.swift in Sources */,
@@ -827,6 +913,9 @@
 				D55369191EE6E2AE00015926 /* BundleContainer.swift in Sources */,
 				169C0DD31DA3501F001F0AD5 /* DIContainer.swift in Sources */,
 				16D7BCBB1DB086B500A29A9F /* DIScan.swift in Sources */,
+				169C0DD41DA3501F001F0AD5 /* Helpers.swift in Sources */,
+				BAB896FB209204B4009274F8 /* DINSResolver.m in Sources */,
+				BAB896D62091FD82009274F8 /* DIComponentBuilder+UseInjectIntoSubviewComponent.swift in Sources */,
 				D512552E1EE06F010067796B /* DISettings.swift in Sources */,
 				D51666FC1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */,
 				BA598A87209308F7004EF9EF /* SwiftLazy.swift in Sources */,
@@ -845,11 +934,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAB896FC209204B4009274F8 /* DINSResolver.m in Sources */,
 				119F4FD81E56069200B2DFA1 /* DIContainer.Reg.swift in Sources */,
 				D515626D1F5472300036919C /* Component.swift in Sources */,
 				169C0E2A1DA35CBE001F0AD5 /* DIComponentBuilder.swift in Sources */,
 				D57961661F4FC7F40079DE8C /* DIByTagAndMany.swift in Sources */,
 				D55AFCBA1EEEA97400527D27 /* MethodSignature.swift in Sources */,
+				BAB896CF2091FCB8009274F8 /* SwiftNSResolver.swift in Sources */,
 				D55AFCB61EEEA48D00527D27 /* MethodMaker.swift in Sources */,
 				D57961841F52C2BD0079DE8C /* DIStoryboard.swift in Sources */,
 				16D7BCC01DB086B900A29A9F /* DIScanPart.swift in Sources */,
@@ -858,10 +949,15 @@
 				D51667001F1FBFAA001AD9F5 /* DIPart.swift in Sources */,
 				163DDDC81DB9C84E0003DE54 /* DITypes.swift in Sources */,
 				169C0E371DA35CBE001F0AD5 /* Resolver.swift in Sources */,
+				BAB89712209210FE009274F8 /* UIViewController+Swizzling.m in Sources */,
 				D57961731F52BA160079DE8C /* DIStoryboardBase.m in Sources */,
+				BAB8970F209210FE009274F8 /* UITableView+Swizzling.m in Sources */,
 				D553691A1EE6E2AE00015926 /* BundleContainer.swift in Sources */,
+				BAB89711209210FE009274F8 /* UIView+Swizzling.m in Sources */,
 				169C0E391DA35CBE001F0AD5 /* DIContainer.swift in Sources */,
 				16D7BCBC1DB086B600A29A9F /* DIScan.swift in Sources */,
+				BAB896D72091FD82009274F8 /* DIComponentBuilder+UseInjectIntoSubviewComponent.swift in Sources */,
+				169C0E3A1DA35CBE001F0AD5 /* Helpers.swift in Sources */,
 				D512552F1EE06F010067796B /* DISettings.swift in Sources */,
 				D51666FD1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */,
 				BA598A88209308F7004EF9EF /* SwiftLazy.swift in Sources */,
@@ -870,6 +966,7 @@
 				D579616B1F526FBA0079DE8C /* StoryboardContainerMap.swift in Sources */,
 				D55369121EE658EA00015926 /* TypeKey.swift in Sources */,
 				D5E3C7D41F3C0C5A0022DD43 /* ByTagAndMany.swift in Sources */,
+				BAB8970E209210FB009274F8 /* UICollectionView+Swizzling.m in Sources */,
 				D57961871F52C2BD0079DE8C /* StoryboardResolver.swift in Sources */,
 				D579618A1F52C4BC0079DE8C /* UIStoryboard+Swizzling.m in Sources */,
 				1651E7071E86373D00E967B4 /* DIComponentBuilder.Injection.swift in Sources */,
@@ -881,8 +978,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				119F4FD61E56069200B2DFA1 /* DIContainer.Reg.swift in Sources */,
+				BAB897142092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift in Sources */,
 				16640A851D9E1E7B00707BFC /* DIComponentBuilder.swift in Sources */,
 				D57961851F52C2BD0079DE8C /* StoryboardResolver.swift in Sources */,
+				BAB896C82091FC41009274F8 /* NSObject+Swizzling.m in Sources */,
 				D55AFCB81EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				BA598A83209308E2004EF9EF /* ProtocolMagic.swift in Sources */,
 				D55AFCB41EEEA48D00527D27 /* MethodMaker.swift in Sources */,
@@ -899,13 +998,20 @@
 				16640A871D9E1E7B00707BFC /* DIContainer.swift in Sources */,
 				16D7BCB81DB086B000A29A9F /* DIScan.swift in Sources */,
 				D512552D1EE06F010067796B /* DISettings.swift in Sources */,
+				BAB8970A209210EF009274F8 /* UITableView+Swizzling.m in Sources */,
+				BAB896D52091FD82009274F8 /* DIComponentBuilder+UseInjectIntoSubviewComponent.swift in Sources */,
 				D51666FB1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */,
+				BAB896FA209204B4009274F8 /* DINSResolver.m in Sources */,
+				BAB896CD2091FCB8009274F8 /* SwiftNSResolver.swift in Sources */,
+				BAB89709209210EF009274F8 /* UICollectionView+Swizzling.m in Sources */,
 				D55368F21EE5BD3300015926 /* Log.swift in Sources */,
 				D57961621F4FC7440079DE8C /* Component.swift in Sources */,
 				D51666FE1F1FBFAA001AD9F5 /* DIPart.swift in Sources */,
 				16D7BCB91DB086B000A29A9F /* DIScanFramework.swift in Sources */,
+				BAB8970C209210EF009274F8 /* UIView+Swizzling.m in Sources */,
 				D55369101EE658EA00015926 /* TypeKey.swift in Sources */,
 				1651E7041E8631A900E967B4 /* DIComponentBuilder.Injection.swift in Sources */,
+				BAB8970D209210EF009274F8 /* UIViewController+Swizzling.m in Sources */,
 				D57961891F52C4BC0079DE8C /* UIStoryboard+Swizzling.m in Sources */,
 				BA598A86209308F5004EF9EF /* SwiftLazy.swift in Sources */,
 			);
@@ -1212,6 +1318,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
@@ -1244,6 +1351,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALID_ARCHS = "arm64 armv7 armv7s";

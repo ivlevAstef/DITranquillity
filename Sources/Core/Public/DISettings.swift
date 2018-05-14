@@ -11,6 +11,12 @@ public struct DISetting {
   public struct Defaults {
     /// Default lifetime of a object
     public static var lifeTime: DILifeTime = .prototype
+    
+    /// Global flag for configuring ViewController view and its subviews injection.
+    ///
+    /// For best optimization keep it *false* and use directly *autoInjectToSubviews()* function during ViewController registration.
+    /// - Warning: Setting to *true* may cause performance degradation.
+    public static var injectToSubviews: Bool = false
   }
   
   /// Namespace for log settings

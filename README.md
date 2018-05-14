@@ -26,7 +26,8 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 * keyPath injection (since swift4.0) [ru](Documentation/ru/injection.md#Внедрение-зависимостей-через-свойства-используя-keypath)
 * Delayed injection [ru](delayed_injection.md#Отложенное-внедрение)
 * Very detail logs [ru](Documentation/ru/log.md#Логирование)
-* Validation at the run app [ru](DocuDocumentation/ru/validation.md#Валидация-контейнера)
+* Validation at the run app [ru](Documentation/ru/validation.md#Валидация-контейнера)
+* Injection into Subviews and cells [ru](Documentation/ru/storyboard.md#Внедрение-в-subview-и-ячейки)
 * Scan Parts/Frameworks [ru](Documentation/ru/scan.md#Поиск)
 * Support Delayed injection [ru](Documentation/ru/delayed_injection.md#Отложенное-внедрение)
 * Thread safe

@@ -26,12 +26,16 @@ Pod::Spec.new do |s|
   core_headers = 'Sources/DITranquillity.h'
   core_sources = 'Sources/**/*.swift'
 
-  s.ios.public_header_files = core_headers, 'Sources/Storyboard/iOS-tvOS/*.h'
-  s.tvos.public_header_files = core_headers, 'Sources/Storyboard/iOS-tvOS/*.h'
-  s.osx.public_header_files = core_headers, 'Sources/Storyboard/OSX/*.h'
+  iis_headers = 'Sources/InjectIntoSubviews/*.h'
+  iis_sources = 'Sources/InjectIntoSubviews/*.{h,m,swift}'
+  itvOS_iis_sources = 'Sources/InjectIntoSubviews/iOS-tvOS/*.{h,m,swift}'
 
-  s.ios.source_files = core_headers, core_sources, 'Sources/Storyboard/iOS-tvOS/*.{h,m}'
-  s.tvos.source_files = core_headers, core_sources, 'Sources/Storyboard/iOS-tvOS/*.{h,m}'
-  s.osx.source_files = core_headers, core_sources, 'Sources/Storyboard/OSX/*.{h,m}'
+  s.ios.public_header_files = core_headers, iis_headers, 'Sources/Storyboard/iOS-tvOS/*.h'
+  s.tvos.public_header_files = core_headers, iis_headers, 'Sources/Storyboard/iOS-tvOS/*.h'
+  s.osx.public_header_files = core_headers, iis_headers, 'Sources/Storyboard/OSX/*.h'
+
+  s.ios.source_files = core_headers, core_sources, iis_sources, itvOS_iis_sources, 'Sources/Storyboard/iOS-tvOS/*.{h,m}'
+  s.tvos.source_files = core_headers, core_sources, iis_sources, itvOS_iis_sources, 'Sources/Storyboard/iOS-tvOS/*.{h,m}'
+  s.osx.source_files = core_headers, core_sources, iis_sources, 'Sources/Storyboard/OSX/*.{h,m}'
 
 end

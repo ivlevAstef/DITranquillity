@@ -57,9 +57,10 @@ final class Component {
     self.framework = framework
     self.part = part
   }
-  
+	
   let info: DIComponentInfo
   let bundle: Bundle?
+  
   let framework: DIFramework.Type?
   let part: DIPart.Type?
   

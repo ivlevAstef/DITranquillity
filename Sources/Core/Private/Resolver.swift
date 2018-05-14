@@ -7,6 +7,7 @@
 //
 
 class Resolver {
+
   init(container: DIContainer) {
     self.container = container // onowned
   }
@@ -172,7 +173,7 @@ class Resolver {
     }
 
     if components.isEmpty {
-      log(.warning, msg: "Not found type: \(description(type: type))")
+      log(.info, msg: "Not found \(description(type: type))")
     } else {
       let infos = components.map{ $0.info }
       log(.warning, msg: "Ambiguous \(description(type: type)) contains in: \(infos)")
@@ -184,6 +185,8 @@ class Resolver {
   /// Super function
   private func makeObject(by component: Component, use usingObject: Any?) -> Any? {
     log(.verbose, msg: "Found component: \(component.info)")
+    
+    
     let uniqueKey = component.info
     
     func makeObject(from cacheName: StaticString, use referenceCounting: DILifeTime.ReferenceCounting, scope: Cache.Scope) -> Any? {
@@ -219,7 +222,7 @@ class Resolver {
       guard let initializedObject = initialObject() else {
         return nil
       }
-      
+
       for injection in component.injections {
         if injection.cycle {
           cache.cycleInjectionStack.append((initializedObject, injection))
@@ -240,7 +243,6 @@ class Resolver {
         log(.verbose, msg: "Use object: \(obj)")
         return obj
       }
-      
       
       if let signature = component.initial {
         let obj = use(signature: signature, usingObject: nil)
