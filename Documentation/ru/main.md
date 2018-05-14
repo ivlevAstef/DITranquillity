@@ -70,7 +70,7 @@ DITranquallity - небольшая библиотека для внедрени
 * [Регистрация ViewController](storyboard.md#Регистрация-viewcontroller)
 * [Создание Storyboard](storyboard.md#Создание-storyboard)
 * [StoryboardReference](storyboard.md#Storyboardreference)
-* [SubviewsInjection](storyboard.md#SubviewsInjection)
+* [SubviewsInjection](storyboard.md#Subviews-Injection)
 
 
 ## [Поиск](scan.md#Поиск)
