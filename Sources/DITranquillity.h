@@ -20,4 +20,8 @@ FOUNDATION_EXPORT const unsigned char DITranquillityVersionString[];
 
 #endif
 
+#if TARGET_OS_IOS || TARGET_OS_TV
+
 #import <DITranquillity/DINSResolver.h>
+
+#endif

@@ -27,7 +27,7 @@
 
 + (nonnull instancetype)di_storyboardWithName:(NSString *)name bundle:(nullable NSBundle *)storyboardBundleOrNil {
   if (self == [UIStoryboard class]) {
-    return [DIStoryboard createWithName: name bundle: storyboardBundleOrNil];
+    return [DIStoryboard createWithName:name bundle:storyboardBundleOrNil];
   } else {
     return [self di_storyboardWithName:name bundle:storyboardBundleOrNil];
   }

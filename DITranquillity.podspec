@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'DITranquillity'
-  s.version      = '3.3.0'
+  s.version      = '3.3.1'
   s.summary      = 'DITranquillity - Dependency injection for iOS/macOS/tvOS (Swift) '
 
   s.description  = <<-DESC
@@ -23,19 +23,28 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = '9.0'
   s.osx.deployment_target = '10.10'
 
-  core_headers = 'Sources/DITranquillity.h'
-  core_sources = 'Sources/**/*.swift'
+  core_h = 'Sources/DITranquillity.h'
+  core_src = 'Sources/Core/**/*.{h,m,swift}'
+  hierarchy_src = 'Sources/Hierarchy/*.swift'
+  scan_src = 'Sources/Scan/*.swift'
+  extensions_src = 'Sources/Extensions/*.swift'
 
-  iis_headers = 'Sources/InjectIntoSubviews/*.h'
-  iis_sources = 'Sources/InjectIntoSubviews/*.{h,m,swift}'
-  itvOS_iis_sources = 'Sources/InjectIntoSubviews/iOS-tvOS/*.{h,m,swift}'
+  iis_h = 'Sources/InjectIntoSubviews/*.h'
+  iis_src = 'Sources/InjectIntoSubviews/*.{h,m,swift}'
+  iis_iOStvOS_src = 'Sources/InjectIntoSubviews/iOS-tvOS/*.{h,m,swift}'
 
-  s.ios.public_header_files = core_headers, iis_headers, 'Sources/Storyboard/iOS-tvOS/*.h'
-  s.tvos.public_header_files = core_headers, iis_headers, 'Sources/Storyboard/iOS-tvOS/*.h'
-  s.osx.public_header_files = core_headers, iis_headers, 'Sources/Storyboard/OSX/*.h'
+  story_src = 'Sources/Storyboard/*.swift'
+  story_iOStvOS_h = 'Sources/Storyboard/iOS-tvOS/*.h'
+  story_iOStvOS_src = 'Sources/Storyboard/iOS-tvOS/*.{h,m}'
+  story_OSX_h = 'Sources/Storyboard/OSX/*.h'
+  story_OSX_src = 'Sources/Storyboard/OSX/*.{h,m}'
 
-  s.ios.source_files = core_headers, core_sources, iis_sources, itvOS_iis_sources, 'Sources/Storyboard/iOS-tvOS/*.{h,m}'
-  s.tvos.source_files = core_headers, core_sources, iis_sources, itvOS_iis_sources, 'Sources/Storyboard/iOS-tvOS/*.{h,m}'
-  s.osx.source_files = core_headers, core_sources, iis_sources, 'Sources/Storyboard/OSX/*.{h,m}'
+  s.ios.public_header_files = core_h, iis_h, story_iOStvOS_h
+  s.tvos.public_header_files = core_h, iis_h, story_iOStvOS_h
+  s.osx.public_header_files = core_h, story_OSX_h
+
+  s.ios.source_files = core_h, core_src, hierarchy_src, scan_src, extensions_src, iis_src, iis_iOStvOS_src, story_src, story_iOStvOS_src
+  s.tvos.source_files = core_h, core_src, hierarchy_src, scan_src, extensions_src, iis_src, iis_iOStvOS_src, story_src, story_iOStvOS_src
+  s.osx.source_files = core_h, core_src, hierarchy_src, scan_src, extensions_src, story_src, story_OSX_src
 
 end
