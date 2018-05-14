@@ -27,7 +27,7 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 * Scan Parts/Frameworks [ru](Documentation/ru/scan.md#Поиск)
 * Very detail logs [ru](Documentation/ru/log.md#Логирование)
 * Validation at the run app [ru](Documentation/ru/validation.md#Валидация-контейнера)
-* Injection into Subviews and cells [ru](Documentation/ru/storyboard.md#Внедрение-в-subview)
+* Injection into Subviews and cells [ru](Documentation/ru/storyboard.md#Внедрение-в-subview-и-ячейки)
 * Thread safe
 
 ## Usage
