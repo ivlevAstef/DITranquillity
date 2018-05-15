@@ -11,12 +11,31 @@
 
 @implementation NSObject (Swizzling)
 
-+ (void)swizzleOriginalSelector:(SEL)originalSelector swizzledSelector:(SEL)swizzledSelector {
-  Class class = [self class];
-  
-  Method originalMethod = class_getInstanceMethod(class, originalSelector);
-  Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
-  
++ (void)swizzleInstanceOriginalSelector:(SEL)originalSelector swizzledSelector:(SEL)swizzledSelector
+{
+  [self swizzleOriginalSelector:originalSelector swizzledSelector:swizzledSelector isClass:NO];
+}
+
++ (void)swizzleClassOriginalSelector:(SEL)originalSelector swizzledSelector:(SEL)swizzledSelector
+{
+  [self swizzleOriginalSelector:originalSelector swizzledSelector:swizzledSelector isClass:YES];
+}
+
++ (void)swizzleOriginalSelector:(SEL)originalSelector swizzledSelector:(SEL)swizzledSelector isClass:(BOOL)isClass {
+  Class class;
+  Method originalMethod;
+  Method swizzledMethod;
+
+  if (isClass) {
+    class = object_getClass((id)self);
+    originalMethod = class_getClassMethod(class, originalSelector);
+    swizzledMethod = class_getClassMethod(class, swizzledSelector);
+  } else {
+    class = [self class];
+    originalMethod = class_getInstanceMethod(class, originalSelector);
+    swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
+  }
+
   BOOL didAddMethod =
   class_addMethod(class,
                   originalSelector,

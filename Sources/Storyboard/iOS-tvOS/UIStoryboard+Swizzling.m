@@ -20,8 +20,8 @@
   static dispatch_once_t onceToken;
   
   dispatch_once(&onceToken, ^{
-    [self swizzleOriginalSelector:@selector(storyboardWithName:bundle:)
-                 swizzledSelector:@selector(di_storyboardWithName:bundle:)];
+    [self swizzleClassOriginalSelector:@selector(storyboardWithName:bundle:)
+                      swizzledSelector:@selector(di_storyboardWithName:bundle:)];
   });
 }
 

@@ -20,11 +20,11 @@
   static dispatch_once_t onceToken;
 
   dispatch_once(&onceToken, ^{
-    [self swizzleOriginalSelector:@selector(dequeueReusableCellWithReuseIdentifier:forIndexPath:)
-                 swizzledSelector:@selector(di_dequeueReusableCellWithReuseIdentifier:forIndexPath:)];
+    [self swizzleInstanceOriginalSelector:@selector(dequeueReusableCellWithReuseIdentifier:forIndexPath:)
+                         swizzledSelector:@selector(di_dequeueReusableCellWithReuseIdentifier:forIndexPath:)];
 
-    [self swizzleOriginalSelector:@selector(dequeueReusableSupplementaryViewOfKind:withReuseIdentifier:forIndexPath:)
-                 swizzledSelector:@selector(di_dequeueReusableSupplementaryViewOfKind:withReuseIdentifier:forIndexPath:)];
+    [self swizzleInstanceOriginalSelector:@selector(dequeueReusableSupplementaryViewOfKind:withReuseIdentifier:forIndexPath:)
+                         swizzledSelector:@selector(di_dequeueReusableSupplementaryViewOfKind:withReuseIdentifier:forIndexPath:)];
   });
 }
 

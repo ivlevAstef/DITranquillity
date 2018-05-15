@@ -10,6 +10,7 @@
 
 @interface NSObject (Swizzling)
 
-+ (void)swizzleOriginalSelector:(SEL)originalSelector swizzledSelector:(SEL)swizzledSelector;
++ (void)swizzleInstanceOriginalSelector:(SEL)originalSelector swizzledSelector:(SEL)swizzledSelector;
++ (void)swizzleClassOriginalSelector:(SEL)originalSelector swizzledSelector:(SEL)swizzledSelector;
 
 @end

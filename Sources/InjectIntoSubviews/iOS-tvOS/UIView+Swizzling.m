@@ -15,8 +15,8 @@
   static dispatch_once_t onceToken;
 
   dispatch_once(&onceToken, ^{
-    [self swizzleOriginalSelector:@selector(didAddSubview:)
-                 swizzledSelector:@selector(di_didAddSubview:)];
+    [self swizzleInstanceOriginalSelector:@selector(didAddSubview:)
+                         swizzledSelector:@selector(di_didAddSubview:)];
   });
 }
 

@@ -18,8 +18,8 @@
   static dispatch_once_t onceToken;
 
   dispatch_once(&onceToken, ^{
-    [self swizzleOriginalSelector:@selector(loadView)
-                 swizzledSelector:@selector(di_loadView)];
+    [self swizzleInstanceOriginalSelector:@selector(loadView)
+                         swizzledSelector:@selector(di_loadView)];
   });
 }
 

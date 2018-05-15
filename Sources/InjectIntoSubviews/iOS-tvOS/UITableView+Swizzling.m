@@ -20,14 +20,14 @@
   static dispatch_once_t onceToken;
   
   dispatch_once(&onceToken, ^{
-    [self swizzleOriginalSelector:@selector(dequeueReusableCellWithIdentifier:forIndexPath:)
-                 swizzledSelector:@selector(di_dequeueReusableCellWithIdentifier:forIndexPath:)];
+    [self swizzleInstanceOriginalSelector:@selector(dequeueReusableCellWithIdentifier:forIndexPath:)
+                         swizzledSelector:@selector(di_dequeueReusableCellWithIdentifier:forIndexPath:)];
 
-    [self swizzleOriginalSelector:@selector(dequeueReusableCellWithIdentifier:)
-                 swizzledSelector:@selector(di_dequeueReusableCellWithIdentifier:)];
+    [self swizzleInstanceOriginalSelector:@selector(dequeueReusableCellWithIdentifier:)
+                         swizzledSelector:@selector(di_dequeueReusableCellWithIdentifier:)];
 
-    [self swizzleOriginalSelector:@selector(dequeueReusableHeaderFooterViewWithIdentifier:)
-                 swizzledSelector:@selector(di_dequeueReusableHeaderFooterViewWithIdentifier:)];
+    [self swizzleInstanceOriginalSelector:@selector(dequeueReusableHeaderFooterViewWithIdentifier:)
+                         swizzledSelector:@selector(di_dequeueReusableHeaderFooterViewWithIdentifier:)];
   });
 }
 
