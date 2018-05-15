@@ -1,3 +1,6 @@
+# v3.3.2
+* fix swizzling bug.
+
 # v3.3.1
 * New feature: inject into subviews, cells, items. Thanks 'Nekitosss'
 
