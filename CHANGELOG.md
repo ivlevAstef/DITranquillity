@@ -1,3 +1,6 @@
+# v3.3.4
+* fix crash when using Lazy/Provider with Optional types.
+
 # v3.3.3 - v3.3.2
 * fix swizzling bug.
 
