@@ -146,7 +146,7 @@ class Resolver {
           components = components.filter{ !stack.contains($0.info) }
       }
 
-      if let delayMaker = type as? DelayMaker.Type {
+      if let delayMaker = asDelayMaker(type) {
         let saveGraph = cache.graph
 
         return delayMaker.init({ () -> Any? in
