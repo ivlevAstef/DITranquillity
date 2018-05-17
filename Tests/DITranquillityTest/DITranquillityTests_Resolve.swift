@@ -673,6 +673,72 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssertEqual(inject.a.count, 2)
   }
   #endif
-  
+
+  func test25_PostInit() {
+    let container = DIContainer()
+
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+
+    var isPostInit: Bool = false
+    container.register(InjectOpt.init)
+      .injection { (obj: InjectOpt, property: ServiceProtocol?) in
+        obj.service = property
+        XCTAssertEqual(isPostInit, false)
+      }
+      .postInit { (obj: InjectOpt) in
+        XCTAssertEqual(obj.service?.foo(), "foo")
+        XCTAssertEqual(isPostInit, false)
+        isPostInit = true
+      }
+
+    let inject: InjectOpt = *container
+
+    XCTAssertEqual(inject.service?.foo(), "foo")
+    XCTAssertEqual(isPostInit, true)
+  }
+
+  func test25_PostInitCycle() {
+    let container = DIContainer()
+
+    var isPostInit1: Bool = false
+    var isPostInit2: Bool = false
+
+    #if swift(>=3.2)
+      container.register1(Circular2A.init)
+        .lifetime(.objectGraph)
+        .postInit { (obj: Circular2A) in
+          XCTAssertEqual(isPostInit1, false)
+          XCTAssertEqual(isPostInit2, false)
+          isPostInit1 = true
+        }
+    #else
+      container.register(Circular2A.init)
+        .lifetime(.objectGraph)
+        .postInit { (obj: Circular2A) in
+          XCTAssertEqual(isPostInit1, false)
+          XCTAssertEqual(isPostInit2, false)
+          isPostInit1 = true
+        }
+    #endif
+
+    container.register(Circular2B.init)
+      .lifetime(.objectGraph)
+      .injection(cycle: true) { (obj: Circular2B, property: Circular2A) in
+        obj.a = property
+        XCTAssertEqual(isPostInit1, true)
+        XCTAssertEqual(isPostInit2, false)
+      }
+      .postInit { (obj: Circular2B) in
+        XCTAssertEqual(isPostInit1, true)
+        XCTAssertEqual(isPostInit2, false)
+        isPostInit2 = true
+      }
+
+    _ = *container as Circular2B
+
+    XCTAssertEqual(isPostInit1, true)
+    XCTAssertEqual(isPostInit2, true)
+  }
 }
 

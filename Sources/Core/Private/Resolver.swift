@@ -225,7 +225,7 @@ class Resolver {
 
       for injection in component.injections {
         if injection.cycle {
-          cache.cycleInjectionStack.append((initializedObject, injection.signature))
+          cache.cycleInjectionQueue.append((initializedObject, injection.signature))
         } else {
           _ = use(signature: injection.signature, usingObject: initializedObject)
         }
@@ -233,7 +233,7 @@ class Resolver {
       
       if let signature = component.postInit {
         if component.injections.contains(where: { $0.cycle }) {
-          cache.cycleInjectionStack.append((initializedObject, signature))
+          cache.cycleInjectionQueue.append((initializedObject, signature))
         } else {
           _ = use(signature: signature, usingObject: initializedObject)
         }
@@ -259,8 +259,8 @@ class Resolver {
     }
     
     func endResolving() {
-      while !cache.cycleInjectionStack.isEmpty {
-        let data = cache.cycleInjectionStack.removeFirst()
+      while !cache.cycleInjectionQueue.isEmpty {
+        let data = cache.cycleInjectionQueue.removeFirst()
         _ = use(signature: data.signature, usingObject: data.obj)
       }
       
@@ -291,10 +291,10 @@ class Resolver {
 
     stack.append(component.info)
     defer {
-      stack.removeLast()
-      if stack.isEmpty {
+      if 1 == stack.count {
         endResolving()
       }
+      stack.removeLast()
     }
 
     switch component.lifeTime {
@@ -333,7 +333,7 @@ class Resolver {
     fileprivate var perContainer = Scope()
 
     fileprivate var graph = Scope()
-    fileprivate var cycleInjectionStack: ContiguousArray<(obj: Any?, signature: MethodSignature)> = []
+    fileprivate var cycleInjectionQueue: ContiguousArray<(obj: Any?, signature: MethodSignature)> = []
   }
 }
 
