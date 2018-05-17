@@ -1,3 +1,8 @@
+# v3.3.5
+* Up code coverage to 90%
+* Fix postInit - now method call after executed cycle injection
+* Fix hard cycle potensial bug.
+
 # v3.3.4
 * fix crash when using Lazy/Provider with Optional types.
 
