@@ -127,20 +127,4 @@ public extension DIComponentBuilder {
   public func injection<P0,P1,P2,P3,P4,P5,P6,P7>(_ m: @escaping (Impl,P0,P1,P2,P3,P4,P5,P6,P7) -> ()) -> Self {
     return append(injection: MM.make9([UseObject.self,P0.self,P1.self,P2.self,P3.self,P4.self,P5.self,P6.self,P7.self], by: m))
   }
-
-  /// Function for appending an injection method
-  ///
-  /// Using:
-  /// ```
-  /// container.register(YourClass.self)
-  ///   .injection{ yourClass, p0, p1, p2, p3, p4, p5, p6, p7, p8 in yourClass.yourMethod(p0, p1, p2, p3, p4, p5, p6, p7, p8) }
-  /// ```
-  ///
-  /// - Parameters:
-  ///   - m: Injection method. First input argument is the always created object
-  /// - Returns: Self
-  @discardableResult
-  public func injection<P0,P1,P2,P3,P4,P5,P6,P7,P8>(_ m: @escaping (Impl,P0,P1,P2,P3,P4,P5,P6,P7,P8) -> ()) -> Self {
-    return append(injection: MM.make10([UseObject.self,P0.self,P1.self,P2.self,P3.self,P4.self,P5.self,P6.self,P7.self,P8.self], by: m))
-  }
 }

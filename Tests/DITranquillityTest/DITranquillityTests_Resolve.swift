@@ -9,6 +9,20 @@
 import XCTest
 import DITranquillity
 
+private class ManyTest {
+  var services: [ServiceProtocol] = []
+  var optServices: [ServiceProtocol?] = []
+}
+
+private class ManyInitTest {
+  let services: [ServiceProtocol]
+
+  init(services: [ServiceProtocol])
+  {
+    self.services = services
+  }
+}
+
 
 class DITranquillityTests_Resolve: XCTestCase {
   override func setUp() {
@@ -739,6 +753,37 @@ class DITranquillityTests_Resolve: XCTestCase {
 
     XCTAssertEqual(isPostInit1, true)
     XCTAssertEqual(isPostInit2, true)
+  }
+
+  func test26_many()
+  {
+    let container = DIContainer()
+
+    container.register(FooService.init)
+      .as(ServiceProtocol.self)
+
+    container.register(BarService.init)
+      .as(ServiceProtocol.self)
+
+    container.register(ManyTest.init)
+      .injection{ $0.services = many($1) }
+      .injection{ $0.optServices = many($1) }
+
+    #if swift(>=3.2)
+      container.register1 { ManyInitTest(services: many($0)) }
+    #else
+      container.register { ManyInitTest(services: many($0)) }
+    #endif
+
+    let test1: ManyTest = *container
+    let test2: ManyInitTest = *container
+
+    XCTAssertEqual(test1.services.count, 2)
+    XCTAssertEqual(test1.optServices.count, 2)
+    XCTAssertNotNil(test1.optServices[0])
+    XCTAssertNotNil(test1.optServices[1])
+
+    XCTAssertEqual(test2.services.count, 2)
   }
 }
 
