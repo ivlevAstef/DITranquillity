@@ -225,14 +225,18 @@ class Resolver {
 
       for injection in component.injections {
         if injection.cycle {
-          cache.cycleInjectionStack.append((initializedObject, injection))
+          cache.cycleInjectionStack.append((initializedObject, injection.signature))
         } else {
           _ = use(signature: injection.signature, usingObject: initializedObject)
         }
       }
       
       if let signature = component.postInit {
-        _ = use(signature: signature, usingObject: initializedObject)
+        if component.injections.contains(where: { $0.cycle }) {
+          cache.cycleInjectionStack.append((initializedObject, signature))
+        } else {
+          _ = use(signature: signature, usingObject: initializedObject)
+        }
       }
       
       return initializedObject
@@ -257,7 +261,7 @@ class Resolver {
     func endResolving() {
       while !cache.cycleInjectionStack.isEmpty {
         let data = cache.cycleInjectionStack.removeFirst()
-        _ = use(signature: data.injection.signature, usingObject: data.obj)
+        _ = use(signature: data.signature, usingObject: data.obj)
       }
       
       cache.graph = Cache.Scope()
@@ -329,7 +333,7 @@ class Resolver {
     fileprivate var perContainer = Scope()
 
     fileprivate var graph = Scope()
-    fileprivate var cycleInjectionStack: ContiguousArray<(obj: Any?, injection: Injection)> = []
+    fileprivate var cycleInjectionStack: ContiguousArray<(obj: Any?, signature: MethodSignature)> = []
   }
 }
 
