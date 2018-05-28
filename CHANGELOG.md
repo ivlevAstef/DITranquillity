@@ -1,3 +1,6 @@
+# v3.3.6
+* Support static library for cocoapods. Needs cocoapods version 1.4.0 up 
+
 # v3.3.5
 * Up code coverage to 90%
 * Fix postInit - now method call after executed cycle injection

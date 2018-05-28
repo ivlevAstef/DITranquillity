@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <objc/runtime.h>
-#import <DITranquillity/DITranquillity-Swift.h>
 #import "NSObject+Swizzling.h"
+
+#if __has_include(<DITranquillity/DITranquillity-Swift.h>)
+#import <DITranquillity/DITranquillity-Swift.h>
+#elif __has_include("DITranquillity-Swift.h")
+#import "DITranquillity-Swift.h"
+#endif
 
 @interface UIStoryboard (Swizzling)
 @end

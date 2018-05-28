@@ -14,14 +14,8 @@ FOUNDATION_EXPORT double DITranquillityVersionNumber;
 //! Project version string for DITranquillity.
 FOUNDATION_EXPORT const unsigned char DITranquillityVersionString[];
 
-#if TARGET_OS_IOS || TARGET_OS_TV || (!TARGET_OS_WATCH && TARGET_OS_MAC)
-
-#import <DITranquillity/DIStoryboardBase.h>
-
-#endif
-
-#if TARGET_OS_IOS || TARGET_OS_TV
-
-#import <DITranquillity/DINSResolver.h>
-
+#if __has_include(<DITranquillity/DITranquillity-Bridging-Header.h>)
+#import <DITranquillity/DITranquillity-Bridging-Header.h>
+#elif __has_include("DITranquillity-Bridging-Header.h")
+#import "DITranquillity-Bridging-Header.h"
 #endif
