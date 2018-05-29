@@ -90,9 +90,6 @@
 		BAB89711209210FE009274F8 /* UIView+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB89707209210EF009274F8 /* UIView+Swizzling.m */; };
 		BAB89712209210FE009274F8 /* UIViewController+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB89708209210EF009274F8 /* UIViewController+Swizzling.m */; };
 		BAB897142092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB897132092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift */; };
-		BAD5789A20BBB02400F4CFCC /* DITranquillity-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = BAD5789920BBB02300F4CFCC /* DITranquillity-Bridging-Header.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BAD5789B20BBB79300F4CFCC /* DITranquillity-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = BAD5789920BBB02300F4CFCC /* DITranquillity-Bridging-Header.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BAD5789C20BBB79300F4CFCC /* DITranquillity-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = BAD5789920BBB02300F4CFCC /* DITranquillity-Bridging-Header.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BADA3A8C209B2948000F5566 /* ProtocolMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A82209308E2004EF9EF /* ProtocolMagic.swift */; };
 		BADA3A8D209B2948000F5566 /* ProtocolMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A82209308E2004EF9EF /* ProtocolMagic.swift */; };
 		BB77BD89CD4CA2B83AD41BC6 /* Pods_DITranquillityTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6C65290B01B60FD6E682C3 /* Pods_DITranquillityTests.framework */; };
@@ -221,7 +218,6 @@
 		BAB89707209210EF009274F8 /* UIView+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Swizzling.m"; sourceTree = "<group>"; };
 		BAB89708209210EF009274F8 /* UIViewController+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Swizzling.m"; sourceTree = "<group>"; };
 		BAB897132092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DIComponentBuilder+SubviewsInject.swift"; sourceTree = "<group>"; };
-		BAD5789920BBB02300F4CFCC /* DITranquillity-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DITranquillity-Bridging-Header.h"; sourceTree = "<group>"; };
 		CA2F896073C111FC22770E6F /* Pods-DITranquillity-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DITranquillity-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DITranquillity-iOS/Pods-DITranquillity-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		D512552C1EE06F010067796B /* DISettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DISettings.swift; sourceTree = "<group>"; };
 		D51666F91F1FBFAA001AD9F5 /* DIFramework.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIFramework.swift; sourceTree = "<group>"; };
@@ -312,7 +308,6 @@
 				16D7BCB41DB086B000A29A9F /* Scan */,
 				169C0E1C1DA355A6001F0AD5 /* Info.plist */,
 				16640A6B1D9E1E7B00707BFC /* DITranquillity.h */,
-				BAD5789920BBB02300F4CFCC /* DITranquillity-Bridging-Header.h */,
 			);
 			path = Sources;
 			sourceTree = SOURCE_ROOT;
@@ -540,7 +535,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAD5789B20BBB79300F4CFCC /* DITranquillity-Bridging-Header.h in Headers */,
 				BAB896C92091FC44009274F8 /* NSObject+Swizzling.h in Headers */,
 				169C0DDF1DA3501F001F0AD5 /* DITranquillity.h in Headers */,
 				D579617B1F52BA5D0079DE8C /* DIStoryboardBase.h in Headers */,
@@ -553,7 +547,6 @@
 			files = (
 				BAB89710209210FE009274F8 /* UIView+Swizzling.h in Headers */,
 				BAB896CA2091FC45009274F8 /* NSObject+Swizzling.h in Headers */,
-				BAD5789C20BBB79300F4CFCC /* DITranquillity-Bridging-Header.h in Headers */,
 				169C0E451DA35CBE001F0AD5 /* DITranquillity.h in Headers */,
 				D57961701F52BA160079DE8C /* DIStoryboardBase.h in Headers */,
 				BAB896F82092040E009274F8 /* DINSResolver.h in Headers */,
@@ -566,7 +559,6 @@
 			files = (
 				BAB8970B209210EF009274F8 /* UIView+Swizzling.h in Headers */,
 				16640A881D9E1E7B00707BFC /* DITranquillity.h in Headers */,
-				BAD5789A20BBB02400F4CFCC /* DITranquillity-Bridging-Header.h in Headers */,
 				BAB896C72091FC41009274F8 /* NSObject+Swizzling.h in Headers */,
 				D579616E1F52BA160079DE8C /* DIStoryboardBase.h in Headers */,
 				BAB896F62092040E009274F8 /* DINSResolver.h in Headers */,
@@ -585,7 +577,6 @@
 				169C0DDD1DA3501F001F0AD5 /* Frameworks */,
 				169C0DDE1DA3501F001F0AD5 /* Headers */,
 				169C0DE11DA3501F001F0AD5 /* Resources */,
-				FFDEFEEB66E27F74DE724246 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -605,7 +596,6 @@
 				169C0E431DA35CBE001F0AD5 /* Frameworks */,
 				169C0E441DA35CBE001F0AD5 /* Headers */,
 				169C0E471DA35CBE001F0AD5 /* Resources */,
-				F9AF7CA373785D915421C677 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -625,7 +615,6 @@
 				A58875501D0944AE00D6DE92 /* Frameworks */,
 				A58875511D0944AE00D6DE92 /* Headers */,
 				A58875521D0944AE00D6DE92 /* Resources */,
-				491E49A858DEC97A74358361 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -644,8 +633,6 @@
 				BA9A2752208851C300584CA0 /* Sources */,
 				BA9A2753208851C300584CA0 /* Frameworks */,
 				BA9A2754208851C300584CA0 /* Resources */,
-				BBC5D429CCE28A5CBDC0C9FC /* [CP] Embed Pods Frameworks */,
-				48873BB4328D9DEB301449A2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -776,54 +763,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		48873BB4328D9DEB301449A2 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillityTests/Pods-DITranquillityTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		491E49A858DEC97A74358361 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillity-iOS/Pods-DITranquillity-iOS-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BBC5D429CCE28A5CBDC0C9FC /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillityTests/Pods-DITranquillityTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SwiftLazy-iOS/SwiftLazy.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftLazy.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillityTests/Pods-DITranquillityTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C07FDDC05DE2D29CBE1F0F5E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -858,36 +797,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F9AF7CA373785D915421C677 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillity-tvOS/Pods-DITranquillity-tvOS-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FFDEFEEB66E27F74DE724246 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillity-OSX/Pods-DITranquillity-OSX-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

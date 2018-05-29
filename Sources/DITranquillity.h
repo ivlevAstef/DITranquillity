@@ -6,16 +6,27 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
-//! Project version number for DITranquillity.
 FOUNDATION_EXPORT double DITranquillityVersionNumber;
-
-//! Project version string for DITranquillity.
 FOUNDATION_EXPORT const unsigned char DITranquillityVersionString[];
 
-#if __has_include(<DITranquillity/DITranquillity-Bridging-Header.h>)
-#import <DITranquillity/DITranquillity-Bridging-Header.h>
-#elif __has_include("DITranquillity-Bridging-Header.h")
-#import "DITranquillity-Bridging-Header.h"
+#if TARGET_OS_IOS || TARGET_OS_TV || (!TARGET_OS_WATCH && TARGET_OS_MAC)
+
+#if __has_include(<DITranquillity/DIStoryboardBase.h>)
+#import <DITranquillity/DIStoryboardBase.h>
+#elif __has_include("DIStoryboardBase.h")
+#import "DIStoryboardBase.h"
+#endif
+
+#endif
+
+#if TARGET_OS_IOS || TARGET_OS_TV
+
+#if __has_include(<DITranquillity/DINSResolver.h>)
+#import <DITranquillity/DINSResolver.h>
+#elif __has_include("DINSResolver.h")
+#import "DINSResolver.h"
+#endif
+
 #endif
