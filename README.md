@@ -6,6 +6,9 @@
 [![Swift Version](https://img.shields.io/badge/Swift-3.0--4.1-F16D39.svg?style=flat)](https://developer.apple.com/swift)
 [![Dependency Status](https://www.versioneye.com/objective-c/DITranquillity/3.3.5/badge.svg?style=flat)](https://www.versioneye.com/objective-c/DITranquillity/3.3.5)
 
+# [Вопрос для пользователей библиотеки](https://github.com/ivlevAstef/DITranquillity/issues/124)
+На русском, так как я понимаю, что библиотекой пользуются только русскоязычные программисты - пока я не рекламировал ее в англоязычных источниках
+
 # DITranquillity
 The small library for [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) in applications written on pure Swift for iOS/OSX/tvOS. Despite its size, it solves a large enough range of tasks, including Storyboard support. Its main advantage -  modularity of support, detailed errors description and lots of opportunities.
 
