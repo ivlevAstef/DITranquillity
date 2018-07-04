@@ -1,6 +1,6 @@
 #!/bin/bash
 
-argmax=16
+argmax=15
 
 join() { local d=$1; shift; printf "$1"; shift; printf "%s" "${@/#/$d}"; }
 

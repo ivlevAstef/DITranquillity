@@ -42,6 +42,7 @@
 		16D7BCC01DB086B900A29A9F /* DIScanPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB71DB086B000A29A9F /* DIScanPart.swift */; };
 		2E9CDE0CC3F8AC36B4063ACF /* Pods_DITranquillity_OSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DACD006610E1AFB49AA136 /* Pods_DITranquillity_OSX.framework */; };
 		73B992F0542A65A0BFD56127 /* Pods_DITranquillity_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA30781EFE63884515C055E /* Pods_DITranquillity_tvOS.framework */; };
+		BA45E51720AD54600059AF48 /* DITranquillityTests_MoreParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA45E51520AD54520059AF48 /* DITranquillityTests_MoreParameters.swift */; };
 		BA598A7B209308A0004EF9EF /* DITranquillityTests_SwiftLazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A792093086E004EF9EF /* DITranquillityTests_SwiftLazy.swift */; };
 		BA598A7C209308B1004EF9EF /* SwiftLazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA598A7D209308B1004EF9EF /* SwiftLazy.framework */; };
 		BA598A7E209308BC004EF9EF /* SwiftLazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA598A7F209308BC004EF9EF /* SwiftLazy.framework */; };
@@ -183,6 +184,7 @@
 		8BFEF6E33DADAA8D77565724 /* Pods-DITranquillityTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DITranquillityTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DITranquillityTests/Pods-DITranquillityTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8BD3B9D0B4F0CEAD71ADF2A /* Pods-DITranquillity-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DITranquillity-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-DITranquillity-tvOS/Pods-DITranquillity-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		BA45E51520AD54520059AF48 /* DITranquillityTests_MoreParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_MoreParameters.swift; sourceTree = "<group>"; };
 		BA598A792093086E004EF9EF /* DITranquillityTests_SwiftLazy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_SwiftLazy.swift; sourceTree = "<group>"; };
 		BA598A7D209308B1004EF9EF /* SwiftLazy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA598A7F209308BC004EF9EF /* SwiftLazy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -463,6 +465,7 @@
 				BA9A2770208851F100584CA0 /* ResolveTestClasses.swift */,
 				BA9A2771208851F100584CA0 /* TestReferenceStoryboard.storyboard */,
 				BA9A2772208851F100584CA0 /* TestStoryboard.storyboard */,
+				BA45E51520AD54520059AF48 /* DITranquillityTests_MoreParameters.swift */,
 			);
 			path = DITranquillityTest;
 			sourceTree = "<group>";
@@ -574,7 +577,6 @@
 				169C0DDD1DA3501F001F0AD5 /* Frameworks */,
 				169C0DDE1DA3501F001F0AD5 /* Headers */,
 				169C0DE11DA3501F001F0AD5 /* Resources */,
-				FFDEFEEB66E27F74DE724246 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -594,7 +596,6 @@
 				169C0E431DA35CBE001F0AD5 /* Frameworks */,
 				169C0E441DA35CBE001F0AD5 /* Headers */,
 				169C0E471DA35CBE001F0AD5 /* Resources */,
-				F9AF7CA373785D915421C677 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -614,7 +615,6 @@
 				A58875501D0944AE00D6DE92 /* Frameworks */,
 				A58875511D0944AE00D6DE92 /* Headers */,
 				A58875521D0944AE00D6DE92 /* Resources */,
-				491E49A858DEC97A74358361 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -633,8 +633,6 @@
 				BA9A2752208851C300584CA0 /* Sources */,
 				BA9A2753208851C300584CA0 /* Frameworks */,
 				BA9A2754208851C300584CA0 /* Resources */,
-				BBC5D429CCE28A5CBDC0C9FC /* [CP] Embed Pods Frameworks */,
-				48873BB4328D9DEB301449A2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -765,54 +763,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		48873BB4328D9DEB301449A2 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillityTests/Pods-DITranquillityTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		491E49A858DEC97A74358361 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillity-iOS/Pods-DITranquillity-iOS-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BBC5D429CCE28A5CBDC0C9FC /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillityTests/Pods-DITranquillityTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SwiftLazy-iOS/SwiftLazy.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftLazy.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillityTests/Pods-DITranquillityTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C07FDDC05DE2D29CBE1F0F5E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -847,36 +797,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F9AF7CA373785D915421C677 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillity-tvOS/Pods-DITranquillity-tvOS-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FFDEFEEB66E27F74DE724246 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillity-OSX/Pods-DITranquillity-OSX-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1012,6 +932,7 @@
 				BA9A279F208851FF00584CA0 /* DITranquillityTests_Lifetime.swift in Sources */,
 				BA9A27A4208851FF00584CA0 /* DITranquillityTests_Storyboard.swift in Sources */,
 				BA9A27A8208851FF00584CA0 /* ResolveTestClasses.swift in Sources */,
+				BA45E51720AD54600059AF48 /* DITranquillityTests_MoreParameters.swift in Sources */,
 				BA9A27A1208851FF00584CA0 /* DITranquillityTests_Resolve.swift in Sources */,
 				BA9A27A6208851FF00584CA0 /* DITranquillityTests_Validation.swift in Sources */,
 				BA598A7B209308A0004EF9EF /* DITranquillityTests_SwiftLazy.swift in Sources */,
@@ -1054,7 +975,9 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
@@ -1086,6 +1009,8 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
@@ -1120,7 +1045,9 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
@@ -1155,6 +1082,8 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
@@ -1306,6 +1235,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 4.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALID_ARCHS = "arm64 armv7 armv7s";
@@ -1338,6 +1268,7 @@
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 4.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALID_ARCHS = "arm64 armv7 armv7s";

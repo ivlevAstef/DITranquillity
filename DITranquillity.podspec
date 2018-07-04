@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'DITranquillity'
-  s.version      = '3.3.3'
+  s.version      = '3.3.7'
   s.summary      = 'DITranquillity - Dependency injection for iOS/macOS/tvOS (Swift) '
 
   s.description  = <<-DESC
@@ -38,10 +38,6 @@ Pod::Spec.new do |s|
   story_iOStvOS_src = 'Sources/Storyboard/iOS-tvOS/*.{h,m}'
   story_OSX_h = 'Sources/Storyboard/OSX/*.h'
   story_OSX_src = 'Sources/Storyboard/OSX/*.{h,m}'
-
-  s.ios.public_header_files = core_h, iis_h, story_iOStvOS_h
-  s.tvos.public_header_files = core_h, iis_h, story_iOStvOS_h
-  s.osx.public_header_files = core_h, story_OSX_h
 
   s.ios.source_files = core_h, core_src, hierarchy_src, scan_src, extensions_src, iis_src, iis_iOStvOS_src, story_src, story_iOStvOS_src
   s.tvos.source_files = core_h, core_src, hierarchy_src, scan_src, extensions_src, iis_src, iis_iOStvOS_src, story_src, story_iOStvOS_src

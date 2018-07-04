@@ -9,6 +9,20 @@
 import XCTest
 import DITranquillity
 
+private class ManyTest {
+  var services: [ServiceProtocol] = []
+  var optServices: [ServiceProtocol?] = []
+}
+
+private class ManyInitTest {
+  let services: [ServiceProtocol]
+
+  init(services: [ServiceProtocol])
+  {
+    self.services = services
+  }
+}
+
 
 class DITranquillityTests_Resolve: XCTestCase {
   override func setUp() {
@@ -673,6 +687,103 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssertEqual(inject.a.count, 2)
   }
   #endif
-  
+
+  func test25_PostInit() {
+    let container = DIContainer()
+
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+
+    var isPostInit: Bool = false
+    container.register(InjectOpt.init)
+      .injection { (obj: InjectOpt, property: ServiceProtocol?) in
+        obj.service = property
+        XCTAssertEqual(isPostInit, false)
+      }
+      .postInit { (obj: InjectOpt) in
+        XCTAssertEqual(obj.service?.foo(), "foo")
+        XCTAssertEqual(isPostInit, false)
+        isPostInit = true
+      }
+
+    let inject: InjectOpt = *container
+
+    XCTAssertEqual(inject.service?.foo(), "foo")
+    XCTAssertEqual(isPostInit, true)
+  }
+
+  func test25_PostInitCycle() {
+    let container = DIContainer()
+
+    var isPostInit1: Bool = false
+    var isPostInit2: Bool = false
+
+    #if swift(>=3.2)
+      container.register1(Circular2A.init)
+        .lifetime(.objectGraph)
+        .postInit { (obj: Circular2A) in
+          XCTAssertEqual(isPostInit1, false)
+          XCTAssertEqual(isPostInit2, false)
+          isPostInit1 = true
+        }
+    #else
+      container.register(Circular2A.init)
+        .lifetime(.objectGraph)
+        .postInit { (obj: Circular2A) in
+          XCTAssertEqual(isPostInit1, false)
+          XCTAssertEqual(isPostInit2, false)
+          isPostInit1 = true
+        }
+    #endif
+
+    container.register(Circular2B.init)
+      .lifetime(.objectGraph)
+      .injection(cycle: true) { (obj: Circular2B, property: Circular2A) in
+        obj.a = property
+        XCTAssertEqual(isPostInit1, true)
+        XCTAssertEqual(isPostInit2, false)
+      }
+      .postInit { (obj: Circular2B) in
+        XCTAssertEqual(isPostInit1, true)
+        XCTAssertEqual(isPostInit2, false)
+        isPostInit2 = true
+      }
+
+    _ = *container as Circular2B
+
+    XCTAssertEqual(isPostInit1, true)
+    XCTAssertEqual(isPostInit2, true)
+  }
+
+  func test26_many()
+  {
+    let container = DIContainer()
+
+    container.register(FooService.init)
+      .as(ServiceProtocol.self)
+
+    container.register(BarService.init)
+      .as(ServiceProtocol.self)
+
+    container.register(ManyTest.init)
+      .injection{ $0.services = many($1) }
+      .injection{ $0.optServices = many($1) }
+
+    #if swift(>=3.2)
+      container.register1 { ManyInitTest(services: many($0)) }
+    #else
+      container.register { ManyInitTest(services: many($0)) }
+    #endif
+
+    let test1: ManyTest = *container
+    let test2: ManyInitTest = *container
+
+    XCTAssertEqual(test1.services.count, 2)
+    XCTAssertEqual(test1.optServices.count, 2)
+    XCTAssertNotNil(test1.optServices[0])
+    XCTAssertNotNil(test1.optServices[1])
+
+    XCTAssertEqual(test2.services.count, 2)
+  }
 }
 

@@ -39,6 +39,14 @@ private class ProviderCycleB {
   }
 }
 
+private class LazyInjectA {
+  var inject: Lazy<ServiceProtocol>!
+}
+
+private class ProviderInjectA {
+  var inject: Provider<ServiceProtocol>!
+}
+
 
 class DITranquillityTests_SwiftLazy: XCTestCase {
   override func setUp() {
@@ -201,6 +209,34 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
     XCTAssertEqual(service.value?.foo(), nil)
 
     XCTAssert(service.description.contains("nil"))
+  }
+
+  func test09_LazyInject() {
+    let container = DIContainer()
+
+    container.register(FooService.init)
+      .as(ServiceProtocol.self)
+
+    container.register(LazyInjectA.init)
+      .injection { $0.inject = $1 }
+
+    let test: LazyInjectA = *container
+
+    XCTAssertEqual(test.inject.value.foo(), "foo")
+  }
+
+  func test10_ProviderInject() {
+    let container = DIContainer()
+
+    container.register(FooService.init)
+      .as(ServiceProtocol.self)
+
+    container.register(ProviderInjectA.init)
+      .injection { $0.inject = $1 }
+
+    let test: ProviderInjectA = *container
+
+    XCTAssertEqual(test.inject.value.foo(), "foo")
   }
 
 }

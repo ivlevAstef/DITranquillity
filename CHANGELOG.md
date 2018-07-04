@@ -1,3 +1,17 @@
+# v3.3.7
+* Support static library for cocoapods. Needs cocoapods version 1.5.0 up
+
+# v3.3.6
+* Support static library for cocoapods. Needs cocoapods version 1.4.0 up 
+
+# v3.3.5
+* Up code coverage to 90%
+* Fix postInit - now method call after executed cycle injection
+* Fix hard cycle potensial bug.
+
+# v3.3.4
+* fix crash when using Lazy/Provider with Optional types.
+
 # v3.3.3 - v3.3.2
 * fix swizzling bug.
 

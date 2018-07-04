@@ -10,6 +10,7 @@
     
   </head>
   <body>
+    <a name="//apple_ref/swift/Section/Protocols" class="dashAnchor"></a>
     <a title="Protocols  Reference"></a>
     <header>
       <div class="content-wrapper">
@@ -172,41 +173,6 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14DITranquillity9DIScannedP"></a>
-                    <a name="//apple_ref/swift/Protocol/DIScanned" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity9DIScannedP">DIScanned</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Protocol to indicate which classes should be included in scan.
-Don&rsquo;t use this opportunity thoughtlessly - use it only if you don&rsquo;t know in advance number of parts or frameworks in the application.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">DIScanned</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Scan/DIScan.swift#L11">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:14DITranquillity11DIFrameworkP"></a>
                     <a name="//apple_ref/swift/Protocol/DIFramework" class="dashAnchor"></a>
                     <a class="token" href="#/s:14DITranquillity11DIFrameworkP">DIFramework</a>
@@ -227,7 +193,7 @@ It isn&rsquo;t necessary to create several such classses on one framework - it w
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">DIFramework</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">DIFramework</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
 
                         </div>
                       </div>
@@ -264,7 +230,7 @@ and in future to include the part, rather than some list components.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">DIPart</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">DIPart</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
 
                         </div>
                       </div>
@@ -276,11 +242,46 @@ and in future to include the part, rather than some list components.</p>
                 </li>
               </ul>
             </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity9DIScannedP"></a>
+                    <a name="//apple_ref/swift/Protocol/DIScanned" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity9DIScannedP">DIScanned</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Protocol to indicate which classes should be included in scan.
+Don&rsquo;t use this opportunity thoughtlessly - use it only if you don&rsquo;t know in advance number of parts or frameworks in the application.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">DIScanned</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Scan/DIScan.swift#L11">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2018-05-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2018-05-17)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

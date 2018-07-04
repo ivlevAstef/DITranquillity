@@ -71,6 +71,17 @@ func removeTypeWrappersFully(_ type: DIAType) -> DIAType {
   return type
 }
 
+func asDelayMaker(_ type: DIAType) -> DelayMaker.Type? {
+  var type = type
+  while let subtype = (type as? WrappedType.Type)?.type {
+    if let maker = type as? DelayMaker.Type {
+      return maker
+    }
+    type = subtype
+  }
+
+  return nil
+}
 
 /// Check type for contains predicate, use WrappedType for iteration
 private func has(in type: DIAType, _ predicate: (DIAType) -> Bool) -> Bool {

@@ -181,6 +181,430 @@ The class allows you to configure all the necessary properties for the component
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_tcr0_lF"></a>
+                    <a name="//apple_ref/swift/Method/injection(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_tcr0_lF">injection(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Function for appending an injection method</p>
+
+<p>Using:</p>
+<pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="n">yourClass</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span> <span class="k">in</span> <span class="n">yourClass</span><span class="o">.</span><span class="nf">yourMethod</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">)</span> <span class="p">}</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">m</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>m</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Injection method. First input argument is the always created object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIComponentBuilder.Injection.swift#L31-L33">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_tcr1_lF"></a>
+                    <a name="//apple_ref/swift/Method/injection(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_tcr1_lF">injection(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Function for appending an injection method</p>
+
+<p>Using:</p>
+<pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="n">yourClass</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span> <span class="k">in</span> <span class="n">yourClass</span><span class="o">.</span><span class="nf">yourMethod</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span> <span class="p">}</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">m</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>m</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Injection method. First input argument is the always created object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIComponentBuilder.Injection.swift#L47-L49">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_tcr2_lF"></a>
+                    <a name="//apple_ref/swift/Method/injection(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_tcr2_lF">injection(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Function for appending an injection method</p>
+
+<p>Using:</p>
+<pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="n">yourClass</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span> <span class="k">in</span> <span class="n">yourClass</span><span class="o">.</span><span class="nf">yourMethod</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">)</span> <span class="p">}</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">m</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>m</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Injection method. First input argument is the always created object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIComponentBuilder.Injection.swift#L63-L65">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_qd_3_tcr3_lF"></a>
+                    <a name="//apple_ref/swift/Method/injection(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_qd_3_tcr3_lF">injection(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Function for appending an injection method</p>
+
+<p>Using:</p>
+<pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="n">yourClass</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span> <span class="k">in</span> <span class="n">yourClass</span><span class="o">.</span><span class="nf">yourMethod</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">)</span> <span class="p">}</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">m</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>m</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Injection method. First input argument is the always created object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIComponentBuilder.Injection.swift#L79-L81">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_qd_3_qd_4_tcr4_lF"></a>
+                    <a name="//apple_ref/swift/Method/injection(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_qd_3_qd_4_tcr4_lF">injection(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Function for appending an injection method</p>
+
+<p>Using:</p>
+<pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="n">yourClass</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">,</span> <span class="n">p5</span> <span class="k">in</span> <span class="n">yourClass</span><span class="o">.</span><span class="nf">yourMethod</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">,</span> <span class="n">p5</span><span class="p">)</span> <span class="p">}</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">m</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>m</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Injection method. First input argument is the always created object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIComponentBuilder.Injection.swift#L95-L97">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_qd_3_qd_4_qd_5_tcr5_lF"></a>
+                    <a name="//apple_ref/swift/Method/injection(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_qd_3_qd_4_qd_5_tcr5_lF">injection(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Function for appending an injection method</p>
+
+<p>Using:</p>
+<pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="n">yourClass</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">,</span> <span class="n">p5</span><span class="p">,</span> <span class="n">p6</span> <span class="k">in</span> <span class="n">yourClass</span><span class="o">.</span><span class="nf">yourMethod</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">,</span> <span class="n">p5</span><span class="p">,</span> <span class="n">p6</span><span class="p">)</span> <span class="p">}</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">m</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>m</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Injection method. First input argument is the always created object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIComponentBuilder.Injection.swift#L111-L113">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_qd_3_qd_4_qd_5_qd_6_tcr6_lF"></a>
+                    <a name="//apple_ref/swift/Method/injection(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_qd_3_qd_4_qd_5_qd_6_tcr6_lF">injection(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Function for appending an injection method</p>
+
+<p>Using:</p>
+<pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="n">yourClass</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">,</span> <span class="n">p5</span><span class="p">,</span> <span class="n">p6</span><span class="p">,</span> <span class="n">p7</span> <span class="k">in</span> <span class="n">yourClass</span><span class="o">.</span><span class="nf">yourMethod</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">,</span> <span class="n">p5</span><span class="p">,</span> <span class="n">p6</span><span class="p">,</span> <span class="n">p7</span><span class="p">)</span> <span class="p">}</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">m</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>m</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Injection method. First input argument is the always created object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIComponentBuilder.Injection.swift#L127-L129">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/contains%20%60as%60%20functions"></a>
+                <a name="//apple_ref/swift/Section/contains `as` functions" class="dashAnchor"></a>
+                <a href="#/contains%20%60as%60%20functions">
+                  <h3 class="section-name">contains `as` functions</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:14DITranquillity18DIComponentBuilderC2asACyxGXDqd__mlF"></a>
                     <a name="//apple_ref/swift/Method/as(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:14DITranquillity18DIComponentBuilderC2asACyxGXDqd__mlF">as(_:)</a>
@@ -202,7 +626,8 @@ Using:</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">as</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">as</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -230,7 +655,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L50-L53">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L56-L59">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -259,7 +684,8 @@ Using:</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">as</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="p">,</span> <span class="kt">Tag</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">tag</span><span class="p">:</span> <span class="kt">Tag</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">as</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="p">,</span> <span class="kt">Tag</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">tag</span><span class="p">:</span> <span class="kt">Tag</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -299,7 +725,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L67-L70">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L73-L76">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -330,7 +756,8 @@ Using:</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">as</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">as</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -370,7 +797,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L86-L89">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L92-L95">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -401,7 +828,8 @@ Using:</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">as</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">check</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">validator</span><span class="p">:</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">)</span><span class="o">-&gt;</span><span class="kt">Parent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">as</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">check</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">validator</span><span class="p">:</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Parent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -441,7 +869,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L104-L106">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L110-L112">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -472,7 +900,8 @@ Using:</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">as</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="p">,</span> <span class="kt">Tag</span><span class="o">&gt;</span><span class="p">(</span><span class="n">check</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">tag</span><span class="p">:</span> <span class="kt">Tag</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">validator</span><span class="p">:</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">)</span><span class="o">-&gt;</span><span class="kt">Parent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">as</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="p">,</span> <span class="kt">Tag</span><span class="o">&gt;</span><span class="p">(</span><span class="n">check</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">tag</span><span class="p">:</span> <span class="kt">Tag</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">validator</span><span class="p">:</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Parent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -524,7 +953,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L122-L124">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L128-L130">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -557,7 +986,8 @@ Using:</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">as</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">check</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">validator</span><span class="p">:</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">)</span><span class="o">-&gt;</span><span class="kt">Parent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">as</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">check</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">validator</span><span class="p">:</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Parent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -609,7 +1039,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L142-L144">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L148-L150">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -617,6 +1047,13 @@ Using:</p>
               </ul>
             </div>
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/contains%20%60injection%60,%20%60postInit%60%20functions"></a>
+                <a name="//apple_ref/swift/Section/contains `injection`, `postInit` functions" class="dashAnchor"></a>
+                <a href="#/contains%20%60injection%60,%20%60postInit%60%20functions">
+                  <h3 class="section-name">contains `injection`, `postInit` functions</h3>
+                </a>
+              </div>
               <ul>
                 <li class="item">
                   <div>
@@ -645,7 +1082,8 @@ Using:</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">injection</span><span class="p">(</span><span class="n">_</span> <span class="nv">method</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">injection</span><span class="p">(</span><span class="n">_</span> <span class="nv">method</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -673,7 +1111,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L162-L165">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L168-L171">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -720,7 +1158,8 @@ Your Can use specified name for get an object.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">Property</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">cycle</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="n">_</span> <span class="nv">method</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">Property</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">Property</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">cycle</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="n">_</span> <span class="nv">method</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">Property</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -772,7 +1211,7 @@ Your Can use specified name for get an object.</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L198-L201">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L204-L207">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -812,7 +1251,8 @@ Your Can use specified name for get an object.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">P</span><span class="p">,</span> <span class="kt">Property</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">cycle</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="n">_</span> <span class="nv">keyPath</span><span class="p">:</span> <span class="kt">ReferenceWritableKeyPath</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">_</span> <span class="nv">modificator</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Property</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">P</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">P</span><span class="p">,</span> <span class="kt">Property</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">cycle</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="n">_</span> <span class="nv">keyPath</span><span class="p">:</span> <span class="kt">ReferenceWritableKeyPath</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">_</span> <span class="nv">modificator</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Property</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">P</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -876,7 +1316,7 @@ Your Can use specified name for get an object.</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L230-L233">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L236-L239">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -916,7 +1356,8 @@ Your Can use specified name for get an object.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">Property</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">cycle</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="n">_</span> <span class="nv">keyPath</span><span class="p">:</span> <span class="kt">ReferenceWritableKeyPath</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">Property</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">Property</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">cycle</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="n">_</span> <span class="nv">keyPath</span><span class="p">:</span> <span class="kt">ReferenceWritableKeyPath</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">Property</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -968,7 +1409,7 @@ Your Can use specified name for get an object.</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L260-L263">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L266-L269">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -998,7 +1439,8 @@ Using:</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">postInit</span><span class="p">(</span><span class="n">_</span> <span class="nv">method</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">postInit</span><span class="p">(</span><span class="n">_</span> <span class="nv">method</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -1026,7 +1468,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L277-L280">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L283-L286">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1034,6 +1476,13 @@ Using:</p>
               </ul>
             </div>
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/contains%20%60lifetime%60%20and%20%60default%60%20functions"></a>
+                <a name="//apple_ref/swift/Section/contains `lifetime` and `default` functions" class="dashAnchor"></a>
+                <a href="#/contains%20%60lifetime%60%20and%20%60default%60%20functions">
+                  <h3 class="section-name">contains `lifetime` and `default` functions</h3>
+                </a>
+              </div>
               <ul>
                 <li class="item">
                   <div>
@@ -1060,7 +1509,8 @@ Using:</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">lifetime</span><span class="p">(</span><span class="n">_</span> <span class="nv">lifetime</span><span class="p">:</span> <span class="kt"><a href="../Enums/DILifeTime.html">DILifeTime</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">lifetime</span><span class="p">(</span><span class="n">_</span> <span class="nv">lifetime</span><span class="p">:</span> <span class="kt"><a href="../Enums/DILifeTime.html">DILifeTime</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -1088,7 +1538,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L297-L300">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L303-L306">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1120,7 +1570,8 @@ Using:</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">default</span><span class="p">`()</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">default</span><span class="p">`()</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -1129,7 +1580,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L314-L317">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIComponentBuilder.swift#L320-L323">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1141,9 +1592,9 @@ Using:</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_tcr0_lF"></a>
-                    <a name="//apple_ref/swift/Method/injection(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_tcr0_lF">injection(_:)</a>
+                    <a name="/s:14DITranquillity18DIComponentBuilderCAASo16UIViewControllerCRbzlE20autoInjectToSubviewsACyxGXDyF"></a>
+                    <a name="//apple_ref/swift/Method/autoInjectToSubviews()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity18DIComponentBuilderCAASo16UIViewControllerCRbzlE20autoInjectToSubviewsACyxGXDyF">autoInjectToSubviews()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1151,57 +1602,40 @@ Using:</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Function for appending an injection method</p>
-
-<p>Using:</p>
-<pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="n">yourClass</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span> <span class="k">in</span> <span class="n">yourClass</span><span class="o">.</span><span class="nf">yourMethod</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">)</span> <span class="p">}</span>
-</code></pre>
+                        <p>Function allows injection inside UIViewController view and its subviews.
+Setted to <em>false</em> by default cause optimization purposes.
+If you want enable injection into ViewController views, UITableViewCells and UICollectionViewCells, set this property to <em>true</em>.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">m</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">autoInjectToSubviews</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>m</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Injection method. First input argument is the always created object</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
                       </div>
                       <div>
                         <h4>Return Value</h4>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIComponentBuilder.Injection.swift#L31-L33">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/InjectIntoSubviews/iOS-tvOS/DIComponentBuilder+SubviewsInject.swift#L26-L32">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_tcr1_lF"></a>
-                    <a name="//apple_ref/swift/Method/injection(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_tcr1_lF">injection(_:)</a>
+                    <a name="/s:14DITranquillity18DIComponentBuilderCAASo6UIViewCRbzlE20autoInjectToSubviewsACyxGXDyF"></a>
+                    <a name="//apple_ref/swift/Method/autoInjectToSubviews()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity18DIComponentBuilderCAASo6UIViewCRbzlE20autoInjectToSubviewsACyxGXDyF">autoInjectToSubviews()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1209,395 +1643,26 @@ Using:</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Function for appending an injection method</p>
-
-<p>Using:</p>
-<pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="n">yourClass</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span> <span class="k">in</span> <span class="n">yourClass</span><span class="o">.</span><span class="nf">yourMethod</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span> <span class="p">}</span>
-</code></pre>
+                        <p>Function allows injection inside UIView and its subviews.
+Setted to <em>false</em> by default cause optimization purposes.
+If you want enable injection into views, UITableViewCells and UICollectionViewCells, set this property to <em>true</em>.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">m</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">autoInjectToSubviews</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>m</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Injection method. First input argument is the always created object</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
                       </div>
                       <div>
                         <h4>Return Value</h4>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIComponentBuilder.Injection.swift#L47-L49">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_tcr2_lF"></a>
-                    <a name="//apple_ref/swift/Method/injection(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_tcr2_lF">injection(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Function for appending an injection method</p>
-
-<p>Using:</p>
-<pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="n">yourClass</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span> <span class="k">in</span> <span class="n">yourClass</span><span class="o">.</span><span class="nf">yourMethod</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">)</span> <span class="p">}</span>
-</code></pre>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">m</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>m</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Injection method. First input argument is the always created object</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>Self</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIComponentBuilder.Injection.swift#L63-L65">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_qd_3_tcr3_lF"></a>
-                    <a name="//apple_ref/swift/Method/injection(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_qd_3_tcr3_lF">injection(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Function for appending an injection method</p>
-
-<p>Using:</p>
-<pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="n">yourClass</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span> <span class="k">in</span> <span class="n">yourClass</span><span class="o">.</span><span class="nf">yourMethod</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">)</span> <span class="p">}</span>
-</code></pre>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">m</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>m</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Injection method. First input argument is the always created object</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>Self</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIComponentBuilder.Injection.swift#L79-L81">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_qd_3_qd_4_tcr4_lF"></a>
-                    <a name="//apple_ref/swift/Method/injection(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_qd_3_qd_4_tcr4_lF">injection(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Function for appending an injection method</p>
-
-<p>Using:</p>
-<pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="n">yourClass</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">,</span> <span class="n">p5</span> <span class="k">in</span> <span class="n">yourClass</span><span class="o">.</span><span class="nf">yourMethod</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">,</span> <span class="n">p5</span><span class="p">)</span> <span class="p">}</span>
-</code></pre>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">m</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>m</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Injection method. First input argument is the always created object</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>Self</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIComponentBuilder.Injection.swift#L95-L97">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_qd_3_qd_4_qd_5_tcr5_lF"></a>
-                    <a name="//apple_ref/swift/Method/injection(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_qd_3_qd_4_qd_5_tcr5_lF">injection(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Function for appending an injection method</p>
-
-<p>Using:</p>
-<pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="n">yourClass</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">,</span> <span class="n">p5</span><span class="p">,</span> <span class="n">p6</span> <span class="k">in</span> <span class="n">yourClass</span><span class="o">.</span><span class="nf">yourMethod</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">,</span> <span class="n">p5</span><span class="p">,</span> <span class="n">p6</span><span class="p">)</span> <span class="p">}</span>
-</code></pre>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">m</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>m</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Injection method. First input argument is the always created object</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>Self</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIComponentBuilder.Injection.swift#L111-L113">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_qd_3_qd_4_qd_5_qd_6_tcr6_lF"></a>
-                    <a name="//apple_ref/swift/Method/injection(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_qd_3_qd_4_qd_5_qd_6_tcr6_lF">injection(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Function for appending an injection method</p>
-
-<p>Using:</p>
-<pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="n">yourClass</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">,</span> <span class="n">p5</span><span class="p">,</span> <span class="n">p6</span><span class="p">,</span> <span class="n">p7</span> <span class="k">in</span> <span class="n">yourClass</span><span class="o">.</span><span class="nf">yourMethod</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">,</span> <span class="n">p5</span><span class="p">,</span> <span class="n">p6</span><span class="p">,</span> <span class="n">p7</span><span class="p">)</span> <span class="p">}</span>
-</code></pre>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">m</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>m</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Injection method. First input argument is the always created object</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>Self</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIComponentBuilder.Injection.swift#L127-L129">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_qd_3_qd_4_qd_5_qd_6_qd_7_tcr7_lF"></a>
-                    <a name="//apple_ref/swift/Method/injection(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity18DIComponentBuilderC9injectionACyxGXDyx_qd__qd_0_qd_1_qd_2_qd_3_qd_4_qd_5_qd_6_qd_7_tcr7_lF">injection(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Function for appending an injection method</p>
-
-<p>Using:</p>
-<pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-  <span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="n">yourClass</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">,</span> <span class="n">p5</span><span class="p">,</span> <span class="n">p6</span><span class="p">,</span> <span class="n">p7</span><span class="p">,</span> <span class="n">p8</span> <span class="k">in</span> <span class="n">yourClass</span><span class="o">.</span><span class="nf">yourMethod</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">,</span> <span class="n">p5</span><span class="p">,</span> <span class="n">p6</span><span class="p">,</span> <span class="n">p7</span><span class="p">,</span> <span class="n">p8</span><span class="p">)</span> <span class="p">}</span>
-</code></pre>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">m</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>m</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Injection method. First input argument is the always created object</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>Self</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/AutoResolve/DIComponentBuilder.Injection.swift#L143-L145">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/InjectIntoSubviews/iOS-tvOS/DIComponentBuilder+SubviewsInject.swift#L48-L54">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1607,8 +1672,8 @@ Using:</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2018-05-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2018-05-17)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
