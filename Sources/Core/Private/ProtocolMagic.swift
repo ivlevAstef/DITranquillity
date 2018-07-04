@@ -34,9 +34,12 @@ protocol WrappedType {
 
 protocol SwiftWrappedType: WrappedType {}
 
+#if swift(>=4.2)
+#else
 extension ImplicitlyUnwrappedOptional: SwiftWrappedType {
   static var type: DIAType { return Wrapped.self }
 }
+#endif
 
 extension Optional: SwiftWrappedType {
   static var type: DIAType { return Wrapped.self }
