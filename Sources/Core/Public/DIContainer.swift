@@ -32,6 +32,7 @@ public final class DIContainer {
   
   internal let componentContainer = ComponentContainer()
   internal let bundleContainer = BundleContainer()
+  internal let extensionsContainer = ExtensionsContainer()
   internal private(set) var resolver: Resolver!
   
   ///MARK: Hierarchy

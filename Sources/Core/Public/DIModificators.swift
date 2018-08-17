@@ -1,5 +1,5 @@
 //
-//  DIByTagAndMany.swift
+//  DIModificators.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 25/08/2017.
@@ -13,7 +13,7 @@
 /// ```
 /// also can using in injection or init:
 /// ```
-/// .injection{ $0 = by(tag: YourTag.self, on: $1) }
+/// .injection{ $0.property = by(tag: YourTag.self, on: $1) }
 /// ```
 ///
 /// - Parameters:
@@ -31,7 +31,7 @@ public func by<Tag,T>(tag: Tag.Type, on obj: DIByTag<Tag,T>) -> T {
 /// ```
 /// also can using in injection or init:
 /// ```
-/// .injection{ $0 = by(tags: YourTag.self, YourTag2.self, on: $1) }
+/// .injection{ $0.property = by(tags: YourTag.self, YourTag2.self, on: $1) }
 /// ```
 ///
 /// - Parameters:
@@ -49,7 +49,7 @@ public func by<Tag1, Tag2, T>(tags: Tag1.Type, _ t: Tag2.Type, on obj: DIByTag<T
 /// ```
 /// also can using in injection or init:
 /// ```
-/// .injection{ $0 = by(tags: YourTag.self, YourTag2.self, YourTag3.self, on: $1) }
+/// .injection{ $0.property = by(tags: YourTag.self, YourTag2.self, YourTag3.self, on: $1) }
 /// ```
 ///
 /// - Parameters:
@@ -72,7 +72,7 @@ public final class DIByTag<Tag, T>: InternalByTag<Tag, T> {}
 /// ```
 /// also can using in injection or init:
 /// ```
-/// .injection{ $0 = many($1) }
+/// .injection{ $0.property = many($1) }
 /// ```
 ///
 /// - Parameter obj: resolving objects
@@ -88,7 +88,7 @@ public func many<T>(_ obj: DIMany<T>) -> [T] {
 /// ```
 /// also can using in injection or init:
 /// ```
-/// .injection{ $0 = manyInBundle($1) }
+/// .injection{ $0.property = manyInBundle($1) }
 /// ```
 ///
 /// - Parameter obj: resolving objects
@@ -103,3 +103,27 @@ public final class DIMany<T>: InternalByMany<T> {}
 /// Special class for resolve many object in bundle. see method: `manyInBundle`
 public final class DIManyInBundle<T>: InternalByManyInBundle<T> {}
 
+
+/// Short syntax for get object use arguments
+/// Simple using:
+/// ```
+/// container.register{ YourClass(p1: $0, p2: arg($2)) }
+///   .injection{ $0.property = arg($1) }
+/// ...
+/// container.extension(for: YourClass.self).setArgs(15, "it's work!")
+/// let yourClass = *container // p1 - injected, p2 = 15, property = "it's work!"
+/// ```
+/// Also your forward parameters at any depth
+/// Warning: not use with cycle injection
+/// Warning: Unsafe type - if you pass an object of wrong type, The library will fall. Exception: type of optional
+///
+/// - Parameters:
+///   - name: The external name for the argument
+///   - obj: resolving object
+/// - Returns: resolved object
+public func arg<T>(_ obj: DIArg<T>) -> T {
+  return obj._object
+}
+
+/// Special class for resolve object use arguments. see method: `arg`
+public final class DIArg<T>: InternalArg<T> {}
