@@ -49,8 +49,7 @@ public class InternalByManyInBundle<T>: IsMany {
 }
 
 
-internal protocol IsArg: class {
-  static var type: DIAType { get }
+internal protocol IsArg: class, WrappedType {
 }
 
 public class InternalArg<T>: IsArg {

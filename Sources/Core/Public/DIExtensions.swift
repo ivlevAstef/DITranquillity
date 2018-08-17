@@ -10,7 +10,7 @@
 /// сlass to extend possible actions related to object creation
 public class DIExtensions {
   private let mutex: PThreadMutex = PThreadMutex(normal: ())
-  private var arguments: [AnyObject?] = []
+  private var arguments: [Any?] = []
 
   /// method for setting arguments injected into an object.
   /// Example:
@@ -24,13 +24,13 @@ public class DIExtensions {
   ///
   /// - Parameters:
   ///   - args: array of arguments
-  public func setArgs(_ args: AnyObject?...) {
+  public func setArgs(_ args: Any?...) {
     mutex.sync {
       arguments = args
     }
   }
 
-  internal func getNextArg() -> AnyObject?
+  internal func getNextArg() -> Any?
   {
     return mutex.sync {
       if arguments.count > 0 {

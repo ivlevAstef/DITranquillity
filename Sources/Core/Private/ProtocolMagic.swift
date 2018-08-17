@@ -143,6 +143,12 @@ extension DIMany: OptionalMake {
   }
 }
 
+extension DIArg: OptionalMake {
+  static func make(by obj: Any?) -> DIArg<T> {
+    return DIArg<T>(object: gmake(by: obj) as T)
+  }
+}
+
 func gmake<T>(by obj: Any?) -> T {
   if let opt = T.self as? OptionalMake.Type {
     return opt.make(by: obj) as! T // it's always valid
