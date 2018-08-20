@@ -107,14 +107,14 @@ public final class DIManyInBundle<T>: InternalByManyInBundle<T> {}
 /// Short syntax for get object use arguments
 /// Simple using:
 /// ```
-/// container.register{ YourClass(p1: $0, p2: arg($2)) }
+/// container.register{ YourClass(p1: $0, p2: arg($1)) }
 ///   .injection{ $0.property = arg($1) }
 /// ...
 /// container.extension(for: YourClass.self).setArgs(15, "it's work!")
 /// let yourClass = *container // p1 - injected, p2 = 15, property = "it's work!"
 /// ```
 /// Also your forward parameters at any depth
-/// Warning: not use with cycle injection
+/// Warning: not use with cycle injection `.injection(cycle: true...` - it's not good
 /// Warning: Unsafe type - if you pass an object of wrong type, The library will fall. Exception: type of optional
 ///
 /// - Parameters:

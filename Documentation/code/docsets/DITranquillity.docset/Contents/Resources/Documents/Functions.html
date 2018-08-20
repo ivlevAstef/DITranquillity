@@ -33,6 +33,9 @@
             <a href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Classes.html#/s:14DITranquillity5DIArgC">DIArg</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a>
               </li>
               <li class="nav-group-task">
@@ -40,6 +43,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/DIContainer.html">DIContainer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/DIExtensions.html">DIExtensions</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes.html#/s:14DITranquillity6DIManyC">DIMany</a>
@@ -64,6 +70,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/DIStoryboard.html">DIStoryboard</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes.html#/s:14DITranquillity11InternalArgC">InternalArg</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes.html#/s:14DITranquillity14InternalByManyC">InternalByMany</a>
@@ -95,6 +104,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Functions.html#/s:14DITranquillity1mopxAA11DIContainerClF">*(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Functions.html#/s:14DITranquillity3argxAA5DIArgCyxGlF">arg(_:)</a>
               </li>
               <li class="nav-group-task">
                 <a href="Functions.html#/s:14DITranquillity2byq_xm3tag_AA7DIByTagCyxq_G2ontr0_lF">by(tag:on:)</a>
@@ -173,346 +185,6 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14DITranquillity2byq_xm3tag_AA7DIByTagCyxq_G2ontr0_lF"></a>
-                    <a name="//apple_ref/swift/Function/by(tag:on:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity2byq_xm3tag_AA7DIByTagCyxq_G2ontr0_lF">by(tag:on:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Short syntax for get object by tag
-Using:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">YourType</span> <span class="o">=</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tag</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="o">*</span><span class="n">container</span><span class="p">)</span>
-</code></pre>
-
-<p>also can using in injection or init:</p>
-<pre class="highlight swift"><code><span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="nv">$0</span> <span class="o">=</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tag</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="nv">$1</span><span class="p">)</span> <span class="p">}</span>
-</code></pre>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">by</span><span class="o">&lt;</span><span class="kt">Tag</span><span class="p">,</span> <span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">tag</span><span class="p">:</span> <span class="kt">Tag</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">on</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag</span><span class="p">,</span> <span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>tag</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>a tag</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>obj</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>resolving object</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>resolved object</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIByTagAndMany.swift#L23-L25">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14DITranquillity2byq0_xm4tags_q_mAA7DIByTagCyxAEyq_q0_GG2ontr1_lF"></a>
-                    <a name="//apple_ref/swift/Function/by(tags:_:on:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity2byq0_xm4tags_q_mAA7DIByTagCyxAEyq_q0_GG2ontr1_lF">by(tags:_:on:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Short syntax for get object by two tags
-Using:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">YourType</span> <span class="o">=</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">YourTag2</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="o">*</span><span class="n">container</span><span class="p">)</span>
-</code></pre>
-
-<p>also can using in injection or init:</p>
-<pre class="highlight swift"><code><span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="nv">$0</span> <span class="o">=</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">YourTag2</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="nv">$1</span><span class="p">)</span> <span class="p">}</span>
-</code></pre>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">by</span><span class="o">&lt;</span><span class="kt">Tag1</span><span class="p">,</span> <span class="kt">Tag2</span><span class="p">,</span> <span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">Tag1</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">t</span><span class="p">:</span> <span class="kt">Tag2</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">on</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag1</span><span class="p">,</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag2</span><span class="p">,</span> <span class="kt">T</span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>tag</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>a tag</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>obj</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>resolving object</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>resolved object</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIByTagAndMany.swift#L41-L43">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14DITranquillity2byq1_xm4tags_q_mq0_mAA7DIByTagCyxAEyq_AEyq0_q1_GGG2ontr2_lF"></a>
-                    <a name="//apple_ref/swift/Function/by(tags:_:_:on:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity2byq1_xm4tags_q_mq0_mAA7DIByTagCyxAEyq_AEyq0_q1_GGG2ontr2_lF">by(tags:_:_:on:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Short syntax for get object by three tags
-Using:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">YourType</span> <span class="o">=</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">YourTag2</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">YourTag3</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="o">*</span><span class="n">container</span><span class="p">)</span>
-</code></pre>
-
-<p>also can using in injection or init:</p>
-<pre class="highlight swift"><code><span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="nv">$0</span> <span class="o">=</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">YourTag2</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">YourTag3</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="nv">$1</span><span class="p">)</span> <span class="p">}</span>
-</code></pre>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">by</span><span class="o">&lt;</span><span class="kt">Tag1</span><span class="p">,</span> <span class="kt">Tag2</span><span class="p">,</span> <span class="kt">Tag3</span><span class="p">,</span> <span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">Tag1</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">t2</span><span class="p">:</span> <span class="kt">Tag2</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">t3</span><span class="p">:</span> <span class="kt">Tag3</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">on</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag1</span><span class="p">,</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag2</span><span class="p">,</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag3</span><span class="p">,</span> <span class="kt">T</span><span class="o">&gt;&gt;&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>tag</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>a tag</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>obj</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>resolving object</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>resolved object</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIByTagAndMany.swift#L59-L61">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14DITranquillity4manySayxGAA6DIManyCyxGlF"></a>
-                    <a name="//apple_ref/swift/Function/many(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity4manySayxGAA6DIManyCyxGlF">many(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Short syntax for get many objects
-Using:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">objects</span><span class="p">:</span> <span class="p">[</span><span class="kt">YourType</span><span class="p">]</span> <span class="o">=</span> <span class="nf">many</span><span class="p">(</span><span class="o">*</span><span class="n">container</span><span class="p">)</span>
-</code></pre>
-
-<p>also can using in injection or init:</p>
-<pre class="highlight swift"><code><span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="nv">$0</span> <span class="o">=</span> <span class="nf">many</span><span class="p">(</span><span class="nv">$1</span><span class="p">)</span> <span class="p">}</span>
-</code></pre>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">many</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity6DIManyC">DIMany</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">T</span><span class="p">]</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>obj</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>resolving objects</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>resolved objects</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIByTagAndMany.swift#L80-L82">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14DITranquillity12manyInBundleSayxGAA06DIManycD0CyxGlF"></a>
-                    <a name="//apple_ref/swift/Function/manyInBundle(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity12manyInBundleSayxGAA06DIManycD0CyxGlF">manyInBundle(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Short syntax for get many objects in bundle
-Using:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">objects</span><span class="p">:</span> <span class="p">[</span><span class="kt">YourType</span><span class="p">]</span> <span class="o">=</span> <span class="nf">manyInBundle</span><span class="p">(</span><span class="o">*</span><span class="n">container</span><span class="p">)</span>
-</code></pre>
-
-<p>also can using in injection or init:</p>
-<pre class="highlight swift"><code><span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="nv">$0</span> <span class="o">=</span> <span class="nf">manyInBundle</span><span class="p">(</span><span class="nv">$1</span><span class="p">)</span> <span class="p">}</span>
-</code></pre>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">manyInBundle</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity14DIManyInBundleC">DIManyInBundle</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">T</span><span class="p">]</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>obj</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>resolving objects</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>resolved objects</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIByTagAndMany.swift#L96-L98">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:14DITranquillity1mopxAA11DIContainerClF"></a>
                     <a name="//apple_ref/swift/Function/*(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:14DITranquillity1mopxAA11DIContainerClF">*(_:)</a>
@@ -568,10 +240,426 @@ Using:</p>
                 </li>
               </ul>
             </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity2byq_xm3tag_AA7DIByTagCyxq_G2ontr0_lF"></a>
+                    <a name="//apple_ref/swift/Function/by(tag:on:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity2byq_xm3tag_AA7DIByTagCyxq_G2ontr0_lF">by(tag:on:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Short syntax for get object by tag
+Using:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">YourType</span> <span class="o">=</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tag</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="o">*</span><span class="n">container</span><span class="p">)</span>
+</code></pre>
+
+<p>also can using in injection or init:</p>
+<pre class="highlight swift"><code><span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">property</span> <span class="o">=</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tag</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="nv">$1</span><span class="p">)</span> <span class="p">}</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">by</span><span class="o">&lt;</span><span class="kt">Tag</span><span class="p">,</span> <span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">tag</span><span class="p">:</span> <span class="kt">Tag</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">on</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag</span><span class="p">,</span> <span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tag</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a tag</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>obj</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>resolving object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>resolved object</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIModificators.swift#L23-L25">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity2byq0_xm4tags_q_mAA7DIByTagCyxAEyq_q0_GG2ontr1_lF"></a>
+                    <a name="//apple_ref/swift/Function/by(tags:_:on:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity2byq0_xm4tags_q_mAA7DIByTagCyxAEyq_q0_GG2ontr1_lF">by(tags:_:on:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Short syntax for get object by two tags
+Using:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">YourType</span> <span class="o">=</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">YourTag2</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="o">*</span><span class="n">container</span><span class="p">)</span>
+</code></pre>
+
+<p>also can using in injection or init:</p>
+<pre class="highlight swift"><code><span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">property</span> <span class="o">=</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">YourTag2</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="nv">$1</span><span class="p">)</span> <span class="p">}</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">by</span><span class="o">&lt;</span><span class="kt">Tag1</span><span class="p">,</span> <span class="kt">Tag2</span><span class="p">,</span> <span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">Tag1</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">t</span><span class="p">:</span> <span class="kt">Tag2</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">on</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag1</span><span class="p">,</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag2</span><span class="p">,</span> <span class="kt">T</span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tag</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a tag</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>obj</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>resolving object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>resolved object</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIModificators.swift#L41-L43">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity2byq1_xm4tags_q_mq0_mAA7DIByTagCyxAEyq_AEyq0_q1_GGG2ontr2_lF"></a>
+                    <a name="//apple_ref/swift/Function/by(tags:_:_:on:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity2byq1_xm4tags_q_mq0_mAA7DIByTagCyxAEyq_AEyq0_q1_GGG2ontr2_lF">by(tags:_:_:on:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Short syntax for get object by three tags
+Using:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">YourType</span> <span class="o">=</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">YourTag2</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">YourTag3</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="o">*</span><span class="n">container</span><span class="p">)</span>
+</code></pre>
+
+<p>also can using in injection or init:</p>
+<pre class="highlight swift"><code><span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">property</span> <span class="o">=</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">YourTag2</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">YourTag3</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="nv">$1</span><span class="p">)</span> <span class="p">}</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">by</span><span class="o">&lt;</span><span class="kt">Tag1</span><span class="p">,</span> <span class="kt">Tag2</span><span class="p">,</span> <span class="kt">Tag3</span><span class="p">,</span> <span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">tags</span><span class="p">:</span> <span class="kt">Tag1</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">t2</span><span class="p">:</span> <span class="kt">Tag2</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">t3</span><span class="p">:</span> <span class="kt">Tag3</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">on</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag1</span><span class="p">,</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag2</span><span class="p">,</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a></span><span class="o">&lt;</span><span class="kt">Tag3</span><span class="p">,</span> <span class="kt">T</span><span class="o">&gt;&gt;&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tag</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a tag</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>obj</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>resolving object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>resolved object</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIModificators.swift#L59-L61">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity4manySayxGAA6DIManyCyxGlF"></a>
+                    <a name="//apple_ref/swift/Function/many(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity4manySayxGAA6DIManyCyxGlF">many(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Short syntax for get many objects
+Using:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">objects</span><span class="p">:</span> <span class="p">[</span><span class="kt">YourType</span><span class="p">]</span> <span class="o">=</span> <span class="nf">many</span><span class="p">(</span><span class="o">*</span><span class="n">container</span><span class="p">)</span>
+</code></pre>
+
+<p>also can using in injection or init:</p>
+<pre class="highlight swift"><code><span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">property</span> <span class="o">=</span> <span class="nf">many</span><span class="p">(</span><span class="nv">$1</span><span class="p">)</span> <span class="p">}</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">many</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity6DIManyC">DIMany</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">T</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>obj</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>resolving objects</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>resolved objects</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIModificators.swift#L80-L82">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity12manyInBundleSayxGAA06DIManycD0CyxGlF"></a>
+                    <a name="//apple_ref/swift/Function/manyInBundle(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity12manyInBundleSayxGAA06DIManycD0CyxGlF">manyInBundle(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Short syntax for get many objects in bundle
+Using:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">objects</span><span class="p">:</span> <span class="p">[</span><span class="kt">YourType</span><span class="p">]</span> <span class="o">=</span> <span class="nf">manyInBundle</span><span class="p">(</span><span class="o">*</span><span class="n">container</span><span class="p">)</span>
+</code></pre>
+
+<p>also can using in injection or init:</p>
+<pre class="highlight swift"><code><span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">property</span> <span class="o">=</span> <span class="nf">manyInBundle</span><span class="p">(</span><span class="nv">$1</span><span class="p">)</span> <span class="p">}</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">manyInBundle</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity14DIManyInBundleC">DIManyInBundle</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">T</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>obj</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>resolving objects</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>resolved objects</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIModificators.swift#L96-L98">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity3argxAA5DIArgCyxGlF"></a>
+                    <a name="//apple_ref/swift/Function/arg(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity3argxAA5DIArgCyxGlF">arg(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Short syntax for get object use arguments
+Simple using:</p>
+<pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="n">register</span><span class="p">{</span> <span class="kt">YourClass</span><span class="p">(</span><span class="nv">p1</span><span class="p">:</span> <span class="nv">$0</span><span class="p">,</span> <span class="nv">p2</span><span class="p">:</span> <span class="nf">arg</span><span class="p">(</span><span class="nv">$1</span><span class="p">))</span> <span class="p">}</span>
+  <span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">property</span> <span class="o">=</span> <span class="nf">arg</span><span class="p">(</span><span class="nv">$1</span><span class="p">)</span> <span class="p">}</span>
+<span class="o">...</span>
+<span class="n">container</span><span class="o">.</span><span class="nf">extension</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span><span class="o">.</span><span class="nf">setArgs</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="s">"it's work!"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">yourClass</span> <span class="o">=</span> <span class="o">*</span><span class="n">container</span> <span class="c1">// p1 - injected, p2 = 15, property = "it's work!"</span>
+</code></pre>
+
+<p>Also your forward parameters at any depth
+Warning: not use with cycle injection <code>.injection(cycle: true...</code> - it&rsquo;s not good
+Warning: Unsafe type - if you pass an object of wrong type, The library will fall. Exception: type of optional</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">arg</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">obj</span><span class="p">:</span> <span class="kt"><a href="Classes.html#/s:14DITranquillity5DIArgC">DIArg</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>name</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The external name for the argument</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>obj</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>resolving object</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>resolved object</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIModificators.swift#L124-L126">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2018-05-17)</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2018-08-20)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

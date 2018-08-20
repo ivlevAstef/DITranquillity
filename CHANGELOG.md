@@ -1,3 +1,9 @@
+# v3.4.0
+* New feature `Arguments for initialization`: https://github.com/ivlevAstef/DITranquillity/issues/123
+- Add extension to container. for example `container.extension(for: Home.self)`
+- Support arguments into extensions `container.extension(for: Home.self).setArgs("arg1", arg2, ...)`
+- Add modificator `arg` - `container.register{ YourClass(p1: $0, p2: arg($1)) }`
+
 # v3.3.7
 * Support static library for cocoapods. Needs cocoapods version 1.5.0 up
 

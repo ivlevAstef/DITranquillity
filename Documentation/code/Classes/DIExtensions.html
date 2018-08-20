@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>DIPart Protocol Reference</title>
+    <title>DIExtensions Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Protocol/DIPart" class="dashAnchor"></a>
-    <a title="DIPart Protocol Reference"></a>
+    <a name="//apple_ref/swift/Class/DIExtensions" class="dashAnchor"></a>
+    <a title="DIExtensions Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">DITranquillity Docs</a> (91% documented)</p>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">DITranquillity Reference</a>
         <img id="carat" src="../img/carat.png" />
-        DIPart Protocol Reference
+        DIExtensions Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -175,16 +175,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>DIPart</h1>
+            <h1>DIExtensions</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">DIPart</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">DIExtensions</span></code></pre>
 
                 </div>
               </div>
-            <p>Class to maintain code hierarchy.
-It&rsquo;s necessary for it to be convenient to combine some parts of the system into one common class, 
-and in future to include the part, rather than some list components.</p>
+            <p>сlass to extend possible actions related to object creation</p>
 
           </section>
           <section class="section task-group-section">
@@ -193,9 +191,9 @@ and in future to include the part, rather than some list components.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14DITranquillity6DIPartP4loadyAA11DIContainerC9container_tFZ"></a>
-                    <a name="//apple_ref/swift/Method/load(container:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity6DIPartP4loadyAA11DIContainerC9container_tFZ">load(container:)</a>
+                    <a name="/s:14DITranquillity12DIExtensionsC7setArgsySayypSgGd_tF"></a>
+                    <a name="//apple_ref/swift/Method/setArgs(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity12DIExtensionsC7setArgsySayypSgGd_tF">setArgs(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -203,16 +201,21 @@ and in future to include the part, rather than some list components.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Method inside of which you can registration a components.
-It&rsquo;s worth combining the components for some reason.
-And call a class implementing the protocol according to this characteristics.</p>
+                        <p>method for setting arguments injected into an object.
+Example:</p>
+<pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="n">register</span><span class="p">{</span> <span class="kt">YourClass</span><span class="p">(</span><span class="nv">p1</span><span class="p">:</span> <span class="nv">$0</span><span class="p">,</span> <span class="nv">p2</span><span class="p">:</span> <span class="nf">arg</span><span class="p">(</span><span class="nv">$2</span><span class="p">))</span> <span class="p">}</span>
+  <span class="o">.</span><span class="n">injection</span><span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">property</span> <span class="o">=</span> <span class="nf">arg</span><span class="p">(</span><span class="nv">$1</span><span class="p">)</span> <span class="p">}</span>
+<span class="o">...</span>
+<span class="n">container</span><span class="o">.</span><span class="nf">extension</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span><span class="o">.</span><span class="nf">setArgs</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="s">"it's work!"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">yourClass</span> <span class="o">=</span> <span class="o">*</span><span class="n">container</span> <span class="c1">// p1 - injected, p2 = 15, property = "it's work!"</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">load</span><span class="p">(</span><span class="nv">container</span><span class="p">:</span> <span class="kt"><a href="../Classes/DIContainer.html">DIContainer</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setArgs</span><span class="p">(</span><span class="n">_</span> <span class="nv">args</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?</span><span class="o">...</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -223,12 +226,12 @@ And call a class implementing the protocol according to this characteristics.</p
                             <tr>
                               <td>
                                 <code>
-                                <em>container</em>
+                                <em>args</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>A container. Don&rsquo;t call the method yourself, but leave it to the method <code>append(...)</code> into container.</p>
+                                  <p>array of arguments</p>
                                 </div>
                               </td>
                             </tr>
@@ -236,7 +239,7 @@ And call a class implementing the protocol according to this characteristics.</p
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Hierarchy/DIPart.swift#L18">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/Public/DIExtensions.swift#L27-L31">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

@@ -30,6 +30,7 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 * Injection into Subviews and cells [ru](Documentation/ru/storyboard.md#Внедрение-в-subview-и-ячейки)
 * Scan Parts/Frameworks [ru](Documentation/ru/scan.md#Поиск)
 * Support Delayed injection [ru](Documentation/ru/delayed_injection.md#Отложенное-внедрение)
+* Injection with arguments at any depth
 * Thread safe
 
 ## Usage
@@ -200,6 +201,7 @@ To install DITranquillity with CocoaPods, add the following lines to your Podfil
 
 ###### Via Carthage.
 
+*not worked - need support for SwiftLazy :(*
 `github "ivlevAstef/DITranquillity"` Swift (iOS8+,macOS10.10+,tvOS9+)
 
 ## Requirements
