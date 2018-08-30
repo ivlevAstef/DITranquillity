@@ -40,8 +40,6 @@
 		16D7BCBE1DB086B900A29A9F /* DIScanPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB71DB086B000A29A9F /* DIScanPart.swift */; };
 		16D7BCBF1DB086B900A29A9F /* DIScanFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB61DB086B000A29A9F /* DIScanFramework.swift */; };
 		16D7BCC01DB086B900A29A9F /* DIScanPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB71DB086B000A29A9F /* DIScanPart.swift */; };
-		2E9CDE0CC3F8AC36B4063ACF /* Pods_DITranquillity_OSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DACD006610E1AFB49AA136 /* Pods_DITranquillity_OSX.framework */; };
-		73B992F0542A65A0BFD56127 /* Pods_DITranquillity_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA30781EFE63884515C055E /* Pods_DITranquillity_tvOS.framework */; };
 		BA09E84A2126CBD400055AF0 /* DIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA09E8492126CBD400055AF0 /* DIExtensions.swift */; };
 		BA09E84B2126CBD400055AF0 /* DIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA09E8492126CBD400055AF0 /* DIExtensions.swift */; };
 		BA09E84C2126CBD400055AF0 /* DIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA09E8492126CBD400055AF0 /* DIExtensions.swift */; };
@@ -50,9 +48,6 @@
 		BA09E8502126CC5C00055AF0 /* ExtensionsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA09E84D2126CC5C00055AF0 /* ExtensionsContainer.swift */; };
 		BA45E51720AD54600059AF48 /* DITranquillityTests_MoreParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA45E51520AD54520059AF48 /* DITranquillityTests_MoreParameters.swift */; };
 		BA598A7B209308A0004EF9EF /* DITranquillityTests_SwiftLazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A792093086E004EF9EF /* DITranquillityTests_SwiftLazy.swift */; };
-		BA598A7C209308B1004EF9EF /* SwiftLazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA598A7D209308B1004EF9EF /* SwiftLazy.framework */; };
-		BA598A7E209308BC004EF9EF /* SwiftLazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA598A7F209308BC004EF9EF /* SwiftLazy.framework */; };
-		BA598A80209308C0004EF9EF /* SwiftLazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA598A81209308C0004EF9EF /* SwiftLazy.framework */; };
 		BA598A83209308E2004EF9EF /* ProtocolMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A82209308E2004EF9EF /* ProtocolMagic.swift */; };
 		BA598A86209308F5004EF9EF /* SwiftLazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A85209308F4004EF9EF /* SwiftLazy.swift */; };
 		BA598A87209308F7004EF9EF /* SwiftLazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A85209308F4004EF9EF /* SwiftLazy.swift */; };
@@ -102,7 +97,6 @@
 		BABB21242126DC58000F8743 /* DITranquillityTests_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABB21202126DC1B000F8743 /* DITranquillityTests_Extensions.swift */; };
 		BADA3A8C209B2948000F5566 /* ProtocolMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A82209308E2004EF9EF /* ProtocolMagic.swift */; };
 		BADA3A8D209B2948000F5566 /* ProtocolMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A82209308E2004EF9EF /* ProtocolMagic.swift */; };
-		BB77BD89CD4CA2B83AD41BC6 /* Pods_DITranquillityTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6C65290B01B60FD6E682C3 /* Pods_DITranquillityTests.framework */; };
 		D512552D1EE06F010067796B /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512552C1EE06F010067796B /* DISettings.swift */; };
 		D512552E1EE06F010067796B /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512552C1EE06F010067796B /* DISettings.swift */; };
 		D512552F1EE06F010067796B /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512552C1EE06F010067796B /* DISettings.swift */; };
@@ -154,7 +148,12 @@
 		D5E3C7D21F3C0C5A0022DD43 /* Modificators.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3C7D11F3C0C5A0022DD43 /* Modificators.swift */; };
 		D5E3C7D31F3C0C5A0022DD43 /* Modificators.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3C7D11F3C0C5A0022DD43 /* Modificators.swift */; };
 		D5E3C7D41F3C0C5A0022DD43 /* Modificators.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3C7D11F3C0C5A0022DD43 /* Modificators.swift */; };
-		EC691E3CF78BC4F5F0FAFBCC /* Pods_DITranquillity_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8109C7765E1E60BD81259213 /* Pods_DITranquillity_iOS.framework */; };
+		FDBB75CE2137B59D00C1E1FF /* SwiftLazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDBB75CD2137B59D00C1E1FF /* SwiftLazy.framework */; };
+		FDBB75D02137B5B700C1E1FF /* SwiftLazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDBB75CF2137B5B700C1E1FF /* SwiftLazy.framework */; };
+		FDBB75D22137B5C400C1E1FF /* SwiftLazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDBB75D12137B5C400C1E1FF /* SwiftLazy.framework */; };
+		FDBB75DF2137BB7900C1E1FF /* DITranquillity.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A58875541D0944AE00D6DE92 /* DITranquillity.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FDBB75E62137BC3E00C1E1FF /* SwiftLazy.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FDBB75CD2137B59D00C1E1FF /* SwiftLazy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FDBB75E92137BCB900C1E1FF /* SwiftLazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDBB75CD2137B59D00C1E1FF /* SwiftLazy.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,8 +166,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		FDBB75D92137B92D00C1E1FF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FDBB75E62137BC3E00C1E1FF /* SwiftLazy.framework in CopyFiles */,
+				FDBB75DF2137BB7900C1E1FF /* DITranquillity.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		103330D81D810B0D8B71E8AF /* Pods-DITranquillity-OSX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DITranquillity-OSX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DITranquillity-OSX/Pods-DITranquillity-OSX.debug.xcconfig"; sourceTree = "<group>"; };
 		115C24C71E6527CA00CC8BC7 /* Synchronize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synchronize.swift; sourceTree = "<group>"; };
 		119F4FCC1E56069200B2DFA1 /* DIContainer.Reg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainer.Reg.swift; sourceTree = "<group>"; };
 		163DDDC51DB9C84E0003DE54 /* DITypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITypes.swift; sourceTree = "<group>"; };
@@ -183,24 +195,11 @@
 		16D7BCB51DB086B000A29A9F /* DIScan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScan.swift; sourceTree = "<group>"; };
 		16D7BCB61DB086B000A29A9F /* DIScanFramework.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScanFramework.swift; sourceTree = "<group>"; };
 		16D7BCB71DB086B000A29A9F /* DIScanPart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScanPart.swift; sourceTree = "<group>"; };
-		16F8495F1BC11CD842628717 /* Pods-DITranquillity-OSX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DITranquillity-OSX.release.xcconfig"; path = "Pods/Target Support Files/Pods-DITranquillity-OSX/Pods-DITranquillity-OSX.release.xcconfig"; sourceTree = "<group>"; };
-		2FA30781EFE63884515C055E /* Pods_DITranquillity_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DITranquillity_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3913569EE177DF2DC5A9E84E /* Pods-DITranquillity-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DITranquillity-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DITranquillity-tvOS/Pods-DITranquillity-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		5C6C65290B01B60FD6E682C3 /* Pods_DITranquillityTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DITranquillityTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		61E56CE22032CCACFC24EFCE /* Pods-DITranquillity-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DITranquillity-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-DITranquillity-iOS/Pods-DITranquillity-iOS.release.xcconfig"; sourceTree = "<group>"; };
-		69EB55E69731583BC47189B0 /* Pods-DITranquillityTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DITranquillityTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DITranquillityTests/Pods-DITranquillityTests.release.xcconfig"; sourceTree = "<group>"; };
-		8109C7765E1E60BD81259213 /* Pods_DITranquillity_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DITranquillity_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		81DACD006610E1AFB49AA136 /* Pods_DITranquillity_OSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DITranquillity_OSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8BFEF6E33DADAA8D77565724 /* Pods-DITranquillityTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DITranquillityTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DITranquillityTests/Pods-DITranquillityTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A8BD3B9D0B4F0CEAD71ADF2A /* Pods-DITranquillity-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DITranquillity-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-DITranquillity-tvOS/Pods-DITranquillity-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		BA09E8492126CBD400055AF0 /* DIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIExtensions.swift; sourceTree = "<group>"; };
 		BA09E84D2126CC5C00055AF0 /* ExtensionsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionsContainer.swift; sourceTree = "<group>"; };
 		BA45E51520AD54520059AF48 /* DITranquillityTests_MoreParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_MoreParameters.swift; sourceTree = "<group>"; };
 		BA598A792093086E004EF9EF /* DITranquillityTests_SwiftLazy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_SwiftLazy.swift; sourceTree = "<group>"; };
-		BA598A7D209308B1004EF9EF /* SwiftLazy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA598A7F209308BC004EF9EF /* SwiftLazy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA598A81209308C0004EF9EF /* SwiftLazy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA598A82209308E2004EF9EF /* ProtocolMagic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolMagic.swift; sourceTree = "<group>"; };
 		BA598A85209308F4004EF9EF /* SwiftLazy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftLazy.swift; sourceTree = "<group>"; };
 		BA9A2756208851C300584CA0 /* DITranquillityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DITranquillityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,7 +231,6 @@
 		BAB897132092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DIComponentBuilder+SubviewsInject.swift"; sourceTree = "<group>"; };
 		BABB211C2126D68F000F8743 /* DIContainer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+Extensions.swift"; sourceTree = "<group>"; };
 		BABB21202126DC1B000F8743 /* DITranquillityTests_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Extensions.swift; sourceTree = "<group>"; };
-		CA2F896073C111FC22770E6F /* Pods-DITranquillity-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DITranquillity-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DITranquillity-iOS/Pods-DITranquillity-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		D512552C1EE06F010067796B /* DISettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DISettings.swift; sourceTree = "<group>"; };
 		D51666F91F1FBFAA001AD9F5 /* DIFramework.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIFramework.swift; sourceTree = "<group>"; };
 		D51666FA1F1FBFAA001AD9F5 /* DIPart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIPart.swift; sourceTree = "<group>"; };
@@ -256,6 +254,9 @@
 		D57961881F52C4BC0079DE8C /* UIStoryboard+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIStoryboard+Swizzling.m"; sourceTree = "<group>"; };
 		D57961911F52D36F0079DE8C /* NSStoryboard+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSStoryboard+Swizzling.m"; sourceTree = "<group>"; };
 		D5E3C7D11F3C0C5A0022DD43 /* Modificators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Modificators.swift; sourceTree = "<group>"; };
+		FDBB75CD2137B59D00C1E1FF /* SwiftLazy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftLazy.framework; path = Carthage/Build/iOS/SwiftLazy.framework; sourceTree = "<group>"; };
+		FDBB75CF2137B5B700C1E1FF /* SwiftLazy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftLazy.framework; path = Carthage/Build/Mac/SwiftLazy.framework; sourceTree = "<group>"; };
+		FDBB75D12137B5C400C1E1FF /* SwiftLazy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftLazy.framework; path = Carthage/Build/tvOS/SwiftLazy.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,8 +264,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA598A7E209308BC004EF9EF /* SwiftLazy.framework in Frameworks */,
-				2E9CDE0CC3F8AC36B4063ACF /* Pods_DITranquillity_OSX.framework in Frameworks */,
+				FDBB75D02137B5B700C1E1FF /* SwiftLazy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,8 +272,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA598A80209308C0004EF9EF /* SwiftLazy.framework in Frameworks */,
-				73B992F0542A65A0BFD56127 /* Pods_DITranquillity_tvOS.framework in Frameworks */,
+				FDBB75D22137B5C400C1E1FF /* SwiftLazy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,8 +280,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA598A7C209308B1004EF9EF /* SwiftLazy.framework in Frameworks */,
-				EC691E3CF78BC4F5F0FAFBCC /* Pods_DITranquillity_iOS.framework in Frameworks */,
+				FDBB75CE2137B59D00C1E1FF /* SwiftLazy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,10 +288,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDBB75E92137BCB900C1E1FF /* SwiftLazy.framework in Frameworks */,
 				BA9A27AC2088529500584CA0 /* SubProject1.framework in Frameworks */,
 				BA9A27AD2088529500584CA0 /* SubProject2.framework in Frameworks */,
 				BA9A275B208851C300584CA0 /* DITranquillity.framework in Frameworks */,
-				BB77BD89CD4CA2B83AD41BC6 /* Pods_DITranquillityTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,21 +410,6 @@
 			path = Scan;
 			sourceTree = "<group>";
 		};
-		46F3DE15D0656C0E009ACF6E /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				103330D81D810B0D8B71E8AF /* Pods-DITranquillity-OSX.debug.xcconfig */,
-				16F8495F1BC11CD842628717 /* Pods-DITranquillity-OSX.release.xcconfig */,
-				CA2F896073C111FC22770E6F /* Pods-DITranquillity-iOS.debug.xcconfig */,
-				61E56CE22032CCACFC24EFCE /* Pods-DITranquillity-iOS.release.xcconfig */,
-				3913569EE177DF2DC5A9E84E /* Pods-DITranquillity-tvOS.debug.xcconfig */,
-				A8BD3B9D0B4F0CEAD71ADF2A /* Pods-DITranquillity-tvOS.release.xcconfig */,
-				8BFEF6E33DADAA8D77565724 /* Pods-DITranquillityTests.debug.xcconfig */,
-				69EB55E69731583BC47189B0 /* Pods-DITranquillityTests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		A588754A1D0944AE00D6DE92 = {
 			isa = PBXGroup;
 			children = (
@@ -434,7 +417,6 @@
 				16640A4C1D9E1E7B00707BFC /* Sources */,
 				A58875551D0944AE00D6DE92 /* Products */,
 				BA9A27AB2088529500584CA0 /* Frameworks */,
-				46F3DE15D0656C0E009ACF6E /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -491,15 +473,11 @@
 		BA9A27AB2088529500584CA0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BA598A81209308C0004EF9EF /* SwiftLazy.framework */,
-				BA598A7F209308BC004EF9EF /* SwiftLazy.framework */,
-				BA598A7D209308B1004EF9EF /* SwiftLazy.framework */,
+				FDBB75CD2137B59D00C1E1FF /* SwiftLazy.framework */,
+				FDBB75CF2137B5B700C1E1FF /* SwiftLazy.framework */,
+				FDBB75D12137B5C400C1E1FF /* SwiftLazy.framework */,
 				BA9A27AE2088529500584CA0 /* SubProject1.framework */,
 				BA9A27AF2088529500584CA0 /* SubProject2.framework */,
-				81DACD006610E1AFB49AA136 /* Pods_DITranquillity_OSX.framework */,
-				8109C7765E1E60BD81259213 /* Pods_DITranquillity_iOS.framework */,
-				2FA30781EFE63884515C055E /* Pods_DITranquillity_tvOS.framework */,
-				5C6C65290B01B60FD6E682C3 /* Pods_DITranquillityTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -590,11 +568,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 169C0DE21DA3501F001F0AD5 /* Build configuration list for PBXNativeTarget "DITranquillity-OSX" */;
 			buildPhases = (
-				C07FDDC05DE2D29CBE1F0F5E /* [CP] Check Pods Manifest.lock */,
 				169C0DC21DA3501F001F0AD5 /* Sources */,
 				169C0DDD1DA3501F001F0AD5 /* Frameworks */,
 				169C0DDE1DA3501F001F0AD5 /* Headers */,
 				169C0DE11DA3501F001F0AD5 /* Resources */,
+				FDBB75D42137B5FB00C1E1FF /* Copy Binary Frameworks */,
 			);
 			buildRules = (
 			);
@@ -609,11 +587,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 169C0E481DA35CBE001F0AD5 /* Build configuration list for PBXNativeTarget "DITranquillity-tvOS" */;
 			buildPhases = (
-				0A9BAE24CAE4295A2B162994 /* [CP] Check Pods Manifest.lock */,
 				169C0E281DA35CBE001F0AD5 /* Sources */,
 				169C0E431DA35CBE001F0AD5 /* Frameworks */,
 				169C0E441DA35CBE001F0AD5 /* Headers */,
 				169C0E471DA35CBE001F0AD5 /* Resources */,
+				FDBB75D52137B64400C1E1FF /* Copy Binary Frameworks */,
 			);
 			buildRules = (
 			);
@@ -628,11 +606,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A588755C1D0944AE00D6DE92 /* Build configuration list for PBXNativeTarget "DITranquillity-iOS" */;
 			buildPhases = (
-				21F12A7DBB746470BF552954 /* [CP] Check Pods Manifest.lock */,
 				A588754F1D0944AE00D6DE92 /* Sources */,
 				A58875501D0944AE00D6DE92 /* Frameworks */,
 				A58875511D0944AE00D6DE92 /* Headers */,
 				A58875521D0944AE00D6DE92 /* Resources */,
+				FDBB75D32137B5CD00C1E1FF /* Copy Binary Frameworks */,
 			);
 			buildRules = (
 			);
@@ -647,10 +625,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BA9A2760208851C300584CA0 /* Build configuration list for PBXNativeTarget "DITranquillityTests" */;
 			buildPhases = (
-				C344BBD5032448A3F7CB8F63 /* [CP] Check Pods Manifest.lock */,
 				BA9A2752208851C300584CA0 /* Sources */,
 				BA9A2753208851C300584CA0 /* Frameworks */,
 				BA9A2754208851C300584CA0 /* Resources */,
+				FDBB75D92137B92D00C1E1FF /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -745,77 +723,53 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0A9BAE24CAE4295A2B162994 /* [CP] Check Pods Manifest.lock */ = {
+		FDBB75D32137B5CD00C1E1FF /* Copy Binary Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftLazy.framework",
 			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "Copy Binary Frameworks";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-DITranquillity-tvOS-checkManifestLockResult.txt",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SwiftLazy.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
-		21F12A7DBB746470BF552954 /* [CP] Check Pods Manifest.lock */ = {
+		FDBB75D42137B5FB00C1E1FF /* Copy Binary Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"$(SRCROOT)/Carthage/Build/Mac/SwiftLazy.framework",
 			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "Copy Binary Frameworks";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-DITranquillity-iOS-checkManifestLockResult.txt",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SwiftLazy.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
-		C07FDDC05DE2D29CBE1F0F5E /* [CP] Check Pods Manifest.lock */ = {
+		FDBB75D52137B64400C1E1FF /* Copy Binary Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"$(SRCROOT)/Carthage/Build/tvOS/SwiftLazy.framework",
 			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "Copy Binary Frameworks";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-DITranquillity-OSX-checkManifestLockResult.txt",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SwiftLazy.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C344BBD5032448A3F7CB8F63 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-DITranquillityTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -981,7 +935,6 @@
 /* Begin XCBuildConfiguration section */
 		169C0DE31DA3501F001F0AD5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 103330D81D810B0D8B71E8AF /* Pods-DITranquillity-OSX.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
@@ -991,6 +944,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
@@ -1015,7 +972,6 @@
 		};
 		169C0DE41DA3501F001F0AD5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 16F8495F1BC11CD842628717 /* Pods-DITranquillity-OSX.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
@@ -1025,6 +981,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
@@ -1048,7 +1008,6 @@
 		};
 		169C0E491DA35CBE001F0AD5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3913569EE177DF2DC5A9E84E /* Pods-DITranquillity-tvOS.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
@@ -1059,6 +1018,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
@@ -1085,7 +1048,6 @@
 		};
 		169C0E4A1DA35CBE001F0AD5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A8BD3B9D0B4F0CEAD71ADF2A /* Pods-DITranquillity-tvOS.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
@@ -1096,6 +1058,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
@@ -1238,7 +1204,6 @@
 		};
 		A588755D1D0944AE00D6DE92 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA2F896073C111FC22770E6F /* Pods-DITranquillity-iOS.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
@@ -1248,6 +1213,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
@@ -1272,7 +1241,6 @@
 		};
 		A588755E1D0944AE00D6DE92 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 61E56CE22032CCACFC24EFCE /* Pods-DITranquillity-iOS.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
@@ -1282,6 +1250,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
@@ -1305,7 +1277,6 @@
 		};
 		BA9A275E208851C300584CA0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8BFEF6E33DADAA8D77565724 /* Pods-DITranquillityTests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1313,6 +1284,13 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1324,6 +1302,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = sia.DITranquillityTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1332,7 +1311,6 @@
 		};
 		BA9A275F208851C300584CA0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 69EB55E69731583BC47189B0 /* Pods-DITranquillityTests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1340,6 +1318,13 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Tests/DiTranquillityTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
@@ -1347,6 +1332,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = sia.DITranquillityTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
