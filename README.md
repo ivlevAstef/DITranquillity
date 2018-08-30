@@ -201,7 +201,6 @@ To install DITranquillity with CocoaPods, add the following lines to your Podfil
 
 ###### Via Carthage.
 
-*not worked - need support for SwiftLazy :(*
 `github "ivlevAstef/DITranquillity"` Swift (iOS8+,macOS10.10+,tvOS9+)
 
 ## Requirements
