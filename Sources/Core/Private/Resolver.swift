@@ -189,12 +189,20 @@ class Resolver {
     let uniqueKey = component.info
     
     func makeObject(from cacheName: StaticString, use referenceCounting: DILifeTime.ReferenceCounting, scope: Cache.Scope) -> Any? {
-      var cacheObject: Any? = scope.data[uniqueKey]
-      if let weakRef = cacheObject as? Weak<Any> {
-        cacheObject = weakRef.value
+      var optCacheObject: Any? = scope.data[uniqueKey]
+      if let weakRef = optCacheObject as? Weak<Any> {
+        optCacheObject = weakRef.value
       }
       
-      if let cacheObject = cacheObject {
+      let isValueReallyExisted: (Any?) -> Bool = { optionalObject in
+        #if swift(>=4.2)
+        return optionalObject.check()
+        #else
+        return true
+        #endif
+      }
+      
+      if let cacheObject = optCacheObject, isValueReallyExisted(optCacheObject)  {
         /// suspending ignore injection for new object
         guard let usingObject = usingObject else {
           log(.verbose, msg: "Resolve object: \(cacheObject) from cache \(cacheName)")

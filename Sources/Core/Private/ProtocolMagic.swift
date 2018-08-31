@@ -46,6 +46,27 @@ extension Optional: SwiftWrappedType {
   static var type: DIAType { return Wrapped.self }
 }
 
+
+#if swift(>=4.2)
+protocol CheckOptional {
+  func check() -> Bool
+}
+
+extension Optional: CheckOptional {
+  func check() -> Bool {
+    switch self {
+    case .some(let obj):
+      if let optObj = obj as? CheckOptional {
+        return optObj.check()
+      }
+      return true
+    case .none:
+      return false
+    }
+  }
+}
+#endif
+
 /// Remove only Optional or ImplicitlyUnwrappedOptional
 ///
 /// - Parameter type: input type
@@ -187,3 +208,17 @@ extension Sequence {
   }
 }
 #endif
+
+
+
+/// Check that variable really existed. if-let syntax could not properly work with Any?-Any-Optional.some(Optional.none) in swift 4.2+
+///
+/// - Parameter optionalObject: Object for recursively value checking
+/// - Returns: *true* if value really exists. *false* otherwise.
+func isValueReallyExisted(optionalObject: Any?) -> Bool {
+  #if swift(>=4.2)
+  return optionalObject.check()
+  #else
+  return true
+  #endif
+}
