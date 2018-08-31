@@ -12,7 +12,7 @@
   import Cocoa
 #endif
 
-#if os(iOS) || os(tvOS) || os(OSX)
+#if os(iOS) || os(tvOS)
 
   #if swift(>=4.2)
   #else
