@@ -194,15 +194,7 @@ class Resolver {
         optCacheObject = weakRef.value
       }
       
-      let isValueReallyExisted: (Any?) -> Bool = { optionalObject in
-        #if swift(>=4.2)
-        return optionalObject.check()
-        #else
-        return true
-        #endif
-      }
-      
-      if let cacheObject = optCacheObject, isValueReallyExisted(optCacheObject)  {
+      if let cacheObject = optCacheObject, isObjectReallyExisted(optCacheObject) {
         /// suspending ignore injection for new object
         guard let usingObject = usingObject else {
           log(.verbose, msg: "Resolve object: \(cacheObject) from cache \(cacheName)")
