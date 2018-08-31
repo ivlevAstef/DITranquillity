@@ -1,23 +1,30 @@
 {
   "warnings": [
     {
-      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Private/ByTagAndMany.swift",
-      "line": 14,
+      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Private/Modificators.swift",
+      "line": 13,
       "symbol": "InternalByTag",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Private/ByTagAndMany.swift",
-      "line": 31,
+      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Private/Modificators.swift",
+      "line": 29,
       "symbol": "InternalByMany",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Private/ByTagAndMany.swift",
-      "line": 42,
+      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Private/Modificators.swift",
+      "line": 40,
       "symbol": "InternalByManyInBundle",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/aivlev/Projects/DITranquillity/Sources/Core/Private/Modificators.swift",
+      "line": 55,
+      "symbol": "InternalArg",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },

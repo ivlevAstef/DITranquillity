@@ -34,6 +34,7 @@ protocol WrappedType {
 
 protocol SwiftWrappedType: WrappedType {}
 
+
 #if swift(>=4.2)
 #else
 extension ImplicitlyUnwrappedOptional: SwiftWrappedType {
@@ -140,6 +141,12 @@ extension DIByTag: OptionalMake {
 extension DIMany: OptionalMake {
   static func make(by obj: Any?) -> DIMany<T> {
     return DIMany<T>(objects: gmake(by: obj) as [T])
+  }
+}
+
+extension DIArg: OptionalMake {
+  static func make(by obj: Any?) -> DIArg<T> {
+    return DIArg<T>(object: gmake(by: obj) as T)
   }
 }
 

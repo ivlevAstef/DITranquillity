@@ -1,5 +1,5 @@
 //
-//  ByTag.swift
+//  Modificators.swift
 //  DITranquillity
 //
 //  Created by Alexander Ivlev on 10/08/2017.
@@ -8,7 +8,6 @@
 
 internal protocol IsTag: class, WrappedType {
   static var tag: DITag { get }
-  static var type: DIAType { get }
 }
 
 public class InternalByTag<Tag, T>: IsTag {
@@ -24,7 +23,6 @@ public class InternalByTag<Tag, T>: IsTag {
 
 
 internal protocol IsMany: class, WrappedType {
-  static var type: DIAType { get }
   static var inBundle: Bool { get }
 }
 
@@ -47,5 +45,19 @@ public class InternalByManyInBundle<T>: IsMany {
   
   internal init(objects: [T]) {
     self._objects = objects
+  }
+}
+
+
+internal protocol IsArg: class, WrappedType {
+}
+
+public class InternalArg<T>: IsArg {
+  internal let _object: T
+
+  internal static var type: DIAType { return T.self }
+
+  internal init(object: T) {
+    self._object = object
   }
 }

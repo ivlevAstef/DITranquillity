@@ -9,7 +9,7 @@
 class Resolver {
 
   init(container: DIContainer) {
-    self.container = container // onowned
+    self.container = container // unowned
   }
   
   func resolve<T>(type: T.Type = T.self, name: String? = nil, from bundle: Bundle? = nil) -> T {
@@ -185,8 +185,7 @@ class Resolver {
   /// Super function
   private func makeObject(by component: Component, use usingObject: Any?) -> Any? {
     log(.verbose, msg: "Found component: \(component.info)")
-    
-    
+
     let uniqueKey = component.info
     
     func makeObject(from cacheName: StaticString, use referenceCounting: DILifeTime.ReferenceCounting, scope: Cache.Scope) -> Any? {
@@ -216,6 +215,14 @@ class Resolver {
       }
       
       return nil
+    }
+
+    func getArgumentObject(by type: DIAType) -> Any? {
+      guard let extensions = container.extensionsContainer.optionalGet(by: component.info) else {
+        log(.error, msg: "Until get argument. Not found extensions for \(component.info)")
+        return nil
+      }
+      return extensions.getNextArg()
     }
     
     func makeObject() -> Any? {
@@ -273,6 +280,8 @@ class Resolver {
         let makedObject: Any?
         if parameter.type is UseObject.Type {
           makedObject = usingObject
+        } else if let argParameter = parameter.type as? IsArg.Type {
+          makedObject = getArgumentObject(by: argParameter.type)
         } else {
           makedObject = make(by: parameter.type, with: parameter.name, from: component.bundle, use: nil)
         }
