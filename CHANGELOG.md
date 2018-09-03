@@ -1,3 +1,6 @@
+# v3.4.1
+* Support Swift 4.2
+
 # v3.4.0
 * New feature `Arguments for initialization`: https://github.com/ivlevAstef/DITranquillity/issues/123
 - Add extension to container. for example `container.extension(for: Home.self)`

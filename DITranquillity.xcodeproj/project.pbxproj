@@ -53,6 +53,10 @@
 		BA598A87209308F7004EF9EF /* SwiftLazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A85209308F4004EF9EF /* SwiftLazy.swift */; };
 		BA598A88209308F7004EF9EF /* SwiftLazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A85209308F4004EF9EF /* SwiftLazy.swift */; };
 		BA7B966E20AA146600BE9F99 /* DIComponentBuilder+SubviewsInject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB897132092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift */; };
+		BA823B3F21396435003B5E7B /* ViewController+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA823B3E21396435003B5E7B /* ViewController+Children.swift */; };
+		BA823B4021396435003B5E7B /* ViewController+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA823B3E21396435003B5E7B /* ViewController+Children.swift */; };
+		BA823B4121396435003B5E7B /* ViewController+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA823B3E21396435003B5E7B /* ViewController+Children.swift */; };
+		BA823B4221396530003B5E7B /* ViewController+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA823B3E21396435003B5E7B /* ViewController+Children.swift */; };
 		BA9A275B208851C300584CA0 /* DITranquillity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58875541D0944AE00D6DE92 /* DITranquillity.framework */; };
 		BA9A279D208851FF00584CA0 /* AccessStoryboard1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA9A2765208851F100584CA0 /* AccessStoryboard1.storyboard */; };
 		BA9A279E208851FF00584CA0 /* AccessStoryboard2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA9A2766208851F100584CA0 /* AccessStoryboard2.storyboard */; };
@@ -63,7 +67,6 @@
 		BA9A27A4208851FF00584CA0 /* DITranquillityTests_Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9A276C208851F100584CA0 /* DITranquillityTests_Storyboard.swift */; };
 		BA9A27A5208851FF00584CA0 /* DITranquillityTests_Threads.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9A276D208851F100584CA0 /* DITranquillityTests_Threads.swift */; };
 		BA9A27A6208851FF00584CA0 /* DITranquillityTests_Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9A276E208851F100584CA0 /* DITranquillityTests_Validation.swift */; };
-		BA9A27A7208851FF00584CA0 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA9A276F208851F100584CA0 /* Info.plist */; };
 		BA9A27A8208851FF00584CA0 /* ResolveTestClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9A2770208851F100584CA0 /* ResolveTestClasses.swift */; };
 		BA9A27A9208851FF00584CA0 /* TestReferenceStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA9A2771208851F100584CA0 /* TestReferenceStoryboard.storyboard */; };
 		BA9A27AA208851FF00584CA0 /* TestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA9A2772208851F100584CA0 /* TestStoryboard.storyboard */; };
@@ -202,6 +205,7 @@
 		BA598A792093086E004EF9EF /* DITranquillityTests_SwiftLazy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_SwiftLazy.swift; sourceTree = "<group>"; };
 		BA598A82209308E2004EF9EF /* ProtocolMagic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolMagic.swift; sourceTree = "<group>"; };
 		BA598A85209308F4004EF9EF /* SwiftLazy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftLazy.swift; sourceTree = "<group>"; };
+		BA823B3E21396435003B5E7B /* ViewController+Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Children.swift"; sourceTree = "<group>"; };
 		BA9A2756208851C300584CA0 /* DITranquillityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DITranquillityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9A2765208851F100584CA0 /* AccessStoryboard1.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AccessStoryboard1.storyboard; sourceTree = "<group>"; };
 		BA9A2766208851F100584CA0 /* AccessStoryboard2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AccessStoryboard2.storyboard; sourceTree = "<group>"; };
@@ -371,6 +375,7 @@
 		16640A6D1D9E1E7B00707BFC /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
+				BA823B3E21396435003B5E7B /* ViewController+Children.swift */,
 				D57961801F52C2BD0079DE8C /* DIStoryboard.swift */,
 				D57961811F52C2BD0079DE8C /* StoryboardResolver.swift */,
 				D57961681F526FBA0079DE8C /* StoryboardContainerMap.swift */,
@@ -629,6 +634,7 @@
 				BA9A2753208851C300584CA0 /* Frameworks */,
 				BA9A2754208851C300584CA0 /* Resources */,
 				FDBB75D92137B92D00C1E1FF /* CopyFiles */,
+				3549F768C97C837BAF0300A2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -715,7 +721,6 @@
 				BA9A279E208851FF00584CA0 /* AccessStoryboard2.storyboard in Resources */,
 				BA9A27A9208851FF00584CA0 /* TestReferenceStoryboard.storyboard in Resources */,
 				BA9A279D208851FF00584CA0 /* AccessStoryboard1.storyboard in Resources */,
-				BA9A27A7208851FF00584CA0 /* Info.plist in Resources */,
 				BA9A27AA208851FF00584CA0 /* TestStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -739,7 +744,25 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
-		FDBB75D42137B5FB00C1E1FF /* Copy Binary Frameworks */ = {
+		3549F768C97C837BAF0300A2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillityTests/Pods-DITranquillityTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SwiftLazy-iOS/SwiftLazy.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftLazy.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DITranquillityTests/Pods-DITranquillityTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C07FDDC05DE2D29CBE1F0F5E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -787,6 +810,7 @@
 				D57961651F4FC7F40079DE8C /* DIModificators.swift in Sources */,
 				D55AFCB91EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				D55AFCB51EEEA48D00527D27 /* MethodMaker.swift in Sources */,
+				BA823B4021396435003B5E7B /* ViewController+Children.swift in Sources */,
 				D57961831F52C2BD0079DE8C /* DIStoryboard.swift in Sources */,
 				16D7BCBE1DB086B900A29A9F /* DIScanPart.swift in Sources */,
 				115C24C91E6527CA00CC8BC7 /* Synchronize.swift in Sources */,
@@ -835,6 +859,7 @@
 				D51667001F1FBFAA001AD9F5 /* DIPart.swift in Sources */,
 				163DDDC81DB9C84E0003DE54 /* DITypes.swift in Sources */,
 				169C0E371DA35CBE001F0AD5 /* Resolver.swift in Sources */,
+				BA823B4121396435003B5E7B /* ViewController+Children.swift in Sources */,
 				BAB89712209210FE009274F8 /* UIViewController+Swizzling.m in Sources */,
 				D57961731F52BA160079DE8C /* DIStoryboardBase.m in Sources */,
 				BAB8970F209210FE009274F8 /* UITableView+Swizzling.m in Sources */,
@@ -873,6 +898,7 @@
 				BA598A83209308E2004EF9EF /* ProtocolMagic.swift in Sources */,
 				D55AFCB41EEEA48D00527D27 /* MethodMaker.swift in Sources */,
 				D5E3C7D21F3C0C5A0022DD43 /* Modificators.swift in Sources */,
+				BA823B3F21396435003B5E7B /* ViewController+Children.swift in Sources */,
 				16D7BCBA1DB086B000A29A9F /* DIScanPart.swift in Sources */,
 				D57961711F52BA160079DE8C /* DIStoryboardBase.m in Sources */,
 				D57961641F4FC7F40079DE8C /* DIModificators.swift in Sources */,
@@ -911,6 +937,7 @@
 				BA9A27A5208851FF00584CA0 /* DITranquillityTests_Threads.swift in Sources */,
 				BA9A27A2208851FF00584CA0 /* DITranquillityTests_ResolveByInit.swift in Sources */,
 				BABB21242126DC58000F8743 /* DITranquillityTests_Extensions.swift in Sources */,
+				BA823B4221396530003B5E7B /* ViewController+Children.swift in Sources */,
 				BA9A279F208851FF00584CA0 /* DITranquillityTests_Lifetime.swift in Sources */,
 				BA9A27A4208851FF00584CA0 /* DITranquillityTests_Storyboard.swift in Sources */,
 				BA9A27A8208851FF00584CA0 /* ResolveTestClasses.swift in Sources */,
@@ -964,7 +991,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALID_ARCHS = "x86_64 i386";
 			};
@@ -1000,7 +1027,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALID_ARCHS = "x86_64 i386";
 			};
@@ -1039,7 +1066,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALID_ARCHS = arm64;
@@ -1078,7 +1105,7 @@
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALID_ARCHS = arm64;
@@ -1233,7 +1260,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
@@ -1269,7 +1296,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
@@ -1304,7 +1331,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;

@@ -28,6 +28,14 @@ class DITranquillityTests_Resolve: XCTestCase {
   override func setUp() {
     super.setUp()
   }
+  
+  func test01_ResolveOptional() {
+    let container = DIContainer()
+    container.register(FooService.init)
+    
+    let optionalValue: FooService? = container.resolve()
+    XCTAssertNotNil(optionalValue)
+  }
 
   func test01_ResolveByClass() {
     let container = DIContainer()

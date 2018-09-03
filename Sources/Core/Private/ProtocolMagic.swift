@@ -34,13 +34,6 @@ protocol WrappedType {
 
 protocol SwiftWrappedType: WrappedType {}
 
-#if swift(>=5.0)
-#else
-    extension ImplicitlyUnwrappedOptional: SwiftWrappedType {
-        static var type: DIAType { return Wrapped.self }
-    }
-#endif
-
 extension Optional: SwiftWrappedType {
   static var type: DIAType { return Wrapped.self }
 }
@@ -50,12 +43,12 @@ extension Optional: SwiftWrappedType {
 /// - Parameter type: input type
 /// - Returns: type without Optional and ImplicitlyUnwrappedOptional
 func removeTypeWrappers(_ type: DIAType) -> DIAType {
-  var type = type
-  while let subtype = (type as? SwiftWrappedType.Type)?.type {
-    type = subtype
-  }
-  
-  return type
+    var type = type
+    while let subtype = (type as? SwiftWrappedType.Type)?.type {
+        type = subtype
+    }
+
+    return type
 }
 
 /// Remove Optional, ImplicitlyUnwrappedOptional, DIByTag, DIMany
@@ -186,3 +179,45 @@ extension Sequence {
   }
 }
 #endif
+
+/// MARK: Swift 4.2
+
+#if swift(>=4.2)
+#else
+  extension ImplicitlyUnwrappedOptional: SwiftWrappedType {
+    static var type: DIAType { return Wrapped.self }
+  }
+#endif
+
+#if swift(>=4.2)
+  // Swift 4.2 bug...
+  protocol CheckOnRealOptional {
+    func check() -> Bool
+  }
+
+  extension Optional: CheckOnRealOptional {
+    func check() -> Bool {
+      switch self {
+      case .some(let obj):
+        if let optObj = obj as? CheckOnRealOptional {
+          return optObj.check()
+        }
+        return true
+      case .none:
+        return false
+      }
+    }
+  }
+#endif
+
+/// Check that variable really existed. if-let syntax could not properly work with Any?-Any-Optional.some(Optional.none) in swift 4.2+
+///
+/// - Parameter optionalObject: Object for recursively value checking
+/// - Returns: *true* if value really exists. *false* otherwise.
+func isObjectReallyExisted(_ optionalObject: Any?) -> Bool {
+  #if swift(>=4.2)
+    return optionalObject.check()
+  #else
+    return optionalObject != nil
+  #endif
+}

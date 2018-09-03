@@ -32,11 +32,11 @@ class TestViewController: UIViewController {
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if let identifier = segue.identifier, identifier == "container" {
-      containerVC = segue.destination as! TestViewContainerVC
+      containerVC = (segue.destination as! TestViewContainerVC)
     }
     
     if let identifier = segue.identifier, identifier == "ShowReferenceViewController" {
-      referenceVC = segue.destination as! TestReferenceVC
+      referenceVC = (segue.destination as! TestReferenceVC)
     }
   }
 }
@@ -83,7 +83,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     let storyboard = DIStoryboard.create(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: container)
 
     let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
-    let viewController = navigation.childViewControllers[0]
+    let viewController = navigation.children[0]
     XCTAssert(viewController is TestViewController)
     guard let testVC = viewController as? TestViewController else {
       XCTFail("incorrect View Controller")
@@ -137,7 +137,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     let storyboard = DIStoryboard.create(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: container)
     
     let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
-    let viewController = navigation.childViewControllers[0]
+    let viewController = navigation.children[0]
     XCTAssert(viewController is TestViewController)
     guard let testVC = viewController as? TestViewController else {
       XCTFail("incorrect View Controller")
@@ -186,7 +186,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     let storyboard: UIStoryboard = *container
     
     let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
-    let viewController = navigation.childViewControllers[0]
+    let viewController = navigation.children[0]
     XCTAssert(viewController is TestViewController)
     guard let testVC = viewController as? TestViewController else {
       XCTFail("incorrect View Controller")
@@ -214,7 +214,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     DispatchQueue.global(qos: .userInteractive).asyncAfter(wallDeadline: .now() + 1) {
       defer { semaphore.signal() }
       let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
-      let viewController = navigation.childViewControllers[0]
+      let viewController = navigation.children[0]
       XCTAssert(viewController is TestViewController)
       guard let testVC = viewController as? TestViewController else {
         XCTFail("incorrect View Controller")
@@ -242,11 +242,11 @@ class DITranquillityTests_Storyboard: XCTestCase {
     let storyboard: UIStoryboard = *container
     
     let navigation1: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
-    let viewController1 = navigation1.childViewControllers[0]
+    let viewController1 = navigation1.children[0]
     XCTAssert(viewController1 is TestViewController)
     
     let navigation2: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
-    let viewController2 = navigation2.childViewControllers[0]
+    let viewController2 = navigation2.children[0]
     XCTAssert(viewController2 is TestViewController)
     
     XCTAssert(viewController1 !== viewController2)
@@ -275,7 +275,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     let storyboard: UIStoryboard = *container
     
     let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
-    let viewController = navigation.childViewControllers[0]
+    let viewController = navigation.children[0]
     _ = viewController.view // for call viewDidLoad() and full initialization
     XCTAssert(viewController is TestViewController)
     
@@ -342,7 +342,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     let storyboard = DIStoryboard.create(name: "TestStoryboard", bundle: Bundle(for: type(of: self)), container: container)
     
     let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
-    let vc = navigation.childViewControllers[0] as! TestViewController
+    let vc = navigation.children[0] as! TestViewController
     _ = vc.view // for call viewDidLoad() and full initialization
     XCTAssertEqual(vc.service.foo(), "foo")
     
@@ -370,7 +370,7 @@ class DITranquillityTests_Storyboard: XCTestCase {
     let storyboard: UIStoryboard = *container
     
     let navigation: UINavigationController = storyboard.instantiateInitialViewController() as! UINavigationController
-    let vc = navigation.childViewControllers[0] as! TestViewController
+    let vc = navigation.children[0] as! TestViewController
     _ = vc.view // for call viewDidLoad() and full initialization
     XCTAssertEqual(vc.service.foo(), "foo")
     
@@ -394,9 +394,9 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     let navigation: UINavigationController = storyboard.instantiateViewController(withIdentifier: "Double") as! UINavigationController
     
-    let navigation2: UINavigationController = navigation.childViewControllers[0] as! UINavigationController
+    let navigation2: UINavigationController = navigation.children[0] as! UINavigationController
     
-    let vc = navigation2.childViewControllers[0] as! TestViewController
+    let vc = navigation2.children[0] as! TestViewController
     _ = vc.view // for call viewDidLoad() and full initialization
     XCTAssertEqual(vc.service.foo(), "foo")
   }
