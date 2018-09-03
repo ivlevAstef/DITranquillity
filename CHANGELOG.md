@@ -1,3 +1,6 @@
+# v3.4.2
+* Support Carthage
+
 # v3.4.1
 * Support Swift 4.2
 
