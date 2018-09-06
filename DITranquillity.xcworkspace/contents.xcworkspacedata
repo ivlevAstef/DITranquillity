@@ -2,9 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:DITranquillity.xcodeproj">
+      location = "group:Carthage/Checkouts/SwiftLazy/SwiftLazy.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Pods/Pods.xcodeproj">
+      location = "group:Tests/SubProject2/SubProject2.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Tests/SubProject1/SubProject1.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:DITranquillity.xcodeproj">
    </FileRef>
 </Workspace>
