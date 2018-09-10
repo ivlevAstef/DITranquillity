@@ -182,14 +182,14 @@ extension Sequence {
 
 /// MARK: Swift 4.2
 
-#if swift(>=4.2)
+#if swift(>=4.1.5)
 #else
   extension ImplicitlyUnwrappedOptional: SwiftWrappedType {
     static var type: DIAType { return Wrapped.self }
   }
 #endif
 
-#if swift(>=4.2)
+#if swift(>=4.1.5)
   // Swift 4.2 bug...
   protocol CheckOnRealOptional {
     func check() -> Bool
@@ -215,7 +215,7 @@ extension Sequence {
 /// - Parameter optionalObject: Object for recursively value checking
 /// - Returns: *true* if value really exists. *false* otherwise.
 func isObjectReallyExisted(_ optionalObject: Any?) -> Bool {
-  #if swift(>=4.2)
+  #if swift(>=4.1.5)
     return optionalObject.check()
   #else
     return optionalObject != nil

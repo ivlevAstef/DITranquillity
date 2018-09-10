@@ -112,7 +112,7 @@ class DITranquillityTests_Lifetime: XCTestCase {
     container.register { () -> FooService in
       initCount += 1
       return FooService()
-      }.lifetime(.perRun(.weak))
+    }.lifetime(.perRun(.weak))
 
     XCTAssertEqual(initCount, 0)
     container.initializeSingletonObjects()
@@ -135,7 +135,7 @@ class DITranquillityTests_Lifetime: XCTestCase {
     container.register { () -> FooService in
       initCount += 1
       return FooService()
-      }.lifetime(.perRun(.weak))
+    }.lifetime(.perRun(.weak))
 
     XCTAssertEqual(initCount, 0)
     container.initializeSingletonObjects()
