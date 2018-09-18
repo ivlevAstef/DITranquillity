@@ -192,32 +192,32 @@ extension Sequence {
 #if swift(>=4.1.5)
   // Swift 4.2 bug...
   protocol CheckOnRealOptional {
-    func check() -> Bool
+    func get() -> Any?
   }
 
   extension Optional: CheckOnRealOptional {
-    func check() -> Bool {
+    func get() -> Any? {
       switch self {
       case .some(let obj):
         if let optObj = obj as? CheckOnRealOptional {
-          return optObj.check()
+          return optObj.get()
         }
-        return true
+        return obj
       case .none:
-        return false
+        return nil
       }
     }
   }
 #endif
 
-/// Check that variable really existed. if-let syntax could not properly work with Any?-Any-Optional.some(Optional.none) in swift 4.2+
+/// Get that really existed variable. if-let syntax could not properly work with Any?-Any-Optional.some(Optional.none) in swift 4.2+
 ///
-/// - Parameter optionalObject: Object for recursively value checking
-/// - Returns: *true* if value really exists. *false* otherwise.
-func isObjectReallyExisted(_ optionalObject: Any?) -> Bool {
-  #if swift(>=4.1.5)
-    return optionalObject.check()
-  #else
-    return optionalObject != nil
-  #endif
+/// - Parameter optionalObject: Object for recursively value getting
+/// - Returns: *object* if value really exists. *nil* otherwise.
+func getReallyObject(_ optionalObject: Any?) -> Any? {
+    #if swift(>=4.1.5)
+        return optionalObject.get()
+    #else
+        return optionalObject
+    #endif
 }

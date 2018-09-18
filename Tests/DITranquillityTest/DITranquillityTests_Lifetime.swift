@@ -123,8 +123,8 @@ class DITranquillityTests_Lifetime: XCTestCase {
     XCTAssertEqual(initCount, 1)
     service1 = nil
 
-    let service2: FooService = *container
-    XCTAssertEqual(service2.foo(), "foo")
+    let service2: FooService? = *container
+    XCTAssertEqual(service2?.foo(), "foo")
     XCTAssertEqual(initCount, 2)
   }
 
@@ -141,14 +141,19 @@ class DITranquillityTests_Lifetime: XCTestCase {
     container.initializeSingletonObjects()
     XCTAssertEqual(initCount, 0)
 
-    let service1: FooService = *container
-    XCTAssertEqual(service1.foo(), "foo")
+    let service1: FooService? = *container
+    XCTAssertEqual(service1?.foo(), "foo")
     XCTAssertEqual(initCount, 1)
 
-    let service2: FooService = *container
-    XCTAssertEqual(service2.foo(), "foo")
+    let service2: FooService? = *container
+    XCTAssertEqual(service2?.foo(), "foo")
     XCTAssertEqual(initCount, 1)
     XCTAssert(service1 === service2)
+
+    let service3: FooService! = *container
+    XCTAssertEqual(service3.foo(), "foo")
+    XCTAssertEqual(initCount, 1)
+    XCTAssert(service1 === service3)
   }
 
   func test03_perContainer() {

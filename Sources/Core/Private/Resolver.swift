@@ -194,7 +194,7 @@ class Resolver {
         optCacheObject = weakRef.value
       }
       
-      if let cacheObject = optCacheObject, isObjectReallyExisted(optCacheObject) {
+      if let cacheObject = getReallyObject(optCacheObject) {
         /// suspending ignore injection for new object
         guard let usingObject = usingObject else {
           log(.verbose, msg: "Resolve object: \(cacheObject) from cache \(cacheName)")
@@ -209,7 +209,7 @@ class Resolver {
       }
       
       if let makedObject = makeObject() {
-        scope.data[uniqueKey] = (.weak == referenceCounting) ? Weak(value: makedObject) : makedObject
+        scope.data[uniqueKey] = (.weak == referenceCounting) ? Weak<Any>(value: makedObject) : makedObject
         log(.verbose, msg: "Add object: \(makedObject) in cache \(cacheName)")
         return makedObject
       }
