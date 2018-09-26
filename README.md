@@ -4,6 +4,7 @@
 [![License](https://img.shields.io/github/license/ivlevAstef/DITranquillity.svg?maxAge=2592000)](http://cocoapods.org/pods/DITranquillity)
 [![Platform](https://img.shields.io/cocoapods/p/DITranquillity.svg?style=flat)](http://cocoapods.org/pods/DITranquillity)
 [![Swift Version](https://img.shields.io/badge/Swift-3.0--4.2-F16D39.svg?style=flat)](https://developer.apple.com/swift)
+[![codecov](https://codecov.io/gh/ivlevAstef/DITranquillity/branch/master/graph/badge.svg)](https://codecov.io/gh/ivlevAstef/DITranquillity)
 
 # DITranquillity
 The small library for [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) in applications written on pure Swift for iOS/OSX/tvOS. Despite its size, it solves a large enough range of tasks, including Storyboard support. Its main advantage -  modularity of support, detailed errors description and lots of opportunities.
@@ -30,7 +31,15 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 * Scan Parts/Frameworks [ru](Documentation/ru/scan.md#Поиск)
 * Support Delayed injection [ru](Documentation/ru/delayed_injection.md#Отложенное-внедрение)
 * Injection with arguments at any depth
+* Container Hierarchy
 * Thread safe
+
+### Helpful links
+* Read the Quick Start [ru](Documentation/ru/quick_start.md#Быстрый-старт) / [~~en~~](Documentation/en/Ups.md)
+* Or documentation [ru](Documentation/ru/main.md) / [~~en~~](Documentation/en/Ups.md)
+* Samples [ru](Documentation/ru/sample.md) / [en](Samples)
+* Also see [code documentation](https://htmlpreview.github.io/?https://github.com/ivlevAstef/DITranquillity/blob/master/Documentation/code/index.html)
+
 
 ## Usage
 
@@ -188,11 +197,6 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 
 </details>
 
-### For more details
-* Read the Quick Start [ru](Documentation/ru/quick_start.md#Быстрый-старт) / [~~en~~](Documentation/en/Ups.md)
-* Or documentation [ru](Documentation/ru/main.md) / [~~en~~](Documentation/en/Ups.md)
-* Also see [code documentation](https://htmlpreview.github.io/?https://github.com/ivlevAstef/DITranquillity/blob/master/Documentation/code/index.html)
-
 ## Install
 ###### Via CocoaPods.
 
@@ -217,13 +221,6 @@ iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
 
 ## Changelog
 See [CHANGELOG.md](CHANGELOG.md) file.
-
-## Alternative
-* [Typhoon](https://github.com/appsquickly/Typhoon)
-* [Swinject](https://github.com/Swinject/Swinject)
-* [DIP](https://github.com/AliSoftware/Dip)
-* [Cleanse](https://github.com/square/Cleanse)
-* [EasyDi](https://github.com/AndreyZarembo/EasyDi)
 
 ## Feedback
 

@@ -25,7 +25,12 @@ public prefix func *<T>(container: DIContainer) -> T {
 /// allows you to register new components, parts, frameworks and
 /// allows you to receive objects by type.
 public final class DIContainer {
-  public init() {
+
+  /// Make entry point for library
+  ///
+  /// - Parameter parent: parent container. first there is an attempt resolve from self, after from parent. For `many` resolve from both and recursive
+  public init(parent: DIContainer? = nil) {
+    self.parent = parent
     resolver = Resolver(container: self)
     register{ [unowned self] in self }.lifetime(.prototype)
   }  
@@ -33,6 +38,7 @@ public final class DIContainer {
   internal let componentContainer = ComponentContainer()
   internal let bundleContainer = BundleContainer()
   internal let extensionsContainer = ExtensionsContainer()
+  internal let parent: DIContainer?
   internal private(set) var resolver: Resolver!
   
   ///MARK: Hierarchy

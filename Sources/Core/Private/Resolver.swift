@@ -41,7 +41,7 @@ class Resolver {
     
     return gmake(by: makeObject(by: component, use: nil))
   }
-  
+
   /// Finds the most suitable components that satisfy the types.
   ///
   /// - Parameters:
@@ -50,6 +50,22 @@ class Resolver {
   ///   - bundle: bundle from whic the call is made
   /// - Returns: components
   func findComponents(by type: DIAType, with name: String?, from bundle: Bundle?) -> Components {
+    let components = Resolver.findComponents(by: type, with: name, from: bundle, in: container)
+    if let parent = container.parent {
+      if components.isEmpty {
+        return parent.resolver.findComponents(by: type, with: name, from: bundle)
+      }
+
+      if hasMany(in: type)
+      {
+        let parentComponents = parent.resolver.findComponents(by: type, with: name, from: bundle)
+        return components + parentComponents
+      }
+    }
+    return components
+  }
+
+  private static func findComponents(by type: DIAType, with name: String?, from bundle: Bundle?, in container: DIContainer) -> Components {
     func defaults(_ components: Components) -> Components {
       let filtering = ContiguousArray(components.filter{ $0.isDefault })
       return filtering.isEmpty ? components : filtering
@@ -85,9 +101,10 @@ class Resolver {
       
       return defaults(components)
     }
-    
-    /// real type without many, tags, optional
+
+    /// type without optional
     var type: DIAType = removeTypeWrappers(type)
+    /// real type without many, tags, optional
     let simpleType: DIAType = removeTypeWrappersFully(type)
     var components: Set<Component> = []
     var filterByBundle: Bool = true

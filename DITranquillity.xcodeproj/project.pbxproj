@@ -100,6 +100,7 @@
 		BABB21242126DC58000F8743 /* DITranquillityTests_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABB21202126DC1B000F8743 /* DITranquillityTests_Extensions.swift */; };
 		BADA3A8C209B2948000F5566 /* ProtocolMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A82209308E2004EF9EF /* ProtocolMagic.swift */; };
 		BADA3A8D209B2948000F5566 /* ProtocolMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A82209308E2004EF9EF /* ProtocolMagic.swift */; };
+		BADC36A4215BA9A900CEC778 /* DITranquillityTests_Parent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADC36A3215BA9A900CEC778 /* DITranquillityTests_Parent.swift */; };
 		D512552D1EE06F010067796B /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512552C1EE06F010067796B /* DISettings.swift */; };
 		D512552E1EE06F010067796B /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512552C1EE06F010067796B /* DISettings.swift */; };
 		D512552F1EE06F010067796B /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512552C1EE06F010067796B /* DISettings.swift */; };
@@ -233,6 +234,7 @@
 		BAB897132092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DIComponentBuilder+SubviewsInject.swift"; sourceTree = "<group>"; };
 		BABB211C2126D68F000F8743 /* DIContainer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+Extensions.swift"; sourceTree = "<group>"; };
 		BABB21202126DC1B000F8743 /* DITranquillityTests_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Extensions.swift; sourceTree = "<group>"; };
+		BADC36A3215BA9A900CEC778 /* DITranquillityTests_Parent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Parent.swift; sourceTree = "<group>"; };
 		D512552C1EE06F010067796B /* DISettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DISettings.swift; sourceTree = "<group>"; };
 		D51666F91F1FBFAA001AD9F5 /* DIFramework.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIFramework.swift; sourceTree = "<group>"; };
 		D51666FA1F1FBFAA001AD9F5 /* DIPart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIPart.swift; sourceTree = "<group>"; };
@@ -465,6 +467,7 @@
 				BA598A792093086E004EF9EF /* DITranquillityTests_SwiftLazy.swift */,
 				BABB21202126DC1B000F8743 /* DITranquillityTests_Extensions.swift */,
 				BA45E51520AD54520059AF48 /* DITranquillityTests_MoreParameters.swift */,
+				BADC36A3215BA9A900CEC778 /* DITranquillityTests_Parent.swift */,
 				BA9A276F208851F100584CA0 /* Info.plist */,
 				BA9A2770208851F100584CA0 /* ResolveTestClasses.swift */,
 				BA9A2771208851F100584CA0 /* TestReferenceStoryboard.storyboard */,
@@ -866,6 +869,7 @@
 				BA823B4221396530003B5E7B /* ViewController+Children.swift in Sources */,
 				BA9A279F208851FF00584CA0 /* DITranquillityTests_Lifetime.swift in Sources */,
 				BA9A27A4208851FF00584CA0 /* DITranquillityTests_Storyboard.swift in Sources */,
+				BADC36A4215BA9A900CEC778 /* DITranquillityTests_Parent.swift in Sources */,
 				BA9A27A8208851FF00584CA0 /* ResolveTestClasses.swift in Sources */,
 				BA45E51720AD54600059AF48 /* DITranquillityTests_MoreParameters.swift in Sources */,
 				BA9A27A1208851FF00584CA0 /* DITranquillityTests_Resolve.swift in Sources */,

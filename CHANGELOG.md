@@ -1,3 +1,6 @@
+# v3.5.0
+* Support container Hierarchy
+
 # v3.4.3
 * Fix swift 4.2 support
 
