@@ -98,7 +98,6 @@ class DITranquillityTests_Parent: XCTestCase {
   }
 
   func test06_Many() {
-    DISetting.Log.level = .verbose
     let pContainer = DIContainer()
 
     pContainer.register(A.init).as(P.self)
