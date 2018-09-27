@@ -23,7 +23,7 @@ class Weak<T> {
 /// Delay types (lazy, provider)
 
 protocol DelayMaker: WrappedType {
-  init(_ factory: @escaping () -> Any?)
+  init(_ container: DIContainer, _ factory: @escaping () -> Any?)
 }
 
 ////// For remove optional type

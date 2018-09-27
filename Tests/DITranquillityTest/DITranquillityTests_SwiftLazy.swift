@@ -47,6 +47,33 @@ private class ProviderInjectA {
   var inject: Provider<ServiceProtocol>!
 }
 
+private class A1 {
+  fileprivate let value1: Int
+  init(_ value1: Int) { self.value1 = value1 }
+}
+private class Provider1InjectA {
+  var inject: Provider1<A1, Int> = Provider1()
+}
+
+private class A2 {
+  fileprivate let value1: Int
+  fileprivate let value2: Double
+  init(_ value1: Int, _ value2: Double) { self.value1 = value1; self.value2 = value2 }
+}
+private class Provider2InjectA {
+  var inject: Provider2<A2, Int, Double> = Provider2()
+}
+
+private class A3 {
+  fileprivate let value1: Int
+  fileprivate let value2: Double
+  fileprivate let value3: String
+  init(_ value1: Int, _ value2: Double, _ value3: String) { self.value1 = value1; self.value2 = value2; self.value3 = value3 }
+}
+private class Provider3InjectA {
+  var inject: Provider3<A3, Int, Double, String> = Provider3()
+}
+
 
 class DITranquillityTests_SwiftLazy: XCTestCase {
   override func setUp() {
@@ -237,6 +264,54 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
     let test: ProviderInjectA = *container
 
     XCTAssertEqual(test.inject.value.foo(), "foo")
+  }
+
+  func test11_Provider1() {
+    let container = DIContainer()
+
+    container.register1{ A1(arg($0)) }
+
+    container.register(Provider1InjectA.init)
+      .injection(\.inject)
+
+    let test: Provider1InjectA = *container
+
+
+    XCTAssertEqual(test.inject.value(10).value1, 10)
+    XCTAssertEqual(test.inject.value(12).value1, 12)
+  }
+
+  func test11_Provider2() {
+    let container = DIContainer()
+
+    container.register{ A2(arg($0), arg($1)) }
+
+    container.register(Provider2InjectA.init)
+      .injection(\.inject)
+
+    let test: Provider2InjectA = *container
+
+
+    let a = test.inject.value(10, 15.0)
+    XCTAssertEqual(a.value1, 10)
+    XCTAssertEqual(a.value2, 15.0)
+  }
+
+  func test11_Provider3() {
+    let container = DIContainer()
+
+    container.register{ A3(arg($0), arg($1), arg($2)) }
+
+    container.register(Provider3InjectA.init)
+      .injection(\.inject)
+
+    let test: Provider3InjectA = *container
+
+
+    let a = test.inject.value(11, 12.0, "a")
+    XCTAssertEqual(a.value1, 11)
+    XCTAssertEqual(a.value2, 12.0)
+    XCTAssertEqual(a.value3, "a")
   }
 
 }

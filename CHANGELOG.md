@@ -1,3 +1,7 @@
+# v3.5.1
+* Support arguments for providers
+* Add empty Lazy/Provider initialization with fatalError
+
 # v3.5.0
 * Support container Hierarchy
 

@@ -166,7 +166,7 @@ class Resolver {
       if let delayMaker = asDelayMaker(type) {
         let saveGraph = cache.graph
 
-        return delayMaker.init({ () -> Any? in
+        return delayMaker.init(container, { () -> Any? in
           return self.mutex.sync {
             self.cache.graph = saveGraph
             return self.make(by: type, isMany: isMany, components: components, use: object)
