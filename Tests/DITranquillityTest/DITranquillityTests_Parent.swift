@@ -17,6 +17,10 @@ private class A: P {
 private class B: P {
 }
 
+private class C {
+  var inject: B?
+}
+
 class DITranquillityTests_Parent: XCTestCase {
   override func setUp() {
     super.setUp()
@@ -111,5 +115,20 @@ class DITranquillityTests_Parent: XCTestCase {
 
     XCTAssert(1 == pOne.count)
     XCTAssert(2 == pTwo.count)
+  }
+
+  func test07_Inject() {
+    let pContainer = DIContainer()
+
+    pContainer.register(C.init)
+      .injection(\.inject)
+
+    let container = DIContainer(parent: pContainer)
+
+    container.register(B.init)
+
+    let c: C = *container
+
+    XCTAssertNotNil(c.inject)
   }
 }
