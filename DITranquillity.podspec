@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'DITranquillity'
-  s.version      = '3.5.1'
+  s.version      = '4.0.0'
   s.summary      = 'DITranquillity - Dependency injection for iOS/macOS/tvOS (Swift) '
 
   s.description  = <<-DESC
@@ -22,6 +22,8 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
   s.tvos.deployment_target = '9.0'
   s.osx.deployment_target = '10.10'
+
+  s.resources = 'Sources/Validation/ditranquillitylint'
 
   core_h = 'Sources/DITranquillity.h'
   core_src = 'Sources/Core/**/*.{h,m,swift}'

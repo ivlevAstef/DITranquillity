@@ -157,6 +157,9 @@
 		FDBB75D22137B5C400C1E1FF /* SwiftLazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDBB75D12137B5C400C1E1FF /* SwiftLazy.framework */; };
 		FDBB75DF2137BB7900C1E1FF /* DITranquillity.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A58875541D0944AE00D6DE92 /* DITranquillity.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FDBB75E92137BCB900C1E1FF /* SwiftLazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDBB75CD2137B59D00C1E1FF /* SwiftLazy.framework */; };
+		FDC8AA4A2199A79B00F02AE3 /* ditranquillitylint in Resources */ = {isa = PBXBuildFile; fileRef = FDC8AA492199A79B00F02AE3 /* ditranquillitylint */; };
+		FDC8AA4B2199A79B00F02AE3 /* ditranquillitylint in Resources */ = {isa = PBXBuildFile; fileRef = FDC8AA492199A79B00F02AE3 /* ditranquillitylint */; };
+		FDC8AA4C2199A79B00F02AE3 /* ditranquillitylint in Resources */ = {isa = PBXBuildFile; fileRef = FDC8AA492199A79B00F02AE3 /* ditranquillitylint */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -261,6 +264,7 @@
 		FDBB75CD2137B59D00C1E1FF /* SwiftLazy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftLazy.framework; path = Carthage/Build/iOS/SwiftLazy.framework; sourceTree = "<group>"; };
 		FDBB75CF2137B5B700C1E1FF /* SwiftLazy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftLazy.framework; path = Carthage/Build/Mac/SwiftLazy.framework; sourceTree = "<group>"; };
 		FDBB75D12137B5C400C1E1FF /* SwiftLazy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftLazy.framework; path = Carthage/Build/tvOS/SwiftLazy.framework; sourceTree = "<group>"; };
+		FDC8AA492199A79B00F02AE3 /* ditranquillitylint */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = ditranquillitylint; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -316,6 +320,7 @@
 		16640A4C1D9E1E7B00707BFC /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				FDC8AA482199A79B00F02AE3 /* Validation */,
 				BAB896B52091FB81009274F8 /* InjectIntoSubviews */,
 				BA598A84209308F4004EF9EF /* Extensions */,
 				D51666F81F1FBFAA001AD9F5 /* Hierarchy */,
@@ -530,6 +535,14 @@
 			path = Hierarchy;
 			sourceTree = "<group>";
 		};
+		FDC8AA482199A79B00F02AE3 /* Validation */ = {
+			isa = PBXGroup;
+			children = (
+				FDC8AA492199A79B00F02AE3 /* ditranquillitylint */,
+			);
+			path = Validation;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -695,6 +708,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDC8AA4B2199A79B00F02AE3 /* ditranquillitylint in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,6 +716,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDC8AA4C2199A79B00F02AE3 /* ditranquillitylint in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -709,6 +724,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDC8AA4A2199A79B00F02AE3 /* ditranquillitylint in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
