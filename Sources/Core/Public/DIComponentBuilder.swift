@@ -93,59 +93,23 @@ public extension DIComponentBuilder {
     componentContainer.insert(TypeKey(by: type, name: name), component)
     return self
   }
-  
-  /// Function allows you to specify a type with tag by which the component will be available.
-  /// Using:
-  /// ```
-  /// container.register(YourClass.self)
-  ///   .as(check: YourProtocol.self){$0}
-  /// ```
-  /// WHERE YourClass implements YourProtocol
-  ///
-  /// - Parameters:
-  ///   - type: Type by which the component will be available paired with tag.
-  ///   - validator: Validate type function. Always use `{$0}` for type validation.
-  /// - Returns: Self
+	
+	
+  /// Method deprecated and used for internal purposes only. Use static validation instead.
   @discardableResult
-  public func `as`<Parent>(check type: Parent.Type, _ validator: (Impl)->Parent) -> Self {
+  func `as`<Parent>(check type: Parent.Type, _ validator: (Impl)->Parent) -> Self {
     return self.as(type)
   }
-  
-  /// Function allows you to specify a type with tag by which the component will be available.
-  /// Using:
-  /// ```
-  /// container.register(YourClass.self)
-  ///   .as(check: YourProtocol.self, tag: YourTag.self){$0}
-  /// ```
-  /// WHERE YourClass implements YourProtocol
-  ///
-  /// - Parameters:
-  ///   - type: Type by which the component will be available paired with tag.
-  ///   - tag: Tag by which the component will be available paired with type.
-  ///   - validator: Validate type function. Always use `{$0}` for type validation.
-  /// - Returns: Self
+	
+  /// Method deprecated and used for internal purposes only. Use static validation instead.
   @discardableResult
-  public func `as`<Parent, Tag>(check type: Parent.Type, tag: Tag.Type, _ validator: (Impl)->Parent) -> Self {
+  func `as`<Parent, Tag>(check type: Parent.Type, tag: Tag.Type, _ validator: (Impl)->Parent) -> Self {
     return self.as(type, tag: tag)
   }
-  
-  /// Function allows you to specify a type with name by which the component will be available.
-  /// But! you can get an object by name in only two ways: use container method `resolve(name:)` or use `injection(name:)`.
-  /// Inside initialization method, you cann't specify name for get an object. Use tags if necessary.
-  /// Using:
-  /// ```
-  /// container.register(YourClass.self)
-  ///   .as(YourProtocol.self, name: "YourKey")
-  /// ```
-  /// WHERE YourClass implements YourProtocol
-  ///
-  /// - Parameters:
-  ///   - type: Type by which the component will be available paired with name.
-  ///   - name: Name by which the component will be available paired with type.
-  ///   - validator: Validate type function. Always use `{$0}` for type validation.
-  /// - Returns: Self
+	
+  /// Method deprecated and used for internal purposes only. Use static validation instead.
   @discardableResult
-  public func `as`<Parent>(check type: Parent.Type, name: String, _ validator: (Impl)->Parent) -> Self {
+  func `as`<Parent>(check type: Parent.Type, name: String, _ validator: (Impl)->Parent) -> Self {
     return self.as(type, name: name)
   }
 }
