@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
   s.resources = 'Sources/Validation/ditranquillitylint'
 
   core_h = 'Sources/DITranquillity.h'
-  core_src = 'Sources/Core/DITranquillity/**/*.{h,m,swift}'
+  core_src = 'Sources/DITranquillity/Core/**/*.{h,m,swift}'
   core_objc_src = 'Sources/Core/**/*.{h,m,swift}'
   hierarchy_src = 'Sources/DITranquillity/Hierarchy/*.swift'
   scan_src = 'Sources/Scan/*.swift'
