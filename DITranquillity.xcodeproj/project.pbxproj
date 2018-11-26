@@ -21,9 +21,6 @@
 		16D7BCC01DB086B900A29A9F /* DIScanPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB71DB086B000A29A9F /* DIScanPart.swift */; };
 		BA45E51720AD54600059AF48 /* DITranquillityTests_MoreParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA45E51520AD54520059AF48 /* DITranquillityTests_MoreParameters.swift */; };
 		BA598A7B209308A0004EF9EF /* DITranquillityTests_SwiftLazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A792093086E004EF9EF /* DITranquillityTests_SwiftLazy.swift */; };
-		BA598A86209308F5004EF9EF /* SwiftLazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A85209308F4004EF9EF /* SwiftLazy.swift */; };
-		BA598A87209308F7004EF9EF /* SwiftLazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A85209308F4004EF9EF /* SwiftLazy.swift */; };
-		BA598A88209308F7004EF9EF /* SwiftLazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA598A85209308F4004EF9EF /* SwiftLazy.swift */; };
 		BA7B966E20AA146600BE9F99 /* DIComponentBuilder+SubviewsInject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB897132092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift */; };
 		BA823B3F21396435003B5E7B /* ViewController+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA823B3E21396435003B5E7B /* ViewController+Children.swift */; };
 		BA823B4021396435003B5E7B /* ViewController+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA823B3E21396435003B5E7B /* ViewController+Children.swift */; };
@@ -68,12 +65,6 @@
 		BAB897142092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB897132092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift */; };
 		BABB21242126DC58000F8743 /* DITranquillityTests_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABB21202126DC1B000F8743 /* DITranquillityTests_Extensions.swift */; };
 		BADC36A4215BA9A900CEC778 /* DITranquillityTests_Parent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADC36A3215BA9A900CEC778 /* DITranquillityTests_Parent.swift */; };
-		D51666FB1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51666F91F1FBFAA001AD9F5 /* DIFramework.swift */; };
-		D51666FC1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51666F91F1FBFAA001AD9F5 /* DIFramework.swift */; };
-		D51666FD1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51666F91F1FBFAA001AD9F5 /* DIFramework.swift */; };
-		D51666FE1F1FBFAA001AD9F5 /* DIPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51666FA1F1FBFAA001AD9F5 /* DIPart.swift */; };
-		D51666FF1F1FBFAA001AD9F5 /* DIPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51666FA1F1FBFAA001AD9F5 /* DIPart.swift */; };
-		D51667001F1FBFAA001AD9F5 /* DIPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51666FA1F1FBFAA001AD9F5 /* DIPart.swift */; };
 		D57961691F526FBA0079DE8C /* StoryboardContainerMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961681F526FBA0079DE8C /* StoryboardContainerMap.swift */; };
 		D579616A1F526FBA0079DE8C /* StoryboardContainerMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961681F526FBA0079DE8C /* StoryboardContainerMap.swift */; };
 		D579616B1F526FBA0079DE8C /* StoryboardContainerMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961681F526FBA0079DE8C /* StoryboardContainerMap.swift */; };
@@ -161,6 +152,15 @@
 		FD03872B21AC06FC00A4EF60 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0386E821AC06FC00A4EF60 /* Component.swift */; };
 		FD03872C21AC06FC00A4EF60 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0386E821AC06FC00A4EF60 /* Component.swift */; };
 		FD03872D21AC06FC00A4EF60 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0386E821AC06FC00A4EF60 /* Component.swift */; };
+		FD03873321AC095800A4EF60 /* SwiftLazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD03872F21AC095800A4EF60 /* SwiftLazy.swift */; };
+		FD03873421AC095800A4EF60 /* SwiftLazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD03872F21AC095800A4EF60 /* SwiftLazy.swift */; };
+		FD03873521AC095800A4EF60 /* SwiftLazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD03872F21AC095800A4EF60 /* SwiftLazy.swift */; };
+		FD03873621AC095800A4EF60 /* DIFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD03873121AC095800A4EF60 /* DIFramework.swift */; };
+		FD03873721AC095800A4EF60 /* DIFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD03873121AC095800A4EF60 /* DIFramework.swift */; };
+		FD03873821AC095800A4EF60 /* DIFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD03873121AC095800A4EF60 /* DIFramework.swift */; };
+		FD03873921AC095800A4EF60 /* DIPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD03873221AC095800A4EF60 /* DIPart.swift */; };
+		FD03873A21AC095800A4EF60 /* DIPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD03873221AC095800A4EF60 /* DIPart.swift */; };
+		FD03873B21AC095800A4EF60 /* DIPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD03873221AC095800A4EF60 /* DIPart.swift */; };
 		FDBB75CE2137B59D00C1E1FF /* SwiftLazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDBB75CD2137B59D00C1E1FF /* SwiftLazy.framework */; };
 		FDBB75D02137B5B700C1E1FF /* SwiftLazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDBB75CF2137B5B700C1E1FF /* SwiftLazy.framework */; };
 		FDBB75D22137B5C400C1E1FF /* SwiftLazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDBB75D12137B5C400C1E1FF /* SwiftLazy.framework */; };
@@ -205,7 +205,6 @@
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA45E51520AD54520059AF48 /* DITranquillityTests_MoreParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_MoreParameters.swift; sourceTree = "<group>"; };
 		BA598A792093086E004EF9EF /* DITranquillityTests_SwiftLazy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_SwiftLazy.swift; sourceTree = "<group>"; };
-		BA598A85209308F4004EF9EF /* SwiftLazy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftLazy.swift; sourceTree = "<group>"; };
 		BA823B3E21396435003B5E7B /* ViewController+Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Children.swift"; sourceTree = "<group>"; };
 		BA9A2756208851C300584CA0 /* DITranquillityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DITranquillityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9A2765208851F100584CA0 /* AccessStoryboard1.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AccessStoryboard1.storyboard; sourceTree = "<group>"; };
@@ -236,8 +235,6 @@
 		BAB897132092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DIComponentBuilder+SubviewsInject.swift"; sourceTree = "<group>"; };
 		BABB21202126DC1B000F8743 /* DITranquillityTests_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Extensions.swift; sourceTree = "<group>"; };
 		BADC36A3215BA9A900CEC778 /* DITranquillityTests_Parent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Parent.swift; sourceTree = "<group>"; };
-		D51666F91F1FBFAA001AD9F5 /* DIFramework.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIFramework.swift; sourceTree = "<group>"; };
-		D51666FA1F1FBFAA001AD9F5 /* DIPart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIPart.swift; sourceTree = "<group>"; };
 		D57961681F526FBA0079DE8C /* StoryboardContainerMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardContainerMap.swift; sourceTree = "<group>"; };
 		D579616C1F52BA160079DE8C /* DIStoryboardBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIStoryboardBase.h; sourceTree = "<group>"; };
 		D579616D1F52BA160079DE8C /* DIStoryboardBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIStoryboardBase.m; sourceTree = "<group>"; };
@@ -271,6 +268,9 @@
 		FD0386E621AC06FC00A4EF60 /* BundleContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleContainer.swift; sourceTree = "<group>"; };
 		FD0386E721AC06FC00A4EF60 /* Modificators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Modificators.swift; sourceTree = "<group>"; };
 		FD0386E821AC06FC00A4EF60 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
+		FD03872F21AC095800A4EF60 /* SwiftLazy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftLazy.swift; sourceTree = "<group>"; };
+		FD03873121AC095800A4EF60 /* DIFramework.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIFramework.swift; sourceTree = "<group>"; };
+		FD03873221AC095800A4EF60 /* DIPart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIPart.swift; sourceTree = "<group>"; };
 		FDBB75CD2137B59D00C1E1FF /* SwiftLazy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftLazy.framework; path = Carthage/Build/iOS/SwiftLazy.framework; sourceTree = "<group>"; };
 		FDBB75CF2137B5B700C1E1FF /* SwiftLazy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftLazy.framework; path = Carthage/Build/Mac/SwiftLazy.framework; sourceTree = "<group>"; };
 		FDBB75D12137B5C400C1E1FF /* SwiftLazy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftLazy.framework; path = Carthage/Build/tvOS/SwiftLazy.framework; sourceTree = "<group>"; };
@@ -322,8 +322,6 @@
 				FD0386CE21AC06FC00A4EF60 /* DITranquillity */,
 				FDC8AA482199A79B00F02AE3 /* Validation */,
 				BAB896B52091FB81009274F8 /* InjectIntoSubviews */,
-				BA598A84209308F4004EF9EF /* Extensions */,
-				D51666F81F1FBFAA001AD9F5 /* Hierarchy */,
 				16640A501D9E1E7B00707BFC /* Core */,
 				16640A6D1D9E1E7B00707BFC /* Storyboard */,
 				16D7BCB41DB086B000A29A9F /* Scan */,
@@ -406,14 +404,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BA598A84209308F4004EF9EF /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				BA598A85209308F4004EF9EF /* SwiftLazy.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		BA9A2763208851F100584CA0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -491,18 +481,11 @@
 			path = "iOS-tvOS";
 			sourceTree = "<group>";
 		};
-		D51666F81F1FBFAA001AD9F5 /* Hierarchy */ = {
-			isa = PBXGroup;
-			children = (
-				D51666F91F1FBFAA001AD9F5 /* DIFramework.swift */,
-				D51666FA1F1FBFAA001AD9F5 /* DIPart.swift */,
-			);
-			path = Hierarchy;
-			sourceTree = "<group>";
-		};
 		FD0386CE21AC06FC00A4EF60 /* DITranquillity */ = {
 			isa = PBXGroup;
 			children = (
+				FD03872E21AC095800A4EF60 /* Extensions */,
+				FD03873021AC095800A4EF60 /* Hierarchy */,
 				FD0386CF21AC06FC00A4EF60 /* Public */,
 				FD0386DC21AC06FC00A4EF60 /* Private */,
 			);
@@ -552,6 +535,23 @@
 				FD0386E821AC06FC00A4EF60 /* Component.swift */,
 			);
 			path = Private;
+			sourceTree = "<group>";
+		};
+		FD03872E21AC095800A4EF60 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FD03872F21AC095800A4EF60 /* SwiftLazy.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		FD03873021AC095800A4EF60 /* Hierarchy */ = {
+			isa = PBXGroup;
+			children = (
+				FD03873121AC095800A4EF60 /* DIFramework.swift */,
+				FD03873221AC095800A4EF60 /* DIPart.swift */,
+			);
+			path = Hierarchy;
 			sourceTree = "<group>";
 		};
 		FDC8AA482199A79B00F02AE3 /* Validation */ = {
@@ -774,6 +774,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD03873A21AC095800A4EF60 /* DIPart.swift in Sources */,
 				BAB896CB2091FC48009274F8 /* NSObject+Swizzling.m in Sources */,
 				FD0386EA21AC06FC00A4EF60 /* DISettings.swift in Sources */,
 				FD03871721AC06FC00A4EF60 /* MethodSignature.swift in Sources */,
@@ -781,6 +782,7 @@
 				FD03872C21AC06FC00A4EF60 /* Component.swift in Sources */,
 				FD03871421AC06FC00A4EF60 /* Log.swift in Sources */,
 				FD0386FC21AC06FC00A4EF60 /* DIExtensions.swift in Sources */,
+				FD03873721AC095800A4EF60 /* DIFramework.swift in Sources */,
 				BA823B4021396435003B5E7B /* ViewController+Children.swift in Sources */,
 				FD0386ED21AC06FC00A4EF60 /* DIComponentBuilder.swift in Sources */,
 				D57961831F52C2BD0079DE8C /* DIStoryboard.swift in Sources */,
@@ -790,19 +792,17 @@
 				FD03870521AC06FC00A4EF60 /* DIContainer.swift in Sources */,
 				FD03870821AC06FC00A4EF60 /* DIContainer+Extensions.swift in Sources */,
 				FD03872021AC06FC00A4EF60 /* MethodMaker.swift in Sources */,
-				D51666FF1F1FBFAA001AD9F5 /* DIPart.swift in Sources */,
 				D579617E1F52BA5D0079DE8C /* DIStoryboardBase.m in Sources */,
 				FD03872921AC06FC00A4EF60 /* Modificators.swift in Sources */,
 				FD03871121AC06FC00A4EF60 /* ProtocolMagic.swift in Sources */,
 				FD0386FF21AC06FC00A4EF60 /* DIModificators.swift in Sources */,
 				16D7BCBB1DB086B500A29A9F /* DIScan.swift in Sources */,
+				FD03873421AC095800A4EF60 /* SwiftLazy.swift in Sources */,
 				FD0386F321AC06FC00A4EF60 /* DIComponentBuilder.Injection.swift in Sources */,
-				D51666FC1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */,
 				FD03871A21AC06FC00A4EF60 /* Resolver.swift in Sources */,
 				FD03870E21AC06FC00A4EF60 /* Synchronize.swift in Sources */,
 				FD0386F621AC06FC00A4EF60 /* DIContainer.Reg.swift in Sources */,
 				FD03870221AC06FC00A4EF60 /* DITypes.swift in Sources */,
-				BA598A87209308F7004EF9EF /* SwiftLazy.swift in Sources */,
 				D57961941F52D37E0079DE8C /* NSStoryboard+Swizzling.m in Sources */,
 				16D7BCBD1DB086B900A29A9F /* DIScanFramework.swift in Sources */,
 				D579616A1F526FBA0079DE8C /* StoryboardContainerMap.swift in Sources */,
@@ -817,18 +817,20 @@
 				BAB896FC209204B4009274F8 /* DINSResolver.m in Sources */,
 				FD03872121AC06FC00A4EF60 /* MethodMaker.swift in Sources */,
 				FD03871221AC06FC00A4EF60 /* ProtocolMagic.swift in Sources */,
+				FD03873B21AC095800A4EF60 /* DIPart.swift in Sources */,
 				BA7B966E20AA146600BE9F99 /* DIComponentBuilder+SubviewsInject.swift in Sources */,
 				FD0386FD21AC06FC00A4EF60 /* DIExtensions.swift in Sources */,
 				BAB896CF2091FCB8009274F8 /* SwiftNSResolver.swift in Sources */,
 				FD0386F721AC06FC00A4EF60 /* DIContainer.Reg.swift in Sources */,
+				FD03873521AC095800A4EF60 /* SwiftLazy.swift in Sources */,
 				FD03872A21AC06FC00A4EF60 /* Modificators.swift in Sources */,
 				FD03871521AC06FC00A4EF60 /* Log.swift in Sources */,
 				FD0386F421AC06FC00A4EF60 /* DIComponentBuilder.Injection.swift in Sources */,
+				FD03873821AC095800A4EF60 /* DIFramework.swift in Sources */,
 				D57961841F52C2BD0079DE8C /* DIStoryboard.swift in Sources */,
 				16D7BCC01DB086B900A29A9F /* DIScanPart.swift in Sources */,
 				FD03870321AC06FC00A4EF60 /* DITypes.swift in Sources */,
 				FD0386EB21AC06FC00A4EF60 /* DISettings.swift in Sources */,
-				D51667001F1FBFAA001AD9F5 /* DIPart.swift in Sources */,
 				FD03871B21AC06FC00A4EF60 /* Resolver.swift in Sources */,
 				BA823B4121396435003B5E7B /* ViewController+Children.swift in Sources */,
 				BAB89712209210FE009274F8 /* UIViewController+Swizzling.m in Sources */,
@@ -839,8 +841,6 @@
 				FD03870F21AC06FC00A4EF60 /* Synchronize.swift in Sources */,
 				16D7BCBC1DB086B600A29A9F /* DIScan.swift in Sources */,
 				FD03870C21AC06FC00A4EF60 /* TypeKey.swift in Sources */,
-				D51666FD1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */,
-				BA598A88209308F7004EF9EF /* SwiftLazy.swift in Sources */,
 				FD03871821AC06FC00A4EF60 /* MethodSignature.swift in Sources */,
 				FD03872721AC06FC00A4EF60 /* BundleContainer.swift in Sources */,
 				FD03870021AC06FC00A4EF60 /* DIModificators.swift in Sources */,
@@ -877,7 +877,9 @@
 				D57961691F526FBA0079DE8C /* StoryboardContainerMap.swift in Sources */,
 				D57961821F52C2BD0079DE8C /* DIStoryboard.swift in Sources */,
 				FD0386E921AC06FC00A4EF60 /* DISettings.swift in Sources */,
+				FD03873321AC095800A4EF60 /* SwiftLazy.swift in Sources */,
 				16D7BCB81DB086B000A29A9F /* DIScan.swift in Sources */,
+				FD03873921AC095800A4EF60 /* DIPart.swift in Sources */,
 				FD03870D21AC06FC00A4EF60 /* Synchronize.swift in Sources */,
 				FD03871F21AC06FC00A4EF60 /* MethodMaker.swift in Sources */,
 				FD03872821AC06FC00A4EF60 /* Modificators.swift in Sources */,
@@ -886,12 +888,11 @@
 				BAB8970A209210EF009274F8 /* UITableView+Swizzling.m in Sources */,
 				FD03872521AC06FC00A4EF60 /* BundleContainer.swift in Sources */,
 				FD03870721AC06FC00A4EF60 /* DIContainer+Extensions.swift in Sources */,
-				D51666FB1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */,
+				FD03873621AC095800A4EF60 /* DIFramework.swift in Sources */,
 				BAB896FA209204B4009274F8 /* DINSResolver.m in Sources */,
 				BAB896CD2091FCB8009274F8 /* SwiftNSResolver.swift in Sources */,
 				FD03872B21AC06FC00A4EF60 /* Component.swift in Sources */,
 				BAB89709209210EF009274F8 /* UICollectionView+Swizzling.m in Sources */,
-				D51666FE1F1FBFAA001AD9F5 /* DIPart.swift in Sources */,
 				16D7BCB91DB086B000A29A9F /* DIScanFramework.swift in Sources */,
 				BAB8970C209210EF009274F8 /* UIView+Swizzling.m in Sources */,
 				FD0386F521AC06FC00A4EF60 /* DIContainer.Reg.swift in Sources */,
@@ -899,7 +900,6 @@
 				FD0386FE21AC06FC00A4EF60 /* DIModificators.swift in Sources */,
 				BAB8970D209210EF009274F8 /* UIViewController+Swizzling.m in Sources */,
 				D57961891F52C4BC0079DE8C /* UIStoryboard+Swizzling.m in Sources */,
-				BA598A86209308F5004EF9EF /* SwiftLazy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

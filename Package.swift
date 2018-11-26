@@ -7,7 +7,7 @@ let package = Package(
 					  targets: ["DITranquillity"])
 	],
   dependencies: [
-	.package(url: "https://github.com/Nekitosss/SwiftLazy.git", from: "1.2.0")
+	.package(url: "https://github.com/Nekitosss/SwiftLazy.git", from: "1.2.1")
 	],
   targets: [
 	.target(name: "DITranquillity",

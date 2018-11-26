@@ -7,6 +7,7 @@
 //
 
 import SwiftLazy
+import Foundation
 
 extension Lazy: DelayMaker {
   public convenience init(file: String = #file, line: UInt = #line) {

@@ -6,6 +6,8 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
+import Foundation
+
 final class BundleContainer {
   private var imports = [Bundle: Set<Bundle>]()
   private var mutex = PThreadMutex(normal: ())
