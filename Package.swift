@@ -1,5 +1,19 @@
+// swift-tools-version:4.0
 import PackageDescription
 
 let package = Package(
-  name: "DITranquillity"
+  name: "DITranquillity",
+  products: [.library(name: "DITranquillity",
+					  targets: ["DITranquillity"])
+	],
+  dependencies: [
+	.package(url: "https://github.com/Nekitosss/SwiftLazy.git", from: "1.2.0")
+	],
+  targets: [
+	.target(name: "DITranquillity",
+			dependencies: ["SwiftLazy"]),
+	.testTarget(name: "DITranquillityTest",
+				dependencies: ["SwiftLazy"])
+	]
 )
+
