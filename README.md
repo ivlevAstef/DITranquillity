@@ -32,6 +32,7 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 * Injection with arguments at any depth
 * Container Hierarchy
 * Thread safe
+* Compillation-time [validation](https://github.com/Nekitosss/DITranquillityLinter)
 
 ### Helpful links
 * Read the Quick Start [ru](Documentation/ru/quick_start.md#Быстрый-старт) / [~~en~~](Documentation/en/Ups.md)
@@ -196,6 +197,11 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 
 </details>
 
+### Compillation-time validation (Beta)
+Scripts for static validation included into CocoaPods and Carthage dependencies. For further information [read here](https://github.com/Nekitosss/DITranquillityLinter). 
+
+**Warning**. Compillation-time validation currently in beta. So runtume validation `container.validate()` still works. For validation bug reporting visit [GitHub issue](https://github.com/Nekitosss/DITranquillityLinter/issues).
+
 ## Install
 ###### Via CocoaPods.
 
@@ -225,6 +231,7 @@ See [CHANGELOG.md](CHANGELOG.md) file.
 
 ### I've found a bug, or have a feature request
 Please raise a [GitHub issue](https://github.com/ivlevAstef/DITranquillity/issues).
+For compilation time validation issues visit separate repo [issue page](https://github.com/Nekitosss/DITranquillityLinter/issues).
 
 ### I've found a defect in documentation, or thought up how to improve it
 Please help library development and create [pull requests](https://github.com/ivlevAstef/DITranquillity/pulls)

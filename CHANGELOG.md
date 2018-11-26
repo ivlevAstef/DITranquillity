@@ -1,3 +1,6 @@
+# v4.0.0
+* Beta static validation adding https://github.com/Nekitosss/DITranquillityLinter
+
 # v3.5.1
 * Support arguments for providers
 * Add empty Lazy/Provider initialization with fatalError
