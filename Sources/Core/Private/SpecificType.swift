@@ -1,0 +1,44 @@
+//
+//  SpecificType.swift
+//  DITranquillity
+//
+//  Created by Ивлев Александр on 06/12/2018.
+//
+
+protocol SpecificType {
+    static var type: DIAType { get }
+    static var tagType: DIAType { get }
+    static var isSwiftType: Bool { get }
+
+    static var many: Bool { get }
+    static var optional: Bool { get }
+    static var delayed: Bool { get }
+    static var inBundle: Bool { get }
+
+    static var tag: Bool { get }
+    static var arg: Bool { get }
+
+    static func make(by obj: Any?) -> Self
+
+    init(_ container: DIContainer, _ factory: @escaping () -> Any?)
+}
+
+extension SpecificType {
+    static var type: DIAType { return self }
+    static var tagType: DIAType { return self }
+    static var isSwiftType: Bool { return false }
+
+    static var many: Bool { return false }
+    static var optional: Bool { return false }
+    static var delayed: Bool { return false }
+    static var inBundle: Bool { return false }
+
+    static var tag: Bool { return false }
+    static var arg: Bool { return false }
+
+    static func make(by obj: Any?) -> Self { return obj as! Self }
+
+    init(_ container: DIContainer, _ factory: @escaping () -> Any?) {
+        fatalError("Unsupport")
+    }
+}

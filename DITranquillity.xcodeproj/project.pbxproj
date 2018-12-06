@@ -40,6 +40,9 @@
 		16D7BCBE1DB086B900A29A9F /* DIScanPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB71DB086B000A29A9F /* DIScanPart.swift */; };
 		16D7BCBF1DB086B900A29A9F /* DIScanFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB61DB086B000A29A9F /* DIScanFramework.swift */; };
 		16D7BCC01DB086B900A29A9F /* DIScanPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB71DB086B000A29A9F /* DIScanPart.swift */; };
+		BA011C7721B9209D00AF1E7F /* TypeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA011C7621B9209C00AF1E7F /* TypeInfo.swift */; };
+		BA011C7821B9209D00AF1E7F /* TypeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA011C7621B9209C00AF1E7F /* TypeInfo.swift */; };
+		BA011C7921B9209D00AF1E7F /* TypeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA011C7621B9209C00AF1E7F /* TypeInfo.swift */; };
 		BA09E84A2126CBD400055AF0 /* DIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA09E8492126CBD400055AF0 /* DIExtensions.swift */; };
 		BA09E84B2126CBD400055AF0 /* DIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA09E8492126CBD400055AF0 /* DIExtensions.swift */; };
 		BA09E84C2126CBD400055AF0 /* DIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA09E8492126CBD400055AF0 /* DIExtensions.swift */; };
@@ -198,6 +201,7 @@
 		16D7BCB61DB086B000A29A9F /* DIScanFramework.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScanFramework.swift; sourceTree = "<group>"; };
 		16D7BCB71DB086B000A29A9F /* DIScanPart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScanPart.swift; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA011C7621B9209C00AF1E7F /* TypeInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeInfo.swift; sourceTree = "<group>"; };
 		BA09E8492126CBD400055AF0 /* DIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIExtensions.swift; sourceTree = "<group>"; };
 		BA09E84D2126CC5C00055AF0 /* ExtensionsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionsContainer.swift; sourceTree = "<group>"; };
 		BA45E51520AD54520059AF48 /* DITranquillityTests_MoreParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_MoreParameters.swift; sourceTree = "<group>"; };
@@ -341,6 +345,7 @@
 		16640A511D9E1E7B00707BFC /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				BA011C7621B9209C00AF1E7F /* TypeInfo.swift */,
 				BA598A82209308E2004EF9EF /* ProtocolMagic.swift */,
 				D57961611F4FC7440079DE8C /* Component.swift */,
 				D55AFCBB1EEEB0E200527D27 /* make_autogenerate.sh */,
@@ -761,6 +766,7 @@
 				D579616A1F526FBA0079DE8C /* StoryboardContainerMap.swift in Sources */,
 				D55369111EE658EA00015926 /* TypeKey.swift in Sources */,
 				D5E3C7D31F3C0C5A0022DD43 /* Modificators.swift in Sources */,
+				BA011C7821B9209D00AF1E7F /* TypeInfo.swift in Sources */,
 				D57961861F52C2BD0079DE8C /* StoryboardResolver.swift in Sources */,
 				1651E7061E86373D00E967B4 /* DIComponentBuilder.Injection.swift in Sources */,
 			);
@@ -777,6 +783,7 @@
 				D515626D1F5472300036919C /* Component.swift in Sources */,
 				169C0E2A1DA35CBE001F0AD5 /* DIComponentBuilder.swift in Sources */,
 				D57961661F4FC7F40079DE8C /* DIModificators.swift in Sources */,
+				BA011C7921B9209D00AF1E7F /* TypeInfo.swift in Sources */,
 				D55AFCBA1EEEA97400527D27 /* MethodSignature.swift in Sources */,
 				BAB896CF2091FCB8009274F8 /* SwiftNSResolver.swift in Sources */,
 				D55AFCB61EEEA48D00527D27 /* MethodMaker.swift in Sources */,
@@ -845,6 +852,7 @@
 				BAB896FA209204B4009274F8 /* DINSResolver.m in Sources */,
 				BAB896CD2091FCB8009274F8 /* SwiftNSResolver.swift in Sources */,
 				BAB89709209210EF009274F8 /* UICollectionView+Swizzling.m in Sources */,
+				BA011C7721B9209D00AF1E7F /* TypeInfo.swift in Sources */,
 				D55368F21EE5BD3300015926 /* Log.swift in Sources */,
 				D57961621F4FC7440079DE8C /* Component.swift in Sources */,
 				D51666FE1F1FBFAA001AD9F5 /* DIPart.swift in Sources */,

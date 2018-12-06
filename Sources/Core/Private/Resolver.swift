@@ -13,18 +13,18 @@ class Resolver {
   }
   
   func resolve<T>(type: T.Type = T.self, name: String? = nil, from bundle: Bundle? = nil) -> T {
-    log(.verbose, msg: "Begin resolve \(description(type: type))", brace: .begin)
-    defer { log(.verbose, msg: "End resolve \(description(type: type))", brace: .end) }
+    let pType = ParsedType(type: type)
+    log(.verbose, msg: "Begin resolve \(description(type: pType))", brace: .begin)
+    defer { log(.verbose, msg: "End resolve \(description(type: pType))", brace: .end) }
     
-    return gmake(by: make(by: type, with: name, from: bundle, use: nil))
+    return gmake(by: make(by: pType, with: name, from: bundle, use: nil))
   }
   
   func injection<T>(obj: T, from bundle: Bundle? = nil) {
     log(.verbose, msg: "Begin injection in obj: \(obj)", brace: .begin)
     defer { log(.verbose, msg: "End injection in obj: \(obj)", brace: .end) }
-    
-    // swift bug - if T is Any then type(of: obj) return always any. - compile optimization?
-    _ = make(by: type(of: (obj as Any)), with: nil, from: bundle, use: obj)
+
+    _ = make(by: ParsedType(obj: obj), with: nil, from: bundle, use: obj)
   }
 
   
@@ -36,8 +36,9 @@ class Resolver {
   }
   
   func resolve<T>(type: T.Type = T.self, component: Component) -> T {
-    log(.verbose, msg: "Begin resolve \(description(type: type)) by component: \(component.info)", brace: .begin)
-    defer { log(.verbose, msg: "End resolve \(description(type: type)) by component: \(component.info)", brace: .end) }
+    let pType = ParsedType(type: type)
+    log(.verbose, msg: "Begin resolve \(description(type: pType)) by component: \(component.info)", brace: .begin)
+    defer { log(.verbose, msg: "End resolve \(description(type: pType)) by component: \(component.info)", brace: .end) }
     
     return gmake(by: makeObject(by: component, use: nil))
   }
@@ -49,23 +50,23 @@ class Resolver {
   ///   - name: a name
   ///   - bundle: bundle from whic the call is made
   /// - Returns: components
-  func findComponents(by type: DIAType, with name: String?, from bundle: Bundle?) -> Components {
-    let components = Resolver.findComponents(by: type, with: name, from: bundle, in: container)
+  func findComponents(by parsedType: ParsedType, with name: String?, from bundle: Bundle?) -> Components {
+    let components = Resolver.findComponents(by: parsedType, with: name, from: bundle, in: container)
     if let parent = container.parent {
       if components.isEmpty {
-        return parent.resolver.findComponents(by: type, with: name, from: bundle)
+        return parent.resolver.findComponents(by: parsedType, with: name, from: bundle)
       }
 
-      if hasMany(in: type)
+      if parsedType.hasMany
       {
-        let parentComponents = parent.resolver.findComponents(by: type, with: name, from: bundle)
+        let parentComponents = parent.resolver.findComponents(by: parsedType, with: name, from: bundle)
         return components + parentComponents
       }
     }
     return components
   }
 
-  private static func findComponents(by type: DIAType, with name: String?, from bundle: Bundle?, in container: DIContainer) -> Components {
+  private static func findComponents(by parsedType: ParsedType, with name: String?, from bundle: Bundle?, in container: DIContainer) -> Components {
     func defaults(_ components: Components) -> Components {
       let filtering = ContiguousArray(components.filter{ $0.isDefault })
       return filtering.isEmpty ? components : filtering
@@ -103,35 +104,37 @@ class Resolver {
     }
 
     /// type without optional
-    var type: DIAType = removeTypeWrappers(type)
+    var type = parsedType.firstNotSwiftType
     /// real type without many, tags, optional
-    let simpleType: DIAType = removeTypeWrappersFully(type)
+    let simpleType = parsedType.base
     var components: Set<Component> = []
     var filterByBundle: Bool = true
     
     var first: Bool = true
     repeat {
       let currentComponents: Set<Component>
-      if let manyType = type as? IsMany.Type {
-        currentComponents = container.componentContainer[ShortTypeKey(by: simpleType)]
-        filterByBundle = filterByBundle && manyType.inBundle /// filter
-      } else if let taggedType = type as? IsTag.Type {
-        currentComponents = container.componentContainer[TypeKey(by: simpleType, tag: taggedType.tag)]
+      if case .specific(let sType, let parent) = type {
+        if sType.many {
+            currentComponents = container.componentContainer[ShortTypeKey(by: simpleType.type)]
+            filterByBundle = filterByBundle && sType.inBundle /// filter
+        } else if sType.tag {
+            currentComponents = container.componentContainer[TypeKey(by: simpleType.type, tag: sType.tagType)]
+        } else {
+            currentComponents = container.componentContainer[TypeKey(by: simpleType.type)]
+        }
+
+        type = parent.firstNotSwiftType
       } else if let name = name {
-        currentComponents = container.componentContainer[TypeKey(by: simpleType, name: name)]
+        currentComponents = container.componentContainer[TypeKey(by: simpleType.type, name: name)]
       } else {
-        currentComponents = container.componentContainer[TypeKey(by: simpleType)]
+        currentComponents = container.componentContainer[TypeKey(by: simpleType.type)]
       }
 
-      if let subtype = (type as? WrappedType.Type)?.type {
-        type = removeTypeWrappers(subtype) /// iteration
-      }
-      
       /// it's not equals components.isEmpty !!!
       components = first ? currentComponents : components.intersection(currentComponents)
       first = false
       
-    } while ObjectIdentifier(type) != ObjectIdentifier(simpleType)
+    } while type != simpleType
     
     if filterByBundle {
       return filter(by: bundle, Components(components))
@@ -153,34 +156,33 @@ class Resolver {
     mutex.sync { cache.perContainer.data.removeAll() }
   }
   
-  private func make(by type: DIAType, with name: String?, from bundle: Bundle?, use object: Any?) -> Any? {
-    let isMany: Bool = hasMany(in: type)
-    var components: Components = findComponents(by: type, with: name, from: bundle)
+  private func make(by parsedType: ParsedType, with name: String?, from bundle: Bundle?, use object: Any?) -> Any? {
+    var components: Components = findComponents(by: parsedType, with: name, from: bundle)
 
     return mutex.sync {
-      if isMany {
+      if parsedType.hasMany {
           //isManyRemove objects contains in stack for exclude cycle initialization
           components = components.filter{ !stack.contains($0.info) }
       }
 
-      if let delayMaker = asDelayMaker(type) {
+      if let delayMaker = parsedType.delayMaker {
         let saveGraph = cache.graph
 
         return delayMaker.init(container, { () -> Any? in
           return self.mutex.sync {
             self.cache.graph = saveGraph
-            return self.make(by: type, isMany: isMany, components: components, use: object)
+            return self.make(by: parsedType, components: components, use: object)
           }
         })
       }
 
-      return make(by: type, isMany: isMany, components: components, use: object)
+      return make(by: parsedType, components: components, use: object)
     }
   }
 
   /// isMany for optimization
-  private func make(by type: DIAType, isMany: Bool, components: Components, use object: Any?) -> Any? {
-    if isMany {
+  private func make(by parsedType: ParsedType, components: Components, use object: Any?) -> Any? {
+    if parsedType.hasMany {
       assert(nil == object, "Many injection not supported")
       return components.compactMap{ makeObject(by: $0, use: nil) }
     }
@@ -190,10 +192,10 @@ class Resolver {
     }
 
     if components.isEmpty {
-      log(.info, msg: "Not found \(description(type: type))")
+      log(.info, msg: "Not found \(description(type: parsedType))")
     } else {
       let infos = components.map{ $0.info }
-      log(.warning, msg: "Ambiguous \(description(type: type)) contains in: \(infos)")
+      log(.warning, msg: "Ambiguous \(description(type: parsedType)) contains in: \(infos)")
     }
 
     return nil
@@ -234,7 +236,7 @@ class Resolver {
       return nil
     }
 
-    func getArgumentObject(by type: DIAType) -> Any? {
+    func getArgumentObject() -> Any? {
       guard let extensions = container.extensionsContainer.optionalGet(by: component.info) else {
         log(.error, msg: "Until get argument. Not found extensions for \(component.info)")
         return nil
@@ -295,15 +297,15 @@ class Resolver {
       var objParameters: [Any?] = []
       for parameter in signature.parameters {
         let makedObject: Any?
-        if parameter.type is UseObject.Type {
+        if parameter.useObj {
           makedObject = usingObject
-        } else if let argParameter = parameter.type as? IsArg.Type {
-          makedObject = getArgumentObject(by: argParameter.type)
+        } else if parameter.parsedType.arg {
+          makedObject = getArgumentObject()
         } else {
-          makedObject = make(by: parameter.type, with: parameter.name, from: component.bundle, use: nil)
+          makedObject = make(by: parameter.parsedType, with: parameter.name, from: component.bundle, use: nil)
         }
         
-        if nil != makedObject || parameter.optional {
+        if nil != makedObject || parameter.parsedType.hasOptional {
           objParameters.append(makedObject)
           continue
         }

@@ -8,7 +8,10 @@
 
 import SwiftLazy
 
-extension Lazy: DelayMaker {
+extension Lazy: SpecificType {
+  static var delayed: Bool { return true }
+  static var type: DIAType { return Value.self }
+
   public convenience init(file: String = #file, line: UInt = #line) {
     self.init { () -> Value in
       let name = (file as NSString).lastPathComponent
@@ -21,13 +24,12 @@ extension Lazy: DelayMaker {
       return gmake(by: factory())
     }
   }
-
-  static var type: DIAType {
-    return Value.self
-  }
 }
 
-extension Provider: DelayMaker {
+extension Provider: SpecificType {
+  static var delayed: Bool { return true }
+  static var type: DIAType { return Value.self }
+
   public convenience init(file: String = #file, line: UInt = #line) {
     self.init { () -> Value in
       let name = (file as NSString).lastPathComponent
@@ -40,22 +42,19 @@ extension Provider: DelayMaker {
       return gmake(by: factory())
     }
   }
-
-  static var type: DIAType {
-    return Value.self
-  }
 }
 
 // Providers with args
-extension Provider1: DelayMaker {
+extension Provider1: SpecificType {
+  static var delayed: Bool { return true }
+  static var type: DIAType { return Value.self }
+
   public convenience init(file: String = #file, line: UInt = #line) {
     self.init { _ -> Value in
       let name = (file as NSString).lastPathComponent
       fatalError("Please inject this property from DI in file: \(name) on line: \(line). Provider type: \(Value.self) ")
     }
   }
-
-  static var type: DIAType { return Value.self }
 
   convenience init(_ container: DIContainer, _ factory: @escaping () -> Any?) {
     self.init { (arg1) -> Value in
@@ -65,15 +64,16 @@ extension Provider1: DelayMaker {
   }
 }
 
-extension Provider2: DelayMaker {
+extension Provider2: SpecificType {
+  static var delayed: Bool { return true }
+  static var type: DIAType { return Value.self }
+
   public convenience init(file: String = #file, line: UInt = #line) {
     self.init { _, _ -> Value in
       let name = (file as NSString).lastPathComponent
       fatalError("Please inject this property from DI in file: \(name) on line: \(line). Provider type: \(Value.self) ")
     }
   }
-
-  static var type: DIAType { return Value.self }
 
   convenience init(_ container: DIContainer, _ factory: @escaping () -> Any?) {
     self.init { (arg1, arg2) -> Value in
@@ -83,15 +83,16 @@ extension Provider2: DelayMaker {
   }
 }
 
-extension Provider3: DelayMaker {
+extension Provider3: SpecificType {
+  static var delayed: Bool { return true }
+  static var type: DIAType { return Value.self }
+
   public convenience init(file: String = #file, line: UInt = #line) {
     self.init { _, _, _ -> Value in
       let name = (file as NSString).lastPathComponent
       fatalError("Please inject this property from DI in file: \(name) on line: \(line). Provider type: \(Value.self) ")
     }
   }
-
-  static var type: DIAType { return Value.self }
 
   convenience init(_ container: DIContainer, _ factory: @escaping () -> Any?) {
     self.init { (arg1, arg2, arg3) -> Value in
@@ -101,15 +102,16 @@ extension Provider3: DelayMaker {
   }
 }
 
-extension Provider4: DelayMaker {
+extension Provider4: SpecificType {
+  static var delayed: Bool { return true }
+  static var type: DIAType { return Value.self }
+
   public convenience init(file: String = #file, line: UInt = #line) {
     self.init { _, _, _, _ -> Value in
       let name = (file as NSString).lastPathComponent
       fatalError("Please inject this property from DI in file: \(name) on line: \(line). Provider type: \(Value.self) ")
     }
   }
-
-  static var type: DIAType { return Value.self }
 
   convenience init(_ container: DIContainer, _ factory: @escaping () -> Any?) {
     self.init { (arg1, arg2, arg3, arg4) -> Value in
@@ -119,15 +121,16 @@ extension Provider4: DelayMaker {
   }
 }
 
-extension Provider5: DelayMaker {
+extension Provider5: SpecificType {
+  static var delayed: Bool { return true }
+  static var type: DIAType { return Value.self }
+
   public convenience init(file: String = #file, line: UInt = #line) {
     self.init { _, _, _, _, _ -> Value in
       let name = (file as NSString).lastPathComponent
       fatalError("Please inject this property from DI in file: \(name) on line: \(line). Provider type: \(Value.self) ")
     }
   }
-
-  static var type: DIAType { return Value.self }
 
   convenience init(_ container: DIContainer, _ factory: @escaping () -> Any?) {
     self.init { (arg1, arg2, arg3, arg4, arg5) -> Value in

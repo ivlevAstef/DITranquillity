@@ -7,7 +7,7 @@
 //
 
 // for short write MethodMaker
-private func m<T>(_ obj: Any?) ->T { return gmake(by: obj) }
+private func m<T>(_ obj: Any?) -> T { return gmake(by: obj) }
 private typealias MS = MethodSignature
 struct MethodMaker {
 

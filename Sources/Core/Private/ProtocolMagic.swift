@@ -20,143 +20,49 @@ class Weak<T> {
   }
 }
 
-/// Delay types (lazy, provider)
-
-protocol DelayMaker: WrappedType {
-  init(_ container: DIContainer, _ factory: @escaping () -> Any?)
-}
-
 ////// For remove optional type
 
-protocol WrappedType {
-  static var type: DIAType { get }
-}
+extension Optional: SpecificType {
+    static var type: DIAType { return Wrapped.self }
+    static var wrappedType: DIAType? { return Wrapped.self }
+    static var isSwiftType: Bool { return true }
+    static var optional: Bool { return true }
 
-protocol SwiftWrappedType: WrappedType {}
-
-extension Optional: SwiftWrappedType {
-  static var type: DIAType { return Wrapped.self }
-}
-
-/// Remove only Optional or ImplicitlyUnwrappedOptional
-///
-/// - Parameter type: input type
-/// - Returns: type without Optional and ImplicitlyUnwrappedOptional
-func removeTypeWrappers(_ type: DIAType) -> DIAType {
-    var type = type
-    while let subtype = (type as? SwiftWrappedType.Type)?.type {
-        type = subtype
+    static func make(by obj: Any?) -> Optional<Wrapped> {
+        return obj as? Wrapped
     }
-
-    return type
 }
 
-/// Remove Optional, ImplicitlyUnwrappedOptional, DIByTag, DIMany
-///
-/// - Parameter type: input type
-/// - Returns: type without Optional, ImplicitlyUnwrappedOptional, DIByTag, DIMany
-func removeTypeWrappersFully(_ type: DIAType) -> DIAType {
-  var type = type
-  while let subtype = (type as? WrappedType.Type)?.type {
-    type = subtype
-  }
-
-  return type
-}
-
-func asDelayMaker(_ type: DIAType) -> DelayMaker.Type? {
-  var type = type
-  while let subtype = (type as? WrappedType.Type)?.type {
-    if let maker = type as? DelayMaker.Type {
-      return maker
-    }
-    type = subtype
-  }
-
-  return nil
-}
-
-/// Check type for contains predicate, use WrappedType for iteration
-private func has(in type: DIAType, _ predicate: (DIAType) -> Bool) -> Bool {
-  var type = type
-
-  while !predicate(type) {
-    if let subtype = (type as? WrappedType.Type)?.type {
-      type = subtype
-      continue
-    }
-
-    return false
-  }
-
-  return true
-}
-
-@inline(__always)
-func hasMany(in type: DIAType) -> Bool {
-  return has(in: type) { $0 is IsMany.Type }
-}
-
-@inline(__always)
-func hasOptional(in type: DIAType) -> Bool {
-  return has(in: type) { $0 is IsOptional.Type }
-}
-
-@inline(__always)
-func hasDelayed(in type: DIAType) -> Bool {
-  return has(in: type) { $0 is DelayMaker.Type }
-}
-
-////// For optional check
-
-protocol IsOptional {}
-extension Optional: IsOptional { }
-
-////// For optional make
-
-protocol OptionalMake {
-  static func make(by obj: Any?) -> Self
-}
-
-extension Optional: OptionalMake {
-  static func make(by obj: Any?) -> Optional<Wrapped> {
-    return obj as? Wrapped
-  }
-}
-
-extension DIByTag: OptionalMake {
-  static func make(by obj: Any?) -> DIByTag<Tag, T> {
-    return DIByTag<Tag, T>(object: gmake(by: obj) as T)
-  }
-}
-
-extension DIMany: OptionalMake {
-  static func make(by obj: Any?) -> DIMany<T> {
-    return DIMany<T>(objects: gmake(by: obj) as [T])
-  }
-}
-
-extension DIArg: OptionalMake {
-  static func make(by obj: Any?) -> DIArg<T> {
-    return DIArg<T>(object: gmake(by: obj) as T)
-  }
-}
+///// For optional make
 
 func gmake<T>(by obj: Any?) -> T {
-  if let opt = T.self as? OptionalMake.Type {
-    return opt.make(by: obj) as! T // it's always valid
+  if let opt = T.self as? SpecificType.Type {
+    guard let typedObject = opt.make(by: obj) as? T else { // it's always valid
+        fatalError("Can't cast \(type(of: obj)) to optional \(T.self). For more information see logs.")
+    }
+    return typedObject
   }
-  
-  return obj as! T // can crash, but it's normally
+
+  guard let typedObject = obj as? T else { // can crash, but it's normally
+    if nil == obj {
+      fatalError("Can't resolve type \(T.self). For more information see logs.")
+    } else {
+      fatalError("Can't cast \(type(of: obj)) to \(T.self). For more information see logs.")
+    }
+  }
+
+  return typedObject
 }
 
 ////// For simple log
 
-func description(type: DIAType) -> String {
-  if let taggedType = type as? IsTag.Type {
-    return "type: \(taggedType.type) with tag: \(taggedType.tag)"
-  } else if let manyType = type as? IsMany.Type {
-    return "many with type: \(manyType.type)"
+func description(type: ParsedType) -> String {
+  if case .specific(let sType, _) = type {
+    if sType.tag {
+      return "type: \(sType.type) with tag: \(sType.tagType)"
+    } else if sType.many {
+      return "many with type: \(sType.type)"
+    }
   }
   return "type: \(type)"
 }

@@ -17,7 +17,7 @@ public extension DIContainer
   ///   - framework: optinal. Qualified framework to which component belongs
   /// - Returns: object for customizing extensions
   public func extensions(for type: DIAType, name: String? = nil, framework: DIFramework.Type? = nil, file: String = #file, line: Int = #line) -> DIExtensions? {
-    let candidates = self.resolver.findComponents(by: type, with: name, from: framework?.bundle)
+    let candidates = self.resolver.findComponents(by: ParsedType(type: type), with: name, from: framework?.bundle)
     if let component = candidates.first, 1 == candidates.count {
       return extensionsContainer.get(by: component.info)
     }

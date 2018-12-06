@@ -6,58 +6,65 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-internal protocol IsTag: class, WrappedType {
-  static var tag: DITag { get }
-}
-
-public class InternalByTag<Tag, T>: IsTag {
+public class InternalByTag<Tag, T>: SpecificType {
   internal let _object: T
-  
-  internal static var tag: DITag { return Tag.self }
+
+  internal static var tagType: DITag { return Tag.self }
   internal static var type: DIAType { return T.self }
+  internal static var tag: Bool { return true }
   
-  internal init(object: T) {
+  internal required init(object: T) {
     self._object = object
   }
-}
 
-
-internal protocol IsMany: class, WrappedType {
-  static var inBundle: Bool { get }
-}
-
-public class InternalByMany<T>: IsMany {
-  internal let _objects: [T]
-  
-  internal static var type: DIAType { return T.self }
-  internal static var inBundle: Bool { return false }
-  
-  internal init(objects: [T]) {
-    self._objects = objects
+  internal static func make(by obj: Any?) -> Self {
+    return self.init(object: gmake(by: obj) as T)
   }
 }
 
-public class InternalByManyInBundle<T>: IsMany {
+
+public class InternalByMany<T>: SpecificType {
   internal let _objects: [T]
   
   internal static var type: DIAType { return T.self }
+  internal static var many: Bool { return true }
+  
+  internal required init(objects: [T]) {
+    self._objects = objects
+  }
+
+  static func make(by obj: Any?) -> Self {
+      return self.init(objects: gmake(by: obj) as [T])
+  }
+}
+
+public class InternalByManyInBundle<T>: SpecificType {
+  internal let _objects: [T]
+  
+  internal static var type: DIAType { return T.self }
+  internal static var many: Bool { return true }
   internal static var inBundle: Bool { return true }
   
-  internal init(objects: [T]) {
+  internal required init(objects: [T]) {
     self._objects = objects
+  }
+
+  static func make(by obj: Any?) -> Self {
+      return self.init(objects: gmake(by: obj) as [T])
   }
 }
 
-
-internal protocol IsArg: class, WrappedType {
-}
-
-public class InternalArg<T>: IsArg {
+public class InternalArg<T>: SpecificType {
   internal let _object: T
 
   internal static var type: DIAType { return T.self }
+  internal static var arg: Bool { return true }
 
-  internal init(object: T) {
+  internal required init(object: T) {
     self._object = object
+  }
+
+  static func make(by obj: Any?) -> Self {
+      return self.init(object: gmake(by: obj) as T)
   }
 }

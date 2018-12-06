@@ -53,13 +53,14 @@ final class Component {
   
   init(componentInfo: DIComponentInfo, in framework: DIFramework.Type?, _ part: DIPart.Type?) {
     self.info = componentInfo
-    self.bundle = framework?.bundle ?? getBundle(for: componentInfo.type)
     self.framework = framework
     self.part = part
   }
 	
   let info: DIComponentInfo
-  let bundle: Bundle?
+  private(set) lazy var bundle: Bundle? = {
+    return framework?.bundle ?? getBundle(for: info.type)
+  }()
   
   let framework: DIFramework.Type?
   let part: DIPart.Type?

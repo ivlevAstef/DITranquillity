@@ -12,13 +12,17 @@ class UseObject {}
 final class MethodSignature {
   typealias Call = ([Any?])->Any?
   
-  struct Parameter {
-    let type: DIAType
+  final class Parameter {
+    let parsedType: ParsedType
     let name: String?
-    
-    var optional: Bool { return hasOptional(in: self.type) }
-    var many: Bool { return hasMany(in: self.type) }
-    var delayed: Bool { return hasDelayed(in: self.type) }
+
+    private(set) lazy var useObj: Bool = { return parsedType.type is UseObject.Type }()
+
+    init(type: DIAType, name: String?)
+    {
+        self.parsedType = ParsedType(type: type)
+        self.name = name
+    }
   }
   
   let parameters: [Parameter]

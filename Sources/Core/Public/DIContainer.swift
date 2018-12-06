@@ -221,7 +221,7 @@ public extension DIContainer {
 // MARK: - validate implementation
 extension DIContainer {
   private func plog(_ parameter: MethodSignature.Parameter, msg: String) {
-    let level: DILogLevel = parameter.optional ? .warning : .error
+    let level: DILogLevel = parameter.parsedType.optional ? .warning : .error
     log(level, msg: msg)
   }
   
@@ -237,33 +237,33 @@ extension DIContainer {
       let bundle = component.bundle
       
       for parameter in parameters {
-        if parameter.type is UseObject.Type {
+        if parameter.useObj {
           continue
         }
         
-        let candidates = resolver.findComponents(by: parameter.type, with: parameter.name, from: bundle)
+        let candidates = resolver.findComponents(by: parameter.parsedType, with: parameter.name, from: bundle)
         let filtered = resolver.removeWhoDoesNotHaveInitialMethod(components: candidates)
         
-        let correct = 1 == filtered.count || parameter.many
+        let correct = 1 == filtered.count || parameter.parsedType.hasMany
         let hasCachedLifetime = filtered.isEmpty && candidates.contains{ $0.lifeTime != .prototype }
-        let success = correct || parameter.optional || hasCachedLifetime
+        let success = correct || parameter.parsedType.hasOptional || hasCachedLifetime
         successfull = successfull && success
 
         // Log
         if !correct {
           if candidates.isEmpty {
-            plog(parameter, msg: "Not found component for \(description(type: parameter.type)) from \(component.info)")
+            plog(parameter, msg: "Not found component for \(description(type: parameter.parsedType)) from \(component.info)")
           } else if filtered.isEmpty {
             let infos = candidates.map{ $0.info }
 
             if hasCachedLifetime {
-              log(.info, msg: "Not found component for \(description(type: parameter.type)) from \(component.info) that would have initialization methods, but object can maked from cache. Were found: \(infos)")
+              log(.info, msg: "Not found component for \(description(type: parameter.parsedType)) from \(component.info) that would have initialization methods, but object can maked from cache. Were found: \(infos)")
             } else {
-              plog(parameter, msg: "Not found component for \(description(type: parameter.type)) from \(component.info) that would have initialization methods. Were found: \(infos)")
+              plog(parameter, msg: "Not found component for \(description(type: parameter.parsedType)) from \(component.info) that would have initialization methods. Were found: \(infos)")
             }
           } else if filtered.count >= 1 {
             let infos = filtered.map{ $0.info }
-            plog(parameter, msg: "Ambiguous \(description(type: parameter.type)) from \(component.info) contains in: \(infos)")
+            plog(parameter, msg: "Ambiguous \(description(type: parameter.parsedType)) from \(component.info) contains in: \(infos)")
           }
         }
       }
@@ -326,16 +326,16 @@ extension DIContainer {
       
       func callDfs(by parameters: [MethodSignature.Parameter], initial: Bool, cycle: Bool) {
         for parameter in parameters {
-          let candidates = resolver.findComponents(by: parameter.type, with: parameter.name, from: bundle)
+            let candidates = resolver.findComponents(by: parameter.parsedType, with: parameter.name, from: bundle)
           if candidates.isEmpty {
             continue
           }
           
           let filtered = candidates.filter{ nil != $0.initial || ($0.lifeTime != .prototype && visited.contains($0)) }
-          let many = parameter.many
+          let many = parameter.parsedType.hasMany
           for subcomponent in filtered {
             var stack = stack
-            stack.append((subcomponent, initial, cycle || parameter.delayed, many))
+            stack.append((subcomponent, initial, cycle || parameter.parsedType.hasDelayed, many))
             dfs(for: subcomponent, visited: visited, stack: stack)
           }
         }
