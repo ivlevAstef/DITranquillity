@@ -1,3 +1,6 @@
+# v3.5.2
+* more improve speed
+
 # v3.5.1
 * Support arguments for providers
 * Add empty Lazy/Provider initialization with fatalError
