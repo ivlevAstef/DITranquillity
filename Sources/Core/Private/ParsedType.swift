@@ -5,23 +5,16 @@
 //  Created by Ивлев Александр on 06/12/2018.
 //
 
-indirect enum ParsedType {
+final class ParsedType {
 
-  case simple(type: DIAType)
-  case specific(type: SpecificType.Type, parent: ParsedType)
+  let type: DIAType
 
-  var type: DIAType {
-    switch self {
-    case .simple(let type):
-        return type
-    case .specific(let type, _):
-        return type
-    }
-  }
+  let sType: SpecificType.Type?
+  let parent: ParsedType?
 
   var base: ParsedType {
     var iter = self
-    while case .specific(_, let parent) = iter {
+    while let parent = iter.parent {
         iter = parent
     }
     return iter
@@ -29,7 +22,7 @@ indirect enum ParsedType {
 
   var firstNotSwiftType: ParsedType {
     var iter = self
-    while case .specific(let sType, let parent) = iter, sType.isSwiftType {
+    while let sType = iter.sType, let parent = iter.parent, sType.isSwiftType {
       iter = parent
     }
     return iter
@@ -40,59 +33,52 @@ indirect enum ParsedType {
   var delayed: Bool { return sType?.delayed ?? false }
   var arg: Bool { return sType?.arg ?? false }
 
-  var hasMany: Bool { return sType?.many ?? parent?.hasMany ?? false }
-  var hasOptional: Bool { return sType?.optional ?? parent?.hasOptional ?? false }
-  var hasDelayed: Bool { return sType?.delayed ?? parent?.hasDelayed ?? false }
+  var useObject: Bool { return sType?.useObject ?? false }
+
+  var hasMany: Bool { return oGet(sType?.many, parent?.hasMany) }
+  var hasOptional: Bool { return oGet(sType?.optional, parent?.hasOptional) }
+  var hasDelayed: Bool { return oGet(sType?.delayed, parent?.hasDelayed) }
 
   var delayMaker: SpecificType.Type? {
-    var iter = self
-    while case .specific(let sType, let parent) = iter {
+    var iter: ParsedType? = self
+    while let sType = iter?.sType {
       if sType.delayed {
         return sType
       }
-      iter = parent
-    }
-    return nil
-  }
-
-  private var sType: SpecificType.Type? {
-    if case .specific(let sType, _) = self {
-        return sType
-    }
-    return nil
-  }
-
-  private var parent: ParsedType? {
-    if case .specific(_, let parent) = self {
-        return parent
+      iter = iter?.parent
     }
     return nil
   }
 
   init(type: DIAType) {
+    self.type = type
     if let sType = type as? SpecificType.Type {
-        self = .specific(type: sType, parent: ParsedType(type: sType.type))
+      self.sType = sType
+      self.parent = sType.recursive ? ParsedType(type: sType.type) : nil
     } else {
-        self = .simple(type: type)
+      self.sType = nil
+      self.parent = nil
     }
   }
 
-  init(obj: Any) {
+  convenience init(obj: Any) {
     // swift bug - if T is Any then type(of: obj) return always any. - compile optimization?
     self.init(type: Swift.type(of: (obj as Any)))
+  }
+
+  @inline(__always)
+  private func oGet(_ value1: Bool?, _ value2: @autoclosure () -> Bool?) -> Bool
+  {
+    if true == value1 {
+        return true
+    }
+    return value2() ?? false
   }
 
 }
 
 extension ParsedType: Equatable {
   static func ==(_ lhs: ParsedType, _ rhs: ParsedType) -> Bool {
-    switch (lhs, rhs) {
-    case (.simple(let typeLeft), .simple(let typeRight)):
-      return typeLeft == typeRight
-    case (.specific(let typeLeft, _), .specific(let typeRight, _)):
-      return typeLeft == typeRight
-    default:
-      return false
-    }
+    return lhs.type == rhs.type
   }
 }

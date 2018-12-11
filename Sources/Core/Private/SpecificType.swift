@@ -6,6 +6,8 @@
 //
 
 protocol SpecificType {
+    static var recursive: Bool { get }
+
     static var type: DIAType { get }
     static var tagType: DIAType { get }
     static var isSwiftType: Bool { get }
@@ -18,12 +20,16 @@ protocol SpecificType {
     static var tag: Bool { get }
     static var arg: Bool { get }
 
+    static var useObject: Bool { get }
+
     static func make(by obj: Any?) -> Self
 
     init(_ container: DIContainer, _ factory: @escaping () -> Any?)
 }
 
 extension SpecificType {
+    static var recursive: Bool { return true }
+
     static var type: DIAType { return self }
     static var tagType: DIAType { return self }
     static var isSwiftType: Bool { return false }
@@ -35,6 +41,8 @@ extension SpecificType {
 
     static var tag: Bool { return false }
     static var arg: Bool { return false }
+
+    static var useObject: Bool { return false }
 
     static func make(by obj: Any?) -> Self { return obj as! Self }
 

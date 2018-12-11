@@ -56,15 +56,15 @@ func gmake<T>(by obj: Any?) -> T {
 
 ////// For simple log
 
-func description(type: ParsedType) -> String {
-  if case .specific(let sType, _) = type {
+func description(type parsedType: ParsedType) -> String {
+  if let sType = parsedType.sType {
     if sType.tag {
       return "type: \(sType.type) with tag: \(sType.tagType)"
     } else if sType.many {
       return "many with type: \(sType.type)"
     }
   }
-  return "type: \(type)"
+  return "type: \(parsedType.type)"
 }
 
 ////// for get bundle by type

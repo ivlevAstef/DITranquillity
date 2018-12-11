@@ -107,13 +107,13 @@ class Resolver {
     var type = parsedType.firstNotSwiftType
     /// real type without many, tags, optional
     let simpleType = parsedType.base
-    var components: Set<Component> = []
+    var components = Set<Component>()
     var filterByBundle: Bool = true
-    
+
     var first: Bool = true
     repeat {
       let currentComponents: Set<Component>
-      if case .specific(let sType, let parent) = type {
+      if let sType = type.sType, let parent = type.parent {
         if sType.many {
             currentComponents = container.componentContainer[ShortTypeKey(by: simpleType.type)]
             filterByBundle = filterByBundle && sType.inBundle /// filter
@@ -294,10 +294,10 @@ class Resolver {
     }
     
     func use(signature: MethodSignature, usingObject: Any?) -> Any? {
-      var objParameters: [Any?] = []
+      var objParameters = [Any?]()
       for parameter in signature.parameters {
         let makedObject: Any?
-        if parameter.useObj {
+        if parameter.parsedType.useObject {
           makedObject = usingObject
         } else if parameter.parsedType.arg {
           makedObject = getArgumentObject()
@@ -312,7 +312,7 @@ class Resolver {
         
         return nil
       }
-      
+
       return signature.call(objParameters)
     }
 
@@ -349,7 +349,7 @@ class Resolver {
   
   private let cache = Cache()
   private var stack: ContiguousArray<Component.UniqueKey> = []
-  
+
   private class Cache {
     // need class for reference type
     fileprivate class Scope {

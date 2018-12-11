@@ -237,7 +237,7 @@ extension DIContainer {
       let bundle = component.bundle
       
       for parameter in parameters {
-        if parameter.useObj {
+        if parameter.parsedType.useObject {
           continue
         }
         

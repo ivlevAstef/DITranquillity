@@ -7,22 +7,17 @@
 //
 
 /// Specific type for resolve parameter with current object.
-class UseObject {}
+class UseObject: SpecificType {
+    static var recursive: Bool { return false }
+    static var useObject: Bool { return true }
+}
 
 final class MethodSignature {
   typealias Call = ([Any?])->Any?
   
-  final class Parameter {
+  struct Parameter {
     let parsedType: ParsedType
     let name: String?
-
-    private(set) lazy var useObj: Bool = { return parsedType.type is UseObject.Type }()
-
-    init(type: DIAType, name: String?)
-    {
-        self.parsedType = ParsedType(type: type)
-        self.name = name
-    }
   }
   
   let parameters: [Parameter]
@@ -32,7 +27,9 @@ final class MethodSignature {
     let initializatedNames = names ?? [String?](repeating: nil, count: types.count)
     assert(initializatedNames.count == types.count)
     
-    self.parameters = zip(types, initializatedNames).map{ Parameter(type: $0, name: $1) }
+    self.parameters = zip(types, initializatedNames).map {
+      Parameter(parsedType: ParsedType(type: $0), name: $1)
+    }
     self.call = call
   }
 }
