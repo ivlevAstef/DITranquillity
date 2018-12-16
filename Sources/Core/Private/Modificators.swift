@@ -12,10 +12,16 @@ public class InternalByTag<Tag, T>: SpecificType {
   internal static var tagType: DITag { return Tag.self }
   internal static var type: DIAType { return T.self }
   internal static var tag: Bool { return true }
-  
+
+  #if swift(>=4.1.5)
   internal required init(object: T) {
     self._object = object
   }
+  #else
+  internal init(object: T) {
+    self._object = object
+  }
+  #endif
 
   internal static func make(by obj: Any?) -> Self {
     return self.init(object: gmake(by: obj) as T)
@@ -28,10 +34,16 @@ public class InternalByMany<T>: SpecificType {
   
   internal static var type: DIAType { return T.self }
   internal static var many: Bool { return true }
-  
+
+  #if swift(>=4.1.5)
   internal required init(objects: [T]) {
     self._objects = objects
   }
+  #else
+  internal init(objects: [T]) {
+    self._objects = objects
+  }
+  #endif
 
   static func make(by obj: Any?) -> Self {
       return self.init(objects: gmake(by: obj) as [T])
@@ -45,9 +57,15 @@ public class InternalByManyInBundle<T>: SpecificType {
   internal static var many: Bool { return true }
   internal static var inBundle: Bool { return true }
   
+  #if swift(>=4.1.5)
   internal required init(objects: [T]) {
     self._objects = objects
   }
+  #else
+  internal init(objects: [T]) {
+    self._objects = objects
+  }
+  #endif
 
   static func make(by obj: Any?) -> Self {
       return self.init(objects: gmake(by: obj) as [T])
@@ -60,9 +78,15 @@ public class InternalArg<T>: SpecificType {
   internal static var type: DIAType { return T.self }
   internal static var arg: Bool { return true }
 
+  #if swift(>=4.1.5)
   internal required init(object: T) {
     self._object = object
   }
+  #else
+  internal init(object: T) {
+    self._object = object
+  }
+  #endif
 
   static func make(by obj: Any?) -> Self {
       return self.init(object: gmake(by: obj) as T)

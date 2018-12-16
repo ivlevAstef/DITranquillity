@@ -24,7 +24,6 @@ class Weak<T> {
 
 extension Optional: SpecificType {
     static var type: DIAType { return Wrapped.self }
-    static var wrappedType: DIAType? { return Wrapped.self }
     static var isSwiftType: Bool { return true }
     static var optional: Bool { return true }
 
@@ -90,8 +89,13 @@ extension Sequence {
 
 #if swift(>=4.1.5)
 #else
-  extension ImplicitlyUnwrappedOptional: SwiftWrappedType {
+  extension ImplicitlyUnwrappedOptional: SpecificType {
     static var type: DIAType { return Wrapped.self }
+    static var isSwiftType: Bool { return true }
+
+    static func make(by obj: Any?) -> ImplicitlyUnwrappedOptional<Wrapped> {
+      return obj as? Wrapped
+    }
   }
 #endif
 
