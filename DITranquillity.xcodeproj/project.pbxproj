@@ -31,15 +31,6 @@
 		169C0E371DA35CBE001F0AD5 /* Resolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A531D9E1E7B00707BFC /* Resolver.swift */; };
 		169C0E391DA35CBE001F0AD5 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16640A6A1D9E1E7B00707BFC /* DIContainer.swift */; };
 		169C0E451DA35CBE001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		16D7BCB81DB086B000A29A9F /* DIScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB51DB086B000A29A9F /* DIScan.swift */; };
-		16D7BCB91DB086B000A29A9F /* DIScanFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB61DB086B000A29A9F /* DIScanFramework.swift */; };
-		16D7BCBA1DB086B000A29A9F /* DIScanPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB71DB086B000A29A9F /* DIScanPart.swift */; };
-		16D7BCBB1DB086B500A29A9F /* DIScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB51DB086B000A29A9F /* DIScan.swift */; };
-		16D7BCBC1DB086B600A29A9F /* DIScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB51DB086B000A29A9F /* DIScan.swift */; };
-		16D7BCBD1DB086B900A29A9F /* DIScanFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB61DB086B000A29A9F /* DIScanFramework.swift */; };
-		16D7BCBE1DB086B900A29A9F /* DIScanPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB71DB086B000A29A9F /* DIScanPart.swift */; };
-		16D7BCBF1DB086B900A29A9F /* DIScanFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB61DB086B000A29A9F /* DIScanFramework.swift */; };
-		16D7BCC01DB086B900A29A9F /* DIScanPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D7BCB71DB086B000A29A9F /* DIScanPart.swift */; };
 		BA011C8821BFCD3B00AF1E7F /* ParsedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA011C8621BFCD3B00AF1E7F /* ParsedType.swift */; };
 		BA011C8921BFCD3B00AF1E7F /* SpecificType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA011C8721BFCD3B00AF1E7F /* SpecificType.swift */; };
 		BA011C8A21BFCD3E00AF1E7F /* SpecificType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA011C8721BFCD3B00AF1E7F /* SpecificType.swift */; };
@@ -200,9 +191,6 @@
 		169C0DE51DA3501F001F0AD5 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		169C0E1C1DA355A6001F0AD5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		169C0E4B1DA35CBE001F0AD5 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		16D7BCB51DB086B000A29A9F /* DIScan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScan.swift; sourceTree = "<group>"; };
-		16D7BCB61DB086B000A29A9F /* DIScanFramework.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScanFramework.swift; sourceTree = "<group>"; };
-		16D7BCB71DB086B000A29A9F /* DIScanPart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIScanPart.swift; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA011C8621BFCD3B00AF1E7F /* ParsedType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsedType.swift; sourceTree = "<group>"; };
 		BA011C8721BFCD3B00AF1E7F /* SpecificType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecificType.swift; sourceTree = "<group>"; };
@@ -329,7 +317,6 @@
 				D51666F81F1FBFAA001AD9F5 /* Hierarchy */,
 				16640A501D9E1E7B00707BFC /* Core */,
 				16640A6D1D9E1E7B00707BFC /* Storyboard */,
-				16D7BCB41DB086B000A29A9F /* Scan */,
 				169C0E1C1DA355A6001F0AD5 /* Info.plist */,
 				16640A6B1D9E1E7B00707BFC /* DITranquillity.h */,
 			);
@@ -413,16 +400,6 @@
 				D57961791F52BA5D0079DE8C /* DIStoryboardBase.m */,
 			);
 			path = OSX;
-			sourceTree = "<group>";
-		};
-		16D7BCB41DB086B000A29A9F /* Scan */ = {
-			isa = PBXGroup;
-			children = (
-				16D7BCB51DB086B000A29A9F /* DIScan.swift */,
-				16D7BCB61DB086B000A29A9F /* DIScanFramework.swift */,
-				16D7BCB71DB086B000A29A9F /* DIScanPart.swift */,
-			);
-			path = Scan;
 			sourceTree = "<group>";
 		};
 		A588754A1D0944AE00D6DE92 = {
@@ -752,7 +729,6 @@
 				D55AFCB51EEEA48D00527D27 /* MethodMaker.swift in Sources */,
 				BA823B4021396435003B5E7B /* ViewController+Children.swift in Sources */,
 				D57961831F52C2BD0079DE8C /* DIStoryboard.swift in Sources */,
-				16D7BCBE1DB086B900A29A9F /* DIScanPart.swift in Sources */,
 				115C24C91E6527CA00CC8BC7 /* Synchronize.swift in Sources */,
 				BADA3A8C209B2948000F5566 /* ProtocolMagic.swift in Sources */,
 				D51666FF1F1FBFAA001AD9F5 /* DIPart.swift in Sources */,
@@ -762,14 +738,12 @@
 				D579617E1F52BA5D0079DE8C /* DIStoryboardBase.m in Sources */,
 				D55369191EE6E2AE00015926 /* BundleContainer.swift in Sources */,
 				169C0DD31DA3501F001F0AD5 /* DIContainer.swift in Sources */,
-				16D7BCBB1DB086B500A29A9F /* DIScan.swift in Sources */,
 				BA09E84F2126CC5C00055AF0 /* ExtensionsContainer.swift in Sources */,
 				D512552E1EE06F010067796B /* DISettings.swift in Sources */,
 				D51666FC1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */,
 				BA598A87209308F7004EF9EF /* SwiftLazy.swift in Sources */,
 				D55368F31EE5BD3600015926 /* Log.swift in Sources */,
 				D57961941F52D37E0079DE8C /* NSStoryboard+Swizzling.m in Sources */,
-				16D7BCBD1DB086B900A29A9F /* DIScanFramework.swift in Sources */,
 				D579616A1F526FBA0079DE8C /* StoryboardContainerMap.swift in Sources */,
 				D55369111EE658EA00015926 /* TypeKey.swift in Sources */,
 				D5E3C7D31F3C0C5A0022DD43 /* Modificators.swift in Sources */,
@@ -793,7 +767,6 @@
 				BAB896CF2091FCB8009274F8 /* SwiftNSResolver.swift in Sources */,
 				D55AFCB61EEEA48D00527D27 /* MethodMaker.swift in Sources */,
 				D57961841F52C2BD0079DE8C /* DIStoryboard.swift in Sources */,
-				16D7BCC01DB086B900A29A9F /* DIScanPart.swift in Sources */,
 				115C24CA1E6527CA00CC8BC7 /* Synchronize.swift in Sources */,
 				BA011C8B21BFCD3F00AF1E7F /* SpecificType.swift in Sources */,
 				BADA3A8D209B2948000F5566 /* ProtocolMagic.swift in Sources */,
@@ -808,12 +781,10 @@
 				D553691A1EE6E2AE00015926 /* BundleContainer.swift in Sources */,
 				BAB89711209210FE009274F8 /* UIView+Swizzling.m in Sources */,
 				169C0E391DA35CBE001F0AD5 /* DIContainer.swift in Sources */,
-				16D7BCBC1DB086B600A29A9F /* DIScan.swift in Sources */,
 				D512552F1EE06F010067796B /* DISettings.swift in Sources */,
 				D51666FD1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */,
 				BA598A88209308F7004EF9EF /* SwiftLazy.swift in Sources */,
 				D55368F41EE5BD3600015926 /* Log.swift in Sources */,
-				16D7BCBF1DB086B900A29A9F /* DIScanFramework.swift in Sources */,
 				BABB211F2126D68F000F8743 /* DIContainer+Extensions.swift in Sources */,
 				D579616B1F526FBA0079DE8C /* StoryboardContainerMap.swift in Sources */,
 				D55369121EE658EA00015926 /* TypeKey.swift in Sources */,
@@ -842,7 +813,6 @@
 				D55AFCB41EEEA48D00527D27 /* MethodMaker.swift in Sources */,
 				D5E3C7D21F3C0C5A0022DD43 /* Modificators.swift in Sources */,
 				BA823B3F21396435003B5E7B /* ViewController+Children.swift in Sources */,
-				16D7BCBA1DB086B000A29A9F /* DIScanPart.swift in Sources */,
 				D57961711F52BA160079DE8C /* DIStoryboardBase.m in Sources */,
 				D57961641F4FC7F40079DE8C /* DIModificators.swift in Sources */,
 				115C24C81E6527CA00CC8BC7 /* Synchronize.swift in Sources */,
@@ -852,7 +822,6 @@
 				16640A741D9E1E7B00707BFC /* Resolver.swift in Sources */,
 				D57961821F52C2BD0079DE8C /* DIStoryboard.swift in Sources */,
 				16640A871D9E1E7B00707BFC /* DIContainer.swift in Sources */,
-				16D7BCB81DB086B000A29A9F /* DIScan.swift in Sources */,
 				D512552D1EE06F010067796B /* DISettings.swift in Sources */,
 				BAB8970A209210EF009274F8 /* UITableView+Swizzling.m in Sources */,
 				D51666FB1F1FBFAA001AD9F5 /* DIFramework.swift in Sources */,
@@ -863,7 +832,6 @@
 				D55368F21EE5BD3300015926 /* Log.swift in Sources */,
 				D57961621F4FC7440079DE8C /* Component.swift in Sources */,
 				D51666FE1F1FBFAA001AD9F5 /* DIPart.swift in Sources */,
-				16D7BCB91DB086B000A29A9F /* DIScanFramework.swift in Sources */,
 				BAB8970C209210EF009274F8 /* UIView+Swizzling.m in Sources */,
 				D55369101EE658EA00015926 /* TypeKey.swift in Sources */,
 				1651E7041E8631A900E967B4 /* DIComponentBuilder.Injection.swift in Sources */,
