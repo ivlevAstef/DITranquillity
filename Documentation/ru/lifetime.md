@@ -48,6 +48,25 @@ builder.register(Cat.init)
   .lifetime(.prototype)
 ```
 
+## Пользовательский (custom)
+В случае если хочется самому отвечать за время жизни некоторых объектов, можно использовать пользовательское время жизни.
+Для этого придется создать экземпляр класса `DIScope`:
+```Swift
+let yourScope = DIScope(name: "your scope", storage: DICacheStorage())
+```
+И после при регистрации объекта во времени жизни указать его:
+```Swift
+builder.register(Cat.init)
+.lifetime(.custom(yourScope))
+```
+Хранилище можно создать свое собственное реализовав протокол `DIStorage`.
+
+При создании scope можно указать политику хранения данных `weak` или `strong`:
+```Swift
+DIScope(name: "your scope", storage: DICacheStorage(), policy: .weak)
+```
+Смысл политики такой же как и для `.perRun` или `.perContainer`.
+
 ## По умолчанию (default)
 Если у компоненты не указано время жизни, то используется `prototype`.
 

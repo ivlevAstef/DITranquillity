@@ -1,3 +1,8 @@
+# v3.6.0
+* Remove scan
+* Support custom/user scopes.
+* Improve description for Component
+
 # v3.5.2
 * more improve speed
 

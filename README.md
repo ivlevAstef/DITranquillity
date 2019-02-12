@@ -18,7 +18,7 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 * Property, Method injections [ru](Documentation/ru/injection.md#Внедрение)
 * Named, Tags definitions and Many [ru](Documentation/ru/modificators.md#Модификаторы)
 * Type forwarding [ru](Documentation/ru/registration.md#Указание-сервисов)
-* Lifetimes: single, perRun(weak/strong), perContainer(weak/strong), objectGraph, prototype [ru](Documentation/ru/lifetime.md#Время-жизни)
+* Lifetimes: single, perRun(weak/strong), perContainer(weak/strong), objectGraph, prototype, custom [ru](Documentation/ru/lifetime.md#Время-жизни)
 * iOS/macOS Storyboard and StoryboardReference [ru](Documentation/ru/storyboard.md#storyboard)
 * Circular dependencies [ru](Documentation/ru/injection.md#Внедрение-циклических-зависимостей-через-свойства)
 * Three level hierarchy: types, part, framework [ru](Documentation/ru/part_framework.md#Части-и-Фреймворки)
@@ -27,7 +27,6 @@ The small library for [dependency injection](https://en.wikipedia.org/wiki/Depen
 * Very detail logs [ru](Documentation/ru/log.md#Логирование)
 * Validation at the run app [ru](Documentation/ru/validation.md#Валидация-контейнера)
 * Injection into Subviews and cells [ru](Documentation/ru/storyboard.md#Внедрение-в-subview-и-ячейки)
-* Scan Parts/Frameworks [ru](Documentation/ru/scan.md#Поиск)
 * Support Delayed injection [ru](Documentation/ru/delayed_injection.md#Отложенное-внедрение)
 * Injection with arguments at any depth
 * Container Hierarchy

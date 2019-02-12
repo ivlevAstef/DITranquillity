@@ -35,7 +35,7 @@ public struct DIComponentInfo: Hashable, CustomStringConvertible {
   
   
   public var description: String {
-    return "Component with type: \(type) in file: \((file as NSString).lastPathComponent) on line: \(line)"
+    return "<Component. type: \(type); path: \((file as NSString).lastPathComponent):\(line)>"
   }
 }
   

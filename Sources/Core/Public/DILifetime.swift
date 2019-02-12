@@ -25,7 +25,7 @@ public enum DILifeTime: Equatable {
   case objectGraph
   /// The object is created every time
   case prototype
-  /// Use user scope
+  /// Use user scope. For more information see `DIScope`
   case custom(DIScope)
 
   /// Default life time. Is taken from the settings. see: `DISetting.Defaults.lifeTime`
