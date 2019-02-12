@@ -315,4 +315,44 @@ class DITranquillityTests_Lifetime: XCTestCase {
     XCTAssert(a.b.d !== a.c.d)
   }
 
+  func test07_customScope() {
+    let container = DIContainer()
+
+    let scope = DIScope(name: "My scope", storage: DICacheStorage(), policy: .strong)
+    container.register(D.init).lifetime(.custom(scope))
+
+    let obj1: D = *container
+    let obj2: D = *container
+
+    scope.clean()
+
+    let obj3: D = *container
+
+    XCTAssert(obj1 === obj2)
+    XCTAssert(obj1 !== obj3)
+  }
+
+  func test07_customWeakScope() {
+    let container = DIContainer()
+
+    let scope = DIScope(name: "My weak scope", storage: DICacheStorage(), policy: .weak)
+    container.register(D.init).lifetime(.custom(scope))
+
+    var obj1: D? = *container
+    var obj2: D? = *container
+    XCTAssert(obj1 != nil)
+    XCTAssert(obj2 != nil)
+    XCTAssert(obj1 === obj2)
+
+    let address1 = ObjectIdentifier(obj1!)
+
+    obj1 = nil
+    obj2 = nil
+
+    let obj3: D = *container
+
+    let address3 = ObjectIdentifier(obj3)
+    XCTAssert(address1 != address3)
+  }
+
 }

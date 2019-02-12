@@ -10,7 +10,7 @@ import DITranquillity
 
 public class Module1Type { }
 
-public class ScannedPart1: DIScanned, DIPart {
+public class ScannedPart1: DIPart {
   public static func load(container: DIContainer) {
     container.register(Module1Type.init)
   }
@@ -18,14 +18,14 @@ public class ScannedPart1: DIScanned, DIPart {
 
 public class Module2Type { }
 
-public class ScannedPart2: DIScanned, DIPart {
+public class ScannedPart2: DIPart {
   public static func load(container: DIContainer) {
     container.register(Module2Type.init)
   }
 }
 // Assemblies
 
-public class ScannedFramework1: DIScanned, DIFramework {
+public class ScannedFramework1: DIFramework {
   public static func load(container: DIContainer) {
     container.append(part: ScannedPart1.self)
     container.append(part: ScannedPart2.self)

@@ -153,7 +153,7 @@ class Resolver {
   
   /// Remove all cache objects in container
   func clean() {
-    mutex.sync { cache.perContainer.data.removeAll() }
+    mutex.sync { cache.containerStorage.clean() }
   }
   
   private func make(by parsedType: ParsedType, with name: String?, from bundle: Bundle?, use object: Any?) -> Any? {
@@ -207,8 +207,8 @@ class Resolver {
 
     let uniqueKey = component.info
     
-    func makeObject(from cacheName: StaticString, use referenceCounting: DILifeTime.ReferenceCounting, scope: Cache.Scope) -> Any? {
-      var optCacheObject: Any? = scope.data[uniqueKey]
+    func makeObject(scope: DIScope) -> Any? {
+      var optCacheObject: Any? = scope.storage.fetch(key: uniqueKey)
       if let weakRef = optCacheObject as? Weak<Any> {
         optCacheObject = weakRef.value
       }
@@ -216,20 +216,21 @@ class Resolver {
       if let cacheObject = getReallyObject(optCacheObject) {
         /// suspending ignore injection for new object
         guard let usingObject = usingObject else {
-          log(.verbose, msg: "Resolve object: \(cacheObject) from cache \(cacheName)")
+          log(.verbose, msg: "Resolve object: \(cacheObject) use scope: \(scope.name)")
           return cacheObject
         }
         
         /// suspending double injection
         if cacheObject as AnyObject === usingObject as AnyObject {
-          log(.verbose, msg: "Resolve object: \(cacheObject) from cache \(cacheName)")
+          log(.verbose, msg: "Resolve object: \(cacheObject) use scope: \(scope.name)")
           return cacheObject
         }
       }
       
       if let makedObject = makeObject() {
-        scope.data[uniqueKey] = (.weak == referenceCounting) ? Weak<Any>(value: makedObject) : makedObject
-        log(.verbose, msg: "Add object: \(makedObject) in cache \(cacheName)")
+        let objectForSave = (.weak == scope.policy) ? Weak<Any>(value: makedObject) : makedObject
+        scope.storage.save(object: objectForSave, by: uniqueKey)
+        log(.verbose, msg: "Save object: \(makedObject) to scope \(scope.name)")
         return makedObject
       }
       
@@ -290,7 +291,7 @@ class Resolver {
         _ = use(signature: data.signature, usingObject: data.obj)
       }
       
-      cache.graph = Cache.Scope()
+      cache.graph = Cache.makeGraphScope()
     }
     
     func use(signature: MethodSignature, usingObject: Any?) -> Any? {
@@ -327,19 +328,23 @@ class Resolver {
 
     switch component.lifeTime {
     case .single:
-      return makeObject(from: "single", use: .strong, scope: Cache.perRun)
-
+      return makeObject(scope: Cache.single)
     case .perRun(let referenceCounting):
-      return makeObject(from: "per run", use: referenceCounting, scope: Cache.perRun)
-
+      switch referenceCounting {
+      case .weak: return makeObject(scope: Cache.weakPerRun)
+      case .strong: return makeObject(scope: Cache.strongPerRun)
+      }
     case .perContainer(let referenceCounting):
-      return makeObject(from: "per container", use: referenceCounting, scope: cache.perContainer)
-
+      switch referenceCounting {
+      case .weak: return makeObject(scope: cache.weakPerContainer)
+      case .strong: return makeObject(scope: cache.strongPerContainer)
+      }
     case .objectGraph:
-      return makeObject(from: "object graph", use: .strong, scope: cache.graph)
-
+      return makeObject(scope: cache.graph)
     case .prototype:
       return makeObject()
+    case .custom(let scope):
+      return makeObject(scope: scope)
     }
   }
  
@@ -351,16 +356,20 @@ class Resolver {
   private var stack: ContiguousArray<Component.UniqueKey> = []
 
   private class Cache {
-    // need class for reference type
-    fileprivate class Scope {
-      var data: [Component.UniqueKey: Any] = [:]
-    }
-    
-    // any can by weak, and object
-    fileprivate static var perRun = Scope()
-    fileprivate var perContainer = Scope()
+    fileprivate static let singleStorage = DICacheStorage()
+    fileprivate let containerStorage = DICacheStorage()
 
-    fileprivate var graph = Scope()
+    fileprivate static var single = DIScope(name: "single", storage: singleStorage, policy: .strong)
+    fileprivate static var weakPerRun = DIScope(name: "per run", storage: singleStorage, policy: .weak)
+    fileprivate static var strongPerRun = DIScope(name: "per run", storage: singleStorage, policy: .strong)
+    fileprivate lazy var weakPerContainer = DIScope(name: "per container", storage: containerStorage, policy: .weak)
+    fileprivate lazy var strongPerContainer = DIScope(name: "per container", storage: containerStorage, policy: .strong)
+    fileprivate var graph = makeGraphScope()
+
+    fileprivate static func makeGraphScope() -> DIScope {
+      return DIScope(name: "object graph", storage: DICacheStorage(), policy: .strong)
+    }
+
     fileprivate var cycleInjectionQueue: ContiguousArray<(obj: Any?, signature: MethodSignature)> = []
   }
 }
