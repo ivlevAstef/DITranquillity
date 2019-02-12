@@ -6,6 +6,7 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
+import Foundation
 
 /// Any type that can be in the application
 public typealias DIAType = Any.Type

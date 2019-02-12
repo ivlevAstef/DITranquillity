@@ -6,6 +6,8 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
+import Foundation
+
 typealias Injection = (signature: MethodSignature, cycle: Bool)
 
 // Reference
