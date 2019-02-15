@@ -35,7 +35,7 @@ private class C {
 }
 
 private class D {
-
+    var uniqueString: String = "initial"
 }
 
 
@@ -344,15 +344,14 @@ class DITranquillityTests_Lifetime: XCTestCase {
     XCTAssert(obj2 != nil)
     XCTAssert(obj1 === obj2)
 
-    let address1 = ObjectIdentifier(obj1!)
-
+    obj1?.uniqueString = "custom weak scope"
+    XCTAssert(obj1?.uniqueString == "custom weak scope")
     obj1 = nil
     obj2 = nil
 
     let obj3: D = *container
 
-    let address3 = ObjectIdentifier(obj3)
-    XCTAssert(address1 != address3)
+    XCTAssert(obj3.uniqueString == "initial")
   }
 
 }
