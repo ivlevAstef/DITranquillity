@@ -397,6 +397,7 @@
 		BA9A2763208851F100584CA0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				FDF430E12216E63E0016E0B1 /* Storyboard */,
 				BA9A2764208851F100584CA0 /* DITranquillityTest */,
 			);
 			path = Tests;
@@ -405,12 +406,9 @@
 		BA9A2764208851F100584CA0 /* DITranquillityTest */ = {
 			isa = PBXGroup;
 			children = (
-				BA9A2765208851F100584CA0 /* AccessStoryboard1.storyboard */,
-				BA9A2766208851F100584CA0 /* AccessStoryboard2.storyboard */,
 				BA9A2767208851F100584CA0 /* DITranquillityTests_Lifetime.swift */,
 				BA9A2769208851F100584CA0 /* DITranquillityTests_Resolve.swift */,
 				BA9A276A208851F100584CA0 /* DITranquillityTests_ResolveByInit.swift */,
-				BA9A276C208851F100584CA0 /* DITranquillityTests_Storyboard.swift */,
 				BA9A276D208851F100584CA0 /* DITranquillityTests_Threads.swift */,
 				BA9A276E208851F100584CA0 /* DITranquillityTests_Validation.swift */,
 				BA598A792093086E004EF9EF /* DITranquillityTests_SwiftLazy.swift */,
@@ -419,8 +417,6 @@
 				BADC36A3215BA9A900CEC778 /* DITranquillityTests_Parent.swift */,
 				BA9A276F208851F100584CA0 /* Info.plist */,
 				BA9A2770208851F100584CA0 /* ResolveTestClasses.swift */,
-				BA9A2771208851F100584CA0 /* TestReferenceStoryboard.storyboard */,
-				BA9A2772208851F100584CA0 /* TestStoryboard.storyboard */,
 			);
 			path = DITranquillityTest;
 			sourceTree = "<group>";
@@ -468,6 +464,18 @@
 				BAB89707209210EF009274F8 /* UIView+Swizzling.m */,
 			);
 			path = "iOS-tvOS";
+			sourceTree = "<group>";
+		};
+		FDF430E12216E63E0016E0B1 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				BA9A276C208851F100584CA0 /* DITranquillityTests_Storyboard.swift */,
+				BA9A2765208851F100584CA0 /* AccessStoryboard1.storyboard */,
+				BA9A2766208851F100584CA0 /* AccessStoryboard2.storyboard */,
+				BA9A2771208851F100584CA0 /* TestReferenceStoryboard.storyboard */,
+				BA9A2772208851F100584CA0 /* TestStoryboard.storyboard */,
+			);
+			path = Storyboard;
 			sourceTree = "<group>";
 		};
 		FDF4D1D42215A6C5008A82E0 /* DITranquillity */ = {

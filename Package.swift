@@ -10,7 +10,7 @@ let package = Package(
     ],
     targets: [
         .target(name: "DITranquillity", dependencies: ["SwiftLazy"]),
-        .testTarget(name: "DITranquillityTest", dependencies: ["SwiftLazy"])
+        .testTarget(name: "DITranquillityTest", dependencies: ["SwiftLazy", "DITranquillity"])
     ]
 )
 

@@ -8,6 +8,7 @@
 
 import XCTest
 import DITranquillity
+import UIKit
 
 class TestView: UIView {
   var service: ServiceProtocol!
@@ -18,7 +19,7 @@ class TestCell: UITableViewCell {
 }
 
 class TestCollectionCell: UICollectionViewCell {
-    var service: ServiceProtocol!
+  var service: ServiceProtocol!
 }
 
 class TestViewController: UIViewController {
