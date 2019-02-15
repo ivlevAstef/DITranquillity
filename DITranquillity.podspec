@@ -24,9 +24,10 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.10'
 
   core_h = 'Sources/DITranquillity.h'
-  core_src = 'Sources/Core/**/*.{h,m,swift}'
-  hierarchy_src = 'Sources/Hierarchy/*.swift'
-  extensions_src = 'Sources/Extensions/*.swift'
+  core_src = 'Sources/DITranquillity/**/*.{h,m,swift}'
+  core_objc_src = 'Sources/Core/**/*.{h,m,swift}'
+  hierarchy_src = 'Sources/DITranquillity/Hierarchy/*.swift'
+  extensions_src = 'Sources/DITranquillity/Extensions/*.swift'
 
   iis_h = 'Sources/InjectIntoSubviews/*.h'
   iis_src = 'Sources/InjectIntoSubviews/*.{h,m,swift}'
@@ -38,8 +39,8 @@ Pod::Spec.new do |s|
   story_OSX_h = 'Sources/Storyboard/OSX/*.h'
   story_OSX_src = 'Sources/Storyboard/OSX/*.{h,m}'
 
-  s.ios.source_files = core_h, core_src, hierarchy_src, extensions_src, iis_src, iis_iOStvOS_src, story_src, story_iOStvOS_src
-  s.tvos.source_files = core_h, core_src, hierarchy_src, extensions_src, iis_src, iis_iOStvOS_src, story_src, story_iOStvOS_src
-  s.osx.source_files = core_h, core_src, hierarchy_src, extensions_src, story_src, story_OSX_src
+  s.ios.source_files = core_h, core_src, core_objc_src, hierarchy_src, extensions_src, iis_src, iis_iOStvOS_src, story_src, story_iOStvOS_src
+  s.tvos.source_files = core_h, core_src, core_objc_src, hierarchy_src, extensions_src, iis_src, iis_iOStvOS_src, story_src, story_iOStvOS_src
+  s.osx.source_files = core_h, core_src, core_objc_src, hierarchy_src, extensions_src, story_src, story_OSX_src
 
 end

@@ -7,6 +7,7 @@
 //
 
 import SwiftLazy
+import Foundation
 
 extension Lazy: SpecificType {
   static var delayed: Bool { return true }

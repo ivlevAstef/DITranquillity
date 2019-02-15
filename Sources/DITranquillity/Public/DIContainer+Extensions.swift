@@ -6,6 +6,8 @@
 //  Copyright © 2018 Alexander Ivlev. All rights reserved.
 //
 
+import Foundation
+
 public extension DIContainer
 {
 
