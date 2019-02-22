@@ -24,8 +24,8 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.10'
 
   core_h = 'Sources/DITranquillity.h'
-  core_src = 'Sources/DITranquillity/**/*.{h,m,swift}'
-  core_objc_src = 'Sources/Core/**/*.{h,m,swift}'
+  core_src = 'Sources/DITranquillity/**/*.swift'
+  core_objc_src = 'Sources/Core/**/*.{h,m}'
   hierarchy_src = 'Sources/DITranquillity/Hierarchy/*.swift'
   extensions_src = 'Sources/DITranquillity/Extensions/*.swift'
 
