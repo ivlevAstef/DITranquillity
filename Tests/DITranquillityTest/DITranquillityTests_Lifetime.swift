@@ -8,8 +8,6 @@
 
 import XCTest
 import DITranquillity
-import SubProject1
-import SubProject2
 
 private class A {
   let b: B
