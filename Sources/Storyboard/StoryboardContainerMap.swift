@@ -25,9 +25,13 @@ private struct StoryboardInformation: Hashable {
     return self
   }
   
-  var hashValue: Int {
-    return name.hashValue
+  #if swift(>=5.0)
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(name)
   }
+  #else
+  var hashValue: Int { return name.hashValue }
+  #endif
   
   static func==(lhs: StoryboardInformation, rhs: StoryboardInformation) -> Bool {
     if lhs.name != rhs.name {

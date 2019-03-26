@@ -82,7 +82,7 @@ public final class DIContainer {
 }
 
 // MARK: - register
-public extension DIContainer {
+extension DIContainer {
   /// Registering a new component without initial.
   /// Using:
   /// ```
@@ -125,7 +125,7 @@ public extension DIContainer {
 }
 
 // MARK: - resolve
-public extension DIContainer {
+extension DIContainer {
   /// Resolve object by type.
   /// Can crash application, if can't found the type.
   /// But if the type is optional, then the application will not crash, but it returns nil.
@@ -195,7 +195,7 @@ public extension DIContainer {
 }
 
 // MARK: - Clean
-public extension DIContainer {
+extension DIContainer {
   /// Remove all cached object in container with lifetime `perContainer(_)`
   public func clean() {
     resolver.clean()
@@ -204,7 +204,7 @@ public extension DIContainer {
 
 
 // MARK: - Validation
-public extension DIContainer {
+extension DIContainer {
   
   /// Validate the graph by checking various conditions. For faster performance, set false.
   ///

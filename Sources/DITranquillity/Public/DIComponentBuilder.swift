@@ -42,7 +42,7 @@ public final class DIComponentBuilder<Impl> {
 }
 
 // MARK: - contains `as` functions
-public extension DIComponentBuilder {
+extension DIComponentBuilder {
   /// Function allows you to specify a type by which the component will be available.
   /// Using:
   /// ```
@@ -152,7 +152,7 @@ public extension DIComponentBuilder {
 
 
 // MARK: - contains `injection`, `postInit` functions
-public extension DIComponentBuilder {
+extension DIComponentBuilder {
   /// Function for appending an injection method.
   /// In addition, container has a set of functions with a different number of parameters.
   /// Using:
@@ -288,7 +288,7 @@ public extension DIComponentBuilder {
 
 
 // MARK: - contains `lifetime` and `default` functions
-public extension DIComponentBuilder {
+extension DIComponentBuilder {
   /// Function to set lifetime of an object.
   /// The lifetime of an object determines when it is created and destroyed.
   /// Using:

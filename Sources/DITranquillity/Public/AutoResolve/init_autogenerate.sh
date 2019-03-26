@@ -68,7 +68,7 @@ echo "//
 
 private typealias MM = MethodMaker
 
-public extension DIContainer {
+extension DIContainer {
 " > $1
 
 for argcount in `seq 0 $argmax`; do

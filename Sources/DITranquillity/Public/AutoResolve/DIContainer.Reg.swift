@@ -8,7 +8,7 @@
 
 private typealias MM = MethodMaker
 
-public extension DIContainer {
+extension DIContainer {
 
 
   /// Declaring a new component with initial.

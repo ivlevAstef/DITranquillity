@@ -84,7 +84,7 @@ public final class DIStoryboard: _DIStoryboardBase {
 }
  
 // MARK: - Storyboard maker
-public extension DIContainer {
+extension DIContainer {
   #if os(iOS) || os(tvOS)
   
   /// Registers a new storyboard.

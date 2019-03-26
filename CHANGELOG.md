@@ -1,3 +1,6 @@
+# v3.6.1
+* Support Swift 5
+
 # v3.6.0
 * Remove scan
 * Support custom/user scopes.

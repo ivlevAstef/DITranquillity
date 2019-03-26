@@ -25,15 +25,22 @@ public struct DIComponentInfo: Hashable, CustomStringConvertible {
   public let file: String
   /// Line where the component is registration
   public let line: Int
-
+  
+  #if swift(>=5.0)
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(line)
+    hasher.combine(file)
+    hasher.combine(ObjectIdentifier(type))
+  }
+  #else
   public var hashValue: Int {
     return line ^ file.hashValue ^ ObjectIdentifier(type).hashValue
   }
+  #endif
   
   public static func ==(lhs: DIComponentInfo, rhs: DIComponentInfo) -> Bool {
     return lhs.type == rhs.type && lhs.line == rhs.line && lhs.file == rhs.file
   }
-  
   
   public var description: String {
     return "<Component. type: \(type); path: \((file as NSString).lastPathComponent):\(line)>"

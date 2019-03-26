@@ -29,12 +29,12 @@ public protocol DIFramework: class {
   static func load(container: DIContainer)
 }
 
-public extension DIFramework {
+extension DIFramework {
   /// Default value
   public static var bundle: Bundle { return Bundle(for: self) }
 }
 
-public extension DIContainer {
+extension DIContainer {
   /// Registers a framework in the container.
   /// Registration means inclusion of all components indicated within.
   ///
@@ -59,7 +59,7 @@ public extension DIContainer {
 }
 
 
-public extension DIContainer {
+extension DIContainer {
   /// Allows you to specify dependencies between frameworks.
   /// The method should be used only within the implementation of the `load(container:)` inside framework.
   ///

@@ -139,5 +139,5 @@ class Params {
 }
 
 class ManyInject {
-  private(set) var a: [ServiceProtocol]!
+  var a: [ServiceProtocol]!
 }

@@ -53,7 +53,7 @@ echo "//
 
 private typealias MM = MethodMaker
 
-public extension DIComponentBuilder {
+extension DIComponentBuilder {
 
   private func append(injection signature: MethodSignature) -> Self {
     component.append(injection: signature, cycle: false)

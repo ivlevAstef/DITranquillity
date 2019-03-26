@@ -15,7 +15,13 @@ struct ShortTypeKey: Hashable {
     self.hash = ObjectIdentifier(type).hashValue
   }
   
+  #if swift(>=5.0)
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(hash)
+  }
+  #else
   var hashValue: Int { return hash }
+  #endif
   
   static func ==(lhs: ShortTypeKey, rhs: ShortTypeKey) -> Bool {
     return lhs.type == rhs.type
@@ -37,7 +43,13 @@ struct TypeKey: Hashable {
     hash = ObjectIdentifier(type).hashValue ^ ObjectIdentifier(tag).hashValue ^ name.hashValue
   }
   
+  #if swift(>=5.0)
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(hash)
+  }
+  #else
   var hashValue: Int { return hash }
+  #endif
   
   static func ==(lhs: TypeKey, rhs: TypeKey) -> Bool {
     return lhs.type == rhs.type && lhs.name == rhs.name && lhs.tag == rhs.tag

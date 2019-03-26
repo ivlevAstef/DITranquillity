@@ -77,7 +77,13 @@ final class Component {
 }
 
 extension Component: Hashable {
+  #if swift(>=5.0)
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(info)
+  }
+  #else
   var hashValue: Int { return info.hashValue }
+  #endif
   
   static func ==(lhs: Component, rhs: Component) -> Bool {
     return lhs.info == rhs.info

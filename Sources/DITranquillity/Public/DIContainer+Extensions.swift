@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension DIContainer
+extension DIContainer
 {
 
   /// Method for creating an object capable of customizing extensions

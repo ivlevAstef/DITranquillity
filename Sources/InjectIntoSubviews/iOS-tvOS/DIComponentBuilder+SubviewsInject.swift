@@ -12,7 +12,7 @@ extension DIComponentBuilder {
   internal func useInjectIntoSubviewComponent() { }
 }
 
-public extension DIComponentBuilder where Impl: UIViewController {
+extension DIComponentBuilder where Impl: UIViewController {
   internal func useInjectIntoSubviewComponent() {
     if DISetting.Defaults.injectToSubviews {
       autoInjectToSubviews()
@@ -34,7 +34,7 @@ public extension DIComponentBuilder where Impl: UIViewController {
   }
 }
 
-public extension DIComponentBuilder where Impl: UIView {
+extension DIComponentBuilder where Impl: UIView {
   internal func useInjectIntoSubviewComponent() {
     if DISetting.Defaults.injectToSubviews {
       autoInjectToSubviews()

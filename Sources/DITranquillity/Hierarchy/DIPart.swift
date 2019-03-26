@@ -18,7 +18,7 @@ public protocol DIPart: class {
   static func load(container: DIContainer)
 }
 
-public extension DIContainer {
+extension DIContainer {
   /// Registers a part in the container.
   /// Registration means inclusion of all components indicated within.
   ///
