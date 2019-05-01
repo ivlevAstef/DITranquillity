@@ -1,3 +1,6 @@
+# v3.6.4
+* Fix IBDesignable crash
+
 # v3.6.3
 * Support Swift 5
 
