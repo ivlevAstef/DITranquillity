@@ -22,6 +22,10 @@
 }
 
 + (void)swizzleOriginalSelector:(SEL)originalSelector swizzledSelector:(SEL)swizzledSelector isClass:(BOOL)isClass {
+// IBDesignable incorrect works with swizzling and crash application. But DI don't need - can be disabled swizzling 
+#ifdef TARGET_INTERFACE_BUILDER
+  return;
+#else
   Class class;
   Method originalMethod;
   Method swizzledMethod;
@@ -50,6 +54,7 @@
   } else {
     method_exchangeImplementations(originalMethod, swizzledMethod);
   }
+#endif  
 }
 
 @end
