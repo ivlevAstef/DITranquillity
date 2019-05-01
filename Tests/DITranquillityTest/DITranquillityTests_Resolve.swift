@@ -270,6 +270,33 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(a !== b.a)
     XCTAssert(a.b !== b)
   }
+    
+  func test13_ResolveCircular2WithPerRun() {
+        let container = DIContainer()
+        
+        #if swift(>=3.2)
+        container.register1(Circular2A.init)
+            .lifetime(.perRun(.strong))
+        #else
+        container.register(Circular2A.init)
+            .lifetime(.perRun(.strong))
+        #endif
+        
+        container.register(Circular2B.init)
+            .lifetime(.perRun(.strong))
+            .injection(cycle: true) { $0.a = $1 }
+        
+        let a: Circular2A = *container
+        XCTAssert(a === a.b.a)
+        XCTAssert(a.b === a.b.a.b)
+        
+        let b: Circular2B = *container
+        XCTAssert(b === b.a.b)
+        XCTAssert(b.a === b.a.b.a)
+        
+        XCTAssert(a === b.a)
+        XCTAssert(a.b === b)
+  }
   
   func test14_ResolveCircular3() {
     let container = DIContainer()
