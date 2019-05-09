@@ -144,17 +144,10 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
   func test05_CycleTest() {
     let container = DIContainer()
 
-    #if swift(>=3.2)
-      container.register1(LazyCycleA.init)
-        .lifetime(.objectGraph)
-      container.register1(LazyCycleB.init)
-        .lifetime(.objectGraph)
-    #else
-      container.register(LazyCycleA.init)
-        .lifetime(.objectGraph)
-      container.register(LazyCycleB.init)
-        .lifetime(.objectGraph)
-    #endif
+    container.register(LazyCycleA.init)
+      .lifetime(.objectGraph)
+    container.register(LazyCycleB.init)
+      .lifetime(.objectGraph)
 
     let lazyA: LazyCycleA = *container
 
@@ -166,17 +159,10 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
   func test06_LazyCycleTest() {
     let container = DIContainer()
 
-    #if swift(>=3.2)
-      container.register1(LazyCycleA.init)
-        .lifetime(.objectGraph)
-      container.register1(LazyCycleB.init)
-        .lifetime(.objectGraph)
-    #else
-      container.register(LazyCycleA.init)
+    container.register(LazyCycleA.init)
       .lifetime(.objectGraph)
-      container.register(LazyCycleB.init)
+    container.register(LazyCycleB.init)
       .lifetime(.objectGraph)
-    #endif
 
     XCTAssert(container.validate(checkGraphCycles: true))
 
@@ -190,17 +176,10 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
   func test07_ProvideCycleTest() {
     let container = DIContainer()
 
-    #if swift(>=3.2)
-      container.register1(ProviderCycleA.init)
-        .lifetime(.objectGraph)
-      container.register1(ProviderCycleB.init)
-        .lifetime(.objectGraph)
-    #else
-      container.register(ProviderCycleA.init)
+    container.register(ProviderCycleA.init)
       .lifetime(.objectGraph)
-      container.register(ProviderCycleB.init)
+    container.register(ProviderCycleB.init)
       .lifetime(.objectGraph)
-    #endif
 
     XCTAssert(container.validate(checkGraphCycles: true))
 
@@ -269,7 +248,7 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
   func test11_Provider1() {
     let container = DIContainer()
 
-    container.register1{ A1(arg($0)) }
+    container.register{ A1(arg($0)) }
 
     container.register(Provider1InjectA.init)
       .injection(\.inject)
@@ -290,7 +269,6 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
       .injection(\.inject)
 
     let test: Provider2InjectA = *container
-
 
     let a = test.inject.value(10, 15.0)
     XCTAssertEqual(a.value1, 10)

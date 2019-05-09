@@ -24,7 +24,8 @@ local PSType=$(join ',' $(replaceToArg numbers[@] "P;I.self"))
 local PComment=$(join ',' $(replaceToArg numbers[@] "p;I:$;I"))
 local quote='```'
 
-echo "
+if [ "$n" != 1 ]; then
+  echo "
   /// Declaring a new component with initial.
   /// Using:
   /// $quote
@@ -34,25 +35,11 @@ echo "
   /// - Parameter c: initial method. Must return type declared at registration.
   /// - Returns: component builder, to configure the component." >> $2
 
-if [ "$n" == 1 ]; then
-  echo "  #if swift(>=3.2)  /// swift4 bug: https://bugs.swift.org/browse/SR-5112
-  @discardableResult
-  public func register1<Impl,P0>(file: String = #file, line: Int = #line, _ c: @escaping (P0) -> Impl) -> DIComponentBuilder<Impl> {
-    return register(file, line, MM.make1([P0.self], by: c))
-  }
-  #else
-  @discardableResult
-  public func register<Impl,P0>(file: String = #file, line: Int = #line, _ c: @escaping (P0) -> Impl) -> DIComponentBuilder<Impl> {
-    return register(file, line, MM.make1([P0.self], by: c))
-  }
-  #endif
-" >> $2
-else
   echo "  @discardableResult
-  public func register<Impl,$PType>(file: String = #file, line: Int = #line, _ c: @escaping ($PType) -> Impl) -> DIComponentBuilder<Impl> {
+  public func register<Impl,$PType>(file: String = #file, line: Int = #line, _ c: @escaping (($PType)) -> Impl) -> DIComponentBuilder<Impl> {
     return register(file, line, MM.make$n([$PSType], by: c))
   }
-" >> $2
+  " >> $2
 fi
 
 }

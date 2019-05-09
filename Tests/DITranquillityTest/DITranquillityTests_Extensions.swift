@@ -77,12 +77,7 @@ class DITranquillityTests_Extensions: XCTestCase {
       .injection{ $0.p4 = arg($1) }
       .injection(\.p5) { arg($0) }
 
-    #if swift(>=3.2)
-      container.register1(DepthClass.init)
-    #else
-      container.register(DepthClass.init)
-    #endif
-
+    container.register(DepthClass.init)
 
     container.extensions(for: Class.self)?.setArgs("injection", 22.2, [1,2,3,4,5], ["H","e","l","l","o"])
 
