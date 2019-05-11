@@ -32,7 +32,9 @@ public final class DIContainer {
   public init(parent: DIContainer? = nil) {
     self.parent = parent
     resolver = Resolver(container: self)
-    register{ [unowned self] in self }.lifetime(.prototype)
+    
+    register{ [unowned self] in return self }.lifetime(.prototype)
+    register { () }
   }  
   
   internal let componentContainer = ComponentContainer()
@@ -99,21 +101,20 @@ extension DIContainer {
   }
   
   /// Declaring a new component with initial.
-  /// In addition, container has a set of functions with a different number of parameters.
   /// Using:
   /// ```
-  /// container.register(YourClass.init)
-  /// ```
-  /// OR
-  /// ```
-  /// container.register{ YourClass(p1: $0, p2: $1 as SpecificType, p3: $2) }
+  /// container.register{ YourClass(p0:$0) }
   /// ```
   ///
-  /// - Parameter initial: initial method. Must return type declared at registration.
+  /// - Parameter c: initial method. Must return type declared at registration.
   /// - Returns: component builder, to configure the component.
   @discardableResult
-  public func register<Impl>(file: String = #file, line: Int = #line, _ c: @escaping () -> Impl) -> DIComponentBuilder<Impl> {
-    return register(file, line, MethodMaker.make0(by: c))
+  public func register<Impl,P0>(file: String = #file, line: Int = #line, _ c: @escaping (P0) -> Impl) -> DIComponentBuilder<Impl> {
+    if P0.self is Void.Type {
+      return register(file, line, MethodMaker.makeVoid(by: c))
+    } else {
+      return register(file, line, MethodMaker.make1([P0.self], by: c))
+    }
   }
   
   
@@ -326,12 +327,14 @@ extension DIContainer {
       
       func callDfs(by parameters: [MethodSignature.Parameter], initial: Bool, cycle: Bool) {
         for parameter in parameters {
-            let candidates = resolver.findComponents(by: parameter.parsedType, with: parameter.name, from: bundle)
+          let candidates = resolver.findComponents(by: parameter.parsedType, with: parameter.name, from: bundle)
           if candidates.isEmpty {
             continue
           }
           
-          let filtered = candidates.filter{ nil != $0.initial || ($0.lifeTime != .prototype && visited.contains($0)) }
+          let filtered = candidates.filter {
+           (nil != $0.initial || ($0.lifeTime != .prototype && visited.contains($0))) && !($0.info.type is Void.Type)
+          }
           let many = parameter.parsedType.hasMany
           for subcomponent in filtered {
             var stack = stack

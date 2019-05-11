@@ -83,11 +83,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     container.register(TestProtocol.self)
     
-    #if swift(>=3.2)
-      container.register1(InjectedClass.init)
-    #else
-      container.register(InjectedClass.init)
-    #endif
+    container.register(InjectedClass.init)
     
     XCTAssert(!container.validate())
   }
@@ -95,11 +91,7 @@ class DITranquillityTests_Build: XCTestCase {
   func test01_NotSetProtocol() {
     let container = DIContainer()
     
-    #if swift(>=3.2)
-      container.register1(InjectedClass.init)
-    #else
-      container.register(InjectedClass.init)
-    #endif
+    container.register(InjectedClass.init)
     
     XCTAssert(!container.validate())
   }
@@ -109,11 +101,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     container.register(TestClass1.self)
     
-    #if swift(>=3.2)
-      container.register1(InjectedClass.init)
-    #else
-      container.register(InjectedClass.init)
-    #endif
+    container.register(InjectedClass.init)
     
     XCTAssert(!container.validate())
   }
@@ -123,11 +111,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     container.register(TestClass1.init)
     
-    #if swift(>=3.2)
-      container.register1(InjectedClass.init)
-    #else
-      container.register(InjectedClass.init)
-    #endif
+    container.register(InjectedClass.init)
     
     XCTAssert(!container.validate())
   }
@@ -135,11 +119,8 @@ class DITranquillityTests_Build: XCTestCase {
   func test01_RegistrateWithOptional() {
     let container = DIContainer()
     
-    #if swift(>=3.2)
-      container.register1(OptionalInjectedClass.init)
-    #else
-      container.register(OptionalInjectedClass.init)
-    #endif
+    container.register(OptionalInjectedClass.init)
+    DISetting.Log.level = .warning
     
     XCTAssert(container.validate())
   }
@@ -154,12 +135,7 @@ class DITranquillityTests_Build: XCTestCase {
     container.register(TestClass2.init)
       .as(check: TestProtocol.self){$0}
     
-    
-    #if swift(>=3.2)
-      container.register1(InjectedClass.init)
-    #else
-      container.register(InjectedClass.init)
-    #endif
+    container.register(InjectedClass.init)
     
     XCTAssert(!container.validate())
   }
@@ -174,12 +150,7 @@ class DITranquillityTests_Build: XCTestCase {
     container.register(TestClass2.init)
       .as(check: TestProtocol.self){$0}
     
-    
-    #if swift(>=3.2)
-      container.register1(InjectedClass.init)
-    #else
-      container.register(InjectedClass.init)
-    #endif
+    container.register(InjectedClass.init)
     
     XCTAssert(container.validate())
   }
@@ -193,12 +164,7 @@ class DITranquillityTests_Build: XCTestCase {
     container.register(TestClass2.init)
       .as(check: TestProtocol.self){$0}
     
-    
-    #if swift(>=3.2)
-      container.register1(InjectedClass.init)
-    #else
-      container.register(InjectedClass.init)
-    #endif
+    container.register(InjectedClass.init)
     
     XCTAssert(container.validate())
   }
@@ -212,23 +178,14 @@ class DITranquillityTests_Build: XCTestCase {
     container.register(TestClass2.init)
       .as(check: TestProtocol.self){$0}
     
-    
-    #if swift(>=3.2)
-      container.register1(InjectedClass.init)
-    #else
-      container.register(InjectedClass.init)
-    #endif
+    container.register(InjectedClass.init)
     
     XCTAssert(container.validate())
   }
   
   func test04_SelfInit() {
     let container = DIContainer()
-    #if swift(>=3.2)
-      container.register1(SelfInit.init)
-    #else
-      container.register(SelfInit.init)
-    #endif
+    container.register(SelfInit.init)
     
     XCTAssert(!container.validate())
   }
@@ -236,15 +193,9 @@ class DITranquillityTests_Build: XCTestCase {
   func test04_RecursiveTripleInit() {
     let container = DIContainer()
     
-    #if swift(>=3.2)
-      container.register1(RInit1.init)
-      container.register1(RInit2.init)
-      container.register1(RInit3.init).as(RInit3Protocol.self)
-    #else
-      container.register(RInit1.init)
-      container.register(RInit2.init)
-      container.register(RInit3.init).as(RInit3Protocol.self)
-    #endif
+    container.register(RInit1.init)
+    container.register(RInit2.init)
+    container.register(RInit3.init).as(RInit3Protocol.self)
     
     
     XCTAssert(!container.validate())
@@ -253,15 +204,9 @@ class DITranquillityTests_Build: XCTestCase {
   func test04_RecursiveTripleInitArray() {
     let container = DIContainer()
     
-    #if swift(>=3.2)
-      container.register1(RInit1.init)
-      container.register1(RInit2.init)
-      container.register1(RInit3Array.init).as(RInit3Protocol.self)
-    #else
-      container.register(RInit1.init)
-      container.register(RInit2.init)
-      container.register(RInit3Array.init).as(RInit3Protocol.self)
-    #endif
+    container.register(RInit1.init)
+    container.register(RInit2.init)
+    container.register(RInit3Array.init).as(RInit3Protocol.self)
     
     XCTAssert(!container.validate())
   }
@@ -269,18 +214,10 @@ class DITranquillityTests_Build: XCTestCase {
   func test04_RecursiveTripleInitArrayWithCorrectLifetime() {
     let container = DIContainer()
     
-    #if swift(>=3.2)
-      container.register1(RInit1.init).lifetime(.objectGraph)
-      container.register1(RInit2.init).lifetime(.objectGraph)
-      
-      container.register1(RInit3Array.init).as(RInit3Protocol.self).lifetime(.objectGraph)
-    #else
-      container.register(RInit1.init).lifetime(.objectGraph)
-      container.register(RInit2.init).lifetime(.objectGraph)
-      
-      container.register(RInit3Array.init).as(RInit3Protocol.self).lifetime(.objectGraph)
-    #endif
+    container.register(RInit1.init).lifetime(.objectGraph)
+    container.register(RInit2.init).lifetime(.objectGraph)
     
+    container.register(RInit3Array.init).as(RInit3Protocol.self).lifetime(.objectGraph)
     
     XCTAssert(!container.validate())
   }
@@ -288,13 +225,8 @@ class DITranquillityTests_Build: XCTestCase {
   func test05_RecursiveTripleInitInject() {
     let container = DIContainer()
     
-    #if swift(>=3.2)
-      container.register1(RInit1.init).lifetime(.objectGraph)
-      container.register1(RInit2.init).lifetime(.objectGraph)
-    #else
-      container.register(RInit1.init).lifetime(.objectGraph)
-      container.register(RInit2.init).lifetime(.objectGraph)
-    #endif
+    container.register(RInit1.init).lifetime(.objectGraph)
+    container.register(RInit2.init).lifetime(.objectGraph)
     container.register(RInit3Inject.init)
       .as(RInit3Protocol.self)
       .injection{ $0.test = $1 }
@@ -306,13 +238,8 @@ class DITranquillityTests_Build: XCTestCase {
   func test05_RecursiveTripleInitInjectIsCycleButLifetime() {
     let container = DIContainer()
     
-    #if swift(>=3.2)
-      container.register1(RInit1.init)
-      container.register1(RInit2.init)
-    #else
-      container.register(RInit1.init)
-      container.register(RInit2.init)
-    #endif
+    container.register(RInit1.init)
+    container.register(RInit2.init)
     container.register(RInit3Inject.init)
       .as(RInit3Protocol.self)
       .injection{ $0.test = $1 }
@@ -323,13 +250,8 @@ class DITranquillityTests_Build: XCTestCase {
   func test05_RecursiveTripleInitInjectIsCycle() {
     let container = DIContainer()
     
-    #if swift(>=3.2)
-      container.register1(RInit1.init).lifetime(.objectGraph)
-      container.register1(RInit2.init).lifetime(.objectGraph)
-    #else
-      container.register(RInit1.init).lifetime(.objectGraph)
-      container.register(RInit2.init).lifetime(.objectGraph)
-    #endif
+    container.register(RInit1.init).lifetime(.objectGraph)
+    container.register(RInit2.init).lifetime(.objectGraph)
     container.register(RInit3Inject.init)
       .as(RInit3Protocol.self)
       .injection(cycle: true) { $0.test = $1 }
@@ -341,13 +263,9 @@ class DITranquillityTests_Build: XCTestCase {
   func test05_RecursiveTripleInitInjectOptional() {
     let container = DIContainer()
     
-    #if swift(>=3.2)
-      container.register1(RInit1.init).lifetime(.objectGraph)
-      container.register1(RInit2.init).lifetime(.objectGraph)
-    #else
-      container.register(RInit1.init).lifetime(.objectGraph)
-      container.register(RInit2.init).lifetime(.objectGraph)
-    #endif
+    container.register(RInit1.init).lifetime(.objectGraph)
+    container.register(RInit2.init).lifetime(.objectGraph)
+    
     container.register(RInit3InjectOptional.init)
       .as(RInit3Protocol.self)
       .injection{ $0.test = $1 }
@@ -359,13 +277,8 @@ class DITranquillityTests_Build: XCTestCase {
   func test06_CycleWithoutInit() {
     let container = DIContainer()
     
-    #if swift(>=3.2)
-    container.register1(RCycle.init)
-      .lifetime(.prototype)
-    #else
     container.register(RCycle.init)
       .lifetime(.prototype)
-    #endif
       
     container.register(RCycle2.self)
       .injection{ $0.inject = $1 }

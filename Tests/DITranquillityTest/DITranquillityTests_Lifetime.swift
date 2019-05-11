@@ -263,13 +263,8 @@ class DITranquillityTests_Lifetime: XCTestCase {
     let container = DIContainer()
 
     container.register(A.init).lifetime(.objectGraph)
-    #if swift(>=3.2)
-    container.register1(B.init).lifetime(.objectGraph)
-    container.register1(C.init).lifetime(.objectGraph)
-    #else
     container.register(B.init).lifetime(.objectGraph)
     container.register(C.init).lifetime(.objectGraph)
-    #endif
     container.register(D.init).lifetime(.objectGraph)
 
     let a: A = *container
@@ -281,13 +276,8 @@ class DITranquillityTests_Lifetime: XCTestCase {
     let container = DIContainer()
 
     container.register(A.init).lifetime(.prototype)
-    #if swift(>=3.2)
-      container.register1(B.init).lifetime(.prototype)
-      container.register1(C.init).lifetime(.prototype)
-    #else
-      container.register(B.init).lifetime(.prototype)
-      container.register(C.init).lifetime(.prototype)
-    #endif
+    container.register(B.init).lifetime(.prototype)
+    container.register(C.init).lifetime(.prototype)
     container.register(D.init).lifetime(.prototype)
 
     let a: A = *container
@@ -299,13 +289,8 @@ class DITranquillityTests_Lifetime: XCTestCase {
     let container = DIContainer()
 
     container.register(A.init).lifetime(.objectGraph)
-    #if swift(>=3.2)
-      container.register1(B.init).lifetime(.objectGraph)
-      container.register1(C.init).lifetime(.objectGraph)
-    #else
-      container.register(B.init).lifetime(.objectGraph)
-      container.register(C.init).lifetime(.objectGraph)
-    #endif
+    container.register(B.init).lifetime(.objectGraph)
+    container.register(C.init).lifetime(.objectGraph)
     container.register(D.init).lifetime(.prototype)
 
     let a: A = *container

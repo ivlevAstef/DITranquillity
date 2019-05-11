@@ -81,11 +81,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-    #if swift(>=3.2)
-      container.register1(Inject.init)
-    #else
-      container.register(Inject.init)
-    #endif
+    container.register(Inject.init)
     
     let inject: Inject = *container
     XCTAssertEqual(inject.service.foo(), "foo")
@@ -247,13 +243,8 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test13_ResolveCircular2() {
     let container = DIContainer()
     
-    #if swift(>=3.2)
-      container.register1(Circular2A.init)
-        .lifetime(.objectGraph)
-    #else
-      container.register(Circular2A.init)
+    container.register(Circular2A.init)
       .lifetime(.objectGraph)
-    #endif
     
     container.register(Circular2B.init)
       .lifetime(.objectGraph)
@@ -272,49 +263,35 @@ class DITranquillityTests_Resolve: XCTestCase {
   }
     
   func test13_ResolveCircular2WithPerRun() {
-        let container = DIContainer()
-        
-        #if swift(>=3.2)
-        container.register1(Circular2A.init)
-            .lifetime(.perRun(.strong))
-        #else
-        container.register(Circular2A.init)
-            .lifetime(.perRun(.strong))
-        #endif
-        
-        container.register(Circular2B.init)
-            .lifetime(.perRun(.strong))
-            .injection(cycle: true) { $0.a = $1 }
-        
-        let a: Circular2A = *container
-        XCTAssert(a === a.b.a)
-        XCTAssert(a.b === a.b.a.b)
-        
-        let b: Circular2B = *container
-        XCTAssert(b === b.a.b)
-        XCTAssert(b.a === b.a.b.a)
-        
-        XCTAssert(a === b.a)
-        XCTAssert(a.b === b)
+    let container = DIContainer()
+    
+    container.register(Circular2A.init)
+      .lifetime(.perRun(.strong))
+    
+    container.register(Circular2B.init)
+      .lifetime(.perRun(.strong))
+      .injection(cycle: true) { $0.a = $1 }
+    
+    let a: Circular2A = *container
+    XCTAssert(a === a.b.a)
+    XCTAssert(a.b === a.b.a.b)
+    
+    let b: Circular2B = *container
+    XCTAssert(b === b.a.b)
+    XCTAssert(b.a === b.a.b.a)
+    
+    XCTAssert(a === b.a)
+    XCTAssert(a.b === b)
   }
   
   func test14_ResolveCircular3() {
     let container = DIContainer()
     
-    #if swift(>=3.2)
-      container.register1(Circular3A.init)
-        .lifetime(.objectGraph)
-      
-      container.register1(Circular3B.init)
-        .lifetime(.objectGraph)
-    #else
-      container.register(Circular3A.init)
+    container.register(Circular3A.init)
       .lifetime(.objectGraph)
-      
-      container.register(Circular3B.init)
-      .lifetime(.objectGraph)
-    #endif
     
+    container.register(Circular3B.init)
+      .lifetime(.objectGraph)
     
     container.register(Circular3C.init)
       .lifetime(.objectGraph)
@@ -353,13 +330,8 @@ class DITranquillityTests_Resolve: XCTestCase {
       .injection(cycle: true) { $0.b1 = $1 }
       .injection(cycle: true) { a, b2 in a.b2 = b2 }
     
-    #if swift(>=3.2)
-      container.register1(CircularDouble2B.init)
-        .lifetime(.prototype)
-    #else
-      container.register(CircularDouble2B.init)
+    container.register(CircularDouble2B.init)
       .lifetime(.prototype)
-    #endif
     
     
     //b1 !== b2 because prototype
@@ -379,13 +351,8 @@ class DITranquillityTests_Resolve: XCTestCase {
       .injection(cycle: true) { $0.b1 = $1 }
       .injection(cycle: true) { a, b2 in a.b2 = b2 }
     
-    #if swift(>=3.2)
-      container.register1(CircularDouble2B.init)
-        .lifetime(.objectGraph)
-    #else
-      container.register(CircularDouble2B.init)
+    container.register(CircularDouble2B.init)
       .lifetime(.objectGraph)
-    #endif
     
     //!!! b1 === b2 === b because objectGraph
     let b: CircularDouble2B = *container
@@ -402,13 +369,8 @@ class DITranquillityTests_Resolve: XCTestCase {
       .lifetime(.objectGraph)
       .injection{ $0.set(b1: $1, b2: $2) }
 
-    #if swift(>=3.2)
-      container.register1(CircularDouble2B.init)
-        .lifetime(.objectGraph)
-    #else
-      container.register(CircularDouble2B.init)
+    container.register(CircularDouble2B.init)
       .lifetime(.objectGraph)
-    #endif
     
     XCTAssert(!container.validate())
   }
@@ -688,13 +650,8 @@ class DITranquillityTests_Resolve: XCTestCase {
       .injection(cycle: true, \.b1)
       .injection(cycle: true, \.b2)
     
-    #if swift(>=3.2)
-      container.register1(CircularDouble2B.init)
-        .lifetime(.prototype)
-    #else
-      container.register(CircularDouble2B.init)
+    container.register(CircularDouble2B.init)
       .lifetime(.prototype)
-    #endif
     
     
     //b1 !== b2 because prototype
@@ -753,23 +710,13 @@ class DITranquillityTests_Resolve: XCTestCase {
     var isPostInit1: Bool = false
     var isPostInit2: Bool = false
 
-    #if swift(>=3.2)
-      container.register1(Circular2A.init)
-        .lifetime(.objectGraph)
-        .postInit { (obj: Circular2A) in
-          XCTAssertEqual(isPostInit1, false)
-          XCTAssertEqual(isPostInit2, false)
-          isPostInit1 = true
-        }
-    #else
-      container.register(Circular2A.init)
-        .lifetime(.objectGraph)
-        .postInit { (obj: Circular2A) in
-          XCTAssertEqual(isPostInit1, false)
-          XCTAssertEqual(isPostInit2, false)
-          isPostInit1 = true
-        }
-    #endif
+    container.register(Circular2A.init)
+      .lifetime(.objectGraph)
+      .postInit { (obj: Circular2A) in
+        XCTAssertEqual(isPostInit1, false)
+        XCTAssertEqual(isPostInit2, false)
+        isPostInit1 = true
+    }
 
     container.register(Circular2B.init)
       .lifetime(.objectGraph)
@@ -804,11 +751,7 @@ class DITranquillityTests_Resolve: XCTestCase {
       .injection{ $0.services = many($1) }
       .injection{ $0.optServices = many($1) }
 
-    #if swift(>=3.2)
-      container.register1 { ManyInitTest(services: many($0)) }
-    #else
-      container.register { ManyInitTest(services: many($0)) }
-    #endif
+    container.register { ManyInitTest(services: many($0)) }
 
     let test1: ManyTest = *container
     let test2: ManyInitTest = *container
