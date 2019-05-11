@@ -42,8 +42,9 @@ private func m<T>(_ obj: Any?) ->T { return gmake(by: obj) }
 private typealias MS = MethodSignature
 struct MethodMaker {
 
-  static func make0<R>(by f: @escaping ()->R) -> MethodSignature {
-    return MS([]){_ in f()}
+  static func makeVoid<P0,R>(by f: @escaping (P0)->R) -> MethodSignature {
+    assert(P0.self is Void.Type, "makeVoid called not for Void type creation")
+    return MS([]){_ in f(() as! P0)}
   }
 " > $1
 

@@ -12,9 +12,7 @@ private typealias MS = MethodSignature
 struct MethodMaker {
 
   static func makeVoid<P0,R>(by f: @escaping (P0)->R) -> MethodSignature {
-    guard P0.self is Void.Type else {
-      fatalError("Method called not for Void type creation")
-    }
+    assert(P0.self is Void.Type, "makeVoid called not for Void type creation")
     return MS([]){_ in f(() as! P0)}
   }
 

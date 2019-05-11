@@ -33,8 +33,7 @@ public final class DIContainer {
     self.parent = parent
     resolver = Resolver(container: self)
     
-    register{ [unowned self] in return self }.lifetime(.prototype)
-    register { () }
+    register { [unowned self] in return self }.lifetime(.prototype)
   }  
   
   internal let componentContainer = ComponentContainer()
@@ -333,7 +332,7 @@ extension DIContainer {
           }
           
           let filtered = candidates.filter {
-           (nil != $0.initial || ($0.lifeTime != .prototype && visited.contains($0))) && !($0.info.type is Void.Type)
+           (nil != $0.initial || ($0.lifeTime != .prototype && visited.contains($0)))
           }
           let many = parameter.parsedType.hasMany
           for subcomponent in filtered {
