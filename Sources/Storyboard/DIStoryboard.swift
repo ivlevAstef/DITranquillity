@@ -118,15 +118,9 @@ extension DIContainer {
   @discardableResult
   public func registerStoryboard(name: String, bundle storyboardBundleOrNil: Bundle? = nil, file: String = #file, line: Int = #line) -> DIComponentBuilder<NSStoryboard> {
     let bundle = storyboardBundleOrNil ?? self.frameworkStack.last?.bundle
-    #if swift(>=3.2)
-    let builder = register1(file: file, line: line) {
-      DIStoryboard.create(name: name, bundle: bundle, container: $0) as NSStoryboard
-    }
-    #else
     let builder = register(file: file, line: line) {
       DIStoryboard.create(name: name, bundle: bundle, container: $0) as NSStoryboard
     }
-    #endif
     builder.as(NSStoryboard.self, name: name)
   
     StoryboardContainerMap.instance.append(name: name, bundle: storyboardBundleOrNil, component: builder.component, in: self)
