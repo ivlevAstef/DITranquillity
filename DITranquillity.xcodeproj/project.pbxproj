@@ -31,6 +31,9 @@
 		BA9A27AA208851FF00584CA0 /* TestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA9A2772208851F100584CA0 /* TestStoryboard.storyboard */; };
 		BA9A27AC2088529500584CA0 /* SubProject1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9A27AE2088529500584CA0 /* SubProject1.framework */; };
 		BA9A27AD2088529500584CA0 /* SubProject2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9A27AF2088529500584CA0 /* SubProject2.framework */; };
+		BAA1EB412293A988009FB5A5 /* GlobalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA1EB402293A988009FB5A5 /* GlobalState.swift */; };
+		BAA1EB422293A988009FB5A5 /* GlobalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA1EB402293A988009FB5A5 /* GlobalState.swift */; };
+		BAA1EB432293A988009FB5A5 /* GlobalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA1EB402293A988009FB5A5 /* GlobalState.swift */; };
 		BAB896C72091FC41009274F8 /* NSObject+Swizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = BAB896C52091FC41009274F8 /* NSObject+Swizzling.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		BAB896C82091FC41009274F8 /* NSObject+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB896C62091FC41009274F8 /* NSObject+Swizzling.m */; };
 		BAB896C92091FC44009274F8 /* NSObject+Swizzling.h in Headers */ = {isa = PBXBuildFile; fileRef = BAB896C52091FC41009274F8 /* NSObject+Swizzling.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -220,6 +223,7 @@
 		BA9A2772208851F100584CA0 /* TestStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TestStoryboard.storyboard; sourceTree = "<group>"; };
 		BA9A27AE2088529500584CA0 /* SubProject1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SubProject1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9A27AF2088529500584CA0 /* SubProject2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SubProject2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BAA1EB402293A988009FB5A5 /* GlobalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalState.swift; sourceTree = "<group>"; };
 		BAB896C52091FC41009274F8 /* NSObject+Swizzling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Swizzling.h"; sourceTree = "<group>"; };
 		BAB896C62091FC41009274F8 /* NSObject+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Swizzling.m"; sourceTree = "<group>"; };
 		BAB896CC2091FCB8009274F8 /* SwiftNSResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftNSResolver.swift; sourceTree = "<group>"; };
@@ -542,6 +546,7 @@
 				FDF4D2622215AA75008A82E0 /* ParsedType.swift */,
 				FDF4D2632215AA75008A82E0 /* SpecificType.swift */,
 				FDF4D1E92215A6C5008A82E0 /* Synchronize.swift */,
+				BAA1EB402293A988009FB5A5 /* GlobalState.swift */,
 				FDF4D1EA2215A6C5008A82E0 /* ProtocolMagic.swift */,
 				FDF4D1EB2215A6C5008A82E0 /* Log.swift */,
 				FDF4D1EC2215A6C5008A82E0 /* MethodSignature.swift */,
@@ -768,6 +773,7 @@
 			files = (
 				FDF4D2702215AA7D008A82E0 /* DIStorage.swift in Sources */,
 				FDF4D2732215AA7D008A82E0 /* DIScope.swift in Sources */,
+				BAA1EB422293A988009FB5A5 /* GlobalState.swift in Sources */,
 				FDF4D21E2215A6C5008A82E0 /* DIModificators.swift in Sources */,
 				FDF4D2332215A6C5008A82E0 /* Log.swift in Sources */,
 				FDF4D2032215A6C5008A82E0 /* DIPart.swift in Sources */,
@@ -834,6 +840,7 @@
 				FDF4D22B2215A6C5008A82E0 /* TypeKey.swift in Sources */,
 				FDF4D2742215AA7D008A82E0 /* DIScope.swift in Sources */,
 				BAB8970F209210FE009274F8 /* UITableView+Swizzling.m in Sources */,
+				BAA1EB432293A988009FB5A5 /* GlobalState.swift in Sources */,
 				BAB89711209210FE009274F8 /* UIView+Swizzling.m in Sources */,
 				FDF4D2042215A6C5008A82E0 /* DIPart.swift in Sources */,
 				FDF4D2012215A6C5008A82E0 /* DIFramework.swift in Sources */,
@@ -883,6 +890,7 @@
 				FDF4D2352215A6C5008A82E0 /* MethodSignature.swift in Sources */,
 				FDF4D20B2215A6C5008A82E0 /* DIComponentBuilder.swift in Sources */,
 				FDF4D2722215AA7D008A82E0 /* DIScope.swift in Sources */,
+				BAA1EB412293A988009FB5A5 /* GlobalState.swift in Sources */,
 				FDF4D2202215A6C5008A82E0 /* DITypes.swift in Sources */,
 				FDF4D2022215A6C5008A82E0 /* DIPart.swift in Sources */,
 				BAB89709209210EF009274F8 /* UICollectionView+Swizzling.m in Sources */,

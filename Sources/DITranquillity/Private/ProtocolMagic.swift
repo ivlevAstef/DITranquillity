@@ -32,12 +32,24 @@ extension Optional: SpecificType {
     }
 }
 
+protocol IsOptional {
+  var value: Any?
+}
+extension Optional: IsOptional {
+  var value: Any? {
+    switch self {
+    case .some(let obj): return obj
+    case .none: return nil
+    }
+  }
+}
+
 ///// For optional make
 
 func gmake<T>(by obj: Any?) -> T {
   if let opt = T.self as? SpecificType.Type {
     guard let typedObject = opt.make(by: obj) as? T else { // it's always valid
-        fatalError("Can't cast \(type(of: obj)) to optional \(T.self). For more information see logs.")
+      fatalError("Can't cast \(type(of: obj)) to optional \(T.self). For more information see logs.")
     }
     return typedObject
   }
@@ -45,6 +57,12 @@ func gmake<T>(by obj: Any?) -> T {
   guard let typedObject = obj as? T else { // can crash, but it's normally
     if nil == obj {
       fatalError("Can't resolve type \(T.self). For more information see logs.")
+    } else if let optional = obj as? IsOptional, optional.value == nil {
+      if let lastComponent = GlobalState.lastComponent {
+        fatalError("Registration with type found \(T.self), but the registration returned zero. See \(lastComponent)")
+      } else {
+        fatalError("Registration with type found \(T.self), but the registration returned zero.")
+      }
     } else {
       fatalError("Can't cast \(type(of: obj)) to \(T.self). For more information see logs.")
     }

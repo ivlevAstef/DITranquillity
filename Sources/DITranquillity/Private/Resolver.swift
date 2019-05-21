@@ -184,6 +184,8 @@ class Resolver {
 
   /// isMany for optimization
   private func make(by parsedType: ParsedType, components: Components, use object: Any?) -> Any? {
+    GlobalState.lastComponent = components.first?.info
+
     if parsedType.hasMany {
       assert(nil == object, "Many injection not supported")
       return components.compactMap{ makeObject(by: $0, use: nil) }
