@@ -32,18 +32,6 @@ extension Optional: SpecificType {
     }
 }
 
-protocol IsOptional {
-  var value: Any?
-}
-extension Optional: IsOptional {
-  var value: Any? {
-    switch self {
-    case .some(let obj): return obj
-    case .none: return nil
-    }
-  }
-}
-
 ///// For optional make
 
 func gmake<T>(by obj: Any?) -> T {
@@ -54,21 +42,44 @@ func gmake<T>(by obj: Any?) -> T {
     return typedObject
   }
 
-  guard let typedObject = obj as? T else { // can crash, but it's normally
-    if nil == obj {
-      fatalError("Can't resolve type \(T.self). For more information see logs.")
-    } else if let optional = obj as? IsOptional, optional.value == nil {
-      if let lastComponent = GlobalState.lastComponent {
-        fatalError("Registration with type found \(T.self), but the registration returned zero. See \(lastComponent)")
+  guard let typedObject = obj as? T else {
+    let unwrapObj = obj.unwrapGet()
+    
+    guard let typedUnwrapObject = unwrapObj as? T else {
+      if nil == obj {
+        fatalError("Can't resolve type \(T.self). For more information see logs.")
+      } else if nil == unwrapObj { // DI found and return obj, but registration make nil object
+        if let lastComponent = GlobalState.lastComponent {
+          fatalError("Registration with type found \(T.self), but the registration return nil. See \(lastComponent)")
+        } else {
+          fatalError("Registration with type found \(T.self), but the registration return nil.")
+        }
       } else {
-        fatalError("Registration with type found \(T.self), but the registration returned zero.")
+        fatalError("Can't cast \(type(of: obj)) to \(T.self). For more information see logs.")
       }
-    } else {
-      fatalError("Can't cast \(type(of: obj)) to \(T.self). For more information see logs.")
     }
+    
+    return typedUnwrapObject
   }
 
   return typedObject
+}
+
+protocol OptionalUnwrapper {
+  static var unwrapType: DIAType { get }
+}
+
+extension Optional: OptionalUnwrapper {
+  static var unwrapType: DIAType { return Wrapped.self }
+}
+
+func unwrapType(_ type: DIAType) -> DIAType {
+  var iter = type
+  while let unwrap = iter as? OptionalUnwrapper.Type {
+    iter = unwrap.unwrapType
+  }
+  
+  return iter
 }
 
 ////// For simple log
@@ -117,34 +128,32 @@ extension Sequence {
   }
 #endif
 
-#if swift(>=4.1.5)
-  // Swift 4.2 bug...
-  protocol CheckOnRealOptional {
-    func get() -> Any?
-  }
+protocol GetRealOptional {
+  func unwrapGet() -> Any?
+}
 
-  extension Optional: CheckOnRealOptional {
-    func get() -> Any? {
-      switch self {
-      case .some(let obj):
-        if let optObj = obj as? CheckOnRealOptional {
-          return optObj.get()
-        }
-        return obj
-      case .none:
-        return nil
+extension Optional: GetRealOptional {
+  func unwrapGet() -> Any? {
+    switch self {
+    case .some(let obj):
+      if let optObj = obj as? GetRealOptional {
+        return optObj.unwrapGet()
       }
+      return obj
+    case .none:
+      return nil
     }
   }
-#endif
+}
 
 /// Get that really existed variable. if-let syntax could not properly work with Any?-Any-Optional.some(Optional.none) in swift 4.2+
 ///
 /// - Parameter optionalObject: Object for recursively value getting
 /// - Returns: *object* if value really exists. *nil* otherwise.
 func getReallyObject(_ optionalObject: Any?) -> Any? {
+  // Swift 4.2 bug...
     #if swift(>=4.1.5)
-        return optionalObject.get()
+        return optionalObject.unwrapGet()
     #else
         return optionalObject
     #endif

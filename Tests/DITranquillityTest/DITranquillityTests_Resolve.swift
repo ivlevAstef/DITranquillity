@@ -763,5 +763,24 @@ class DITranquillityTests_Resolve: XCTestCase {
 
     XCTAssertEqual(test2.services.count, 2)
   }
+  
+  func test27_crashLogNilRegister()
+  {
+    let container = DIContainer()
+    
+    // Yes it's incorrect for library syntax, but not?
+    var obj: ServiceProtocol? = BarService()
+    container.register { obj }
+    
+    let resolve = container.resolve() as ServiceProtocol
+    _ = resolve
+    
+    obj = nil
+    let resolveOpt = container.resolve() as ServiceProtocol?
+    XCTAssertNil(resolveOpt)
+    
+//    let resolveCrash = container.resolve() as ServiceProtocol
+//    _ = resolveCrash
+  }
 }
 

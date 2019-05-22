@@ -15,7 +15,7 @@ public final class DIComponentBuilder<Impl> {
                                in: container.frameworkStack.last, container.partStack.last)
     self.componentContainer = container.componentContainer
     self.resolver = container.resolver
-    componentContainer.insert(TypeKey(by: Impl.self), component)
+    componentContainer.insert(TypeKey(by: unwrapType(Impl.self)), component)
 
     #if os(iOS) || os(tvOS)
       useInjectIntoSubviewComponent()
@@ -54,7 +54,7 @@ extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func `as`<Parent>(_ type: Parent.Type) -> Self {
-    componentContainer.insert(TypeKey(by: type), component)
+    componentContainer.insert(TypeKey(by: unwrapType(type)), component)
     return self
   }
   
@@ -71,7 +71,7 @@ extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func `as`<Parent, Tag>(_ type: Parent.Type, tag: Tag.Type) -> Self {
-    componentContainer.insert(TypeKey(by: type, tag: tag), component)
+    componentContainer.insert(TypeKey(by: unwrapType(type), tag: tag), component)
     return self
   }
   
@@ -90,7 +90,7 @@ extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func `as`<Parent>(_ type: Parent.Type, name: String) -> Self {
-    componentContainer.insert(TypeKey(by: type, name: name), component)
+    componentContainer.insert(TypeKey(by: unwrapType(type), name: name), component)
     return self
   }
   
