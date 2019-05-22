@@ -1,3 +1,7 @@
+# v3.7.1
+* Fully support optional register. `c.register { optionalValue }` now can correct resolve.
+* Improve logs for optional register if optional is nil.
+
 # v3.7.0
 * Fix `register1` - now only `register`
 * Sorry. Stop support swift 3.x
