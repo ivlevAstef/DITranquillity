@@ -21,17 +21,10 @@ class LoggerPart: DIPart {
     container.register{ ServerLogger(server: "http://server.com/") }
       .as(check: Logger.self){$0}
       .lifetime(.single)
-    
-    #if swift(>=4.0)
-    container.register1{ MainLogger(loggers: many($0)) }
-      .as(check: Logger.self){$0}
-      .default()
-      .lifetime(.single)
-    #else
+
     container.register{ MainLogger(loggers: many($0)) }
       .as(check: Logger.self){$0}
       .default()
       .lifetime(.single)
-    #endif
   }
 }

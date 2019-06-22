@@ -13,13 +13,8 @@ class AppPart: DIPart {
     container.registerStoryboard(name: "Main", bundle: nil)
       .lifetime(.single)
     
-    #if swift(>=4.0)
-    container.register1(YourPresenter.init)
-      .injection { $0.logger = $1 }
-    #else
     container.register(YourPresenter.init)
       .injection { $0.logger = $1 }
-    #endif
     
     container.register(YourViewController.self)
       .injection { $0.presenter = $1 }

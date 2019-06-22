@@ -78,10 +78,10 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test04_ResolveWithInitializerResolve() {
     let container = DIContainer()
     
-    container.register(FooService.init)
+    container.register(FooService.init())
       .as(check: ServiceProtocol.self){$0}
     
-    container.register(Inject.init)
+    container.register(Inject.init(service:))
     
     let inject: Inject = *container
     XCTAssertEqual(inject.service.foo(), "foo")
