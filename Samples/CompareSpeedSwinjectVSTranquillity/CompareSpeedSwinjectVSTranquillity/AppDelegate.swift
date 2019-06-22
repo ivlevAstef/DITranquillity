@@ -43,7 +43,7 @@ class PerformanceTest {
 }
 
 private let TestsCount = 50
-private let ResolveCount = 5000
+private let ResolveCount = 1500
 private let useAsync = false
 
 // NEW (3.5.2 vc 2.5.0)
@@ -131,15 +131,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     container.register(Ref4.init).lifetime(.prototype)
     container.register(Ref4_2.init).lifetime(.prototype)
 
-    #if swift(>=3.2)
-    container.register1(PerformanceParameter1.init)
-      .injection { $0.property = $1 }
-      .lifetime(.prototype)
-    #else
     container.register(PerformanceParameter1.init)
       .injection { $0.property = $1 }
       .lifetime(.prototype)
-    #endif
 
     container.register(PerformanceParameter2.init)
       .lifetime(.prototype)
@@ -187,32 +181,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     } else {
       moreTranquillity(container: container)
       for _ in 0..<ResolveCount {
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
-//        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
+        _ = container.resolve() as Ref1
         _ = container.resolve() as PerformanceTest
         _ = container.resolve() as PerformanceParameter1
         _ = container.resolve() as PerformanceParameter3
@@ -289,32 +283,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     } else {
       moreSwinject(container: container)
       for _ in 0..<ResolveCount {
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
 
         _ = container.resolve(PerformanceTest.self)!
         _ = container.resolve(PerformanceParameter1.self)!
@@ -387,32 +381,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     } else {
       moreAutoSwinject(container: container)
       for _ in 0..<ResolveCount {
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
-//        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
+        _ = container.resolve(Ref1.self)!
         _ = container.resolve(PerformanceTest.self)!
         _ = container.resolve(PerformanceParameter1.self)!
         _ = container.resolve(PerformanceParameter3.self)!
