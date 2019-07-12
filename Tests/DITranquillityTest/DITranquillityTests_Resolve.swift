@@ -78,7 +78,7 @@ class DITranquillityTests_Resolve: XCTestCase {
   func test04_ResolveWithInitializerResolve() {
     let container = DIContainer()
     
-    container.register(FooService.init())
+    container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
     container.register(Inject.init(service:))
@@ -239,6 +239,30 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssertEqual(services.count, 2)
     XCTAssertNotEqual(services[0].foo(), services[1].foo())
   }
+
+    func test12_ResolveMultiplyManyOrder() {
+        let container = DIContainer()
+
+        container.register(FooService.init)
+            .as(ServiceProtocol.self)
+        container.register(BarService.init)
+            .as(ServiceProtocol.self)
+        container.register(FooService.init)
+            .as(ServiceProtocol.self)
+        container.register(FooService.init)
+            .as(ServiceProtocol.self)
+        container.register(BarService.init)
+            .as(ServiceProtocol.self)
+
+        let services: [ServiceProtocol] = container.resolveMany()
+        XCTAssertEqual(services.count, 5)
+
+        XCTAssert(services[0] is FooService)
+        XCTAssert(services[1] is BarService)
+        XCTAssert(services[2] is FooService)
+        XCTAssert(services[3] is FooService)
+        XCTAssert(services[4] is BarService)
+    }
   
   func test13_ResolveCircular2() {
     let container = DIContainer()

@@ -188,7 +188,7 @@ class Resolver {
 
     if parsedType.hasMany {
       assert(nil == object, "Many injection not supported")
-      return components.compactMap{ makeObject(by: $0, use: nil) }
+      return components.sorted{ $0.order < $1.order }.compactMap{ makeObject(by: $0, use: nil) }
     }
 
     if let component = components.first, 1 == components.count {

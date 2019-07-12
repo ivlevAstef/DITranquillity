@@ -49,6 +49,8 @@ final class ComponentContainer {
   private let mutex = PThreadMutex(normal: ())
 }
 
+private var componentsCount: Int = 0
+private let componentsCountSynchronizer = makeFastLock()
 
 final class Component {
   typealias UniqueKey = DIComponentInfo
@@ -57,6 +59,11 @@ final class Component {
     self.info = componentInfo
     self.framework = framework
     self.part = part
+
+    componentsCountSynchronizer.lock()
+    componentsCount += 1
+    self.order = componentsCount
+    componentsCountSynchronizer.unlock()
   }
 	
   let info: DIComponentInfo
@@ -66,6 +73,7 @@ final class Component {
   
   let framework: DIFramework.Type?
   let part: DIPart.Type?
+  let order: Int
   
   var lifeTime = DILifeTime.default
   var isDefault: Bool = false

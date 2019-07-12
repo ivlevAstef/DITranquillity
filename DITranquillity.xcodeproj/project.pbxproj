@@ -57,6 +57,9 @@
 		BAB89712209210FE009274F8 /* UIViewController+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB89708209210EF009274F8 /* UIViewController+Swizzling.m */; };
 		BAB897142092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB897132092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift */; };
 		BABB21242126DC58000F8743 /* DITranquillityTests_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABB21202126DC1B000F8743 /* DITranquillityTests_Extensions.swift */; };
+		BAD9C77B22D8651A00AD3261 /* Multithread.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD9C77A22D8651A00AD3261 /* Multithread.swift */; };
+		BAD9C77C22D8651A00AD3261 /* Multithread.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD9C77A22D8651A00AD3261 /* Multithread.swift */; };
+		BAD9C77D22D8651A00AD3261 /* Multithread.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD9C77A22D8651A00AD3261 /* Multithread.swift */; };
 		BADC36A4215BA9A900CEC778 /* DITranquillityTests_Parent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADC36A3215BA9A900CEC778 /* DITranquillityTests_Parent.swift */; };
 		D57961691F526FBA0079DE8C /* StoryboardContainerMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961681F526FBA0079DE8C /* StoryboardContainerMap.swift */; };
 		D579616A1F526FBA0079DE8C /* StoryboardContainerMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57961681F526FBA0079DE8C /* StoryboardContainerMap.swift */; };
@@ -126,9 +129,6 @@
 		FDF4D2292215A6C5008A82E0 /* TypeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1E82215A6C5008A82E0 /* TypeKey.swift */; };
 		FDF4D22A2215A6C5008A82E0 /* TypeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1E82215A6C5008A82E0 /* TypeKey.swift */; };
 		FDF4D22B2215A6C5008A82E0 /* TypeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1E82215A6C5008A82E0 /* TypeKey.swift */; };
-		FDF4D22C2215A6C5008A82E0 /* Synchronize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1E92215A6C5008A82E0 /* Synchronize.swift */; };
-		FDF4D22D2215A6C5008A82E0 /* Synchronize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1E92215A6C5008A82E0 /* Synchronize.swift */; };
-		FDF4D22E2215A6C5008A82E0 /* Synchronize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1E92215A6C5008A82E0 /* Synchronize.swift */; };
 		FDF4D22F2215A6C5008A82E0 /* ProtocolMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1EA2215A6C5008A82E0 /* ProtocolMagic.swift */; };
 		FDF4D2302215A6C5008A82E0 /* ProtocolMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1EA2215A6C5008A82E0 /* ProtocolMagic.swift */; };
 		FDF4D2312215A6C5008A82E0 /* ProtocolMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1EA2215A6C5008A82E0 /* ProtocolMagic.swift */; };
@@ -236,6 +236,7 @@
 		BAB89708209210EF009274F8 /* UIViewController+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Swizzling.m"; sourceTree = "<group>"; };
 		BAB897132092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DIComponentBuilder+SubviewsInject.swift"; sourceTree = "<group>"; };
 		BABB21202126DC1B000F8743 /* DITranquillityTests_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Extensions.swift; sourceTree = "<group>"; };
+		BAD9C77A22D8651A00AD3261 /* Multithread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Multithread.swift; sourceTree = "<group>"; };
 		BADC36A3215BA9A900CEC778 /* DITranquillityTests_Parent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Parent.swift; sourceTree = "<group>"; };
 		D57961681F526FBA0079DE8C /* StoryboardContainerMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardContainerMap.swift; sourceTree = "<group>"; };
 		D579616C1F52BA160079DE8C /* DIStoryboardBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIStoryboardBase.h; sourceTree = "<group>"; };
@@ -265,7 +266,6 @@
 		FDF4D1E52215A6C5008A82E0 /* DIContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		FDF4D1E62215A6C5008A82E0 /* DIContainer+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DIContainer+Extensions.swift"; sourceTree = "<group>"; };
 		FDF4D1E82215A6C5008A82E0 /* TypeKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeKey.swift; sourceTree = "<group>"; };
-		FDF4D1E92215A6C5008A82E0 /* Synchronize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Synchronize.swift; sourceTree = "<group>"; };
 		FDF4D1EA2215A6C5008A82E0 /* ProtocolMagic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolMagic.swift; sourceTree = "<group>"; };
 		FDF4D1EB2215A6C5008A82E0 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		FDF4D1EC2215A6C5008A82E0 /* MethodSignature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodSignature.swift; sourceTree = "<group>"; };
@@ -542,10 +542,10 @@
 		FDF4D1E72215A6C5008A82E0 /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				BAD9C77A22D8651A00AD3261 /* Multithread.swift */,
 				FDF4D1E82215A6C5008A82E0 /* TypeKey.swift */,
 				FDF4D2622215AA75008A82E0 /* ParsedType.swift */,
 				FDF4D2632215AA75008A82E0 /* SpecificType.swift */,
-				FDF4D1E92215A6C5008A82E0 /* Synchronize.swift */,
 				BAA1EB402293A988009FB5A5 /* GlobalState.swift */,
 				FDF4D1EA2215A6C5008A82E0 /* ProtocolMagic.swift */,
 				FDF4D1EB2215A6C5008A82E0 /* Log.swift */,
@@ -784,7 +784,6 @@
 				FDF4D2122215A6C5008A82E0 /* DIComponentBuilder.Injection.swift in Sources */,
 				BA823B4021396435003B5E7B /* ViewController+Children.swift in Sources */,
 				FDF4D2062215A6C5008A82E0 /* SwiftLazy.swift in Sources */,
-				FDF4D22D2215A6C5008A82E0 /* Synchronize.swift in Sources */,
 				FDF4D2212215A6C5008A82E0 /* DITypes.swift in Sources */,
 				D57961831F52C2BD0079DE8C /* DIStoryboard.swift in Sources */,
 				FDF4D2362215A6C5008A82E0 /* MethodSignature.swift in Sources */,
@@ -807,6 +806,7 @@
 				FDF4D2242215A6C5008A82E0 /* DIContainer.swift in Sources */,
 				FDF4D2092215A6C5008A82E0 /* DISettings.swift in Sources */,
 				FDF4D23C2215A6C5008A82E0 /* ExtensionsContainer.swift in Sources */,
+				BAD9C77C22D8651A00AD3261 /* Multithread.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -824,6 +824,7 @@
 				FDF4D2252215A6C5008A82E0 /* DIContainer.swift in Sources */,
 				FDF4D2372215A6C5008A82E0 /* MethodSignature.swift in Sources */,
 				FDF4D2492215A6C5008A82E0 /* Modificators.swift in Sources */,
+				BAD9C77D22D8651A00AD3261 /* Multithread.swift in Sources */,
 				BAB896FC209204B4009274F8 /* DINSResolver.m in Sources */,
 				FDF4D23D2215A6C5008A82E0 /* ExtensionsContainer.swift in Sources */,
 				BA7B966E20AA146600BE9F99 /* DIComponentBuilder+SubviewsInject.swift in Sources */,
@@ -852,7 +853,6 @@
 				FDF4D20A2215A6C5008A82E0 /* DISettings.swift in Sources */,
 				FDF4D2402215A6C5008A82E0 /* MethodMaker.swift in Sources */,
 				D579618A1F52C4BC0079DE8C /* UIStoryboard+Swizzling.m in Sources */,
-				FDF4D22E2215A6C5008A82E0 /* Synchronize.swift in Sources */,
 				FDF4D2282215A6C5008A82E0 /* DIContainer+Extensions.swift in Sources */,
 				FDF4D2342215A6C5008A82E0 /* Log.swift in Sources */,
 				FDF4D26A2215AA75008A82E0 /* SpecificType.swift in Sources */,
@@ -863,7 +863,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FDF4D22C2215A6C5008A82E0 /* Synchronize.swift in Sources */,
 				BAB897142092110D009274F8 /* DIComponentBuilder+SubviewsInject.swift in Sources */,
 				FDF4D2322215A6C5008A82E0 /* Log.swift in Sources */,
 				D57961851F52C2BD0079DE8C /* StoryboardResolver.swift in Sources */,
@@ -902,6 +901,7 @@
 				FDF4D2232215A6C5008A82E0 /* DIContainer.swift in Sources */,
 				FDF4D2642215AA75008A82E0 /* ParsedType.swift in Sources */,
 				FDF4D2292215A6C5008A82E0 /* TypeKey.swift in Sources */,
+				BAD9C77B22D8651A00AD3261 /* Multithread.swift in Sources */,
 				FDF4D24A2215A6C5008A82E0 /* Component.swift in Sources */,
 				BAB8970D209210EF009274F8 /* UIViewController+Swizzling.m in Sources */,
 				FDF4D23B2215A6C5008A82E0 /* ExtensionsContainer.swift in Sources */,
