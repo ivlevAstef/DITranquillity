@@ -6,6 +6,7 @@
 //  Copyright © 2019 Alexander Ivlev. All rights reserved.
 //
 
+import Foundation
 
 class GlobalState {
   private static let lastComponentKey = "GlobalState_Last_Component\(UUID().uuidString)"
