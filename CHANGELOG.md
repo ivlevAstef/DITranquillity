@@ -1,3 +1,6 @@
+# v3.7.3
+* Fix "swift build" command compillation error
+
 # v3.7.2
 * Support order for many
 
