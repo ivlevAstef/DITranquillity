@@ -1,6 +1,9 @@
 # v3.7.3
 * Fix "swift build" command compillation error
 
+# v3.7.2
+* Support order for many
+
 # v3.7.1
 * Fully support optional register. `c.register { optionalValue }` now can correct resolve.
 * Improve logs for optional register if optional is nil.
