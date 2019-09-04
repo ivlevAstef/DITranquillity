@@ -970,7 +970,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_SWIFT_FLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillity;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-OSX";
 				PRODUCT_NAME = DITranquillity;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -1004,7 +1004,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_SWIFT_FLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillity;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-OSX";
 				PRODUCT_NAME = DITranquillity;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -1039,7 +1039,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_SWIFT_FLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillity;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-tvOS";
 				PRODUCT_MODULE_NAME = DITranquillity;
 				PRODUCT_NAME = DITranquillity;
 				SDKROOT = appletvos;
@@ -1076,7 +1076,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_SWIFT_FLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillity;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-tvOS";
 				PRODUCT_MODULE_NAME = DITranquillity;
 				PRODUCT_NAME = DITranquillity;
 				SDKROOT = appletvos;
@@ -1232,7 +1232,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_SWIFT_FLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillity;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-iOS";
 				PRODUCT_NAME = DITranquillity;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -1243,7 +1243,7 @@
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
-				VALID_ARCHS = "arm64e x86_64";
+				VALID_ARCHS = "arm64 armv7 arm64e armv7s";
 			};
 			name = Debug;
 		};
@@ -1269,7 +1269,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_SWIFT_FLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sia.DITranquillity;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-iOS";
 				PRODUCT_NAME = DITranquillity;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -1279,7 +1279,7 @@
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
-				VALID_ARCHS = "arm64e x86_64";
+				VALID_ARCHS = "arm64 armv7 arm64e armv7s";
 			};
 			name = Release;
 		};
