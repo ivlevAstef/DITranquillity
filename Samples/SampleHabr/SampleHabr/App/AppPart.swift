@@ -10,7 +10,7 @@ import DITranquillity
 
 class AppPart: DIPart {
   static func load(container: DIContainer) {
-    container.registerStoryboard(name: "Main", bundle: nil)
+    container.registerStoryboard(name: "Main")
       .lifetime(.single)
     
     container.register(YourPresenter.init)

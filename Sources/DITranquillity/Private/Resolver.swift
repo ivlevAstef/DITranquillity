@@ -14,19 +14,19 @@ class Resolver {
     self.container = container // unowned
   }
   
-  func resolve<T>(type: T.Type = T.self, name: String? = nil, from bundle: Bundle? = nil) -> T {
+  func resolve<T>(type: T.Type = T.self, name: String? = nil, from framework: DIFramework.Type? = nil) -> T {
     let pType = ParsedType(type: type)
     log(.verbose, msg: "Begin resolve \(description(type: pType))", brace: .begin)
     defer { log(.verbose, msg: "End resolve \(description(type: pType))", brace: .end) }
     
-    return gmake(by: make(by: pType, with: name, from: bundle, use: nil))
+    return gmake(by: make(by: pType, with: name, from: framework, use: nil))
   }
   
-  func injection<T>(obj: T, from bundle: Bundle? = nil) {
+  func injection<T>(obj: T, from framework: DIFramework.Type? = nil) {
     log(.verbose, msg: "Begin injection in obj: \(obj)", brace: .begin)
     defer { log(.verbose, msg: "End injection in obj: \(obj)", brace: .end) }
 
-    _ = make(by: ParsedType(obj: obj), with: nil, from: bundle, use: obj)
+    _ = make(by: ParsedType(obj: obj), with: nil, from: framework, use: obj)
   }
 
   
@@ -52,50 +52,51 @@ class Resolver {
   ///   - name: a name
   ///   - bundle: bundle from whic the call is made
   /// - Returns: components
-  func findComponents(by parsedType: ParsedType, with name: String?, from bundle: Bundle?) -> Components {
-    let components = Resolver.findComponents(by: parsedType, with: name, from: bundle, in: container)
+  func findComponents(by parsedType: ParsedType, with name: String?, from framework: DIFramework.Type?) -> Components {
+    let components = Resolver.findComponents(by: parsedType, with: name, from: framework, in: container)
     if let parent = container.parent {
       if components.isEmpty {
-        return parent.resolver.findComponents(by: parsedType, with: name, from: bundle)
+        return parent.resolver.findComponents(by: parsedType, with: name, from: framework)
       }
 
       if parsedType.hasMany
       {
-        let parentComponents = parent.resolver.findComponents(by: parsedType, with: name, from: bundle)
+        let parentComponents = parent.resolver.findComponents(by: parsedType, with: name, from: framework)
         return components + parentComponents
       }
     }
     return components
   }
 
-  private static func findComponents(by parsedType: ParsedType, with name: String?, from bundle: Bundle?, in container: DIContainer) -> Components {
+  private static func findComponents(by parsedType: ParsedType, with name: String?, from framework: DIFramework.Type?, in container: DIContainer) -> Components {
     func defaults(_ components: Components) -> Components {
       let filtering = ContiguousArray(components.filter{ $0.isDefault })
       return filtering.isEmpty ? components : filtering
     }
     
-    func filter(by bundle: Bundle?, _ components: Components) -> Components {
+    func filter(by framework: DIFramework.Type?, _ components: Components) -> Components {
       if components.count <= 1 {
         return components
       }
       
       /// check into self bundle
-      if let bundle = bundle {
+      if let framework = framework {
         /// get all components in bundle
-        let filteredByBundle = ContiguousArray(components.filter{ $0.bundle.map{ bundle == $0 } ?? false })
+        let filteredByFramework = ContiguousArray(components.filter{ $0.framework.map{ framework == $0 } ?? false })
         
         func componentsIsNeedReturn(_ components: Components) -> Components? {
           let filtered = defaults(components)
           return 1 == filtered.count ? filtered : nil
         }
         
-        if let components = componentsIsNeedReturn(filteredByBundle) {
+        if let components = componentsIsNeedReturn(filteredByFramework) {
           return components
         }
         
         /// get direct dependencies
+        let bundle = DIBundle(framework: framework)
         let childs = container.bundleContainer.childs(for: bundle)
-        let filteredByChilds = ContiguousArray(components.filter{ $0.bundle.map{ childs.contains($0) } ?? false })
+        let filteredByChilds = ContiguousArray(components.filter{ $0.framework.map{ childs.contains(DIBundle(framework: $0)) } ?? false })
         
         if let components = componentsIsNeedReturn(filteredByChilds) {
           return components
@@ -110,7 +111,7 @@ class Resolver {
     /// real type without many, tags, optional
     let simpleType = parsedType.base
     var components = Set<Component>()
-    var filterByBundle: Bool = true
+    var filterByFramework: Bool = true
 
     var first: Bool = true
     repeat {
@@ -118,7 +119,7 @@ class Resolver {
       if let sType = type.sType, let parent = type.parent {
         if sType.many {
             currentComponents = container.componentContainer[ShortTypeKey(by: simpleType.type)]
-            filterByBundle = filterByBundle && sType.inBundle /// filter
+            filterByFramework = filterByFramework && sType.inFramework /// filter
         } else if sType.tag {
             currentComponents = container.componentContainer[TypeKey(by: simpleType.type, tag: sType.tagType)]
         } else {
@@ -138,8 +139,8 @@ class Resolver {
       
     } while type != simpleType
     
-    if filterByBundle {
-      return filter(by: bundle, Components(components))
+    if filterByFramework {
+      return filter(by: framework, Components(components))
     }
     
     return Components(components)
@@ -158,8 +159,8 @@ class Resolver {
     mutex.sync { cache.containerStorage.clean() }
   }
   
-  private func make(by parsedType: ParsedType, with name: String?, from bundle: Bundle?, use object: Any?) -> Any? {
-    var components: Components = findComponents(by: parsedType, with: name, from: bundle)
+  private func make(by parsedType: ParsedType, with name: String?, from framework: DIFramework.Type?, use object: Any?) -> Any? {
+    var components: Components = findComponents(by: parsedType, with: name, from: framework)
 
     return mutex.sync {
       if parsedType.hasMany {
@@ -307,7 +308,7 @@ class Resolver {
         } else if parameter.parsedType.arg {
           makedObject = getArgumentObject()
         } else {
-          makedObject = make(by: parameter.parsedType, with: parameter.name, from: component.bundle, use: nil)
+          makedObject = make(by: parameter.parsedType, with: parameter.name, from: component.framework, use: nil)
         }
         
         if nil != makedObject || parameter.parsedType.hasOptional {

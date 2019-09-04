@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1648C621231F805400A3F6B5 /* DIBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648C620231F805400A3F6B5 /* DIBundle.swift */; };
+		1648C622231F805400A3F6B5 /* DIBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648C620231F805400A3F6B5 /* DIBundle.swift */; };
+		1648C623231F805400A3F6B5 /* DIBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648C620231F805400A3F6B5 /* DIBundle.swift */; };
 		16640A881D9E1E7B00707BFC /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		169C0DDF1DA3501F001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		169C0E451DA35CBE001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -200,6 +203,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1648C620231F805400A3F6B5 /* DIBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIBundle.swift; sourceTree = "<group>"; };
 		16640A6B1D9E1E7B00707BFC /* DITranquillity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DITranquillity.h; sourceTree = "<group>"; };
 		169C0DE51DA3501F001F0AD5 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		169C0E1C1DA355A6001F0AD5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -498,6 +502,7 @@
 			children = (
 				FDF4D1D62215A6C5008A82E0 /* DIFramework.swift */,
 				FDF4D1D72215A6C5008A82E0 /* DIPart.swift */,
+				1648C620231F805400A3F6B5 /* DIBundle.swift */,
 			);
 			path = Hierarchy;
 			sourceTree = "<group>";
@@ -778,6 +783,7 @@
 				FDF4D2332215A6C5008A82E0 /* Log.swift in Sources */,
 				FDF4D2032215A6C5008A82E0 /* DIPart.swift in Sources */,
 				FDF4D2482215A6C5008A82E0 /* Modificators.swift in Sources */,
+				1648C622231F805400A3F6B5 /* DIBundle.swift in Sources */,
 				BAB896CB2091FC48009274F8 /* NSObject+Swizzling.m in Sources */,
 				FDF4D21B2215A6C5008A82E0 /* DIExtensions.swift in Sources */,
 				FDF4D2392215A6C5008A82E0 /* Resolver.swift in Sources */,
@@ -818,6 +824,7 @@
 				FDF4D2162215A6C5008A82E0 /* DIContainer.Reg.swift in Sources */,
 				FDF4D24C2215A6C5008A82E0 /* Component.swift in Sources */,
 				FDF4D20D2215A6C5008A82E0 /* DIComponentBuilder.swift in Sources */,
+				1648C623231F805400A3F6B5 /* DIBundle.swift in Sources */,
 				FDF4D2662215AA75008A82E0 /* ParsedType.swift in Sources */,
 				FDF4D2222215A6C5008A82E0 /* DITypes.swift in Sources */,
 				FDF4D2132215A6C5008A82E0 /* DIComponentBuilder.Injection.swift in Sources */,
@@ -871,6 +878,7 @@
 				BA823B3F21396435003B5E7B /* ViewController+Children.swift in Sources */,
 				FDF4D2752215AA7D008A82E0 /* DILifetime.swift in Sources */,
 				FDF4D2142215A6C5008A82E0 /* DIContainer.Reg.swift in Sources */,
+				1648C621231F805400A3F6B5 /* DIBundle.swift in Sources */,
 				FDF4D2112215A6C5008A82E0 /* DIComponentBuilder.Injection.swift in Sources */,
 				FDF4D2082215A6C5008A82E0 /* DISettings.swift in Sources */,
 				FDF4D2442215A6C5008A82E0 /* BundleContainer.swift in Sources */,

@@ -130,10 +130,10 @@ extension DIContainer {
   /// Can crash application, if can't found the type.
   /// But if the type is optional, then the application will not crash, but it returns nil.
   ///
-  /// - Parameter bundle: Bundle from which to resolve a object
+  /// - Parameter framework: Framework from which to resolve a object
   /// - Returns: Object for the specified type, or nil (see description).
-  public func resolve<T>(from bundle: Bundle? = nil) -> T {
-    return resolver.resolve(from: bundle)
+  public func resolve<T>(from framework: DIFramework.Type? = nil) -> T {
+    return resolver.resolve(from: framework)
   }
   
   /// Resolve object by type with tag.
@@ -142,10 +142,10 @@ extension DIContainer {
   ///
   /// - Parameters:
   ///   - tag: Resolve tag.
-  ///   - bundle: Bundle from which to resolve a object
+  ///   - framework: Framework from which to resolve a object
   /// - Returns: Object for the specified type with tag, or nil (see description).
-  public func resolve<T, Tag>(tag: Tag.Type, from bundle: Bundle? = nil) -> T {
-    return by(tag: tag, on: resolver.resolve(from: bundle))
+  public func resolve<T, Tag>(tag: Tag.Type, from framework: DIFramework.Type? = nil) -> T {
+    return by(tag: tag, on: resolver.resolve(from: framework))
   }
   
   /// Resolve object by type with name.
@@ -154,10 +154,10 @@ extension DIContainer {
   ///
   /// - Parameters:
   ///   - name: Resolve name.
-  ///   - bundle: Bundle from which to resolve a object
+  ///   - framework: Framework from which to resolve a object
   /// - Returns: Object for the specified type with name, or nil (see description).
-  public func resolve<T>(name: String, from bundle: Bundle? = nil) -> T {
-    return resolver.resolve(name: name, from: bundle)
+  public func resolve<T>(name: String, from framework: DIFramework.Type? = nil) -> T {
+    return resolver.resolve(name: name, from: framework)
   }
   
   /// Resolve many objects by type.
@@ -172,9 +172,9 @@ extension DIContainer {
   ///
   /// - Parameters:
   ///   - object: object in which injections will be introduced.
-  ///   - bundle: Bundle from which to injection into object
-  public func inject<T>(into object: T, from bundle: Bundle? = nil) {
-    _ = resolver.injection(obj: object, from: bundle)
+  ///   - framework: Framework from which to injection into object
+  public func inject<T>(into object: T, from framework: DIFramework.Type? = nil) {
+    _ = resolver.injection(obj: object, from: framework)
   }
   
   /// Initialize registered object with lifetime `.single`
@@ -234,14 +234,14 @@ extension DIContainer {
     
     for component in components {
       let parameters = component.signatures.flatMap{ $0.parameters }
-      let bundle = component.bundle
+      let framework = component.framework
       
       for parameter in parameters {
         if parameter.parsedType.useObject {
           continue
         }
         
-        let candidates = resolver.findComponents(by: parameter.parsedType, with: parameter.name, from: bundle)
+        let candidates = resolver.findComponents(by: parameter.parsedType, with: parameter.name, from: framework)
         let filtered = resolver.removeWhoDoesNotHaveInitialMethod(components: candidates)
         
         let correct = 1 == filtered.count || parameter.parsedType.hasMany
@@ -318,7 +318,7 @@ extension DIContainer {
         return
       }
       
-      let bundle = component.bundle
+      let framework = component.framework
       
       var visited = visited
       visited.insert(component)
@@ -326,7 +326,7 @@ extension DIContainer {
       
       func callDfs(by parameters: [MethodSignature.Parameter], initial: Bool, cycle: Bool) {
         for parameter in parameters {
-          let candidates = resolver.findComponents(by: parameter.parsedType, with: parameter.name, from: bundle)
+          let candidates = resolver.findComponents(by: parameter.parsedType, with: parameter.name, from: framework)
           if candidates.isEmpty {
             continue
           }

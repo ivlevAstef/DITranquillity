@@ -81,27 +81,27 @@ public func many<T>(_ obj: DIMany<T>) -> [T] {
   return obj._objects
 }
 
-/// Short syntax for get many objects in bundle
+/// Short syntax for get many objects in framework
 /// Using:
 /// ```
-/// let objects: [YourType] = manyInBundle(*container)
+/// let objects: [YourType] = manyInFramework(*container)
 /// ```
 /// also can using in injection or init:
 /// ```
-/// .injection{ $0.property = manyInBundle($1) }
+/// .injection{ $0.property = manyInFramework($1) }
 /// ```
 ///
 /// - Parameter obj: resolving objects
 /// - Returns: resolved objects
-public func manyInBundle<T>(_ obj: DIManyInBundle<T>) -> [T] {
+public func manyInFramework<T>(_ obj: DIManyInFramework<T>) -> [T] {
   return obj._objects
 }
 
 /// Special class for resolve many object. see method: `many`
 public final class DIMany<T>: InternalByMany<T> {}
 
-/// Special class for resolve many object in bundle. see method: `manyInBundle`
-public final class DIManyInBundle<T>: InternalByManyInBundle<T> {}
+/// Special class for resolve many object in framework. see method: `manyInFramework`
+public final class DIManyInFramework<T>: InternalByManyInFramework<T> {}
 
 
 /// Short syntax for get object use arguments
