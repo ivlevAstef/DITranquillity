@@ -14,7 +14,7 @@
     <a title="DIStoryboard Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">DITranquillity Docs</a> (89% documented)</p>
+        <p><a href="../index.html">DITranquillity 3.8.0 Docs</a> (88% documented)</p>
         <p class="header-right"><a href="https://github.com/ivlevAstef/DITranquillity"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2FivlevAstef%2FDITranquillity%2Fcode%2Fdocsets%2FDITranquillity%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -57,7 +57,7 @@
                 <a href="../Classes.html#/s:14DITranquillity6DIManyC">DIMany</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes.html#/s:14DITranquillity14DIManyInBundleC">DIManyInBundle</a>
+                <a href="../Classes.html#/s:14DITranquillity17DIManyInFrameworkC">DIManyInFramework</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/DIScope.html">DIScope</a>
@@ -72,7 +72,7 @@
                 <a href="../Classes.html#/s:14DITranquillity14InternalByManyC">InternalByMany</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes.html#/s:14DITranquillity22InternalByManyInBundleC">InternalByManyInBundle</a>
+                <a href="../Classes.html#/s:14DITranquillity25InternalByManyInFrameworkC">InternalByManyInFramework</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes.html#/s:14DITranquillity13InternalByTagC">InternalByTag</a>
@@ -141,7 +141,7 @@
                 <a href="../Functions.html#/s:14DITranquillity4manyySayxGAA6DIManyCyxGlF">many(_:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Functions.html#/s:14DITranquillity12manyInBundleySayxGAA06DIManycD0CyxGlF">manyInBundle(_:)</a>
+                <a href="../Functions.html#/s:14DITranquillity15manyInFrameworkySayxGAA06DIManycD0CyxGlF">manyInFramework(_:)</a>
               </li>
             </ul>
           </li>
@@ -231,7 +231,7 @@ When initializing itself, it finds a container and other information about the s
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">bundle</span> <span class="nv">storyboardBundleOrNil</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">DIStoryboard</span></code></pre>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">DIStoryboard</span></code></pre>
 
                         </div>
                       </div>
@@ -254,12 +254,12 @@ When initializing itself, it finds a container and other information about the s
                             <tr>
                               <td>
                                 <code>
-                                <em>storyboardBundleOrNil</em>
+                                <em>bundle</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The bundle containing the storyboard file and its resources. Specify nil to use the main bundle.</p>
+                                  <p>The bundle containing the storyboard file and its resources.</p>
                                 </div>
                               </td>
                             </tr>
@@ -296,7 +296,7 @@ When initializing itself, it finds a container and other information about the s
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">bundle</span> <span class="nv">storyboardBundleOrNil</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?,</span> <span class="nv">container</span><span class="p">:</span> <span class="kt"><a href="../Classes/DIContainer.html">DIContainer</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">DIStoryboard</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?,</span> <span class="nv">container</span><span class="p">:</span> <span class="kt"><a href="../Classes/DIContainer.html">DIContainer</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">DIStoryboard</span></code></pre>
 
                         </div>
                       </div>
@@ -313,18 +313,6 @@ When initializing itself, it finds a container and other information about the s
                               <td>
                                 <div>
                                   <p>The name of the storyboard resource file without the filename extension.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>storyboardBundleOrNil</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The bundle containing the storyboard file and its resources. Specify nil to use the main bundle.</p>
                                 </div>
                               </td>
                             </tr>
@@ -348,7 +336,96 @@ When initializing itself, it finds a container and other information about the s
                         <p>The new instane of <code>DIStoryboard</code>.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Storyboard/DIStoryboard.swift#L49-L53">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Storyboard/DIStoryboard.swift#L48-L50">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity12DIStoryboardC6create4name6bundle9framework9containerACSS_So8NSBundleCSgAA11DIFramework_pXpSgAA11DIContainerCtFZ"></a>
+                    <a name="//apple_ref/swift/Method/create(name:bundle:framework:container:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity12DIStoryboardC6create4name6bundle9framework9containerACSS_So8NSBundleCSgAA11DIFramework_pXpSgAA11DIContainerCtFZ">create(name:bundle:framework:container:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates new instance of <code>DIStoryboard</code>, with the specified container.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?,</span> <span class="nv">framework</span><span class="p">:</span> <span class="kt"><a href="../Protocols/DIFramework.html">DIFramework</a></span><span class="o">.</span><span class="k">Type</span><span class="p">?,</span> <span class="nv">container</span><span class="p">:</span> <span class="kt"><a href="../Classes/DIContainer.html">DIContainer</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">DIStoryboard</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>name</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the storyboard resource file without the filename extension.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>bundle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The bundle containing the storyboard file and its resources. Specify nil to use the main bundle.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>framework</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The framework containing the storyboard registration. Specify nil to find storyboard into all registrations.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>container</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The container with registrations of the view/window controllers in the storyboard ant their dependencies.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The new instane of <code>DIStoryboard</code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Storyboard/DIStoryboard.swift#L60-L68">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -402,7 +479,7 @@ The view controller and its child controllers have their dependencies injected a
                         <p>The instantiated view controller with its dependencies injected.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Storyboard/DIStoryboard.swift#L62-L66">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Storyboard/DIStoryboard.swift#L77-L81">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -432,8 +509,8 @@ The view/window controller and tis child controllers hase their dependencies inj
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2019-02-12)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2019 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2019-09-05)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.10.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
