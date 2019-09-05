@@ -158,6 +158,9 @@ class Resolver {
   }
   
   private func make(by parsedType: ParsedType, with name: String?, from framework: DIFramework.Type?, use object: Any?) -> Any? {
+    log(.verbose, msg: "Begin make \(description(type: parsedType))", brace: .begin)
+    defer { log(.verbose, msg: "End make \(description(type: parsedType))", brace: .end) }
+
     var components: Components = findComponents(by: parsedType, with: name, from: framework)
 
     return mutex.sync {

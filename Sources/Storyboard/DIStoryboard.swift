@@ -58,6 +58,10 @@ public final class DIStoryboard: _DIStoryboardBase {
   ///   - container: The container with registrations of the view/window controllers in the storyboard ant their dependencies.
   /// - Returns: The new instane of `DIStoryboard`.
   public class func create(name: String, bundle: Bundle?, framework: DIFramework.Type?, container: DIContainer) -> DIStoryboard {
+    let bundle = bundle ?? framework.flatMap { Bundle(for: $0) }
+    log(.verbose, msg: "Begin create storyboard by name '\(name)' in bundle: '\(bundle?.bundleIdentifier ?? "nil")'", brace: .begin)
+    defer { log(.verbose, msg: "Finish create storyboard with name '\(name)'", brace: .end) }
+
     let storyboard = DIStoryboard._create(name, bundle: bundle)
     storyboard.resolver = StoryboardResolver(container: container, framework: framework)
     return storyboard
