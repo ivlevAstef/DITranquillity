@@ -1,3 +1,9 @@
+# v3.8.0
+* remove bundle from DIFramework - now support found dependencies for static libralies
+
+# v3.7.4
+* fix carthage compilation
+
 # v3.7.3
 * Fix "swift build" command compillation error
 
