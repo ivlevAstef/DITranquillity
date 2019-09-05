@@ -46,9 +46,7 @@ public final class DIStoryboard: _DIStoryboardBase {
   ///   - container: The container with registrations of the view/window controllers in the storyboard ant their dependencies.
   /// - Returns: The new instane of `DIStoryboard`.
   public class func create(name: String, bundle: Bundle?, container: DIContainer) -> DIStoryboard {
-    let storyboard = DIStoryboard._create(name, bundle: bundle)
-    storyboard.resolver = StoryboardResolver(container: container, bundle: nil)
-    return storyboard
+    return create(name: name, bundle: bundle, framework: nil, container: container)
   }
 
   /// Creates new instance of `DIStoryboard`, with the specified container.
@@ -56,11 +54,12 @@ public final class DIStoryboard: _DIStoryboardBase {
   /// - Parameters:
   ///   - name: The name of the storyboard resource file without the filename extension.
   ///   - bundle: The bundle containing the storyboard file and its resources. Specify nil to use the main bundle.
+  ///   - framework: The framework containing the storyboard registration. Specify nil to find storyboard into all registrations.
   ///   - container: The container with registrations of the view/window controllers in the storyboard ant their dependencies.
   /// - Returns: The new instane of `DIStoryboard`.
-  public class func create(name: String, bundle: DIBundle?, container: DIContainer) -> DIStoryboard {
-    let storyboard = DIStoryboard._create(name, bundle: bundle?.bundle)
-    storyboard.resolver = StoryboardResolver(container: container, bundle: bundle)
+  public class func create(name: String, bundle: Bundle?, framework: DIFramework.Type?, container: DIContainer) -> DIStoryboard {
+    let storyboard = DIStoryboard._create(name, bundle: bundle)
+    storyboard.resolver = StoryboardResolver(container: container, framework: framework)
     return storyboard
   }
 
@@ -98,25 +97,6 @@ public final class DIStoryboard: _DIStoryboardBase {
 // MARK: - Storyboard maker
 extension DIContainer {
   #if os(iOS) || os(tvOS)
-  
-  /// Registers a new storyboard.
-  /// The storyboard can be created both from the code or use storyboard reference from otherwise a storyboard.
-  ///
-  /// - Parameters:
-  ///   - name: The name of the storyboard resource file without the filename extension.
-  ///   - bundle: The bundle containing the storyboard file and its resources.
-  /// - Returns: component builder, to configure the component
-  @discardableResult
-  public func registerStoryboard(name: String, bundle: DIBundle? = nil, file: String = #file, line: Int = #line) -> DIComponentBuilder<UIStoryboard> {
-    let bundle = bundle ?? self.frameworkStack.last?.bundle
-    let builder = register(file: file, line: line) {
-      DIStoryboard.create(name: name, bundle: bundle, container: $0) as UIStoryboard
-    }
-    builder.as(UIStoryboard.self, name: name)
-    
-    StoryboardContainerMap.instance.append(name: name, bundle: bundle?.bundle, component: builder.component, in: self)
-    return builder
-  }
 
   /// Registers a new storyboard.
   /// The storyboard can be created both from the code or use storyboard reference from otherwise a storyboard.
@@ -126,13 +106,10 @@ extension DIContainer {
   ///   - bundle: The bundle containing the storyboard file and its resources.
   /// - Returns: component builder, to configure the component
   @discardableResult
-  public func registerStoryboard(name: String, bundle: Bundle?, file: String = #file, line: Int = #line) -> DIComponentBuilder<UIStoryboard> {
-    let diBundle = self.frameworkStack.last?.bundle
+  public func registerStoryboard(name: String, bundle: Bundle? = nil, file: String = #file, line: Int = #line) -> DIComponentBuilder<UIStoryboard> {
+    let framework = frameworkStack.last
     let builder = register(file: file, line: line) { (container: DIContainer) -> UIStoryboard in
-      if let bundle = diBundle {
-        return DIStoryboard.create(name: name, bundle: bundle/*di bundle*/, container: container)
-      }
-      return DIStoryboard.create(name: name, bundle: bundle, container: container)
+      return DIStoryboard.create(name: name, bundle: bundle, framework: framework, container: container)
     }
     builder.as(UIStoryboard.self, name: name)
 
@@ -141,25 +118,6 @@ extension DIContainer {
   }
   
   #elseif os(OSX)
-  
-  /// Registers a new storyboard.
-  /// The storyboard can be created both from the code or use storyboard reference from otherwise a storyboard.
-  ///
-  /// - Parameters:
-  ///   - name: The name of the storyboard resource file without the filename extension.
-  ///   - bundle: The bundle containing the storyboard file and its resources.
-  /// - Returns: component builder, to configure the component
-  @discardableResult
-  public func registerStoryboard(name: String, bundle: DIBundle? = nil, file: String = #file, line: Int = #line) -> DIComponentBuilder<NSStoryboard> {
-    let bundle = bundle ?? self.frameworkStack.last?.bundle
-    let builder = register(file: file, line: line) {
-      DIStoryboard.create(name: name, bundle: bundle, container: $0) as NSStoryboard
-    }
-    builder.as(NSStoryboard.self, name: name)
-  
-    StoryboardContainerMap.instance.append(name: name, bundle: bundle?.bundle, component: builder.component, in: self)
-    return builder
-  }
 
   /// Registers a new storyboard.
   /// The storyboard can be created both from the code or use storyboard reference from otherwise a storyboard.
@@ -169,13 +127,10 @@ extension DIContainer {
   ///   - bundle: The bundle containing the storyboard file and its resources.
   /// - Returns: component builder, to configure the component
   @discardableResult
-  public func registerStoryboard(name: String, bundle: Bundle?, file: String = #file, line: Int = #line) -> DIComponentBuilder<NSStoryboard> {
-    let diBundle = self.frameworkStack.last?.bundle
+  public func registerStoryboard(name: String, bundle: Bundle? = nil, file: String = #file, line: Int = #line) -> DIComponentBuilder<NSStoryboard> {
+    let framework = frameworkStack.last
     let builder = register(file: file, line: line) { (container: DIContainer) -> NSStoryboard in
-      if let bundle = diBundle {
-        return DIStoryboard.create(name: name, bundle: bundle/*di bundle*/, container: container)
-      }
-      return DIStoryboard.create(name: name, bundle: bundle, container: container)
+      return DIStoryboard.create(name: name, bundle: bundle, framework: framework, container: container)
     }
     builder.as(NSStoryboard.self, name: name)
 

@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1648C621231F805400A3F6B5 /* DIBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648C620231F805400A3F6B5 /* DIBundle.swift */; };
-		1648C622231F805400A3F6B5 /* DIBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648C620231F805400A3F6B5 /* DIBundle.swift */; };
-		1648C623231F805400A3F6B5 /* DIBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648C620231F805400A3F6B5 /* DIBundle.swift */; };
 		16378709231FB93700881F8B /* SwiftLazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16378708231FB93700881F8B /* SwiftLazy.framework */; };
 		1637870B231FB93D00881F8B /* SwiftLazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1637870A231FB93D00881F8B /* SwiftLazy.framework */; };
 		1637870D231FB94300881F8B /* SwiftLazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1637870C231FB94300881F8B /* SwiftLazy.framework */; };
@@ -153,9 +150,9 @@
 		FDF4D2412215A6C5008A82E0 /* make_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = FDF4D1F02215A6C5008A82E0 /* make_autogenerate.sh */; };
 		FDF4D2422215A6C5008A82E0 /* make_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = FDF4D1F02215A6C5008A82E0 /* make_autogenerate.sh */; };
 		FDF4D2432215A6C5008A82E0 /* make_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = FDF4D1F02215A6C5008A82E0 /* make_autogenerate.sh */; };
-		FDF4D2442215A6C5008A82E0 /* BundleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1F12215A6C5008A82E0 /* BundleContainer.swift */; };
-		FDF4D2452215A6C5008A82E0 /* BundleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1F12215A6C5008A82E0 /* BundleContainer.swift */; };
-		FDF4D2462215A6C5008A82E0 /* BundleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1F12215A6C5008A82E0 /* BundleContainer.swift */; };
+		FDF4D2442215A6C5008A82E0 /* FrameworksDependenciesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1F12215A6C5008A82E0 /* FrameworksDependenciesContainer.swift */; };
+		FDF4D2452215A6C5008A82E0 /* FrameworksDependenciesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1F12215A6C5008A82E0 /* FrameworksDependenciesContainer.swift */; };
+		FDF4D2462215A6C5008A82E0 /* FrameworksDependenciesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1F12215A6C5008A82E0 /* FrameworksDependenciesContainer.swift */; };
 		FDF4D2472215A6C5008A82E0 /* Modificators.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1F22215A6C5008A82E0 /* Modificators.swift */; };
 		FDF4D2482215A6C5008A82E0 /* Modificators.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1F22215A6C5008A82E0 /* Modificators.swift */; };
 		FDF4D2492215A6C5008A82E0 /* Modificators.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1F22215A6C5008A82E0 /* Modificators.swift */; };
@@ -203,7 +200,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1648C620231F805400A3F6B5 /* DIBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIBundle.swift; sourceTree = "<group>"; };
 		16378702231FB75500881F8B /* SwiftLazy_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		16378704231FB75E00881F8B /* SwiftLazy_OSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy_OSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		16378706231FB76300881F8B /* SwiftLazy_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -283,7 +279,7 @@
 		FDF4D1EE2215A6C5008A82E0 /* ExtensionsContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionsContainer.swift; sourceTree = "<group>"; };
 		FDF4D1EF2215A6C5008A82E0 /* MethodMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodMaker.swift; sourceTree = "<group>"; };
 		FDF4D1F02215A6C5008A82E0 /* make_autogenerate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = make_autogenerate.sh; sourceTree = "<group>"; };
-		FDF4D1F12215A6C5008A82E0 /* BundleContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleContainer.swift; sourceTree = "<group>"; };
+		FDF4D1F12215A6C5008A82E0 /* FrameworksDependenciesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameworksDependenciesContainer.swift; sourceTree = "<group>"; };
 		FDF4D1F22215A6C5008A82E0 /* Modificators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Modificators.swift; sourceTree = "<group>"; };
 		FDF4D1F32215A6C5008A82E0 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		FDF4D2622215AA75008A82E0 /* ParsedType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsedType.swift; sourceTree = "<group>"; };
@@ -514,7 +510,6 @@
 			children = (
 				FDF4D1D62215A6C5008A82E0 /* DIFramework.swift */,
 				FDF4D1D72215A6C5008A82E0 /* DIPart.swift */,
-				1648C620231F805400A3F6B5 /* DIBundle.swift */,
 			);
 			path = Hierarchy;
 			sourceTree = "<group>";
@@ -571,7 +566,7 @@
 				FDF4D1EE2215A6C5008A82E0 /* ExtensionsContainer.swift */,
 				FDF4D1EF2215A6C5008A82E0 /* MethodMaker.swift */,
 				FDF4D1F02215A6C5008A82E0 /* make_autogenerate.sh */,
-				FDF4D1F12215A6C5008A82E0 /* BundleContainer.swift */,
+				FDF4D1F12215A6C5008A82E0 /* FrameworksDependenciesContainer.swift */,
 				FDF4D1F22215A6C5008A82E0 /* Modificators.swift */,
 				FDF4D1F32215A6C5008A82E0 /* Component.swift */,
 			);
@@ -795,7 +790,6 @@
 				FDF4D2332215A6C5008A82E0 /* Log.swift in Sources */,
 				FDF4D2032215A6C5008A82E0 /* DIPart.swift in Sources */,
 				FDF4D2482215A6C5008A82E0 /* Modificators.swift in Sources */,
-				1648C622231F805400A3F6B5 /* DIBundle.swift in Sources */,
 				BAB896CB2091FC48009274F8 /* NSObject+Swizzling.m in Sources */,
 				FDF4D21B2215A6C5008A82E0 /* DIExtensions.swift in Sources */,
 				FDF4D2392215A6C5008A82E0 /* Resolver.swift in Sources */,
@@ -811,7 +805,7 @@
 				FDF4D2652215AA75008A82E0 /* ParsedType.swift in Sources */,
 				FDF4D2272215A6C5008A82E0 /* DIContainer+Extensions.swift in Sources */,
 				FDF4D2762215AA7D008A82E0 /* DILifetime.swift in Sources */,
-				FDF4D2452215A6C5008A82E0 /* BundleContainer.swift in Sources */,
+				FDF4D2452215A6C5008A82E0 /* FrameworksDependenciesContainer.swift in Sources */,
 				FDF4D24B2215A6C5008A82E0 /* Component.swift in Sources */,
 				FDF4D2692215AA75008A82E0 /* SpecificType.swift in Sources */,
 				D57961941F52D37E0079DE8C /* NSStoryboard+Swizzling.m in Sources */,
@@ -836,7 +830,6 @@
 				FDF4D2162215A6C5008A82E0 /* DIContainer.Reg.swift in Sources */,
 				FDF4D24C2215A6C5008A82E0 /* Component.swift in Sources */,
 				FDF4D20D2215A6C5008A82E0 /* DIComponentBuilder.swift in Sources */,
-				1648C623231F805400A3F6B5 /* DIBundle.swift in Sources */,
 				FDF4D2662215AA75008A82E0 /* ParsedType.swift in Sources */,
 				FDF4D2222215A6C5008A82E0 /* DITypes.swift in Sources */,
 				FDF4D2132215A6C5008A82E0 /* DIComponentBuilder.Injection.swift in Sources */,
@@ -851,7 +844,7 @@
 				FDF4D21F2215A6C5008A82E0 /* DIModificators.swift in Sources */,
 				FDF4D2312215A6C5008A82E0 /* ProtocolMagic.swift in Sources */,
 				BAB896CF2091FCB8009274F8 /* SwiftNSResolver.swift in Sources */,
-				FDF4D2462215A6C5008A82E0 /* BundleContainer.swift in Sources */,
+				FDF4D2462215A6C5008A82E0 /* FrameworksDependenciesContainer.swift in Sources */,
 				D57961841F52C2BD0079DE8C /* DIStoryboard.swift in Sources */,
 				BA823B4121396435003B5E7B /* ViewController+Children.swift in Sources */,
 				BAB89712209210FE009274F8 /* UIViewController+Swizzling.m in Sources */,
@@ -890,10 +883,9 @@
 				BA823B3F21396435003B5E7B /* ViewController+Children.swift in Sources */,
 				FDF4D2752215AA7D008A82E0 /* DILifetime.swift in Sources */,
 				FDF4D2142215A6C5008A82E0 /* DIContainer.Reg.swift in Sources */,
-				1648C621231F805400A3F6B5 /* DIBundle.swift in Sources */,
 				FDF4D2112215A6C5008A82E0 /* DIComponentBuilder.Injection.swift in Sources */,
 				FDF4D2082215A6C5008A82E0 /* DISettings.swift in Sources */,
-				FDF4D2442215A6C5008A82E0 /* BundleContainer.swift in Sources */,
+				FDF4D2442215A6C5008A82E0 /* FrameworksDependenciesContainer.swift in Sources */,
 				FDF4D21A2215A6C5008A82E0 /* DIExtensions.swift in Sources */,
 				FDF4D26F2215AA7D008A82E0 /* DIStorage.swift in Sources */,
 				FDF4D2052215A6C5008A82E0 /* SwiftLazy.swift in Sources */,

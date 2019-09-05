@@ -37,7 +37,7 @@ public final class DIContainer {
   }
   
   internal let componentContainer = ComponentContainer()
-  internal let bundleContainer = BundleContainer()
+  internal let frameworksDependencies = FrameworksDependenciesContainer()
   internal let extensionsContainer = ExtensionsContainer()
   internal let parent: DIContainer?
   internal private(set) var resolver: Resolver!

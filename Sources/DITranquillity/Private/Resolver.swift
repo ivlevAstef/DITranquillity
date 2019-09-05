@@ -94,9 +94,7 @@ class Resolver {
         }
         
         /// get direct dependencies
-        let bundle = DIBundle(framework: framework)
-        let childs = container.bundleContainer.childs(for: bundle)
-        let filteredByChilds = ContiguousArray(components.filter{ $0.framework.map{ childs.contains(DIBundle(framework: $0)) } ?? false })
+        let filteredByChilds = container.frameworksDependencies.filterByChilds(for: framework, components: components)
         
         if let components = componentsIsNeedReturn(filteredByChilds) {
           return components
