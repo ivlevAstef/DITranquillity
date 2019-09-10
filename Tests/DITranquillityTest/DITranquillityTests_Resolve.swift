@@ -8,6 +8,7 @@
 
 import XCTest
 import DITranquillity
+import SwiftLazy
 
 private class ManyTest {
   var services: [ServiceProtocol] = []
@@ -228,41 +229,72 @@ class DITranquillityTests_Resolve: XCTestCase {
   
   func test12_ResolveMultiplyMany() {
     let container = DIContainer()
-    
+
     container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
-    
+
     container.register(BarService.init)
       .as(check: ServiceProtocol.self){$0}
-    
+
     let services: [ServiceProtocol] = container.resolveMany()
+
     XCTAssertEqual(services.count, 2)
     XCTAssertNotEqual(services[0].foo(), services[1].foo())
   }
 
-    func test12_ResolveMultiplyManyOrder() {
-        let container = DIContainer()
+  func test12_ResolveMultiplyLazyMany() {
+    let container = DIContainer()
 
-        container.register(FooService.init)
-            .as(ServiceProtocol.self)
-        container.register(BarService.init)
-            .as(ServiceProtocol.self)
-        container.register(FooService.init)
-            .as(ServiceProtocol.self)
-        container.register(FooService.init)
-            .as(ServiceProtocol.self)
-        container.register(BarService.init)
-            .as(ServiceProtocol.self)
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
 
-        let services: [ServiceProtocol] = container.resolveMany()
-        XCTAssertEqual(services.count, 5)
+    container.register(BarService.init)
+      .as(check: ServiceProtocol.self){$0}
 
-        XCTAssert(services[0] is FooService)
-        XCTAssert(services[1] is BarService)
-        XCTAssert(services[2] is FooService)
-        XCTAssert(services[3] is FooService)
-        XCTAssert(services[4] is BarService)
-    }
+    let services: [Lazy<ServiceProtocol>] = many(*container)
+
+    XCTAssertEqual(services.count, 2)
+    XCTAssertNotEqual(services[0].value.foo(), services[1].value.foo())
+  }
+
+  func test12_ResolveMultiplyProviderMany() {
+    let container = DIContainer()
+
+    container.register(FooService.init)
+      .as(check: ServiceProtocol.self){$0}
+
+    container.register(BarService.init)
+      .as(check: ServiceProtocol.self){$0}
+
+    let services: [Provider<ServiceProtocol>] = many(*container)
+
+    XCTAssertEqual(services.count, 2)
+    XCTAssertNotEqual(services[0].value.foo(), services[1].value.foo())
+  }
+
+  func test12_ResolveMultiplyManyOrder() {
+    let container = DIContainer()
+
+    container.register(FooService.init)
+        .as(ServiceProtocol.self)
+    container.register(BarService.init)
+        .as(ServiceProtocol.self)
+    container.register(FooService.init)
+        .as(ServiceProtocol.self)
+    container.register(FooService.init)
+        .as(ServiceProtocol.self)
+    container.register(BarService.init)
+        .as(ServiceProtocol.self)
+
+    let services: [ServiceProtocol] = container.resolveMany()
+    XCTAssertEqual(services.count, 5)
+
+    XCTAssert(services[0] is FooService)
+    XCTAssert(services[1] is BarService)
+    XCTAssert(services[2] is FooService)
+    XCTAssert(services[3] is FooService)
+    XCTAssert(services[4] is BarService)
+  }
   
   func test13_ResolveCircular2() {
     let container = DIContainer()

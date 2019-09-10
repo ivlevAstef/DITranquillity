@@ -172,12 +172,23 @@ class Resolver {
       if let delayMaker = parsedType.delayMaker {
         let saveGraph = cache.graph
 
-        return delayMaker.init(container, { () -> Any? in
-          return self.mutex.sync {
-            self.cache.graph = saveGraph
-            return self.make(by: parsedType, components: components, use: object)
+        func makeDelayMaker(by parsedType: ParsedType, components: Components) -> Any? {
+          return delayMaker.init(container, { () -> Any? in
+            return self.mutex.sync {
+              self.cache.graph = saveGraph
+              return self.make(by: parsedType, components: components, use: object)
+            }
+          })
+        }
+
+        if parsedType.hasMany, let subPType = parsedType.nextParsedTypeAfterManyOrBreakIfDelayed() {
+          // hard logic for support Many<Lazy<Type>> and Many<Provider<Type>> but Many<Many<Lazy<Type>>> not supported
+          return components.sorted{ $0.order < $1.order }.compactMap {
+            return makeDelayMaker(by: subPType, components: Components([$0]))
           }
-        })
+        } else {
+          return makeDelayMaker(by: parsedType, components: components)
+        }
       }
 
       return make(by: parsedType, components: components, use: object)
