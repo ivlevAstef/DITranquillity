@@ -1,3 +1,6 @@
+# v3.8.1
+* Support Many<Lazy<Type>>. For example: let objects: [Lazy<Service>] = many(*container)
+
 # v3.8.0
 * remove bundle from DIFramework - now support found dependencies for static libralies
 
