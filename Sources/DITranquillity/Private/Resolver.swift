@@ -120,8 +120,12 @@ class Resolver {
             filterByFramework = filterByFramework && sType.inFramework /// filter
         } else if sType.tag {
             currentComponents = container.componentContainer[TypeKey(by: simpleType.type, tag: sType.tagType)]
+        } else if sType.delayed {
+          // ignore - delayed type don't change components list
+          type = parent.firstNotSwiftType
+          continue
         } else {
-            currentComponents = container.componentContainer[TypeKey(by: simpleType.type)]
+          currentComponents = container.componentContainer[TypeKey(by: simpleType.type)]
         }
 
         type = parent.firstNotSwiftType
@@ -135,7 +139,7 @@ class Resolver {
       components = first ? currentComponents : components.intersection(currentComponents)
       first = false
       
-    } while type != simpleType
+    } while type != simpleType || first /*check on first need only for delayed types*/
     
     if filterByFramework {
       return filter(by: framework, Components(components))

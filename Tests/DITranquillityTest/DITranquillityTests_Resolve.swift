@@ -192,6 +192,26 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     XCTAssertNotEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar as AnyObject).toOpaque())
   }
+
+	func test10_ResolveMultiplyLazyProviderByTag() {
+		let container = DIContainer()
+
+		container.register(FooService.init)
+			.as(check: ServiceProtocol.self, tag: FooService.self){$0}
+			.lifetime(.single)
+
+		container.register(BarService.init)
+			.as(check: ServiceProtocol.self, tag: BarService.self){$0}
+			.lifetime(.single)
+
+		let serviceFoo: Lazy<ServiceProtocol> = container.resolve(tag: FooService.self)
+		XCTAssertEqual(serviceFoo.value.foo(), "foo")
+
+		let serviceBar: Provider<ServiceProtocol> = container.resolve(tag: BarService.self)
+		XCTAssertEqual(serviceBar.value.foo(), "bar")
+
+		XCTAssertNotEqual(Unmanaged.passUnretained(serviceFoo.value as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar.value as AnyObject).toOpaque())
+	}
   
   func test11_ResolveMultiplySingleByName() {
     let container = DIContainer()
@@ -552,6 +572,32 @@ class DITranquillityTests_Resolve: XCTestCase {
 		let serviceFooTag2: ServiceProtocol? = by(tag: FooService.self, on: by(tag: BarService.self, on: *container2))
 		XCTAssertEqual(serviceFooTag2?.foo() ?? "", "")
 	}
+
+	func test20_ResolveLazyByTagAndTag() {
+		let container1 = DIContainer()
+
+		container1.register(FooService.init)
+			.as(check: ServiceProtocol.self, tag: FooService.self){$0}
+			.as(check: ServiceProtocol.self, tag: BarService.self){$0}
+
+		let container2 = DIContainer()
+		container2.register(FooService.init)
+			.as(check: ServiceProtocol.self, tag: FooService.self){$0}
+
+
+		let serviceFoo1: Lazy<ServiceProtocol?> = container1.resolve(tag: FooService.self)
+		XCTAssertEqual(serviceFoo1.value?.foo() ?? "", "foo")
+
+		let serviceFoo2: Lazy<ServiceProtocol?> = container2.resolve(tag: FooService.self)
+		XCTAssertEqual(serviceFoo2.value?.foo() ?? "", "foo")
+
+
+		let serviceFooTag1: Lazy<ServiceProtocol?> = by(tag: FooService.self, on: by(tag: BarService.self, on: *container1))
+		XCTAssertEqual(serviceFooTag1.value?.foo() ?? "", "foo")
+
+		let serviceFooTag2: Lazy<ServiceProtocol?> = by(tag: FooService.self, on: by(tag: BarService.self, on: *container2))
+		XCTAssertEqual(serviceFooTag2.value?.foo() ?? "", "")
+	}
   
   func test20_ResolveByTagAndTagShort() {
     let container1 = DIContainer()
@@ -601,6 +647,32 @@ class DITranquillityTests_Resolve: XCTestCase {
 		let servicesByTag1: [ServiceProtocol] = many(by(tag: FooService.self, on: *container))
 		
 		XCTAssertEqual(servicesByTag1.count, 2)		
+	}
+
+	func test21_ResolveLazyByTagAndMany() {
+		let container = DIContainer()
+
+		container.register(FooService.init)
+			.as(check: ServiceProtocol.self, tag: FooService.self){$0}
+
+		container.register(BarService.init)
+			.as(check: ServiceProtocol.self, tag: FooService.self){$0}
+
+		container.register(FooService.init)
+			.as(check: ServiceProtocol.self){$0}
+
+		container.register(BarService.init)
+			.as(check: ServiceProtocol.self){$0}
+
+
+		let services: [Lazy<ServiceProtocol>] = container.resolveMany()
+		XCTAssertEqual(services.count, 4)
+		XCTAssertEqual(services.first?.value.foo() ?? "", "foo")
+
+		let servicesByTag1: [Lazy<ServiceProtocol>] = many(by(tag: FooService.self, on: *container))
+
+		XCTAssertEqual(servicesByTag1.count, 2)
+		XCTAssertEqual(servicesByTag1.last?.value.foo() ?? "", "bar")
 	}
 	
 	func test22_ResolveByTagTagAndMany() {

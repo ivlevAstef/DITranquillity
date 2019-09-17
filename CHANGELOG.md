@@ -1,5 +1,8 @@
+# v3.8.2
+* Support Lazy with tags, many and other combinations. for example: `let services: [Lazy<ServiceProtocol>] = many(by(tag: FooService.self, on: *container))`
+
 # v3.8.1
-* Support Many<Lazy<Type>>. For example: let objects: [Lazy<Service>] = many(*container)
+* Support Many<Lazy<Type>>. For example: `let objects: [Lazy<Service>] = many(*container)`
 
 # v3.8.0
 * remove bundle from DIFramework - now support found dependencies for static libralies
