@@ -1,3 +1,6 @@
+# v3.8.3
+* Now `initializeSingletonObjects` always resolved in the same order.
+
 # v3.8.2
 * Support Lazy with tags, many and other combinations. for example: `let services: [Lazy<ServiceProtocol>] = many(by(tag: FooService.self, on: *container))`
 
