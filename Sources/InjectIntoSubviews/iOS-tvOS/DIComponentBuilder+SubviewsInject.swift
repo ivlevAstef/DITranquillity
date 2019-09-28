@@ -8,10 +8,6 @@
 
 import UIKit
 
-extension DIComponentBuilder {
-  internal func useInjectIntoSubviewComponent() { }
-}
-
 extension DIComponentBuilder where Impl: UIViewController {
   internal func useInjectIntoSubviewComponent() {
     if DISetting.Defaults.injectToSubviews {
