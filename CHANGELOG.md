@@ -1,3 +1,6 @@
+# v3.8.4
+* Fix support swiftPM 
+
 # v3.8.3
 * Now `initializeSingletonObjects` always resolved in the same order.
 
