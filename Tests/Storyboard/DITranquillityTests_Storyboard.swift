@@ -483,6 +483,10 @@ class DITranquillityTests_Storyboard: XCTestCase {
     
     let testDataSource = CollectionViewTestDataSource()
     collectionVC.collectionView!.dataSource = testDataSource
+    // For proper dequeue calling
+    let window = UIWindow(frame: UIScreen.main.bounds)
+    window.rootViewController = collectionVC
+    window.makeKeyAndVisible()
 
     collectionVC.collectionView!.setNeedsLayout()
     collectionVC.collectionView!.layoutIfNeeded()

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-argmax=15
+argmax=35
 
 join() { local d=$1; shift; printf "$1"; shift; printf "%s" "${@/#/$d}"; }
 
@@ -22,8 +22,8 @@ local n=$((1+$1))
 local PType=$(join ',' ${numbers[@]/#/P})
 local MArg=$(join ',' $(replaceToArg numbers[@] "m(\$0[;I])"))
 
-echo "  static func make$n<$PType,R>(_ types: [DIAType], _ names: [String?]? = nil, by f: @escaping ($PType)->R) -> MethodSignature {
-    return MS(types, names){f($MArg)}
+echo "  static func make$n<$PType,R>(_ types: [DIAType], _ names: [String?]? = nil, by f: @escaping (($PType))->R) -> MethodSignature {
+    return MS(types, names){f(($MArg))}
   }
 " >> $2
 }
@@ -43,7 +43,7 @@ private typealias MS = MethodSignature
 struct MethodMaker {
 
   static func makeVoid<P0,R>(by f: @escaping (P0)->R) -> MethodSignature {
-    assert(P0.self is Void.Type, "makeVoid called not for Void type creation")
+    assert(P0.self is Void.Type, \"makeVoid called not for Void type creation\")
     return MS([]){_ in f(() as! P0)}
   }
 " > $1
