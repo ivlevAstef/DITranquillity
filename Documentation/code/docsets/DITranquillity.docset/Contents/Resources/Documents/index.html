@@ -13,7 +13,7 @@
     <a title="DITranquillity  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">DITranquillity Docs</a> (89% documented)</p>
+        <p><a href="index.html">DITranquillity 3.8.0 Docs</a> (88% documented)</p>
         <p class="header-right"><a href="https://github.com/ivlevAstef/DITranquillity"><img src="img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2FivlevAstef%2FDITranquillity%2Fcode%2Fdocsets%2FDITranquillity%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -56,7 +56,7 @@
                 <a href="Classes.html#/s:14DITranquillity6DIManyC">DIMany</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes.html#/s:14DITranquillity14DIManyInBundleC">DIManyInBundle</a>
+                <a href="Classes.html#/s:14DITranquillity17DIManyInFrameworkC">DIManyInFramework</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/DIScope.html">DIScope</a>
@@ -71,7 +71,7 @@
                 <a href="Classes.html#/s:14DITranquillity14InternalByManyC">InternalByMany</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes.html#/s:14DITranquillity22InternalByManyInBundleC">InternalByManyInBundle</a>
+                <a href="Classes.html#/s:14DITranquillity25InternalByManyInFrameworkC">InternalByManyInFramework</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes.html#/s:14DITranquillity13InternalByTagC">InternalByTag</a>
@@ -140,7 +140,7 @@
                 <a href="Functions.html#/s:14DITranquillity4manyySayxGAA6DIManyCyxGlF">many(_:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:14DITranquillity12manyInBundleySayxGAA06DIManycD0CyxGlF">manyInBundle(_:)</a>
+                <a href="Functions.html#/s:14DITranquillity15manyInFrameworkySayxGAA06DIManycD0CyxGlF">manyInFramework(_:)</a>
               </li>
             </ul>
           </li>
@@ -195,13 +195,11 @@
         <section>
           <section class="section">
             
-            <p><a href="https://travis-ci.org/ivlevAstef/DITranquillity"><img src="https://travis-ci.org/ivlevAstef/DITranquillity.svg?branch=master" alt="Travis CI"></a>
-<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible"></a>
+            <p><a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible"></a>
 <a href="http://cocoapods.org/pods/DITranquillity"><img src="https://img.shields.io/cocoapods/v/DITranquillity.svg?style=flat" alt="CocoaPods Version"></a>
 <a href="http://cocoapods.org/pods/DITranquillity"><img src="https://img.shields.io/github/license/ivlevAstef/DITranquillity.svg?maxAge=2592000" alt="License"></a>
 <a href="http://cocoapods.org/pods/DITranquillity"><img src="https://img.shields.io/cocoapods/p/DITranquillity.svg?style=flat" alt="Platform"></a>
-<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift-3.0--4.2-F16D39.svg?style=flat" alt="Swift Version"></a>
-<a href="https://codecov.io/gh/ivlevAstef/DITranquillity"><img src="https://codecov.io/gh/ivlevAstef/DITranquillity/branch/master/graph/badge.svg" alt="codecov"></a></p>
+<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift-3.0--5.0-F16D39.svg?style=flat" alt="Swift Version"></a></p>
 <h1 id='ditranquillity' class='heading'>DITranquillity</h1>
 
 <p>The small library for <a href="https://en.wikipedia.org/wiki/Dependency_injection">dependency injection</a> in applications written on pure Swift for iOS/OSX/tvOS. Despite its size, it solves a large enough range of tasks, including Storyboard support. Its main advantage -  modularity of support, detailed errors description and lots of opportunities.</p>
@@ -402,10 +400,11 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 <p>iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC</p>
 
 <ul>
+<li>Swift 5.0: Xcode 10.2; version &gt;= 3.6.3</li>
 <li>Swift 4.2: Xcode 10; version &gt;= 3.4.3</li>
 <li>Swift 4.1: Xcode 9.3; version &gt;= 3.2.3</li>
 <li>Swift 4.0: Xcode 9.0; version &gt;= 3.0.5</li>
-<li>Swift 3.0-3.2: Xcode 8.0-9.0; version &gt;= 0.9.5</li>
+<li>Swift 3.0-3.2: Xcode 8.0-9.0; 0.9.5 &lt;= version &lt; 3.7.0</li>
 <li>Swift 2.3: Xcode 7.0; version &lt; 0.9.5</li>
 </ul>
 <h2 id='migration' class='heading'>Migration</h2>
@@ -431,8 +430,8 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2019-02-12)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2019 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2019-09-05)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.10.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

@@ -67,10 +67,7 @@ final class Component {
   }
 	
   let info: DIComponentInfo
-  private(set) lazy var bundle: Bundle? = {
-    return framework?.bundle ?? getBundle(for: info.type)
-  }()
-  
+ 
   let framework: DIFramework.Type?
   let part: DIPart.Type?
   let order: Int

@@ -50,12 +50,12 @@ public class InternalByMany<T>: SpecificType {
   }
 }
 
-public class InternalByManyInBundle<T>: SpecificType {
+public class InternalByManyInFramework<T>: SpecificType {
   internal let _objects: [T]
   
   internal static var type: DIAType { return T.self }
   internal static var many: Bool { return true }
-  internal static var inBundle: Bool { return true }
+  internal static var inFramework: Bool { return true }
   
   #if swift(>=4.1.5)
   internal required init(objects: [T]) {

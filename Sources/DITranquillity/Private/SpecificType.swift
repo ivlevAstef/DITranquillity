@@ -15,7 +15,7 @@ protocol SpecificType {
     static var many: Bool { get }
     static var optional: Bool { get }
     static var delayed: Bool { get }
-    static var inBundle: Bool { get }
+    static var inFramework: Bool { get }
 
     static var tag: Bool { get }
     static var arg: Bool { get }
@@ -37,7 +37,7 @@ extension SpecificType {
     static var many: Bool { return false }
     static var optional: Bool { return false }
     static var delayed: Bool { return false }
-    static var inBundle: Bool { return false }
+    static var inFramework: Bool { return false }
 
     static var tag: Bool { return false }
     static var arg: Bool { return false }

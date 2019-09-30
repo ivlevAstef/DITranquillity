@@ -15,17 +15,17 @@
 
 /// The class responsible for injecting dependencies in the view/window controller.
 final class StoryboardResolver {
-  init(container: DIContainer, bundle: Bundle?) {
+  init(container: DIContainer, framework: DIFramework.Type?) {
     self.container = container
-    self.bundle = bundle ?? Bundle.main
+    self.framework = framework
   }
 
   #if os(iOS) || os(tvOS)
 
   func inject(into viewController: UIViewController) {
-    self.container.inject(into: viewController, from: bundle)
+    self.container.inject(into: viewController, from: framework)
     
-	for childVC in viewController.children {
+    for childVC in viewController.children {
       inject(into: childVC)
     }
   }
@@ -33,7 +33,7 @@ final class StoryboardResolver {
   #elseif os(OSX)
 
   func inject(into viewController: Any) {
-    self.container.inject(into: viewController, from: bundle)
+    self.container.inject(into: viewController, from: framework)
 
     if let windowController = viewController as? NSWindowController, let viewController = windowController.contentViewController {
       inject(into: viewController)
@@ -49,7 +49,7 @@ final class StoryboardResolver {
   #endif
 
   private let container: DIContainer
-  private let bundle: Bundle
+  private let framework: DIFramework.Type?
 }
 
 #endif

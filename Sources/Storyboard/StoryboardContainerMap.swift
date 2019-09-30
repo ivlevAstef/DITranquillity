@@ -38,7 +38,7 @@ private struct StoryboardInformation: Hashable {
       return false
     }
     
-    return lhs.isUniversal || rhs.isUniversal || lhs.bundle.bundlePath == rhs.bundle.bundlePath
+    return lhs.isUniversal || rhs.isUniversal || lhs.bundle == rhs.bundle
   }
 }
 

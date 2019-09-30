@@ -1,3 +1,21 @@
+# v3.8.4
+* Fix support swiftPM 
+
+# v3.8.3
+* Now `initializeSingletonObjects` always resolved in the same order.
+
+# v3.8.2
+* Support Lazy with tags, many and other combinations. for example: `let services: [Lazy<ServiceProtocol>] = many(by(tag: FooService.self, on: *container))`
+
+# v3.8.1
+* Support Many<Lazy<Type>>. For example: `let objects: [Lazy<Service>] = many(*container)`
+
+# v3.8.0
+* remove bundle from DIFramework - now support found dependencies for static libralies
+
+# v3.7.4
+* fix carthage compilation
+
 # v3.7.3
 * Fix "swift build" command compillation error
 

@@ -14,7 +14,7 @@
     <a title="DIFramework Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">DITranquillity Docs</a> (89% documented)</p>
+        <p><a href="../index.html">DITranquillity 3.8.0 Docs</a> (88% documented)</p>
         <p class="header-right"><a href="https://github.com/ivlevAstef/DITranquillity"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2FivlevAstef%2FDITranquillity%2Fcode%2Fdocsets%2FDITranquillity%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -57,7 +57,7 @@
                 <a href="../Classes.html#/s:14DITranquillity6DIManyC">DIMany</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes.html#/s:14DITranquillity14DIManyInBundleC">DIManyInBundle</a>
+                <a href="../Classes.html#/s:14DITranquillity17DIManyInFrameworkC">DIManyInFramework</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/DIScope.html">DIScope</a>
@@ -72,7 +72,7 @@
                 <a href="../Classes.html#/s:14DITranquillity14InternalByManyC">InternalByMany</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes.html#/s:14DITranquillity22InternalByManyInBundleC">InternalByManyInBundle</a>
+                <a href="../Classes.html#/s:14DITranquillity25InternalByManyInFrameworkC">InternalByManyInFramework</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes.html#/s:14DITranquillity13InternalByTagC">InternalByTag</a>
@@ -141,7 +141,7 @@
                 <a href="../Functions.html#/s:14DITranquillity4manyySayxGAA6DIManyCyxGlF">many(_:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Functions.html#/s:14DITranquillity12manyInBundleySayxGAA06DIManycD0CyxGlF">manyInBundle(_:)</a>
+                <a href="../Functions.html#/s:14DITranquillity15manyInFrameworkySayxGAA06DIManycD0CyxGlF">manyInFramework(_:)</a>
               </li>
             </ul>
           </li>
@@ -213,50 +213,6 @@ It isn&rsquo;t necessary to create several such classses on one framework - it w
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14DITranquillity11DIFrameworkP6bundleSo8NSBundleCvpZ"></a>
-                    <a name="//apple_ref/swift/Variable/bundle" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIFrameworkP6bundleSo8NSBundleCvpZ">bundle</a>
-                    </code>
-                      <span class="declaration-note">
-                        Default implementation
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>bundle which is a framework. Default picks based on where the class.
-But if the framework is statically link, it can be a problem, as all classes will be in the main bundle.
-To obtain the bundle name framework, used:</p>
-<pre class="highlight swift"><code><span class="kt">Bundle</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="kt">Bundle</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">privateFrameworksPath</span><span class="o">!</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="p">{</span><span class="kt">FRAMEWORK_NAME</span><span class="p">}</span> <span class="o">+</span> <span class="s">".framework"</span><span class="p">)</span>
-</code></pre>
-
-<p>This is the unsafe code, but you can rewrite it.</p>
-
-                      </div>
-                      <h4>Default Implementation</h4>
-                      <div class="default_impl abstract">
-                        <p>Default value</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Hierarchy/DIFramework.swift#L20">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:14DITranquillity11DIFrameworkP4load9containeryAA11DIContainerC_tFZ"></a>
                     <a name="//apple_ref/swift/Method/load(container:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:14DITranquillity11DIFrameworkP4load9containeryAA11DIContainerC_tFZ">load(container:)</a>
@@ -300,7 +256,7 @@ And call a class implementing the protocol according to this characteristics.</p
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Hierarchy/DIFramework.swift#L27">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Hierarchy/DIFramework.swift#L20">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -310,8 +266,8 @@ And call a class implementing the protocol according to this characteristics.</p
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2019-02-12)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2019 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2019-09-05)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.10.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

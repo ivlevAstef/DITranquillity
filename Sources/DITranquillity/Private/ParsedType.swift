@@ -66,6 +66,26 @@ final class ParsedType {
     self.init(type: Swift.type(of: (obj as Any)))
   }
 
+  func nextParsedTypeAfterManyOrBreakIfDelayed() -> ParsedType? {
+    var pType: ParsedType = self
+    repeat {
+      if pType.delayed {
+        return nil
+      }
+      if pType.many {
+        return pType.parent
+      }
+
+      if let parentType = pType.parent {
+        pType = parentType
+        continue
+      }
+      break
+    } while true
+
+    return nil
+  }
+
   @inline(__always)
   private func oGet(_ value1: Bool?, _ value2: @autoclosure () -> Bool?) -> Bool
   {
