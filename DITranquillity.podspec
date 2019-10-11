@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'DITranquillity'
-  s.version      = '3.8.3'
+  s.version      = '3.9.0'
   s.summary      = 'DITranquillity - Dependency injection for iOS/macOS/tvOS (Swift) '
 
   s.description  = <<-DESC
@@ -16,6 +16,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => 'https://github.com/ivlevAstef/DITranquillity.git', :tag => "v#{s.version}" }
 
   s.requires_arc = true
+  s.swift_version = '5.1'
 
   s.dependency 'SwiftLazy'
 

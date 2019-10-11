@@ -11,8 +11,8 @@ public class DIScope {
   /// Scope name. Used in logging
   public let name: String
 
-  internal let policy: DILifeTime.ReferenceCounting
-  internal let storage: DIStorage
+  internal var policy: DILifeTime.ReferenceCounting
+  internal var storage: DIStorage
 
   /// Make Scope. Scopes need for control lifetime of your objects
   ///
@@ -35,6 +35,35 @@ public class DIScope {
   /// Remove all saved objects
   public func clean() {
     self.storage.clean()
+  }
+
+  internal func toWeak() {
+    if policy == .weak {
+      return
+    }
+
+    let weakStorage = DICacheStorage()
+    for (key, value) in storage.any {
+      weakStorage.save(object: Weak<Any>(value: value), by: key)
+    }
+
+    policy = .weak
+    storage = weakStorage
+  }
+
+  internal func toStrongCopy() -> DIScope {
+    let strongStorage = DICacheStorage()
+    for (key, value) in storage.any {
+       if let weakRef = value as? Weak<Any> {
+        if let value = weakRef.value {
+          strongStorage.save(object: value, by: key)
+        }
+       } else {
+        strongStorage.save(object: value, by: key)
+      }
+    }
+
+    return DIScope(name: name, storage: strongStorage, policy: .strong, parent: nil)
   }
 }
 

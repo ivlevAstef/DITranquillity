@@ -8,6 +8,9 @@
 
 /// Universal protocol for contains objects by key
 public protocol DIStorage {
+  /// Return all storaged object if there is.
+  var any: [DIComponentInfo: Any] { get }
+
   /// Return storaged object if there is.
   ///
   /// - Parameters:
@@ -29,6 +32,10 @@ public protocol DIStorage {
 
 /// Contains objects in dictionary by keys
 public class DICacheStorage: DIStorage {
+  public var any: [DIComponentInfo: Any] {
+    return cache
+  }
+
   private var cache: [DIComponentInfo: Any] = [:]
 
   public init() {
@@ -50,6 +57,17 @@ public class DICacheStorage: DIStorage {
 
 /// Unite few storages for fetch from first containing and save to all.
 public class DICompositeStorage: DIStorage {
+  public var any: [DIComponentInfo: Any] {
+    var result: [DIComponentInfo: Any] = [:]
+    // reverse for first storage rewrite last storage if the same keys
+    for storage in storages.reversed() {
+      for (key, value) in storage.any {
+        result[key] = value
+      }
+    }
+    return result
+  }
+
   private let storages: [DIStorage]
 
   public init(storages: [DIStorage]) {
