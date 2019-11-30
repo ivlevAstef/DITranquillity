@@ -8,8 +8,7 @@
 
 import Foundation
 
-////// Weak reference
-
+/// Weak reference
 class Weak<T> {
   private weak var _value: AnyObject?
   
@@ -20,8 +19,16 @@ class Weak<T> {
   }
 }
 
-////// For remove optional type
+/// fix bug on xcode 11.2.1, and small improve speed. Don't use Weak<T> for any
+class WeakAny {
+  private(set) weak var value: AnyObject?
 
+  init(value: Any) {
+    self.value = value as AnyObject
+  }
+}
+
+/// For remove optional type
 extension Optional: SpecificType {
     static var type: DIAType { return Wrapped.self }
     static var isSwiftType: Bool { return true }
@@ -32,8 +39,7 @@ extension Optional: SpecificType {
     }
 }
 
-///// For optional make
-
+/// For optional make
 func gmake<T>(by obj: Any?) -> T {
   if let opt = T.self as? SpecificType.Type {
     guard let typedObject = opt.make(by: obj) as? T else { // it's always valid
@@ -82,7 +88,7 @@ func unwrapType(_ type: DIAType) -> DIAType {
   return iter
 }
 
-////// For simple log
+/// For simple log
 
 func description(type parsedType: ParsedType) -> String {
   if let sType = parsedType.sType {
@@ -95,7 +101,7 @@ func description(type parsedType: ParsedType) -> String {
   return "type: \(parsedType.type)"
 }
 
-////// for get bundle by type
+/// for get bundle by type
 
 #if swift(>=4.1)
 #else
@@ -107,7 +113,7 @@ extension Sequence {
 }
 #endif
 
-/// MARK: Swift 4.2
+// MARK: Swift 4.2
 
 #if swift(>=4.1.5)
 #else

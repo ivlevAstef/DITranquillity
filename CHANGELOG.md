@@ -1,3 +1,6 @@
+# v3.9.1
+* fix xcode 11.2.1 bug with Weak generic
+
 # v3.9.0
 * DANGER! changed logic for Provider and Lazy - now objectGraph object not retained for Provider and Lazy. It's remove potencial memory leak, but can changed your logic.
 

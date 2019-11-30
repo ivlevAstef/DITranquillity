@@ -230,7 +230,7 @@ class Resolver {
     
     func makeObject(scope: DIScope) -> Any? {
       var optCacheObject: Any? = scope.storage.fetch(key: uniqueKey)
-      if let weakRef = optCacheObject as? Weak<Any> {
+      if let weakRef = optCacheObject as? WeakAny {
         optCacheObject = weakRef.value
       }
       
@@ -249,7 +249,7 @@ class Resolver {
       }
       
       if let makedObject = makeObject() {
-        let objectForSave = (.weak == scope.policy) ? Weak<Any>(value: makedObject) : makedObject
+        let objectForSave = (.weak == scope.policy) ? WeakAny(value: makedObject) : makedObject
         scope.storage.save(object: objectForSave, by: uniqueKey)
         log(.verbose, msg: "Save object: \(makedObject) to scope \(scope.name)")
         return makedObject

@@ -44,7 +44,7 @@ public class DIScope {
 
     let weakStorage = DICacheStorage()
     for (key, value) in storage.any {
-      weakStorage.save(object: Weak<Any>(value: value), by: key)
+      weakStorage.save(object: WeakAny(value: value), by: key)
     }
 
     policy = .weak
@@ -54,7 +54,7 @@ public class DIScope {
   internal func toStrongCopy() -> DIScope {
     let strongStorage = DICacheStorage()
     for (key, value) in storage.any {
-       if let weakRef = value as? Weak<Any> {
+       if let weakRef = value as? WeakAny {
         if let value = weakRef.value {
           strongStorage.save(object: value, by: key)
         }
