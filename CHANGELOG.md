@@ -1,3 +1,6 @@
+# v3.9.2
+* fix graph validate - now validation not checked arguments
+
 # v3.9.1
 * fix xcode 11.2.1 bug with Weak generic
 

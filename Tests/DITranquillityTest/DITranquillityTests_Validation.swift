@@ -286,4 +286,13 @@ class DITranquillityTests_Build: XCTestCase {
     
     XCTAssert(!container.validate())
   }
+
+  func test07_args() {
+    let container = DIContainer()
+
+    container.register { RCycle(arg($0)) }
+      .lifetime(.prototype)
+
+    XCTAssert(container.validate())
+  }
 }

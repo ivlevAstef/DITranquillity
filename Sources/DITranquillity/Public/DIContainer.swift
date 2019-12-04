@@ -237,7 +237,7 @@ extension DIContainer {
       let framework = component.framework
       
       for parameter in parameters {
-        if parameter.parsedType.useObject {
+        if parameter.parsedType.useObject || parameter.parsedType.arg {
           continue
         }
         
