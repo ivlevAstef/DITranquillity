@@ -213,7 +213,7 @@ extension DIContainer {
   @discardableResult
   public func validate(checkGraphCycles isCheckGraphCycles: Bool = true) -> Bool {
     let components = componentContainer.components
-    return checkGraph(components) && (!isCheckGraphCycles || checkGraphCycles(components))
+    return checkGraph(components) && (!isCheckGraphCycles || validate(components))
   }
 }
 
@@ -272,6 +272,110 @@ extension DIContainer {
     return successfull
   }
 
+  func validate(_ components: [Component]) -> Bool {
+    var success: Bool = true
+    var globalVisited: Set<Component> = []
+    
+    typealias Stack = (component: Component, initial: Bool, cycle: Bool, many: Bool)
+    
+    func process(node component: Component, visited: Set<Component>, stack: [Stack]) {
+      defer { globalVisited.insert(component) }
+      if visited.contains(component) {
+        func isValidCycle() -> Bool {
+          
+          func getGapStack() -> (hasGap: Bool, stack: [Stack])  {
+            var result = [Stack]()
+            var stackContainsGap = false
+            for (index, stackItem) in stack.reversed().enumerated() {
+              if stackItem.component == component && index > 0 {
+                break
+              }
+              stackContainsGap = stackContainsGap || (stackItem.cycle || (stackItem.initial && stackItem.many))
+              result.append(stackItem)
+            }
+            return (stackContainsGap, result.reversed())
+          }
+          
+          let (hasGap, gapStack) = getGapStack()
+          let infos = gapStack.map{ $0.component.info }
+          let short = infos.map{ "\($0.type)" }.joined(separator: " - ")
+          
+          let allInitials = !gapStack.contains{ !($0.initial && !$0.many) }
+          if allInitials {
+            log(.error, msg: "You have a cycle: \(short) consisting entirely of initialization methods. Full: \(infos)")
+            return false
+          }
+          
+          if !hasGap {
+            log(.error, msg: "Cycle has no discontinuities. Please install at least one explosion in the cycle: \(short) using `injection(cycle: true) { ... }`. Full: \(infos)")
+            return false
+          }
+          
+          let allPrototypes = !stack.contains{ $0.component.lifeTime != .prototype }
+          if allPrototypes {
+            log(.error, msg: "You cycle: \(short) consists only of object with lifetime - prototype. Please change at least one object lifetime to another. Full: \(infos)")
+            return false
+          }
+          
+          let containsPrototype = stack.contains{ $0.component.lifeTime == .prototype }
+          if containsPrototype {
+            log(.info, msg: "You cycle: \(short) contains an object with lifetime - prototype. In some cases this can lead to an udesirable effect.  Full: \(infos)")
+          }
+          
+          return true
+        }
+        
+        success = isValidCycle() && success
+        return
+        
+      } else {
+        let framework = component.framework
+        
+        var visited = visited
+        visited.insert(component)
+        
+        func callDfs(by parameters: [MethodSignature.Parameter], initial: Bool, cycle: Bool) {
+          for parameter in parameters {
+            let candidates = resolver.findComponents(by: parameter.parsedType, with: parameter.name, from: framework)
+            if candidates.isEmpty {
+              continue
+            }
+            
+            let filtered = candidates.filter {
+             (nil != $0.initial || ($0.lifeTime != .prototype && visited.contains($0)))
+            }
+            let many = parameter.parsedType.hasMany
+            for subcomponent in filtered {
+              var stack = stack
+              stack.append((subcomponent, initial, cycle || parameter.parsedType.hasDelayed, many))
+              process(node: subcomponent, visited: visited, stack: stack)
+            }
+          }
+        }
+        
+        if let initial = component.initial {
+          callDfs(by: initial.parameters, initial: true, cycle: false)
+        }
+        
+        for injection in component.injections {
+          callDfs(by: injection.signature.parameters, initial: false, cycle: injection.cycle)
+        }
+      }
+    }
+    
+    
+    for component in components {
+      if globalVisited.contains(component) {
+        continue
+      }
+      let stack = [(component, false, false, false)]
+      process(node: component, visited: [], stack: stack)
+    }
+    
+    return success
+  }
+  
+  
   fileprivate func checkGraphCycles(_ components: [Component]) -> Bool {
     var success: Bool = true
     
