@@ -278,12 +278,12 @@ extension DIContainer {
     
     typealias Stack = (component: Component, initial: Bool, cycle: Bool, many: Bool, hasDelayed: Bool)
     
-    func dfs(component: Component, visited: Set<Component>, stack: [Stack]) {
+    func processUsingDFS(node component: Component, visited: Set<Component>, stack: [Stack]) {
       defer { globalVisited.insert(component) }
       if visited.contains(component) {
         func isValidCycle() -> Bool {
           
-          func getGapStack() -> (hasGap: Bool, stack: [Stack])  {
+          func getCycledSubsequence() -> (hasGap: Bool, stack: [Stack])  {
             var result = [Stack]()
             var stackContainsGap = false
             for (index, stackItem) in stack.reversed().enumerated() {
@@ -296,11 +296,11 @@ extension DIContainer {
             return (stackContainsGap, result.reversed())
           }
           
-          let (hasGap, gapStack) = getGapStack()
-          let infos = gapStack.map{ $0.component.info }
+          let (hasGap, cycledStack) = getCycledSubsequence()
+          let infos = cycledStack.map{ $0.component.info }
           let short = infos.map{ "\($0.type)" }.joined(separator: " - ")
           
-          let allInitials = !gapStack.contains{ !$0.initial || $0.many || $0.hasDelayed }
+          let allInitials = !cycledStack.contains{ !$0.initial || $0.many || $0.hasDelayed }
           if allInitials {
             log(.error, msg: "You have a cycle: \(short) consisting entirely of initialization methods. Full: \(infos)")
             return false
@@ -334,31 +334,34 @@ extension DIContainer {
         var visited = visited
         visited.insert(component)
         
-        func callDfs(by parameters: [MethodSignature.Parameter], initial: Bool, cycle: Bool) {
-          for parameter in parameters {
-            let candidates = resolver.findComponents(by: parameter.parsedType, with: parameter.name, from: framework)
-            if candidates.isEmpty {
-              continue
-            }
-            
-            let filtered = candidates.filter {
-             (nil != $0.initial || ($0.lifeTime != .prototype && visited.contains($0)))
-            }
-            let many = parameter.parsedType.hasMany
-            for subcomponent in filtered {
-              var stack = stack
-              stack.append((subcomponent, initial, cycle || parameter.parsedType.hasDelayed, many, parameter.parsedType.hasDelayed))
-              dfs(component: subcomponent, visited: visited, stack: stack)
-            }
+        func processParameter(_ parameter: MethodSignature.Parameter, initial: Bool, cycle: Bool) {
+          let candidates = resolver.findComponents(by: parameter.parsedType, with: parameter.name, from: framework)
+          if candidates.isEmpty {
+            return
+          }
+          
+          let filtered = candidates.filter {
+           (nil != $0.initial || ($0.lifeTime != .prototype && visited.contains($0)))
+          }
+          let many = parameter.parsedType.hasMany
+          for subcomponent in filtered {
+            var stack = stack
+            stack.append((subcomponent, initial, cycle || parameter.parsedType.hasDelayed, many, parameter.parsedType.hasDelayed))
+            processUsingDFS(node: subcomponent, visited: visited, stack: stack)
           }
         }
         
         if let initial = component.initial {
-          callDfs(by: initial.parameters, initial: true, cycle: false)
+          for parameter in initial.parameters {
+            processParameter(parameter, initial: true, cycle: false)
+          }
         }
         
         for injection in component.injections {
-          callDfs(by: injection.signature.parameters, initial: false, cycle: injection.cycle)
+          for parameter in injection.signature.parameters {
+            processParameter(parameter, initial: false, cycle: injection.cycle)
+          }
+          
         }
       }
     }
@@ -369,7 +372,7 @@ extension DIContainer {
         continue
       }
       let stack = [(component, false, false, false, false)]
-      dfs(component: component, visited: [], stack: stack)
+      processUsingDFS(node: component, visited: [], stack: stack)
     }
     
     return success
