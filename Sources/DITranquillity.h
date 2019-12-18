@@ -19,10 +19,6 @@ FOUNDATION_EXPORT const unsigned char DITranquillityVersionString[];
 #import "DIStoryboardBase.h"
 #endif
 
-#endif
-
-#if TARGET_OS_IOS || TARGET_OS_TV
-
 #if __has_include(<DITranquillity/DINSResolver.h>)
 #import <DITranquillity/DINSResolver.h>
 #elif __has_include("DINSResolver.h")

@@ -3,7 +3,7 @@
     "pins": [
       {
         "package": "SwiftLazy",
-        "repositoryURL": "https://github.com/ivlevAstef/SwiftLazy.git",
+        "repositoryURL": "https://github.com/ivlevAstef/SwiftLazy",
         "state": {
           "branch": null,
           "revision": "988bd1bc5850115a8f3ae20e4db937963b076960",

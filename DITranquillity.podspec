@@ -24,24 +24,30 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = '9.0'
   s.osx.deployment_target = '10.10'
 
-  core_h = 'Sources/DITranquillity.h'
-  core_src = 'Sources/DITranquillity/**/*.swift'
-  core_objc_src = 'Sources/Core/**/*.{h,m}'
-  hierarchy_src = 'Sources/DITranquillity/Hierarchy/*.swift'
-  extensions_src = 'Sources/DITranquillity/Extensions/*.swift'
+  s.subspec 'Core' do |s_core|
+    core_h = 'Sources/DITranquillity.h'
+    core_src = 'Sources/Core/**/*.swift'
+  
+    s_core.source_files = core_h, core_src
+  end
 
-  iis_h = 'Sources/InjectIntoSubviews/*.h'
-  iis_src = 'Sources/InjectIntoSubviews/*.{h,m,swift}'
-  iis_iOStvOS_src = 'Sources/InjectIntoSubviews/iOS-tvOS/*.{h,m,swift}'
+  s.subspec 'UIKit' do |s_uikit|
+    uikit_swizzling = 'Sources/UIKit/Swizzling/*.{h,m,swift}'
 
-  story_src = 'Sources/Storyboard/*.swift'
-  story_iOStvOS_h = 'Sources/Storyboard/iOS-tvOS/*.h'
-  story_iOStvOS_src = 'Sources/Storyboard/iOS-tvOS/*.{h,m}'
-  story_OSX_h = 'Sources/Storyboard/OSX/*.h'
-  story_OSX_src = 'Sources/Storyboard/OSX/*.{h,m}'
+    uikit_storyboard = 'Sources/UIKit/Storyboard/*.{h,m,swift}'
+    uikit_storyboard_OSX = 'Sources/UIKit/Storyboard/OSX/*.{h,m,swift}'
+    uikit_storyboard_iOStvOS = 'Sources/UIKit/Storyboard/iOS-tvOS/*.{h,m,swift}'
 
-  s.ios.source_files = core_h, core_src, core_objc_src, hierarchy_src, extensions_src, iis_src, iis_iOStvOS_src, story_src, story_iOStvOS_src
-  s.tvos.source_files = core_h, core_src, core_objc_src, hierarchy_src, extensions_src, iis_src, iis_iOStvOS_src, story_src, story_iOStvOS_src
-  s.osx.source_files = core_h, core_src, core_objc_src, hierarchy_src, extensions_src, story_src, story_OSX_src
+    uikit_injectintosubviews = 'Sources/UIKit/InjectIntoSubviews/*.{h,m,swift}'
+    uikit_injectintosubviews_iOStvOS = 'Sources/UIKit/InjectIntoSubviews/iOS-tvOS/*.{h,m,swift}'
+
+    s_uikit.dependency 'DITranquillity/Core'
+    s_uikit.source_files = uikit_swizzling, uikit_storyboard, uikit_injectintosubviews
+    s_uikit.ios.source_files = uikit_storyboard_iOStvOS, uikit_injectintosubviews_iOStvOS
+    s_uikit.tvos.source_files = uikit_storyboard_iOStvOS, uikit_injectintosubviews_iOStvOS
+    s_uikit.osx.source_files = uikit_storyboard_OSX
+  end
+
+  s.default_subspec = 'Core', 'UIKit'
 
 end
