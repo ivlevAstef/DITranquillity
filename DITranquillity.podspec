@@ -48,6 +48,6 @@ Pod::Spec.new do |s|
     s_uikit.osx.source_files = uikit_storyboard_OSX
   end
 
-  s.default_subspec = 'Core', 'UIKit'
+  s.default_subspec = 'Core'
 
 end
