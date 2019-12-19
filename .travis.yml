@@ -31,17 +31,17 @@ matrix:
       script:
         - carthage bootstrap
         - carthage update
-    - env: JOB="XCODE_macOS" DEST="arch=x86_64" SCHEME="DITranquillity-macOS" SDK="macosx" ACTION="build" PLATFORM="OSX" ENABLE_TESTABILITY=NO
+    - env: JOB="XCODE_OSX" DEST="arch=x86_64" SCHEME="DITranquillity-OSX" SDK="macosx" ACTION="build" PLATFORM="OSX" ENABLE_TESTABILITY=NO
       osx_image: xcode11.2
-    - env: JOB="XCODE_tvOS" DEST="OS=10.0,name=Apple TV 1080p" SCHEME="DITranquillity-tvOS" SDK="appletvsimulator" ACTION="build" PLATFORM="tvOS" ENABLE_TESTABILITY=NO
+    - env: JOB="XCODE_tvOS" DEST="OS=13.2,name=Apple TV 4K" SCHEME="DITranquillity-tvOS" SDK="appletvsimulator" ACTION="build" PLATFORM="tvOS" ENABLE_TESTABILITY=NO
       osx_image: xcode11.2
-    - env: JOB="XCODE_watchOS" DEST="OS=2.2,name=Apple Watch - 42mm" SCHEME="DITranquillity-watchOS" SDK="watchsimulator" ACTION="build" PLATFORM="watchOS" ENABLE_TESTABILITY=NO
+    - env: JOB="XCODE_watchOS" DEST="OS=5.0,name=Apple Watch Series 4 - 40mm" SCHEME="DITranquillity-WatchOS" SDK="watchsimulator" ACTION="build" PLATFORM="watchOS" ENABLE_TESTABILITY=NO
       osx_image: xcode11.2
-    - env: JOB="XCODE_iOS" DEST="OS=13.0,name=iPhone 11" SCHEME="DITranquillity-iOS" SDK="iphonesimulator" ACTION="test" PLATFORM="iOS" ENABLE_TESTABILITY=YES
+    - env: JOB="XCODE_iOS" DEST="OS=13.2,name=iPhone 11" SCHEME="DITranquillity-iOS" SDK="iphonesimulator" ACTION="test" PLATFORM="iOS" ENABLE_TESTABILITY=YES
       osx_image: xcode11.2
+      after_success:
+        - bash <(curl -s https://codecov.io/bash) -J 'DITranquillity' -t 878c72a2-ad50-4fd2-84bf-1fe4fba5d260
 
 script:
   - set -o pipefail
   - xcodebuild "$ACTION" -workspace "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DEST" -configuration Release ENABLE_TESTABILITY=$ENABLE_TESTABILITY ONLY_ACTIVE_ARCH=NO | xcpretty
-after_success:
-  - bash <(curl -s https://codecov.io/bash) -t -J 'DITranquillity' -n 'DITranquillity' -t 878c72a2-ad50-4fd2-84bf-1fe4fba5d260

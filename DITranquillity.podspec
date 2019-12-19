@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.swift_version = '5.1'
 
-  s.dependency 'SwiftLazy'
+  s.dependency 'SwiftLazy', '>= 1.1.6'
 
   s.ios.deployment_target = '8.0'
   s.tvos.deployment_target = '9.0'
@@ -42,14 +42,12 @@ Pod::Spec.new do |s|
     ui_injectintosubviews = 'Sources/UI/InjectIntoSubviews/*.{h,m,swift}'
     ui_injectintosubviews_iOStvOS = 'Sources/UI/InjectIntoSubviews/iOS-tvOS/*.{h,m,swift}'
 
-    ui_core = ui_swizzling, ui_storyboard, ui_injectintosubviews
-
     s_ui.dependency 'DITranquillity/Core'
 
-    s_ui.ios.source_files = ui_core, ui_storyboard_iOStvOS, ui_injectintosubviews_iOStvOS
-    s_ui.tvos.source_files = ui_core, ui_storyboard_iOStvOS, ui_injectintosubviews_iOStvOS
-    s_ui.osx.source_files = ui_core, ui_storyboard_OSX
-    s_ui.watchos.source_files = ''
+    s_ui.ios.source_files = ui_swizzling, ui_storyboard, ui_injectintosubviews, ui_storyboard_iOStvOS, ui_injectintosubviews_iOStvOS
+    s_ui.tvos.source_files = ui_swizzling, ui_storyboard, ui_injectintosubviews, ui_storyboard_iOStvOS, ui_injectintosubviews_iOStvOS
+    s_ui.osx.source_files = ui_swizzling, ui_storyboard, ui_injectintosubviews, ui_storyboard_OSX
+    s_ui.watchos.source_files = ui_swizzling
   end
 
   s.default_subspec = 'Core'

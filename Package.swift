@@ -13,10 +13,6 @@ let package = Package(
         .target(name: "DITranquillity", dependencies: [
             "SwiftLazy"
         ], path: "./Sources/Core"),
-
-        .testTarget(name: "DITranquillityTest", dependencies: [
-            "SwiftLazy", "DITranquillity"
-        ])
     ]
 )
 
