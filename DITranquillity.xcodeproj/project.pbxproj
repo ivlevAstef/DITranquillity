@@ -1677,7 +1677,7 @@
 			repositoryURL = "https://github.com/ivlevAstef/SwiftLazy";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.1.7;
+				minimumVersion = 1.1.8;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

@@ -35,7 +35,7 @@ internal func makeFastLock() -> FastLock {
 
 #if os(Linux)
 
-import GLibc
+import Glibc
 
 private class SpinLock: FastLock {
   private var monitor: pthread_spinlock_t = 0
