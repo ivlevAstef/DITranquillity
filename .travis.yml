@@ -23,14 +23,14 @@ matrix:
       script:
         - pod lib lint
     - env: JOB="CARTHAGE_lint"
-        osx_image: xcode11.2
-        before_install:
-            - curl -L -O https://github.com/Carthage/Carthage/releases/download/0.33.0/Carthage.pkg
-            - sudo installer -pkg Carthage.pkg -target /
-            - rm Carthage.pkg
-        script:
-          - carthage bootstrap
-          - carthage update
+      osx_image: xcode11.2
+      before_install:
+        - curl -L -O https://github.com/Carthage/Carthage/releases/download/0.33.0/Carthage.pkg
+        - sudo installer -pkg Carthage.pkg -target /
+        - rm Carthage.pkg
+      script:
+        - carthage bootstrap
+        - carthage update
     - env: JOB="XCODE_macOS" DEST="arch=x86_64" SCHEME="DITranquillity-macOS" SDK="macosx" ACTION="build" PLATFORM="OSX" ENABLE_TESTABILITY=NO
       osx_image: xcode11.2
     - env: JOB="XCODE_tvOS" DEST="OS=10.0,name=Apple TV 1080p" SCHEME="DITranquillity-tvOS" SDK="appletvsimulator" ACTION="build" PLATFORM="tvOS" ENABLE_TESTABILITY=NO
@@ -45,5 +45,3 @@ script:
   - xcodebuild "$ACTION" -workspace "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DEST" -configuration Release ENABLE_TESTABILITY=$ENABLE_TESTABILITY ONLY_ACTIVE_ARCH=NO | xcpretty
 after_success:
   - bash <(curl -s https://codecov.io/bash) -t -J 'DITranquillity' -n 'DITranquillity' -t 878c72a2-ad50-4fd2-84bf-1fe4fba5d260
-
-
