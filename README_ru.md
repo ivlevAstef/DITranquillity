@@ -6,17 +6,21 @@
 
 # DITranquillity
 Спокойствие это простая, но мощная библиотека на языке swift для [внедрения зависимостей](https://ru.wikipedia.org/wiki/Внедрение_зависимости).
+
 Название "Спокойствие" выбрано не случайно - оно закладывает три базовых приципа библиотеки: понятность, простота и безопасность.
+
 Оно говори - используйте библиотеку и вы будете спокойны за свои зависимости.
 
-> Сменить язык: [English](README.md), [Russian](README_RU.md)
+> Сменить язык: [English](README.md), [Russian](README_ru.md)
 
 ## Что такое внедрение зависимостей?
 [Внедрение зависимостей (DI)](https://ru.wikipedia.org/wiki/Внедрение_зависимости) это паттерн проектирования при котором некто поставляет зависимости в объект. 
+
 Является специфичной формой [принципа инверсии управления (IoC)](https://ru.wikipedia.org/wiki/Инверсия_управления) и помощником для [принципа инверсии зависимостей](https://ru.wikipedia.org/wiki/Принцип_инверсии_зависимостей).
+
 Более подробно об этом можно [почитать по ссылке]()
 
-А также советую ознакомиться со [словарем]() который поможет лучше ориентироваться в терминах.
+И советую ознакомиться со [словарем]() который поможет лучше ориентироваться в терминах.
 
 ## Возможности
 <img align="right" src="https://habrastorage.org/files/c6d/c89/5d0/c6dc895d02324b96bc679f41228ab6bf.png" alt="Tranquillity">  
@@ -46,15 +50,23 @@
 
 #### CocoaPods
 Добавьте строчку в ваш `Podfile`: 
-`pod 'DITranquillity'` 
+```
+pod 'DITranquillity'
+``` 
 Для использования возможностей из секции "UIKit" допишите строчку в ваш `Podfile`:
-`pod 'DITranquillity/UIKit'`
+```
+pod 'DITranquillity/UIKit'
+```
 Для использования возможностей из секции "Graph API" допишите строчку в ваш `Podfile`
-`pod 'DITranquillity/GraphAPI'`
+```
+pod 'DITranquillity/GraphAPI'
+```
 
 #### SwiftPM
 Вы можете воспользуйтесь "Xcode/File/Swift Packages/Add Package Dependency..." и указать в качестве url:
-`https://github.com/ivlevAstef/DITranquillity`
+```
+https://github.com/ivlevAstef/DITranquillity
+```
 Или прописать в вашем `Package.swift` файле в секции `dependencies`:
 ```Swift
     .package(url: "https://github.com/ivlevAstef/DITranquillity.git", from: "3.8.4")
@@ -63,13 +75,14 @@
 ```Swift
 .product(name: "DITranquillity")
 ```
-!! Важно - SwiftPM не поддреживает фичи из секции UIKit.
+> Важно! - SwiftPM не поддреживает фичи из секции UIKit.
 
 #### Carthage
 Добавьте строчку в ваш `Cartfile`:
-`github "ivlevAstef/DITranquillity"`
+```
+github "ivlevAstef/DITranquillity"
+```
 Carthage поддерживает работу со сторибоардами и прямое внедрение, без дополнительных действий.
-
 
 ## Использование
 Библиотека в своей основе использует декларативный стиль описания зависимостей, и работает так, что прикладной код не знает о том каким образом происходит внедрение.

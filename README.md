@@ -6,15 +6,21 @@
 
 # DITranquillity
 Tranquillity is a lightweight but powerful [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) library for swift.
+
 The name "Tranquillity" laid the foundation in the basic principles of library: clarity, simplicity and security.
+
 It says - use the library and you will be calm for your dependencies.
 
-> Language switch: [English](README.md), [Russian](README_RU.md)
+> Language switch: [English](README.md), [Russian](README_ru.md)
 
-## Что такое внедрение зависимостей?
-Dependency Injections is a software design pattern for simplify implements [Inversion of Control]() and Dependency :
-* [принцип внедрения зависимостей]()
-* [словарик]()
+## About Dependendy Injection
+Dependency Injections is a software design pattern in which someone delivers dependencies to an object.
+
+Is one form of the broader technique of [Inversion Of Control](https://en.wikipedia.org/wiki/Inversion_of_control) and help the [Dependency Inversion Principle](https://en.wikipedia.org/wiki/Dependency_inversion_principle)
+
+[For more details you can read this link]()
+
+Also I recommend you to read [Glossary]() which will help to better understand the terms. 
 
 ## Features
 <img align="right" src="https://habrastorage.org/files/c6d/c89/5d0/c6dc895d02324b96bc679f41228ab6bf.png" alt="Tranquillity">  
@@ -43,15 +49,23 @@ The library supports three popular package managers: Cocoapods, Carthage, SwiftP
 
 #### CocoaPods
 Add the following lines to your `Podfile`: 
-`pod 'DITranquillity'` 
+```
+pod 'DITranquillity'
+``` 
 To use the features from the "UIKit" section, add the following lines to your `Podfile`:
-`pod 'DITranquillity/UIKit'`
+```
+pod 'DITranquillity/UIKit'
+```
 To use the features from the "Graph API" section, add the following lines to your `Podfile`:
-`pod 'DITranquillity/GraphAPI'`
+```
+pod 'DITranquillity/GraphAPI'
+```
 
 #### SwiftPM
 You can use "Xcode/File/Swift Packages/Add Package Dependency..." and write github url:
-`https://github.com/ivlevAstef/DITranquillity`
+```
+https://github.com/ivlevAstef/DITranquillity
+```
 
 Also you can edit your `Package.swift` and the following line into section `dependencies`:
 ```Swift
@@ -61,11 +75,13 @@ And don't forget to specify in your section `target` wrote dependency line:
 ```Swift
 .product(name: "DITranquillity")
 ```
-!! Attention - SwiftPM unsupport features from the "UIKit" section.
+> Attention! - SwiftPM unsupport features from the "UIKit" section.
 
 #### Carthage
 Add the following lines to your `Cartfile`:
-`github "ivlevAstef/DITranquillity"`
+```
+github "ivlevAstef/DITranquillity"
+```
 Carthage support "UIKit" and "Graph API" section no additional actions.
 
 ## Usage
