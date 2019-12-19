@@ -44,6 +44,6 @@ script:
   - set -o pipefail
   - xcodebuild "$ACTION" -workspace "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DEST" -configuration Release ENABLE_TESTABILITY=$ENABLE_TESTABILITY ONLY_ACTIVE_ARCH=NO | xcpretty
 after_success:
-  - bash <(curl -s https://codecov.io/bash) -J 'DITranquillity' -n 'DITranquillity'
+  - bash <(curl -s https://codecov.io/bash) -t -J 'DITranquillity' -n 'DITranquillity' -t 878c72a2-ad50-4fd2-84bf-1fe4fba5d260
 
 

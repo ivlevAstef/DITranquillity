@@ -1,2 +1,9 @@
 codecov:
-  branch: master
+  ignore:
+    - "Sources/Core/Internal/MethodMaker.swift"
+    - "Sources/Core/API/AutoResolve/DIContainer.Reg.swift"
+    - "Sources/Core/API/AutoResolve/DIComponentBuilder.Injection.swift"
+    - "Documentation/**/*"
+    - "Samples/**/*"
+    - "SetupDependencies/**/*"
+    - "Tests/**/*"
