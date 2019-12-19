@@ -26,6 +26,10 @@ internal func makeFastLock() -> FastLock {
     if #available(tvOS 10.0, *) {
       return UnfairLock()
     }
+  #elseif os(watchOS)
+    if #available(watchOS 3.0, *) {
+      return UnfairLock()
+    }
   #endif
 
   return SpinLock()
@@ -34,6 +38,7 @@ internal func makeFastLock() -> FastLock {
 @available(tvOS 10.0, *)
 @available(OSX 10.12, *)
 @available(iOS 10.0, *)
+@available(watchOS 3.0, *)
 private class UnfairLock: FastLock {
   private var monitor: os_unfair_lock = os_unfair_lock()
 

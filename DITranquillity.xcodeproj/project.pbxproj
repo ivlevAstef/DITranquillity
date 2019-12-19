@@ -10,9 +10,41 @@
 		16640A881D9E1E7B00707BFC /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		169C0DDF1DA3501F001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		169C0E451DA35CBE001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AB0DC4A723AA72E000D1F281 /* SwiftLazy in Frameworks */ = {isa = PBXBuildFile; productRef = AB0DC4A623AA72E000D1F281 /* SwiftLazy */; };
-		AB0DC4A923AA730600D1F281 /* SwiftLazy in Frameworks */ = {isa = PBXBuildFile; productRef = AB0DC4A823AA730600D1F281 /* SwiftLazy */; };
-		AB0DC4AB23AA730A00D1F281 /* SwiftLazy in Frameworks */ = {isa = PBXBuildFile; productRef = AB0DC4AA23AA730A00D1F281 /* SwiftLazy */; };
+		ABDA289B23ABBECD00BEB63F /* DIStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDC23AA75AC00DEA34A /* DIStorage.swift */; };
+		ABDA289C23ABBECD00BEB63F /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDB23AA75AC00DEA34A /* DIContainer.swift */; };
+		ABDA289E23ABBECD00BEB63F /* Multithread.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EB923AA75AC00DEA34A /* Multithread.swift */; };
+		ABDA289F23ABBECD00BEB63F /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EC723AA75AC00DEA34A /* Component.swift */; };
+		ABDA28A023ABBECD00BEB63F /* SpecificType.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EC623AA75AC00DEA34A /* SpecificType.swift */; };
+		ABDA28A123ABBECD00BEB63F /* DITypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDA23AA75AC00DEA34A /* DITypes.swift */; };
+		ABDA28A223ABBECD00BEB63F /* ProtocolMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBC23AA75AC00DEA34A /* ProtocolMagic.swift */; };
+		ABDA28A323ABBECD00BEB63F /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBD23AA75AC00DEA34A /* Log.swift */; };
+		ABDA28A423ABBECD00BEB63F /* Resolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EC023AA75AC00DEA34A /* Resolver.swift */; };
+		ABDA28A523ABBECD00BEB63F /* DISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60ECE23AA75AC00DEA34A /* DISettings.swift */; };
+		ABDA28A623ABBECD00BEB63F /* DIFramework.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60ECC23AA75AC00DEA34A /* DIFramework.swift */; };
+		ABDA28A723ABBECD00BEB63F /* DIComponentBuilder+EmptySubviewsInject.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBF23AA75AC00DEA34A /* DIComponentBuilder+EmptySubviewsInject.swift */; };
+		ABDA28A823ABBECD00BEB63F /* Modificators.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EC523AA75AC00DEA34A /* Modificators.swift */; };
+		ABDA28AA23ABBECD00BEB63F /* DIPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60ECD23AA75AC00DEA34A /* DIPart.swift */; };
+		ABDA28AB23ABBECD00BEB63F /* DIContainer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDD23AA75AC00DEA34A /* DIContainer+Extensions.swift */; };
+		ABDA28AC23ABBECD00BEB63F /* TypeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBA23AA75AC00DEA34A /* TypeKey.swift */; };
+		ABDA28AD23ABBECD00BEB63F /* MethodMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EC323AA75AC00DEA34A /* MethodMaker.swift */; };
+		ABDA28AE23ABBECD00BEB63F /* FrameworksDependenciesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EC823AA75AC00DEA34A /* FrameworksDependenciesContainer.swift */; };
+		ABDA28AF23ABBECD00BEB63F /* GlobalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBB23AA75AC00DEA34A /* GlobalState.swift */; };
+		ABDA28B123ABBECD00BEB63F /* SwiftLazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60ED723AA75AC00DEA34A /* SwiftLazy.swift */; };
+		ABDA28B223ABBECD00BEB63F /* DILifetime.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60ED823AA75AC00DEA34A /* DILifetime.swift */; };
+		ABDA28B323ABBECD00BEB63F /* DIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60ED623AA75AC00DEA34A /* DIExtensions.swift */; };
+		ABDA28B523ABBECD00BEB63F /* ExtensionsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EC223AA75AC00DEA34A /* ExtensionsContainer.swift */; };
+		ABDA28B623ABBECD00BEB63F /* DIContainer.Reg.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60ED323AA75AC00DEA34A /* DIContainer.Reg.swift */; };
+		ABDA28B923ABBECD00BEB63F /* DIComponentBuilder.Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60ED223AA75AC00DEA34A /* DIComponentBuilder.Injection.swift */; };
+		ABDA28C123ABBECD00BEB63F /* MethodSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBE23AA75AC00DEA34A /* MethodSignature.swift */; };
+		ABDA28C323ABBECD00BEB63F /* DIModificators.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60ED923AA75AC00DEA34A /* DIModificators.swift */; };
+		ABDA28C423ABBECD00BEB63F /* ParsedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EC123AA75AC00DEA34A /* ParsedType.swift */; };
+		ABDA28C523ABBECD00BEB63F /* DIComponentBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60ECF23AA75AC00DEA34A /* DIComponentBuilder.swift */; };
+		ABDA28C623ABBECD00BEB63F /* DIScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60ECA23AA75AC00DEA34A /* DIScope.swift */; };
+		ABDA28C823ABBECD00BEB63F /* SwiftLazy in Frameworks */ = {isa = PBXBuildFile; productRef = ABDA289823ABBECD00BEB63F /* SwiftLazy */; };
+		ABDA28CE23ABBECD00BEB63F /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ABDA28E623ABC7A600BEB63F /* SwiftLazy in Frameworks */ = {isa = PBXBuildFile; productRef = ABDA28E523ABC7A600BEB63F /* SwiftLazy */; };
+		ABDA28E823ABC7BA00BEB63F /* SwiftLazy in Frameworks */ = {isa = PBXBuildFile; productRef = ABDA28E723ABC7BA00BEB63F /* SwiftLazy */; };
+		ABDA28EA23ABC7BE00BEB63F /* SwiftLazy in Frameworks */ = {isa = PBXBuildFile; productRef = ABDA28E923ABC7BE00BEB63F /* SwiftLazy */; };
 		ABE60EDE23AA75AC00DEA34A /* Multithread.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EB923AA75AC00DEA34A /* Multithread.swift */; };
 		ABE60EDF23AA75AC00DEA34A /* Multithread.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EB923AA75AC00DEA34A /* Multithread.swift */; };
 		ABE60EE023AA75AC00DEA34A /* Multithread.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EB923AA75AC00DEA34A /* Multithread.swift */; };
@@ -207,6 +239,7 @@
 		169C0E1C1DA355A6001F0AD5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		169C0E4B1DA35CBE001F0AD5 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABDA28D323ABBECD00BEB63F /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABE60EB923AA75AC00DEA34A /* Multithread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Multithread.swift; sourceTree = "<group>"; };
 		ABE60EBA23AA75AC00DEA34A /* TypeKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeKey.swift; sourceTree = "<group>"; };
 		ABE60EBB23AA75AC00DEA34A /* GlobalState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalState.swift; sourceTree = "<group>"; };
@@ -291,7 +324,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB0DC4A923AA730600D1F281 /* SwiftLazy in Frameworks */,
+				ABDA28E823ABC7BA00BEB63F /* SwiftLazy in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,7 +332,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB0DC4AB23AA730A00D1F281 /* SwiftLazy in Frameworks */,
+				ABDA28EA23ABC7BE00BEB63F /* SwiftLazy in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,7 +340,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB0DC4A723AA72E000D1F281 /* SwiftLazy in Frameworks */,
+				ABDA28E623ABC7A600BEB63F /* SwiftLazy in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABDA28C723ABBECD00BEB63F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABDA28C823ABBECD00BEB63F /* SwiftLazy in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,6 +394,7 @@
 				169C0DE51DA3501F001F0AD5 /* DITranquillity.framework */,
 				169C0E4B1DA35CBE001F0AD5 /* DITranquillity.framework */,
 				BA9A2756208851C300584CA0 /* DITranquillityTests.xctest */,
+				ABDA28D323ABBECD00BEB63F /* DITranquillity.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -608,6 +650,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ABDA28C923ABBECD00BEB63F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABDA28CE23ABBECD00BEB63F /* DITranquillity.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -626,7 +676,7 @@
 			);
 			name = "DITranquillity-OSX";
 			packageProductDependencies = (
-				AB0DC4A823AA730600D1F281 /* SwiftLazy */,
+				ABDA28E723ABC7BA00BEB63F /* SwiftLazy */,
 			);
 			productName = DITranquillity;
 			productReference = 169C0DE51DA3501F001F0AD5 /* DITranquillity.framework */;
@@ -647,7 +697,7 @@
 			);
 			name = "DITranquillity-tvOS";
 			packageProductDependencies = (
-				AB0DC4AA23AA730A00D1F281 /* SwiftLazy */,
+				ABDA28E923ABC7BE00BEB63F /* SwiftLazy */,
 			);
 			productName = DITranquillity;
 			productReference = 169C0E4B1DA35CBE001F0AD5 /* DITranquillity.framework */;
@@ -668,10 +718,31 @@
 			);
 			name = "DITranquillity-iOS";
 			packageProductDependencies = (
-				AB0DC4A623AA72E000D1F281 /* SwiftLazy */,
+				ABDA28E523ABC7A600BEB63F /* SwiftLazy */,
 			);
 			productName = DITranquillity;
 			productReference = A58875541D0944AE00D6DE92 /* DITranquillity.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		ABDA289723ABBECD00BEB63F /* DITranquillity-WatchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABDA28D023ABBECD00BEB63F /* Build configuration list for PBXNativeTarget "DITranquillity-WatchOS" */;
+			buildPhases = (
+				ABDA289A23ABBECD00BEB63F /* Sources */,
+				ABDA28C723ABBECD00BEB63F /* Frameworks */,
+				ABDA28C923ABBECD00BEB63F /* Headers */,
+				ABDA28CF23ABBECD00BEB63F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "DITranquillity-WatchOS";
+			packageProductDependencies = (
+				ABDA289823ABBECD00BEB63F /* SwiftLazy */,
+			);
+			productName = DITranquillity;
+			productReference = ABDA28D323ABBECD00BEB63F /* DITranquillity.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		BA9A2755208851C300584CA0 /* DITranquillityTests */ = {
@@ -732,7 +803,7 @@
 			);
 			mainGroup = A588754A1D0944AE00D6DE92;
 			packageReferences = (
-				AB0DC4A523AA72E000D1F281 /* XCRemoteSwiftPackageReference "SwiftLazy" */,
+				ABDA28E423ABC7A600BEB63F /* XCRemoteSwiftPackageReference "SwiftLazy" */,
 			);
 			productRefGroup = A58875551D0944AE00D6DE92 /* Products */;
 			projectDirPath = "";
@@ -741,6 +812,7 @@
 				A58875531D0944AE00D6DE92 /* DITranquillity-iOS */,
 				169C0DC11DA3501F001F0AD5 /* DITranquillity-OSX */,
 				169C0E271DA35CBE001F0AD5 /* DITranquillity-tvOS */,
+				ABDA289723ABBECD00BEB63F /* DITranquillity-WatchOS */,
 				BA9A2755208851C300584CA0 /* DITranquillityTests */,
 			);
 		};
@@ -762,6 +834,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		A58875521D0944AE00D6DE92 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABDA28CF23ABBECD00BEB63F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -927,6 +1006,43 @@
 				ABE60EF623AA75AC00DEA34A /* ParsedType.swift in Sources */,
 				ABE60F1A23AA75AC00DEA34A /* DIComponentBuilder.swift in Sources */,
 				ABE60F0E23AA75AC00DEA34A /* DIScope.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABDA289A23ABBECD00BEB63F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABDA289B23ABBECD00BEB63F /* DIStorage.swift in Sources */,
+				ABDA289C23ABBECD00BEB63F /* DIContainer.swift in Sources */,
+				ABDA289E23ABBECD00BEB63F /* Multithread.swift in Sources */,
+				ABDA289F23ABBECD00BEB63F /* Component.swift in Sources */,
+				ABDA28A023ABBECD00BEB63F /* SpecificType.swift in Sources */,
+				ABDA28A123ABBECD00BEB63F /* DITypes.swift in Sources */,
+				ABDA28A223ABBECD00BEB63F /* ProtocolMagic.swift in Sources */,
+				ABDA28A323ABBECD00BEB63F /* Log.swift in Sources */,
+				ABDA28A423ABBECD00BEB63F /* Resolver.swift in Sources */,
+				ABDA28A523ABBECD00BEB63F /* DISettings.swift in Sources */,
+				ABDA28A623ABBECD00BEB63F /* DIFramework.swift in Sources */,
+				ABDA28A723ABBECD00BEB63F /* DIComponentBuilder+EmptySubviewsInject.swift in Sources */,
+				ABDA28A823ABBECD00BEB63F /* Modificators.swift in Sources */,
+				ABDA28AA23ABBECD00BEB63F /* DIPart.swift in Sources */,
+				ABDA28AB23ABBECD00BEB63F /* DIContainer+Extensions.swift in Sources */,
+				ABDA28AC23ABBECD00BEB63F /* TypeKey.swift in Sources */,
+				ABDA28AD23ABBECD00BEB63F /* MethodMaker.swift in Sources */,
+				ABDA28AE23ABBECD00BEB63F /* FrameworksDependenciesContainer.swift in Sources */,
+				ABDA28AF23ABBECD00BEB63F /* GlobalState.swift in Sources */,
+				ABDA28B123ABBECD00BEB63F /* SwiftLazy.swift in Sources */,
+				ABDA28B223ABBECD00BEB63F /* DILifetime.swift in Sources */,
+				ABDA28B323ABBECD00BEB63F /* DIExtensions.swift in Sources */,
+				ABDA28B523ABBECD00BEB63F /* ExtensionsContainer.swift in Sources */,
+				ABDA28B623ABBECD00BEB63F /* DIContainer.Reg.swift in Sources */,
+				ABDA28B923ABBECD00BEB63F /* DIComponentBuilder.Injection.swift in Sources */,
+				ABDA28C123ABBECD00BEB63F /* MethodSignature.swift in Sources */,
+				ABDA28C323ABBECD00BEB63F /* DIModificators.swift in Sources */,
+				ABDA28C423ABBECD00BEB63F /* ParsedType.swift in Sources */,
+				ABDA28C523ABBECD00BEB63F /* DIComponentBuilder.swift in Sources */,
+				ABDA28C623ABBECD00BEB63F /* DIScope.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1322,6 +1438,97 @@
 			};
 			name = Release;
 		};
+		ABDA28D123ABBECD00BEB63F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MARKETING_VERSION = 4.0.0;
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-WatchOS";
+				PRODUCT_MODULE_NAME = DITranquillity;
+				PRODUCT_NAME = DITranquillity;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				VALID_ARCHS = "arm64_32 armv7k";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		ABDA28D223ABBECD00BEB63F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MARKETING_VERSION = 4.0.0;
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-WatchOS";
+				PRODUCT_MODULE_NAME = DITranquillity;
+				PRODUCT_NAME = DITranquillity;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				VALID_ARCHS = "arm64_32 armv7k";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
 		BA9A275E208851C300584CA0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1426,6 +1633,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		ABDA28D023ABBECD00BEB63F /* Build configuration list for PBXNativeTarget "DITranquillity-WatchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABDA28D123ABBECD00BEB63F /* Debug */,
+				ABDA28D223ABBECD00BEB63F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		BA9A2760208851C300584CA0 /* Build configuration list for PBXNativeTarget "DITranquillityTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1438,7 +1654,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		AB0DC4A523AA72E000D1F281 /* XCRemoteSwiftPackageReference "SwiftLazy" */ = {
+		ABDA289923ABBECD00BEB63F /* XCRemoteSwiftPackageReference "SwiftLazy" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ivlevAstef/SwiftLazy";
 			requirement = {
@@ -1446,22 +1662,35 @@
 				minimumVersion = 1.1.5;
 			};
 		};
+		ABDA28E423ABC7A600BEB63F /* XCRemoteSwiftPackageReference "SwiftLazy" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ivlevAstef/SwiftLazy";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.1.6;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		AB0DC4A623AA72E000D1F281 /* SwiftLazy */ = {
+		ABDA289823ABBECD00BEB63F /* SwiftLazy */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = AB0DC4A523AA72E000D1F281 /* XCRemoteSwiftPackageReference "SwiftLazy" */;
+			package = ABDA289923ABBECD00BEB63F /* XCRemoteSwiftPackageReference "SwiftLazy" */;
 			productName = SwiftLazy;
 		};
-		AB0DC4A823AA730600D1F281 /* SwiftLazy */ = {
+		ABDA28E523ABC7A600BEB63F /* SwiftLazy */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = AB0DC4A523AA72E000D1F281 /* XCRemoteSwiftPackageReference "SwiftLazy" */;
+			package = ABDA28E423ABC7A600BEB63F /* XCRemoteSwiftPackageReference "SwiftLazy" */;
 			productName = SwiftLazy;
 		};
-		AB0DC4AA23AA730A00D1F281 /* SwiftLazy */ = {
+		ABDA28E723ABC7BA00BEB63F /* SwiftLazy */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = AB0DC4A523AA72E000D1F281 /* XCRemoteSwiftPackageReference "SwiftLazy" */;
+			package = ABDA28E423ABC7A600BEB63F /* XCRemoteSwiftPackageReference "SwiftLazy" */;
+			productName = SwiftLazy;
+		};
+		ABDA28E923ABC7BE00BEB63F /* SwiftLazy */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ABDA28E423ABC7A600BEB63F /* XCRemoteSwiftPackageReference "SwiftLazy" */;
 			productName = SwiftLazy;
 		};
 /* End XCSwiftPackageProductDependency section */

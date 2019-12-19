@@ -1,38 +1,54 @@
 language: swift
-osx_image: xcode9.3beta
-
-git:
-  submodules: false
-
 env:
   global:
     - LC_CTYPE=en_US.UTF-8
-    - LANG=en_US.UTF-8
     - PROJECT=DITranquillity.xcworkspace
-    - FRAMEWORK_NAME=DITranquillity
-    - IOS_SDK=iphonesimulator
-    - OSX_SDK=macosx
-    - TVOS_SDK=appletvsimulator
-  matrix:
-    # - DESTINATION="OS=8.4,name=iPhone 5" SCHEME="DITranquillity-iOS" SDK="$IOS_SDK" PLATFORM="iOS" ACTION="test"
-    - DESTINATION="OS=9.3,name=iPhone 6" SCHEME="DITranquillity-iOS" SDK="$IOS_SDK" PLATFORM="iOS" ACTION="test" ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=NO
-    # - DESTINATION="OS=10.3,name=iPhone 6S Plus" SCHEME="DITranquillity-iOS" SDK="$IOS_SDK" PLATFORM="iOS" ACTION="test"
-    - DESTINATION="OS=11.2,name=iPhone 8 Plus" SCHEME="DITranquillity-iOS" SDK="$IOS_SDK" PLATFORM="iOS" ACTION="test" ONLY_ACTIVE_ARCH=YES ENABLE_TESTABILITY=YES
-    - DESTINATION="arch=x86_64" SCHEME="DITranquillity-OSX" SDK="$OSX_SDK" PLATFORM="Mac" ACTION="build" ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=NO
-    - DESTINATION="OS=9.2,name=Apple TV 1080p" SCHEME="DITranquillity-tvOS" SDK="$TVOS_SDK" PLATFORM="tvOS" ACTION="build" ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=NO
-    - DESTINATION="OS=10.0,name=Apple TV 1080p" SCHEME="DITranquillity-tvOS" SDK="$TVOS_SDK" PLATFORM="tvOS" ACTION="build" ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=NO
-    - DESTINATION="OS=11.0,name=Apple TV 1080p" SCHEME="DITranquillity-tvOS" SDK="$TVOS_SDK" PLATFORM="tvOS" ACTION="build" ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=NO
+git:
+  submodules: false
+matrix:
+  include:
+    - env: JOB="LINUX_spm" SWIFT_VERSION="5.0"
+      os: linux
+      language: generic
+      sudo: required
+      dist: trusty
+      before_install:
+        - eval "$(curl -sL https://gist.githubusercontent.com/kylef/5c0475ff02b7c7671d2a/raw/9f442512a46d7a2af7b850d65a7e9bd31edfb09b/swiftenv-install.sh)"
+      script:
+        - swift build
+        - swift test
+    - env: JOB="POD_lint"
+      osx_image: xcode11.2
+      before_install:
+      script:
+        - pod lib lint
+    - env: JOB="CARTHAGE_lint"
+        osx_image: xcode11.2
+        before_install:
+            - curl -L -O https://github.com/Carthage/Carthage/releases/download/0.33.0/Carthage.pkg
+            - sudo installer -pkg Carthage.pkg -target /
+            - rm Carthage.pkg
+        script:
+          - carthage bootstrap
+          - carthage update
+    - env: JOB="XCODE_macOS" DEST="arch=x86_64" SCHEME="DITranquillity-macOS" SDK="macosx" ACTION="test" PLATFORM="OSX" ENABLE_TESTABILITY=NO
+      osx_image: xcode11.2
+    - env: JOB="XCODE_tvOS" DEST="OS=10.0,name=Apple TV 1080p" SCHEME="DITranquillity-tvOS" SDK="appletvsimulator" ACTION="test" PLATFORM="tvOS" ENABLE_TESTABILITY=NO
+      osx_image: xcode11.2
+    - env: JOB="XCODE_watchOS" DEST="OS=2.2,name=Apple Watch - 42mm" SCHEME="DITranquillity-watchOS" SDK="watchsimulator" ACTION="build" PLATFORM="watchOS" ENABLE_TESTABILITY=NO
+      osx_image: xcode11.2
+    - env: JOB="XCODE_iOS" DEST="OS=13.0,name=iPhone 11" SCHEME="DITranquillity-iOS" SDK="iphonesimulator" ACTION="test" PLATFORM="iOS" ENABLE_TESTABILITY=YES
+      osx_image: xcode11.2
+
 before_install:
-  - curl -L -O https://github.com/Carthage/Carthage/releases/download/0.28.0/Carthage.pkg
+  - curl -L -O https://github.com/Carthage/Carthage/releases/download/0.33.0/Carthage.pkg
   - sudo installer -pkg Carthage.pkg -target /
   - rm Carthage.pkg
+  - carthage bootstrap --verbose --platform $PLATFORM
 script:
   - set -o pipefail
-  - open -b com.apple.iphonesimulator # Workaround https://github.com/travis-ci/travis-ci/issues/3040
-  - carthage update
-  - xcodebuild "$ACTION" -workspace "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Release ENABLE_TESTABILITY=$ENABLE_TESTABILITY ONLY_ACTIVE_ARCH=$ONLY_ACTIVE_ARCH
+  - xcodebuild "$ACTION" -workspace "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DEST" -configuration Release ENABLE_TESTABILITY=$ENABLE_TESTABILITY ONLY_ACTIVE_ARCH=NO | xcpretty
 after_success:
   - bash <(curl -s https://codecov.io/bash) -J 'DITranquillity' -n 'DITranquillity'
-notifications:
-  email:
-    on_success: never
+
+

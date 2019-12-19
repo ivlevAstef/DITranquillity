@@ -23,6 +23,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
   s.tvos.deployment_target = '9.0'
   s.osx.deployment_target = '10.10'
+  s.watchos.deployment_target = '2.0'
 
   s.subspec 'Core' do |s_core|
     core_h = 'Sources/DITranquillity.h'
@@ -41,11 +42,14 @@ Pod::Spec.new do |s|
     ui_injectintosubviews = 'Sources/UI/InjectIntoSubviews/*.{h,m,swift}'
     ui_injectintosubviews_iOStvOS = 'Sources/UI/InjectIntoSubviews/iOS-tvOS/*.{h,m,swift}'
 
+    ui_core = ui_swizzling, ui_storyboard, ui_injectintosubviews
+
     s_ui.dependency 'DITranquillity/Core'
-    s_ui.source_files = ui_swizzling, ui_storyboard, ui_injectintosubviews
-    s_ui.ios.source_files = ui_storyboard_iOStvOS, ui_injectintosubviews_iOStvOS
-    s_ui.tvos.source_files = ui_storyboard_iOStvOS, ui_injectintosubviews_iOStvOS
-    s_ui.osx.source_files = ui_storyboard_OSX
+
+    s_ui.ios.source_files = ui_core, ui_storyboard_iOStvOS, ui_injectintosubviews_iOStvOS
+    s_ui.tvos.source_files = ui_core, ui_storyboard_iOStvOS, ui_injectintosubviews_iOStvOS
+    s_ui.osx.source_files = ui_core, ui_storyboard_OSX
+    s_ui.watchos.source_files = ''
   end
 
   s.default_subspec = 'Core'
