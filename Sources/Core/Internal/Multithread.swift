@@ -17,11 +17,11 @@ final class PThreadMutex {
     private var unsafeMutex = pthread_mutex_t()
 
     convenience init(normal: ()) {
-        self.init(type: PTHREAD_MUTEX_NORMAL)
+        self.init(type: Int32(PTHREAD_MUTEX_NORMAL))
     }
 
     convenience init(recursive: ()) {
-        self.init(type: PTHREAD_MUTEX_RECURSIVE)
+        self.init(type: Int32(PTHREAD_MUTEX_RECURSIVE))
     }
 
     private init(type: Int32) {

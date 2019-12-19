@@ -159,6 +159,6 @@ func getReallyObject(_ optionalObject: Any?) -> Any? {
 
 extension String {
     var fileName: String {
-        return components(separatedBy: CharacterSet(charactersIn: "\\/")).last ?? self
+        return split(separator: "/").last.flatMap { "\($0)" } ?? self
     }
 }

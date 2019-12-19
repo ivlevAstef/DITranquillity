@@ -1,10 +1,13 @@
-codecov:
+coverage:
   ignore:
     - "Sources/Core/Internal/MethodMaker.swift"
     - "Sources/Core/API/AutoResolve/DIContainer.Reg.swift"
     - "Sources/Core/API/AutoResolve/DIComponentBuilder.Injection.swift"
-    - "Sources/UI/**/*"
-    - "Documentation/**/*"
-    - "Samples/**/*"
-    - "SetupDependencies/**/*"
-    - "Tests/**/*"
+    - Documentation
+    - Samples
+    - SetupDependencies
+    - Tests
+  status:
+    patch: false
+    changes: false
+comment: false
