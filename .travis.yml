@@ -39,9 +39,9 @@ matrix:
     - env: JOB="XCODE_iOS" DEST="OS=13.2.2,name=iPhone 11" SCHEME="DITranquillity-iOS" SDK="iphonesimulator" ACTION="build" PLATFORM="iOS" ISTESTS=NO CONF=Release
       osx_image: xcode11.2
     - env: JOB="XCODE_TESTS" DEST="OS=13.2.2,name=iPhone 11" SCHEME="DITranquillity-iOS" SDK="iphonesimulator" ACTION="test" PLATFORM="iOS" ISTESTS=YES CONF=Debug
-    osx_image: xcode11.2
-    after_success:
-      - bash <(curl -s https://codecov.io/bash) -J 'DITranquillity' -t 878c72a2-ad50-4fd2-84bf-1fe4fba5d260
+      osx_image: xcode11.2
+      after_success:
+        - bash <(curl -s https://codecov.io/bash) -J 'DITranquillity' -t 878c72a2-ad50-4fd2-84bf-1fe4fba5d260
 
 script:
   - set -o pipefail
