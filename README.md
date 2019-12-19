@@ -1,3 +1,5 @@
+<img align="center" src="https://habrastorage.org/files/c6d/c89/5d0/c6dc895d02324b96bc679f41228ab6bf.png" alt="Tranquillity">
+
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods Version](https://img.shields.io/cocoapods/v/DITranquillity.svg?style=flat)](http://cocoapods.org/pods/DITranquillity)
 [![License](https://img.shields.io/github/license/ivlevAstef/DITranquillity.svg?maxAge=2592000)](http://cocoapods.org/pods/DITranquillity)
@@ -26,23 +28,23 @@ Also I recommend you to read [Glossary]() which will help to better understand t
 <img align="right" src="https://habrastorage.org/files/c6d/c89/5d0/c6dc895d02324b96bc679f41228ab6bf.png" alt="Tranquillity">  
 
 #### Core
-* [Registration components and services]()
-* [Initializer/Property/Method Injections]()
-* [Optional and argument, many, by tag Injections]()
-* [Delayed injection]()
-* [Circular dependency injection]()
-* [Scope and lifetime]()
-* [Modular]()
-* [Details logs]()
-* [Graph Validation]()
-* [Thread safety]()
-* [Container hierarchy]()
+- [x] [Registration components and services]()
+- [x] [Initializer/Property/Method Injections]()
+- [x] [Optional and argument, many, by tag Injections]()
+- [x] [Delayed injection]()
+- [x] [Circular dependency injection]()
+- [x] [Scope and lifetime]()
+- [x] [Modular]()
+- [x] [Details logs]()
+- [x] [Graph Validation]()
+- [x] [Thread safety]()
+- [x] [Container hierarchy]()
 #### UIKit
-* [Storyboard and StoryboardReferences]()
-* [Simple subviews and Cells Injection]()
+- [x] [Storyboard and StoryboardReferences]()
+- [x] [Simple subviews and Cells Injection]()
 #### Graph API
-* [Get dependency graph]()
-* [Visualization dependency graph]()
+- [ ] [Get dependency graph]()
+- [ ] [Visualization dependency graph]()
 
 ## Installing
 The library supports three popular package managers: Cocoapods, Carthage, SwiftPM.
