@@ -6,10 +6,10 @@
 //  Copyright © 2019 Alexander Ivlev. All rights reserved.
 //
 
-import Foundation
+import class Foundation.Thread
 
 class GlobalState {
-  private static let lastComponentKey = "GlobalState_Last_Component\(UUID().uuidString)"
+  private static let lastComponentKey = "DITranquillity_GlobalState_Last_Component"
 
   static var lastComponent: DIComponentInfo? {
     get {

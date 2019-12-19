@@ -45,6 +45,10 @@
 		ABDA28E623ABC7A600BEB63F /* SwiftLazy in Frameworks */ = {isa = PBXBuildFile; productRef = ABDA28E523ABC7A600BEB63F /* SwiftLazy */; };
 		ABDA28E823ABC7BA00BEB63F /* SwiftLazy in Frameworks */ = {isa = PBXBuildFile; productRef = ABDA28E723ABC7BA00BEB63F /* SwiftLazy */; };
 		ABDA28EA23ABC7BE00BEB63F /* SwiftLazy in Frameworks */ = {isa = PBXBuildFile; productRef = ABDA28E923ABC7BE00BEB63F /* SwiftLazy */; };
+		ABDA28EC23ABE13500BEB63F /* FastLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDA28EB23ABE13500BEB63F /* FastLock.swift */; };
+		ABDA28ED23ABE13500BEB63F /* FastLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDA28EB23ABE13500BEB63F /* FastLock.swift */; };
+		ABDA28EE23ABE13500BEB63F /* FastLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDA28EB23ABE13500BEB63F /* FastLock.swift */; };
+		ABDA28EF23ABE13500BEB63F /* FastLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDA28EB23ABE13500BEB63F /* FastLock.swift */; };
 		ABE60EDE23AA75AC00DEA34A /* Multithread.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EB923AA75AC00DEA34A /* Multithread.swift */; };
 		ABE60EDF23AA75AC00DEA34A /* Multithread.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EB923AA75AC00DEA34A /* Multithread.swift */; };
 		ABE60EE023AA75AC00DEA34A /* Multithread.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EB923AA75AC00DEA34A /* Multithread.swift */; };
@@ -240,6 +244,7 @@
 		169C0E4B1DA35CBE001F0AD5 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABDA28D323ABBECD00BEB63F /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABDA28EB23ABE13500BEB63F /* FastLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastLock.swift; sourceTree = "<group>"; };
 		ABE60EB923AA75AC00DEA34A /* Multithread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Multithread.swift; sourceTree = "<group>"; };
 		ABE60EBA23AA75AC00DEA34A /* TypeKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeKey.swift; sourceTree = "<group>"; };
 		ABE60EBB23AA75AC00DEA34A /* GlobalState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalState.swift; sourceTree = "<group>"; };
@@ -411,6 +416,7 @@
 		ABE60EB823AA75AC00DEA34A /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				ABDA28EB23ABE13500BEB63F /* FastLock.swift */,
 				ABE60EB923AA75AC00DEA34A /* Multithread.swift */,
 				ABE60EBA23AA75AC00DEA34A /* TypeKey.swift */,
 				ABE60EBB23AA75AC00DEA34A /* GlobalState.swift */,
@@ -897,6 +903,7 @@
 				ABE60F7523AA75B400DEA34A /* StoryboardContainerMap.swift in Sources */,
 				ABE60F8123AA75B400DEA34A /* SwiftNSResolver.swift in Sources */,
 				ABE60FA223AA793E00DEA34A /* NSObject+Swizzling.m in Sources */,
+				ABDA28ED23ABE13500BEB63F /* FastLock.swift in Sources */,
 				ABE60F7223AA75B400DEA34A /* StoryboardResolver.swift in Sources */,
 				ABE60EEE23AA75AC00DEA34A /* MethodSignature.swift in Sources */,
 				ABE60F7823AA75B400DEA34A /* ViewController+Children.swift in Sources */,
@@ -938,6 +945,7 @@
 				ABE60F2B23AA75AC00DEA34A /* DIExtensions.swift in Sources */,
 				ABE60F8823AA75B400DEA34A /* UIViewController+Swizzling.m in Sources */,
 				ABE60EFB23AA75AC00DEA34A /* ExtensionsContainer.swift in Sources */,
+				ABDA28EE23ABE13500BEB63F /* FastLock.swift in Sources */,
 				ABE60F2523AA75AC00DEA34A /* DIContainer.Reg.swift in Sources */,
 				ABE60F8523AA75B400DEA34A /* UITableView+Swizzling.m in Sources */,
 				ABE60F7F23AA75B400DEA34A /* DINSResolver.m in Sources */,
@@ -989,6 +997,7 @@
 				ABE60F2923AA75AC00DEA34A /* DIExtensions.swift in Sources */,
 				ABE60F8623AA75B400DEA34A /* UIViewController+Swizzling.m in Sources */,
 				ABE60EF923AA75AC00DEA34A /* ExtensionsContainer.swift in Sources */,
+				ABDA28EC23ABE13500BEB63F /* FastLock.swift in Sources */,
 				ABE60F2323AA75AC00DEA34A /* DIContainer.Reg.swift in Sources */,
 				ABE60F8323AA75B400DEA34A /* UITableView+Swizzling.m in Sources */,
 				ABE60F7D23AA75B400DEA34A /* DINSResolver.m in Sources */,
@@ -1042,6 +1051,7 @@
 				ABDA28C323ABBECD00BEB63F /* DIModificators.swift in Sources */,
 				ABDA28C423ABBECD00BEB63F /* ParsedType.swift in Sources */,
 				ABDA28C523ABBECD00BEB63F /* DIComponentBuilder.swift in Sources */,
+				ABDA28EF23ABE13500BEB63F /* FastLock.swift in Sources */,
 				ABDA28C623ABBECD00BEB63F /* DIScope.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1667,7 +1677,7 @@
 			repositoryURL = "https://github.com/ivlevAstef/SwiftLazy";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.1.6;
+				minimumVersion = 1.1.7;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

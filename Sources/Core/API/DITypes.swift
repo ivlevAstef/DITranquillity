@@ -6,8 +6,6 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-import Foundation
-
 /// Any type that can be in the application
 public typealias DIAType = Any.Type
 
@@ -43,7 +41,7 @@ public struct DIComponentInfo: Hashable, CustomStringConvertible {
   }
   
   public var description: String {
-    return "<Component. type: \(type); path: \((file as NSString).lastPathComponent):\(line)>"
+    return "<Component. type: \(type); path: \(file.fileName):\(line)>"
   }
 }
   

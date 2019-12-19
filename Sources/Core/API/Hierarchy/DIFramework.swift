@@ -6,8 +6,6 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-import Foundation
-
 /// Slight expansion over part.
 /// Allows you to express more expressively the entry point to the framework of you application.
 /// It isn't necessary to create several such classses on one framework - it willn't be convenient.

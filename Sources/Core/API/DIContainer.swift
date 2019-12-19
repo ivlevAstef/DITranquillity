@@ -6,7 +6,7 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-import Foundation
+import class Foundation.Thread
 
 prefix operator *
 /// Short syntax for resolve.
@@ -53,7 +53,7 @@ public final class DIContainer {
   }
   
   final class Stack<T> {
-    private let key = "DIContainer_Stack_ThreadSafe\(T.self)\(UUID().uuidString)"
+    private let key = "DITranquillity_DIContainer_Stack_ThreadSafe_\(T.self)"
     
     var last: T? { return stack?.last }
     

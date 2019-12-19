@@ -6,8 +6,6 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-import Foundation
-
 final class FrameworksDependenciesContainer {
   private var imports = [FrameworkWrapper: Set<FrameworkWrapper>]()
   private var mutex = PThreadMutex(normal: ())

@@ -7,7 +7,6 @@
 //
 
 import SwiftLazy
-import Foundation
 
 extension Lazy: SpecificType {
   static var delayed: Bool { return true }
@@ -15,8 +14,7 @@ extension Lazy: SpecificType {
 
   public convenience init(file: String = #file, line: UInt = #line) {
     self.init { () -> Value in
-      let name = (file as NSString).lastPathComponent
-      fatalError("Please inject this property from DI in file: \(name) on line: \(line). Lazy type: \(Value.self) ")
+      fatalError("Please inject this property from DI in file: \(file.fileName) on line: \(line). Lazy type: \(Value.self) ")
     }
   }
 
@@ -33,8 +31,7 @@ extension Provider: SpecificType {
 
   public convenience init(file: String = #file, line: UInt = #line) {
     self.init { () -> Value in
-      let name = (file as NSString).lastPathComponent
-      fatalError("Please inject this property from DI in file: \(name) on line: \(line). Provider type: \(Value.self) ")
+      fatalError("Please inject this property from DI in file: \(file.fileName) on line: \(line). Provider type: \(Value.self) ")
     }
   }
 
@@ -52,8 +49,7 @@ extension Provider1: SpecificType {
 
   public convenience init(file: String = #file, line: UInt = #line) {
     self.init { _ -> Value in
-      let name = (file as NSString).lastPathComponent
-      fatalError("Please inject this property from DI in file: \(name) on line: \(line). Provider type: \(Value.self) ")
+      fatalError("Please inject this property from DI in file: \(file.fileName) on line: \(line). Provider type: \(Value.self) ")
     }
   }
 
@@ -71,8 +67,7 @@ extension Provider2: SpecificType {
 
   public convenience init(file: String = #file, line: UInt = #line) {
     self.init { _, _ -> Value in
-      let name = (file as NSString).lastPathComponent
-      fatalError("Please inject this property from DI in file: \(name) on line: \(line). Provider type: \(Value.self) ")
+      fatalError("Please inject this property from DI in file: \(file.fileName) on line: \(line). Provider type: \(Value.self) ")
     }
   }
 
@@ -90,8 +85,7 @@ extension Provider3: SpecificType {
 
   public convenience init(file: String = #file, line: UInt = #line) {
     self.init { _, _, _ -> Value in
-      let name = (file as NSString).lastPathComponent
-      fatalError("Please inject this property from DI in file: \(name) on line: \(line). Provider type: \(Value.self) ")
+      fatalError("Please inject this property from DI in file: \(file.fileName) on line: \(line). Provider type: \(Value.self) ")
     }
   }
 
@@ -109,8 +103,7 @@ extension Provider4: SpecificType {
 
   public convenience init(file: String = #file, line: UInt = #line) {
     self.init { _, _, _, _ -> Value in
-      let name = (file as NSString).lastPathComponent
-      fatalError("Please inject this property from DI in file: \(name) on line: \(line). Provider type: \(Value.self) ")
+      fatalError("Please inject this property from DI in file: \(file.fileName) on line: \(line). Provider type: \(Value.self) ")
     }
   }
 
@@ -128,8 +121,7 @@ extension Provider5: SpecificType {
 
   public convenience init(file: String = #file, line: UInt = #line) {
     self.init { _, _, _, _, _ -> Value in
-      let name = (file as NSString).lastPathComponent
-      fatalError("Please inject this property from DI in file: \(name) on line: \(line). Provider type: \(Value.self) ")
+      fatalError("Please inject this property from DI in file: \(file.fileName) on line: \(line). Provider type: \(Value.self) ")
     }
   }
 

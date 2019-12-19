@@ -6,8 +6,6 @@
 //  Copyright © 2018 Alexander Ivlev. All rights reserved.
 //
 
-import Foundation
-
 extension DIContainer
 {
 
@@ -25,9 +23,9 @@ extension DIContainer
     }
 
     if 0 == candidates.count {
-      log(.error, msg: "Until make extensions can't find component by type: \(type) in file: \((file as NSString).lastPathComponent) on line: \(line)")
+      log(.error, msg: "Until make extensions can't find component by type: \(type) in file: \(file.fileName) on line: \(line)")
     } else {
-      log(.error, msg: "Until make extensions can't choose component by type: \(type) in file: \((file as NSString).lastPathComponent) on line: \(line) from: \(candidates)")
+      log(.error, msg: "Until make extensions can't choose component by type: \(type) in file: \(file.fileName) on line: \(line) from: \(candidates)")
     }
 
     return nil

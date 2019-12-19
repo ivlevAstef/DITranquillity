@@ -6,8 +6,6 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-import Foundation
-
 /// Weak reference
 class Weak<T> {
   private weak var _value: AnyObject?
@@ -156,4 +154,11 @@ func getReallyObject(_ optionalObject: Any?) -> Any? {
     #else
         return optionalObject
     #endif
+}
+
+
+extension String {
+    var fileName: String {
+        return components(separatedBy: CharacterSet(charactersIn: "\\/")).last ?? self
+    }
 }
