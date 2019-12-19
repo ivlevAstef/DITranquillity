@@ -23,29 +23,29 @@ Dependency Injections is a software design pattern in which someone delivers dep
 
 Is one form of the broader technique of [Inversion Of Control](https://en.wikipedia.org/wiki/Inversion_of_control) and help the [Dependency Inversion Principle](https://en.wikipedia.org/wiki/Dependency_inversion_principle)
 
-[For more details you can read this link]()
+[For more details you can read this link](Documentation/en/about_dependency_injection.md)
 
-Also I recommend you to read [Glossary]() which will help to better understand the terms. 
+Also I recommend you to read [Glossary](Documentation/en/glossary.md) which will help to better understand the terms. 
 
 ## Features
 #### Core
-- [x] [Registration components and services]()
-- [x] [Initializer/Property/Method Injections]()
-- [x] [Optional and argument, many, by tag Injections]()
-- [x] [Delayed injection]()
-- [x] [Circular dependency injection]()
-- [x] [Scope and lifetime]()
-- [x] [Modular]()
-- [x] [Details logs]()
-- [x] [Graph Validation]()
-- [x] [Thread safety]()
-- [x] [Container hierarchy]()
-#### UIKit
-- [x] [Storyboard and StoryboardReferences]()
-- [x] [Simple subviews and Cells Injection]()
+- [x] [Registration components and services](Documentation/en/core/registration_and_service.md)
+- [x] [Initializer/Property/Method Injections](Documentation/en/core/injection.md)
+- [x] [Optional and argument, many, by tag Injections](Documentation/en/core/modificated_injection.md)
+- [x] [Delayed injection](Documentation/en/core/delayed_injection.md)
+- [x] [Circular dependency injection](Documentation/en/core/cycle_injection.md)
+- [x] [Scope and lifetime](Documentation/en/core/scope_and_lifetime.md)
+- [x] [Modular](Documentation/en/core/modular.md)
+- [x] [Details logs](Documentation/en/core/logs.md)
+- [x] [Graph Validation](Documentation/en/core/graph_validation.md)
+- [x] [Thread safety](Documentation/en/core/thread_safety.md)
+- [x] [Container hierarchy](Documentation/en/core/container_hierarchy.md)
+#### UI
+- [x] [Storyboard and StoryboardReferences](Documentation/en/ui/storyboard.md)
+- [x] [Simple subviews and Cells Injection](Documentation/en/ui/view_injection.md)
 #### Graph API
-- [ ] [Get dependency graph]()
-- [ ] [Visualization dependency graph]()
+- [ ] [Get dependency graph](Documentation/en/graph/get_graph.md)
+- [ ] [Visualization dependency graph](Documentation/en/graph/visualization_graph.md)
 
 ## Installing
 The library supports three popular package managers: Cocoapods, Carthage, SwiftPM.
@@ -55,9 +55,9 @@ Add the following lines to your `Podfile`:
 ```
 pod 'DITranquillity'
 ``` 
-To use the features from the "UIKit" section, add the following lines to your `Podfile`:
+To use the features from the "UI" section, add the following lines to your `Podfile`:
 ```
-pod 'DITranquillity/UIKit'
+pod 'DITranquillity/UI'
 ```
 To use the features from the "Graph API" section, add the following lines to your `Podfile`:
 ```
@@ -78,20 +78,23 @@ And don't forget to specify in your section `target` wrote dependency line:
 ```Swift
 .product(name: "DITranquillity")
 ```
-> Attention! - SwiftPM unsupport features from the "UIKit" section.
+> Attention! - SwiftPM unsupport features from the "UI" section.
 
 #### Carthage
 Add the following lines to your `Cartfile`:
 ```
 github "ivlevAstef/DITranquillity"
 ```
-Carthage support "UIKit" and "Graph API" section no additional actions.
+Carthage support "UI" and "Graph API" section no additional actions.
 
 ## Usage
-Библиотека в своей основе использует декларативный стиль описания зависимостей, и работает так, что прикладной код не знает о том каким образом происходит внедрение.
-В простом случае для работы с библиотекой достаточно создать контейнер, записать все зависимости в декларативном стиле, и получить интерисующую зависимость.
-Но мы рассмотрим более сложный пример, как сделать упрощенный и не совсем верный вариант одного VIPER экрана:
+The library uses a declarative style of dependency description, and allows you to separate your application code from dependency description code.
+
+For a quick entry, let's look at an example code of one simplified VIPER screen:
 ```Swift
+.................................................
+/// Dependency description
+
 let container = DIContainer()
 
 container.register(LoginRouter.init)
@@ -109,12 +112,15 @@ container.register(AuthInteractorImpl.init)
   .as(AuthInteractor.self)
 
 .................................................
+/// Application start point
 
 let router: LoginRouter = container.resolve()
 window.rootViewController = router.rootViewController
 router.start()
 
 .................................................
+/// Application Code
+
 import SwiftLazy
 
 class LoginRouter {
@@ -130,7 +136,7 @@ class LoginRouter {
         presenter.loginSuccessCallback = { [weak self] _ in
             ...
         }
-        // без force cast можно обойтись, но этот вопрос выходит за рамки разбора DI
+        // Your can write code without force cast, it's code simple example
         rootViewController.push(presenter.view as! UIViewController)
     }
 }
@@ -157,6 +163,7 @@ class LoginPresenterImpl: LoginPresenter {
             view?.showError(text: "fill input")
             return
         }
+        
         authInteractor.login(name: name, password: password, completion: { [weak self] result in
             switch result {
             case .failure(let error): 
@@ -190,7 +197,7 @@ class AuthInteractorImpl: AuthInteractor {
     }
 }
 ```
-Код описывающий внедрение зависимостей минимизирован, и прикладной код остается в неведенье о том как и кто в него внедряет зависимости.
+As you can see, the dependency description code takes a small part, and the application code doen't know about how dependencies are implemented.  
 
 Для рассмотрения более сложных кейсов советую посмотреть примеры кода:
 * Код 1

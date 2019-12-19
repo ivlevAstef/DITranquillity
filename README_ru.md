@@ -23,30 +23,29 @@
 
 Является специфичной формой [принципа инверсии управления (IoC)](https://ru.wikipedia.org/wiki/Инверсия_управления) и помощником для [принципа инверсии зависимостей](https://ru.wikipedia.org/wiki/Принцип_инверсии_зависимостей).
 
-Более подробно об этом можно [почитать по ссылке]()
+Более подробно об этом можно [почитать по ссылке](Documentation/ru/about_dependency_injection.md)
 
-И советую ознакомиться со [словарем]() который поможет лучше ориентироваться в терминах.
+И советую ознакомиться со [словарем](Documentation/ru/glossary.md) который поможет лучше ориентироваться в терминах.
 
 ## Возможности
 #### Ядро
-- [x] [Регистрация компонент и сервисов]()
-- [x] [Внедрение через инициализацию, свойства, методы]()
-- [x] [Опциональное внедрение, а также с аргументами, множественное, с указанием тэга/имени]()
-- [x] [Отложенное внедрение]()
-- [x] [Внедрение циклических зависимостей]()
-- [x] [Указание времени жизни]()
-- [x] [Поддержка модульности]()
-- [x] [Полное и подробное логирование]()
-- [x] [Валидация графа зависимостей]()
-- [x] [Одновременная работа из нескольких потоков]()
-- [x] [Иерархичные контейнеры]()
-- [x] [Получение и визуализация графа зависимостей]()
+- [x] [Регистрация компонент и сервисов](Documentation/ru/core/registration_and_service.md)
+- [x] [Внедрение через инициализацию, свойства, методы](Documentation/ru/core/injection.md)
+- [x] [Опциональное внедрение, а также с аргументами, множественное, с указанием тэга/имени](Documentation/ru/core/modificated_injection.md)
+- [x] [Отложенное внедрение](Documentation/ru/core/delayed_injection.md)
+- [x] [Внедрение циклических зависимостей](Documentation/ru/core/cycle_injection.md)
+- [x] [Указание времени жизни](Documentation/ru/core/scope_and_lifetime.md)
+- [x] [Поддержка модульности](Documentation/ru/core/modular.md)
+- [x] [Полное и подробное логирование](Documentation/ru/core/logs.md)
+- [x] [Валидация графа зависимостей](Documentation/ru/core/graph_validation.md)
+- [x] [Одновременная работа из нескольких потоков](Documentation/ru/core/thread_safety.md)
+- [x] [Иерархичные контейнеры](Documentation/ru/core/container_hierarchy.md)
 #### UIKit
-- [x] [Поддержка сторибоардов]()
-- [x] [Внедрение в subviews и ячейки]()
+- [x] [Поддержка сторибоардов](Documentation/ru/ui/storyboard.md)
+- [x] [Внедрение в subviews и ячейки](Documentation/ru/ui/view_injection.md)
 #### Graph API
-- [ ] [Получение графа зависимостей]()
-- [ ] [Визуализация графа зависимостей]()
+- [ ] [Получение графа зависимостей](Documentation/ru/graph/get_graph.md)
+- [ ] [Визуализация графа зависимостей](Documentation/ru/graph/visualization_graph.md)
 
 ## Установка
 Библиотека поддерживает три популярных пакетных менеджера: Cocoapods, Carthage, SwiftPM.
@@ -56,7 +55,7 @@
 ```
 pod 'DITranquillity'
 ``` 
-Для использования возможностей из секции "UIKit" допишите строчку в ваш `Podfile`:
+Для использования возможностей из секции "UI" допишите строчку в ваш `Podfile`:
 ```
 pod 'DITranquillity/UIKit'
 ```
@@ -72,13 +71,13 @@ https://github.com/ivlevAstef/DITranquillity
 ```
 Или прописать в вашем `Package.swift` файле в секции `dependencies`:
 ```Swift
-    .package(url: "https://github.com/ivlevAstef/DITranquillity.git", from: "3.8.4")
+.package(url: "https://github.com/ivlevAstef/DITranquillity.git", from: "3.8.4")
 ```
 И не забудьте указать в таргете в аргументе `dependencies` зависимость на библиотеку:
 ```Swift
 .product(name: "DITranquillity")
 ```
-> Важно! - SwiftPM не поддреживает фичи из секции UIKit.
+> Важно! - SwiftPM не поддерживает фичи из секции UI.
 
 #### Carthage
 Добавьте строчку в ваш `Cartfile`:
@@ -88,10 +87,13 @@ github "ivlevAstef/DITranquillity"
 Carthage поддерживает работу со сторибоардами и прямое внедрение, без дополнительных действий.
 
 ## Использование
-Библиотека в своей основе использует декларативный стиль описания зависимостей, и работает так, что прикладной код не знает о том каким образом происходит внедрение.
-В простом случае для работы с библиотекой достаточно создать контейнер, записать все зависимости в декларативном стиле, и получить интерисующую зависимость.
-Но мы рассмотрим более сложный пример, как сделать упрощенный и не совсем верный вариант одного VIPER экрана:
+Библиотека использует декларативный стиль описания зависимостей, и позволяет отделить ваш прикладной код от кода описания зависимостей.
+
+Для быстрого входа давайте рассмотрим пример кода одного упрощенного VIPER экрана:
 ```Swift
+.................................................
+/// Описание зависимостей
+
 let container = DIContainer()
 
 container.register(LoginRouter.init)
@@ -109,12 +111,15 @@ container.register(AuthInteractorImpl.init)
   .as(AuthInteractor.self)
 
 .................................................
+/// Место запуска приложения
 
 let router: LoginRouter = container.resolve()
 window.rootViewController = router.rootViewController
 router.start()
 
 .................................................
+/// Код приложения
+
 import SwiftLazy
 
 class LoginRouter {
@@ -157,6 +162,7 @@ class LoginPresenterImpl: LoginPresenter {
             view?.showError(text: "fill input")
             return
         }
+        
         authInteractor.login(name: name, password: password, completion: { [weak self] result in
             switch result {
             case .failure(let error): 
@@ -190,7 +196,7 @@ class AuthInteractorImpl: AuthInteractor {
     }
 }
 ```
-Код описывающий внедрение зависимостей минимизирован, и прикладной код остается в неведенье о том как и кто в него внедряет зависимости.
+Как видим код описывающий внедрение зависимостей занимает малую часть, а прикладной код остается в неведенье о способе внедрения зависимостей.
 
 Для рассмотрения более сложных кейсов советую посмотреть примеры кода:
 * Код 1

@@ -327,7 +327,7 @@
 		16640A4C1D9E1E7B00707BFC /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				ABE60F4123AA75B300DEA34A /* UIKit */,
+				ABE60F4123AA75B300DEA34A /* UI */,
 				ABE60EB723AA75AC00DEA34A /* Core */,
 				169C0E1C1DA355A6001F0AD5 /* Info.plist */,
 				16640A6B1D9E1E7B00707BFC /* DITranquillity.h */,
@@ -437,14 +437,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		ABE60F4123AA75B300DEA34A /* UIKit */ = {
+		ABE60F4123AA75B300DEA34A /* UI */ = {
 			isa = PBXGroup;
 			children = (
 				ABE60F9B23AA793E00DEA34A /* Swizzling */,
 				ABE60F4223AA75B300DEA34A /* Storyboard */,
 				ABE60F5023AA75B300DEA34A /* InjectIntoSubviews */,
 			);
-			path = UIKit;
+			path = UI;
 			sourceTree = "<group>";
 		};
 		ABE60F4223AA75B300DEA34A /* Storyboard */ = {
@@ -981,7 +981,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 3.9.3;
+				MARKETING_VERSION = 4.0.0;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-OSX";
 				PRODUCT_NAME = DITranquillity;
@@ -1020,7 +1020,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 3.9.3;
+				MARKETING_VERSION = 4.0.0;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-OSX";
 				PRODUCT_NAME = DITranquillity;
@@ -1060,7 +1060,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 3.9.3;
+				MARKETING_VERSION = 4.0.0;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-tvOS";
 				PRODUCT_MODULE_NAME = DITranquillity;
@@ -1102,7 +1102,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 3.9.3;
+				MARKETING_VERSION = 4.0.0;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-tvOS";
 				PRODUCT_MODULE_NAME = DITranquillity;
@@ -1264,7 +1264,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 3.9.3;
+				MARKETING_VERSION = 4.0.0;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-iOS";
 				PRODUCT_NAME = DITranquillity;
@@ -1306,7 +1306,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 3.9.3;
+				MARKETING_VERSION = 4.0.0;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-iOS";
 				PRODUCT_NAME = DITranquillity;

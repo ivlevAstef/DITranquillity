@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'DITranquillity'
-  s.version      = '3.9.3'
+  s.version      = '4.0.0'
   s.summary      = 'DITranquillity - Dependency injection for iOS/macOS/tvOS (Swift) '
 
   s.description  = <<-DESC
@@ -31,21 +31,21 @@ Pod::Spec.new do |s|
     s_core.source_files = core_h, core_src
   end
 
-  s.subspec 'UIKit' do |s_uikit|
-    uikit_swizzling = 'Sources/UIKit/Swizzling/*.{h,m,swift}'
+  s.subspec 'UI' do |s_ui|
+    ui_swizzling = 'Sources/UI/Swizzling/*.{h,m,swift}'
 
-    uikit_storyboard = 'Sources/UIKit/Storyboard/*.{h,m,swift}'
-    uikit_storyboard_OSX = 'Sources/UIKit/Storyboard/OSX/*.{h,m,swift}'
-    uikit_storyboard_iOStvOS = 'Sources/UIKit/Storyboard/iOS-tvOS/*.{h,m,swift}'
+    ui_storyboard = 'Sources/UI/Storyboard/*.{h,m,swift}'
+    ui_storyboard_OSX = 'Sources/UI/Storyboard/OSX/*.{h,m,swift}'
+    ui_storyboard_iOStvOS = 'Sources/UI/Storyboard/iOS-tvOS/*.{h,m,swift}'
 
-    uikit_injectintosubviews = 'Sources/UIKit/InjectIntoSubviews/*.{h,m,swift}'
-    uikit_injectintosubviews_iOStvOS = 'Sources/UIKit/InjectIntoSubviews/iOS-tvOS/*.{h,m,swift}'
+    ui_injectintosubviews = 'Sources/UI/InjectIntoSubviews/*.{h,m,swift}'
+    ui_injectintosubviews_iOStvOS = 'Sources/UI/InjectIntoSubviews/iOS-tvOS/*.{h,m,swift}'
 
-    s_uikit.dependency 'DITranquillity/Core'
-    s_uikit.source_files = uikit_swizzling, uikit_storyboard, uikit_injectintosubviews
-    s_uikit.ios.source_files = uikit_storyboard_iOStvOS, uikit_injectintosubviews_iOStvOS
-    s_uikit.tvos.source_files = uikit_storyboard_iOStvOS, uikit_injectintosubviews_iOStvOS
-    s_uikit.osx.source_files = uikit_storyboard_OSX
+    s_ui.dependency 'DITranquillity/Core'
+    s_ui.source_files = ui_swizzling, ui_storyboard, ui_injectintosubviews
+    s_ui.ios.source_files = ui_storyboard_iOStvOS, ui_injectintosubviews_iOStvOS
+    s_ui.tvos.source_files = ui_storyboard_iOStvOS, ui_injectintosubviews_iOStvOS
+    s_ui.osx.source_files = ui_storyboard_OSX
   end
 
   s.default_subspec = 'Core'
