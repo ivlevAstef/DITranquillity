@@ -102,18 +102,12 @@
 		FDF4D20B2215A6C5008A82E0 /* DIComponentBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1DC2215A6C5008A82E0 /* DIComponentBuilder.swift */; };
 		FDF4D20C2215A6C5008A82E0 /* DIComponentBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1DC2215A6C5008A82E0 /* DIComponentBuilder.swift */; };
 		FDF4D20D2215A6C5008A82E0 /* DIComponentBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1DC2215A6C5008A82E0 /* DIComponentBuilder.swift */; };
-		FDF4D20E2215A6C5008A82E0 /* init_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = FDF4D1DE2215A6C5008A82E0 /* init_autogenerate.sh */; };
-		FDF4D20F2215A6C5008A82E0 /* init_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = FDF4D1DE2215A6C5008A82E0 /* init_autogenerate.sh */; };
-		FDF4D2102215A6C5008A82E0 /* init_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = FDF4D1DE2215A6C5008A82E0 /* init_autogenerate.sh */; };
 		FDF4D2112215A6C5008A82E0 /* DIComponentBuilder.Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1DF2215A6C5008A82E0 /* DIComponentBuilder.Injection.swift */; };
 		FDF4D2122215A6C5008A82E0 /* DIComponentBuilder.Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1DF2215A6C5008A82E0 /* DIComponentBuilder.Injection.swift */; };
 		FDF4D2132215A6C5008A82E0 /* DIComponentBuilder.Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1DF2215A6C5008A82E0 /* DIComponentBuilder.Injection.swift */; };
 		FDF4D2142215A6C5008A82E0 /* DIContainer.Reg.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1E02215A6C5008A82E0 /* DIContainer.Reg.swift */; };
 		FDF4D2152215A6C5008A82E0 /* DIContainer.Reg.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1E02215A6C5008A82E0 /* DIContainer.Reg.swift */; };
 		FDF4D2162215A6C5008A82E0 /* DIContainer.Reg.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1E02215A6C5008A82E0 /* DIContainer.Reg.swift */; };
-		FDF4D2172215A6C5008A82E0 /* inject_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = FDF4D1E12215A6C5008A82E0 /* inject_autogenerate.sh */; };
-		FDF4D2182215A6C5008A82E0 /* inject_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = FDF4D1E12215A6C5008A82E0 /* inject_autogenerate.sh */; };
-		FDF4D2192215A6C5008A82E0 /* inject_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = FDF4D1E12215A6C5008A82E0 /* inject_autogenerate.sh */; };
 		FDF4D21A2215A6C5008A82E0 /* DIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1E22215A6C5008A82E0 /* DIExtensions.swift */; };
 		FDF4D21B2215A6C5008A82E0 /* DIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1E22215A6C5008A82E0 /* DIExtensions.swift */; };
 		FDF4D21C2215A6C5008A82E0 /* DIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1E22215A6C5008A82E0 /* DIExtensions.swift */; };
@@ -150,9 +144,6 @@
 		FDF4D23E2215A6C5008A82E0 /* MethodMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1EF2215A6C5008A82E0 /* MethodMaker.swift */; };
 		FDF4D23F2215A6C5008A82E0 /* MethodMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1EF2215A6C5008A82E0 /* MethodMaker.swift */; };
 		FDF4D2402215A6C5008A82E0 /* MethodMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1EF2215A6C5008A82E0 /* MethodMaker.swift */; };
-		FDF4D2412215A6C5008A82E0 /* make_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = FDF4D1F02215A6C5008A82E0 /* make_autogenerate.sh */; };
-		FDF4D2422215A6C5008A82E0 /* make_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = FDF4D1F02215A6C5008A82E0 /* make_autogenerate.sh */; };
-		FDF4D2432215A6C5008A82E0 /* make_autogenerate.sh in Resources */ = {isa = PBXBuildFile; fileRef = FDF4D1F02215A6C5008A82E0 /* make_autogenerate.sh */; };
 		FDF4D2442215A6C5008A82E0 /* FrameworksDependenciesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1F12215A6C5008A82E0 /* FrameworksDependenciesContainer.swift */; };
 		FDF4D2452215A6C5008A82E0 /* FrameworksDependenciesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1F12215A6C5008A82E0 /* FrameworksDependenciesContainer.swift */; };
 		FDF4D2462215A6C5008A82E0 /* FrameworksDependenciesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4D1F12215A6C5008A82E0 /* FrameworksDependenciesContainer.swift */; };
@@ -744,9 +735,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FDF4D20F2215A6C5008A82E0 /* init_autogenerate.sh in Resources */,
-				FDF4D2182215A6C5008A82E0 /* inject_autogenerate.sh in Resources */,
-				FDF4D2422215A6C5008A82E0 /* make_autogenerate.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -754,9 +742,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FDF4D2102215A6C5008A82E0 /* init_autogenerate.sh in Resources */,
-				FDF4D2192215A6C5008A82E0 /* inject_autogenerate.sh in Resources */,
-				FDF4D2432215A6C5008A82E0 /* make_autogenerate.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -764,9 +749,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FDF4D20E2215A6C5008A82E0 /* init_autogenerate.sh in Resources */,
-				FDF4D2172215A6C5008A82E0 /* inject_autogenerate.sh in Resources */,
-				FDF4D2412215A6C5008A82E0 /* make_autogenerate.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -977,7 +959,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 3.9.1;
+				MARKETING_VERSION = 3.9.3;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-OSX";
 				PRODUCT_NAME = DITranquillity;
@@ -1012,7 +994,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 3.9.1;
+				MARKETING_VERSION = 3.9.3;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-OSX";
 				PRODUCT_NAME = DITranquillity;
@@ -1048,7 +1030,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 3.9.1;
+				MARKETING_VERSION = 3.9.3;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-tvOS";
 				PRODUCT_MODULE_NAME = DITranquillity;
@@ -1086,7 +1068,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 3.9.1;
+				MARKETING_VERSION = 3.9.3;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-tvOS";
 				PRODUCT_MODULE_NAME = DITranquillity;
@@ -1243,7 +1225,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 3.9.1;
+				MARKETING_VERSION = 3.9.3;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-iOS";
 				PRODUCT_NAME = DITranquillity;
@@ -1281,7 +1263,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 3.9.1;
+				MARKETING_VERSION = 3.9.3;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-iOS";
 				PRODUCT_NAME = DITranquillity;

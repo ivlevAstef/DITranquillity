@@ -1,3 +1,9 @@
+# v3.9.3
+* fix carthage app store - remove copy shell scripts from build phase
+
+# v3.9.2
+* fix graph validate - now validation not checked arguments
+
 # v3.9.1
 * fix xcode 11.2.1 bug with Weak generic
 
