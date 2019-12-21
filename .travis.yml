@@ -45,4 +45,4 @@ matrix:
 
 script:
   - set -o pipefail
-  - xcodebuild "$ACTION" -workspace "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DEST" -configuration $CONF -enableCodeCoverage $ISTESTS ENABLE_TESTABILITY=$ISTESTS | xcpretty
+  - xcodebuild "$ACTION" -workspace "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DEST" -configuration $CONF ENABLE_TESTABILITY=$ISTESTS | xcpretty
