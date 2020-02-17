@@ -481,15 +481,17 @@ class DITranquillityTests_Storyboard: XCTestCase {
     let storyboard: UIStoryboard = *container
     
     let collectionVC = storyboard.instantiateViewController(withIdentifier: "CollectionViewStoryboard") as! UICollectionViewController
-    
+    // For proper dequeue calling
+    let window = UIWindow(frame: UIScreen.main.bounds)
+    window.rootViewController = collectionVC
+    window.makeKeyAndVisible()
     
     let testDataSource = CollectionViewTestDataSource()
     collectionVC.collectionView!.dataSource = testDataSource
 
     collectionVC.collectionView!.setNeedsLayout()
     collectionVC.collectionView!.layoutIfNeeded()
-    // Test not worked on xCode11.1 - collectionView cellForItem not called :(
-    //XCTAssertTrue(testDataSource.result)
+    XCTAssertTrue(testDataSource.result)
   }
   
   
