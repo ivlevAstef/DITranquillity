@@ -26,6 +26,8 @@ private class B {
 }
 
 private class C {
+  var uniqueString: String = "initial"
+
   let d: D
   init(d: D) {
     self.d = d
@@ -335,6 +337,35 @@ class DITranquillityTests_Lifetime: XCTestCase {
     let obj3: D = *container
 
     XCTAssert(obj3.uniqueString == "initial")
+  }
+
+  func test08_innerScope() {
+    let container = DIContainer()
+
+    let scope = DIScope(name: "My scope", storage: DICacheStorage(), policy: .strong)
+    container.register(D.init).lifetime(.custom(scope))
+
+    let weakScope = DIScope(name: "My weak scope", storage: DICacheStorage(), policy: .weak, parent: scope)
+    container.register(C.init).lifetime(.custom(weakScope))
+
+    var c: C? = *container
+    XCTAssertNotNil(c)
+    c?.uniqueString = "changed"
+    c?.d.uniqueString = "changed"
+
+    c = nil
+    c = *container
+    XCTAssertNotNil(c)
+    XCTAssertEqual(c?.uniqueString, "initial")
+    XCTAssertEqual(c?.d.uniqueString, "changed")
+
+    c = nil
+    scope.clean()
+    c = *container
+
+    XCTAssertNotNil(c)
+    XCTAssertEqual(c?.uniqueString, "initial")
+    XCTAssertEqual(c?.d.uniqueString, "initial")
   }
 
 }

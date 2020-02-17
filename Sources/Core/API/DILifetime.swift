@@ -31,12 +31,6 @@ public enum DILifeTime: Equatable {
   /// Default life time. Is taken from the settings. see: `DISetting.Defaults.lifeTime`
   static var `default`: DILifeTime { return DISetting.Defaults.lifeTime }
 
-  @available(*, deprecated, message: "use `.perRun(.strong).`")
-  public static var lazySingle: DILifeTime { return .perRun(.strong) }
-
-  @available(*, deprecated, message: "use `.perRun(.weak)`")
-  public static var weakSingle: DILifeTime { return .perRun(.weak) }
-
   public static func ==(_ lhs: DILifeTime, rhs: DILifeTime) -> Bool {
     switch (lhs, rhs) {
     case (.single, .single),

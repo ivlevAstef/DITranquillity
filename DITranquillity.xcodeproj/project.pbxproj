@@ -10,6 +10,7 @@
 		16640A881D9E1E7B00707BFC /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		169C0DDF1DA3501F001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		169C0E451DA35CBE001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		16EA372E23FA7715004DA194 /* DITranquillityTests_Modular.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EA372D23FA7715004DA194 /* DITranquillityTests_Modular.swift */; };
 		ABDA289B23ABBECD00BEB63F /* DIStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDC23AA75AC00DEA34A /* DIStorage.swift */; };
 		ABDA289C23ABBECD00BEB63F /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDB23AA75AC00DEA34A /* DIContainer.swift */; };
 		ABDA289E23ABBECD00BEB63F /* Multithread.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EB923AA75AC00DEA34A /* Multithread.swift */; };
@@ -242,6 +243,7 @@
 		169C0DE51DA3501F001F0AD5 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		169C0E1C1DA355A6001F0AD5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		169C0E4B1DA35CBE001F0AD5 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		16EA372D23FA7715004DA194 /* DITranquillityTests_Modular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Modular.swift; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABDA28D323ABBECD00BEB63F /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABDA28EB23ABE13500BEB63F /* FastLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastLock.swift; sourceTree = "<group>"; };
@@ -584,6 +586,7 @@
 				BADC36A3215BA9A900CEC778 /* DITranquillityTests_Parent.swift */,
 				BA9A276F208851F100584CA0 /* Info.plist */,
 				BA9A2770208851F100584CA0 /* ResolveTestClasses.swift */,
+				16EA372D23FA7715004DA194 /* DITranquillityTests_Modular.swift */,
 			);
 			path = DITranquillityTest;
 			sourceTree = "<group>";
@@ -1071,6 +1074,7 @@
 				BA9A27A1208851FF00584CA0 /* DITranquillityTests_Resolve.swift in Sources */,
 				BA9A27A6208851FF00584CA0 /* DITranquillityTests_Validation.swift in Sources */,
 				BA598A7B209308A0004EF9EF /* DITranquillityTests_SwiftLazy.swift in Sources */,
+				16EA372E23FA7715004DA194 /* DITranquillityTests_Modular.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -295,4 +295,23 @@ class DITranquillityTests_Build: XCTestCase {
 
     XCTAssert(container.validate())
   }
+
+  func test08_registerlog() {
+    let container = DIContainer()
+
+    DISetting.Log.level = .verbose
+    DISetting.Log.fun = Self.logFunction
+    Self.logs.removeAll()
+
+    container.register { RCycle(arg($0)) }
+      .lifetime(.prototype)
+
+    XCTAssertGreaterThan(Self.logs.count, 0)
+    if let firstLog = Self.logs.first {
+      XCTAssertEqual(firstLog.level, .verbose)
+      XCTAssert(firstLog.msg.contains("\(RCycle.self)"))
+      XCTAssert(firstLog.msg.contains("\(DILifeTime.prototype.self)"))
+    }
+
+  }
 }

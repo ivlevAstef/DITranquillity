@@ -9,7 +9,11 @@
 import XCTest
 import DITranquillity
 
-private class Class
+private protocol MyProtocol {
+  func empty()
+}
+
+private class Class: MyProtocol
 {
   let p1: Int
   let p2: String
@@ -22,18 +26,22 @@ private class Class
     self.p2 = p2
     self.p3 = p3
   }
+
+  func empty() { }
 }
 
-private class DepthClass
+private class DepthClass: MyProtocol
 {
   let c: Class
 
   internal init(c: Class) {
     self.c = c
   }
+
+  func empty() { }
 }
 
-private class OptionalClass
+private class OptionalClass: MyProtocol
 {
   let p1: Int?
   let p2: String?
@@ -44,6 +52,8 @@ private class OptionalClass
     self.p2 = p2
     self.p3 = p3
   }
+
+  func empty() { }
 }
 
 class DITranquillityTests_Extensions: XCTestCase {
@@ -61,11 +71,11 @@ class DITranquillityTests_Extensions: XCTestCase {
 
     let obj: Class = *container
 
-    XCTAssert(obj.p1 == 111)
-    XCTAssert(obj.p2 == "injection")
-    XCTAssert(obj.p3 == 22.2)
-    XCTAssert(obj.p4.count == 5)
-    XCTAssert(obj.p5.joined() == "Hello")
+    XCTAssertEqual(obj.p1, 111)
+    XCTAssertEqual(obj.p2, "injection")
+    XCTAssertEqual(obj.p3, 22.2)
+    XCTAssertEqual(obj.p4.count, 5)
+    XCTAssertEqual(obj.p5.joined(), "Hello")
   }
 
   func test02_DepthArguments() {
@@ -83,11 +93,11 @@ class DITranquillityTests_Extensions: XCTestCase {
 
     let obj: DepthClass = *container
 
-    XCTAssert(obj.c.p1 == 111)
-    XCTAssert(obj.c.p2 == "injection")
-    XCTAssert(obj.c.p3 == 22.2)
-    XCTAssert(obj.c.p4.count == 5)
-    XCTAssert(obj.c.p5.joined() == "Hello")
+    XCTAssertEqual(obj.c.p1, 111)
+    XCTAssertEqual(obj.c.p2, "injection")
+    XCTAssertEqual(obj.c.p3, 22.2)
+    XCTAssertEqual(obj.c.p4.count, 5)
+    XCTAssertEqual(obj.c.p5.joined(), "Hello")
   }
 
   func test03_OptionalArguments() {
@@ -99,9 +109,9 @@ class DITranquillityTests_Extensions: XCTestCase {
 
     let obj: OptionalClass = *container
 
-    XCTAssert(obj.p1 == nil)
-    XCTAssert(obj.p2 == nil)
-    XCTAssert(obj.p3 == 22.2)
+    XCTAssertNil(obj.p1)
+    XCTAssertNil(obj.p2)
+    XCTAssertEqual(obj.p3, 22.2)
   }
 
   func test04_NotSetOptionalArguments() {
@@ -111,10 +121,44 @@ class DITranquillityTests_Extensions: XCTestCase {
 
     let obj: OptionalClass = *container
 
-    XCTAssert(obj.p1 == nil)
-    XCTAssert(obj.p2 == nil)
-    XCTAssert(obj.p3 == nil)
+    XCTAssertNil(obj.p1)
+    XCTAssertNil(obj.p2)
+    XCTAssertNil(obj.p3)
   }
+
+  func test05_ExtensionsNoRegister() {
+    let container = DIContainer()
+
+    let ext = container.extensions(for: Class.self)
+
+    XCTAssertNil(ext)
+  }
+
+  func test06_ExtensionsProtocolOneRegister() {
+    let container = DIContainer()
+
+   container.register{ Class(p1: $0, p2: arg($1), p3: arg($2)) }
+     .as(MyProtocol.self)
+
+    let ext = container.extensions(for: MyProtocol.self)
+
+    XCTAssertNotNil(ext)
+  }
+
+  func test06_ExtensionsMoreRegister() {
+     let container = DIContainer()
+
+    container.register{ OptionalClass(p1: arg($0), p2: $1, p3: arg($2)) }
+      .as(MyProtocol.self)
+
+    container.register{ Class(p1: $0, p2: arg($1), p3: arg($2)) }
+      .as(MyProtocol.self)
+
+     let ext = container.extensions(for: MyProtocol.self)
+
+     XCTAssertNil(ext)
+   }
+
 
 }
 
