@@ -70,8 +70,22 @@ class DITranquillityTests_Build: XCTestCase {
   var file: String { return #file }
   
   static var logs: [(level: DILogLevel, msg: String)] = []
-  static func logFunction(level: DILogLevel, msg: String) {
+  private static func logFunction(level: DILogLevel, msg: String) {
     logs.append((level, msg))
+  }
+  
+  private static func testWithLogs(_ test: () -> Void, level: DILogLevel = .verbose) {
+    let prevFun = DISetting.Log.fun
+    let prevLevel = DISetting.Log.level
+    DISetting.Log.level = level
+    DISetting.Log.fun = logFunction
+    logs.removeAll()
+    
+    test()
+    
+    DISetting.Log.level = prevLevel
+    DISetting.Log.fun = prevFun 
+    logs.removeAll()
   }
   
   override func setUp() {
@@ -299,18 +313,16 @@ class DITranquillityTests_Build: XCTestCase {
   func test08_registerlog() {
     let container = DIContainer()
 
-    DISetting.Log.level = .verbose
-    DISetting.Log.fun = Self.logFunction
-    Self.logs.removeAll()
+    Self.testWithLogs {
+      container.register { RCycle(arg($0)) }
+        .lifetime(.prototype)
 
-    container.register { RCycle(arg($0)) }
-      .lifetime(.prototype)
-
-    XCTAssertGreaterThan(Self.logs.count, 0)
-    if let firstLog = Self.logs.first {
-      XCTAssertEqual(firstLog.level, .verbose)
-      XCTAssert(firstLog.msg.contains("\(RCycle.self)"))
-      XCTAssert(firstLog.msg.contains("\(DILifeTime.prototype.self)"))
+      XCTAssertGreaterThan(Self.logs.count, 0)
+      if let firstLog = Self.logs.first {
+        XCTAssertEqual(firstLog.level, .verbose)
+        XCTAssert(firstLog.msg.contains("\(RCycle.self)"))
+        XCTAssert(firstLog.msg.contains("\(DILifeTime.prototype.self)"))
+      }
     }
 
   }
