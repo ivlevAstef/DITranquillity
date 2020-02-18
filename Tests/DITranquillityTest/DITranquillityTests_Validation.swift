@@ -74,14 +74,14 @@ class DITranquillityTests_Build: XCTestCase {
     logs.append((level, msg))
   }
   
-  private static func testWithLogs(_ test: () -> Void, level: DILogLevel = .verbose) {
+  private static func testWithLogs(level: DILogLevel = .verbose, testMethod: () -> Void) {
     let prevFun = DISetting.Log.fun
     let prevLevel = DISetting.Log.level
     DISetting.Log.level = level
     DISetting.Log.fun = logFunction
     logs.removeAll()
     
-    test()
+    testMethod()
     
     DISetting.Log.level = prevLevel
     DISetting.Log.fun = prevFun 
