@@ -243,5 +243,8 @@ Please raise a [GitHub issue](https://github.com/ivlevAstef/DITranquillity/issue
 ### I've found a defect in documentation, or thought up how to improve it
 Please help library development and create [pull requests](https://github.com/ivlevAstef/DITranquillity/pulls)
 
+### Plea
+If you like my library, then support the library by putting star.
+
 ### Question?
-You can feel free to ask the question at e-mail: ivlev.stef@gmail.com.  
+You can feel free to ask the question at e-mail: ivlev.stef@gmail.com.

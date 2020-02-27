@@ -62,10 +62,6 @@ pod 'DITranquillity'
 ```
 pod 'DITranquillity/UIKit'
 ```
-Для использования возможностей из секции "Graph API" допишите строчку в ваш `Podfile`
-```
-pod 'DITranquillity/GraphAPI'
-```
 
 #### SwiftPM
 Вы можете воспользуйтесь "Xcode/File/Swift Packages/Add Package Dependency..." и указать в качестве url:
@@ -240,6 +236,9 @@ iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
 
 ### Я нашел проблему в документации, или я знаю как улучшить библиотеку
 Вы можете помочь развитию библиотеки сделав [pull requests](https://github.com/ivlevAstef/DITranquillity/pulls)
+
+### Просьба
+Если вам понравилась моя библиотека, то поддержите библиотеку поставив звёздочку.
 
 ### Остались вопросы?
 Я могу ответить на ваши вопросы по почте: ivlev.stef@gmail.com  

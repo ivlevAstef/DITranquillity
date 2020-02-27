@@ -37,6 +37,15 @@
             ReferencedContainer = "container:DITranquillity.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "A58875531D0944AE00D6DE92"
+            BuildableName = "DITranquillity.framework"
+            BlueprintName = "DITranquillity-iOS"
+            ReferencedContainer = "container:DITranquillity.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
          <TestableReference
             skipped = "NO">
