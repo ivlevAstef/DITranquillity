@@ -30,8 +30,7 @@ public class DIExtensions {
     }
   }
 
-  internal func getNextArg() -> Any?
-  {
+  internal func getNextArg() -> Any? {
     return mutex.sync {
       if arguments.count > 0 {
         return arguments.removeFirst()
