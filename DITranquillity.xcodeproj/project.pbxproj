@@ -244,6 +244,7 @@
 		169C0E1C1DA355A6001F0AD5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		169C0E4B1DA35CBE001F0AD5 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		16EA372D23FA7715004DA194 /* DITranquillityTests_Modular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Modular.swift; sourceTree = "<group>"; };
+		16FADF3F24A701F7007BF1C1 /* Documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Documentation; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABDA28D323ABBECD00BEB63F /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABDA28EB23ABE13500BEB63F /* FastLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastLock.swift; sourceTree = "<group>"; };
@@ -386,6 +387,7 @@
 		A588754A1D0944AE00D6DE92 = {
 			isa = PBXGroup;
 			children = (
+				16FADF3F24A701F7007BF1C1 /* Documentation */,
 				FD03854921ABFFF100A4EF60 /* Package.swift */,
 				BA9A2763208851F100584CA0 /* Tests */,
 				16640A4C1D9E1E7B00707BFC /* Sources */,
