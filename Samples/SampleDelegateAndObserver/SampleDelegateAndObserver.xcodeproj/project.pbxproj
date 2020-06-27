@@ -22,6 +22,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1602500924A74DBB00BB63D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 16640AA21D9E1FF900707BFC /* DITranquillity.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ABDA28D323ABBECD00BEB63F;
+			remoteInfo = "DITranquillity-WatchOS";
+		};
 		16640AA61D9E1FFA00707BFC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 16640AA21D9E1FF900707BFC /* DITranquillity.xcodeproj */;
@@ -42,34 +49,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = BA9A2756208851C300584CA0;
 			remoteInfo = DITranquillityTests;
-		};
-		AB0AF9A22279367A0031021F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB0AF997227936790031021F /* SwiftLazy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A58875541D0944AE00D6DE92;
-			remoteInfo = "SwiftLazy-iOS";
-		};
-		AB0AF9A42279367A0031021F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB0AF997227936790031021F /* SwiftLazy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 169C0DE51DA3501F001F0AD5;
-			remoteInfo = "SwiftLazy-OSX";
-		};
-		AB0AF9A62279367A0031021F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB0AF997227936790031021F /* SwiftLazy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 169C0E4B1DA35CBE001F0AD5;
-			remoteInfo = "SwiftLazy-tvOS";
-		};
-		AB0AF9A82279373D0031021F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB0AF997227936790031021F /* SwiftLazy.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A58875531D0944AE00D6DE92;
-			remoteInfo = "SwiftLazy-iOS";
 		};
 		D5932E621F722C3E0041ECB8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -115,7 +94,6 @@
 		16EE40C11D81A8AA009259A1 /* PopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
 		16EE40C21D81A8AA009259A1 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A58875681D0944FE00D6DE92 /* SampleDelegateAndObserver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleDelegateAndObserver.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB0AF997227936790031021F /* SwiftLazy.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftLazy.xcodeproj; path = ../../Carthage/Checkouts/SwiftLazy/SwiftLazy.xcodeproj; sourceTree = "<group>"; };
 		AB0AF9AA227937B90031021F /* UIView+cornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+cornerRadius.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -136,6 +114,7 @@
 				16640AA71D9E1FFA00707BFC /* DITranquillity.framework */,
 				D5932E631F722C3E0041ECB8 /* DITranquillity.framework */,
 				D5932E651F722C3E0041ECB8 /* DITranquillity.framework */,
+				1602500A24A74DBB00BB63D3 /* DITranquillity.framework */,
 				AB0AF99E2279367A0031021F /* DITranquillityTests.xctest */,
 			);
 			name = Products;
@@ -180,7 +159,6 @@
 		A588755F1D0944FE00D6DE92 = {
 			isa = PBXGroup;
 			children = (
-				AB0AF997227936790031021F /* SwiftLazy.xcodeproj */,
 				16640AA21D9E1FF900707BFC /* DITranquillity.xcodeproj */,
 				16EE40991D818619009259A1 /* SampleDelegateAndObserver */,
 				A58875691D0944FE00D6DE92 /* Products */,
@@ -191,16 +169,6 @@
 			isa = PBXGroup;
 			children = (
 				A58875681D0944FE00D6DE92 /* SampleDelegateAndObserver.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		AB0AF998227936790031021F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AB0AF9A32279367A0031021F /* SwiftLazy.framework */,
-				AB0AF9A52279367A0031021F /* SwiftLazy.framework */,
-				AB0AF9A72279367A0031021F /* SwiftLazy.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -220,7 +188,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				AB0AF9A92279373D0031021F /* PBXTargetDependency */,
 				16640AA91D9E1FFE00707BFC /* PBXTargetDependency */,
 			);
 			name = SampleDelegateAndObserver;
@@ -261,10 +228,6 @@
 					ProductGroup = 16640AA31D9E1FF900707BFC /* Products */;
 					ProjectRef = 16640AA21D9E1FF900707BFC /* DITranquillity.xcodeproj */;
 				},
-				{
-					ProductGroup = AB0AF998227936790031021F /* Products */;
-					ProjectRef = AB0AF997227936790031021F /* SwiftLazy.xcodeproj */;
-				},
 			);
 			projectRoot = "";
 			targets = (
@@ -274,6 +237,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		1602500A24A74DBB00BB63D3 /* DITranquillity.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = DITranquillity.framework;
+			remoteRef = 1602500924A74DBB00BB63D3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		16640AA71D9E1FFA00707BFC /* DITranquillity.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -286,27 +256,6 @@
 			fileType = wrapper.cfbundle;
 			path = DITranquillityTests.xctest;
 			remoteRef = AB0AF99D2279367A0031021F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB0AF9A32279367A0031021F /* SwiftLazy.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftLazy.framework;
-			remoteRef = AB0AF9A22279367A0031021F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB0AF9A52279367A0031021F /* SwiftLazy.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftLazy.framework;
-			remoteRef = AB0AF9A42279367A0031021F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB0AF9A72279367A0031021F /* SwiftLazy.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftLazy.framework;
-			remoteRef = AB0AF9A62279367A0031021F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D5932E631F722C3E0041ECB8 /* DITranquillity.framework */ = {
@@ -362,11 +311,6 @@
 			isa = PBXTargetDependency;
 			name = DITranquillity;
 			targetProxy = 16640AA81D9E1FFE00707BFC /* PBXContainerItemProxy */;
-		};
-		AB0AF9A92279373D0031021F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "SwiftLazy-iOS";
-			targetProxy = AB0AF9A82279373D0031021F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

@@ -7,7 +7,7 @@
 <a href="https://swift.org/package-manager"><img src ="https://img.shields.io/badge/SwiftPM-compatible-4BC51D.svg?style=flat"/></a>
 <a href="https://travis-ci.org/ivlevAstef/DITranquillity"><img src ="https://travis-ci.org/ivlevAstef/DITranquillity.svg?branch=restructorization"/></a>
 <a href="https://github.com/ivlevAstef/DITranquillity/blob/master/LICENSE"><img src ="https://img.shields.io/github/license/ivlevAstef/DITranquillity.svg?maxAge=2592000"/></a>
-<a href="https://developer.apple.com/swift"><img src ="https://img.shields.io/badge/Swift-3.0--5.0-F16D39.svg?style=flat"/></a>
+<a href="https://developer.apple.com/swift"><img src ="https://img.shields.io/badge/Swift-3.0--5.3-F16D39.svg?style=flat"/></a>
 <a href="http://cocoapods.org/pods/DITranquillity"><img src ="https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-lightgrey.svg"/></a>
 <a href="https://codecov.io/gh/ivlevAstef/DITranquillity"><img src ="https://codecov.io/gh/scribd/DITranquillity/branch/restructorization/graph/badge.svg"/></a>
 </p>
@@ -58,7 +58,7 @@
 ```
 pod 'DITranquillity'
 ``` 
-Для использования возможностей из секции "UI" допишите строчку в ваш `Podfile`:
+Для использования возможностей из секции "UIKit" допишите строчку в ваш `Podfile`:
 ```
 pod 'DITranquillity/UIKit'
 ```
@@ -198,18 +198,18 @@ class AuthInteractorImpl: AuthInteractor {
 Как видим код описывающий внедрение зависимостей занимает малую часть, а прикладной код остается в неведенье о способе внедрения зависимостей.
 
 Для рассмотрения более сложных кейсов советую посмотреть примеры кода:
-* Код 1
-* Код 2
-* Код 3
-* Код 4
+* [Для хабра](Samples/SampleHabr/)
+* [Хаос](Samples/SampleChaos/)
+* [Делегаты и обсерверы](Samples/SampleDelegateAndObserver/)
 
 Или прочитать статьи:
-* Статья 1
-* Статья 2
+* [https://habr.com/ru/post/457188/](https://habr.com/ru/post/457188/) 
+* Старая [https://habr.com/ru/post/311334/](https://habr.com/ru/post/311334/)
 
 ## Требования
 iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
 
+* Swift 5.3: Xcode 12; version >= 3.9.1
 * Swift 5.1: Xcode 11.2.1; version >= 3.9.1
 * Swift 5.1: Xcode 11; version >= 3.6.3
 * Swift 5.0: Xcode 10.2; version >= 3.6.3
@@ -223,11 +223,11 @@ iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
 Смотри [CHANGELOG](CHANGELOG.md) файл, или вкладку [releases](https://github.com/ivlevAstef/DITranquillity/releases).
 
 ## История и планы
-* v1.x.x - Начальная версия
-* v2.x.x - Стабилизация [миграция с первой](Documentation/ru/migration1to2.md)
-* v3.x.x - Эволюция и фичи [миграция со второй](Documentation/ru/migration2to3.md)
-* v4.x.x - API получения графа, оптимизация, Обновление документации и маркетинг
-* v5.x.x - Перенос валидации графа, и других проверок на этап компиляции
+[x] v1.x.x - Начальная версия
+[x] v2.x.x - Стабилизация [миграция с первой](Documentation/ru/migration1to2.md)
+[x] v3.x.x - Эволюция и фичи [миграция со второй](Documentation/ru/migration2to3.md)
+[ ] v4.x.x - API получения графа, оптимизация, Обновление документации и маркетинг
+[ ] v5.x.x - Перенос валидации графа, и других проверок на этап компиляции
 
 ## Обратная связь
 

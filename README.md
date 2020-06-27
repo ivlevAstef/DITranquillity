@@ -7,7 +7,7 @@
 <a href="https://swift.org/package-manager"><img src ="https://img.shields.io/badge/SwiftPM-compatible-4BC51D.svg?style=flat"/></a>
 <a href="https://travis-ci.org/ivlevAstef/DITranquillity"><img src ="https://travis-ci.org/ivlevAstef/DITranquillity.svg?branch=restructorization"/></a>
 <a href="https://github.com/ivlevAstef/DITranquillity/blob/master/LICENSE"><img src ="https://img.shields.io/github/license/ivlevAstef/DITranquillity.svg?maxAge=2592000"/></a>
-<a href="https://developer.apple.com/swift"><img src ="https://img.shields.io/badge/Swift-3.0--5.1-F16D39.svg?style=flat"/></a>
+<a href="https://developer.apple.com/swift"><img src ="https://img.shields.io/badge/Swift-3.0--5.3-F16D39.svg?style=flat"/></a>
 <a href="http://cocoapods.org/pods/DITranquillity"><img src ="https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-lightgrey.svg"/></a>
 <a href="https://codecov.io/gh/ivlevAstef/DITranquillity"><img src ="https://codecov.io/gh/scribd/DITranquillity/branch/restructorization/graph/badge.svg"/></a>
 
@@ -42,9 +42,9 @@ Also I recommend you to read [Glossary](Documentation/en/glossary.md) which will
 - [x] [Modular](Documentation/en/core/modular.md)
 - [x] [Details logs](Documentation/en/core/logs.md)
 - [x] [Graph Validation](Documentation/en/core/graph_validation.md)
-- [x] [Thread safety](Documentation/en/core/thread_safety.md)
+- [x] Thread safety
 - [x] [Container hierarchy](Documentation/en/core/container_hierarchy.md)
-#### UI
+#### UIKit
 - [x] [Storyboard and StoryboardReferences](Documentation/en/ui/storyboard.md)
 - [x] [Simple subviews and Cells Injection](Documentation/en/ui/view_injection.md)
 #### Graph API
@@ -59,13 +59,9 @@ Add the following lines to your `Podfile`:
 ```
 pod 'DITranquillity'
 ``` 
-To use the features from the "UI" section, add the following lines to your `Podfile`:
+To use the features from the "UIKit" section, add the following lines to your `Podfile`:
 ```
 pod 'DITranquillity/UI'
-```
-To use the features from the "Graph API" section, add the following lines to your `Podfile`:
-```
-pod 'DITranquillity/GraphAPI'
 ```
 
 #### SwiftPM
@@ -89,7 +85,7 @@ Add the following lines to your `Cartfile`:
 ```
 github "ivlevAstef/DITranquillity"
 ```
-Carthage support "UI" and "Graph API" section no additional actions.
+Carthage support "UIKit" section no additional actions.
 
 ## Usage
 The library uses a declarative style of dependency description, and allows you to separate your application code from dependency description code.
@@ -203,19 +199,19 @@ class AuthInteractorImpl: AuthInteractor {
 ```
 As you can see, the dependency description code takes a small part, and the application code doen't know about how dependencies are implemented.  
 
-Для рассмотрения более сложных кейсов советую посмотреть примеры кода:
-* Код 1
-* Код 2
-* Код 3
-* Код 4
+Also your can show samples:
+* [For habr](Samples/SampleHabr/)
+* [Chaos](Samples/SampleChaos/)
+* [Delegate and observer](Samples/SampleDelegateAndObserver/)
 
-Или прочитать статьи:
-* Статья 1
-* Статья 2
+Also your can read articles:
+* Ru! [https://habr.com/ru/post/457188/](https://habr.com/ru/post/457188/) 
+* Ru! Old! [https://habr.com/ru/post/311334/](https://habr.com/ru/post/311334/)
 
 ## Requirements
 iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
 
+* Swift 5.3: Xcode 12; version >= 3.9.1
 * Swift 5.1: Xcode 11.2.1; version >= 3.9.1
 * Swift 5.1: Xcode 11; version >= 3.6.3
 * Swift 5.0: Xcode 10.2; version >= 3.6.3
@@ -229,11 +225,11 @@ iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
 See [CHANGELOG](CHANGELOG.md) file or [releases](https://github.com/ivlevAstef/DITranquillity/releases).
 
 ## History and Plans
-* v1.x.x - Started
-* v2.x.x - Stabilization
-* v3.x.x - Evolution and Features
-* v4.x.x - Graph API and Optimization. Also Documentation and Marketing
-* v5.x.x - Pre compile time validation
+[x] v1.x.x - Started
+[x] v2.x.x - Stabilization
+[x]  v3.x.x - Evolution and Features
+[ ] v4.x.x - Graph API and Optimization. Also Documentation and Marketing
+[ ]  v5.x.x - Pre compile time validation
 
 ## Feedback
 
