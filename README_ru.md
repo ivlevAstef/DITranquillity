@@ -36,12 +36,12 @@
 - [x] [Внедрение через инициализацию, свойства, методы](Documentation/ru/core/injection.md)
 - [x] [Опциональное внедрение, а также с аргументами, множественное, с указанием тэга/имени](Documentation/ru/core/modificated_injection.md)
 - [x] [Отложенное внедрение](Documentation/ru/core/delayed_injection.md)
-- [x] [Внедрение циклических зависимостей](Documentation/ru/core/cycle_injection.md)
+- [x] [Внедрение циклических зависимостей](Documentation/ru/core/injection.md#Внедрение-через-свойства)
 - [x] [Указание времени жизни](Documentation/ru/core/scope_and_lifetime.md)
 - [x] [Поддержка модульности](Documentation/ru/core/modular.md)
 - [x] [Полное и подробное логирование](Documentation/ru/core/logs.md)
 - [x] [Валидация графа зависимостей](Documentation/ru/core/graph_validation.md)
-- [x] [Одновременная работа из нескольких потоков](Documentation/ru/core/thread_safety.md)
+- [x] Одновременная работа из нескольких потоков
 - [x] [Иерархичные контейнеры](Documentation/ru/core/container_hierarchy.md)
 #### UIKit
 - [x] [Поддержка сторибоардов](Documentation/ru/ui/storyboard.md)
