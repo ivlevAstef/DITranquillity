@@ -242,6 +242,7 @@ Please help library development and create [pull requests](https://github.com/iv
 If you like my library, then support the library by putting star.
 
 You can also support the author of the library with a donation:
+
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/ivlevAstef)
 
 ### Question?
