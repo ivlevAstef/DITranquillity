@@ -5,12 +5,11 @@
 <a href="http://cocoapods.org/pods/DITranquillity"><img src ="https://img.shields.io/cocoapods/v/DITranquillity.svg?style=flat"/></a>
 <a href="https://github.com/Carthage/Carthage"><img src ="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat"/></a>
 <a href="https://swift.org/package-manager"><img src ="https://img.shields.io/badge/SwiftPM-compatible-4BC51D.svg?style=flat"/></a>
-<a href="https://travis-ci.org/ivlevAstef/DITranquillity"><img src ="https://travis-ci.org/ivlevAstef/DITranquillity.svg?branch=restructorization"/></a>
+<a href="https://travis-ci.org/ivlevAstef/DITranquillity"><img src ="https://travis-ci.org/ivlevAstef/DITranquillity.svg?branch=master"/></a>
 <a href="https://github.com/ivlevAstef/DITranquillity/blob/master/LICENSE"><img src ="https://img.shields.io/github/license/ivlevAstef/DITranquillity.svg?maxAge=2592000"/></a>
 <a href="https://developer.apple.com/swift"><img src ="https://img.shields.io/badge/Swift-3.0--5.3-F16D39.svg?style=flat"/></a>
 <a href="http://cocoapods.org/pods/DITranquillity"><img src ="https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-lightgrey.svg"/></a>
-<a href="https://codecov.io/gh/ivlevAstef/DITranquillity"><img src ="https://codecov.io/gh/scribd/DITranquillity/branch/restructorization/graph/badge.svg"/></a>
-
+<a href="https://codecov.io/gh/ivlevAstef/DITranquillity"><img src ="https://codecov.io/gh/ivlevAstef/DITranquillity/branch/master/graph/badge.svg"/></a>
 </p>
 
 # DITranquillity
