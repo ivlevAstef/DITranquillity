@@ -37,7 +37,7 @@ Also I recommend you to read [Glossary](Documentation/en/glossary.md) which will
 - [x] [Initializer/Property/Method Injections](Documentation/en/core/injection.md)
 - [x] [Optional and argument, many, by tag Injections](Documentation/en/core/modificated_injection.md)
 - [x] [Delayed injection](Documentation/en/core/delayed_injection.md)
-- [x] [Circular dependency injection](Documentation/en/core/cycle_injection.md)
+- [x] [Circular dependency injection](Documentation/en/core/injection.md)
 - [x] [Scope and lifetime](Documentation/en/core/scope_and_lifetime.md)
 - [x] [Modular](Documentation/en/core/modular.md)
 - [x] [Details logs](Documentation/en/core/logs.md)
@@ -225,11 +225,11 @@ iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
 See [CHANGELOG](CHANGELOG.md) file or [releases](https://github.com/ivlevAstef/DITranquillity/releases).
 
 ## History and Plans
-[x] v1.x.x - Started
-[x] v2.x.x - Stabilization
-[x]  v3.x.x - Evolution and Features
-[ ] v4.x.x - Graph API and Optimization. Also Documentation and Marketing
-[ ]  v5.x.x - Pre compile time validation
+- [x] v1.x.x - Started
+- [x] v2.x.x - Stabilization
+- [x]  v3.x.x - Evolution and Features
+- [ ] v4.x.x - Graph API and Optimization. Also Documentation and Marketing
+- [ ]  v5.x.x - Pre compile time validation
 
 ## Feedback
 
