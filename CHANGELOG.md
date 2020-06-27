@@ -1,3 +1,9 @@
+# v4.0.0
+* update documentation and README
+* update structure
+* restore code coverage and travis
+* support linux
+
 # v3.9.3
 * fix carthage app store - remove copy shell scripts from build phase
 

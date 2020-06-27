@@ -104,8 +104,8 @@ container.extensions(for: Cat.self).setArgs("Felix", "Peter", 2)
 Существует более безопасный, и более красивый способ передачи аргументов - воспользоваться [отложенным внедрением](delayed_injection.md). Подробно про него написано на [странице](delayed_injection.md), тут будет лишь небольшой пример:
 ```Swift
 class Home {
-    let catMaker: Provider<Cat, String, String, Int>
-    init(catMaker: Provider<Cat, String, String, Int>) {
+    let catMaker: Provider3<Cat, String, String, Int>
+    init(catMaker: Provider3<Cat, String, String, Int>) {
         self.catMaker = catMaker
     }
     ...

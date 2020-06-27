@@ -14,9 +14,9 @@
     <a title="DIContainer Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">DITranquillity 3.8.0 Docs</a> (88% documented)</p>
+        <p><a href="../index.html">DITranquillity 4.0.0 Docs</a> (90% documented)</p>
         <p class="header-right"><a href="https://github.com/ivlevAstef/DITranquillity"><img src="../img/gh.png"/>View on GitHub</a></p>
-        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2FivlevAstef%2FDITranquillity%2Fcode%2Fdocsets%2FDITranquillity%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub.com%2FivlevAstef%2FDITranquillity%2Fcode%2Fdocsets%2FDITranquillity.xml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -215,7 +215,7 @@ allows you to receive objects by type.</p>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC6parentA2CSg_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(parent:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC6parentA2CSg_tcfc">init(parent:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC6parentA2CSg_tcfc">init(parent:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -254,193 +254,17 @@ allows you to receive objects by type.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/DIContainer.swift#L32-L37">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIContainer.swift#L32-L37">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14DITranquillity11DIContainerC6append9frameworkAcA11DIFramework_pXp_tF"></a>
-                    <a name="//apple_ref/swift/Method/append(framework:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC6append9frameworkAcA11DIFramework_pXp_tF">append(framework:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Registers a framework in the container.
-Registration means inclusion of all components indicated within.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="nf">append</span><span class="p">(</span><span class="nv">framework</span><span class="p">:</span> <span class="kt"><a href="../Protocols/DIFramework.html">DIFramework</a></span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">DIContainer</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>framework</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>the framework type</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>self</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Hierarchy/DIFramework.swift#L31-L44">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14DITranquillity11DIContainerC6importyyAA11DIFramework_pXpF"></a>
-                    <a name="//apple_ref/swift/Method/import(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC6importyyAA11DIFramework_pXpF">import(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Allows you to specify dependencies between frameworks.
-The method should be used only within the implementation of the <code>load(container:)</code> inside framework.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">import</span><span class="p">`(</span><span class="n">_</span> <span class="nv">importFramework</span><span class="p">:</span> <span class="kt"><a href="../Protocols/DIFramework.html">DIFramework</a></span><span class="o">.</span><span class="k">Type</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>framework</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>A framework that is imported into the current one. Import means communication designation, and not inclusion of all components.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Hierarchy/DIFramework.swift#L53-L59">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14DITranquillity11DIContainerC6append4partAcA6DIPart_pXp_tF"></a>
-                    <a name="//apple_ref/swift/Method/append(part:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC6append4partAcA6DIPart_pXp_tF">append(part:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Registers a part in the container.
-Registration means inclusion of all components indicated within.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="nf">append</span><span class="p">(</span><span class="nv">part</span><span class="p">:</span> <span class="kt"><a href="../Protocols/DIPart.html">DIPart</a></span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">DIContainer</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>path</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>the part type</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>self</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Hierarchy/DIPart.swift#L29-L38">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
                 <li class="item">
                   <div>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_t_tctr1_lF"></a>
                     <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_t_tctr1_lF">register(file:line:_:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_t_tctr1_lF">register(file:<wbr>line:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -459,7 +283,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -487,7 +311,7 @@ Using:</p>
                         <p>component builder, to configure the component.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/AutoResolve/DIContainer.Reg.swift#L23-L25">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/AutoResolve/DIContainer.Reg.swift#L23-L25">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -497,7 +321,7 @@ Using:</p>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_t_tctr2_lF"></a>
                     <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_t_tctr2_lF">register(file:line:_:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_t_tctr2_lF">register(file:<wbr>line:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -516,7 +340,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -544,7 +368,7 @@ Using:</p>
                         <p>component builder, to configure the component.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/AutoResolve/DIContainer.Reg.swift#L37-L39">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/AutoResolve/DIContainer.Reg.swift#L37-L39">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -554,7 +378,7 @@ Using:</p>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_t_tctr3_lF"></a>
                     <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_t_tctr3_lF">register(file:line:_:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_t_tctr3_lF">register(file:<wbr>line:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -573,7 +397,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -601,7 +425,7 @@ Using:</p>
                         <p>component builder, to configure the component.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/AutoResolve/DIContainer.Reg.swift#L51-L53">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/AutoResolve/DIContainer.Reg.swift#L51-L53">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -611,7 +435,7 @@ Using:</p>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_t_tctr4_lF"></a>
                     <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_t_tctr4_lF">register(file:line:_:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_t_tctr4_lF">register(file:<wbr>line:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -630,7 +454,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -658,7 +482,7 @@ Using:</p>
                         <p>component builder, to configure the component.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/AutoResolve/DIContainer.Reg.swift#L65-L67">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/AutoResolve/DIContainer.Reg.swift#L65-L67">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -668,7 +492,7 @@ Using:</p>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_t_tctr5_lF"></a>
                     <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_t_tctr5_lF">register(file:line:_:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_t_tctr5_lF">register(file:<wbr>line:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -687,7 +511,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -715,7 +539,7 @@ Using:</p>
                         <p>component builder, to configure the component.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/AutoResolve/DIContainer.Reg.swift#L79-L81">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/AutoResolve/DIContainer.Reg.swift#L79-L81">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -725,7 +549,7 @@ Using:</p>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_t_tctr6_lF"></a>
                     <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_t_tctr6_lF">register(file:line:_:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_t_tctr6_lF">register(file:<wbr>line:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -744,7 +568,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -772,7 +596,7 @@ Using:</p>
                         <p>component builder, to configure the component.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/AutoResolve/DIContainer.Reg.swift#L93-L95">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/AutoResolve/DIContainer.Reg.swift#L93-L95">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -782,7 +606,7 @@ Using:</p>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_t_tctr7_lF"></a>
                     <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_t_tctr7_lF">register(file:line:_:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_t_tctr7_lF">register(file:<wbr>line:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -801,7 +625,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">,</span> <span class="kt">P7</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">,</span> <span class="kt">P7</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -829,7 +653,7 @@ Using:</p>
                         <p>component builder, to configure the component.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/AutoResolve/DIContainer.Reg.swift#L107-L109">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/AutoResolve/DIContainer.Reg.swift#L107-L109">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -839,7 +663,7 @@ Using:</p>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_t_tctr8_lF"></a>
                     <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_t_tctr8_lF">register(file:line:_:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_t_tctr8_lF">register(file:<wbr>line:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -858,7 +682,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">,</span> <span class="kt">P7</span><span class="p">,</span> <span class="kt">P8</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">,</span> <span class="kt">P7</span><span class="p">,</span> <span class="kt">P8</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -886,7 +710,7 @@ Using:</p>
                         <p>component builder, to configure the component.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/AutoResolve/DIContainer.Reg.swift#L121-L123">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/AutoResolve/DIContainer.Reg.swift#L121-L123">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -896,7 +720,7 @@ Using:</p>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_t_tctr9_lF"></a>
                     <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_t_tctr9_lF">register(file:line:_:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_t_tctr9_lF">register(file:<wbr>line:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -915,7 +739,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">,</span> <span class="kt">P7</span><span class="p">,</span> <span class="kt">P8</span><span class="p">,</span> <span class="kt">P9</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">,</span> <span class="kt">P7</span><span class="p">,</span> <span class="kt">P8</span><span class="p">,</span> <span class="kt">P9</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -943,7 +767,7 @@ Using:</p>
                         <p>component builder, to configure the component.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/AutoResolve/DIContainer.Reg.swift#L135-L137">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/AutoResolve/DIContainer.Reg.swift#L135-L137">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -953,7 +777,7 @@ Using:</p>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_t_tctr10_lF"></a>
                     <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_t_tctr10_lF">register(file:line:_:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_t_tctr10_lF">register(file:<wbr>line:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -972,7 +796,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">,</span> <span class="kt">P7</span><span class="p">,</span> <span class="kt">P8</span><span class="p">,</span> <span class="kt">P9</span><span class="p">,</span> <span class="kt">P10</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">,</span> <span class="kt">P7</span><span class="p">,</span> <span class="kt">P8</span><span class="p">,</span> <span class="kt">P9</span><span class="p">,</span> <span class="kt">P10</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1000,7 +824,7 @@ Using:</p>
                         <p>component builder, to configure the component.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/AutoResolve/DIContainer.Reg.swift#L149-L151">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/AutoResolve/DIContainer.Reg.swift#L149-L151">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1010,7 +834,7 @@ Using:</p>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_t_tctr11_lF"></a>
                     <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_t_tctr11_lF">register(file:line:_:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_t_tctr11_lF">register(file:<wbr>line:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1029,7 +853,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">,</span> <span class="kt">P7</span><span class="p">,</span> <span class="kt">P8</span><span class="p">,</span> <span class="kt">P9</span><span class="p">,</span> <span class="kt">P10</span><span class="p">,</span> <span class="kt">P11</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">,</span> <span class="kt">P7</span><span class="p">,</span> <span class="kt">P8</span><span class="p">,</span> <span class="kt">P9</span><span class="p">,</span> <span class="kt">P10</span><span class="p">,</span> <span class="kt">P11</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1057,7 +881,7 @@ Using:</p>
                         <p>component builder, to configure the component.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/AutoResolve/DIContainer.Reg.swift#L163-L165">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/AutoResolve/DIContainer.Reg.swift#L163-L165">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1067,7 +891,7 @@ Using:</p>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_t_tctr12_lF"></a>
                     <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_t_tctr12_lF">register(file:line:_:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_t_tctr12_lF">register(file:<wbr>line:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1086,7 +910,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">,</span><span class="kt">P12</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">,</span><span class="kt">P12</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">,</span> <span class="kt">P7</span><span class="p">,</span> <span class="kt">P8</span><span class="p">,</span> <span class="kt">P9</span><span class="p">,</span> <span class="kt">P10</span><span class="p">,</span> <span class="kt">P11</span><span class="p">,</span> <span class="kt">P12</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">,</span> <span class="kt">P7</span><span class="p">,</span> <span class="kt">P8</span><span class="p">,</span> <span class="kt">P9</span><span class="p">,</span> <span class="kt">P10</span><span class="p">,</span> <span class="kt">P11</span><span class="p">,</span> <span class="kt">P12</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1114,7 +938,7 @@ Using:</p>
                         <p>component builder, to configure the component.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/AutoResolve/DIContainer.Reg.swift#L177-L179">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/AutoResolve/DIContainer.Reg.swift#L177-L179">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1124,7 +948,7 @@ Using:</p>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_q12_t_tctr13_lF"></a>
                     <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_q12_t_tctr13_lF">register(file:line:_:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_q12_t_tctr13_lF">register(file:<wbr>line:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1143,7 +967,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">,</span><span class="kt">P12</span><span class="p">,</span><span class="kt">P13</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">,</span><span class="kt">P12</span><span class="p">,</span><span class="kt">P13</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">,</span> <span class="kt">P7</span><span class="p">,</span> <span class="kt">P8</span><span class="p">,</span> <span class="kt">P9</span><span class="p">,</span> <span class="kt">P10</span><span class="p">,</span> <span class="kt">P11</span><span class="p">,</span> <span class="kt">P12</span><span class="p">,</span> <span class="kt">P13</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">,</span> <span class="kt">P7</span><span class="p">,</span> <span class="kt">P8</span><span class="p">,</span> <span class="kt">P9</span><span class="p">,</span> <span class="kt">P10</span><span class="p">,</span> <span class="kt">P11</span><span class="p">,</span> <span class="kt">P12</span><span class="p">,</span> <span class="kt">P13</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1171,7 +995,7 @@ Using:</p>
                         <p>component builder, to configure the component.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/AutoResolve/DIContainer.Reg.swift#L191-L193">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/AutoResolve/DIContainer.Reg.swift#L191-L193">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1181,7 +1005,7 @@ Using:</p>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_q12_q13_t_tctr14_lF"></a>
                     <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_q12_q13_t_tctr14_lF">register(file:line:_:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_q12_q13_t_tctr14_lF">register(file:<wbr>line:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1200,7 +1024,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">,</span><span class="kt">P12</span><span class="p">,</span><span class="kt">P13</span><span class="p">,</span><span class="kt">P14</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">,</span><span class="kt">P12</span><span class="p">,</span><span class="kt">P13</span><span class="p">,</span><span class="kt">P14</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">,</span> <span class="kt">P7</span><span class="p">,</span> <span class="kt">P8</span><span class="p">,</span> <span class="kt">P9</span><span class="p">,</span> <span class="kt">P10</span><span class="p">,</span> <span class="kt">P11</span><span class="p">,</span> <span class="kt">P12</span><span class="p">,</span> <span class="kt">P13</span><span class="p">,</span> <span class="kt">P14</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">,</span> <span class="kt">P7</span><span class="p">,</span> <span class="kt">P8</span><span class="p">,</span> <span class="kt">P9</span><span class="p">,</span> <span class="kt">P10</span><span class="p">,</span> <span class="kt">P11</span><span class="p">,</span> <span class="kt">P12</span><span class="p">,</span> <span class="kt">P13</span><span class="p">,</span> <span class="kt">P14</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1228,7 +1052,7 @@ Using:</p>
                         <p>component builder, to configure the component.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/AutoResolve/DIContainer.Reg.swift#L205-L207">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/AutoResolve/DIContainer.Reg.swift#L205-L207">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1238,7 +1062,7 @@ Using:</p>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_q12_q13_q14_t_tctr15_lF"></a>
                     <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_q12_q13_q14_t_tctr15_lF">register(file:line:_:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq__q0_q1_q2_q3_q4_q5_q6_q7_q8_q9_q10_q11_q12_q13_q14_t_tctr15_lF">register(file:<wbr>line:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1257,7 +1081,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">,</span><span class="kt">P12</span><span class="p">,</span><span class="kt">P13</span><span class="p">,</span><span class="kt">P14</span><span class="p">,</span><span class="kt">P15</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span><span class="kt">P1</span><span class="p">,</span><span class="kt">P2</span><span class="p">,</span><span class="kt">P3</span><span class="p">,</span><span class="kt">P4</span><span class="p">,</span><span class="kt">P5</span><span class="p">,</span><span class="kt">P6</span><span class="p">,</span><span class="kt">P7</span><span class="p">,</span><span class="kt">P8</span><span class="p">,</span><span class="kt">P9</span><span class="p">,</span><span class="kt">P10</span><span class="p">,</span><span class="kt">P11</span><span class="p">,</span><span class="kt">P12</span><span class="p">,</span><span class="kt">P13</span><span class="p">,</span><span class="kt">P14</span><span class="p">,</span><span class="kt">P15</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">,</span> <span class="kt">P7</span><span class="p">,</span> <span class="kt">P8</span><span class="p">,</span> <span class="kt">P9</span><span class="p">,</span> <span class="kt">P10</span><span class="p">,</span> <span class="kt">P11</span><span class="p">,</span> <span class="kt">P12</span><span class="p">,</span> <span class="kt">P13</span><span class="p">,</span> <span class="kt">P14</span><span class="p">,</span> <span class="kt">P15</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">P0</span><span class="p">,</span> <span class="kt">P1</span><span class="p">,</span> <span class="kt">P2</span><span class="p">,</span> <span class="kt">P3</span><span class="p">,</span> <span class="kt">P4</span><span class="p">,</span> <span class="kt">P5</span><span class="p">,</span> <span class="kt">P6</span><span class="p">,</span> <span class="kt">P7</span><span class="p">,</span> <span class="kt">P8</span><span class="p">,</span> <span class="kt">P9</span><span class="p">,</span> <span class="kt">P10</span><span class="p">,</span> <span class="kt">P11</span><span class="p">,</span> <span class="kt">P12</span><span class="p">,</span> <span class="kt">P13</span><span class="p">,</span> <span class="kt">P14</span><span class="p">,</span> <span class="kt">P15</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1285,21 +1109,17 @@ Using:</p>
                         <p>component builder, to configure the component.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/AutoResolve/DIContainer.Reg.swift#L219-L221">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/AutoResolve/DIContainer.Reg.swift#L219-L221">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
                 <li class="item">
                   <div>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC10extensions3for4name9framework4file4lineAA12DIExtensionsCSgypXp_SSSgAA11DIFramework_pXpSgSSSitF"></a>
                     <a name="//apple_ref/swift/Method/extensions(for:name:framework:file:line:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC10extensions3for4name9framework4file4lineAA12DIExtensionsCSgypXp_SSSgAA11DIFramework_pXpSgSSSitF">extensions(for:name:framework:file:line:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC10extensions3for4name9framework4file4lineAA12DIExtensionsCSgypXp_SSSgAA11DIFramework_pXpSgSSSitF">extensions(for:<wbr>name:<wbr>framework:<wbr>file:<wbr>line:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1366,7 +1186,7 @@ Using:</p>
                         <p>object for customizing extensions</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/DIContainer+Extensions.swift#L21-L34">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIContainer+Extensions.swift#L19-L32">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1377,9 +1197,11 @@ Using:</p>
               <div class="task-name-container">
                 <a name="/register"></a>
                 <a name="//apple_ref/swift/Section/register" class="dashAnchor"></a>
-                <a href="#/register">
-                  <h3 class="section-name">register</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/register"></a>
+                  <h3 class="section-name"><p>register</p>
+</h3>
+                </div>
               </div>
               <ul>
                 <li class="item">
@@ -1387,7 +1209,7 @@ Using:</p>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC8register_4file4lineAA18DIComponentBuilderCyxGxm_SSSitlF"></a>
                     <a name="//apple_ref/swift/Method/register(_:file:line:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register_4file4lineAA18DIComponentBuilderCyxGxm_SSSitlF">register(_:file:line:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register_4file4lineAA18DIComponentBuilderCyxGxm_SSSitlF">register(_:<wbr>file:<wbr>line:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1435,7 +1257,7 @@ Using:</p>
                         <p>component builder, to configure the component.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/DIContainer.swift#L98-L100">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIContainer.swift#L98-L100">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1445,7 +1267,7 @@ Using:</p>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq_ctr0_lF"></a>
                     <a name="//apple_ref/swift/Method/register(file:line:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq_ctr0_lF">register(file:line:_:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8register4file4line_AA18DIComponentBuilderCyxGSS_Sixq_ctr0_lF">register(file:<wbr>line:<wbr>_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1464,7 +1286,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span><span class="kt">P0</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="n">register</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P0</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">,</span> <span class="n">_</span> <span class="nv">c</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">P0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a></span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1492,7 +1314,7 @@ Using:</p>
                         <p>component builder, to configure the component.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/DIContainer.swift#L111-L117">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIContainer.swift#L111-L117">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1503,9 +1325,11 @@ Using:</p>
               <div class="task-name-container">
                 <a name="/resolve"></a>
                 <a name="//apple_ref/swift/Section/resolve" class="dashAnchor"></a>
-                <a href="#/resolve">
-                  <h3 class="section-name">resolve</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/resolve"></a>
+                  <h3 class="section-name"><p>resolve</p>
+</h3>
+                </div>
               </div>
               <ul>
                 <li class="item">
@@ -1513,7 +1337,7 @@ Using:</p>
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC7resolve4fromxAA11DIFramework_pXpSg_tlF"></a>
                     <a name="//apple_ref/swift/Method/resolve(from:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC7resolve4fromxAA11DIFramework_pXpSg_tlF">resolve(from:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC7resolve4fromxAA11DIFramework_pXpSg_tlF">resolve(from:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1558,7 +1382,7 @@ But if the type is optional, then the application will not crash, but it returns
                         <p>Object for the specified type, or nil (see description).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/DIContainer.swift#L135-L137">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIContainer.swift#L135-L137">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1568,7 +1392,7 @@ But if the type is optional, then the application will not crash, but it returns
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC7resolve3tag4fromxq_m_AA11DIFramework_pXpSgtr0_lF"></a>
                     <a name="//apple_ref/swift/Method/resolve(tag:from:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC7resolve3tag4fromxq_m_AA11DIFramework_pXpSgtr0_lF">resolve(tag:from:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC7resolve3tag4fromxq_m_AA11DIFramework_pXpSgtr0_lF">resolve(tag:<wbr>from:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1625,7 +1449,7 @@ But if the type is optional, then the application will not crash, but it returns
                         <p>Object for the specified type with tag, or nil (see description).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/DIContainer.swift#L147-L149">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIContainer.swift#L147-L149">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1635,7 +1459,7 @@ But if the type is optional, then the application will not crash, but it returns
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC7resolve4name4fromxSS_AA11DIFramework_pXpSgtlF"></a>
                     <a name="//apple_ref/swift/Method/resolve(name:from:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC7resolve4name4fromxSS_AA11DIFramework_pXpSgtlF">resolve(name:from:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC7resolve4name4fromxSS_AA11DIFramework_pXpSgtlF">resolve(name:<wbr>from:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1692,7 +1516,7 @@ But if the type is optional, then the application will not crash, but it returns
                         <p>Object for the specified type with name, or nil (see description).</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/DIContainer.swift#L159-L161">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIContainer.swift#L159-L161">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1726,7 +1550,7 @@ But if the type is optional, then the application will not crash, but it returns
                         <p>Objects for the specified type.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/DIContainer.swift#L166-L168">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIContainer.swift#L166-L168">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1736,7 +1560,7 @@ But if the type is optional, then the application will not crash, but it returns
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC6inject4into4fromyx_AA11DIFramework_pXpSgtlF"></a>
                     <a name="//apple_ref/swift/Method/inject(into:from:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC6inject4into4fromyx_AA11DIFramework_pXpSgtlF">inject(into:from:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC6inject4into4fromyx_AA11DIFramework_pXpSgtlF">inject(into:<wbr>from:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1788,7 +1612,7 @@ If the object type couldn&rsquo;t be found, then in logs there will be a warning
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/DIContainer.swift#L176-L178">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIContainer.swift#L176-L178">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1818,7 +1642,7 @@ If the object type couldn&rsquo;t be found, then in logs there will be a warning
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/DIContainer.swift#L181-L194">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIContainer.swift#L181-L194">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1829,9 +1653,11 @@ If the object type couldn&rsquo;t be found, then in logs there will be a warning
               <div class="task-name-container">
                 <a name="/Clean"></a>
                 <a name="//apple_ref/swift/Section/Clean" class="dashAnchor"></a>
-                <a href="#/Clean">
-                  <h3 class="section-name">Clean</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Clean"></a>
+                  <h3 class="section-name"><p>Clean</p>
+</h3>
+                </div>
               </div>
               <ul>
                 <li class="item">
@@ -1859,7 +1685,7 @@ If the object type couldn&rsquo;t be found, then in logs there will be a warning
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/DIContainer.swift#L200-L202">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIContainer.swift#L200-L202">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1870,9 +1696,11 @@ If the object type couldn&rsquo;t be found, then in logs there will be a warning
               <div class="task-name-container">
                 <a name="/Validation"></a>
                 <a name="//apple_ref/swift/Section/Validation" class="dashAnchor"></a>
-                <a href="#/Validation">
-                  <h3 class="section-name">Validation</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Validation"></a>
+                  <h3 class="section-name"><p>Validation</p>
+</h3>
+                </div>
               </div>
               <ul>
                 <li class="item">
@@ -1880,7 +1708,7 @@ If the object type couldn&rsquo;t be found, then in logs there will be a warning
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC8validate16checkGraphCyclesS2b_tF"></a>
                     <a name="//apple_ref/swift/Method/validate(checkGraphCycles:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8validate16checkGraphCyclesS2b_tF">validate(checkGraphCycles:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC8validate16checkGraphCyclesS2b_tF">validate(checkGraphCycles:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1924,7 +1752,167 @@ If the object type couldn&rsquo;t be found, then in logs there will be a warning
                         <p>true if validation success.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/DITranquillity/Public/DIContainer.swift#L214-L217">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIContainer.swift#L214-L217">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC6append9frameworkAcA11DIFramework_pXp_tF"></a>
+                    <a name="//apple_ref/swift/Method/append(framework:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC6append9frameworkAcA11DIFramework_pXp_tF">append(framework:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Registers a framework in the container.
+Registration means inclusion of all components indicated within.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">append</span><span class="p">(</span><span class="nv">framework</span><span class="p">:</span> <span class="kt"><a href="../Protocols/DIFramework.html">DIFramework</a></span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">DIContainer</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>framework</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the framework type</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>self</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/Hierarchy/DIFramework.swift#L29-L42">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC6importyyAA11DIFramework_pXpF"></a>
+                    <a name="//apple_ref/swift/Method/import(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC6importyyAA11DIFramework_pXpF">import(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Allows you to specify dependencies between frameworks.
+The method should be used only within the implementation of the <code>load(container:)</code> inside framework.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">import</span><span class="p">`(</span><span class="n">_</span> <span class="nv">importFramework</span><span class="p">:</span> <span class="kt"><a href="../Protocols/DIFramework.html">DIFramework</a></span><span class="o">.</span><span class="k">Type</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>framework</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A framework that is imported into the current one. Import means communication designation, and not inclusion of all components.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/Hierarchy/DIFramework.swift#L51-L57">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC6append4partAcA6DIPart_pXp_tF"></a>
+                    <a name="//apple_ref/swift/Method/append(part:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC6append4partAcA6DIPart_pXp_tF">append(part:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Registers a part in the container.
+Registration means inclusion of all components indicated within.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">append</span><span class="p">(</span><span class="nv">part</span><span class="p">:</span> <span class="kt"><a href="../Protocols/DIPart.html">DIPart</a></span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">DIContainer</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>path</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the part type</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>self</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/Hierarchy/DIPart.swift#L29-L38">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1935,9 +1923,11 @@ If the object type couldn&rsquo;t be found, then in logs there will be a warning
               <div class="task-name-container">
                 <a name="/Storyboard%20maker"></a>
                 <a name="//apple_ref/swift/Section/Storyboard maker" class="dashAnchor"></a>
-                <a href="#/Storyboard%20maker">
-                  <h3 class="section-name">Storyboard maker</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Storyboard%20maker"></a>
+                  <h3 class="section-name"><p>Storyboard maker</p>
+</h3>
+                </div>
               </div>
               <ul>
                 <li class="item">
@@ -1945,7 +1935,7 @@ If the object type couldn&rsquo;t be found, then in logs there will be a warning
                     <code>
                     <a name="/s:14DITranquillity11DIContainerC18registerStoryboard4name6bundle4file4lineAA18DIComponentBuilderCySo12UIStoryboardCGSS_So8NSBundleCSgSSSitF"></a>
                     <a name="//apple_ref/swift/Method/registerStoryboard(name:bundle:file:line:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC18registerStoryboard4name6bundle4file4lineAA18DIComponentBuilderCySo12UIStoryboardCGSS_So8NSBundleCSgSSSitF">registerStoryboard(name:bundle:file:line:)</a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC18registerStoryboard4name6bundle4file4lineAA18DIComponentBuilderCySo12UIStoryboardCGSS_So8NSBundleCSgSSSitF">registerStoryboard(name:<wbr>bundle:<wbr>file:<wbr>line:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2002,7 +1992,7 @@ The storyboard can be created both from the code or use storyboard reference fro
                         <p>component builder, to configure the component</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Storyboard/DIStoryboard.swift#L113-L122">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/UI/Storyboard/DIStoryboard.swift#L113-L122">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2012,7 +2002,7 @@ The storyboard can be created both from the code or use storyboard reference fro
                     <code>
                     <a name="/"></a>
                     <a name="//apple_ref/swift/Method/registerStoryboard(name:bundle:file:line:)" class="dashAnchor"></a>
-                    <a class="token" href="#/">registerStoryboard(name:bundle:file:line:)</a>
+                    <a class="token" href="#/">registerStoryboard(name:<wbr>bundle:<wbr>file:<wbr>line:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2032,8 +2022,8 @@ The storyboard can be created both from the code or use storyboard reference fro
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2019-09-05)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.10.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2020-06-27)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

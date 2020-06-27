@@ -1,131 +1,110 @@
 {
   "warnings": [
     {
-      "file": "/Users/ae.ivlev/Projects/Code/DITranquillity/Sources/DITranquillity/Extensions/SwiftLazy.swift",
-      "line": 16,
-      "symbol": "Lazy.init(file:line:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ae.ivlev/Projects/Code/DITranquillity/Sources/DITranquillity/Extensions/SwiftLazy.swift",
-      "line": 34,
-      "symbol": "Provider.init(file:line:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ae.ivlev/Projects/Code/DITranquillity/Sources/DITranquillity/Extensions/SwiftLazy.swift",
-      "line": 53,
-      "symbol": "Provider1.init(file:line:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ae.ivlev/Projects/Code/DITranquillity/Sources/DITranquillity/Extensions/SwiftLazy.swift",
-      "line": 72,
-      "symbol": "Provider2.init(file:line:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ae.ivlev/Projects/Code/DITranquillity/Sources/DITranquillity/Extensions/SwiftLazy.swift",
-      "line": 91,
-      "symbol": "Provider3.init(file:line:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ae.ivlev/Projects/Code/DITranquillity/Sources/DITranquillity/Extensions/SwiftLazy.swift",
-      "line": 110,
-      "symbol": "Provider4.init(file:line:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ae.ivlev/Projects/Code/DITranquillity/Sources/DITranquillity/Extensions/SwiftLazy.swift",
-      "line": 129,
-      "symbol": "Provider5.init(file:line:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ae.ivlev/Projects/Code/DITranquillity/Sources/DITranquillity/Private/Component.swift",
-      "line": 365,
-      "symbol": "Component",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ae.ivlev/Projects/Code/DITranquillity/Sources/DITranquillity/Private/Modificators.swift",
-      "line": 9,
-      "symbol": "InternalByTag",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ae.ivlev/Projects/Code/DITranquillity/Sources/DITranquillity/Private/Modificators.swift",
-      "line": 32,
-      "symbol": "InternalByMany",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ae.ivlev/Projects/Code/DITranquillity/Sources/DITranquillity/Private/Modificators.swift",
-      "line": 53,
-      "symbol": "InternalByManyInFramework",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ae.ivlev/Projects/Code/DITranquillity/Sources/DITranquillity/Private/Modificators.swift",
-      "line": 75,
-      "symbol": "InternalArg",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ae.ivlev/Projects/Code/DITranquillity/Sources/DITranquillity/Public/DILifetime.swift",
+      "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/API/DILifetime.swift",
       "line": 11,
       "symbol": "DILifeTime.ReferenceCounting",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/ae.ivlev/Projects/Code/DITranquillity/Sources/DITranquillity/Public/DILifetime.swift",
-      "line": 35,
-      "symbol": "DILifeTime.lazySingle",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ae.ivlev/Projects/Code/DITranquillity/Sources/DITranquillity/Public/DILifetime.swift",
-      "line": 38,
-      "symbol": "DILifeTime.weakSingle",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ae.ivlev/Projects/Code/DITranquillity/Sources/DITranquillity/Public/DISettings.swift",
+      "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/API/DISettings.swift",
       "line": 11,
       "symbol": "DISetting.Defaults",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/ae.ivlev/Projects/Code/DITranquillity/Sources/DITranquillity/Public/DIStorage.swift",
-      "line": 34,
+      "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/API/DIStorage.swift",
+      "line": 41,
       "symbol": "DICacheStorage.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/ae.ivlev/Projects/Code/DITranquillity/Sources/DITranquillity/Public/DIStorage.swift",
-      "line": 55,
+      "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/API/DIStorage.swift",
+      "line": 73,
       "symbol": "DICompositeStorage.init(storages:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/API/Extensions/SwiftLazy.swift",
+      "line": 15,
+      "symbol": "Lazy.init(file:line:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/API/Extensions/SwiftLazy.swift",
+      "line": 32,
+      "symbol": "Provider.init(file:line:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/API/Extensions/SwiftLazy.swift",
+      "line": 50,
+      "symbol": "Provider1.init(file:line:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/API/Extensions/SwiftLazy.swift",
+      "line": 68,
+      "symbol": "Provider2.init(file:line:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/API/Extensions/SwiftLazy.swift",
+      "line": 86,
+      "symbol": "Provider3.init(file:line:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/API/Extensions/SwiftLazy.swift",
+      "line": 104,
+      "symbol": "Provider4.init(file:line:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/API/Extensions/SwiftLazy.swift",
+      "line": 122,
+      "symbol": "Provider5.init(file:line:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/Internal/Modificators.swift",
+      "line": 9,
+      "symbol": "InternalByTag",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/Internal/Modificators.swift",
+      "line": 32,
+      "symbol": "InternalByMany",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/Internal/Modificators.swift",
+      "line": 53,
+      "symbol": "InternalByManyInFramework",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/Internal/Modificators.swift",
+      "line": 75,
+      "symbol": "InternalArg",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/ae.ivlev/Projects/Code/DITranquillity"
+  "source_directory": "/Users/ae.ivlev/Projects/Code/External/DITranquillity"
 }

@@ -83,21 +83,21 @@ class DITranquillityTests_Threads: XCTestCase {
     let singleService: FooService = *container
     XCTAssertEqual(singleService.foo(), "foo")
     
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
+    DispatchQueue.global(qos: .userInteractive).async {
       for _ in 0..<32768 {
         let service: FooService = *container
         XCTAssert(service === singleService)
       }
     }
     
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
+    DispatchQueue.global(qos: .utility).async {
       for _ in 0..<16384 {
         let service: FooService = *container
         XCTAssert(service === singleService)
       }
     }
     
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+    DispatchQueue.global(qos: .background).async {
       for _ in 0..<8192 {
         let service: FooService = *container
         XCTAssert(service === singleService)

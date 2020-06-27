@@ -13,9 +13,9 @@
     <a title="DITranquillity  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">DITranquillity 3.8.0 Docs</a> (88% documented)</p>
+        <p><a href="index.html">DITranquillity 4.0.0 Docs</a> (90% documented)</p>
         <p class="header-right"><a href="https://github.com/ivlevAstef/DITranquillity"><img src="img/gh.png"/>View on GitHub</a></p>
-        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2FivlevAstef%2FDITranquillity%2Fcode%2Fdocsets%2FDITranquillity%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub.com%2FivlevAstef%2FDITranquillity%2Fcode%2Fdocsets%2FDITranquillity.xml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -195,211 +195,234 @@
         <section>
           <section class="section">
             
-            <p><a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible"></a>
-<a href="http://cocoapods.org/pods/DITranquillity"><img src="https://img.shields.io/cocoapods/v/DITranquillity.svg?style=flat" alt="CocoaPods Version"></a>
-<a href="http://cocoapods.org/pods/DITranquillity"><img src="https://img.shields.io/github/license/ivlevAstef/DITranquillity.svg?maxAge=2592000" alt="License"></a>
-<a href="http://cocoapods.org/pods/DITranquillity"><img src="https://img.shields.io/cocoapods/p/DITranquillity.svg?style=flat" alt="Platform"></a>
-<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift-3.0--5.0-F16D39.svg?style=flat" alt="Swift Version"></a></p>
+            <p align="center">
+<img src ="https://habrastorage.org/files/c6d/c89/5d0/c6dc895d02324b96bc679f41228ab6bf.png" alt="Tranquillity"/>
+</p>
+
+<p align="center">
+<a href="http://cocoapods.org/pods/DITranquillity"><img src ="https://img.shields.io/cocoapods/v/DITranquillity.svg?style=flat"/></a>
+<a href="https://github.com/Carthage/Carthage"><img src ="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat"/></a>
+<a href="https://swift.org/package-manager"><img src ="https://img.shields.io/badge/SwiftPM-compatible-4BC51D.svg?style=flat"/></a>
+<a href="https://travis-ci.org/ivlevAstef/DITranquillity"><img src ="https://travis-ci.org/ivlevAstef/DITranquillity.svg?branch=restructorization"/></a>
+<a href="https://github.com/ivlevAstef/DITranquillity/blob/master/LICENSE"><img src ="https://img.shields.io/github/license/ivlevAstef/DITranquillity.svg?maxAge=2592000"/></a>
+<a href="https://developer.apple.com/swift"><img src ="https://img.shields.io/badge/Swift-3.0--5.3-F16D39.svg?style=flat"/></a>
+<a href="http://cocoapods.org/pods/DITranquillity"><img src ="https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-lightgrey.svg"/></a>
+<a href="https://codecov.io/gh/ivlevAstef/DITranquillity"><img src ="https://codecov.io/gh/scribd/DITranquillity/branch/restructorization/graph/badge.svg"/></a>
+
+</p>
 <h1 id='ditranquillity' class='heading'>DITranquillity</h1>
 
-<p>The small library for <a href="https://en.wikipedia.org/wiki/Dependency_injection">dependency injection</a> in applications written on pure Swift for iOS/OSX/tvOS. Despite its size, it solves a large enough range of tasks, including Storyboard support. Its main advantage -  modularity of support, detailed errors description and lots of opportunities.</p>
+<p>Tranquillity is a lightweight but powerful <a href="https://en.wikipedia.org/wiki/Dependency_injection">dependency injection</a> library for swift.</p>
+
+<p>The name &ldquo;Tranquillity&rdquo; laid the foundation in the basic principles of library: clarity, simplicity and security.</p>
+
+<p>It says - use the library and you will be calm for your dependencies.</p>
+
+<blockquote>
+<p>Language switch: <a href="README.md">English</a>, <a href="README_ru.md">Russian</a></p>
+</blockquote>
+<h2 id='about-dependendy-injection' class='heading'>About Dependendy Injection</h2>
+
+<p>Dependency Injections is a software design pattern in which someone delivers dependencies to an object.</p>
+
+<p>Is one form of the broader technique of <a href="https://en.wikipedia.org/wiki/Inversion_of_control">Inversion Of Control</a> and help the <a href="https://en.wikipedia.org/wiki/Dependency_inversion_principle">Dependency Inversion Principle</a></p>
+
+<p><a href="Documentation/en/about_dependency_injection.md">For more details you can read this link</a></p>
+
+<p>Also I recommend you to read <a href="Documentation/en/glossary.md">Glossary</a> which will help to better understand the terms. </p>
 <h2 id='features' class='heading'>Features</h2>
-
-<p><img align="right" src="https://habrastorage.org/files/c6d/c89/5d0/c6dc895d02324b96bc679f41228ab6bf.png" alt="Tranquillity">  </p>
-
-<ul>
-<li>Pure Swift Type Support</li>
-<li>Initializer injections <a href="Documentation/ru/registration.md#%D0%A0%D0%B0%D0%B7%D1%80%D0%B5%D1%88%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B5%D0%B9-%D0%BF%D1%80%D0%B8-%D0%B8%D0%BD%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8">ru</a></li>
-<li>Property, Method injections <a href="Documentation/ru/injection.md#%D0%92%D0%BD%D0%B5%D0%B4%D1%80%D0%B5%D0%BD%D0%B8%D0%B5">ru</a></li>
-<li>Named, Tags definitions and Many <a href="Documentation/ru/modificators.md#%D0%9C%D0%BE%D0%B4%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D0%BE%D1%80%D1%8B">ru</a></li>
-<li>Type forwarding <a href="Documentation/ru/registration.md#%D0%A3%D0%BA%D0%B0%D0%B7%D0%B0%D0%BD%D0%B8%D0%B5-%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D0%BE%D0%B2">ru</a></li>
-<li>Lifetimes: single, perRun(weak/strong), perContainer(weak/strong), objectGraph, prototype, custom <a href="Documentation/ru/lifetime.md#%D0%92%D1%80%D0%B5%D0%BC%D1%8F-%D0%B6%D0%B8%D0%B7%D0%BD%D0%B8">ru</a></li>
-<li>iOS/macOS Storyboard and StoryboardReference <a href="Documentation/ru/storyboard.md#storyboard">ru</a></li>
-<li>Circular dependencies <a href="Documentation/ru/injection.md#%D0%92%D0%BD%D0%B5%D0%B4%D1%80%D0%B5%D0%BD%D0%B8%D0%B5-%D1%86%D0%B8%D0%BA%D0%BB%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D1%85-%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B5%D0%B9-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-%D1%81%D0%B2%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%B0">ru</a></li>
-<li>Three level hierarchy: types, part, framework <a href="Documentation/ru/part_framework.md#%D0%A7%D0%B0%D1%81%D1%82%D0%B8-%D0%B8-%D0%A4%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B8">ru</a></li>
-<li>Short resolve syntax <a href="Documentation/ru/resolve.md#%D0%A0%D0%B0%D0%B7%D1%80%D0%B5%D1%88%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B5%D0%B9">ru</a></li>
-<li>keyPath injection (since swift4.0) <a href="Documentation/ru/injection.md#%D0%92%D0%BD%D0%B5%D0%B4%D1%80%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B5%D0%B9-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-%D1%81%D0%B2%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%B0-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D1%8F-keypath">ru</a></li>
-<li>Very detail logs <a href="Documentation/ru/log.md#%D0%9B%D0%BE%D0%B3%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5">ru</a></li>
-<li>Validation at the run app <a href="Documentation/ru/validation.md#%D0%92%D0%B0%D0%BB%D0%B8%D0%B4%D0%B0%D1%86%D0%B8%D1%8F-%D0%BA%D0%BE%D0%BD%D1%82%D0%B5%D0%B9%D0%BD%D0%B5%D1%80%D0%B0">ru</a></li>
-<li>Injection into Subviews and cells <a href="Documentation/ru/storyboard.md#%D0%92%D0%BD%D0%B5%D0%B4%D1%80%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B2-subview-%D0%B8-%D1%8F%D1%87%D0%B5%D0%B9%D0%BA%D0%B8">ru</a></li>
-<li>Support Delayed injection <a href="Documentation/ru/delayed_injection.md#%D0%9E%D1%82%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%BD%D0%BE%D0%B5-%D0%B2%D0%BD%D0%B5%D0%B4%D1%80%D0%B5%D0%BD%D0%B8%D0%B5">ru</a></li>
-<li>Injection with arguments at any depth</li>
-<li>Container Hierarchy</li>
-<li>Thread safe</li>
-</ul>
-<h3 id='helpful-links' class='heading'>Helpful links</h3>
+<h4 id='core' class='heading'>Core</h4>
 
 <ul>
-<li>Read the Quick Start <a href="Documentation/ru/quick_start.md#%D0%91%D1%8B%D1%81%D1%82%D1%80%D1%8B%D0%B9-%D1%81%D1%82%D0%B0%D1%80%D1%82">ru</a> / <a href="Documentation/en/Ups.md"><del>en</del></a></li>
-<li>Or documentation <a href="Documentation/ru/main.md">ru</a> / <a href="Documentation/en/Ups.md"><del>en</del></a></li>
-<li>Samples <a href="Documentation/ru/sample.md">ru</a> / <a href="Samples">en</a></li>
-<li>Also see <a href="https://htmlpreview.github.io/?https://github.com/ivlevAstef/DITranquillity/blob/master/Documentation/code/index.html">code documentation</a></li>
+<li>[x] <a href="Documentation/en/core/registration_and_service.md">Registration components and services</a></li>
+<li>[x] <a href="Documentation/en/core/injection.md">Initializer/Property/Method Injections</a></li>
+<li>[x] <a href="Documentation/en/core/modificated_injection.md">Optional and argument, many, by tag Injections</a></li>
+<li>[x] <a href="Documentation/en/core/delayed_injection.md">Delayed injection</a></li>
+<li>[x] <a href="Documentation/en/core/injection.md">Circular dependency injection</a></li>
+<li>[x] <a href="Documentation/en/core/scope_and_lifetime.md">Scope and lifetime</a></li>
+<li>[x] <a href="Documentation/en/core/modular.md">Modular</a></li>
+<li>[x] <a href="Documentation/en/core/logs.md">Details logs</a></li>
+<li>[x] <a href="Documentation/en/core/graph_validation.md">Graph Validation</a></li>
+<li>[x] Thread safety</li>
+<li>[x] <a href="Documentation/en/core/container_hierarchy.md">Container hierarchy</a>
+#### UIKit</li>
+<li>[x] <a href="Documentation/en/ui/storyboard.md">Storyboard and StoryboardReferences</a></li>
+<li>[x] <a href="Documentation/en/ui/view_injection.md">Simple subviews and Cells Injection</a>
+#### Graph API</li>
+<li>[ ] <a href="Documentation/en/graph/get_graph.md">Get dependency graph</a></li>
+<li>[ ] <a href="Documentation/en/graph/visualization_graph.md">Visualization dependency graph</a></li>
 </ul>
+<h2 id='installing' class='heading'>Installing</h2>
+
+<p>The library supports three popular package managers: Cocoapods, Carthage, SwiftPM.</p>
+<h4 id='cocoapods' class='heading'>CocoaPods</h4>
+
+<p>Add the following lines to your <code>Podfile</code>: </p>
+<pre class="highlight plaintext"><code>pod 'DITranquillity'
+</code></pre>
+
+<p>To use the features from the &ldquo;UIKit&rdquo; section, add the following lines to your <code>Podfile</code>:</p>
+<pre class="highlight plaintext"><code>pod 'DITranquillity/UI'
+</code></pre>
+<h4 id='swiftpm' class='heading'>SwiftPM</h4>
+
+<p>You can use &ldquo;Xcode/File/Swift Packages/Add Package Dependency&hellip;&rdquo; and write github url:</p>
+<pre class="highlight plaintext"><code>https://github.com/ivlevAstef/DITranquillity
+</code></pre>
+
+<p>Also you can edit your <code>Package.swift</code> and the following line into section <code>dependencies</code>:</p>
+<pre class="highlight plaintext"><code>.package(url: "https://github.com/ivlevAstef/DITranquillity.git", from: "3.8.4")
+</code></pre>
+
+<p>And don&rsquo;t forget to specify in your section <code>target</code> wrote dependency line:</p>
+<pre class="highlight plaintext"><code>.product(name: "DITranquillity")
+</code></pre>
+
+<blockquote>
+<p>Attention! - SwiftPM unsupport features from the &ldquo;UI&rdquo; section.</p>
+</blockquote>
+<h4 id='carthage' class='heading'>Carthage</h4>
+
+<p>Add the following lines to your <code>Cartfile</code>:</p>
+<pre class="highlight plaintext"><code>github "ivlevAstef/DITranquillity"
+</code></pre>
+
+<p>Carthage support &ldquo;UIKit&rdquo; section no additional actions.</p>
 <h2 id='usage' class='heading'>Usage</h2>
-<pre class="highlight plaintext"><code>// container - for register and resolve your types
+
+<p>The library uses a declarative style of dependency description, and allows you to separate your application code from dependency description code.</p>
+
+<p>For a quick entry, let&rsquo;s look at an example code of one simplified VIPER screen:</p>
+<pre class="highlight plaintext"><code>.................................................
+/// Dependency description
+
 let container = DIContainer()
 
-container.register{ Cat(name: "Felix") }
-  .as(Animal.self) // register Cat with name felix by protocol Animal
-  .lifetime(.prototype) // set lifetime
+container.register(LoginRouter.init)
 
-container.register(PetOwner.init) // register PetOwner
+container.register(LoginPresenterImpl.init)
+  .as(LoginPresenter.self)
+  .lifetime(.objectGraph)
 
-// you can validate you registrations graph
-if !container.validate() {
-  fatalError("...")
-}
+container.register(LoginViewController.init)
+  .injection(cycle: true, \.presenter)
+  .as(LoginView.self)
+  .lifetime(.objectGraph)
 
-.................................................
-
-// get instance of a types from the container
-let owner: PetOwner = container.resolve()
-let animal: Animal = *container // short syntax
-
-print(owner.pet.name) // "Felix"
-print(animal.name) // "Felix"
+container.register(AuthInteractorImpl.init)
+  .as(AuthInteractor.self)
 
 .................................................
+/// Application start point
 
-// where
-protocol Animal {
-  var name: String { get }
+let router: LoginRouter = container.resolve()
+window.rootViewController = router.rootViewController
+router.start()
+
+.................................................
+/// Application Code
+
+import SwiftLazy
+
+class LoginRouter {
+    let rootViewController = UINavigationController()
+    private let loginPresenterProvider: Provider&lt;LoginPresenter&gt;
+
+    init(loginPresenterProvider: Provider&lt;LoginPresenter&gt;) {
+        loginPresenterProvider = loginPresenterProvider
+    }
+
+    func start() {
+        let presenter = loginPresenterProvider.value
+        presenter.loginSuccessCallback = { [weak self] _ in
+            ...
+        }
+        // Your can write code without force cast, it's code simple example
+        rootViewController.push(presenter.view as! UIViewController)
+    }
 }
 
-class Cat: Animal {
-  let name: String
-  init(name: String) {
-    self.name = name
-  }
+protocol LoginPresenter: class {
+    var loginSuccessCallback: ((_ userId: String) -&gt; Void)?
+    func login(name: String, password: String)
 }
 
-class PetOwner {
-  let pet: Animal
-  init(pet: Animal) {
-    self.pet = pet
-  }
+protocol LoginView: class {
+    func showError(text: String)
+}
+
+class LoginPresenterImpl: LoginPresenter {
+    private weak var view: LoginView?
+    private let authInteractor: AuthInteractor
+    init(view: LoginView, authInteractor: AuthInteractor) {
+        self.view = view
+        self.authInteractor = authInteractor
+    }
+
+    func login(name: String, password: String) {
+        if name.isEmpty || password.isEmpty {
+            view?.showError(text: "fill input")
+            return
+        }
+
+        authInteractor.login(name: name, password: password, completion: { [weak self] result in
+            switch result {
+            case .failure(let error): 
+                self?.view?.showError(text: "\(error)")
+            case .success(let userId):
+                self?.loginSuccessCallback?(userId)
+            }
+        })
+    }
+}
+
+class LoginViewController: UIViewController, LoginView {
+    var presenter: LoginPresenter!
+    ...
+    func showError(text: String) {
+        showAlert(title: "Error", message: text)
+    }
+
+    private func tapOnLoginButton() {
+        presenter.login(name: nameTextField.text ?? "", password: passwordTextField.text ?? "")
+    }
+}
+
+protocol AuthInteractor: class {
+    func login(name: String, password: String, completion: (Result&lt;String, Error&gt;) -&gt; Void)
+}
+
+class AuthInteractorImpl: AuthInteractor {
+    func login(name: String, password: String, completion: (Result&lt;String, Error&gt;) -&gt; Void) {
+        ...
+    }
 }
 </code></pre>
 
-<details>
-<summary>See More</summary>
+<p>As you can see, the dependency description code takes a small part, and the application code doen&rsquo;t know about how dependencies are implemented.  </p>
 
-&ldquo;`Swift
-let container = DIContainer()
+<p>Also your can show samples:</p>
 
-container.register{ Cat(name: &quot;Felix&rdquo;) }
-  .as(Animal.self)
-  
-container.register{ Dog(name: &ldquo;Rex&rdquo;) }
-  .as(Animal.self)
-  .default()
+<ul>
+<li><a href="Samples/SampleHabr/">For habr</a></li>
+<li><a href="Samples/SampleChaos/">Chaos</a></li>
+<li><a href="Samples/SampleDelegateAndObserver/">Delegate and observer</a></li>
+</ul>
 
-container.register{ PetOwner(pets: many($0)) }
-  .injection(.home) // since swift4.0 and 3.2.0 lib
+<p>Also your can read articles:</p>
 
-container.register(Home.init)
-  .postInit{ $0.address = &ldquo;City, Street, Number&rdquo; }
-
-&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;.
-
-let owner: PetOwner = *container
-
-print(owner.pets.map{ $0.name }) // [&ldquo;Felix&rdquo;, &ldquo;Rex&rdquo;]
-print(onwer.home.address) // &ldquo;City, Street, Number&rdquo;
-
-&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;.
-
-// where
-protocol Animal {
-  var name: String { get }
-}
-
-class Cat: Animal {
-  let name: String
-  init(name: String) {
-    self.name = name
-  }
-}
-
-class Dog: Animal {
-  let name: String
-  init(name: String) {
-    self.name = name
-  }
-}
-
-class PetOwner {
-  let pets: [Animal]
-  init(pets: [Animal]) {
-    self.pets = pets
-  }
-  
-  private(set) var home: Home!
-}
-
-class Home {
-  var address: String!
-}
-&ldquo;`
-</details>
-<h3 id='storyboard-ios-os-x' class='heading'>Storyboard (iOS/OS X)</h3>
-
-<details>
-<summary>See code</summary>
-
-Create your ViewController:
-&rdquo;`Swift
-class ViewController: UIViewController/NSViewController {
-  private(set) var inject: Inject?
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    print(&ldquo;Inject: \(inject)&rdquo;)
-  }
-}
-&ldquo;`
-Create container:
-&rdquo;`Swift
-let container = DIContainer()
-container.register(ViewController.self)
-  .injection(.inject)
-&ldquo;`
-Create Storyboard:
-&rdquo;`Swift
-/// for iOS
-func applicationDidFinishLaunching(_ application: UIApplication) {
-  let storyboard = DIStoryboard.create(name: &ldquo;Main&rdquo;, bundle: nil, container: container)
-
-  window = UIWindow(frame: UIScreen.main.bounds)
-  window!.rootViewController = storyboard.instantiateInitialViewController()
-  window!.makeKeyAndVisible()
-}
-&ldquo;`
-
-&rdquo;`Swift
-/// for OS X
-func applicationDidFinishLaunching(_ aNotification: Notification) {
-  let storyboard = DIStoryboard.create(name: &ldquo;Main&rdquo;, bundle: nil, container: container)
-
-  let viewController = storyboard.instantiateInitialController() as! NSViewController
-  let window = NSApplication.shared.windows.first
-  window?.contentViewController = viewController
-}
-&ldquo;`
-
-</details>
-<h2 id='install' class='heading'>Install</h2>
-<h6 id='via-cocoapods' class='heading'>Via CocoaPods.</h6>
-
-<p>To install DITranquillity with CocoaPods, add the following lines to your Podfile: <code>pod &#39;DITranquillity&#39;</code>  </p>
-<h6 id='via-carthage' class='heading'>Via Carthage.</h6>
-
-<p><code>github &quot;ivlevAstef/DITranquillity&quot;</code> Swift (iOS8+,macOS10.10+,tvOS9+)</p>
+<ul>
+<li>Ru! <a href="https://habr.com/ru/post/457188/">https://habr.com/ru/post/457188/</a></li>
+<li>Ru! Old! <a href="https://habr.com/ru/post/311334/">https://habr.com/ru/post/311334/</a></li>
+</ul>
 <h2 id='requirements' class='heading'>Requirements</h2>
 
 <p>iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC</p>
 
 <ul>
+<li>Swift 5.3: Xcode 12; version &gt;= 3.9.1</li>
+<li>Swift 5.1: Xcode 11.2.1; version &gt;= 3.9.1</li>
+<li>Swift 5.1: Xcode 11; version &gt;= 3.6.3</li>
 <li>Swift 5.0: Xcode 10.2; version &gt;= 3.6.3</li>
 <li>Swift 4.2: Xcode 10; version &gt;= 3.4.3</li>
 <li>Swift 4.1: Xcode 9.3; version &gt;= 3.2.3</li>
@@ -407,15 +430,18 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 <li>Swift 3.0-3.2: Xcode 8.0-9.0; 0.9.5 &lt;= version &lt; 3.7.0</li>
 <li>Swift 2.3: Xcode 7.0; version &lt; 0.9.5</li>
 </ul>
-<h2 id='migration' class='heading'>Migration</h2>
-
-<ul>
-<li>v1.x.x -&gt; v2.x.x <a href="Documentation/ru/migration1to2.md">ru</a></li>
-<li>v2.x.x -&gt; v3.x.x <a href="Documentation/ru/migration2to3.md">ru</a></li>
-</ul>
 <h2 id='changelog' class='heading'>Changelog</h2>
 
-<p>See <a href="CHANGELOG.md">CHANGELOG.md</a> file.</p>
+<p>See <a href="CHANGELOG.md">CHANGELOG</a> file or <a href="https://github.com/ivlevAstef/DITranquillity/releases">releases</a>.</p>
+<h2 id='history-and-plans' class='heading'>History and Plans</h2>
+
+<ul>
+<li>[x] v1.x.x - Started</li>
+<li>[x] v2.x.x - Stabilization</li>
+<li>[x]  v3.x.x - Evolution and Features</li>
+<li>[ ] v4.x.x - Graph API and Optimization. Also Documentation and Marketing</li>
+<li>[ ]  v5.x.x - Pre compile time validation</li>
+</ul>
 <h2 id='feedback' class='heading'>Feedback</h2>
 <h3 id='i-39-ve-found-a-bug-or-have-a-feature-request' class='heading'>I&rsquo;ve found a bug, or have a feature request</h3>
 
@@ -423,15 +449,18 @@ func applicationDidFinishLaunching(_ aNotification: Notification) {
 <h3 id='i-39-ve-found-a-defect-in-documentation-or-thought-up-how-to-improve-it' class='heading'>I&rsquo;ve found a defect in documentation, or thought up how to improve it</h3>
 
 <p>Please help library development and create <a href="https://github.com/ivlevAstef/DITranquillity/pulls">pull requests</a></p>
+<h3 id='plea' class='heading'>Plea</h3>
+
+<p>If you like my library, then support the library by putting star.</p>
 <h3 id='question' class='heading'>Question?</h3>
 
-<p>You can feel free to ask the question at e-mail: <a href="mailto:ivlev.stef@gmail.com">ivlev.stef@gmail.com</a>.  </p>
+<p>You can feel free to ask the question at e-mail: <a href="mailto:ivlev.stef@gmail.com">ivlev.stef@gmail.com</a>.</p>
 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2019-09-05)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.10.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2020-06-27)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

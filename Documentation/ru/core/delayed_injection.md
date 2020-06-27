@@ -92,11 +92,11 @@ container.register(NewsRouter.init)
 ## Provider, Lazy и аргументы
 В главе [Модификаторы внедрения](modificated_injection.md) есть описание модификатора "аргумент" который позволяет передавать параметры в момент исполнения программы. И в этой главе есть ссылка на отложенное внедрение. Так сложилось, что синтаксис отложенного внедрения хорошо расширяется для передачи аргументов.
 
-Для этого у Provider и Lazy есть несколько дженериков у которых по мимо указания типа создаваемого объекта еще присутствует и типы передаваемых аргументов. В коде это выглядит так:
+Для этого у Provider и Lazy есть несколько дженериков у которых по мимо указания типа создаваемого объекта еще присутствует и типы передаваемых аргументов. В силу специфики языка они имеют нумерацию в зависимости от количества аргументов: `Lazy1, Lazy2,... Provide1, Provider2, ...`. В коде это выглядит так:
 ```Swift
 class MainRouter {
-    let newsRouter: Provider<NewsRouter, String, Int>
-    init(newsRouter: Provider<NewsRouter, String, Int>) {
+    let newsRouter: Provider2<NewsRouter, String, Int>
+    init(newsRouter: Provider2<NewsRouter, String, Int>) {
         self.newsRouter = newsRouter
     }
     ...
