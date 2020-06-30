@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		160F0EB124AB06D000723F28 /* DIContainer+makeGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160F0EB024AB06D000723F28 /* DIContainer+makeGraph.swift */; };
+		160F0EB224AB06D000723F28 /* DIContainer+makeGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160F0EB024AB06D000723F28 /* DIContainer+makeGraph.swift */; };
+		160F0EB324AB06D000723F28 /* DIContainer+makeGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160F0EB024AB06D000723F28 /* DIContainer+makeGraph.swift */; };
+		160F0EB424AB06D000723F28 /* DIContainer+makeGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160F0EB024AB06D000723F28 /* DIContainer+makeGraph.swift */; };
+		160F0EB624AB06F400723F28 /* DIGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160F0EB524AB06F400723F28 /* DIGraph.swift */; };
+		160F0EB724AB06F400723F28 /* DIGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160F0EB524AB06F400723F28 /* DIGraph.swift */; };
+		160F0EB824AB06F400723F28 /* DIGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160F0EB524AB06F400723F28 /* DIGraph.swift */; };
+		160F0EB924AB06F400723F28 /* DIGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160F0EB524AB06F400723F28 /* DIGraph.swift */; };
 		16640A881D9E1E7B00707BFC /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		169C0DDF1DA3501F001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		169C0E451DA35CBE001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -233,6 +241,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		160F0EB024AB06D000723F28 /* DIContainer+makeGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+makeGraph.swift"; sourceTree = "<group>"; };
+		160F0EB524AB06F400723F28 /* DIGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIGraph.swift; sourceTree = "<group>"; };
 		16378702231FB75500881F8B /* SwiftLazy_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		16378704231FB75E00881F8B /* SwiftLazy_OSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy_OSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		16378706231FB76300881F8B /* SwiftLazy_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -373,9 +383,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		160F0EAF24AB066700723F28 /* GraphAPI */ = {
+			isa = PBXGroup;
+			children = (
+				160F0EB024AB06D000723F28 /* DIContainer+makeGraph.swift */,
+				160F0EB524AB06F400723F28 /* DIGraph.swift */,
+			);
+			path = GraphAPI;
+			sourceTree = "<group>";
+		};
 		16640A4C1D9E1E7B00707BFC /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				160F0EAF24AB066700723F28 /* GraphAPI */,
 				ABE60F4123AA75B300DEA34A /* UI */,
 				ABE60EB723AA75AC00DEA34A /* Core */,
 				169C0E1C1DA355A6001F0AD5 /* Info.plist */,
@@ -877,6 +897,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABE60F3C23AA75AC00DEA34A /* DIStorage.swift in Sources */,
+				160F0EB724AB06F400723F28 /* DIGraph.swift in Sources */,
 				ABE60F3923AA75AC00DEA34A /* DIContainer.swift in Sources */,
 				ABE60EDF23AA75AC00DEA34A /* Multithread.swift in Sources */,
 				ABE60F0923AA75AC00DEA34A /* Component.swift in Sources */,
@@ -912,6 +933,7 @@
 				ABE60F7223AA75B400DEA34A /* StoryboardResolver.swift in Sources */,
 				ABE60EEE23AA75AC00DEA34A /* MethodSignature.swift in Sources */,
 				ABE60F7823AA75B400DEA34A /* ViewController+Children.swift in Sources */,
+				160F0EB224AB06D000723F28 /* DIContainer+makeGraph.swift in Sources */,
 				ABE60F3323AA75AC00DEA34A /* DIModificators.swift in Sources */,
 				ABE60EF723AA75AC00DEA34A /* ParsedType.swift in Sources */,
 				ABE60F1B23AA75AC00DEA34A /* DIComponentBuilder.swift in Sources */,
@@ -923,6 +945,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				160F0EB824AB06F400723F28 /* DIGraph.swift in Sources */,
 				ABE60F3D23AA75AC00DEA34A /* DIStorage.swift in Sources */,
 				ABE60F3A23AA75AC00DEA34A /* DIContainer.swift in Sources */,
 				ABE60F6D23AA75B300DEA34A /* DIStoryboardBase.m in Sources */,
@@ -963,6 +986,7 @@
 				ABE60F8E23AA75B400DEA34A /* UICollectionView+Swizzling.m in Sources */,
 				ABE60F7323AA75B400DEA34A /* StoryboardResolver.swift in Sources */,
 				ABE60EEF23AA75AC00DEA34A /* MethodSignature.swift in Sources */,
+				160F0EB324AB06D000723F28 /* DIContainer+makeGraph.swift in Sources */,
 				ABE60F7923AA75B400DEA34A /* ViewController+Children.swift in Sources */,
 				ABE60F3423AA75AC00DEA34A /* DIModificators.swift in Sources */,
 				ABE60EF823AA75AC00DEA34A /* ParsedType.swift in Sources */,
@@ -975,6 +999,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				160F0EB624AB06F400723F28 /* DIGraph.swift in Sources */,
 				ABE60F3B23AA75AC00DEA34A /* DIStorage.swift in Sources */,
 				ABE60F3823AA75AC00DEA34A /* DIContainer.swift in Sources */,
 				ABE60F6B23AA75B300DEA34A /* DIStoryboardBase.m in Sources */,
@@ -1015,6 +1040,7 @@
 				ABE60F8C23AA75B400DEA34A /* UICollectionView+Swizzling.m in Sources */,
 				ABE60F7123AA75B400DEA34A /* StoryboardResolver.swift in Sources */,
 				ABE60EED23AA75AC00DEA34A /* MethodSignature.swift in Sources */,
+				160F0EB124AB06D000723F28 /* DIContainer+makeGraph.swift in Sources */,
 				ABE60F7723AA75B400DEA34A /* ViewController+Children.swift in Sources */,
 				ABE60F3223AA75AC00DEA34A /* DIModificators.swift in Sources */,
 				ABE60EF623AA75AC00DEA34A /* ParsedType.swift in Sources */,
@@ -1029,6 +1055,7 @@
 			files = (
 				ABDA289B23ABBECD00BEB63F /* DIStorage.swift in Sources */,
 				ABDA289C23ABBECD00BEB63F /* DIContainer.swift in Sources */,
+				160F0EB424AB06D000723F28 /* DIContainer+makeGraph.swift in Sources */,
 				ABDA289E23ABBECD00BEB63F /* Multithread.swift in Sources */,
 				ABDA289F23ABBECD00BEB63F /* Component.swift in Sources */,
 				ABDA28A023ABBECD00BEB63F /* SpecificType.swift in Sources */,
@@ -1051,6 +1078,7 @@
 				ABDA28B323ABBECD00BEB63F /* DIExtensions.swift in Sources */,
 				ABDA28B523ABBECD00BEB63F /* ExtensionsContainer.swift in Sources */,
 				ABDA28B623ABBECD00BEB63F /* DIContainer.Reg.swift in Sources */,
+				160F0EB924AB06F400723F28 /* DIGraph.swift in Sources */,
 				ABDA28B923ABBECD00BEB63F /* DIComponentBuilder.Injection.swift in Sources */,
 				ABDA28C123ABBECD00BEB63F /* MethodSignature.swift in Sources */,
 				ABDA28C323ABBECD00BEB63F /* DIModificators.swift in Sources */,

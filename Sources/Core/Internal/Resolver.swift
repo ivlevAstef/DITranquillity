@@ -326,7 +326,7 @@ class Resolver {
           makedObject = make(by: parameter.parsedType, with: parameter.name, from: component.framework, use: nil)
         }
         
-        if nil != makedObject || parameter.parsedType.hasOptional {
+        if nil != makedObject || parameter.parsedType.optional {
           objParameters.append(makedObject)
           continue
         }

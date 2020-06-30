@@ -12,34 +12,42 @@ final class ParsedType {
   let sType: SpecificType.Type?
   let parent: ParsedType?
 
-  var base: ParsedType {
+  private(set) lazy var base: ParsedType = {
     var iter = self
     while let parent = iter.parent {
         iter = parent
     }
     return iter
-  }
+  }()
 
-  var firstNotSwiftType: ParsedType {
+  private(set) lazy var firstNotSwiftType: ParsedType = {
     var iter = self
     while let sType = iter.sType, let parent = iter.parent, sType.isSwiftType {
       iter = parent
     }
     return iter
-  }
+  }()
 
-  var many: Bool { return sType?.many ?? false }
-  var optional: Bool { return sType?.optional ?? false }
-  var delayed: Bool { return sType?.delayed ?? false }
-  var arg: Bool { return sType?.arg ?? false }
+  private(set) lazy var many: Bool = { sType?.many ?? false }()
+  private(set) lazy var optional: Bool = {
+    guard let sType = sType else {
+      return false
+    }
+    if sType.optional {
+      return true
+    }
+    // `many` not need - because it's inner type
+    if sType.delayed || sType.tag || sType.arg {
+      return parent?.optional ?? false
+    }
+    return false
+  }()
+  private(set) lazy var delayed: Bool = { sType?.delayed ?? false }()
+  private(set) lazy var arg: Bool = { sType?.arg ?? false }()
 
-  var useObject: Bool { return sType?.useObject ?? false }
+  private(set) lazy var useObject: Bool = { sType?.useObject ?? false }()
 
-  var hasMany: Bool { return oGet(sType?.many, parent?.hasMany) }
-  var hasOptional: Bool { return oGet(sType?.optional, parent?.hasOptional) }
-  var hasDelayed: Bool { return oGet(sType?.delayed, parent?.hasDelayed) }
-
-  var delayMaker: SpecificType.Type? {
+  private(set) lazy var delayMaker: SpecificType.Type? = {
     var iter: ParsedType? = self
     while let sType = iter?.sType {
       if sType.delayed {
@@ -48,7 +56,10 @@ final class ParsedType {
       iter = iter?.parent
     }
     return nil
-  }
+  }()
+
+  var hasMany: Bool { oGet(sType?.many, parent?.hasMany) }
+  var hasDelayed: Bool { oGet(sType?.delayed, parent?.hasDelayed) }
 
   init(type: DIAType) {
     self.type = type

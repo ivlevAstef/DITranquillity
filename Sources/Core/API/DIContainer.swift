@@ -246,7 +246,7 @@ extension DIContainer {
         
         let correct = 1 == filtered.count || parameter.parsedType.hasMany
         let hasCachedLifetime = filtered.isEmpty && candidates.contains{ $0.lifeTime != .prototype }
-        let success = correct || parameter.parsedType.hasOptional || hasCachedLifetime
+        let success = correct || parameter.parsedType.optional || hasCachedLifetime
         successfull = successfull && success
 
         // Log

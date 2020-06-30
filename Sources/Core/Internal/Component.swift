@@ -76,7 +76,7 @@ final class Component {
   fileprivate(set) var initial: MethodSignature?
   fileprivate(set) var injections: [Injection] = []
   
-  var postInit:  MethodSignature?
+  var postInit: MethodSignature?
 }
 
 extension Component: Hashable {
