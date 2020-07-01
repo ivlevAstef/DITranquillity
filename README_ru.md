@@ -206,12 +206,9 @@ class AuthInteractorImpl: AuthInteractor {
 * Старая [https://habr.com/ru/post/311334/](https://habr.com/ru/post/311334/)
 
 ## Требования
-iOS 8.0+,macOS 10.10+,tvOS 9.0+; ARC
+iOS 8.0+,macOS 10.10+,tvOS 9.0+, watchOS, linux; ARC
 
-* Swift 5.3: Xcode 12; version >= 3.9.1
-* Swift 5.1: Xcode 11.2.1; version >= 3.9.1
-* Swift 5.1: Xcode 11; version >= 3.6.3
-* Swift 5.0: Xcode 10.2; version >= 3.6.3
+* Swift 5.0-5.3: Xcode 10.2-12; version >= 3.6.3
 * Swift 4.2: Xcode 10; version >= 3.4.3
 * Swift 4.1: Xcode 9.3; version >= 3.2.3
 * Swift 4.0: Xcode 9.0; version >= 3.0.5
