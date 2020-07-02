@@ -20,9 +20,14 @@ public struct DIArgumentVertex {
   public let type: DIAType
 }
 
+public struct DIUnknownVertex {
+  public let type: DIAType
+}
+
 public enum DIVertex {
   case component(DIComponentVertex)
   case argument(DIArgumentVertex)
+  case unknown(DIUnknownVertex)
 }
 
 public struct DIEdge {

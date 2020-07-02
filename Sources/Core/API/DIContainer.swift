@@ -243,6 +243,7 @@ extension DIContainer {
         
         let candidates = resolver.findComponents(by: parameter.parsedType, with: parameter.name, from: framework)
         let filtered = resolver.removeWhoDoesNotHaveInitialMethod(components: candidates)
+        // Код валидации не корректен - в коде resolve если кандидатов ноль или больше одного будет ошибка кроме случаем many. Тут же может быть все окей, если не many, есть много кандидатов, но все без метода инициализации кроме одного.
         
         let correct = 1 == filtered.count || parameter.parsedType.hasMany
         let hasCachedLifetime = filtered.isEmpty && candidates.contains{ $0.lifeTime != .prototype }

@@ -29,17 +29,25 @@ extension DIContainer {
 
         let edge = makeEdge(by: parameter, cycle: cycle)
 
-        if addArgument(by: parameter.parsedType, matrix: &matrix, vertices: &vertices) {
+        if addArgumentIfNeeded(by: parameter.parsedType, matrix: &matrix, vertices: &vertices) {
           matrix[index][vertices.count] = edge
           continue
         }
 
         let candidates = resolver.findComponents(by: parameter.parsedType, with: parameter.name, from: component.framework)
         let toIndices = candidates.compactMap { findIndex(for: $0, in: components) }
+
+        assert(candidates.count == toIndices.count)
+        // not found candidates - need add reference on unknown type
+        if toIndices.isEmpty {
+          addUnknown(by: parameter.parsedType, matrix: &matrix, vertices: &vertices)
+          matrix[index][vertices.count] = edge
+          continue
+        }
+
         for toIndex in toIndices {
             matrix[index][toIndex] = edge
         }
-        
       }
     }
 
@@ -71,7 +79,7 @@ extension DIContainer {
     return nil
   }
 
-  private func addArgument(by parsedType: ParsedType, matrix: inout [[DIEdge?]], vertices: inout [DIVertex]) -> Bool {
+  private func addArgumentIfNeeded(by parsedType: ParsedType, matrix: inout [[DIEdge?]], vertices: inout [DIVertex]) -> Bool {
     if !parsedType.arg {
       return false
     }
@@ -80,13 +88,21 @@ extension DIContainer {
       return false
     }
 
+    addVertex(DIVertex.argument(DIArgumentVertex(type: argType)), matrix: &matrix, vertices: &vertices)
+    return true
+  }
+
+  private func addUnknown(by parsedType: ParsedType, matrix: inout [[DIEdge?]], vertices: inout [DIVertex]) {
+    addVertex(DIVertex.unknown(DIUnknownVertex(type: parsedType.type)), matrix: &matrix, vertices: &vertices)
+  }
+
+  private func addVertex(_ vertex: DIVertex, matrix: inout [[DIEdge?]], vertices: inout [DIVertex]) {
     matrix.append(Array(repeating: nil, count: matrix.first?.count ?? 0))
     for index in matrix.indices {
       matrix[index].append(nil)
     }
-    vertices.append(DIVertex.argument(DIArgumentVertex(type: argType)))
 
-    return true
+    vertices.append(vertex)
   }
 
   private func componentParametersInfo(component: Component) -> [(MethodSignature.Parameter, Bool)] {
@@ -134,39 +150,3 @@ extension DIContainer {
                   name: parameter.name)
   }
 }
-
-//for component in components {
-//let parameters = component.signatures.flatMap{ $0.parameters }
-//let framework = component.framework
-//
-//for parameter in parameters {
-//  if parameter.parsedType.useObject || parameter.parsedType.arg {
-//    continue
-//  }
-//
-//  let candidates = resolver.findComponents(by: parameter.parsedType, with: parameter.name, from: framework)
-//  let filtered = resolver.removeWhoDoesNotHaveInitialMethod(components: candidates)
-//
-//  let correct = 1 == filtered.count || parameter.parsedType.hasMany
-//  let hasCachedLifetime = filtered.isEmpty && candidates.contains{ $0.lifeTime != .prototype }
-//  let success = correct || parameter.parsedType.hasOptional || hasCachedLifetime
-//  successfull = successfull && success
-//
-//  // Log
-//  if !correct {
-//    if candidates.isEmpty {
-//      plog(parameter, msg: "Not found component for \(description(type: parameter.parsedType)) from \(component.info)")
-//    } else if filtered.isEmpty {
-//      let infos = candidates.map{ $0.info }
-//
-//      if hasCachedLifetime {
-//        log(.info, msg: "Not found component for \(description(type: parameter.parsedType)) from \(component.info) that would have initialization methods, but object can maked from cache. Were found: \(infos)")
-//      } else {
-//        plog(parameter, msg: "Not found component for \(description(type: parameter.parsedType)) from \(component.info) that would have initialization methods. Were found: \(infos)")
-//      }
-//    } else if filtered.count >= 1 {
-//      let infos = filtered.map{ $0.info }
-//      plog(parameter, msg: "Ambiguous \(description(type: parameter.parsedType)) from \(component.info) contains in: \(infos)")
-//    }
-//  }
-//}
