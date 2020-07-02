@@ -28,7 +28,7 @@ final class ParsedType {
     return iter
   }()
 
-  private(set) lazy var many: Bool = { sType?.many ?? false }()
+  private(set) lazy var many: Bool = { return sType?.many ?? false }()
   private(set) lazy var optional: Bool = {
     guard let sType = sType else {
       return false
@@ -42,10 +42,10 @@ final class ParsedType {
     }
     return false
   }()
-  private(set) lazy var delayed: Bool = { sType?.delayed ?? false }()
-  private(set) lazy var arg: Bool = { sType?.arg ?? false }()
+  private(set) lazy var delayed: Bool = { return sType?.delayed ?? false }()
+  private(set) lazy var arg: Bool = { return sType?.arg ?? false }()
 
-  private(set) lazy var useObject: Bool = { sType?.useObject ?? false }()
+  private(set) lazy var useObject: Bool = { return sType?.useObject ?? false }()
 
   private(set) lazy var delayMaker: SpecificType.Type? = {
     var iter: ParsedType? = self
@@ -58,8 +58,8 @@ final class ParsedType {
     return nil
   }()
 
-  var hasMany: Bool { oGet(sType?.many, parent?.hasMany) }
-  var hasDelayed: Bool { oGet(sType?.delayed, parent?.hasDelayed) }
+  var hasMany: Bool { return oGet(sType?.many, parent?.hasMany) }
+  var hasDelayed: Bool { return oGet(sType?.delayed, parent?.hasDelayed) }
 
   init(type: DIAType) {
     self.type = type
