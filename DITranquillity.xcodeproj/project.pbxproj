@@ -15,6 +15,10 @@
 		160F0EB724AB06F400723F28 /* DIGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160F0EB524AB06F400723F28 /* DIGraph.swift */; };
 		160F0EB824AB06F400723F28 /* DIGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160F0EB524AB06F400723F28 /* DIGraph.swift */; };
 		160F0EB924AB06F400723F28 /* DIGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160F0EB524AB06F400723F28 /* DIGraph.swift */; };
+		1661095124AE23CC009603BF /* DIGraph+Validate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095024AE23CB009603BF /* DIGraph+Validate.swift */; };
+		1661095224AE23CC009603BF /* DIGraph+Validate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095024AE23CB009603BF /* DIGraph+Validate.swift */; };
+		1661095324AE23CC009603BF /* DIGraph+Validate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095024AE23CB009603BF /* DIGraph+Validate.swift */; };
+		1661095424AE23CC009603BF /* DIGraph+Validate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095024AE23CB009603BF /* DIGraph+Validate.swift */; };
 		16640A881D9E1E7B00707BFC /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		169C0DDF1DA3501F001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		169C0E451DA35CBE001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -249,6 +253,7 @@
 		16378708231FB93700881F8B /* SwiftLazy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1637870A231FB93D00881F8B /* SwiftLazy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1637870C231FB94300881F8B /* SwiftLazy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1661095024AE23CB009603BF /* DIGraph+Validate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIGraph+Validate.swift"; sourceTree = "<group>"; };
 		16640A6B1D9E1E7B00707BFC /* DITranquillity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DITranquillity.h; sourceTree = "<group>"; };
 		169C0DE51DA3501F001F0AD5 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		169C0E1C1DA355A6001F0AD5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -388,6 +393,7 @@
 			children = (
 				160F0EB024AB06D000723F28 /* DIContainer+makeGraph.swift */,
 				160F0EB524AB06F400723F28 /* DIGraph.swift */,
+				1661095024AE23CB009603BF /* DIGraph+Validate.swift */,
 			);
 			path = GraphAPI;
 			sourceTree = "<group>";
@@ -918,6 +924,7 @@
 				ABE60EFD23AA75AC00DEA34A /* MethodMaker.swift in Sources */,
 				ABE60F0C23AA75AC00DEA34A /* FrameworksDependenciesContainer.swift in Sources */,
 				ABE60EE523AA75AC00DEA34A /* GlobalState.swift in Sources */,
+				1661095224AE23CC009603BF /* DIGraph+Validate.swift in Sources */,
 				ABE60F2D23AA75AC00DEA34A /* SwiftLazy.swift in Sources */,
 				ABE60F3023AA75AC00DEA34A /* DILifetime.swift in Sources */,
 				ABE60F2A23AA75AC00DEA34A /* DIExtensions.swift in Sources */,
@@ -982,6 +989,7 @@
 				ABE60F7623AA75B400DEA34A /* StoryboardContainerMap.swift in Sources */,
 				ABE60F9423AA75B400DEA34A /* UIView+Swizzling.m in Sources */,
 				ABE60F8223AA75B400DEA34A /* SwiftNSResolver.swift in Sources */,
+				1661095324AE23CC009603BF /* DIGraph+Validate.swift in Sources */,
 				ABE60FA323AA793E00DEA34A /* NSObject+Swizzling.m in Sources */,
 				ABE60F8E23AA75B400DEA34A /* UICollectionView+Swizzling.m in Sources */,
 				ABE60F7323AA75B400DEA34A /* StoryboardResolver.swift in Sources */,
@@ -1036,6 +1044,7 @@
 				ABE60F7423AA75B400DEA34A /* StoryboardContainerMap.swift in Sources */,
 				ABE60F9223AA75B400DEA34A /* UIView+Swizzling.m in Sources */,
 				ABE60F8023AA75B400DEA34A /* SwiftNSResolver.swift in Sources */,
+				1661095124AE23CC009603BF /* DIGraph+Validate.swift in Sources */,
 				ABE60FA123AA793E00DEA34A /* NSObject+Swizzling.m in Sources */,
 				ABE60F8C23AA75B400DEA34A /* UICollectionView+Swizzling.m in Sources */,
 				ABE60F7123AA75B400DEA34A /* StoryboardResolver.swift in Sources */,
@@ -1064,6 +1073,7 @@
 				ABDA28A323ABBECD00BEB63F /* Log.swift in Sources */,
 				ABDA28A423ABBECD00BEB63F /* Resolver.swift in Sources */,
 				ABDA28A523ABBECD00BEB63F /* DISettings.swift in Sources */,
+				1661095424AE23CC009603BF /* DIGraph+Validate.swift in Sources */,
 				ABDA28A623ABBECD00BEB63F /* DIFramework.swift in Sources */,
 				ABDA28A723ABBECD00BEB63F /* DIComponentBuilder+EmptySubviewsInject.swift in Sources */,
 				ABDA28A823ABBECD00BEB63F /* Modificators.swift in Sources */,

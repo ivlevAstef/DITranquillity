@@ -21,13 +21,13 @@ extension DIContainer {
     for (index, component) in components.enumerated() {
       // get all paramaters - from init and injection
       let parametersInfo = componentParametersInfo(component: component)
-      for (parameter, cycle) in parametersInfo {
+      for (parameterIndex, (parameter, cycle)) in parametersInfo.enumerated() {
         // ignore reference on self
         if parameter.parsedType.useObject {
           continue
         }
 
-        let edge = makeEdge(by: parameter, cycle: cycle)
+        let edge = makeEdge(by: parameter, cycle: cycle, parameterNumber: parameterIndex)
 
         if addArgumentIfNeeded(by: parameter.parsedType, matrix: &matrix, vertices: &vertices) {
           matrix[index][vertices.count] = edge
@@ -132,7 +132,7 @@ extension DIContainer {
     }
   }
 
-  private func makeEdge(by parameter: MethodSignature.Parameter, cycle: Bool) -> DIEdge {
+  private func makeEdge(by parameter: MethodSignature.Parameter, cycle: Bool, parameterNumber: Int) -> DIEdge {
     var tags: [DITag] = []
     var typeIterator: ParsedType? = parameter.parsedType
     repeat {
@@ -147,6 +147,7 @@ extension DIContainer {
                   many: parameter.parsedType.hasMany,
                   delayed: parameter.parsedType.hasDelayed,
                   tags: tags,
-                  name: parameter.name)
+                  name: parameter.name,
+                  parameterNumber: parameterNumber)
   }
 }
