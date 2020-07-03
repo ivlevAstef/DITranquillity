@@ -98,8 +98,8 @@ class DITranquillityTests_Build: XCTestCase {
     container.register(TestProtocol.self)
     
     container.register(InjectedClass.init)
-    
-    XCTAssert(!container.validate())
+
+    XCTAssert(!container.makeGraph().checkIsValid())
   }
   
   func test01_NotSetProtocol() {
@@ -107,7 +107,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     container.register(InjectedClass.init)
     
-    XCTAssert(!container.validate())
+    XCTAssert(!container.makeGraph().checkIsValid())
   }
   
   func test01_NotSetInitializerForClass() {
@@ -117,7 +117,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     container.register(InjectedClass.init)
     
-    XCTAssert(!container.validate())
+    XCTAssert(!container.makeGraph().checkIsValid())
   }
   
   func test01_RegistrateOnlyRealization() {
@@ -127,7 +127,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     container.register(InjectedClass.init)
     
-    XCTAssert(!container.validate())
+    XCTAssert(!container.makeGraph().checkIsValid())
   }
   
   func test01_RegistrateWithOptional() {
@@ -136,7 +136,7 @@ class DITranquillityTests_Build: XCTestCase {
     container.register(OptionalInjectedClass.init)
     DISetting.Log.level = .warning
     
-    XCTAssert(container.validate())
+    XCTAssert(container.makeGraph().checkIsValid())
   }
   
   
@@ -151,7 +151,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     container.register(InjectedClass.init)
     
-    XCTAssert(!container.validate())
+    XCTAssert(!container.makeGraph().checkIsValid())
   }
   
   func test02_MultiplyRegistrateTypeWithDefault() {
@@ -166,7 +166,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     container.register(InjectedClass.init)
     
-    XCTAssert(container.validate())
+    XCTAssert(container.makeGraph().checkIsValid())
   }
   
   func test02_MultiplyRegistrateTypeWithName() {
@@ -180,7 +180,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     container.register(InjectedClass.init)
     
-    XCTAssert(container.validate())
+    XCTAssert(container.makeGraph().checkIsValid())
   }
   
   func test02_MultiplyRegistrateTypeWithTag() {
@@ -194,14 +194,14 @@ class DITranquillityTests_Build: XCTestCase {
     
     container.register(InjectedClass.init)
     
-    XCTAssert(container.validate())
+    XCTAssert(container.makeGraph().checkIsValid())
   }
   
   func test04_SelfInit() {
     let container = DIContainer()
     container.register(SelfInit.init)
     
-    XCTAssert(!container.validate())
+    XCTAssert(!container.makeGraph().checkIsValid(checkGraphCycles: true))
   }
   
   func test04_RecursiveTripleInit() {
@@ -212,7 +212,7 @@ class DITranquillityTests_Build: XCTestCase {
     container.register(RInit3.init).as(RInit3Protocol.self)
     
     
-    XCTAssert(!container.validate())
+    XCTAssert(!container.makeGraph().checkIsValid(checkGraphCycles: true))
   }
   
   func test04_RecursiveTripleInitArray() {
@@ -222,7 +222,7 @@ class DITranquillityTests_Build: XCTestCase {
     container.register(RInit2.init)
     container.register(RInit3Array.init).as(RInit3Protocol.self)
     
-    XCTAssert(!container.validate())
+    XCTAssert(!container.makeGraph().checkIsValid(checkGraphCycles: true))
   }
   
   func test04_RecursiveTripleInitArrayWithCorrectLifetime() {
@@ -233,7 +233,7 @@ class DITranquillityTests_Build: XCTestCase {
     
     container.register(RInit3Array.init).as(RInit3Protocol.self).lifetime(.objectGraph)
     
-    XCTAssert(!container.validate())
+    XCTAssert(!container.makeGraph().checkIsValid(checkGraphCycles: true))
   }
   
   func test05_RecursiveTripleInitInject() {
@@ -246,7 +246,7 @@ class DITranquillityTests_Build: XCTestCase {
       .injection{ $0.test = $1 }
       .lifetime(.objectGraph)
     
-    XCTAssert(!container.validate())
+    XCTAssert(!container.makeGraph().checkIsValid(checkGraphCycles: true))
   }
   
   func test05_RecursiveTripleInitInjectIsCycleButLifetime() {
@@ -258,7 +258,7 @@ class DITranquillityTests_Build: XCTestCase {
       .as(RInit3Protocol.self)
       .injection{ $0.test = $1 }
     
-    XCTAssert(!container.validate())
+    XCTAssert(!container.makeGraph().checkIsValid(checkGraphCycles: true))
   }
   
   func test05_RecursiveTripleInitInjectIsCycle() {
@@ -271,7 +271,7 @@ class DITranquillityTests_Build: XCTestCase {
       .injection(cycle: true) { $0.test = $1 }
       .lifetime(.objectGraph)
     
-    XCTAssert(container.validate())
+    XCTAssert(container.makeGraph().checkIsValid(checkGraphCycles: true))
   }
   
   func test05_RecursiveTripleInitInjectOptional() {
@@ -285,7 +285,7 @@ class DITranquillityTests_Build: XCTestCase {
       .injection{ $0.test = $1 }
       .lifetime(.objectGraph)
     
-    XCTAssert(!container.validate())
+    XCTAssert(!container.makeGraph().checkIsValid(checkGraphCycles: true))
   }
   
   func test06_CycleWithoutInit() {
@@ -298,7 +298,7 @@ class DITranquillityTests_Build: XCTestCase {
       .injection{ $0.inject = $1 }
       .lifetime(.objectGraph)
     
-    XCTAssert(!container.validate())
+    XCTAssert(!container.makeGraph().checkIsValid(checkGraphCycles: true))
   }
 
   func test07_args() {
@@ -307,7 +307,7 @@ class DITranquillityTests_Build: XCTestCase {
     container.register { RCycle(arg($0)) }
       .lifetime(.prototype)
 
-    XCTAssert(container.validate())
+    XCTAssert(container.makeGraph().checkIsValid(checkGraphCycles: true))
   }
 
   func test08_registerlog() {

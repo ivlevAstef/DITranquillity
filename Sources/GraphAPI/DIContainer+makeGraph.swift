@@ -62,7 +62,7 @@ extension DIContainer {
     var right = count
 
     while left <= right {
-      let center = (right - left) / 2
+      let center = (right + left) / 2
       if components[center] === component {
         return center
       }

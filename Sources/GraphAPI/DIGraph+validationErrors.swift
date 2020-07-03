@@ -46,4 +46,17 @@ extension DIGraph {
     log(logLevel, msg: "Ambiguity create object for type: \(type) into \(fromVertex.description). Candidates: \(candidates.map { $0.description })")
   }
 
+  // MARK: - reachibility
+  func log_invalidReferenceOptional(from fromVertex: DIVertex, on type: DIAType) {
+    log(.warning, msg: "Invalid reference from \(fromVertex.description) by type: Optional<\(type)>")
+  }
+
+  func log_invalidReferenceMany(from fromVertex: DIVertex, on type: DIAType) {
+      log(.warning, msg: "Invalid reference from \(fromVertex.description) by type: Array<\(type)>")
+  }
+
+  func log_invalidReference(from fromVertex: DIVertex, on type: DIAType) {
+      log(.error, msg: "\(fromVertex.description) can't maked because not found component for type: \(type)")
+  }
+
 }

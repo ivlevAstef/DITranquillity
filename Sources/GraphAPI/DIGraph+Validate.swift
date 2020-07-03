@@ -8,11 +8,12 @@
 
 extension DIGraph {
 
-  public func checkIsValid() -> Bool {
+  public func checkIsValid(checkGraphCycles: Bool = false) -> Bool {
     let canInitialize = checkGraphOnCanInitialize()
     let unambiguity = checkGraphForUnambiguity()
     let reachibility = checkGraphForReachability()
-    return canInitialize && unambiguity && reachibility// TODO: && cycles
+    let notCycles = !checkGraphCycles || checkGraphForCycles()
+    return canInitialize && unambiguity && reachibility && notCycles
   }
 }
 
@@ -36,13 +37,13 @@ extension DIGraph {
           visitedVertices.insert(vertices[toIndex])
 
           if componentVertex.lifeTime == .prototype {
-            successful = false
+            successful = successful && edge.optional
             log_canNotInitializePrototype(vertices[toIndex], from: vertices[fromIndex], optional: edge.optional)
           } else if componentVertex.lifeTime == .objectGraph {
             // fromIndex have edge into toIndex. If toIndex have path to fromIndex then it's cycle
             let hasCycle = hasPath(from: toIndex, to: fromIndex)
             if !hasCycle {
-              successful = false
+              successful = successful && edge.optional
               log_canNotInitializeObjectGraphWithoutCycle(vertices[toIndex], from: vertices[fromIndex], optional: edge.optional)
             } else {
               log_canNotInitializeObjectGraphWithCycle(vertices[toIndex], from: vertices[fromIndex], optional: edge.optional)
@@ -109,7 +110,7 @@ extension DIGraph {
         if toIndices.count <= 1 {
           continue
         }
-        successful = false
+        successful = successful && edge.optional
 
         let candidates = toIndices.map { vertices[$0] }
         log_ambiguityReference(from: vertices[fromIndex], for: edge.type, candidates: candidates, optional: edge.optional)
@@ -132,30 +133,128 @@ extension DIGraph {
         continue
       }
 
-      var success: Bool = true
-      var edgesCount: Int = 0
-      var optionalCount: Int = 0
-      var manyCount: Int = 0
-      for fromIndex in matrix.indices {
-        for (edge, _) in matrix[fromIndex].filter({ $0.toIndices.contains(toIndex) }) {
-          edgesCount += 1
-          optionalCount += edge.optional ? 1 : 0
-          manyCount += edge.many ? 1 : 0
-
-          let isOptionalEdge = edge.optional || edge.many
-          success = success && isOptionalEdge
-        }
+      // By make algorith for unknown vertex can only one from vertex.
+      guard let fromIndex = matrix.firstIndex(where: { $0.contains { $0.toIndices.contains(toIndex) }}) else {
+        assertionFailure("Can't found from vertices for unknown vertex? it's bug in code")
+        continue
       }
 
-      // TODO: need add:
-      // error if not success.
-      // warning if only many edge.
-      // info if only optional edge.
-      successful = successful && success
-    }
+      guard let (edge, _) = matrix[fromIndex].first(where: { $0.toIndices.contains(toIndex) }) else {
+        assertionFailure("But in top code checked on contains")
+        continue
+      }
 
-    //plog(parameter, msg: "Not found component for \(description(type: parameter.parsedType)) from \(component.info)")
+      if edge.optional {
+        log_invalidReferenceOptional(from: vertices[fromIndex], on: unknownVertex.type)
+        continue
+      }
+
+      if edge.many {
+        log_invalidReferenceMany(from: vertices[fromIndex], on: unknownVertex.type)
+        continue
+      }
+
+      successful = false
+
+      log_invalidReference(from: vertices[fromIndex], on: unknownVertex.type)
+    }
 
     return successful
   }
 }
+
+// MARK: - cycle
+extension DIGraph {
+  private func checkGraphForCycles() -> Bool {
+    return true
+  }
+}
+
+//fileprivate func checkGraphCycles(_ components: [Component]) -> Bool {
+//  var success: Bool = true
+//
+//  typealias Stack = (component: Component, initial: Bool, cycle: Bool, many: Bool)
+//  func dfs(for component: Component, visited: Set<Component>, stack: [Stack]) {
+//    // it's cycle
+//    if visited.contains(component) {
+//      func isValidCycle() -> Bool {
+//        if stack.first!.component != component {
+//          // but inside -> will find in a another dfs call.
+//          return true
+//        }
+//
+//        let infos = stack.dropLast().map{ $0.component.info }
+//        let short = infos.map{ "\($0.type)" }.joined(separator: " - ")
+//
+//        let allInitials = !stack.contains{ !($0.initial && !$0.many) }
+//        if allInitials {
+//          log(.error, msg: "You have a cycle: \(short) consisting entirely of initialization methods. Full: \(infos)")
+//          return false
+//        }
+//
+//        let hasGap = stack.contains{ $0.cycle || ($0.initial && $0.many) }
+//        if !hasGap {
+//          log(.error, msg: "Cycle has no discontinuities. Please install at least one explosion in the cycle: \(short) using `injection(cycle: true) { ... }`. Full: \(infos)")
+//          return false
+//        }
+//
+//        let allPrototypes = !stack.contains{ $0.component.lifeTime != .prototype }
+//        if allPrototypes {
+//          log(.error, msg: "You cycle: \(short) consists only of object with lifetime - prototype. Please change at least one object lifetime to another. Full: \(infos)")
+//          return false
+//        }
+//
+//        let containsPrototype = stack.contains{ $0.component.lifeTime == .prototype }
+//        if containsPrototype {
+//          log(.info, msg: "You cycle: \(short) contains an object with lifetime - prototype. In some cases this can lead to an udesirable effect.  Full: \(infos)")
+//        }
+//
+//        return true
+//      }
+//
+//      success = isValidCycle() && success
+//      return
+//    }
+//
+//    let framework = component.framework
+//
+//    var visited = visited
+//    visited.insert(component)
+//
+//
+//    func callDfs(by parameters: [MethodSignature.Parameter], initial: Bool, cycle: Bool) {
+//      for parameter in parameters {
+//        let candidates = resolver.findComponents(by: parameter.parsedType, with: parameter.name, from: framework)
+//        if candidates.isEmpty {
+//          continue
+//        }
+//
+//        let filtered = candidates.filter {
+//         (nil != $0.initial || ($0.lifeTime != .prototype && visited.contains($0)))
+//        }
+//        let many = parameter.parsedType.hasMany
+//        for subcomponent in filtered {
+//          var stack = stack
+//          stack.append((subcomponent, initial, cycle || parameter.parsedType.hasDelayed, many))
+//          dfs(for: subcomponent, visited: visited, stack: stack)
+//        }
+//      }
+//    }
+//
+//    if let initial = component.initial {
+//      callDfs(by: initial.parameters, initial: true, cycle: false)
+//    }
+//
+//    for injection in component.injections {
+//      callDfs(by: injection.signature.parameters, initial: false, cycle: injection.cycle)
+//    }
+//  }
+//
+//
+//  for component in components {
+//    let stack = [(component, false, false, false)]
+//    dfs(for: component, visited: [], stack: stack)
+//  }
+//
+//  return success
+//}
