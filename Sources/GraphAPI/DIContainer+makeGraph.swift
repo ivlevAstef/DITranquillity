@@ -21,16 +21,16 @@ extension DIContainer {
     for (index, component) in components.enumerated() {
       // get all paramaters - from init and injection
       let parametersInfo = componentParametersInfo(component: component)
-      for (parameterIndex, (parameter, cycle)) in parametersInfo.enumerated() {
+      for (parameter, cycle) in parametersInfo {
         // ignore reference on self
         if parameter.parsedType.useObject {
           continue
         }
 
-        let edge = makeEdge(by: parameter, cycle: cycle, parameterNumber: parameterIndex)
+        let edge = makeEdge(by: parameter, cycle: cycle)
 
         if addArgumentIfNeeded(by: parameter.parsedType, matrix: &matrix, vertices: &vertices) {
-          matrix[index].append((edge, vertices.count - 1))
+          matrix[index].append((edge, [vertices.count - 1]))
           continue
         }
 
@@ -41,13 +41,11 @@ extension DIContainer {
         // not found candidates - need add reference on unknown type
         if toIndices.isEmpty {
           addUnknown(by: parameter.parsedType, matrix: &matrix, vertices: &vertices)
-          matrix[index].append((edge, vertices.count - 1))
+          matrix[index].append((edge, [vertices.count - 1]))
           continue
         }
 
-        for toIndex in toIndices {
-          matrix[index].append((edge, toIndex))
-        }
+        matrix[index].append((edge, toIndices))
       }
     }
 
@@ -128,7 +126,7 @@ extension DIContainer {
     }
   }
 
-  private func makeEdge(by parameter: MethodSignature.Parameter, cycle: Bool, parameterNumber: Int) -> DIEdge {
+  private func makeEdge(by parameter: MethodSignature.Parameter, cycle: Bool) -> DIEdge {
     var tags: [DITag] = []
     var typeIterator: ParsedType? = parameter.parsedType
     repeat {
@@ -144,6 +142,6 @@ extension DIContainer {
                   delayed: parameter.parsedType.hasDelayed,
                   tags: tags,
                   name: parameter.name,
-                  parameterNumber: parameterNumber)
+                  type: parameter.parsedType.base.type)
   }
 }

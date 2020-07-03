@@ -6,7 +6,7 @@
 //  Copyright © 2020 Alexander Ivlev. All rights reserved.
 //
 
-public struct DIComponentVertex {
+public struct DIComponentVertex: Hashable {
   public let componentInfo: DIComponentInfo
   public let lifeTime: DILifeTime
   public let isDefault: Bool
@@ -14,18 +14,39 @@ public struct DIComponentVertex {
 
   public let framework: DIFramework.Type?
   public let part: DIPart.Type?
+
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(componentInfo)
+  }
+  public static func ==(lhs: DIComponentVertex, rhs: DIComponentVertex) -> Bool {
+    return lhs.componentInfo == rhs.componentInfo
+  }
 }
 
-public struct DIArgumentVertex {
+public struct DIArgumentVertex: Hashable {
   public let type: DIAType
+
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(ObjectIdentifier(type))
+  }
+  public static func ==(lhs: DIArgumentVertex, rhs: DIArgumentVertex) -> Bool {
+    return lhs.type == rhs.type
+  }
 }
 
-public struct DIUnknownVertex {
+public struct DIUnknownVertex: Hashable {
   public let type: DIAType
+
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(ObjectIdentifier(type))
+  }
+  public static func ==(lhs: DIUnknownVertex, rhs: DIUnknownVertex) -> Bool {
+    return lhs.type == rhs.type
+  }
 }
 
 /// Information about vertex in graph. Vertex is it component/argument or unknown type.
-public enum DIVertex {
+public enum DIVertex: Hashable {
   /// Component. Is it description about registration in di container.
   case component(DIComponentVertex)
   /// Argument. Is it injection information but injection not component - injection runtime argument. For more information see modificators.
@@ -44,19 +65,17 @@ public struct DIEdge {
   public let many: Bool
   /// Is it dependency delayed. Is it or `Lazy` or `Provider` from SwiftLazy library
   public let delayed: Bool
-  /// dependency all tags. Can be empty.
+  /// Dependency all tags. Can be empty.
   public let tags: [DITag]
-  /// dependency name. Can be nil.
+  /// Dependency name. Can be nil.
   public let name: String?
-  /// Parameter number. Supported information about edge injection number. In simple case one dependency have one edge, but not for many.
-  /// For many or not valid dependency one injection can have more edges. For an unambiguous comparison was invented `groupNumber`
-  /// DIfference injection have different numbers.
-  public let parameterNumber: Int
+  /// The type that transition 
+  public let type: DIAType
 }
 
 /// Dependency graph. Contains vertices array: components or argument or type. and transition matrix.
 public struct DIGraph {
-  public typealias Matrix = [[(edge: DIEdge, toIndex: Int)]]
+  public typealias Matrix = [[(edge: DIEdge, toIndices: [Int])]]
   /// vertices array. It's All dependencies. Contains All components, all arguments and all unknown type dependencies.
   public let vertices: [DIVertex]
 
@@ -68,5 +87,19 @@ public struct DIGraph {
   init(vertices: [DIVertex], matrix: Matrix) {
     self.vertices = vertices
     self.matrix = matrix
+  }
+}
+
+
+extension DIVertex: CustomStringConvertible {
+  public var description: String {
+    switch self {
+    case .component(let componentVertex):
+      return componentVertex.componentInfo.description
+    case .argument(let argumentVertex):
+      return "<Argument. type: \(argumentVertex.type)>"
+    case .unknown(let unknownVertex):
+      return "<Unknown. type: \(unknownVertex.type)>"
+    }
   }
 }

@@ -19,6 +19,10 @@
 		1661095224AE23CC009603BF /* DIGraph+Validate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095024AE23CB009603BF /* DIGraph+Validate.swift */; };
 		1661095324AE23CC009603BF /* DIGraph+Validate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095024AE23CB009603BF /* DIGraph+Validate.swift */; };
 		1661095424AE23CC009603BF /* DIGraph+Validate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095024AE23CB009603BF /* DIGraph+Validate.swift */; };
+		1661095624AF18DB009603BF /* DIGraph+validationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095524AF18DB009603BF /* DIGraph+validationErrors.swift */; };
+		1661095724AF18DB009603BF /* DIGraph+validationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095524AF18DB009603BF /* DIGraph+validationErrors.swift */; };
+		1661095824AF18DB009603BF /* DIGraph+validationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095524AF18DB009603BF /* DIGraph+validationErrors.swift */; };
+		1661095924AF18DB009603BF /* DIGraph+validationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095524AF18DB009603BF /* DIGraph+validationErrors.swift */; };
 		16640A881D9E1E7B00707BFC /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		169C0DDF1DA3501F001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		169C0E451DA35CBE001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -254,6 +258,7 @@
 		1637870A231FB93D00881F8B /* SwiftLazy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1637870C231FB94300881F8B /* SwiftLazy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1661095024AE23CB009603BF /* DIGraph+Validate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIGraph+Validate.swift"; sourceTree = "<group>"; };
+		1661095524AF18DB009603BF /* DIGraph+validationErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIGraph+validationErrors.swift"; sourceTree = "<group>"; };
 		16640A6B1D9E1E7B00707BFC /* DITranquillity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DITranquillity.h; sourceTree = "<group>"; };
 		169C0DE51DA3501F001F0AD5 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		169C0E1C1DA355A6001F0AD5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -394,6 +399,7 @@
 				160F0EB024AB06D000723F28 /* DIContainer+makeGraph.swift */,
 				160F0EB524AB06F400723F28 /* DIGraph.swift */,
 				1661095024AE23CB009603BF /* DIGraph+Validate.swift */,
+				1661095524AF18DB009603BF /* DIGraph+validationErrors.swift */,
 			);
 			path = GraphAPI;
 			sourceTree = "<group>";
@@ -921,6 +927,7 @@
 				ABE60F1523AA75AC00DEA34A /* DIPart.swift in Sources */,
 				ABE60F3F23AA75AC00DEA34A /* DIContainer+Extensions.swift in Sources */,
 				ABE60EE223AA75AC00DEA34A /* TypeKey.swift in Sources */,
+				1661095724AF18DB009603BF /* DIGraph+validationErrors.swift in Sources */,
 				ABE60EFD23AA75AC00DEA34A /* MethodMaker.swift in Sources */,
 				ABE60F0C23AA75AC00DEA34A /* FrameworksDependenciesContainer.swift in Sources */,
 				ABE60EE523AA75AC00DEA34A /* GlobalState.swift in Sources */,
@@ -992,6 +999,7 @@
 				1661095324AE23CC009603BF /* DIGraph+Validate.swift in Sources */,
 				ABE60FA323AA793E00DEA34A /* NSObject+Swizzling.m in Sources */,
 				ABE60F8E23AA75B400DEA34A /* UICollectionView+Swizzling.m in Sources */,
+				1661095824AF18DB009603BF /* DIGraph+validationErrors.swift in Sources */,
 				ABE60F7323AA75B400DEA34A /* StoryboardResolver.swift in Sources */,
 				ABE60EEF23AA75AC00DEA34A /* MethodSignature.swift in Sources */,
 				160F0EB324AB06D000723F28 /* DIContainer+makeGraph.swift in Sources */,
@@ -1047,6 +1055,7 @@
 				1661095124AE23CC009603BF /* DIGraph+Validate.swift in Sources */,
 				ABE60FA123AA793E00DEA34A /* NSObject+Swizzling.m in Sources */,
 				ABE60F8C23AA75B400DEA34A /* UICollectionView+Swizzling.m in Sources */,
+				1661095624AF18DB009603BF /* DIGraph+validationErrors.swift in Sources */,
 				ABE60F7123AA75B400DEA34A /* StoryboardResolver.swift in Sources */,
 				ABE60EED23AA75AC00DEA34A /* MethodSignature.swift in Sources */,
 				160F0EB124AB06D000723F28 /* DIContainer+makeGraph.swift in Sources */,
@@ -1067,6 +1076,7 @@
 				160F0EB424AB06D000723F28 /* DIContainer+makeGraph.swift in Sources */,
 				ABDA289E23ABBECD00BEB63F /* Multithread.swift in Sources */,
 				ABDA289F23ABBECD00BEB63F /* Component.swift in Sources */,
+				1661095924AF18DB009603BF /* DIGraph+validationErrors.swift in Sources */,
 				ABDA28A023ABBECD00BEB63F /* SpecificType.swift in Sources */,
 				ABDA28A123ABBECD00BEB63F /* DITypes.swift in Sources */,
 				ABDA28A223ABBECD00BEB63F /* ProtocolMagic.swift in Sources */,
