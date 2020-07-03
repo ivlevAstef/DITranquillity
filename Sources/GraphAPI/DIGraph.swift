@@ -56,16 +56,16 @@ public struct DIEdge {
 
 /// Dependency graph. Contains vertices array: components or argument or type. and transition matrix.
 public struct DIGraph {
+  public typealias Matrix = [[(edge: DIEdge, toIndex: Int)]]
   /// vertices array. It's All dependencies. Contains All components, all arguments and all unknown type dependencies.
   public let vertices: [DIVertex]
 
-  /// Directed, asymmetric, Transition matrix. Contains information about transition from vertex to vertex.
-  /// If edge == `nil` then not transition.
-  /// For get transition information your can write: `matrix[fromIndexVertices][toIndexVertices]`
-  /// This write means that component by fromIndexVertices can dependency on toIndexVertices.
-  public let matrix: [[DIEdge?]]
+  /// Directed, Transition matrix. Contains information about transition from vertex to vertex. Containts edges.
+  /// For get transition information your can write: `for (edge, toIndex) in matrix[fromIndexVertices]`
+  /// This write means that component by fromIndexVertices can dependency on toIndex.
+  public let matrix: Matrix
 
-  init(vertices: [DIVertex], matrix: [[DIEdge?]]) {
+  init(vertices: [DIVertex], matrix: Matrix) {
     self.vertices = vertices
     self.matrix = matrix
   }

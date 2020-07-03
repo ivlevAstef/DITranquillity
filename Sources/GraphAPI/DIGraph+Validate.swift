@@ -17,13 +17,52 @@ extension DIGraph {
 
   /// a graph contains object which create - have initialized or can maked and safed in cache
   private func checkGraphOnCanInitialize() -> Bool {
-    // TODO: implementation
-    // if hasCachedLifetime {
-    //  log(.info, msg: "Not found component for \(description(type: parameter.parsedType)) from \(component.info) that would have initialization methods, but object can maked from cache. Were found: \(infos)")
-    // } else {
-    //   plog(parameter, msg: "Not found component for \(description(type: parameter.parsedType)) from \(component.info) that would have initialization methods. Were found: \(infos)")
-    // }
-    return true
+    var successful: Bool = true
+
+    for fromIndex in matrix.indices {
+      for (edge, toIndex) in matrix[fromIndex] {
+        guard case .component(let componentVertex) = vertices[toIndex] else {
+          continue
+        }
+        if componentVertex.canInitialize {
+          continue
+        }
+
+        // fromIndex have edge into toIndex. If toIndex have path to fromIndex then it's cycle
+        let hasCycle = hasPath(from: toIndex, to: fromIndex)
+
+        successful = successful && componentVertex.lifeTime != .prototype
+        successful = successful && (componentVertex.lifeTime != .objectGraph || hasCycle)
+
+        // TODO: add error if lifeTime prototype
+        // add error if lifeTime objectGraph and not found circle (To -> ... -> From -> To)
+        // add warning if lifeTime objectGraph - it's correct only if start from To and have circle (see prev)
+        // add info if lifetime perContainer, perRun, single - it's correct if call injection for this type
+      }
+    }
+
+    return successful
+  }
+
+  private func hasPath(from startFromIndex: Int, to requiredIndex: Int) -> Bool {
+    var visited: Set<Int> = []
+    var stack: [Int] = [startFromIndex]
+    while let fromIndex = stack.first {
+      stack.removeFirst()
+
+      if fromIndex == requiredIndex {
+        return true
+      }
+
+      for (_, toIndex) in matrix[fromIndex] {
+        if !visited.contains(toIndex) {
+          stack.append(toIndex)
+        }
+      }
+      visited.insert(fromIndex)
+    }
+
+    return false
   }
 
   /// a graph is unambiguous if any dependency can always be passed unambiguously to another one
@@ -33,10 +72,7 @@ extension DIGraph {
     for fromIndex in matrix.indices {
       var parameterNumberMapToCount: [Int: [Int]] = [:]
 
-      for toIndex in matrix[fromIndex].indices {
-        guard let edge = matrix[fromIndex][toIndex] else {
-          continue
-        }
+      for (edge, toIndex) in matrix[fromIndex] {
         if edge.many { // ignore many
           continue
         }
@@ -58,6 +94,7 @@ extension DIGraph {
   private func checkGraphForReachability() -> Bool {
     var successful: Bool = true
 
+    /// Yes it's N^3 but unknown vertices it shouldn't be too much
     for (toIndex, vertex) in vertices.enumerated() {
       guard case .unknown(let unknownVertex) = vertex else {
         continue
@@ -68,15 +105,14 @@ extension DIGraph {
       var optionalCount: Int = 0
       var manyCount: Int = 0
       for fromIndex in matrix.indices {
-        guard let edge = matrix[fromIndex][toIndex] else {
-          continue
-        }
-        edgesCount += 1
-        optionalCount += edge.optional ? 1 : 0
-        manyCount += edge.many ? 1 : 0
+        for (edge, _) in matrix[fromIndex].filter({ $0.toIndex == toIndex }) {
+          edgesCount += 1
+          optionalCount += edge.optional ? 1 : 0
+          manyCount += edge.many ? 1 : 0
 
-        let isOptionalEdge = edge.optional || edge.many
-        success = success && isOptionalEdge
+          let isOptionalEdge = edge.optional || edge.many
+          success = success && isOptionalEdge
+        }
       }
 
       // TODO: need add:

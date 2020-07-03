@@ -16,7 +16,7 @@ extension DIContainer {
 
     var vertices = makeVertices(by: components)
 
-    var matrix: [[DIEdge?]] = Array(repeating: Array(repeating: nil, count: vertices.count), count: vertices.count)
+    var matrix: DIGraph.Matrix = Array(repeating: [], count: vertices.count)
 
     for (index, component) in components.enumerated() {
       // get all paramaters - from init and injection
@@ -30,7 +30,7 @@ extension DIContainer {
         let edge = makeEdge(by: parameter, cycle: cycle, parameterNumber: parameterIndex)
 
         if addArgumentIfNeeded(by: parameter.parsedType, matrix: &matrix, vertices: &vertices) {
-          matrix[index][vertices.count] = edge
+          matrix[index].append((edge, vertices.count - 1))
           continue
         }
 
@@ -41,12 +41,12 @@ extension DIContainer {
         // not found candidates - need add reference on unknown type
         if toIndices.isEmpty {
           addUnknown(by: parameter.parsedType, matrix: &matrix, vertices: &vertices)
-          matrix[index][vertices.count] = edge
+          matrix[index].append((edge, vertices.count - 1))
           continue
         }
 
         for toIndex in toIndices {
-            matrix[index][toIndex] = edge
+          matrix[index].append((edge, toIndex))
         }
       }
     }
@@ -79,7 +79,7 @@ extension DIContainer {
     return nil
   }
 
-  private func addArgumentIfNeeded(by parsedType: ParsedType, matrix: inout [[DIEdge?]], vertices: inout [DIVertex]) -> Bool {
+  private func addArgumentIfNeeded(by parsedType: ParsedType, matrix: inout DIGraph.Matrix, vertices: inout [DIVertex]) -> Bool {
     if !parsedType.arg {
       return false
     }
@@ -92,16 +92,12 @@ extension DIContainer {
     return true
   }
 
-  private func addUnknown(by parsedType: ParsedType, matrix: inout [[DIEdge?]], vertices: inout [DIVertex]) {
+  private func addUnknown(by parsedType: ParsedType, matrix: inout DIGraph.Matrix, vertices: inout [DIVertex]) {
     addVertex(DIVertex.unknown(DIUnknownVertex(type: parsedType.type)), matrix: &matrix, vertices: &vertices)
   }
 
-  private func addVertex(_ vertex: DIVertex, matrix: inout [[DIEdge?]], vertices: inout [DIVertex]) {
-    matrix.append(Array(repeating: nil, count: matrix.first?.count ?? 0))
-    for index in matrix.indices {
-      matrix[index].append(nil)
-    }
-
+  private func addVertex(_ vertex: DIVertex, matrix: inout DIGraph.Matrix, vertices: inout [DIVertex]) {
+    matrix.append([])
     vertices.append(vertex)
   }
 
