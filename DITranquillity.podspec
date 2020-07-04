@@ -50,6 +50,12 @@ Pod::Spec.new do |s|
     s_ui.watchos.source_files = ui_swizzling
   end
 
-  s.default_subspec = 'Core'
+  s.subspec 'GraphAPI' do |s_graphapi|
+    s_graphapi.dependency 'DITranquillity/Core'
+
+    s_graphapi.source_files = 'Sources/GraphAPI/*.swift'
+  end
+
+  s.default_subspec = 'Core', 'UI', 'GraphAPI'
 
 end

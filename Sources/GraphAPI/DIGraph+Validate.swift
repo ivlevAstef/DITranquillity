@@ -15,7 +15,7 @@ extension DIGraph {
     let canInitialize = checkGraphOnCanInitialize()
     let unambiguity = checkGraphForUnambiguity()
     let reachibility = checkGraphForReachability()
-    let notCycles = !checkGraphCycles || checkGraphForCycles()
+    let notCycles = checkGraphCycles ? checkGraphForCycles() : true
     return canInitialize && unambiguity && reachibility && notCycles
   }
 }
@@ -46,6 +46,7 @@ extension DIGraph {
             // fromIndex have edge into toIndex. If toIndex have path to fromIndex then it's cycle
             let hasCycle = hasPath(from: toIndex, to: fromIndex)
             if !hasCycle {
+              _ = hasPath(from: toIndex, to: fromIndex)
               successful = successful && edge.optional
               log_canNotInitializeObjectGraphWithoutCycle(vertices[toIndex], from: vertices[fromIndex], optional: edge.optional)
             } else {
@@ -176,6 +177,11 @@ extension DIGraph {
   private func checkGraphForCycles() -> Bool {
     let cycles = findAllCycles()
 
+    func calculateAverageLength() -> Double {
+      Double(cycles.map { $0.vertexIndices.count }.reduce(0, +)) / Double(cycles.count)
+    }
+    log(.verbose, msg: "Found \(cycles.count) cycles with average length: \(calculateAverageLength())")
+
     let isValidVerticesCycles = checkGraphCyclesVertices(cycles: cycles)
     let isValidEdgesCycles = checkGraphCyclesEdges(cycles: cycles)
 
@@ -285,6 +291,7 @@ extension DIGraph {
     return result
   }
 
+  private static var maxDepth: Int = 0
   private func findCycles(currentVertexIndex: Int,
                           visitedVertices: [Int], // need order for subcycle
                           visitedEdges: [DIEdge], // need order for subcycle

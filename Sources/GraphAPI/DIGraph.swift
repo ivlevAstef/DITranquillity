@@ -72,7 +72,7 @@ public enum DIVertex: Hashable {
 }
 
 /// Information about transition in dependency graph matrix. This transition is a dependency.
-public struct DIEdge: Hashable {
+public final class DIEdge: Hashable {
   let id: Int
   /// Is it dependency from init method.
   public let initial: Bool
@@ -90,6 +90,18 @@ public struct DIEdge: Hashable {
   public let name: String?
   /// The type that transition 
   public let type: DIAType
+
+  init(id: Int, initial: Bool, cycle: Bool, optional: Bool, many: Bool, delayed: Bool, tags: [DITag], name: String?, type: DIAType) {
+    self.id = id
+    self.initial = initial
+    self.cycle = cycle
+    self.optional = optional
+    self.many = many
+    self.delayed = delayed
+    self.tags = tags
+    self.name = name
+    self.type = type
+  }
 
   public func hash(into hasher: inout Hasher) {
     hasher.combine(id)

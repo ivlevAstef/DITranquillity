@@ -188,7 +188,7 @@ extension DIContainer {
     log(.verbose, msg: "Begin resolving \(singleComponents.count) singletons", brace: .begin)
     defer { log(.verbose, msg: "End resolving singletons", brace: .end) }
     
-    for component in singleComponents.sorted(by: { $0.order < $1.order }) {
+    for component in singleComponents {
       resolver.resolveSingleton(component: component)
     }
   }

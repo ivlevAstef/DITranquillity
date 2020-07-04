@@ -39,9 +39,20 @@ final class ComponentContainer {
   }
   
   var components: [Component] {
-    return mutex.sync {
-      return map.values.flatMap{ $0 }
+    let values = mutex.sync { map.values.flatMap { $0 } }
+    let sortedValues = values.sorted(by: { $0.order < $1.order })
+    var result = sortedValues
+    // remove dublicates - dublicates generated for `as(Type.self)`
+    var index = 0
+    while index + 1 < result.count {
+      if result[index].order == result[index + 1].order {
+        result.remove(at: index)
+        continue
+      }
+      index += 1
     }
+
+    return result
   }
   
   private let mutex = PThreadMutex(normal: ())
