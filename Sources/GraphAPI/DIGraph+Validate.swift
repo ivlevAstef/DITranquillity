@@ -9,7 +9,7 @@
 extension DIGraph {
   /// Validate the graph by checking various conditions.
   ///
-  /// - Parameter checkGraphCycles: check cycles in the graph of heavy operation. So it can be disabled/
+  /// - Parameter checkGraphCycles: check cycles in the graph of heavy operation. So it can be disabled.
   /// - Returns: true if validation success.
   public func checkIsValid(checkGraphCycles: Bool = true) -> Bool {
     let canInitialize = checkGraphOnCanInitialize()

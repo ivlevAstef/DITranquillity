@@ -6,9 +6,6 @@
 //  Copyright © 2020 Alexander Ivlev. All rights reserved.
 //
 
-import Foundation
-
-
 extension DIGraph {
 
   // MARK: - not initialize
@@ -61,22 +58,36 @@ extension DIGraph {
 
   // MARK: - cycle
   func log_cycleAnyInitEdges(vertices: [DIVertex], edges: [DIEdge]) {
-    log(.error, msg: "")
+    let cycleDescription = makeCycleDescription(vertices: vertices, edges: edges)
+    log(.error, msg: "Found cycle used only init methods. Please tear cycle: \(cycleDescription)")
   }
 
   func log_cycleNoHaveBreakPoint(vertices: [DIVertex], edges: [DIEdge]) {
-    log(.error, msg: "")
+    let cycleDescription = makeCycleDescription(vertices: vertices, edges: edges)
+    log(.error, msg: "Found cycle without tears. Please tear cycle use `.injection(cycle: true...`: \(cycleDescription)")
   }
 
   func log_cycleAnyVerticesPrototype(vertices: [DIVertex], edges: [DIEdge]) {
-    log(.error, msg: "")
+    let cycleDescription = makeCycleDescription(vertices: vertices, edges: edges)
+    log(.error, msg: "Found cycle where any components have lifetime prototype. This cycle will be created indefinitely. Please change lifetime on `objectGraph` or other. Cycle description: \(cycleDescription)")
   }
 
   func log_cycleHavePrototype(vertices: [DIVertex], edges: [DIEdge]) {
-    log(.warning, msg: "")
+    let cycleDescription = makeCycleDescription(vertices: vertices, edges: edges)
+    log(.warning, msg: "Found cycle where is it components have lifetime prototype. This cycle can maked incorrect, if call resolve from `prototype` component. Your can change lifetime on `objectGraph` or ignore warning. Cycle description: \(cycleDescription)")
   }
 
   func log_cycleHaveInvariantLifetimes(vertices: [DIVertex], edges: [DIEdge]) {
-    log(.warning, msg: "")
+    let cycleDescription = makeCycleDescription(vertices: vertices, edges: edges)
+    log(.warning, msg: "Found cycle where is it components have different lifetimes. This cycle can maked incorrect. If start resolve from `prototype`/`objectGraph` you can reference from `perContainer`/`perRun`/`single` on other object because there is an old resolve in cache. Cycle description: \(cycleDescription)")
+  }
+
+  private func makeCycleDescription(vertices: [DIVertex], edges: [DIEdge]) -> String {
+    var vertexDescriptions = vertices.map { $0.description }
+    guard let firstDescription = vertexDescriptions.first else {
+      return ""
+    }
+    vertexDescriptions.append(firstDescription)
+    return vertexDescriptions.joined(separator: " -> ")
   }
 }

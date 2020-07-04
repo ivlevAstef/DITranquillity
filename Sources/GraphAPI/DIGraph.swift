@@ -6,13 +6,20 @@
 //  Copyright © 2020 Alexander Ivlev. All rights reserved.
 //
 
+/// Component vertex. For all components maked one to one component vertex
 public struct DIComponentVertex: Hashable {
+  /// Information about registration component - type, file, line
   public let componentInfo: DIComponentInfo
+  /// Component lifetime
   public let lifeTime: DILifeTime
+  /// Component have `default` flag or not
   public let isDefault: Bool
+  /// Component have `init` method or not
   public let canInitialize: Bool
 
+  /// Framework where this component was register
   public let framework: DIFramework.Type?
+  /// Part where this component was register
   public let part: DIPart.Type?
 
   public func hash(into hasher: inout Hasher) {
@@ -23,9 +30,11 @@ public struct DIComponentVertex: Hashable {
   }
 }
 
+/// This vertex maked if component have dependency using `arg`.
 public struct DIArgumentVertex: Hashable {
   let id: Int
 
+  /// Argument type in component dependency
   public let type: DIAType
 
   public func hash(into hasher: inout Hasher) {
@@ -37,9 +46,11 @@ public struct DIArgumentVertex: Hashable {
   }
 }
 
+/// This vertex maked if component have dependency on unknown type
 public struct DIUnknownVertex: Hashable {
   let id: Int
 
+  /// Unknown type - for this type DI didn't find component in graph
   public let type: DIAType
 
   public func hash(into hasher: inout Hasher) {
@@ -95,8 +106,9 @@ public struct DIGraph {
   public let vertices: [DIVertex]
 
   /// Directed, Transition matrix. Contains information about transition from vertex to vertex. Containts edges.
-  /// For get transition information your can write: `for (edge, toIndex) in matrix[fromIndexVertices]`
-  /// This write means that component by fromIndexVertices can dependency on toIndex.
+  /// For get transition information your can write: `for (edge, toIndices) in matrix[fromIndexVertices]`
+  /// This write means that component by fromIndexVertices can dependency on toIndices.
+  /// array of to indices need only for many, or if not valid graph.
   public let matrix: Matrix
 
   init(vertices: [DIVertex], matrix: Matrix) {
@@ -107,6 +119,7 @@ public struct DIGraph {
 
 
 extension DIVertex: CustomStringConvertible {
+  /// Vertex description
   public var description: String {
     switch self {
     case .component(let componentVertex):

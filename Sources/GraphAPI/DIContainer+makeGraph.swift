@@ -9,7 +9,8 @@
 extension DIContainer {
 
   /// Make graph for public usage.
-  /// Also your can call `validate` for check for correct
+  /// Your can call `checkIsValid` for check for correct.
+  /// Or Your can use this graph for dependency analysis.
   /// - Returns: Dependency graph
   public func makeGraph() -> DIGraph {
     let components = componentContainer.components.sorted(by: { $0.order < $1.order })
