@@ -14,20 +14,21 @@ extension DIContainer {
   public func makeGraph() -> DIGraph {
     let components = componentContainer.components.sorted(by: { $0.order < $1.order })
 
+    var edgeId: Int = 0
     var vertices = makeVertices(by: components)
-
     var matrix: DIGraph.Matrix = Array(repeating: [], count: vertices.count)
 
     for (index, component) in components.enumerated() {
       // get all paramaters - from init and injection
       let parametersInfo = componentParametersInfo(component: component)
-      for (parameter, cycle) in parametersInfo {
+      for (parameter, initial, cycle) in parametersInfo {
         // ignore reference on self
         if parameter.parsedType.useObject {
           continue
         }
 
-        let edge = makeEdge(by: parameter, cycle: cycle)
+        edgeId += 1
+        let edge = makeEdge(by: parameter, id: edgeId, initial: initial, cycle: cycle)
 
         if addArgumentIfNeeded(by: parameter.parsedType, matrix: &matrix, vertices: &vertices) {
           matrix[index].append((edge, [vertices.count - 1]))
@@ -86,12 +87,14 @@ extension DIContainer {
       return false
     }
 
-    addVertex(DIVertex.argument(DIArgumentVertex(type: argType)), matrix: &matrix, vertices: &vertices)
+    let id = vertices.count
+    addVertex(DIVertex.argument(DIArgumentVertex(id: id, type: argType)), matrix: &matrix, vertices: &vertices)
     return true
   }
 
   private func addUnknown(by parsedType: ParsedType, matrix: inout DIGraph.Matrix, vertices: inout [DIVertex]) {
-    addVertex(DIVertex.unknown(DIUnknownVertex(type: parsedType.type)), matrix: &matrix, vertices: &vertices)
+    let id = vertices.count
+    addVertex(DIVertex.unknown(DIUnknownVertex(id: id, type: parsedType.type)), matrix: &matrix, vertices: &vertices)
   }
 
   private func addVertex(_ vertex: DIVertex, matrix: inout DIGraph.Matrix, vertices: inout [DIVertex]) {
@@ -99,15 +102,16 @@ extension DIContainer {
     vertices.append(vertex)
   }
 
-  private func componentParametersInfo(component: Component) -> [(MethodSignature.Parameter, Bool)] {
-    var result: [(MethodSignature.Parameter, Bool)] = []
+  typealias ParameterInfo = (parameter: MethodSignature.Parameter, initial: Bool, cycle: Bool)
+  private func componentParametersInfo(component: Component) -> [ParameterInfo] {
+    var result: [ParameterInfo] = []
 
     if let initial = component.initial {
-      result.append(contentsOf: initial.parameters.map { ($0, false) })
+      result.append(contentsOf: initial.parameters.map { ($0, true, false) })
     }
 
     for injection in component.injections {
-      result.append(contentsOf: injection.signature.parameters.map{ ($0, injection.cycle) })
+      result.append(contentsOf: injection.signature.parameters.map{ ($0, false, injection.cycle) })
     }
 
     return result
@@ -126,7 +130,7 @@ extension DIContainer {
     }
   }
 
-  private func makeEdge(by parameter: MethodSignature.Parameter, cycle: Bool) -> DIEdge {
+  private func makeEdge(by parameter: MethodSignature.Parameter, id: Int, initial: Bool, cycle: Bool) -> DIEdge {
     var tags: [DITag] = []
     var typeIterator: ParsedType? = parameter.parsedType
     repeat {
@@ -136,7 +140,9 @@ extension DIContainer {
       typeIterator = typeIterator?.parent
     } while typeIterator != nil
 
-    return DIEdge(cycle: cycle,
+    return DIEdge(id: id,
+                  initial: initial,
+                  cycle: cycle,
                   optional: parameter.parsedType.optional,
                   many: parameter.parsedType.hasMany,
                   delayed: parameter.parsedType.hasDelayed,

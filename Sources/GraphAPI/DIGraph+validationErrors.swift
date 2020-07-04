@@ -59,4 +59,8 @@ extension DIGraph {
       log(.error, msg: "\(fromVertex.description) can't maked because not found component for type: \(type)")
   }
 
+  // MARK: - cycle
+  func log_cycleAnyInitEdges(vertices: [DIVertex], edges: [DIEdge]) {
+    
+  }
 }

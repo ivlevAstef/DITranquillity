@@ -24,24 +24,29 @@ public struct DIComponentVertex: Hashable {
 }
 
 public struct DIArgumentVertex: Hashable {
+  let id: Int
+
   public let type: DIAType
 
   public func hash(into hasher: inout Hasher) {
-    hasher.combine(ObjectIdentifier(type))
+    hasher.combine(id)
   }
+
   public static func ==(lhs: DIArgumentVertex, rhs: DIArgumentVertex) -> Bool {
-    return lhs.type == rhs.type
+    return lhs.id == rhs.id
   }
 }
 
 public struct DIUnknownVertex: Hashable {
+  let id: Int
+
   public let type: DIAType
 
   public func hash(into hasher: inout Hasher) {
-    hasher.combine(ObjectIdentifier(type))
+    hasher.combine(id)
   }
   public static func ==(lhs: DIUnknownVertex, rhs: DIUnknownVertex) -> Bool {
-    return lhs.type == rhs.type
+    return lhs.id == rhs.id
   }
 }
 
@@ -56,7 +61,10 @@ public enum DIVertex: Hashable {
 }
 
 /// Information about transition in dependency graph matrix. This transition is a dependency.
-public struct DIEdge {
+public struct DIEdge: Hashable {
+  let id: Int
+  /// Is it dependency from init method.
+  public let initial: Bool
   /// Is it dependency cycle. It could be only dependency written as `.injection(cycle: true,...`
   public let cycle: Bool
   /// Is it dependency optional. Optional dependency contains `Optional` type.
@@ -71,6 +79,13 @@ public struct DIEdge {
   public let name: String?
   /// The type that transition 
   public let type: DIAType
+
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(id)
+  }
+  public static func == (lhs: DIEdge, rhs: DIEdge) -> Bool {
+    return lhs.id == rhs.id
+  }
 }
 
 /// Dependency graph. Contains vertices array: components or argument or type. and transition matrix.

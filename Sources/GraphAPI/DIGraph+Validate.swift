@@ -165,96 +165,119 @@ extension DIGraph {
 
 // MARK: - cycle
 extension DIGraph {
+  private struct Cycle: Hashable {
+    let vertexIndices: [Int]
+    let edges: [DIEdge]
+  }
+
   private func checkGraphForCycles() -> Bool {
+    let cycles = findAllCycles()
+
+    for cycle in cycles {
+      assert(cycle.vertexIndices.count >= 2)
+      assert(cycle.edges.count >= 2)
+      assert(cycle.vertexIndices.count == cycle.edges.count)
+      let cycleVertices = cycle.vertexIndices.map { vertices[$0] }
+
+      var anyVerticesPrototype: Bool = true
+      var countPrototypeLifetime: Int = 0
+      var countObjectGraphLifetime: Int = 0
+      var countCachedLifetime: Int = 0
+      var countCustomLifetime: Int = 0
+      for vertex in cycleVertices {
+        guard case .component(let componentVertex) = vertex else {
+          continue
+        }
+        anyVerticesPrototype = anyVerticesPrototype && (componentVertex.lifeTime == .prototype)
+        switch componentVertex.lifeTime {
+        case .prototype: countPrototypeLifetime += 1
+        case .objectGraph: countObjectGraphLifetime += 1
+        case .perContainer: countCachedLifetime += 1
+        case .perRun: countCachedLifetime += 1
+        case .single: countCachedLifetime += 1
+        case .custom: countCustomLifetime += 1
+        }
+      }
+
+      var anyInitialEdge: Bool = true
+      var hasCycleEdge: Bool = false
+      for edge in cycle.edges {
+        // TODO: подумать
+        hasCycleEdge = hasCycleEdge || (edge.cycle || (edge.initial && edge.many))
+        anyInitialEdge = anyInitialEdge && (edge.initial && !edge.many)
+      }
+
+      if anyInitialEdge {
+        log_cycleAnyInitEdges(vertices: cycleVertices, edges: cycle.edges)
+      }
+    }
+
     return true
   }
-}
 
-//fileprivate func checkGraphCycles(_ components: [Component]) -> Bool {
-//  var success: Bool = true
-//
-//  typealias Stack = (component: Component, initial: Bool, cycle: Bool, many: Bool)
-//  func dfs(for component: Component, visited: Set<Component>, stack: [Stack]) {
-//    // it's cycle
-//    if visited.contains(component) {
-//      func isValidCycle() -> Bool {
-//        if stack.first!.component != component {
-//          // but inside -> will find in a another dfs call.
-//          return true
-//        }
-//
-//        let infos = stack.dropLast().map{ $0.component.info }
-//        let short = infos.map{ "\($0.type)" }.joined(separator: " - ")
-//
-//        let allInitials = !stack.contains{ !($0.initial && !$0.many) }
-//        if allInitials {
-//          log(.error, msg: "You have a cycle: \(short) consisting entirely of initialization methods. Full: \(infos)")
-//          return false
-//        }
-//
-//        let hasGap = stack.contains{ $0.cycle || ($0.initial && $0.many) }
-//        if !hasGap {
-//          log(.error, msg: "Cycle has no discontinuities. Please install at least one explosion in the cycle: \(short) using `injection(cycle: true) { ... }`. Full: \(infos)")
-//          return false
-//        }
-//
-//        let allPrototypes = !stack.contains{ $0.component.lifeTime != .prototype }
-//        if allPrototypes {
-//          log(.error, msg: "You cycle: \(short) consists only of object with lifetime - prototype. Please change at least one object lifetime to another. Full: \(infos)")
-//          return false
-//        }
-//
-//        let containsPrototype = stack.contains{ $0.component.lifeTime == .prototype }
-//        if containsPrototype {
-//          log(.info, msg: "You cycle: \(short) contains an object with lifetime - prototype. In some cases this can lead to an udesirable effect.  Full: \(infos)")
-//        }
-//
-//        return true
-//      }
-//
-//      success = isValidCycle() && success
-//      return
-//    }
-//
-//    let framework = component.framework
-//
-//    var visited = visited
-//    visited.insert(component)
-//
-//
-//    func callDfs(by parameters: [MethodSignature.Parameter], initial: Bool, cycle: Bool) {
-//      for parameter in parameters {
-//        let candidates = resolver.findComponents(by: parameter.parsedType, with: parameter.name, from: framework)
-//        if candidates.isEmpty {
-//          continue
-//        }
-//
-//        let filtered = candidates.filter {
-//         (nil != $0.initial || ($0.lifeTime != .prototype && visited.contains($0)))
-//        }
-//        let many = parameter.parsedType.hasMany
-//        for subcomponent in filtered {
-//          var stack = stack
-//          stack.append((subcomponent, initial, cycle || parameter.parsedType.hasDelayed, many))
-//          dfs(for: subcomponent, visited: visited, stack: stack)
-//        }
-//      }
-//    }
-//
-//    if let initial = component.initial {
-//      callDfs(by: initial.parameters, initial: true, cycle: false)
-//    }
-//
-//    for injection in component.injections {
-//      callDfs(by: injection.signature.parameters, initial: false, cycle: injection.cycle)
-//    }
-//  }
-//
-//
-//  for component in components {
-//    let stack = [(component, false, false, false)]
-//    dfs(for: component, visited: [], stack: stack)
-//  }
-//
-//  return success
-//}
+  private func findAllCycles() -> [Cycle] {
+    var visitedVertices: Set<Int> = []
+    var allCycles: [Cycle] = []
+    for (index, vertex) in vertices.enumerated() {
+      guard case .component = vertex else {
+        continue
+      }
+      // Почему мы можем так делать? Почему пройденные вершины точно можно исключить из поиска циклов
+      // Рассмотрим две ситуации:
+      // Пройденная вершина не входит в цикл. Тогда стартуя из нее мы точно уже не найдем цикла - ведь мы с нее уже начинали и не нашли цикл.
+      // Пройденная вершина входит в цикл. Тогда мы уже нашли этот цикл, так как нельзя взять вершину входящую в цикл и не найти все циклы проходящие через нее. На то он и цикл.
+      // По этой причине мы можем смело выкидывать вершины которые уже просмотрели на одной из итераций
+      if visitedVertices.contains(index) {
+        continue
+      }
+
+      allCycles.append(contentsOf: findCycles(from: index, visited: &visitedVertices))
+    }
+
+    return allCycles
+  }
+
+  private func findCycles(from vertexIndex: Int, visited globalVisitedVertices: inout Set<Int>) -> [Cycle] {
+    // Для поиска циклов используется обход в глубину
+    // рекурсивный для простоты - в любом случае если упадет тут рекурсия, то уж точно упадет при получении зависимостей :)
+    var result: [Cycle] = []
+    findCycles(currentVertexIndex: vertexIndex,
+               visitedVertices: [],
+               visitedEdges: [],
+               globalVisitedVertices: &globalVisitedVertices,
+               result: &result)
+
+    return result
+  }
+
+  private func findCycles(currentVertexIndex: Int,
+                          visitedVertices: [Int], // need order for subcycle
+                          visitedEdges: [DIEdge], // need order for subcycle
+                          globalVisitedVertices: inout Set<Int>,
+                          result: inout [Cycle]) {
+    if let cycleStartIndex = visitedVertices.lastIndex(of: currentVertexIndex) {
+      assert(visitedVertices.count == visitedEdges.count)
+      // In all cases edges count equal vertexIndicesCount
+      let cycleVertexIndices = Array(visitedVertices[cycleStartIndex...])
+      let cycleEdges = Array(visitedEdges[cycleStartIndex...])
+
+      let cycle = Cycle(vertexIndices: cycleVertexIndices, edges: cycleEdges)
+      result.append(cycle)
+      return
+    }
+
+    let visitedVertices = visitedVertices + [currentVertexIndex]
+    globalVisitedVertices.insert(currentVertexIndex)
+
+    for (edge, toIndices) in matrix[currentVertexIndex] {
+      let visitedEdges = visitedEdges + [edge]
+      for toVertexIndex in toIndices {
+        findCycles(currentVertexIndex: toVertexIndex,
+                   visitedVertices: visitedVertices,
+                   visitedEdges: visitedEdges,
+                   globalVisitedVertices: &globalVisitedVertices,
+                   result: &result)
+      }
+    }
+  }
+}
