@@ -7,8 +7,11 @@
 //
 
 extension DIGraph {
-
-  public func checkIsValid(checkGraphCycles: Bool = false) -> Bool {
+  /// Validate the graph by checking various conditions.
+  ///
+  /// - Parameter checkGraphCycles: check cycles in the graph of heavy operation. So it can be disabled/
+  /// - Returns: true if validation success.
+  public func checkIsValid(checkGraphCycles: Bool = true) -> Bool {
     let canInitialize = checkGraphOnCanInitialize()
     let unambiguity = checkGraphForUnambiguity()
     let reachibility = checkGraphForReachability()
@@ -173,10 +176,17 @@ extension DIGraph {
   private func checkGraphForCycles() -> Bool {
     let cycles = findAllCycles()
 
+    let isValidVerticesCycles = checkGraphCyclesVertices(cycles: cycles)
+    let isValidEdgesCycles = checkGraphCyclesEdges(cycles: cycles)
+
+    return isValidVerticesCycles && isValidEdgesCycles
+  }
+
+
+  private func checkGraphCyclesVertices(cycles: [Cycle]) -> Bool {
+    var successful: Bool = true
     for cycle in cycles {
-      assert(cycle.vertexIndices.count >= 2)
-      assert(cycle.edges.count >= 2)
-      assert(cycle.vertexIndices.count == cycle.edges.count)
+      assert(cycle.vertexIndices.count >= 1)
       let cycleVertices = cycle.vertexIndices.map { vertices[$0] }
 
       var anyVerticesPrototype: Bool = true
@@ -199,20 +209,46 @@ extension DIGraph {
         }
       }
 
-      var anyInitialEdge: Bool = true
-      var hasCycleEdge: Bool = false
-      for edge in cycle.edges {
-        // TODO: подумать
-        hasCycleEdge = hasCycleEdge || (edge.cycle || (edge.initial && edge.many))
-        anyInitialEdge = anyInitialEdge && (edge.initial && !edge.many)
+      if anyVerticesPrototype {
+        successful = false
+        log_cycleAnyVerticesPrototype(vertices: cycleVertices, edges: cycle.edges)
       }
 
-      if anyInitialEdge {
-        log_cycleAnyInitEdges(vertices: cycleVertices, edges: cycle.edges)
+      if countPrototypeLifetime > 0 {
+        log_cycleHavePrototype(vertices: cycleVertices, edges: cycle.edges)
+      }
+
+      if countCachedLifetime > 0 && countPrototypeLifetime + countObjectGraphLifetime > 0 {
+        log_cycleHaveInvariantLifetimes(vertices: cycleVertices, edges: cycle.edges)
       }
     }
 
-    return true
+    return successful
+  }
+
+  private func checkGraphCyclesEdges(cycles: [Cycle]) -> Bool {
+    var successful: Bool = true
+    for cycle in cycles {
+      assert(cycle.edges.count >= 1)
+      let cycleVertices = cycle.vertexIndices.map { vertices[$0] }
+
+      var anyInitialEdge: Bool = true
+      var hasBreakPointEdge: Bool = false
+      for edge in cycle.edges {
+        hasBreakPointEdge = hasBreakPointEdge || (edge.cycle || edge.delayed || (edge.initial && edge.many))
+        anyInitialEdge = anyInitialEdge && (edge.initial && !edge.many && !edge.delayed)
+      }
+
+      if anyInitialEdge {
+        successful = false
+        log_cycleAnyInitEdges(vertices: cycleVertices, edges: cycle.edges)
+      } else if !hasBreakPointEdge {
+        successful = false
+        log_cycleNoHaveBreakPoint(vertices: cycleVertices, edges: cycle.edges)
+      }
+    }
+
+    return successful
   }
 
   private func findAllCycles() -> [Cycle] {
@@ -238,9 +274,8 @@ extension DIGraph {
   }
 
   private func findCycles(from vertexIndex: Int, visited globalVisitedVertices: inout Set<Int>) -> [Cycle] {
-    // Для поиска циклов используется обход в глубину
-    // рекурсивный для простоты - в любом случае если упадет тут рекурсия, то уж точно упадет при получении зависимостей :)
     var result: [Cycle] = []
+    // dfs
     findCycles(currentVertexIndex: vertexIndex,
                visitedVertices: [],
                visitedEdges: [],

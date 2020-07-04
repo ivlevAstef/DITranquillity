@@ -164,7 +164,7 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
     container.register(LazyCycleB.init)
       .lifetime(.objectGraph)
 
-    XCTAssert(container.validate(checkGraphCycles: true))
+    XCTAssert(container.makeGraph().checkIsValid(checkGraphCycles: true))
 
     let lazyA: LazyCycleA = *container
 
@@ -181,7 +181,7 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
     container.register(ProviderCycleB.init)
       .lifetime(.objectGraph)
 
-    XCTAssert(container.validate(checkGraphCycles: true))
+    XCTAssert(container.makeGraph().checkIsValid(checkGraphCycles: true))
 
     let providerA: ProviderCycleA = *container
 

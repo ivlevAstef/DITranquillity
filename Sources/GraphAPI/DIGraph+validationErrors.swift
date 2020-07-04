@@ -61,6 +61,22 @@ extension DIGraph {
 
   // MARK: - cycle
   func log_cycleAnyInitEdges(vertices: [DIVertex], edges: [DIEdge]) {
-    
+    log(.error, msg: "")
+  }
+
+  func log_cycleNoHaveBreakPoint(vertices: [DIVertex], edges: [DIEdge]) {
+    log(.error, msg: "")
+  }
+
+  func log_cycleAnyVerticesPrototype(vertices: [DIVertex], edges: [DIEdge]) {
+    log(.error, msg: "")
+  }
+
+  func log_cycleHavePrototype(vertices: [DIVertex], edges: [DIEdge]) {
+    log(.warning, msg: "")
+  }
+
+  func log_cycleHaveInvariantLifetimes(vertices: [DIVertex], edges: [DIEdge]) {
+    log(.warning, msg: "")
   }
 }
