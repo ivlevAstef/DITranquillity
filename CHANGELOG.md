@@ -1,3 +1,8 @@
+# v4.1.0
+* Add Graph API - now your get dependency graph.
+* Change graph validation - change syntax, add validation cases, improve validation cycles speed x1000-10000
+* Fix small bugs and full synchronize validation graph and real usage.
+
 # v4.0.0
 * update documentation and README
 * update structure
