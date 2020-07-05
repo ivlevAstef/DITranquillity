@@ -28,8 +28,8 @@ extension DIGraph {
 
     var visitedVertices: Set<DIVertex> = []
 
-    for fromIndex in matrix.indices {
-      for (edge, toIndices) in matrix[fromIndex] {
+    for fromIndex in adjacencyList.indices {
+      for (edge, toIndices) in adjacencyList[fromIndex] {
         for toIndex in toIndices {
           guard case .component(let componentVertex) = vertices[toIndex] else {
             continue
@@ -88,12 +88,12 @@ extension DIGraph {
         return true
       }
 
-      for toIndex in matrix[fromIndex].flatMap({ $0.toIndices }) {
+      visited.insert(fromIndex)
+      for toIndex in adjacencyList[fromIndex].flatMap({ $0.toIndices }) {
         if !visited.contains(toIndex) {
           stack.append(toIndex)
         }
       }
-      visited.insert(fromIndex)
     }
 
     return false
@@ -106,8 +106,8 @@ extension DIGraph {
   private func checkGraphForUnambiguity() -> Bool {
     var successful: Bool = true
 
-    for fromIndex in matrix.indices {
-      for (edge, toIndices) in matrix[fromIndex] {
+    for fromIndex in adjacencyList.indices {
+      for (edge, toIndices) in adjacencyList[fromIndex] {
         if edge.many { // ignore many
           continue
         }
@@ -138,12 +138,12 @@ extension DIGraph {
       }
 
       // By make algorith for unknown vertex can only one from vertex.
-      guard let fromIndex = matrix.firstIndex(where: { $0.contains { $0.toIndices.contains(toIndex) }}) else {
+      guard let fromIndex = adjacencyList.firstIndex(where: { $0.contains { $0.toIndices.contains(toIndex) }}) else {
         assertionFailure("Can't found from vertices for unknown vertex? it's bug in code")
         continue
       }
 
-      guard let (edge, _) = matrix[fromIndex].first(where: { $0.toIndices.contains(toIndex) }) else {
+      guard let (edge, _) = adjacencyList[fromIndex].first(where: { $0.toIndices.contains(toIndex) }) else {
         assertionFailure("But in top code checked on contains")
         continue
       }
@@ -169,16 +169,19 @@ extension DIGraph {
 
 // MARK: - cycle
 extension DIGraph {
-  private struct Cycle: Hashable {
+  fileprivate struct Cycle: Hashable {
     let vertexIndices: [Int]
     let edges: [DIEdge]
   }
 
   private func checkGraphForCycles() -> Bool {
+    let edgeCount = adjacencyList.map { $0.map { $0.toIndices.count }.reduce(0, +) }.reduce(0, +)
+
     let cycles = findAllCycles()
 
     func calculateAverageLength() -> Double {
-      Double(cycles.map { $0.vertexIndices.count }.reduce(0, +)) / Double(cycles.count)
+      let summaryVerticesCount = cycles.map { $0.vertexIndices.count }.reduce(0, +)
+      return Double(summaryVerticesCount) / Double(cycles.count)
     }
     log(.verbose, msg: "Found \(cycles.count) cycles with average length: \(calculateAverageLength())")
 
@@ -258,67 +261,118 @@ extension DIGraph {
   }
 
   private func findAllCycles() -> [Cycle] {
-    var visitedVertices: Set<Int> = []
+    return CycleFinder(in: self).findAllCycles()
+  }
+}
+
+/// Class need for optimization
+private final class CycleFinder {
+  typealias Cycle = DIGraph.Cycle
+  private let graph: DIGraph
+
+  private var startVertexIndex: Int = 0
+  private var result: [DIGraph.Cycle] = []
+  private var noCycleVertices: Set<Int> = [] // Optimization
+
+  private var reachability: [Set<Int>]
+
+  private var maxDepth: Int = 0
+  private var counterVertices: Int = 0
+
+  fileprivate init(in graph: DIGraph) {
+    self.graph = graph
+    reachability = Array(repeating: [], count: graph.vertices.count)
+  }
+
+  fileprivate func findAllCycles() -> [Cycle] {
+    findAllReachableVertices()
+
     var allCycles: [Cycle] = []
-    for (index, vertex) in vertices.enumerated() {
+    for (index, vertex) in graph.vertices.enumerated() {
       guard case .component = vertex else {
         continue
       }
-      // Почему мы можем так делать? Почему пройденные вершины точно можно исключить из поиска циклов
-      // Рассмотрим две ситуации:
-      // Пройденная вершина не входит в цикл. Тогда стартуя из нее мы точно уже не найдем цикла - ведь мы с нее уже начинали и не нашли цикл.
-      // Пройденная вершина входит в цикл. Тогда мы уже нашли этот цикл, так как нельзя взять вершину входящую в цикл и не найти все циклы проходящие через нее. На то он и цикл.
-      // По этой причине мы можем смело выкидывать вершины которые уже просмотрели на одной из итераций
-      if visitedVertices.contains(index) {
-        continue
-      }
 
-      allCycles.append(contentsOf: findCycles(from: index, visited: &visitedVertices))
+      allCycles.append(contentsOf: findCycles(from: index))
     }
 
     return allCycles
   }
 
-  private func findCycles(from vertexIndex: Int, visited globalVisitedVertices: inout Set<Int>) -> [Cycle] {
-    var result: [Cycle] = []
+  private func findAllReachableVertices() {
+    assert(reachability.count == graph.vertices.count)
+
+    for (index, vertex) in graph.vertices.enumerated() {
+      guard case .component = vertex else {
+        continue
+      }
+
+      reachability[index] = findAllReachableVertices(for: index)
+    }
+  }
+
+  private func findAllReachableVertices(for startVertexIndex: Int) -> Set<Int> {
+    var visited: Set<Int> = []
+    var stack: [Int] = [startVertexIndex]
+    while let fromIndex = stack.first {
+      stack.removeFirst()
+
+      visited.insert(fromIndex)
+      for toIndex in graph.adjacencyList[fromIndex].flatMap({ $0.toIndices }) {
+        if !visited.contains(toIndex) {
+          stack.append(toIndex)
+        }
+      }
+    }
+
+    return visited
+  }
+
+  private func findCycles(from vertexIndex: Int) -> [DIGraph.Cycle] {
+    startVertexIndex = vertexIndex
+    counterVertices = 0
+    maxDepth = 0
+    result = []
+    noCycleVertices = []
     // dfs
     findCycles(currentVertexIndex: vertexIndex,
                visitedVertices: [],
-               visitedEdges: [],
-               globalVisitedVertices: &globalVisitedVertices,
-               result: &result)
+               visitedEdges: [])
 
+    print("Found: \(result.count) cycles. Saw vertices \(counterVertices) max depth: \(maxDepth)")
     return result
   }
 
-  private static var maxDepth: Int = 0
   private func findCycles(currentVertexIndex: Int,
                           visitedVertices: [Int], // need order for subcycle
-                          visitedEdges: [DIEdge], // need order for subcycle
-                          globalVisitedVertices: inout Set<Int>,
-                          result: inout [Cycle]) {
-    if let cycleStartIndex = visitedVertices.lastIndex(of: currentVertexIndex) {
+                          visitedEdges: [DIEdge]) {
+    if currentVertexIndex == startVertexIndex && !visitedVertices.isEmpty {
       assert(visitedVertices.count == visitedEdges.count)
-      // In all cases edges count equal vertexIndicesCount
-      let cycleVertexIndices = Array(visitedVertices[cycleStartIndex...])
-      let cycleEdges = Array(visitedEdges[cycleStartIndex...])
 
-      let cycle = Cycle(vertexIndices: cycleVertexIndices, edges: cycleEdges)
+      let cycle = DIGraph.Cycle(vertexIndices: visitedVertices, edges: visitedEdges)
       result.append(cycle)
       return
     }
 
-    let visitedVertices = visitedVertices + [currentVertexIndex]
-    globalVisitedVertices.insert(currentVertexIndex)
+    if visitedVertices.contains(currentVertexIndex) {
+      return
+    }
 
-    for (edge, toIndices) in matrix[currentVertexIndex] {
+    if !reachability[currentVertexIndex].contains(startVertexIndex) {
+      return
+    }
+
+    let visitedVertices = visitedVertices + [currentVertexIndex]
+
+    counterVertices += 1
+    maxDepth = max(maxDepth, visitedVertices.count)
+
+    for (edge, toIndices) in graph.adjacencyList[currentVertexIndex] {
       let visitedEdges = visitedEdges + [edge]
       for toVertexIndex in toIndices {
         findCycles(currentVertexIndex: toVertexIndex,
                    visitedVertices: visitedVertices,
-                   visitedEdges: visitedEdges,
-                   globalVisitedVertices: &globalVisitedVertices,
-                   result: &result)
+                   visitedEdges: visitedEdges)
       }
     }
   }

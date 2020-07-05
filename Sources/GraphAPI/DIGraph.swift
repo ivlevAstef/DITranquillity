@@ -71,7 +71,7 @@ public enum DIVertex: Hashable {
   case unknown(DIUnknownVertex)
 }
 
-/// Information about transition in dependency graph matrix. This transition is a dependency.
+/// Information about transition in dependency graph adjacency list. This transition is a dependency.
 public final class DIEdge: Hashable {
   let id: Int
   /// Is it dependency from init method.
@@ -111,21 +111,21 @@ public final class DIEdge: Hashable {
   }
 }
 
-/// Dependency graph. Contains vertices array: components or argument or type. and transition matrix.
+/// Dependency graph. Contains vertices array: components or argument or type. and transition adjacency list.
 public struct DIGraph {
-  public typealias Matrix = [[(edge: DIEdge, toIndices: [Int])]]
+  public typealias AdjacencyList = [[(edge: DIEdge, toIndices: [Int])]]
   /// vertices array. It's All dependencies. Contains All components, all arguments and all unknown type dependencies.
   public let vertices: [DIVertex]
 
-  /// Directed, Transition matrix. Contains information about transition from vertex to vertex. Containts edges.
-  /// For get transition information your can write: `for (edge, toIndices) in matrix[fromIndexVertices]`
+  /// Directed, Transition фdjacency list. Contains information about transition from vertex to vertices. Containts edges.
+  /// For get transition information your can write: `for (edge, toIndices) in adjacencyList[fromIndexVertices]`
   /// This write means that component by fromIndexVertices can dependency on toIndices.
   /// array of to indices need only for many, or if not valid graph.
-  public let matrix: Matrix
+  public let adjacencyList: AdjacencyList
 
-  init(vertices: [DIVertex], matrix: Matrix) {
+  init(vertices: [DIVertex], adjacencyList: AdjacencyList) {
     self.vertices = vertices
-    self.matrix = matrix
+    self.adjacencyList = adjacencyList
   }
 }
 

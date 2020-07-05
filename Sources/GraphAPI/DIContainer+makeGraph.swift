@@ -17,7 +17,7 @@ extension DIContainer {
 
     var edgeId: Int = 0
     var vertices = makeVertices(by: components)
-    var matrix: DIGraph.Matrix = Array(repeating: [], count: vertices.count)
+    var adjacencyList: DIGraph.AdjacencyList = Array(repeating: [], count: vertices.count)
 
     for (index, component) in components.enumerated() {
       // get all paramaters - from init and injection
@@ -31,8 +31,8 @@ extension DIContainer {
         edgeId += 1
         let edge = makeEdge(by: parameter, id: edgeId, initial: initial, cycle: cycle)
 
-        if addArgumentIfNeeded(by: parameter.parsedType, matrix: &matrix, vertices: &vertices) {
-          matrix[index].append((edge, [vertices.count - 1]))
+        if addArgumentIfNeeded(by: parameter.parsedType, adjacencyList: &adjacencyList, vertices: &vertices) {
+          adjacencyList[index].append((edge, [vertices.count - 1]))
           continue
         }
 
@@ -42,16 +42,16 @@ extension DIContainer {
         assert(candidates.count == toIndices.count)
         // not found candidates - need add reference on unknown type
         if toIndices.isEmpty {
-          addUnknown(by: parameter.parsedType, matrix: &matrix, vertices: &vertices)
-          matrix[index].append((edge, [vertices.count - 1]))
+          addUnknown(by: parameter.parsedType, adjacencyList: &adjacencyList, vertices: &vertices)
+          adjacencyList[index].append((edge, [vertices.count - 1]))
           continue
         }
 
-        matrix[index].append((edge, toIndices))
+        adjacencyList[index].append((edge, toIndices))
       }
     }
 
-    return DIGraph(vertices: vertices, matrix: matrix)
+    return DIGraph(vertices: vertices, adjacencyList: adjacencyList)
   }
 
   private func findIndex(for component: Component, in components: [Component]) -> Int? {
@@ -79,7 +79,7 @@ extension DIContainer {
     return nil
   }
 
-  private func addArgumentIfNeeded(by parsedType: ParsedType, matrix: inout DIGraph.Matrix, vertices: inout [DIVertex]) -> Bool {
+  private func addArgumentIfNeeded(by parsedType: ParsedType, adjacencyList: inout DIGraph.AdjacencyList, vertices: inout [DIVertex]) -> Bool {
     if !parsedType.arg {
       return false
     }
@@ -89,17 +89,17 @@ extension DIContainer {
     }
 
     let id = vertices.count
-    addVertex(DIVertex.argument(DIArgumentVertex(id: id, type: argType)), matrix: &matrix, vertices: &vertices)
+    addVertex(DIVertex.argument(DIArgumentVertex(id: id, type: argType)), adjacencyList: &adjacencyList, vertices: &vertices)
     return true
   }
 
-  private func addUnknown(by parsedType: ParsedType, matrix: inout DIGraph.Matrix, vertices: inout [DIVertex]) {
+  private func addUnknown(by parsedType: ParsedType, adjacencyList: inout DIGraph.AdjacencyList, vertices: inout [DIVertex]) {
     let id = vertices.count
-    addVertex(DIVertex.unknown(DIUnknownVertex(id: id, type: parsedType.type)), matrix: &matrix, vertices: &vertices)
+    addVertex(DIVertex.unknown(DIUnknownVertex(id: id, type: parsedType.type)), adjacencyList: &adjacencyList, vertices: &vertices)
   }
 
-  private func addVertex(_ vertex: DIVertex, matrix: inout DIGraph.Matrix, vertices: inout [DIVertex]) {
-    matrix.append([])
+  private func addVertex(_ vertex: DIVertex, adjacencyList: inout DIGraph.AdjacencyList, vertices: inout [DIVertex]) {
+    adjacencyList.append([])
     vertices.append(vertex)
   }
 
