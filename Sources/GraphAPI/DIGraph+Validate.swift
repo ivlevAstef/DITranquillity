@@ -169,15 +169,10 @@ extension DIGraph {
 
 // MARK: - cycle
 extension DIGraph {
-  fileprivate struct Cycle: Hashable {
-    let vertexIndices: [Int]
-    let edges: [DIEdge]
-  }
+  fileprivate typealias Cycle = CycleFinder.Cycle
 
   private func checkGraphForCycles() -> Bool {
-    let edgeCount = adjacencyList.map { $0.map { $0.toIndices.count }.reduce(0, +) }.reduce(0, +)
-
-    let cycles = findAllCycles()
+    let cycles = CycleFinder(in: self).findAllCycles()
 
     func calculateAverageLength() -> Double {
       let summaryVerticesCount = cycles.map { $0.vertexIndices.count }.reduce(0, +)
@@ -192,7 +187,7 @@ extension DIGraph {
   }
 
 
-  private func checkGraphCyclesVertices(cycles: [Cycle]) -> Bool {
+  private func checkGraphCyclesVertices(cycles: Set<Cycle>) -> Bool {
     var successful: Bool = true
     for cycle in cycles {
       assert(cycle.vertexIndices.count >= 1)
@@ -235,7 +230,7 @@ extension DIGraph {
     return successful
   }
 
-  private func checkGraphCyclesEdges(cycles: [Cycle]) -> Bool {
+  private func checkGraphCyclesEdges(cycles: Set<Cycle>) -> Bool {
     var successful: Bool = true
     for cycle in cycles {
       assert(cycle.edges.count >= 1)
@@ -259,44 +254,53 @@ extension DIGraph {
 
     return successful
   }
-
-  private func findAllCycles() -> [Cycle] {
-    return CycleFinder(in: self).findAllCycles()
-  }
 }
 
-/// Class need for optimization
-private final class CycleFinder {
-  typealias Cycle = DIGraph.Cycle
+/// Class need for optimization - he containts local properties
+fileprivate final class CycleFinder {
+  fileprivate struct Cycle: Hashable {
+    let vertexIndices: [Int]
+    let edges: [DIEdge]
+
+    public func hash(into hasher: inout Hasher) {
+      // in real SET it's incorrect - because need order. but vertices + edges in all orders form unique
+      hasher.combine(Set(vertexIndices))
+      hasher.combine(Set(edges))
+    }
+    public static func ==(lhs: Cycle, rhs: Cycle) -> Bool {
+      return Set(lhs.vertexIndices) == Set(rhs.vertexIndices) && Set(lhs.edges) == Set(rhs.edges)
+    }
+  }
+
   private let graph: DIGraph
 
   private var startVertexIndex: Int = 0
-  private var result: [DIGraph.Cycle] = []
-  private var noCycleVertices: Set<Int> = [] // Optimization
+  private var result: Set<Cycle> = []
 
-  private var reachability: [Set<Int>]
-
-  private var maxDepth: Int = 0
-  private var counterVertices: Int = 0
+  private var reachability: [Set<Int>] // Optimization x100
 
   fileprivate init(in graph: DIGraph) {
     self.graph = graph
     reachability = Array(repeating: [], count: graph.vertices.count)
   }
 
-  fileprivate func findAllCycles() -> [Cycle] {
+  fileprivate func findAllCycles() -> Set<Cycle> {
     findAllReachableVertices()
 
-    var allCycles: [Cycle] = []
+    result = []
     for (index, vertex) in graph.vertices.enumerated() {
       guard case .component = vertex else {
         continue
       }
 
-      allCycles.append(contentsOf: findCycles(from: index))
+      startVertexIndex = index
+      // dfs
+      findCycles(currentVertexIndex: index,
+                 visitedVertices: [],
+                 visitedEdges: [])
     }
 
-    return allCycles
+    return result
   }
 
   private func findAllReachableVertices() {
@@ -328,29 +332,13 @@ private final class CycleFinder {
     return visited
   }
 
-  private func findCycles(from vertexIndex: Int) -> [DIGraph.Cycle] {
-    startVertexIndex = vertexIndex
-    counterVertices = 0
-    maxDepth = 0
-    result = []
-    noCycleVertices = []
-    // dfs
-    findCycles(currentVertexIndex: vertexIndex,
-               visitedVertices: [],
-               visitedEdges: [])
-
-    print("Found: \(result.count) cycles. Saw vertices \(counterVertices) max depth: \(maxDepth)")
-    return result
-  }
-
   private func findCycles(currentVertexIndex: Int,
                           visitedVertices: [Int], // need order for subcycle
                           visitedEdges: [DIEdge]) {
     if currentVertexIndex == startVertexIndex && !visitedVertices.isEmpty {
       assert(visitedVertices.count == visitedEdges.count)
 
-      let cycle = DIGraph.Cycle(vertexIndices: visitedVertices, edges: visitedEdges)
-      result.append(cycle)
+      result.insert(Cycle(vertexIndices: visitedVertices, edges: visitedEdges))
       return
     }
 
@@ -358,14 +346,13 @@ private final class CycleFinder {
       return
     }
 
-    if !reachability[currentVertexIndex].contains(startVertexIndex) {
+    // first check - current vertex find ALL cycles via current vertex.
+    // Second check - current vertex guaranted not cycles via startVertexIndex.
+    if currentVertexIndex < startVertexIndex || !reachability[currentVertexIndex].contains(startVertexIndex) {
       return
     }
 
     let visitedVertices = visitedVertices + [currentVertexIndex]
-
-    counterVertices += 1
-    maxDepth = max(maxDepth, visitedVertices.count)
 
     for (edge, toIndices) in graph.adjacencyList[currentVertexIndex] {
       let visitedEdges = visitedEdges + [edge]
