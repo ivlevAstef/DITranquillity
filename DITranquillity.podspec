@@ -56,6 +56,6 @@ Pod::Spec.new do |s|
     s_graphapi.source_files = 'Sources/GraphAPI/*.swift'
   end
 
-  s.default_subspec = 'Core', 'UI', 'GraphAPI'
+  s.default_subspec = 'Core'
 
 end

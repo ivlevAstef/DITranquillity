@@ -40,14 +40,14 @@ Also I recommend you to read [Glossary](Documentation/en/glossary.md) which will
 - [x] [Scope and lifetime](Documentation/en/core/scope_and_lifetime.md)
 - [x] [Modular](Documentation/en/core/modular.md)
 - [x] [Details logs](Documentation/en/core/logs.md)
-- [x] [Graph Validation](Documentation/en/core/graph_validation.md)
 - [x] Thread safety
 - [x] [Container hierarchy](Documentation/en/core/container_hierarchy.md)
-#### UIKit
+#### UI
 - [x] [Storyboard and StoryboardReferences](Documentation/en/ui/storyboard.md)
 - [x] [Simple subviews and Cells Injection](Documentation/en/ui/view_injection.md)
 #### Graph API
-- [ ] [Get dependency graph](Documentation/en/graph/get_graph.md)
+- [x ] [Get dependency graph](Documentation/en/graph/get_graph.md)
+- [x] [Graph Validation](Documentation/en/graph/graph_validation.md)
 - [ ] [Visualization dependency graph](Documentation/en/graph/visualization_graph.md)
 
 ## Installing
@@ -58,9 +58,13 @@ Add the following lines to your `Podfile`:
 ```
 pod 'DITranquillity'
 ``` 
-To use the features from the "UIKit" section, add the following lines to your `Podfile`:
+To use the features from the "UI" section, add the following lines to your `Podfile`:
 ```
 pod 'DITranquillity/UI'
+```
+To use the features from the "GraphAPI" section, add the following lines to your `Podfile`:
+```
+pod 'DITranquillity/GraphAPI'
 ```
 
 #### SwiftPM
@@ -84,7 +88,7 @@ Add the following lines to your `Cartfile`:
 ```
 github "ivlevAstef/DITranquillity"
 ```
-Carthage support "UIKit" section no additional actions.
+Carthage support "UI" and "GraphAPI" section no additional actions.
 
 ## Usage
 The library uses a declarative style of dependency description, and allows you to separate your application code from dependency description code.

@@ -277,15 +277,15 @@ fileprivate final class CycleFinder {
   private var startVertexIndex: Int = 0
   private var result: Set<Cycle> = []
 
-  private var reachability: [Set<Int>] // Optimization x100
+  private var reachableIndices: [Set<Int>] // Optimization x100
 
   fileprivate init(in graph: DIGraph) {
     self.graph = graph
-    reachability = Array(repeating: [], count: graph.vertices.count)
+    reachableIndices = Array(repeating: [], count: graph.vertices.count)
   }
 
   fileprivate func findAllCycles() -> Set<Cycle> {
-    findAllReachableVertices()
+    findAllReachableIndices()
 
     result = []
     for (index, vertex) in graph.vertices.enumerated() {
@@ -303,19 +303,19 @@ fileprivate final class CycleFinder {
     return result
   }
 
-  private func findAllReachableVertices() {
-    assert(reachability.count == graph.vertices.count)
+  private func findAllReachableIndices() {
+    assert(reachableIndices.count == graph.vertices.count)
 
     for (index, vertex) in graph.vertices.enumerated() {
       guard case .component = vertex else {
         continue
       }
 
-      reachability[index] = findAllReachableVertices(for: index)
+      reachableIndices[index] = findAllReachableIndices(for: index)
     }
   }
 
-  private func findAllReachableVertices(for startVertexIndex: Int) -> Set<Int> {
+  private func findAllReachableIndices(for startVertexIndex: Int) -> Set<Int> {
     var visited: Set<Int> = []
     var stack: [Int] = [startVertexIndex]
     while let fromIndex = stack.first {
@@ -348,7 +348,7 @@ fileprivate final class CycleFinder {
 
     // first check - current vertex find ALL cycles via current vertex.
     // Second check - current vertex guaranted not cycles via startVertexIndex.
-    if currentVertexIndex < startVertexIndex || !reachability[currentVertexIndex].contains(startVertexIndex) {
+    if currentVertexIndex < startVertexIndex || !reachableIndices[currentVertexIndex].contains(startVertexIndex) {
       return
     }
 

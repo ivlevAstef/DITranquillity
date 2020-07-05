@@ -117,7 +117,7 @@ public struct DIGraph {
   /// vertices array. It's All dependencies. Contains All components, all arguments and all unknown type dependencies.
   public let vertices: [DIVertex]
 
-  /// Directed, Transition фdjacency list. Contains information about transition from vertex to vertices. Containts edges.
+  /// Directed, Transition adjacency list. Contains information about transition from vertex to vertices. Containts edges.
   /// For get transition information your can write: `for (edge, toIndices) in adjacencyList[fromIndexVertices]`
   /// This write means that component by fromIndexVertices can dependency on toIndices.
   /// array of to indices need only for many, or if not valid graph.

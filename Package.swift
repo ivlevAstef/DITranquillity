@@ -12,7 +12,7 @@ let package = Package(
     targets: [
         .target(name: "DITranquillity", dependencies: [
             "SwiftLazy"
-        ], path: "./Sources/Core"),
+        ], path: "./Sources", sources: ["Core", "GraphAPI"])
     ]
 )
 

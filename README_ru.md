@@ -39,14 +39,14 @@
 - [x] [Указание времени жизни](Documentation/ru/core/scope_and_lifetime.md)
 - [x] [Поддержка модульности](Documentation/ru/core/modular.md)
 - [x] [Полное и подробное логирование](Documentation/ru/core/logs.md)
-- [x] [Валидация графа зависимостей](Documentation/ru/core/graph_validation.md)
 - [x] Одновременная работа из нескольких потоков
 - [x] [Иерархичные контейнеры](Documentation/ru/core/container_hierarchy.md)
-#### UIKit
+#### UI
 - [x] [Поддержка сторибоардов](Documentation/ru/ui/storyboard.md)
 - [x] [Внедрение в subviews и ячейки](Documentation/ru/ui/view_injection.md)
 #### Graph API
-- [ ] [Получение графа зависимостей](Documentation/ru/graph/get_graph.md)
+- [x] [Получение графа зависимостей](Documentation/ru/graph/get_graph.md)
+- [x] [Валидация графа зависимостей](Documentation/ru/graph/graph_validation.md)
 - [ ] [Визуализация графа зависимостей](Documentation/ru/graph/visualization_graph.md)
 
 ## Установка
@@ -57,9 +57,13 @@
 ```
 pod 'DITranquillity'
 ``` 
-Для использования возможностей из секции "UIKit" допишите строчку в ваш `Podfile`:
+Для использования возможностей из секции "UI" допишите строчку в ваш `Podfile`:
 ```
 pod 'DITranquillity/UIKit'
+```
+Для использования возможностей из секции "GraphAPI" допишите строчку в ваш `Podfile`:
+```
+pod 'DITranquillity/GraphAPI'
 ```
 
 #### SwiftPM
@@ -82,7 +86,7 @@ https://github.com/ivlevAstef/DITranquillity
 ```
 github "ivlevAstef/DITranquillity"
 ```
-Carthage поддерживает работу со сторибоардами и прямое внедрение, без дополнительных действий.
+Carthage поддерживает работу со сторибоардами графом и прямое внедрение, без дополнительных действий.
 
 ## Использование
 Библиотека использует декларативный стиль описания зависимостей, и позволяет отделить ваш прикладной код от кода описания зависимостей.
