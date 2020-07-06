@@ -58,31 +58,31 @@ extension DIGraph {
 
   // MARK: - cycle
   func log_cycleAnyInitEdges(vertices: [DIVertex], edges: [DIEdge]) {
-    let cycleDescription = makeCycleDescription(vertices: vertices, edges: edges)
-    log(.error, msg: "Found cycle used only init methods. Please tear cycle: \(cycleDescription)")
+    let cycleDescriptionMaker = { Self.makeCycleDescription(vertices: vertices, edges: edges) }
+    log(.error, msg: "Found a cycle used only init methods. Please tear cycle: \(cycleDescriptionMaker())")
   }
 
   func log_cycleNoHaveBreakPoint(vertices: [DIVertex], edges: [DIEdge]) {
-    let cycleDescription = makeCycleDescription(vertices: vertices, edges: edges)
-    log(.error, msg: "Found cycle without tears. Please tear cycle use `.injection(cycle: true...`: \(cycleDescription)")
+    let cycleDescriptionMaker = { Self.makeCycleDescription(vertices: vertices, edges: edges) }
+    log(.error, msg: "Found a cycle without tears. Please tear cycle use `.injection(cycle: true...`: \(cycleDescriptionMaker())")
   }
 
   func log_cycleAnyVerticesPrototype(vertices: [DIVertex], edges: [DIEdge]) {
-    let cycleDescription = makeCycleDescription(vertices: vertices, edges: edges)
-    log(.error, msg: "Found cycle where any components have lifetime prototype. This cycle will be created indefinitely. Please change lifetime on `objectGraph` or other. Cycle description: \(cycleDescription)")
+    let cycleDescriptionMaker = { Self.makeCycleDescription(vertices: vertices, edges: edges) }
+    log(.error, msg: "Found a cycle where any components have lifetime prototype. This cycle will be created indefinitely. Please change lifetime on `objectGraph` or other. Cycle description: \(cycleDescriptionMaker())")
   }
 
   func log_cycleHavePrototype(vertices: [DIVertex], edges: [DIEdge]) {
-    let cycleDescription = makeCycleDescription(vertices: vertices, edges: edges)
-    log(.warning, msg: "Found cycle where is it components have lifetime prototype. This cycle can maked incorrect, if call resolve from `prototype` component. Your can change lifetime on `objectGraph` or ignore warning. Cycle description: \(cycleDescription)")
+    let cycleDescriptionMaker = { Self.makeCycleDescription(vertices: vertices, edges: edges) }
+    log(.warning, msg: "Found a cycle where is it components have lifetime prototype. This cycle can maked incorrect, if call resolve from `prototype` component. Your can change lifetime on `objectGraph` or ignore warning. Cycle description: \(cycleDescriptionMaker())")
   }
 
   func log_cycleHaveInvariantLifetimes(vertices: [DIVertex], edges: [DIEdge]) {
-    let cycleDescription = makeCycleDescription(vertices: vertices, edges: edges)
-    log(.warning, msg: "Found cycle where is it components have different lifetimes. This cycle can maked incorrect. If start resolve from `prototype`/`objectGraph` you can reference from `perContainer`/`perRun`/`single` on other object because there is an old resolve in cache. Cycle description: \(cycleDescription)")
+    let cycleDescriptionMaker = { Self.makeCycleDescription(vertices: vertices, edges: edges) }
+    log(.warning, msg: "Found a cycle where is it components have different lifetimes. This cycle can maked incorrect. If start resolve from `prototype`/`objectGraph` you can reference from `perContainer`/`perRun`/`single` on other object because there is an old resolve in cache. Cycle description: \(cycleDescriptionMaker())")
   }
 
-  private func makeCycleDescription(vertices: [DIVertex], edges: [DIEdge]) -> String {
+  private static func makeCycleDescription(vertices: [DIVertex], edges: [DIEdge]) -> String {
     var vertexDescriptions = vertices.map { $0.description }
     guard let firstDescription = vertexDescriptions.first else {
       return ""

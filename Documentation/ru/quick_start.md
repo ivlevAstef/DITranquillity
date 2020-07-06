@@ -8,11 +8,8 @@ DITranquillity - проект с открытым исходным кодом.
 Добавьте строчку в `Podfile`: 
 ```
 pod 'DITranquillity'
-``` 
-Для использования возможностей из секции "UI" допишите строчку в `Podfile`:
 ```
-pod 'DITranquillity/UI'
-```
+
 #### SwiftPM
 Можно воспользоваться "Xcode/File/Swift Packages/Add Package Dependency..." и указать в качестве url:
 ```

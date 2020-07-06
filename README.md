@@ -58,14 +58,6 @@ Add the following lines to your `Podfile`:
 ```
 pod 'DITranquillity'
 ``` 
-To use the features from the "UI" section, add the following lines to your `Podfile`:
-```
-pod 'DITranquillity/UI'
-```
-To use the features from the "GraphAPI" section, add the following lines to your `Podfile`:
-```
-pod 'DITranquillity/GraphAPI'
-```
 
 #### SwiftPM
 You can use "Xcode/File/Swift Packages/Add Package Dependency..." and write github url:

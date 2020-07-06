@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'DITranquillity'
-  s.version      = '4.0.0'
+  s.version      = '4.1.0'
   s.summary      = 'DITranquillity - Dependency injection for iOS/macOS/tvOS (Swift) '
 
   s.description  = <<-DESC
@@ -56,6 +56,6 @@ Pod::Spec.new do |s|
     s_graphapi.source_files = 'Sources/GraphAPI/*.swift'
   end
 
-  s.default_subspec = 'Core'
+  s.default_subspec = 'Core', 'UI', 'GraphAPI'
 
 end

@@ -57,14 +57,6 @@
 ```
 pod 'DITranquillity'
 ``` 
-Для использования возможностей из секции "UI" допишите строчку в ваш `Podfile`:
-```
-pod 'DITranquillity/UIKit'
-```
-Для использования возможностей из секции "GraphAPI" допишите строчку в ваш `Podfile`:
-```
-pod 'DITranquillity/GraphAPI'
-```
 
 #### SwiftPM
 Вы можете воспользуйтесь "Xcode/File/Swift Packages/Add Package Dependency..." и указать в качестве url:
