@@ -45,15 +45,15 @@ extension DIGraph {
 
   // MARK: - reachibility
   func log_invalidReferenceOptional(from fromVertex: DIVertex, on type: DIAType) {
-    log(.warning, msg: "Invalid reference from \(fromVertex.description) by type: Optional<\(type)>")
+    log(.warning, msg: "Invalid reference from \(fromVertex.description) because not found component type: Optional<\(type)>")
   }
 
   func log_invalidReferenceMany(from fromVertex: DIVertex, on type: DIAType) {
-      log(.warning, msg: "Invalid reference from \(fromVertex.description) by type: Array<\(type)>")
+      log(.warning, msg: "Invalid reference from \(fromVertex.description) because not found component type: Array<\(type)>")
   }
 
   func log_invalidReference(from fromVertex: DIVertex, on type: DIAType) {
-      log(.error, msg: "\(fromVertex.description) can't maked because not found component for type: \(type)")
+      log(.error, msg: "Invalid reference from \(fromVertex.description) because not found component for type: \(type)")
   }
 
   // MARK: - cycle
@@ -69,12 +69,12 @@ extension DIGraph {
 
   func log_cycleAnyVerticesPrototype(vertices: [DIVertex], edges: [DIEdge]) {
     let cycleDescriptionMaker = { makeCycleDescription(vertices: vertices, edges: edges) }
-    log(.error, msg: "Found a cycle where any components have lifetime prototype. This cycle will be created indefinitely. Please change lifetime on `objectGraph` or other. Cycle description: \(cycleDescriptionMaker())")
+    log(.error, msg: "Found a cycle where any components have lifetime `prototype`. This cycle will be created indefinitely. Please change lifetime on `objectGraph` or other. Cycle description: \(cycleDescriptionMaker())")
   }
 
   func log_cycleHavePrototype(vertices: [DIVertex], edges: [DIEdge]) {
     let cycleDescriptionMaker = { makeCycleDescription(vertices: vertices, edges: edges) }
-    log(.warning, msg: "Found a cycle where is it components have lifetime prototype. This cycle can maked incorrect, if call resolve from `prototype` component. Your can change lifetime on `objectGraph` or ignore warning. Cycle description: \(cycleDescriptionMaker())")
+    log(.warning, msg: "Found a cycle where is it components have lifetime `prototype`. This cycle can maked incorrect, if call resolve from `prototype` component. Your can change lifetime on `objectGraph` or ignore warning. Cycle description: \(cycleDescriptionMaker())")
   }
 
   func log_cycleHaveInvariantLifetimes(vertices: [DIVertex], edges: [DIEdge]) {
