@@ -1,6 +1,27 @@
 {
   "warnings": [
     {
+      "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/API/ComponentAlternativeType.swift",
+      "line": 11,
+      "symbol": "ComponentAlternativeType.type(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/API/ComponentAlternativeType.swift",
+      "line": 12,
+      "symbol": "ComponentAlternativeType.tag(_:type:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/API/ComponentAlternativeType.swift",
+      "line": 13,
+      "symbol": "ComponentAlternativeType.name(_:type:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/Core/API/DILifetime.swift",
       "line": 11,
       "symbol": "DILifeTime.ReferenceCounting",
@@ -107,7 +128,7 @@
     },
     {
       "file": "/Users/ae.ivlev/Projects/Code/External/DITranquillity/Sources/GraphAPI/DIGraph.swift",
-      "line": 116,
+      "line": 11,
       "symbol": "DIGraph.AdjacencyList",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"

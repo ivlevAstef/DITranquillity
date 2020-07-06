@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>DIUnknownVertex Structure Reference</title>
+    <title>DIComponentVertex Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,11 +10,11 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Struct/DIUnknownVertex" class="dashAnchor"></a>
-    <a title="DIUnknownVertex Structure Reference"></a>
+    <a name="//apple_ref/swift/Class/DIComponentVertex" class="dashAnchor"></a>
+    <a title="DIComponentVertex Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">DITranquillity 4.1.0 Docs</a> (92% documented)</p>
+        <p><a href="../index.html">DITranquillity 4.1.0 Docs</a> (91% documented)</p>
         <p class="header-right"><a href="https://github.com/ivlevAstef/DITranquillity"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub.com%2FivlevAstef%2FDITranquillity%2Fcode%2Fdocsets%2FDITranquillity.xml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">DITranquillity Reference</a>
         <img id="carat" src="../img/carat.png" />
-        DIUnknownVertex Structure Reference
+        DIComponentVertex Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -36,6 +36,9 @@
                 <a href="../Classes.html#/s:14DITranquillity5DIArgC">DIArg</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/DIArgumentVertex.html">DIArgumentVertex</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes.html#/s:14DITranquillity7DIByTagC">DIByTag</a>
               </li>
               <li class="nav-group-task">
@@ -43,6 +46,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/DIComponentBuilder.html">DIComponentBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DIComponentVertex.html">DIComponentVertex</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/DICompositeStorage.html">DICompositeStorage</a>
@@ -69,6 +75,9 @@
                 <a href="../Classes/DIStoryboard.html">DIStoryboard</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/DIUnknownVertex.html">DIUnknownVertex</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes.html#/s:14DITranquillity11InternalArgC">InternalArg</a>
               </li>
               <li class="nav-group-task">
@@ -85,6 +94,9 @@
           <li class="nav-group-name">
             <a href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/ComponentAlternativeType.html">ComponentAlternativeType</a>
+              </li>
               <li class="nav-group-task">
                 <a href="../Enums/DILifeTime.html">DILifeTime</a>
               </li>
@@ -169,13 +181,10 @@
             <a href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Structs/DIArgumentVertex.html">DIArgumentVertex</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Structs/DIComponentInfo.html">DIComponentInfo</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/DIComponentVertex.html">DIComponentVertex</a>
+                <a href="../Structs.html#/s:14DITranquillity7DICycleV">DICycle</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/DIGraph.html">DIGraph</a>
@@ -188,9 +197,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/DISetting/Log.html">– Log</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Structs/DIUnknownVertex.html">DIUnknownVertex</a>
               </li>
             </ul>
           </li>
@@ -213,14 +219,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>DIUnknownVertex</h1>
+            <h1>DIComponentVertex</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">DIUnknownVertex</span> <span class="p">:</span> <span class="kt">Hashable</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">DIComponentVertex</span> <span class="p">:</span> <span class="kt">Hashable</span></code></pre>
 
                 </div>
               </div>
-            <p>This vertex maked if component have dependency on unknown type</p>
+            <p>Component vertex. For all components maked one to one component vertex</p>
 
           </section>
           <section class="section task-group-section">
@@ -229,9 +235,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14DITranquillity15DIUnknownVertexV4typeypXpvp"></a>
-                    <a name="//apple_ref/swift/Property/type" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity15DIUnknownVertexV4typeypXpvp">type</a>
+                    <a name="/s:14DITranquillity17DIComponentVertexC13componentInfoAA0bE0Vvp"></a>
+                    <a name="//apple_ref/swift/Property/componentInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity17DIComponentVertexC13componentInfoAA0bE0Vvp">componentInfo</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -239,19 +245,199 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Unknown type - for this type DI didn&rsquo;t find component in graph</p>
+                        <p>Information about registration component - type, file, line</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">type</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:14DITranquillity7DIATypea">DIAType</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">componentInfo</span><span class="p">:</span> <span class="kt"><a href="../Structs/DIComponentInfo.html">DIComponentInfo</a></span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIGraph.swift#L54">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIVertex.swift#L22">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity17DIComponentVertexC8lifeTimeAA06DILifeE0Ovp"></a>
+                    <a name="//apple_ref/swift/Property/lifeTime" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity17DIComponentVertexC8lifeTimeAA06DILifeE0Ovp">lifeTime</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Component lifetime</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">lifeTime</span><span class="p">:</span> <span class="kt"><a href="../Enums/DILifeTime.html">DILifeTime</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIVertex.swift#L24">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity17DIComponentVertexC9isDefaultSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isDefault" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity17DIComponentVertexC9isDefaultSbvp">isDefault</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Component have <code>default</code> flag or not</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">isDefault</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIVertex.swift#L26">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity17DIComponentVertexC13canInitializeSbvp"></a>
+                    <a name="//apple_ref/swift/Property/canInitialize" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity17DIComponentVertexC13canInitializeSbvp">canInitialize</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Component have <code>init</code> method or not</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">canInitialize</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIVertex.swift#L28">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity17DIComponentVertexC16alternativeTypesSayAA24ComponentAlternativeTypeOGvp"></a>
+                    <a name="//apple_ref/swift/Property/alternativeTypes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity17DIComponentVertexC16alternativeTypesSayAA24ComponentAlternativeTypeOGvp">alternativeTypes</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Alternative types. It&rsquo;s types setup in component used function <code>as(...</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">alternativeTypes</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums/ComponentAlternativeType.html">ComponentAlternativeType</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIVertex.swift#L30">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity17DIComponentVertexC9frameworkAA11DIFramework_pXpSgvp"></a>
+                    <a name="//apple_ref/swift/Property/framework" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity17DIComponentVertexC9frameworkAA11DIFramework_pXpSgvp">framework</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Framework where this component was register</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">framework</span><span class="p">:</span> <span class="kt"><a href="../Protocols/DIFramework.html">DIFramework</a></span><span class="o">.</span><span class="k">Type</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIVertex.swift#L33">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity17DIComponentVertexC4partAA6DIPart_pXpSgvp"></a>
+                    <a name="//apple_ref/swift/Property/part" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity17DIComponentVertexC4partAA6DIPart_pXpSgvp">part</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Part where this component was register</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">part</span><span class="p">:</span> <span class="kt"><a href="../Protocols/DIPart.html">DIPart</a></span><span class="o">.</span><span class="k">Type</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIVertex.swift#L35">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -280,7 +466,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIGraph.swift#L56-L58">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIVertex.swift#L47-L49">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -304,12 +490,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">DIUnknownVertex</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">DIUnknownVertex</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">DIComponentVertex</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">DIComponentVertex</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIGraph.swift#L59-L61">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIVertex.swift#L50-L52">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
