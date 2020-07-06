@@ -1,5 +1,5 @@
 //
-//  DIGraph+validationErrors.swift
+//  DIGraph+ValidationErrors.swift
 //  DITranquillity
 //
 //  Created by Ивлев А.Е. on 03.07.2020.

@@ -19,13 +19,29 @@
 		1661095224AE23CC009603BF /* DIGraph+Validate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095024AE23CB009603BF /* DIGraph+Validate.swift */; };
 		1661095324AE23CC009603BF /* DIGraph+Validate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095024AE23CB009603BF /* DIGraph+Validate.swift */; };
 		1661095424AE23CC009603BF /* DIGraph+Validate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095024AE23CB009603BF /* DIGraph+Validate.swift */; };
-		1661095624AF18DB009603BF /* DIGraph+validationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095524AF18DB009603BF /* DIGraph+validationErrors.swift */; };
-		1661095724AF18DB009603BF /* DIGraph+validationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095524AF18DB009603BF /* DIGraph+validationErrors.swift */; };
-		1661095824AF18DB009603BF /* DIGraph+validationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095524AF18DB009603BF /* DIGraph+validationErrors.swift */; };
-		1661095924AF18DB009603BF /* DIGraph+validationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095524AF18DB009603BF /* DIGraph+validationErrors.swift */; };
+		1661095624AF18DB009603BF /* DIGraph+ValidationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095524AF18DB009603BF /* DIGraph+ValidationErrors.swift */; };
+		1661095724AF18DB009603BF /* DIGraph+ValidationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095524AF18DB009603BF /* DIGraph+ValidationErrors.swift */; };
+		1661095824AF18DB009603BF /* DIGraph+ValidationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095524AF18DB009603BF /* DIGraph+ValidationErrors.swift */; };
+		1661095924AF18DB009603BF /* DIGraph+ValidationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1661095524AF18DB009603BF /* DIGraph+ValidationErrors.swift */; };
 		16640A881D9E1E7B00707BFC /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		169C0DDF1DA3501F001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		169C0E451DA35CBE001F0AD5 /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		16ABEC1224B37D1F007577CF /* ComponentAlternativeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC1124B37D1F007577CF /* ComponentAlternativeType.swift */; };
+		16ABEC1324B37D1F007577CF /* ComponentAlternativeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC1124B37D1F007577CF /* ComponentAlternativeType.swift */; };
+		16ABEC1424B37D1F007577CF /* ComponentAlternativeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC1124B37D1F007577CF /* ComponentAlternativeType.swift */; };
+		16ABEC1524B37D1F007577CF /* ComponentAlternativeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC1124B37D1F007577CF /* ComponentAlternativeType.swift */; };
+		16ABEC1724B37F22007577CF /* DIVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC1624B37F22007577CF /* DIVertex.swift */; };
+		16ABEC1824B37F22007577CF /* DIVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC1624B37F22007577CF /* DIVertex.swift */; };
+		16ABEC1924B37F22007577CF /* DIVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC1624B37F22007577CF /* DIVertex.swift */; };
+		16ABEC1A24B37F22007577CF /* DIVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC1624B37F22007577CF /* DIVertex.swift */; };
+		16ABEC1C24B37F49007577CF /* DIEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC1B24B37F49007577CF /* DIEdge.swift */; };
+		16ABEC1D24B37F49007577CF /* DIEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC1B24B37F49007577CF /* DIEdge.swift */; };
+		16ABEC1E24B37F49007577CF /* DIEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC1B24B37F49007577CF /* DIEdge.swift */; };
+		16ABEC1F24B37F49007577CF /* DIEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC1B24B37F49007577CF /* DIEdge.swift */; };
+		16ABEC2124B37F8A007577CF /* DIGraph+Cycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC2024B37F8A007577CF /* DIGraph+Cycle.swift */; };
+		16ABEC2224B37F8A007577CF /* DIGraph+Cycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC2024B37F8A007577CF /* DIGraph+Cycle.swift */; };
+		16ABEC2324B37F8A007577CF /* DIGraph+Cycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC2024B37F8A007577CF /* DIGraph+Cycle.swift */; };
+		16ABEC2424B37F8A007577CF /* DIGraph+Cycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC2024B37F8A007577CF /* DIGraph+Cycle.swift */; };
 		16EA372E23FA7715004DA194 /* DITranquillityTests_Modular.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EA372D23FA7715004DA194 /* DITranquillityTests_Modular.swift */; };
 		ABDA289B23ABBECD00BEB63F /* DIStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDC23AA75AC00DEA34A /* DIStorage.swift */; };
 		ABDA289C23ABBECD00BEB63F /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDB23AA75AC00DEA34A /* DIContainer.swift */; };
@@ -258,11 +274,15 @@
 		1637870A231FB93D00881F8B /* SwiftLazy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1637870C231FB94300881F8B /* SwiftLazy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftLazy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1661095024AE23CB009603BF /* DIGraph+Validate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIGraph+Validate.swift"; sourceTree = "<group>"; };
-		1661095524AF18DB009603BF /* DIGraph+validationErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIGraph+validationErrors.swift"; sourceTree = "<group>"; };
+		1661095524AF18DB009603BF /* DIGraph+ValidationErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIGraph+ValidationErrors.swift"; sourceTree = "<group>"; };
 		16640A6B1D9E1E7B00707BFC /* DITranquillity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DITranquillity.h; sourceTree = "<group>"; };
 		169C0DE51DA3501F001F0AD5 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		169C0E1C1DA355A6001F0AD5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		169C0E4B1DA35CBE001F0AD5 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		16ABEC1124B37D1F007577CF /* ComponentAlternativeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentAlternativeType.swift; sourceTree = "<group>"; };
+		16ABEC1624B37F22007577CF /* DIVertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIVertex.swift; sourceTree = "<group>"; };
+		16ABEC1B24B37F49007577CF /* DIEdge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIEdge.swift; sourceTree = "<group>"; };
+		16ABEC2024B37F8A007577CF /* DIGraph+Cycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIGraph+Cycle.swift"; sourceTree = "<group>"; };
 		16EA372D23FA7715004DA194 /* DITranquillityTests_Modular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Modular.swift; sourceTree = "<group>"; };
 		16FADF3F24A701F7007BF1C1 /* Documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Documentation; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -398,8 +418,11 @@
 			children = (
 				160F0EB024AB06D000723F28 /* DIContainer+makeGraph.swift */,
 				160F0EB524AB06F400723F28 /* DIGraph.swift */,
+				16ABEC1624B37F22007577CF /* DIVertex.swift */,
+				16ABEC1B24B37F49007577CF /* DIEdge.swift */,
+				16ABEC2024B37F8A007577CF /* DIGraph+Cycle.swift */,
 				1661095024AE23CB009603BF /* DIGraph+Validate.swift */,
-				1661095524AF18DB009603BF /* DIGraph+validationErrors.swift */,
+				1661095524AF18DB009603BF /* DIGraph+ValidationErrors.swift */,
 			);
 			path = GraphAPI;
 			sourceTree = "<group>";
@@ -488,6 +511,7 @@
 				ABE60EDB23AA75AC00DEA34A /* DIContainer.swift */,
 				ABE60EDC23AA75AC00DEA34A /* DIStorage.swift */,
 				ABE60EDD23AA75AC00DEA34A /* DIContainer+Extensions.swift */,
+				16ABEC1124B37D1F007577CF /* ComponentAlternativeType.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -910,11 +934,13 @@
 			files = (
 				ABE60F3C23AA75AC00DEA34A /* DIStorage.swift in Sources */,
 				160F0EB724AB06F400723F28 /* DIGraph.swift in Sources */,
+				16ABEC1D24B37F49007577CF /* DIEdge.swift in Sources */,
 				ABE60F3923AA75AC00DEA34A /* DIContainer.swift in Sources */,
 				ABE60EDF23AA75AC00DEA34A /* Multithread.swift in Sources */,
 				ABE60F0923AA75AC00DEA34A /* Component.swift in Sources */,
 				ABE60F0623AA75AC00DEA34A /* SpecificType.swift in Sources */,
 				ABE60F3623AA75AC00DEA34A /* DITypes.swift in Sources */,
+				16ABEC2224B37F8A007577CF /* DIGraph+Cycle.swift in Sources */,
 				ABE60EE823AA75AC00DEA34A /* ProtocolMagic.swift in Sources */,
 				ABE60EEB23AA75AC00DEA34A /* Log.swift in Sources */,
 				ABE60EF423AA75AC00DEA34A /* Resolver.swift in Sources */,
@@ -927,7 +953,7 @@
 				ABE60F1523AA75AC00DEA34A /* DIPart.swift in Sources */,
 				ABE60F3F23AA75AC00DEA34A /* DIContainer+Extensions.swift in Sources */,
 				ABE60EE223AA75AC00DEA34A /* TypeKey.swift in Sources */,
-				1661095724AF18DB009603BF /* DIGraph+validationErrors.swift in Sources */,
+				1661095724AF18DB009603BF /* DIGraph+ValidationErrors.swift in Sources */,
 				ABE60EFD23AA75AC00DEA34A /* MethodMaker.swift in Sources */,
 				ABE60F0C23AA75AC00DEA34A /* FrameworksDependenciesContainer.swift in Sources */,
 				ABE60EE523AA75AC00DEA34A /* GlobalState.swift in Sources */,
@@ -944,9 +970,11 @@
 				ABE60F8123AA75B400DEA34A /* SwiftNSResolver.swift in Sources */,
 				ABE60FA223AA793E00DEA34A /* NSObject+Swizzling.m in Sources */,
 				ABDA28ED23ABE13500BEB63F /* FastLock.swift in Sources */,
+				16ABEC1824B37F22007577CF /* DIVertex.swift in Sources */,
 				ABE60F7223AA75B400DEA34A /* StoryboardResolver.swift in Sources */,
 				ABE60EEE23AA75AC00DEA34A /* MethodSignature.swift in Sources */,
 				ABE60F7823AA75B400DEA34A /* ViewController+Children.swift in Sources */,
+				16ABEC1324B37D1F007577CF /* ComponentAlternativeType.swift in Sources */,
 				160F0EB224AB06D000723F28 /* DIContainer+makeGraph.swift in Sources */,
 				ABE60F3323AA75AC00DEA34A /* DIModificators.swift in Sources */,
 				ABE60EF723AA75AC00DEA34A /* ParsedType.swift in Sources */,
@@ -968,6 +996,7 @@
 				ABE60F0723AA75AC00DEA34A /* SpecificType.swift in Sources */,
 				ABE60F3723AA75AC00DEA34A /* DITypes.swift in Sources */,
 				ABE60EE923AA75AC00DEA34A /* ProtocolMagic.swift in Sources */,
+				16ABEC1E24B37F49007577CF /* DIEdge.swift in Sources */,
 				ABE60EEC23AA75AC00DEA34A /* Log.swift in Sources */,
 				ABE60EF523AA75AC00DEA34A /* Resolver.swift in Sources */,
 				ABE60F1923AA75AC00DEA34A /* DISettings.swift in Sources */,
@@ -978,6 +1007,7 @@
 				ABE60F1623AA75AC00DEA34A /* DIPart.swift in Sources */,
 				ABE60F4023AA75AC00DEA34A /* DIContainer+Extensions.swift in Sources */,
 				ABE60EE323AA75AC00DEA34A /* TypeKey.swift in Sources */,
+				16ABEC1424B37D1F007577CF /* ComponentAlternativeType.swift in Sources */,
 				ABE60EFE23AA75AC00DEA34A /* MethodMaker.swift in Sources */,
 				ABE60F0D23AA75AC00DEA34A /* FrameworksDependenciesContainer.swift in Sources */,
 				ABE60EE623AA75AC00DEA34A /* GlobalState.swift in Sources */,
@@ -994,17 +1024,19 @@
 				ABE60F2223AA75AC00DEA34A /* DIComponentBuilder.Injection.swift in Sources */,
 				ABE60F9123AA75B400DEA34A /* DIComponentBuilder+SubviewsInject.swift in Sources */,
 				ABE60F7623AA75B400DEA34A /* StoryboardContainerMap.swift in Sources */,
+				16ABEC1924B37F22007577CF /* DIVertex.swift in Sources */,
 				ABE60F9423AA75B400DEA34A /* UIView+Swizzling.m in Sources */,
 				ABE60F8223AA75B400DEA34A /* SwiftNSResolver.swift in Sources */,
 				1661095324AE23CC009603BF /* DIGraph+Validate.swift in Sources */,
 				ABE60FA323AA793E00DEA34A /* NSObject+Swizzling.m in Sources */,
 				ABE60F8E23AA75B400DEA34A /* UICollectionView+Swizzling.m in Sources */,
-				1661095824AF18DB009603BF /* DIGraph+validationErrors.swift in Sources */,
+				1661095824AF18DB009603BF /* DIGraph+ValidationErrors.swift in Sources */,
 				ABE60F7323AA75B400DEA34A /* StoryboardResolver.swift in Sources */,
 				ABE60EEF23AA75AC00DEA34A /* MethodSignature.swift in Sources */,
 				160F0EB324AB06D000723F28 /* DIContainer+makeGraph.swift in Sources */,
 				ABE60F7923AA75B400DEA34A /* ViewController+Children.swift in Sources */,
 				ABE60F3423AA75AC00DEA34A /* DIModificators.swift in Sources */,
+				16ABEC2324B37F8A007577CF /* DIGraph+Cycle.swift in Sources */,
 				ABE60EF823AA75AC00DEA34A /* ParsedType.swift in Sources */,
 				ABE60F1C23AA75AC00DEA34A /* DIComponentBuilder.swift in Sources */,
 				ABE60F1023AA75AC00DEA34A /* DIScope.swift in Sources */,
@@ -1024,6 +1056,7 @@
 				ABE60F0523AA75AC00DEA34A /* SpecificType.swift in Sources */,
 				ABE60F3523AA75AC00DEA34A /* DITypes.swift in Sources */,
 				ABE60EE723AA75AC00DEA34A /* ProtocolMagic.swift in Sources */,
+				16ABEC1C24B37F49007577CF /* DIEdge.swift in Sources */,
 				ABE60EEA23AA75AC00DEA34A /* Log.swift in Sources */,
 				ABE60EF323AA75AC00DEA34A /* Resolver.swift in Sources */,
 				ABE60F1723AA75AC00DEA34A /* DISettings.swift in Sources */,
@@ -1034,6 +1067,7 @@
 				ABE60F1423AA75AC00DEA34A /* DIPart.swift in Sources */,
 				ABE60F3E23AA75AC00DEA34A /* DIContainer+Extensions.swift in Sources */,
 				ABE60EE123AA75AC00DEA34A /* TypeKey.swift in Sources */,
+				16ABEC1224B37D1F007577CF /* ComponentAlternativeType.swift in Sources */,
 				ABE60EFC23AA75AC00DEA34A /* MethodMaker.swift in Sources */,
 				ABE60F0B23AA75AC00DEA34A /* FrameworksDependenciesContainer.swift in Sources */,
 				ABE60EE423AA75AC00DEA34A /* GlobalState.swift in Sources */,
@@ -1050,17 +1084,19 @@
 				ABE60F2023AA75AC00DEA34A /* DIComponentBuilder.Injection.swift in Sources */,
 				ABE60F8F23AA75B400DEA34A /* DIComponentBuilder+SubviewsInject.swift in Sources */,
 				ABE60F7423AA75B400DEA34A /* StoryboardContainerMap.swift in Sources */,
+				16ABEC1724B37F22007577CF /* DIVertex.swift in Sources */,
 				ABE60F9223AA75B400DEA34A /* UIView+Swizzling.m in Sources */,
 				ABE60F8023AA75B400DEA34A /* SwiftNSResolver.swift in Sources */,
 				1661095124AE23CC009603BF /* DIGraph+Validate.swift in Sources */,
 				ABE60FA123AA793E00DEA34A /* NSObject+Swizzling.m in Sources */,
 				ABE60F8C23AA75B400DEA34A /* UICollectionView+Swizzling.m in Sources */,
-				1661095624AF18DB009603BF /* DIGraph+validationErrors.swift in Sources */,
+				1661095624AF18DB009603BF /* DIGraph+ValidationErrors.swift in Sources */,
 				ABE60F7123AA75B400DEA34A /* StoryboardResolver.swift in Sources */,
 				ABE60EED23AA75AC00DEA34A /* MethodSignature.swift in Sources */,
 				160F0EB124AB06D000723F28 /* DIContainer+makeGraph.swift in Sources */,
 				ABE60F7723AA75B400DEA34A /* ViewController+Children.swift in Sources */,
 				ABE60F3223AA75AC00DEA34A /* DIModificators.swift in Sources */,
+				16ABEC2124B37F8A007577CF /* DIGraph+Cycle.swift in Sources */,
 				ABE60EF623AA75AC00DEA34A /* ParsedType.swift in Sources */,
 				ABE60F1A23AA75AC00DEA34A /* DIComponentBuilder.swift in Sources */,
 				ABE60F0E23AA75AC00DEA34A /* DIScope.swift in Sources */,
@@ -1073,10 +1109,12 @@
 			files = (
 				ABDA289B23ABBECD00BEB63F /* DIStorage.swift in Sources */,
 				ABDA289C23ABBECD00BEB63F /* DIContainer.swift in Sources */,
+				16ABEC2424B37F8A007577CF /* DIGraph+Cycle.swift in Sources */,
 				160F0EB424AB06D000723F28 /* DIContainer+makeGraph.swift in Sources */,
+				16ABEC1F24B37F49007577CF /* DIEdge.swift in Sources */,
 				ABDA289E23ABBECD00BEB63F /* Multithread.swift in Sources */,
 				ABDA289F23ABBECD00BEB63F /* Component.swift in Sources */,
-				1661095924AF18DB009603BF /* DIGraph+validationErrors.swift in Sources */,
+				1661095924AF18DB009603BF /* DIGraph+ValidationErrors.swift in Sources */,
 				ABDA28A023ABBECD00BEB63F /* SpecificType.swift in Sources */,
 				ABDA28A123ABBECD00BEB63F /* DITypes.swift in Sources */,
 				ABDA28A223ABBECD00BEB63F /* ProtocolMagic.swift in Sources */,
@@ -1089,9 +1127,11 @@
 				ABDA28A823ABBECD00BEB63F /* Modificators.swift in Sources */,
 				ABDA28AA23ABBECD00BEB63F /* DIPart.swift in Sources */,
 				ABDA28AB23ABBECD00BEB63F /* DIContainer+Extensions.swift in Sources */,
+				16ABEC1A24B37F22007577CF /* DIVertex.swift in Sources */,
 				ABDA28AC23ABBECD00BEB63F /* TypeKey.swift in Sources */,
 				ABDA28AD23ABBECD00BEB63F /* MethodMaker.swift in Sources */,
 				ABDA28AE23ABBECD00BEB63F /* FrameworksDependenciesContainer.swift in Sources */,
+				16ABEC1524B37D1F007577CF /* ComponentAlternativeType.swift in Sources */,
 				ABDA28AF23ABBECD00BEB63F /* GlobalState.swift in Sources */,
 				ABDA28B123ABBECD00BEB63F /* SwiftLazy.swift in Sources */,
 				ABDA28B223ABBECD00BEB63F /* DILifetime.swift in Sources */,

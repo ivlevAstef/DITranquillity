@@ -16,7 +16,7 @@ extension DIContainer {
     let components = componentContainer.components
 
     var edgeId: Int = 0
-    var vertices = makeVertices(by: components)
+    var vertices: [DIVertex] = components.map { .component(DIComponentVertex(component: $0)) }
     var adjacencyList: DIGraph.AdjacencyList = Array(repeating: [], count: vertices.count)
 
     for (index, component) in components.enumerated() {
@@ -29,7 +29,7 @@ extension DIContainer {
         }
 
         edgeId += 1
-        let edge = makeEdge(by: parameter, id: edgeId, initial: initial, cycle: cycle)
+        let edge = DIEdge(by: parameter, id: edgeId, initial: initial, cycle: cycle)
 
         if addArgumentIfNeeded(by: parameter.parsedType, adjacencyList: &adjacencyList, vertices: &vertices) {
           adjacencyList[index].append((edge, [vertices.count - 1]))
@@ -116,39 +116,5 @@ extension DIContainer {
     }
 
     return result
-  }
-
-  private func makeVertices(by components: [Component]) -> [DIVertex] {
-    return components.map { component in
-      return .component(DIComponentVertex(
-        componentInfo: component.info,
-        lifeTime: component.lifeTime,
-        isDefault: component.isDefault,
-        canInitialize: component.initial != nil,
-        framework: component.framework,
-        part: component.part
-      ))
-    }
-  }
-
-  private func makeEdge(by parameter: MethodSignature.Parameter, id: Int, initial: Bool, cycle: Bool) -> DIEdge {
-    var tags: [DITag] = []
-    var typeIterator: ParsedType? = parameter.parsedType
-    repeat {
-      if let sType = typeIterator?.sType, sType.tag {
-        tags.append(sType.tagType)
-      }
-      typeIterator = typeIterator?.parent
-    } while typeIterator != nil
-
-    return DIEdge(id: id,
-                  initial: initial,
-                  cycle: cycle,
-                  optional: parameter.parsedType.optional,
-                  many: parameter.parsedType.hasMany,
-                  delayed: parameter.parsedType.hasDelayed,
-                  tags: tags,
-                  name: parameter.name,
-                  type: parameter.parsedType.base.type)
   }
 }

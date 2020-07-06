@@ -13,7 +13,7 @@ final class ComponentContainer {
   private var map = Dictionary<TypeKey, Set<Component>>()
   private var manyMap = Dictionary<ShortTypeKey, Set<Component>>()
   
-  func insert(_ key: TypeKey, _ component: Component) {
+  func insert(_ key: TypeKey, _ component: Component, otherOperation: (() -> Void)? = nil) {
     let shortKey = ShortTypeKey(by: key.type)
     mutex.sync {
       if nil == map[key]?.insert(component) {
@@ -23,6 +23,8 @@ final class ComponentContainer {
       if nil == manyMap[shortKey]?.insert(component) {
         manyMap[shortKey] = [component]
       }
+
+      otherOperation?()
     }
   }
   
@@ -83,6 +85,8 @@ final class Component {
   
   var lifeTime = DILifeTime.default
   var isDefault: Bool = false
+
+  var alternativeTypes: [ComponentAlternativeType] = []
   
   fileprivate(set) var initial: MethodSignature?
   fileprivate(set) var injections: [Injection] = []

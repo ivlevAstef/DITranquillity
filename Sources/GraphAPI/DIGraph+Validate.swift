@@ -169,10 +169,8 @@ extension DIGraph {
 
 // MARK: - cycle
 extension DIGraph {
-  fileprivate typealias Cycle = CycleFinder.Cycle
-
   private func checkGraphForCycles() -> Bool {
-    let cycles = CycleFinder(in: self).findAllCycles()
+    let cycles = findCycles()
 
     func calculateAverageLength() -> Double {
       let summaryVerticesCount = cycles.map { $0.vertexIndices.count }.reduce(0, +)
@@ -187,7 +185,7 @@ extension DIGraph {
   }
 
 
-  private func checkGraphCyclesVertices(cycles: [Cycle]) -> Bool {
+  private func checkGraphCyclesVertices(cycles: [DICycle]) -> Bool {
     var successful: Bool = true
     for cycle in cycles {
       assert(cycle.vertexIndices.count >= 1)
@@ -230,7 +228,7 @@ extension DIGraph {
     return successful
   }
 
-  private func checkGraphCyclesEdges(cycles: [Cycle]) -> Bool {
+  private func checkGraphCyclesEdges(cycles: [DICycle]) -> Bool {
     var successful: Bool = true
     for cycle in cycles {
       assert(cycle.edges.count >= 1)
@@ -253,101 +251,5 @@ extension DIGraph {
     }
 
     return successful
-  }
-}
-
-/// Class need for optimization - he containts local properties
-fileprivate final class CycleFinder {
-  fileprivate struct Cycle {
-    let vertexIndices: [Int]
-    let edges: [DIEdge]
-  }
-
-  private let graph: DIGraph
-
-  private var startVertexIndex: Int = 0
-  private var result: [Cycle] = []
-
-  private var reachableIndices: [Set<Int>] // Optimization x100
-
-  fileprivate init(in graph: DIGraph) {
-    self.graph = graph
-    reachableIndices = Array(repeating: [], count: graph.vertices.count)
-  }
-
-  fileprivate func findAllCycles() -> [Cycle] {
-    findAllReachableIndices()
-
-    result = []
-    for (index, vertex) in graph.vertices.enumerated() {
-      guard case .component = vertex else {
-        continue
-      }
-
-      startVertexIndex = index
-      // dfs
-      findCycles(currentVertexIndex: index,
-                 visitedVertices: [],
-                 visitedEdges: [])
-    }
-
-    return result
-  }
-
-  private func findAllReachableIndices() {
-    assert(reachableIndices.count == graph.vertices.count)
-
-    for (index, vertex) in graph.vertices.enumerated() {
-      guard case .component = vertex else {
-        continue
-      }
-
-      reachableIndices[index] = findAllReachableIndices(for: index)
-    }
-  }
-
-  private func findAllReachableIndices(for startVertexIndex: Int) -> Set<Int> {
-    var visited: Set<Int> = []
-    var stack: [Int] = [startVertexIndex]
-    while let fromIndex = stack.popLast() {
-      visited.insert(fromIndex)
-      for toIndex in graph.adjacencyList[fromIndex].flatMap({ $0.toIndices }) {
-        if !visited.contains(toIndex) {
-          stack.insert(toIndex, at: 0)
-        }
-      }
-    }
-
-    return visited
-  }
-
-  private func findCycles(currentVertexIndex: Int,
-                          visitedVertices: [Int], // need order for subcycle
-                          visitedEdges: [DIEdge]) {
-    if currentVertexIndex == startVertexIndex && !visitedVertices.isEmpty {
-      result.append(Cycle(vertexIndices: visitedVertices, edges: visitedEdges))
-      return
-    }
-
-    if visitedVertices.contains(currentVertexIndex) {
-      return
-    }
-
-    // first check - current vertex find ALL cycles via current vertex.
-    // Second check - current vertex guaranted not cycles via startVertexIndex.
-    if currentVertexIndex < startVertexIndex || !reachableIndices[currentVertexIndex].contains(startVertexIndex) {
-      return
-    }
-
-    let visitedVertices = visitedVertices + [currentVertexIndex]
-
-    for (edge, toIndices) in graph.adjacencyList[currentVertexIndex] {
-      let visitedEdges = visitedEdges + [edge]
-      for toVertexIndex in toIndices {
-        findCycles(currentVertexIndex: toVertexIndex,
-                   visitedVertices: visitedVertices,
-                   visitedEdges: visitedEdges)
-      }
-    }
   }
 }

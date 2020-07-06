@@ -54,7 +54,9 @@ extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func `as`<Parent>(_ type: Parent.Type) -> Self {
-    componentContainer.insert(TypeKey(by: unwrapType(type)), component)
+    componentContainer.insert(TypeKey(by: unwrapType(type)), component, otherOperation: {
+      self.component.alternativeTypes.append(.type(type))
+    })
     return self
   }
   
@@ -71,7 +73,9 @@ extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func `as`<Parent, Tag>(_ type: Parent.Type, tag: Tag.Type) -> Self {
-    componentContainer.insert(TypeKey(by: unwrapType(type), tag: tag), component)
+    componentContainer.insert(TypeKey(by: unwrapType(type), tag: tag), component, otherOperation: {
+      self.component.alternativeTypes.append(.tag(tag, type: type))
+    })
     return self
   }
   
@@ -90,7 +94,9 @@ extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func `as`<Parent>(_ type: Parent.Type, name: String) -> Self {
-    componentContainer.insert(TypeKey(by: unwrapType(type), name: name), component)
+    componentContainer.insert(TypeKey(by: unwrapType(type), name: name), component, otherOperation: {
+      self.component.alternativeTypes.append(.name(name, type: type))
+    })
     return self
   }
   
