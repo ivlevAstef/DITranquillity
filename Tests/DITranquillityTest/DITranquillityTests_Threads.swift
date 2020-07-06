@@ -20,12 +20,15 @@ class DITranquillityTests_Threads: XCTestCase {
     
     container.register(FooService.init)
       .lifetime(.prototype)
-    
+
+    let waiter = DispatchSemaphore(value: 0)
+
     DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
       for _ in 0..<32768 {
         let service: FooService = *container
         XCTAssertEqual(service.foo(), "foo")
       }
+      waiter.signal()
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
@@ -33,6 +36,7 @@ class DITranquillityTests_Threads: XCTestCase {
         let service: FooService = *container
         XCTAssertEqual(service.foo(), "foo")
       }
+      waiter.signal()
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
@@ -40,7 +44,12 @@ class DITranquillityTests_Threads: XCTestCase {
         let service: FooService = *container
         XCTAssertEqual(service.foo(), "foo")
       }
+      waiter.signal()
     }
+
+    waiter.wait()
+    waiter.wait()
+    waiter.wait()
   }
   
   func test02_ResolveLazySingle() {
@@ -51,12 +60,15 @@ class DITranquillityTests_Threads: XCTestCase {
     
     let singleService: FooService = *container
     XCTAssertEqual(singleService.foo(), "foo")
-    
+
+    let waiter = DispatchSemaphore(value: 0)
+
     DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
       for _ in 0..<32768 {
         let service: FooService = *container
         XCTAssert(service === singleService)
       }
+      waiter.signal()
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
@@ -64,6 +76,7 @@ class DITranquillityTests_Threads: XCTestCase {
         let service: FooService = *container
         XCTAssert(service === singleService)
       }
+      waiter.signal()
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
@@ -71,7 +84,12 @@ class DITranquillityTests_Threads: XCTestCase {
         let service: FooService = *container
         XCTAssert(service === singleService)
       }
+      waiter.signal()
     }
+
+    waiter.wait()
+    waiter.wait()
+    waiter.wait()
   }
   
   func test03_ResolveSingle() {
@@ -82,12 +100,15 @@ class DITranquillityTests_Threads: XCTestCase {
     
     let singleService: FooService = *container
     XCTAssertEqual(singleService.foo(), "foo")
+
+    let waiter = DispatchSemaphore(value: 0)
     
     DispatchQueue.global(qos: .userInteractive).async {
       for _ in 0..<32768 {
         let service: FooService = *container
         XCTAssert(service === singleService)
       }
+      waiter.signal()
     }
     
     DispatchQueue.global(qos: .utility).async {
@@ -95,6 +116,7 @@ class DITranquillityTests_Threads: XCTestCase {
         let service: FooService = *container
         XCTAssert(service === singleService)
       }
+      waiter.signal()
     }
     
     DispatchQueue.global(qos: .background).async {
@@ -102,32 +124,47 @@ class DITranquillityTests_Threads: XCTestCase {
         let service: FooService = *container
         XCTAssert(service === singleService)
       }
+      waiter.signal()
     }
+
+    waiter.wait()
+    waiter.wait()
+    waiter.wait()
   }
   
   func test04_ResolveRegister() {
     let container = DIContainer()
     
     DISetting.Log.fun = nil
-    
+
+    let waiter = DispatchSemaphore(value: 0)
+
     DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
-      for i in 0..<32768 {
+      usleep(10)
+      for i in 0..<1024 {
         container.register(line: i + 1000, FooService.init).lifetime(.prototype)
       }
+      waiter.signal()
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
-      for _ in 0..<16384 {
+      for _ in 0..<4096 {
         let service: FooService? = *container
         _ = service
       }
+      waiter.signal()
     }
     
     DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
-      for _ in 0..<8192 {
+      for _ in 0..<2048 {
         let service: FooService? = *container
         _ = service
       }
+      waiter.signal()
     }
+
+    waiter.wait()
+    waiter.wait()
+    waiter.wait()
   }
 }
