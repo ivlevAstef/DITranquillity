@@ -187,7 +187,7 @@ extension DIGraph {
   }
 
 
-  private func checkGraphCyclesVertices(cycles: Set<Cycle>) -> Bool {
+  private func checkGraphCyclesVertices(cycles: [Cycle]) -> Bool {
     var successful: Bool = true
     for cycle in cycles {
       assert(cycle.vertexIndices.count >= 1)
@@ -230,7 +230,7 @@ extension DIGraph {
     return successful
   }
 
-  private func checkGraphCyclesEdges(cycles: Set<Cycle>) -> Bool {
+  private func checkGraphCyclesEdges(cycles: [Cycle]) -> Bool {
     var successful: Bool = true
     for cycle in cycles {
       assert(cycle.edges.count >= 1)
@@ -258,24 +258,15 @@ extension DIGraph {
 
 /// Class need for optimization - he containts local properties
 fileprivate final class CycleFinder {
-  fileprivate struct Cycle: Hashable {
+  fileprivate struct Cycle {
     let vertexIndices: [Int]
     let edges: [DIEdge]
-
-    public func hash(into hasher: inout Hasher) {
-      // in real SET it's incorrect - because need order. but vertices + edges in all orders form unique
-      hasher.combine(Set(vertexIndices))
-      hasher.combine(Set(edges))
-    }
-    public static func ==(lhs: Cycle, rhs: Cycle) -> Bool {
-      return Set(lhs.vertexIndices) == Set(rhs.vertexIndices) && Set(lhs.edges) == Set(rhs.edges)
-    }
   }
 
   private let graph: DIGraph
 
   private var startVertexIndex: Int = 0
-  private var result: Set<Cycle> = []
+  private var result: [Cycle] = []
 
   private var reachableIndices: [Set<Int>] // Optimization x100
 
@@ -284,7 +275,7 @@ fileprivate final class CycleFinder {
     reachableIndices = Array(repeating: [], count: graph.vertices.count)
   }
 
-  fileprivate func findAllCycles() -> Set<Cycle> {
+  fileprivate func findAllCycles() -> [Cycle] {
     findAllReachableIndices()
 
     result = []
@@ -318,13 +309,11 @@ fileprivate final class CycleFinder {
   private func findAllReachableIndices(for startVertexIndex: Int) -> Set<Int> {
     var visited: Set<Int> = []
     var stack: [Int] = [startVertexIndex]
-    while let fromIndex = stack.first {
-      stack.removeFirst()
-
+    while let fromIndex = stack.popLast() {
       visited.insert(fromIndex)
       for toIndex in graph.adjacencyList[fromIndex].flatMap({ $0.toIndices }) {
         if !visited.contains(toIndex) {
-          stack.append(toIndex)
+          stack.insert(toIndex, at: 0)
         }
       }
     }
@@ -336,9 +325,7 @@ fileprivate final class CycleFinder {
                           visitedVertices: [Int], // need order for subcycle
                           visitedEdges: [DIEdge]) {
     if currentVertexIndex == startVertexIndex && !visitedVertices.isEmpty {
-      assert(visitedVertices.count == visitedEdges.count)
-
-      result.insert(Cycle(vertexIndices: visitedVertices, edges: visitedEdges))
+      result.append(Cycle(vertexIndices: visitedVertices, edges: visitedEdges))
       return
     }
 
