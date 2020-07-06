@@ -14,7 +14,7 @@
     <a title="DIContainer Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">DITranquillity 4.0.0 Docs</a> (90% documented)</p>
+        <p><a href="../index.html">DITranquillity 4.1.0 Docs</a> (92% documented)</p>
         <p class="header-right"><a href="https://github.com/ivlevAstef/DITranquillity"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub.com%2FivlevAstef%2FDITranquillity%2Fcode%2Fdocsets%2FDITranquillity.xml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -49,6 +49,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/DIContainer.html">DIContainer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DIEdge.html">DIEdge</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/DIExtensions.html">DIExtensions</a>
@@ -90,6 +93,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/DILogLevel.html">DILogLevel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/DIVertex.html">DIVertex</a>
               </li>
             </ul>
           </li>
@@ -163,7 +169,16 @@
             <a href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Structs/DIArgumentVertex.html">DIArgumentVertex</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/DIComponentInfo.html">DIComponentInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DIComponentVertex.html">DIComponentVertex</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DIGraph.html">DIGraph</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/DISetting.html">DISetting</a>
@@ -173,6 +188,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/DISetting/Log.html">– Log</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DIUnknownVertex.html">DIUnknownVertex</a>
               </li>
             </ul>
           </li>
@@ -1690,73 +1708,6 @@ If the object type couldn&rsquo;t be found, then in logs there will be a warning
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/Validation"></a>
-                <a name="//apple_ref/swift/Section/Validation" class="dashAnchor"></a>
-                <div class="section-name-container">
-                  <a class="section-name-link" href="#/Validation"></a>
-                  <h3 class="section-name"><p>Validation</p>
-</h3>
-                </div>
-              </div>
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14DITranquillity11DIContainerC8validate16checkGraphCyclesS2b_tF"></a>
-                    <a name="//apple_ref/swift/Method/validate(checkGraphCycles:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity11DIContainerC8validate16checkGraphCyclesS2b_tF">validate(checkGraphCycles:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Validate the graph by checking various conditions. For faster performance, set false.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="nf">validate</span><span class="p">(</span><span class="n">checkGraphCycles</span> <span class="nv">isCheckGraphCycles</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>checkGraphCycles</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>check cycles in the graph of heavy operation. So it can be disabled</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>true if validation success.</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIContainer.swift#L214-L217">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -1917,6 +1868,42 @@ Registration means inclusion of all components indicated within.</p>
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity11DIContainerC9makeGraphAA7DIGraphVyF"></a>
+                    <a name="//apple_ref/swift/Method/makeGraph()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity11DIContainerC9makeGraphAA7DIGraphVyF">makeGraph()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Make graph for public usage.
+Your can call <code>checkIsValid</code> for check for correct.
+Or Your can use this graph for dependency analysis.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">makeGraph</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/DIGraph.html">DIGraph</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Dependency graph</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIContainer+makeGraph.swift#L15-L55">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
             <div class="task-group">
@@ -2022,7 +2009,7 @@ The storyboard can be created both from the code or use storyboard reference fro
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2020-06-27)</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2020-07-06)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

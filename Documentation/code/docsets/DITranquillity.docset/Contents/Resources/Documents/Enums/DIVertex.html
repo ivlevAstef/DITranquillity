@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Provider2 Extension Reference</title>
+    <title>DIVertex Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Extension/Provider2" class="dashAnchor"></a>
-    <a title="Provider2 Extension Reference"></a>
+    <a name="//apple_ref/swift/Enum/DIVertex" class="dashAnchor"></a>
+    <a title="DIVertex Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">DITranquillity 4.1.0 Docs</a> (92% documented)</p>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">DITranquillity Reference</a>
         <img id="carat" src="../img/carat.png" />
-        Provider2 Extension Reference
+        DIVertex Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -213,14 +213,16 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>Provider2</h1>
+            <h1>DIVertex</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Provider2</span><span class="p">:</span> <span class="kt">SpecificType</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">DIVertex</span> <span class="p">:</span> <span class="kt">Hashable</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">DIVertex</span><span class="p">:</span> <span class="kt">CustomStringConvertible</span></code></pre>
 
                 </div>
               </div>
-            
+            <p>Information about vertex in graph. Vertex is it component/argument or unknown type.</p>
+
           </section>
           <section class="section task-group-section">
             <div class="task-group">
@@ -228,9 +230,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:9SwiftLazy9Provider2C14DITranquillityE4file4lineACyxq_q0_GSS_Sutcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(file:line:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:9SwiftLazy9Provider2C14DITranquillityE4file4lineACyxq_q0_GSS_Sutcfc">init(file:<wbr>line:<wbr>)</a>
+                    <a name="/s:14DITranquillity8DIVertexO9componentyAcA17DIComponentVertexVcACmF"></a>
+                    <a name="//apple_ref/swift/Element/component(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity8DIVertexO9componentyAcA17DIComponentVertexVcACmF">component(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -238,19 +240,109 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Component. Is it description about registration in di container.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">component</span><span class="p">(</span><span class="kt"><a href="../Structs/DIComponentVertex.html">DIComponentVertex</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/Extensions/SwiftLazy.swift#L68-L72">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIGraph.swift#L67">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity8DIVertexO8argumentyAcA16DIArgumentVertexVcACmF"></a>
+                    <a name="//apple_ref/swift/Element/argument(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity8DIVertexO8argumentyAcA16DIArgumentVertexVcACmF">argument(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Argument. Is it injection information but injection not component - injection runtime argument. For more information see modificators.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">argument</span><span class="p">(</span><span class="kt"><a href="../Structs/DIArgumentVertex.html">DIArgumentVertex</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIGraph.swift#L69">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity8DIVertexO7unknownyAcA15DIUnknownVertexVcACmF"></a>
+                    <a name="//apple_ref/swift/Element/unknown(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity8DIVertexO7unknownyAcA15DIUnknownVertexVcACmF">unknown(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Unknown. Is it invalid injection because not found component for dependency.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">unknown</span><span class="p">(</span><span class="kt"><a href="../Structs/DIUnknownVertex.html">DIUnknownVertex</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIGraph.swift#L71">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity8DIVertexO11descriptionSSvp"></a>
+                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity8DIVertexO11descriptionSSvp">description</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Vertex description</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIGraph.swift#L135-L144">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

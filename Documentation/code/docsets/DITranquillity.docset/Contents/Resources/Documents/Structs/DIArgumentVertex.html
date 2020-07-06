@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Provider2 Extension Reference</title>
+    <title>DIArgumentVertex Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Extension/Provider2" class="dashAnchor"></a>
-    <a title="Provider2 Extension Reference"></a>
+    <a name="//apple_ref/swift/Struct/DIArgumentVertex" class="dashAnchor"></a>
+    <a title="DIArgumentVertex Structure Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">DITranquillity 4.1.0 Docs</a> (92% documented)</p>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">DITranquillity Reference</a>
         <img id="carat" src="../img/carat.png" />
-        Provider2 Extension Reference
+        DIArgumentVertex Structure Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -213,14 +213,15 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>Provider2</h1>
+            <h1>DIArgumentVertex</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Provider2</span><span class="p">:</span> <span class="kt">SpecificType</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">DIArgumentVertex</span> <span class="p">:</span> <span class="kt">Hashable</span></code></pre>
 
                 </div>
               </div>
-            
+            <p>This vertex maked if component have dependency using <code>arg</code>.</p>
+
           </section>
           <section class="section task-group-section">
             <div class="task-group">
@@ -228,9 +229,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:9SwiftLazy9Provider2C14DITranquillityE4file4lineACyxq_q0_GSS_Sutcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(file:line:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:9SwiftLazy9Provider2C14DITranquillityE4file4lineACyxq_q0_GSS_Sutcfc">init(file:<wbr>line:<wbr>)</a>
+                    <a name="/s:14DITranquillity16DIArgumentVertexV4typeypXpvp"></a>
+                    <a name="//apple_ref/swift/Property/type" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity16DIArgumentVertexV4typeypXpvp">type</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -238,19 +239,77 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Argument type in component dependency</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">file</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">type</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:14DITranquillity7DIATypea">DIAType</a></span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/Extensions/SwiftLazy.swift#L68-L72">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIGraph.swift#L38">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SH4hash4intoys6HasherVz_tF"></a>
+                    <a name="//apple_ref/swift/Method/hash(into:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SH4hash4intoys6HasherVz_tF">hash(into:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">hash</span><span class="p">(</span><span class="n">into</span> <span class="nv">hasher</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Hasher</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIGraph.swift#L40-L42">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SQ2eeoiySbx_xtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SQ2eeoiySbx_xtFZ">==(_:<wbr>_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">DIArgumentVertex</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">DIArgumentVertex</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIGraph.swift#L44-L46">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
