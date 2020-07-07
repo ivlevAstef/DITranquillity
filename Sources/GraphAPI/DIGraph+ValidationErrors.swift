@@ -74,12 +74,12 @@ extension DIGraph {
 
   func log_cycleHavePrototype(vertices: [DIVertex], edges: [DIEdge]) {
     let cycleDescriptionMaker = { makeCycleDescription(vertices: vertices, edges: edges) }
-    log(.warning, msg: "Found a cycle where is it components have lifetime `prototype`. This cycle can maked incorrect, if call resolve from `prototype` component. Your can change lifetime on `objectGraph` or ignore warning. Cycle description: \(cycleDescriptionMaker())")
+    log(.warning, msg: "Found a cycle where is it components have lifetime `prototype`. This cycle can make incorrect, if call resolve from `prototype` component. You can change lifetime on `objectGraph` or ignore warning. Cycle description: \(cycleDescriptionMaker())")
   }
 
   func log_cycleHaveInvariantLifetimes(vertices: [DIVertex], edges: [DIEdge]) {
     let cycleDescriptionMaker = { makeCycleDescription(vertices: vertices, edges: edges) }
-    log(.warning, msg: "Found a cycle where is it components have different lifetimes. This cycle can maked incorrect. If start resolve from `prototype`/`objectGraph` you can reference from `perContainer`/`perRun`/`single` on other object because there is an old resolve in cache. Cycle description: \(cycleDescriptionMaker())")
+    log(.warning, msg: "Found a cycle where is it components have different lifetimes. This cycle can make incorrect. If start resolve from `prototype`/`objectGraph` you can reference from `perContainer`/`perRun`/`single` on other object because there is an old resolve in cache. Cycle description: \(cycleDescriptionMaker())")
   }
 }
 
