@@ -9,9 +9,9 @@
 /// Information about cycle.
 public struct DICycle {
   /// array of vertex indices. Don't contains dublicates.
-  let vertexIndices: [Int]
+  public let vertexIndices: [Int]
   /// array of edges. edges[index] it's edge from vertexIndices[index] to vertexIndices[(index + 1) % count]
-  let edges: [DIEdge]
+  public let edges: [DIEdge]
 }
 
 
