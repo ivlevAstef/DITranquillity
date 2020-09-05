@@ -84,9 +84,8 @@ extension DIContainer {
       return false
     }
 
-    guard let argType = parsedType.base.sType?.type else {
-      return false
-    }
+    let baseType = parsedType.base
+    let argType = baseType.sType?.type ?? baseType.type
 
     let id = vertices.count
     addVertex(DIVertex.argument(DIArgumentVertex(id: id, type: argType)), adjacencyList: &adjacencyList, vertices: &vertices)
@@ -95,7 +94,8 @@ extension DIContainer {
 
   private func addUnknown(by parsedType: ParsedType, adjacencyList: inout DIGraph.AdjacencyList, vertices: inout [DIVertex]) {
     let id = vertices.count
-    let unknownType = parsedType.base.sType?.type ?? parsedType.base.type
+    let baseType = parsedType.base
+    let unknownType = baseType.sType?.type ?? baseType.type
 
     addVertex(DIVertex.unknown(DIUnknownVertex(id: id, type: unknownType)), adjacencyList: &adjacencyList, vertices: &vertices)
   }
