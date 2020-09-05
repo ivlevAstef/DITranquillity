@@ -84,7 +84,7 @@ final class Component {
   let order: Int
   
   var lifeTime = DILifeTime.default
-  var isDefault: Bool = false
+  var priority: DIComponentPriority = .normal
 
   var alternativeTypes: [ComponentAlternativeType] = []
   

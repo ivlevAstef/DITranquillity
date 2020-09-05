@@ -67,8 +67,8 @@ class Resolver {
   }
 
   private static func findComponents(by parsedType: ParsedType, with name: String?, from framework: DIFramework.Type?, in container: DIContainer) -> Components {
-    func defaults(_ components: Components) -> Components {
-      let filtering = ContiguousArray(components.filter{ $0.isDefault })
+    func byPriority(_ priority: DIComponentPriority, _ components: Components) -> Components {
+      let filtering = ContiguousArray(components.filter{ $0.priority == priority })
       return filtering.isEmpty ? components : filtering
     }
     
@@ -83,7 +83,7 @@ class Resolver {
         let filteredByFramework = ContiguousArray(components.filter{ $0.framework.map{ framework == $0 } ?? false })
         
         func componentsIsNeedReturn(_ components: Components) -> Components? {
-          let filtered = defaults(components)
+          let filtered = byPriority(.default, components)
           return 1 == filtered.count ? filtered : nil
         }
         
@@ -99,7 +99,7 @@ class Resolver {
         }
       }
       
-      return defaults(components)
+      return byPriority(.default, components)
     }
 
     /// type without optional
@@ -138,12 +138,22 @@ class Resolver {
       first = false
       
     } while type != simpleType || first /*check on first need only for delayed types*/
-    
-    if filterByFramework {
-      return filter(by: framework, Components(components))
+
+    let componentsArray = Components(components)
+    if componentsArray.count > 1 {
+      let testComponents = byPriority(.test, componentsArray)
+      if testComponents.count == 1 {
+        return testComponents
+      } else if testComponents.count > 1 {
+        log(.error, msg: "Found more test components: \(testComponents)")
+      }
     }
     
-    return Components(components)
+    if filterByFramework {
+      return filter(by: framework, componentsArray)
+    }
+    
+    return componentsArray
   }
   
   /// Remove components who doesn't have initialization method

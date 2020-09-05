@@ -24,12 +24,11 @@ public final class DIComponentBuilder<Impl> {
   
   deinit {
     log(.verbose, msgc: {
-      var msg = component.isDefault ? "default " : ""
+      var msg = "\(component.priority)"
       msg += "registration: \(component.info)\n"
       msg += "\(DISetting.Log.tab)initial: \(nil != component.initial)\n"
 
       msg += "\(DISetting.Log.tab)lifetime: \(component.lifeTime)\n"
-      msg += "\(DISetting.Log.tab)is default: \(component.isDefault)\n"
 
       msg += "\(DISetting.Log.tab)injections: \(component.injections.count)\n"
       return msg
@@ -324,7 +323,25 @@ extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func `default`() -> Self {
-    component.isDefault = true
+    component.priority = .default
+    return self
+  }
+
+  /// Function declaring that this component will use the default.
+  /// It's necessary to resolve uncertainties if several components are available on one type.
+  /// Component declared as "test" will be given in the case if there were clarifications that you need.
+  /// But the components belonging to the framework have higher priority than the default components from other frameworks.
+  /// Has the greatest power "default"
+  /// Using:
+  /// ```
+  /// container.register(YourClass.self)
+  ///   .test()
+  /// ```
+  ///
+  /// - Returns: Self
+  @discardableResult
+  public func test() -> Self {
+    component.priority = .test
     return self
   }
 }

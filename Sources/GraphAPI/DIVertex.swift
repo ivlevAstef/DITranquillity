@@ -22,8 +22,8 @@ public final class DIComponentVertex: Hashable {
   public let componentInfo: DIComponentInfo
   /// Component lifetime
   public let lifeTime: DILifeTime
-  /// Component have `default` flag or not
-  public let isDefault: Bool
+  /// Component set to `default` or `test`
+  public let priority: DIComponentPriority
   /// Component have `init` method or not
   public let canInitialize: Bool
   /// Alternative types. It's types setup in component used function `as(...`
@@ -37,7 +37,7 @@ public final class DIComponentVertex: Hashable {
   init(component: Component) {
     self.componentInfo = component.info
     self.lifeTime = component.lifeTime
-    self.isDefault = component.isDefault
+    self.priority = component.priority
     self.canInitialize = component.initial != nil
     self.alternativeTypes = component.alternativeTypes
     self.framework = component.framework

@@ -168,6 +168,21 @@ class DITranquillityTests_Build: XCTestCase {
     
     XCTAssert(container.makeGraph().checkIsValid())
   }
+
+  func test02_MultiplyRegistrateTypeWithTest() {
+    let container = DIContainer()
+
+    container.register(TestClass1.init)
+      .as(check: TestProtocol.self){$0}
+      .test()
+
+    container.register(TestClass2.init)
+      .as(check: TestProtocol.self){$0}
+
+    container.register(InjectedClass.init)
+
+    XCTAssert(container.makeGraph().checkIsValid())
+  }
   
   func test02_MultiplyRegistrateTypeWithName() {
     let container = DIContainer()

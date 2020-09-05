@@ -43,6 +43,10 @@
 		16ABEC2324B37F8A007577CF /* DIGraph+Cycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC2024B37F8A007577CF /* DIGraph+Cycle.swift */; };
 		16ABEC2424B37F8A007577CF /* DIGraph+Cycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC2024B37F8A007577CF /* DIGraph+Cycle.swift */; };
 		16EA372E23FA7715004DA194 /* DITranquillityTests_Modular.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EA372D23FA7715004DA194 /* DITranquillityTests_Modular.swift */; };
+		AB4F30F32503BD2100E74FB7 /* DIComponentPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */; };
+		AB4F30F42503BD2100E74FB7 /* DIComponentPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */; };
+		AB4F30F52503BD2100E74FB7 /* DIComponentPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */; };
+		AB4F30F62503BD2100E74FB7 /* DIComponentPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */; };
 		ABDA289B23ABBECD00BEB63F /* DIStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDC23AA75AC00DEA34A /* DIStorage.swift */; };
 		ABDA289C23ABBECD00BEB63F /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDB23AA75AC00DEA34A /* DIContainer.swift */; };
 		ABDA289E23ABBECD00BEB63F /* Multithread.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EB923AA75AC00DEA34A /* Multithread.swift */; };
@@ -286,6 +290,7 @@
 		16EA372D23FA7715004DA194 /* DITranquillityTests_Modular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Modular.swift; sourceTree = "<group>"; };
 		16FADF3F24A701F7007BF1C1 /* Documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Documentation; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIComponentPriority.swift; sourceTree = "<group>"; };
 		ABDA28D323ABBECD00BEB63F /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABDA28EB23ABE13500BEB63F /* FastLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastLock.swift; sourceTree = "<group>"; };
 		ABE60EB923AA75AC00DEA34A /* Multithread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Multithread.swift; sourceTree = "<group>"; };
@@ -499,6 +504,7 @@
 		ABE60EC923AA75AC00DEA34A /* API */ = {
 			isa = PBXGroup;
 			children = (
+				AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */,
 				ABE60ECA23AA75AC00DEA34A /* DIScope.swift */,
 				ABE60ECB23AA75AC00DEA34A /* Hierarchy */,
 				ABE60ECE23AA75AC00DEA34A /* DISettings.swift */,
@@ -949,6 +955,7 @@
 				ABE60EF123AA75AC00DEA34A /* DIComponentBuilder+EmptySubviewsInject.swift in Sources */,
 				ABE60F6023AA75B300DEA34A /* DIStoryboardBase.m in Sources */,
 				ABE60F0323AA75AC00DEA34A /* Modificators.swift in Sources */,
+				AB4F30F42503BD2100E74FB7 /* DIComponentPriority.swift in Sources */,
 				ABE60F6623AA75B300DEA34A /* DIStoryboard.swift in Sources */,
 				ABE60F1523AA75AC00DEA34A /* DIPart.swift in Sources */,
 				ABE60F3F23AA75AC00DEA34A /* DIContainer+Extensions.swift in Sources */,
@@ -1001,6 +1008,7 @@
 				ABE60EF523AA75AC00DEA34A /* Resolver.swift in Sources */,
 				ABE60F1923AA75AC00DEA34A /* DISettings.swift in Sources */,
 				ABE60F1323AA75AC00DEA34A /* DIFramework.swift in Sources */,
+				AB4F30F52503BD2100E74FB7 /* DIComponentPriority.swift in Sources */,
 				ABE60EF223AA75AC00DEA34A /* DIComponentBuilder+EmptySubviewsInject.swift in Sources */,
 				ABE60F0423AA75AC00DEA34A /* Modificators.swift in Sources */,
 				ABE60F6723AA75B300DEA34A /* DIStoryboard.swift in Sources */,
@@ -1061,6 +1069,7 @@
 				ABE60EF323AA75AC00DEA34A /* Resolver.swift in Sources */,
 				ABE60F1723AA75AC00DEA34A /* DISettings.swift in Sources */,
 				ABE60F1123AA75AC00DEA34A /* DIFramework.swift in Sources */,
+				AB4F30F32503BD2100E74FB7 /* DIComponentPriority.swift in Sources */,
 				ABE60EF023AA75AC00DEA34A /* DIComponentBuilder+EmptySubviewsInject.swift in Sources */,
 				ABE60F0223AA75AC00DEA34A /* Modificators.swift in Sources */,
 				ABE60F6523AA75B300DEA34A /* DIStoryboard.swift in Sources */,
@@ -1137,6 +1146,7 @@
 				ABDA28B223ABBECD00BEB63F /* DILifetime.swift in Sources */,
 				ABDA28B323ABBECD00BEB63F /* DIExtensions.swift in Sources */,
 				ABDA28B523ABBECD00BEB63F /* ExtensionsContainer.swift in Sources */,
+				AB4F30F62503BD2100E74FB7 /* DIComponentPriority.swift in Sources */,
 				ABDA28B623ABBECD00BEB63F /* DIContainer.Reg.swift in Sources */,
 				160F0EB924AB06F400723F28 /* DIGraph.swift in Sources */,
 				ABDA28B923ABBECD00BEB63F /* DIComponentBuilder.Injection.swift in Sources */,
