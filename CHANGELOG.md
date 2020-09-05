@@ -1,3 +1,7 @@
+# v4.1.1
+* Add `test` - it's a more powerful analog `default` needed for tests.
+* Small improve Graph API - fix access scope and fix getted type for unknown and arg.
+
 # v4.1.0
 * Add Graph API - now your get dependency graph.
 * Change graph validation - change syntax, add validation cases, improve validation cycles speed x1000-10000

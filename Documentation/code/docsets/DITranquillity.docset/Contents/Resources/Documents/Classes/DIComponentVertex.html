@@ -8,15 +8,23 @@
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a name="//apple_ref/swift/Class/DIComponentVertex" class="dashAnchor"></a>
     <a title="DIComponentVertex Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">DITranquillity 4.1.0 Docs</a> (91% documented)</p>
+        <p><a href="../index.html">DITranquillity 4.1.1 Docs</a> (90% documented)</p>
         <p class="header-right"><a href="https://github.com/ivlevAstef/DITranquillity"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub.com%2FivlevAstef%2FDITranquillity%2Fcode%2Fdocsets%2FDITranquillity.xml"><img src="../img/dash.png"/>Install in Dash</a></p>
+        <p class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -96,6 +104,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Enums/ComponentAlternativeType.html">ComponentAlternativeType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/DIComponentPriority.html">DIComponentPriority</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/DILifeTime.html">DILifeTime</a>
@@ -184,7 +195,7 @@
                 <a href="../Structs/DIComponentInfo.html">DIComponentInfo</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs.html#/s:14DITranquillity7DICycleV">DICycle</a>
+                <a href="../Structs/DICycle.html">DICycle</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/DIGraph.html">DIGraph</a>
@@ -222,12 +233,16 @@
             <h1>DIComponentVertex</h1>
               <div class="declaration">
                 <div class="language">
+                  
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">DIComponentVertex</span> <span class="p">:</span> <span class="kt">Hashable</span></code></pre>
 
                 </div>
               </div>
             <p>Component vertex. For all components maked one to one component vertex</p>
 
+              <div class="slightly-smaller">
+                <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/GraphAPI/DIVertex.swift#L20-L53">Show on GitHub</a>
+              </div>
           </section>
           <section class="section task-group-section">
             <div class="task-group">
@@ -295,9 +310,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14DITranquillity17DIComponentVertexC9isDefaultSbvp"></a>
-                    <a name="//apple_ref/swift/Property/isDefault" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14DITranquillity17DIComponentVertexC9isDefaultSbvp">isDefault</a>
+                    <a name="/s:14DITranquillity17DIComponentVertexC8priorityAA0B8PriorityOvp"></a>
+                    <a name="//apple_ref/swift/Property/priority" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity17DIComponentVertexC8priorityAA0B8PriorityOvp">priority</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -305,14 +320,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Component have <code>default</code> flag or not</p>
+                        <p>Component set to <code>default</code> or <code>test</code></p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">isDefault</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">priority</span><span class="p">:</span> <span class="kt"><a href="../Enums/DIComponentPriority.html">DIComponentPriority</a></span></code></pre>
 
                         </div>
                       </div>
@@ -505,8 +520,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2020-07-06)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2020-09-05)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

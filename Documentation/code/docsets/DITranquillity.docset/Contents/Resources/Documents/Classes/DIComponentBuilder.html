@@ -8,15 +8,23 @@
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a name="//apple_ref/swift/Class/DIComponentBuilder" class="dashAnchor"></a>
     <a title="DIComponentBuilder Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">DITranquillity 4.1.0 Docs</a> (91% documented)</p>
+        <p><a href="../index.html">DITranquillity 4.1.1 Docs</a> (90% documented)</p>
         <p class="header-right"><a href="https://github.com/ivlevAstef/DITranquillity"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub.com%2FivlevAstef%2FDITranquillity%2Fcode%2Fdocsets%2FDITranquillity.xml"><img src="../img/dash.png"/>Install in Dash</a></p>
+        <p class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -96,6 +104,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Enums/ComponentAlternativeType.html">ComponentAlternativeType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/DIComponentPriority.html">DIComponentPriority</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/DILifeTime.html">DILifeTime</a>
@@ -184,7 +195,7 @@
                 <a href="../Structs/DIComponentInfo.html">DIComponentInfo</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs.html#/s:14DITranquillity7DICycleV">DICycle</a>
+                <a href="../Structs/DICycle.html">DICycle</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/DIGraph.html">DIGraph</a>
@@ -222,6 +233,7 @@
             <h1>DIComponentBuilder</h1>
               <div class="declaration">
                 <div class="language">
+                  
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">DIComponentBuilder</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="o">&gt;</span></code></pre>
 
                 </div>
@@ -230,6 +242,9 @@
 To create a used function <code>register(_:)</code> in class <code>ContainerBuilder</code>.
 The class allows you to configure all the necessary properties for the component.</p>
 
+              <div class="slightly-smaller">
+                <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L12-L41">Show on GitHub</a>
+              </div>
           </section>
           <section class="section task-group-section">
             <div class="task-group">
@@ -685,7 +700,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">as</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">as</span><span class="err">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -713,7 +728,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L56-L61">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L55-L60">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -743,7 +758,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">as</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="p">,</span> <span class="kt">Tag</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">tag</span><span class="p">:</span> <span class="kt">Tag</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">as</span><span class="err">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="p">,</span> <span class="kt">Tag</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">tag</span><span class="p">:</span> <span class="kt">Tag</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -783,7 +798,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L75-L80">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L74-L79">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -815,7 +830,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">as</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">as</span><span class="err">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -855,7 +870,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L96-L101">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L95-L100">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -887,7 +902,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">as</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">check</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">validator</span><span class="p">:</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Parent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">as</span><span class="err">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">check</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">validator</span><span class="p">:</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Parent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -927,7 +942,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L116-L118">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L115-L117">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -959,7 +974,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">as</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="p">,</span> <span class="kt">Tag</span><span class="o">&gt;</span><span class="p">(</span><span class="n">check</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">tag</span><span class="p">:</span> <span class="kt">Tag</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">validator</span><span class="p">:</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Parent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">as</span><span class="err">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="p">,</span> <span class="kt">Tag</span><span class="o">&gt;</span><span class="p">(</span><span class="n">check</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">tag</span><span class="p">:</span> <span class="kt">Tag</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">_</span> <span class="nv">validator</span><span class="p">:</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Parent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -1011,7 +1026,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L134-L136">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L133-L135">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1045,7 +1060,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">as</span><span class="p">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">check</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">validator</span><span class="p">:</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Parent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">as</span><span class="err">`</span><span class="o">&lt;</span><span class="kt">Parent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">check</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Parent</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">validator</span><span class="p">:</span> <span class="p">(</span><span class="kt">Impl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Parent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -1097,7 +1112,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L154-L156">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L153-L155">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1171,7 +1186,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L174-L177">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L173-L176">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1271,7 +1286,7 @@ Your Can use specified name for get an object.</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L210-L213">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L209-L212">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1294,16 +1309,16 @@ Your Can use specified name for get an object.</p>
 
 <p>Using:</p>
 <pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-  <span class="o">.</span><span class="nf">injection</span><span class="p">(\</span><span class="kt">YourClass</span><span class="o">.</span><span class="n">yourClassProperty</span><span class="p">)</span> <span class="p">{</span> <span class="nf">many</span><span class="p">(</span><span class="nv">$0</span><span class="p">)</span> <span class="p">}</span>
+  <span class="o">.</span><span class="nf">injection</span><span class="p">(</span><span class="err">\</span><span class="kt">YourClass</span><span class="o">.</span><span class="n">yourClassProperty</span><span class="p">)</span> <span class="p">{</span> <span class="nf">many</span><span class="p">(</span><span class="nv">$0</span><span class="p">)</span> <span class="p">}</span>
 <span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-  <span class="o">.</span><span class="nf">injection</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"key"</span><span class="p">,</span> <span class="p">\</span><span class="o">.</span><span class="n">yourClassProperty</span><span class="p">)</span> <span class="p">{</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tag</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="nv">$0</span><span class="p">)</span> <span class="p">}</span>
+  <span class="o">.</span><span class="nf">injection</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"key"</span><span class="p">,</span> <span class="err">\</span><span class="o">.</span><span class="n">yourClassProperty</span><span class="p">)</span> <span class="p">{</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tag</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="nv">$0</span><span class="p">)</span> <span class="p">}</span>
 </code></pre>
 
 <p>OR if the injection participates in a cycle</p>
 <pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-  <span class="o">.</span><span class="nf">injection</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"key"</span><span class="p">,</span> <span class="nv">cycle</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="p">\</span><span class="o">.</span><span class="n">yourClassProperty</span><span class="p">)</span> <span class="p">{</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tag</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="nv">$0</span><span class="p">)</span> <span class="p">}</span>
+  <span class="o">.</span><span class="nf">injection</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"key"</span><span class="p">,</span> <span class="nv">cycle</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="err">\</span><span class="o">.</span><span class="n">yourClassProperty</span><span class="p">)</span> <span class="p">{</span> <span class="nf">by</span><span class="p">(</span><span class="nv">tag</span><span class="p">:</span> <span class="kt">YourTag</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="nv">$0</span><span class="p">)</span> <span class="p">}</span>
 <span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-  <span class="o">.</span><span class="nf">injection</span><span class="p">(</span><span class="nv">cycle</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="p">\</span><span class="kt">YourClass</span><span class="o">.</span><span class="n">yourClassProperty</span><span class="p">)</span> <span class="p">{</span> <span class="nf">many</span><span class="p">(</span><span class="nv">$0</span><span class="p">)</span> <span class="p">}</span>
+  <span class="o">.</span><span class="nf">injection</span><span class="p">(</span><span class="nv">cycle</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="err">\</span><span class="kt">YourClass</span><span class="o">.</span><span class="n">yourClassProperty</span><span class="p">)</span> <span class="p">{</span> <span class="nf">many</span><span class="p">(</span><span class="nv">$0</span><span class="p">)</span> <span class="p">}</span>
 </code></pre>
 
                       </div>
@@ -1311,7 +1326,7 @@ Your Can use specified name for get an object.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">swift</span> <span class="mf">4.0</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(swift 4.0)</span>
 <span class="kd">@discardableResult</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">P</span><span class="p">,</span> <span class="kt">Property</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">cycle</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="n">_</span> <span class="nv">keyPath</span><span class="p">:</span> <span class="kt">ReferenceWritableKeyPath</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">P</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">_</span> <span class="nv">modificator</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Property</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">P</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
@@ -1377,7 +1392,7 @@ Your Can use specified name for get an object.</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L242-L245">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L241-L244">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1400,16 +1415,16 @@ Your Can use specified name for get an object.</p>
 
 <p>Using:</p>
 <pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-  <span class="o">.</span><span class="nf">injection</span><span class="p">(\</span><span class="o">.</span><span class="n">yourClassProperty</span><span class="p">)</span>
+  <span class="o">.</span><span class="nf">injection</span><span class="p">(</span><span class="err">\</span><span class="o">.</span><span class="n">yourClassProperty</span><span class="p">)</span>
 <span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-  <span class="o">.</span><span class="nf">injection</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"key"</span><span class="p">,</span> <span class="p">\</span><span class="kt">YourClass</span><span class="o">.</span><span class="n">yourClassProperty</span><span class="p">)</span>
+  <span class="o">.</span><span class="nf">injection</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"key"</span><span class="p">,</span> <span class="err">\</span><span class="kt">YourClass</span><span class="o">.</span><span class="n">yourClassProperty</span><span class="p">)</span>
 </code></pre>
 
 <p>OR if the injection participates in a cycle</p>
 <pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-  <span class="o">.</span><span class="nf">injection</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"key"</span><span class="p">,</span> <span class="nv">cycle</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="p">\</span><span class="kt">YourClass</span><span class="o">.</span><span class="n">yourClassProperty</span><span class="p">)</span>
+  <span class="o">.</span><span class="nf">injection</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"key"</span><span class="p">,</span> <span class="nv">cycle</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="err">\</span><span class="kt">YourClass</span><span class="o">.</span><span class="n">yourClassProperty</span><span class="p">)</span>
 <span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-  <span class="o">.</span><span class="nf">injection</span><span class="p">(</span><span class="nv">cycle</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="p">\</span><span class="o">.</span><span class="n">yourClassProperty</span><span class="p">)</span>
+  <span class="o">.</span><span class="nf">injection</span><span class="p">(</span><span class="nv">cycle</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="err">\</span><span class="o">.</span><span class="n">yourClassProperty</span><span class="p">)</span>
 </code></pre>
 
                       </div>
@@ -1417,7 +1432,7 @@ Your Can use specified name for get an object.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">swift</span> <span class="mf">4.0</span><span class="p">)</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(swift 4.0)</span>
 <span class="kd">@discardableResult</span>
 <span class="kd">public</span> <span class="kd">func</span> <span class="n">injection</span><span class="o">&lt;</span><span class="kt">Property</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">cycle</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="n">_</span> <span class="nv">keyPath</span><span class="p">:</span> <span class="kt">ReferenceWritableKeyPath</span><span class="o">&lt;</span><span class="kt">Impl</span><span class="p">,</span> <span class="kt">Property</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
@@ -1471,7 +1486,7 @@ Your Can use specified name for get an object.</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L272-L275">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L271-L274">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1530,7 +1545,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L289-L292">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L288-L291">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1602,7 +1617,7 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L309-L312">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L308-L311">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1635,7 +1650,7 @@ Using:</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="p">`</span><span class="nv">default</span><span class="p">`()</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">default</span><span class="err">`</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -1644,7 +1659,50 @@ Using:</p>
                         <p>Self</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L326-L329">Show on GitHub</a>
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L325-L328">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14DITranquillity18DIComponentBuilderC4testACyxGXDyF"></a>
+                    <a name="//apple_ref/swift/Method/test()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14DITranquillity18DIComponentBuilderC4testACyxGXDyF">test()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Function declaring that this component will use the default.
+It&rsquo;s necessary to resolve uncertainties if several components are available on one type.
+Component declared as &ldquo;test&rdquo; will be given in the case if there were clarifications that you need.
+But the components belonging to the framework have higher priority than the default components from other frameworks.
+Has the greatest power &ldquo;default&rdquo;
+Using:</p>
+<pre class="highlight swift"><code><span class="n">container</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">YourClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+  <span class="o">.</span><span class="nf">test</span><span class="p">()</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">test</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/ivlevAstef/DITranquillity/tree/master/Sources/Core/API/DIComponentBuilder.swift#L343-L346">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1754,8 +1812,8 @@ If you want enable injection into views, UITableViewCells and UICollectionViewCe
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2020-07-06)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/ivlevAstef" target="_blank" rel="external">Ivlev</a>. All rights reserved. (Last updated: 2020-09-05)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
