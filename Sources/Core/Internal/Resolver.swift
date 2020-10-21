@@ -187,7 +187,12 @@ class Resolver {
         func makeDelayMaker(by parsedType: ParsedType, components: Components) -> Any? {
           return delayMaker.init(container, { () -> Any? in
             return self.mutex.sync {
-              self.cache.graph = saveGraph.toStrongCopy()
+              if self.stack.isEmpty {
+                self.cache.graph = saveGraph.toStrongCopy()
+                return self.make(by: parsedType, components: components, use: object)
+              }
+              // for this case saveGraph and cache.graph always equals
+              assert(saveGraph === self.cache.graph, "DITranquillity fail support Providers/Lazy. Please wrote issues on github.")
               return self.make(by: parsedType, components: components, use: object)
             }
           })

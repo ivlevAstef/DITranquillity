@@ -75,6 +75,44 @@ private class Provider3InjectA {
 }
 
 
+private class ProviderInitProvider1 {
+  private let provider: Provider<ProviderInitProvider2>
+  private let value: ProviderInitProvider2
+  init(_ provider: Provider<ProviderInitProvider2>) {
+    self.provider = provider
+    self.value = provider.value
+  }
+}
+private class ProviderInitProvider2 {
+  init() {
+  }
+}
+private class ProviderInitProviderStarter {
+  private let provider: ProviderInitProvider1
+  private var otherClass0: ProviderInitProviderChecker0?
+  private var otherClass1: ProviderInitProviderChecker1?
+  init(otherClass0: ProviderInitProviderChecker0, provider: ProviderInitProvider1, otherClass1: ProviderInitProviderChecker1) {
+    self.otherClass0 = otherClass0
+    self.otherClass1 = otherClass1
+    self.provider = provider
+  }
+  func clean() {
+    self.otherClass0 = nil
+    self.otherClass1 = nil
+  }
+}
+
+var providerInitProvider1InitDeinitBalance: Int = 0
+private class ProviderInitProviderChecker0 {
+  init() { providerInitProvider1InitDeinitBalance += 1 }
+  deinit { providerInitProvider1InitDeinitBalance -= 1 }
+}
+private class ProviderInitProviderChecker1 {
+  init() { providerInitProvider1InitDeinitBalance += 1 }
+  deinit { providerInitProvider1InitDeinitBalance -= 1 }
+}
+
+
 class DITranquillityTests_SwiftLazy: XCTestCase {
   override func setUp() {
     super.setUp()
@@ -290,6 +328,26 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
     XCTAssertEqual(a.value1, 11)
     XCTAssertEqual(a.value2, 12.0)
     XCTAssertEqual(a.value3, "a")
+  }
+
+  func test12_provider_init() {
+    let container = DIContainer()
+
+    container.register(ProviderInitProvider1.init)
+      .lifetime(.objectGraph)
+    container.register(ProviderInitProvider2.init)
+      .lifetime(.objectGraph)
+    container.register(ProviderInitProviderChecker0.init)
+      .lifetime(.objectGraph)
+    container.register(ProviderInitProviderChecker1.init)
+      .lifetime(.objectGraph)
+    container.register(ProviderInitProviderStarter.init)
+      .lifetime(.objectGraph)
+
+    let test: ProviderInitProviderStarter = *container
+    test.clean()
+
+    XCTAssertEqual(providerInitProvider1InitDeinitBalance, 0)
   }
 
 }
