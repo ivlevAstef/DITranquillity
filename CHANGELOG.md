@@ -1,3 +1,6 @@
+# v4.1.2
+* Fix library bug - potencial memory leaks. This bug manifested if your use Provider/Lazy and call get object until initialize other dependency (for example inside init method).
+
 # v4.1.1
 * Add `test` - it's a more powerful analog `default` needed for tests.
 * Small improve Graph API - fix access scope and fix getted type for unknown and arg.
