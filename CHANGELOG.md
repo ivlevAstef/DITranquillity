@@ -1,4 +1,4 @@
-# v4.1.2 - v4.1.3
+# v4.1.2 - v4.1.4
 * Fix library bug - potencial memory leaks. This bug manifested if your use Provider/Lazy and call get object until initialize other dependency (for example inside init method).
 
 # v4.1.1

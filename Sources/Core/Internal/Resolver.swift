@@ -145,7 +145,7 @@ class Resolver {
       if testComponents.count == 1 {
         return testComponents
       } else if testComponents.count > 1 {
-        log(.error, msg: "Found more test components: \(testComponents)")
+        log(.error, msg: "Found more test components: \(testComponents.map { $0.info.description })")
       }
     }
     
@@ -187,8 +187,23 @@ class Resolver {
         func makeDelayMaker(by parsedType: ParsedType, components: Components) -> Any? {
           return delayMaker.init(container, { () -> Any? in
             return self.mutex.sync {
-              if saveGraph !== self.cache.graph {
+              // call `.value` into DI initialize.
+              if saveGraph === self.cache.graph {
+                return self.make(by: parsedType, components: components, use: object)
+              }
+              // Call `.value` firstly.
+              if self.stack.isEmpty {
                 self.cache.graph = saveGraph.toStrongCopy()
+                return self.make(by: parsedType, components: components, use: object)
+              }
+              // Call `.value` into DI initialize, and DI graph has lifetimes perContainer, perRun, single...
+              // For this case need call provider on her Cache Graph.
+              // But need restore cache graph after make object.
+              let currentGraphCache = self.cache.graph
+              self.cache.graph = saveGraph.toStrongCopy()
+              defer {
+                self.cache.graph.toWeak()
+                self.cache.graph = currentGraphCache
               }
               return self.make(by: parsedType, components: components, use: object)
             }
