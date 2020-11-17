@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "SwiftLazy",
+        "repositoryURL": "https://github.com/ivlevAstef/SwiftLazy",
+        "state": {
+          "branch": null,
+          "revision": "70f0b50542d97212b8bad18075a500537c244abc",
+          "version": "1.1.8"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

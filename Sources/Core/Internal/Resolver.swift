@@ -28,9 +28,9 @@ class Resolver {
   }
 
   
-  func resolveSingleton(component: Component) {
-    log(.verbose, msg: "Begin resolve singleton by component: \(component.info)", brace: .begin)
-    defer { log(.verbose, msg: "End resolve singleton by component: \(component.info)", brace: .end) }
+  func resolveCached(component: Component) {
+    log(.verbose, msg: "Begin resolve cached object by component: \(component.info)", brace: .begin)
+    defer { log(.verbose, msg: "End resolve cached object by component: \(component.info)", brace: .end) }
     
     _ = makeObject(by: component, use: nil)
   }
@@ -67,9 +67,9 @@ class Resolver {
   }
 
   private static func findComponents(by parsedType: ParsedType, with name: String?, from framework: DIFramework.Type?, in container: DIContainer) -> Components {
-    func byPriority(_ priority: DIComponentPriority, _ components: Components) -> Components {
-      let filtering = ContiguousArray(components.filter{ $0.priority == priority })
-      return filtering.isEmpty ? components : filtering
+    func byPriority(_ priority: DIComponentPriority, _ components: Components, isEmpty: Bool = true) -> Components {
+      let filtering = ContiguousArray(components.filter { $0.priority == priority })
+      return filtering.isEmpty && isEmpty ? components : filtering
     }
     
     func filter(by framework: DIFramework.Type?, _ components: Components) -> Components {
@@ -141,7 +141,8 @@ class Resolver {
 
     let componentsArray = Components(components)
     if componentsArray.count > 1 {
-      let testComponents = byPriority(.test, componentsArray)
+      // If no found test components, then return 0, and continue without additional logic.
+      let testComponents = byPriority(.test, componentsArray, isEmpty: false)
       if testComponents.count == 1 {
         return testComponents
       } else if testComponents.count > 1 {

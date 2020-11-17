@@ -1,3 +1,7 @@
+# v4.1.5
+* Small fix log bugs - if your use many in logs can shown incorrect warning.
+* Add new feature: initialize objects for scope. This feature equals to `initializeSingletonObjects` but for your custom lifetime/scope.
+
 # v4.1.2 - v4.1.4
 * Fix library bug - potencial memory leaks. This bug manifested if your use Provider/Lazy and call get object until initialize other dependency (for example inside init method).
 

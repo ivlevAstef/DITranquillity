@@ -48,3 +48,25 @@ public enum DILifeTime: Equatable {
     }
   }
 }
+
+extension DILifeTime.ReferenceCounting: CustomStringConvertible {
+  public var description: String {
+    switch self {
+    case .strong: return "strong"
+    case .weak: return "weak"
+    }
+  }
+}
+
+extension DILifeTime: CustomStringConvertible {
+  public var description: String {
+    switch self {
+    case .single: return "single"
+    case .perRun(let referenceCounting): return "perRun(\(referenceCounting.description))"
+    case .perContainer(let referenceCounting): return "perContainer(\(referenceCounting.description))"
+    case .objectGraph: return "objectGraph"
+    case .prototype: return "prototype"
+    case .custom(let scope): return "custom(\(scope.name))"
+    }
+  }
+}

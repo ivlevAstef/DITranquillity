@@ -174,22 +174,30 @@ extension DIContainer {
   ///   - object: object in which injections will be introduced.
   ///   - framework: Framework from which to injection into object
   public func inject<T>(into object: T, from framework: DIFramework.Type? = nil) {
-    _ = resolver.injection(obj: object, from: framework)
+    resolver.injection(obj: object, from: framework)
   }
   
   /// Initialize registered object with lifetime `.single`
   public func initializeSingletonObjects() {
-    let singleComponents = componentContainer.components.filter{ .single == $0.lifeTime }
-    
-    if singleComponents.isEmpty { // for ignore log
+    initializeObjectsWithLifetime(.single)
+  }
+
+  /// Initialize registered object with specified scope. Please don't use this method if your scope don't cache objects.
+  public func initializeObjectsForScope(_ scope: DIScope) {
+    initializeObjectsWithLifetime(.custom(scope))
+  }
+
+  private func initializeObjectsWithLifetime(_ lifetime: DILifeTime) {
+    let components = componentContainer.components.filter{ lifetime == $0.lifeTime }
+    if components.isEmpty { // for ignore log
       return
     }
-    
-    log(.verbose, msg: "Begin resolving \(singleComponents.count) singletons", brace: .begin)
-    defer { log(.verbose, msg: "End resolving singletons", brace: .end) }
-    
-    for component in singleComponents {
-      resolver.resolveSingleton(component: component)
+
+    log(.verbose, msg: "Begin resolving \(components.count) components with lifetime: \(lifetime)", brace: .begin)
+    defer { log(.verbose, msg: "End resolving components with lifetime: \(lifetime)", brace: .end) }
+
+    for component in components {
+      resolver.resolveCached(component: component)
     }
   }
 }
