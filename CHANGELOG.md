@@ -1,3 +1,6 @@
+# v4.1.6
+* Fix multithread crash - logger tabulation can crashed on multithread.
+
 # v4.1.5
 * Small fix log bugs - if your use many in logs can shown incorrect warning.
 * Add new feature: initialize objects for scope. This feature equals to `initializeSingletonObjects` but for your custom lifetime/scope.

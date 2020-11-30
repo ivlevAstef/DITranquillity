@@ -10,11 +10,11 @@ enum LogBrace {
   case begin, neutral, end
 }
 
-private var tabulation = ""
-
 internal func log(_ level: DILogLevel, msg: @autoclosure ()->String, brace: LogBrace = .neutral) {
   log(level, msgc: msg, brace: brace)
 }
+
+private let tabulationKey = "di_tranquillity_tabulation"
 
 internal func log(_ level: DILogLevel, msgc: ()->String, brace: LogBrace = .neutral) {
   guard let logFunc = DISetting.Log.fun else {
@@ -24,17 +24,20 @@ internal func log(_ level: DILogLevel, msgc: ()->String, brace: LogBrace = .neut
   if level.priority < DISetting.Log.level.priority {
     return
   }
-  
+
+  var tabulation = (Thread.current.threadDictionary[tabulationKey] as? String) ?? ""
   if .end == brace {
-    assert(tabulation.count >= DISetting.Log.tab.count)
-    tabulation.removeLast(DISetting.Log.tab.count)
+    if tabulation.count >= DISetting.Log.tab.count && DISetting.Log.tab.count > 0 {
+        tabulation.removeLast(DISetting.Log.tab.count)
+    } else {
+        assert(tabulation.count >= DISetting.Log.tab.count)
+        tabulation.removeAll()
+    }
+  } else if .begin == brace {
+    Thread.current.threadDictionary[tabulationKey] = tabulation + DISetting.Log.tab
   }
-  
+
   logFunc(level, tabulation + msgc())
-  
-  if .begin == brace {
-    tabulation += DISetting.Log.tab
-  }
 }
 
 extension DILogLevel {
