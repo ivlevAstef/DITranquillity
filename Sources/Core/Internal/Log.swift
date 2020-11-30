@@ -35,6 +35,7 @@ internal func log(_ level: DILogLevel, msgc: ()->String, brace: LogBrace = .neut
         assert(tabulation.count >= DISetting.Log.tab.count)
         tabulation.removeAll()
     }
+    Thread.current.threadDictionary[tabulationKey] = tabulation
   } else if .begin == brace {
     Thread.current.threadDictionary[tabulationKey] = tabulation + DISetting.Log.tab
   }

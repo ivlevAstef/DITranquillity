@@ -1,4 +1,4 @@
-# v4.1.6
+# v4.1.6-v4.1.7
 * Fix multithread crash - logger tabulation can crashed on multithread.
 
 # v4.1.5
