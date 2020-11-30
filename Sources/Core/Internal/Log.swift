@@ -6,6 +6,8 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
+import Foundation
+
 enum LogBrace {
   case begin, neutral, end
 }
