@@ -1,3 +1,7 @@
+# v4.2.0
+* Add new settings - enable disable multithread support. Default enable.
+* Improve resolve speed - fix small performance bug.
+
 # v4.1.6-v4.1.7
 * Fix multithread crash - logger tabulation can crashed on multithread.
 
