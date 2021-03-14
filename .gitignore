@@ -68,3 +68,5 @@ Podfile.lock
 Samples/CompareSpeedSwinjectVSTranquillity/CompareSpeedSwinjectVSTranquillity.xcodeproj/project.xcworkspace
 Samples/CompareSpeedSwinjectVSTranquillity/CompareSpeedSwinjectVSTranquillity.xcworkspace
 Pods
+IDEWorkspaceChecks.plist
+Package.resolved

@@ -128,11 +128,7 @@ class DITranquillityTests_Performance: XCTestCase {
     self.measure {
       let container = DIContainer()
       for i in 0..<2000 {
-        #if swift(>=3.2)
-          container.register1(line: i, { PerformanceTest(withOne: $0) })
-        #else
-          container.register(line: i, { PerformanceTest(withOne: $0) })
-        #endif
+        container.register(line: i, { PerformanceTest(withOne: $0) })
       }
     }
   }
@@ -174,7 +170,7 @@ class DITranquillityTests_Performance: XCTestCase {
       .lifetime(.prototype)
     
     self.measure {
-      for _ in 0..<50000 {
+      for _ in 0..<10000 {
         _ = container.resolve() as PerformanceTest
       }
     }
@@ -187,7 +183,7 @@ class DITranquillityTests_Performance: XCTestCase {
       .lifetime(.objectGraph)
     
     self.measure {
-      for _ in 0..<50000 {
+      for _ in 0..<10000 {
         _ = container.resolve() as PerformanceTest
       }
     }
@@ -314,11 +310,12 @@ class DITranquillityTests_Performance: XCTestCase {
     self.measure {
       let container = DIContainer()
       for i in 0..<2000 {
-        container.register(line: i, { PerformanceTest() })
+        let r = container.register(line: i, { PerformanceTest() })
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
+        r
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
@@ -338,6 +335,7 @@ class DITranquillityTests_Performance: XCTestCase {
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
+        r
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
@@ -347,6 +345,7 @@ class DITranquillityTests_Performance: XCTestCase {
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
+        r
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
           .injection{ $0.parameter = $1 }
@@ -354,20 +353,28 @@ class DITranquillityTests_Performance: XCTestCase {
       }
     }
   }
-  
-  func test06_scan_append() {
+
+  func test07_complex_1000_prototype() {
     DISetting.Log.fun = nil
-    
-    class ScanPart: DIScanPart { }
-    class ScanPart2: DIScanPart { }
-    
+    GeneratedComplexRegResolve.lifetime = .prototype
+
     self.measure {
       let container = DIContainer()
-      container.append(part: ScanPart.self)
-      container.append(part: ScanPart2.self)
+      GeneratedComplexRegResolve.register(container: container, count: 500)
+      GeneratedComplexRegResolve.resolve(container: container, count: 500)
     }
   }
-  
+
+  func test07_complex_1000_objectGraph() {
+    DISetting.Log.fun = nil
+    GeneratedComplexRegResolve.lifetime = .objectGraph
+
+    self.measure {
+      let container = DIContainer()
+      GeneratedComplexRegResolve.register(container: container, count: 1000)
+      GeneratedComplexRegResolve.resolve(container: container, count: 1000)
+    }
+  }
 }
 
 #endif
