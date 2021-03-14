@@ -41,8 +41,12 @@ final class PThreadMutex {
     }
 
     func sync<R>(execute: () -> R) -> R {
+      if DISetting.Defaults.multiThread {
         pthread_mutex_lock(&unsafeMutex)
         defer { pthread_mutex_unlock(&unsafeMutex) }
         return execute()
+      } else {
+        return execute()
+      }
     }
 }

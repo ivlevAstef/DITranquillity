@@ -16,7 +16,7 @@ internal func log(_ level: DILogLevel, msg: @autoclosure ()->String, brace: LogB
   log(level, msgc: msg, brace: brace)
 }
 
-private let tabulationKey = "di_tranquillity_tabulation"
+private let tabulationKey: String = "di_tranquillity_tabulation"
 
 internal func log(_ level: DILogLevel, msgc: ()->String, brace: LogBrace = .neutral) {
   guard let logFunc = DISetting.Log.fun else {
@@ -27,7 +27,7 @@ internal func log(_ level: DILogLevel, msgc: ()->String, brace: LogBrace = .neut
     return
   }
 
-  var tabulation = (Thread.current.threadDictionary[tabulationKey] as? String) ?? ""
+  var tabulation = ThreadDictionary.get(key: tabulationKey) as? String ?? ""
   if .end == brace {
     if tabulation.count >= DISetting.Log.tab.count && DISetting.Log.tab.count > 0 {
         tabulation.removeLast(DISetting.Log.tab.count)
@@ -35,9 +35,9 @@ internal func log(_ level: DILogLevel, msgc: ()->String, brace: LogBrace = .neut
         assert(tabulation.count >= DISetting.Log.tab.count)
         tabulation.removeAll()
     }
-    Thread.current.threadDictionary[tabulationKey] = tabulation
+    ThreadDictionary.insert(key: tabulationKey, obj: tabulation)
   } else if .begin == brace {
-    Thread.current.threadDictionary[tabulationKey] = tabulation + DISetting.Log.tab
+    ThreadDictionary.insert(key: tabulationKey, obj: tabulation + DISetting.Log.tab)
   }
 
   logFunc(level, tabulation + msgc())

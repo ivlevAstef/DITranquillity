@@ -16,6 +16,7 @@ class DITranquillityTests_Threads: XCTestCase {
   /// Remove support threads, in next version return new improved thread safe.
   
   func test01_ResolvePrototype() {
+    DISetting.Defaults.multiThread = true
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -50,9 +51,12 @@ class DITranquillityTests_Threads: XCTestCase {
     waiter.wait()
     waiter.wait()
     waiter.wait()
+
+    DISetting.Defaults.multiThread = false
   }
   
   func test02_ResolveLazySingle() {
+    DISetting.Defaults.multiThread = true
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -90,9 +94,12 @@ class DITranquillityTests_Threads: XCTestCase {
     waiter.wait()
     waiter.wait()
     waiter.wait()
+
+    DISetting.Defaults.multiThread = false
   }
   
   func test03_ResolveSingle() {
+    DISetting.Defaults.multiThread = true
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -130,9 +137,12 @@ class DITranquillityTests_Threads: XCTestCase {
     waiter.wait()
     waiter.wait()
     waiter.wait()
+
+    DISetting.Defaults.multiThread = false
   }
   
   func test04_ResolveRegister() {
+    DISetting.Defaults.multiThread = true
     let container = DIContainer()
     
     DISetting.Log.fun = nil
@@ -166,5 +176,7 @@ class DITranquillityTests_Threads: XCTestCase {
     waiter.wait()
     waiter.wait()
     waiter.wait()
+
+    DISetting.Defaults.multiThread = false
   }
 }

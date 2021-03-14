@@ -9,8 +9,12 @@
 /// Namespace for settings
 public struct DISetting {
   public struct Defaults {
-    /// Default lifetime of a object
+    /// Default lifetime of a object. By default = .prototype
     public static var lifeTime: DILifeTime = .prototype
+    /// Can resolve/register from more threads or always from one. By default = false
+    /// Setup to true decrease performance but can use from more thread without crash.
+    /// If your use DI only from one thread, for improve perofrmance set false.
+    public static var multiThread: Bool = false
     
     /// Global flag for configuring ViewController view and its subviews injection.
     ///

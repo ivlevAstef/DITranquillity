@@ -47,6 +47,10 @@
 		AB4F30F42503BD2100E74FB7 /* DIComponentPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */; };
 		AB4F30F52503BD2100E74FB7 /* DIComponentPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */; };
 		AB4F30F62503BD2100E74FB7 /* DIComponentPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */; };
+		ABBE383D25FDE60F00DAFB62 /* ThreadDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBE383C25FDE60F00DAFB62 /* ThreadDictionary.swift */; };
+		ABBE383E25FDE60F00DAFB62 /* ThreadDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBE383C25FDE60F00DAFB62 /* ThreadDictionary.swift */; };
+		ABBE383F25FDE60F00DAFB62 /* ThreadDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBE383C25FDE60F00DAFB62 /* ThreadDictionary.swift */; };
+		ABBE384025FDE60F00DAFB62 /* ThreadDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBE383C25FDE60F00DAFB62 /* ThreadDictionary.swift */; };
 		ABDA289B23ABBECD00BEB63F /* DIStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDC23AA75AC00DEA34A /* DIStorage.swift */; };
 		ABDA289C23ABBECD00BEB63F /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDB23AA75AC00DEA34A /* DIContainer.swift */; };
 		ABDA289E23ABBECD00BEB63F /* Multithread.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EB923AA75AC00DEA34A /* Multithread.swift */; };
@@ -65,7 +69,6 @@
 		ABDA28AC23ABBECD00BEB63F /* TypeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBA23AA75AC00DEA34A /* TypeKey.swift */; };
 		ABDA28AD23ABBECD00BEB63F /* MethodMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EC323AA75AC00DEA34A /* MethodMaker.swift */; };
 		ABDA28AE23ABBECD00BEB63F /* FrameworksDependenciesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EC823AA75AC00DEA34A /* FrameworksDependenciesContainer.swift */; };
-		ABDA28AF23ABBECD00BEB63F /* GlobalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBB23AA75AC00DEA34A /* GlobalState.swift */; };
 		ABDA28B123ABBECD00BEB63F /* SwiftLazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60ED723AA75AC00DEA34A /* SwiftLazy.swift */; };
 		ABDA28B223ABBECD00BEB63F /* DILifetime.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60ED823AA75AC00DEA34A /* DILifetime.swift */; };
 		ABDA28B323ABBECD00BEB63F /* DIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60ED623AA75AC00DEA34A /* DIExtensions.swift */; };
@@ -92,9 +95,6 @@
 		ABE60EE123AA75AC00DEA34A /* TypeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBA23AA75AC00DEA34A /* TypeKey.swift */; };
 		ABE60EE223AA75AC00DEA34A /* TypeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBA23AA75AC00DEA34A /* TypeKey.swift */; };
 		ABE60EE323AA75AC00DEA34A /* TypeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBA23AA75AC00DEA34A /* TypeKey.swift */; };
-		ABE60EE423AA75AC00DEA34A /* GlobalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBB23AA75AC00DEA34A /* GlobalState.swift */; };
-		ABE60EE523AA75AC00DEA34A /* GlobalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBB23AA75AC00DEA34A /* GlobalState.swift */; };
-		ABE60EE623AA75AC00DEA34A /* GlobalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBB23AA75AC00DEA34A /* GlobalState.swift */; };
 		ABE60EE723AA75AC00DEA34A /* ProtocolMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBC23AA75AC00DEA34A /* ProtocolMagic.swift */; };
 		ABE60EE823AA75AC00DEA34A /* ProtocolMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBC23AA75AC00DEA34A /* ProtocolMagic.swift */; };
 		ABE60EE923AA75AC00DEA34A /* ProtocolMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBC23AA75AC00DEA34A /* ProtocolMagic.swift */; };
@@ -291,11 +291,11 @@
 		16FADF3F24A701F7007BF1C1 /* Documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Documentation; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIComponentPriority.swift; sourceTree = "<group>"; };
+		ABBE383C25FDE60F00DAFB62 /* ThreadDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadDictionary.swift; sourceTree = "<group>"; };
 		ABDA28D323ABBECD00BEB63F /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABDA28EB23ABE13500BEB63F /* FastLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastLock.swift; sourceTree = "<group>"; };
 		ABE60EB923AA75AC00DEA34A /* Multithread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Multithread.swift; sourceTree = "<group>"; };
 		ABE60EBA23AA75AC00DEA34A /* TypeKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeKey.swift; sourceTree = "<group>"; };
-		ABE60EBB23AA75AC00DEA34A /* GlobalState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalState.swift; sourceTree = "<group>"; };
 		ABE60EBC23AA75AC00DEA34A /* ProtocolMagic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolMagic.swift; sourceTree = "<group>"; };
 		ABE60EBD23AA75AC00DEA34A /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		ABE60EBE23AA75AC00DEA34A /* MethodSignature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodSignature.swift; sourceTree = "<group>"; };
@@ -468,6 +468,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		ABBE383B25FDE5FD00DAFB62 /* threads */ = {
+			isa = PBXGroup;
+			children = (
+				ABDA28EB23ABE13500BEB63F /* FastLock.swift */,
+				ABE60EB923AA75AC00DEA34A /* Multithread.swift */,
+				ABBE383C25FDE60F00DAFB62 /* ThreadDictionary.swift */,
+			);
+			path = threads;
+			sourceTree = "<group>";
+		};
 		ABE60EB723AA75AC00DEA34A /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -480,10 +490,8 @@
 		ABE60EB823AA75AC00DEA34A /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				ABDA28EB23ABE13500BEB63F /* FastLock.swift */,
-				ABE60EB923AA75AC00DEA34A /* Multithread.swift */,
+				ABBE383B25FDE5FD00DAFB62 /* threads */,
 				ABE60EBA23AA75AC00DEA34A /* TypeKey.swift */,
-				ABE60EBB23AA75AC00DEA34A /* GlobalState.swift */,
 				ABE60EBC23AA75AC00DEA34A /* ProtocolMagic.swift */,
 				ABE60EBD23AA75AC00DEA34A /* Log.swift */,
 				ABE60EBE23AA75AC00DEA34A /* MethodSignature.swift */,
@@ -963,7 +971,6 @@
 				1661095724AF18DB009603BF /* DIGraph+ValidationErrors.swift in Sources */,
 				ABE60EFD23AA75AC00DEA34A /* MethodMaker.swift in Sources */,
 				ABE60F0C23AA75AC00DEA34A /* FrameworksDependenciesContainer.swift in Sources */,
-				ABE60EE523AA75AC00DEA34A /* GlobalState.swift in Sources */,
 				1661095224AE23CC009603BF /* DIGraph+Validate.swift in Sources */,
 				ABE60F2D23AA75AC00DEA34A /* SwiftLazy.swift in Sources */,
 				ABE60F3023AA75AC00DEA34A /* DILifetime.swift in Sources */,
@@ -977,6 +984,7 @@
 				ABE60F8123AA75B400DEA34A /* SwiftNSResolver.swift in Sources */,
 				ABE60FA223AA793E00DEA34A /* NSObject+Swizzling.m in Sources */,
 				ABDA28ED23ABE13500BEB63F /* FastLock.swift in Sources */,
+				ABBE383E25FDE60F00DAFB62 /* ThreadDictionary.swift in Sources */,
 				16ABEC1824B37F22007577CF /* DIVertex.swift in Sources */,
 				ABE60F7223AA75B400DEA34A /* StoryboardResolver.swift in Sources */,
 				ABE60EEE23AA75AC00DEA34A /* MethodSignature.swift in Sources */,
@@ -1018,7 +1026,6 @@
 				16ABEC1424B37D1F007577CF /* ComponentAlternativeType.swift in Sources */,
 				ABE60EFE23AA75AC00DEA34A /* MethodMaker.swift in Sources */,
 				ABE60F0D23AA75AC00DEA34A /* FrameworksDependenciesContainer.swift in Sources */,
-				ABE60EE623AA75AC00DEA34A /* GlobalState.swift in Sources */,
 				ABE60F7023AA75B400DEA34A /* UIStoryboard+Swizzling.m in Sources */,
 				ABE60F2E23AA75AC00DEA34A /* SwiftLazy.swift in Sources */,
 				ABE60F3123AA75AC00DEA34A /* DILifetime.swift in Sources */,
@@ -1028,6 +1035,7 @@
 				ABDA28EE23ABE13500BEB63F /* FastLock.swift in Sources */,
 				ABE60F2523AA75AC00DEA34A /* DIContainer.Reg.swift in Sources */,
 				ABE60F8523AA75B400DEA34A /* UITableView+Swizzling.m in Sources */,
+				ABBE383F25FDE60F00DAFB62 /* ThreadDictionary.swift in Sources */,
 				ABE60F7F23AA75B400DEA34A /* DINSResolver.m in Sources */,
 				ABE60F2223AA75AC00DEA34A /* DIComponentBuilder.Injection.swift in Sources */,
 				ABE60F9123AA75B400DEA34A /* DIComponentBuilder+SubviewsInject.swift in Sources */,
@@ -1079,7 +1087,6 @@
 				16ABEC1224B37D1F007577CF /* ComponentAlternativeType.swift in Sources */,
 				ABE60EFC23AA75AC00DEA34A /* MethodMaker.swift in Sources */,
 				ABE60F0B23AA75AC00DEA34A /* FrameworksDependenciesContainer.swift in Sources */,
-				ABE60EE423AA75AC00DEA34A /* GlobalState.swift in Sources */,
 				ABE60F6E23AA75B300DEA34A /* UIStoryboard+Swizzling.m in Sources */,
 				ABE60F2C23AA75AC00DEA34A /* SwiftLazy.swift in Sources */,
 				ABE60F2F23AA75AC00DEA34A /* DILifetime.swift in Sources */,
@@ -1089,6 +1096,7 @@
 				ABDA28EC23ABE13500BEB63F /* FastLock.swift in Sources */,
 				ABE60F2323AA75AC00DEA34A /* DIContainer.Reg.swift in Sources */,
 				ABE60F8323AA75B400DEA34A /* UITableView+Swizzling.m in Sources */,
+				ABBE383D25FDE60F00DAFB62 /* ThreadDictionary.swift in Sources */,
 				ABE60F7D23AA75B400DEA34A /* DINSResolver.m in Sources */,
 				ABE60F2023AA75AC00DEA34A /* DIComponentBuilder.Injection.swift in Sources */,
 				ABE60F8F23AA75B400DEA34A /* DIComponentBuilder+SubviewsInject.swift in Sources */,
@@ -1137,11 +1145,11 @@
 				ABDA28AA23ABBECD00BEB63F /* DIPart.swift in Sources */,
 				ABDA28AB23ABBECD00BEB63F /* DIContainer+Extensions.swift in Sources */,
 				16ABEC1A24B37F22007577CF /* DIVertex.swift in Sources */,
+				ABBE384025FDE60F00DAFB62 /* ThreadDictionary.swift in Sources */,
 				ABDA28AC23ABBECD00BEB63F /* TypeKey.swift in Sources */,
 				ABDA28AD23ABBECD00BEB63F /* MethodMaker.swift in Sources */,
 				ABDA28AE23ABBECD00BEB63F /* FrameworksDependenciesContainer.swift in Sources */,
 				16ABEC1524B37D1F007577CF /* ComponentAlternativeType.swift in Sources */,
-				ABDA28AF23ABBECD00BEB63F /* GlobalState.swift in Sources */,
 				ABDA28B123ABBECD00BEB63F /* SwiftLazy.swift in Sources */,
 				ABDA28B223ABBECD00BEB63F /* DILifetime.swift in Sources */,
 				ABDA28B323ABBECD00BEB63F /* DIExtensions.swift in Sources */,

@@ -53,11 +53,12 @@ func gmake<T>(by obj: Any?) -> T {
       if nil == obj {
         fatalError("Can't resolve type \(T.self). For more information see logs.")
       } else if nil == unwrapObj { // DI found and return obj, but registration make nil object
-        if let lastComponent = GlobalState.lastComponent {
-          fatalError("Registration with type found \(T.self), but the registration return nil. See \(lastComponent)")
-        } else {
-          fatalError("Registration with type found \(T.self), but the registration return nil.")
-        }
+        fatalError("""
+          Registration with type found \(T.self), but the registration return nil.
+          Check you code - maybe in registration method you return nil object. For example:
+          var obj: Obj? = nil
+          container.register { obj }
+        """)
       } else {
         fatalError("Can't cast \(type(of: obj)) to \(T.self). For more information see logs.")
       }

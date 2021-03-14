@@ -53,9 +53,13 @@ public final class DIContainer {
   }
   
   final class Stack<T> {
-    private let key = "DITranquillity_DIContainer_Stack_ThreadSafe_\(T.self)"
+    private let key: String
     
     var last: T? { return stack?.last }
+
+    init(key: String) {
+      self.key = key
+    }
     
     func push(_ element: T) {
       if let stack = self.stack {
@@ -72,14 +76,14 @@ public final class DIContainer {
     }
     
     private var stack: [T]? {
-      set { return Thread.current.threadDictionary[key] = newValue }
-      get { return Thread.current.threadDictionary[key] as? [T] }
+      set { ThreadDictionary.insert(key: key, obj: newValue ?? []) }
+      get { return ThreadDictionary.get(key: key) as? [T] }
     }
   }
   
   internal let includedParts = IncludedParts()
-  internal let partStack = Stack<DIPart.Type>()
-  internal let frameworkStack = Stack<DIFramework.Type>()
+  internal let partStack = Stack<DIPart.Type>(key: "DIContainer_Stack_Part")
+  internal let frameworkStack = Stack<DIFramework.Type>(key: "DIContainer_Stack_Framework")
 }
 
 // MARK: - register
