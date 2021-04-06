@@ -12,21 +12,27 @@ final class ParsedType {
   let sType: SpecificType.Type?
   let parent: ParsedType?
 
-  private(set) lazy var base: ParsedType = {
+  var base: ParsedType { _base ?? makeBase() }
+  private unowned var _base: ParsedType? = nil
+  private func makeBase() -> ParsedType {
     var iter = self
     while let parent = iter.parent {
-        iter = parent
+      iter = parent
     }
+    _base = iter
     return iter
-  }()
+  }
 
-  private(set) lazy var firstNotSwiftType: ParsedType = {
+  var firstNotSwiftType: ParsedType { _firstNotSwiftType ?? makeFirstNotSwiftType() }
+  private unowned var _firstNotSwiftType: ParsedType? = nil
+  private func makeFirstNotSwiftType() -> ParsedType {
     var iter = self
     while let sType = iter.sType, let parent = iter.parent, sType.isSwiftType {
       iter = parent
     }
+    _firstNotSwiftType = iter
     return iter
-  }()
+  }
 
   private(set) lazy var many: Bool = { return sType?.many ?? false }()
   private(set) lazy var optional: Bool = {
@@ -97,11 +103,9 @@ final class ParsedType {
     return nil
   }
 
-  @inline(__always)
-  private func oGet(_ value1: Bool?, _ value2: @autoclosure () -> Bool?) -> Bool
-  {
+  private func oGet(_ value1: Bool?, _ value2: @autoclosure () -> Bool?) -> Bool {
     if true == value1 {
-        return true
+      return true
     }
     return value2() ?? false
   }

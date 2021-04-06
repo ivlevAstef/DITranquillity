@@ -26,49 +26,47 @@ private class PerformanceTest {
 
 class DITranquillityTests_Performance: XCTestCase {
   /*
-   /// time for core i7-6800K in virtual machine
+   /// time for 9 GHz 6-Core Intel Core i9
    register count:
-   1000 = 0.040
-   2000 = 0.135
-   4000 = 0.532
-   8000 = 2.217
-   not linear!!!
-   but 1k classes it's more.
-   0.000008 per register
+   1000 = 0,00342 s
+   2000 = 0,00694 s
+   4000 = 0,0121 s
+   8000 = 0,023 s
+   linear - 0.000004 per register
    
    parameters count (for 2000):
-   0 = 0.131
-   1 = 0.135
-   2 = 0.134
-   3 = 0.137
-   8 = 0.136
+   0 = 0,00788 s
+   1 = 0,00945 s
+   2 = 0,0101 s
+   3 = 0,0111 s
+   8 = 0,0141 s
    linear - 0.001 sec or 0.5%
    increase register time on 0.0000005 per parameter
    
    resolve (for 50000):
-   prototype = 0.101
-   objectGraph = 0.264
-   single = 0.227
-   0.000003 per resolve with one register
+   prototype = 0,0197 s
+   objectGraph = 0,0353 s
+   single = 0,104 s
    
    resolve by register count (for 50000):
-   250 = 0.419
-   500 = 0.798
-   1000 = 1.607
-   2000 = 3.726
+   250 = 0,35 s
+   500 = 0,647 s
+   1000 = 1,27 s
+   2000 = 2,63 s
    linear
    resolve type increase on 0.0011 (for 50000) per one register
    0.00002 per resolve with 1000 register
    
    inject count (for 2000):
-   1 = 0.137
-   2 = 0.142
-   4 = 0.146
-   8 = 0.163
-   16 = 0.216
-   not linear, but this is not critical
-   increase register time on 0.000022 per injection
-   
+   1 = 0,0126 s
+   2 = 0,0168 s
+   4 = 0,0273 s
+   8 = 0,046 s
+   16 = 0,0832 s
+   around linear, but this is not critical
+
+   complex prototype (for 1000): 0,551 s
+   complex objectGraph (for 1000): 0,119 s
    */
   
   func test01_registerType() {

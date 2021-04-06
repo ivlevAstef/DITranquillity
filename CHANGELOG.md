@@ -1,3 +1,6 @@
+# v4.2.1
+* Fix memory leak ParsedType. About bug in comments [#159](https://github.com/ivlevAstef/DITranquillity/issues/159) issue
+
 # v4.2.0
 * Add new settings - enable disable multithread support. Default enable.
 * Improve resolve speed - fix small performance bug.
