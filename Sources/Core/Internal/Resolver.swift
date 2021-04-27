@@ -31,8 +31,8 @@ class Resolver {
   func resolveCached(component: Component) {
     log(.verbose, msg: "Begin resolve cached object by component: \(component.info)", brace: .begin)
     defer { log(.verbose, msg: "End resolve cached object by component: \(component.info)", brace: .end) }
-    
-    _ = makeObject(by: component, use: nil)
+
+    mutex.sync { _ = makeObject(by: component, use: nil) }
   }
   
   func resolve<T>(type: T.Type = T.self, component: Component) -> T {
@@ -402,8 +402,8 @@ class Resolver {
   private var stack: ContiguousArray<Component.UniqueKey> = []
 
   private class Cache {
-    fileprivate static let singleStorage = DICacheStorage()
-    fileprivate let containerStorage = DICacheStorage()
+    fileprivate static let singleStorage = DIUnsafeCacheStorage()
+    fileprivate let containerStorage = DIUnsafeCacheStorage()
 
     fileprivate static var single = DIScope(name: "single", storage: singleStorage, policy: .strong)
     fileprivate static var weakPerRun = DIScope(name: "per run", storage: singleStorage, policy: .weak)
@@ -413,7 +413,7 @@ class Resolver {
     fileprivate var graph = makeGraphScope()
 
     fileprivate static func makeGraphScope() -> DIScope {
-      return DIScope(name: "object graph", storage: DICacheStorage(), policy: .strong)
+      return DIScope(name: "object graph", storage: DIUnsafeCacheStorage(), policy: .strong)
     }
 
     fileprivate var cycleInjectionQueue: ContiguousArray<(obj: Any?, signature: MethodSignature)> = []

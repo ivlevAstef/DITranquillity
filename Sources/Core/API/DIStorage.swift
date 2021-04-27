@@ -30,30 +30,38 @@ public protocol DIStorage {
 }
 
 
-/// Contains objects in dictionary by keys
+/// Contains objects in dictionary by keys.
 public class DICacheStorage: DIStorage {
   public var any: [DIComponentInfo: Any] {
+    lock.lock()
+    defer { lock.unlock() }
     return cache
   }
 
   private var cache: [DIComponentInfo: Any] = [:]
+  private var lock = makeFastLock()
 
   public init() {
   }
 
   public func fetch(key: DIComponentInfo) -> Any? {
+    lock.lock()
+    defer { lock.unlock() }
     return cache[key]
   }
 
   public func save(object: Any, by key: DIComponentInfo) {
+    lock.lock()
+    defer { lock.unlock() }
     cache[key] = object
   }
 
   public func clean() {
+    lock.lock()
+    defer { lock.unlock() }
     cache.removeAll()
   }
 }
-
 
 /// Unite few storages for fetch from first containing and save to all.
 public class DICompositeStorage: DIStorage {
@@ -99,5 +107,27 @@ public class DICompositeStorage: DIStorage {
   /// Remove all save objects from all storages
   public func clean() {
     storages.forEach { $0.clean() }
+  }
+}
+
+
+/// Contains objects in dictionary by keys
+class DIUnsafeCacheStorage: DIStorage {
+  var any: [DIComponentInfo: Any] {
+    return cache
+  }
+
+  private var cache: [DIComponentInfo: Any] = [:]
+
+  func fetch(key: DIComponentInfo) -> Any? {
+    return cache[key]
+  }
+
+  func save(object: Any, by key: DIComponentInfo) {
+    cache[key] = object
+  }
+
+  func clean() {
+    cache.removeAll()
   }
 }

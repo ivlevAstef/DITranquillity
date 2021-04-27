@@ -1,3 +1,7 @@
+# v4.2.2
+* Improve thread safe for public scopes. Actually only if you use custom lifetime.
+* Fix thread safe for methods `initializeSingletonObjects` and `initializeObjectsForScope`
+
 # v4.2.1
 * Fix memory leak ParsedType. About bug in comments [#159](https://github.com/ivlevAstef/DITranquillity/issues/159) issue
 
