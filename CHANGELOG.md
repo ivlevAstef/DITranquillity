@@ -1,3 +1,6 @@
+# v4.2.3
+* Fix potential crash into FastLock. For more information saw: https://github.com/ivlevAstef/SwiftLazy/issues/6
+
 # v4.2.2
 * Improve thread safe for public scopes. Actually only if you use custom lifetime.
 * Fix thread safe for methods `initializeSingletonObjects` and `initializeObjectsForScope`

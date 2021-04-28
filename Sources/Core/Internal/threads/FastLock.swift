@@ -68,14 +68,24 @@ import Darwin
 @available(iOS 10.0, *)
 @available(watchOS 3.0, *)
 private class UnfairLock: FastLock {
-  private var monitor: os_unfair_lock = os_unfair_lock()
+  private let monitor: os_unfair_lock_t
+
+  init() {
+    monitor = .allocate(capacity: 1)
+    monitor.initialize(to: os_unfair_lock())
+  }
+
+  deinit {
+    monitor.deinitialize(count: 1)
+    monitor.deallocate()
+  }
 
   func lock() {
-    os_unfair_lock_lock(&monitor)
+    os_unfair_lock_lock(monitor)
   }
 
   func unlock() {
-    os_unfair_lock_unlock(&monitor)
+    os_unfair_lock_unlock(monitor)
   }
 }
 
