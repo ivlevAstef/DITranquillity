@@ -25,6 +25,8 @@ public prefix func *<T>(container: DIContainer) -> T {
 /// allows you to register new components, parts, frameworks and
 /// allows you to receive objects by type.
 public final class DIContainer {
+  /// Extensions for container. Use this components, for subscribe on event from container about registration or resolve or make component.
+  public let extensions = DIExtensions()
 
   /// Make entry point for library
   ///
@@ -135,9 +137,21 @@ extension DIContainer {
   /// But if the type is optional, then the application will not crash, but it returns nil.
   ///
   /// - Parameter framework: Framework from which to resolve a object
+  /// - Parameter arguments: Information about injection arguments. Used only if your registration objects with `arg` modificator.
   /// - Returns: Object for the specified type, or nil (see description).
-  public func resolve<T>(from framework: DIFramework.Type? = nil) -> T {
-    return resolver.resolve(from: framework)
+  public func resolve<T>(from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) -> T {
+    return resolver.resolve(from: framework, arguments: arguments)
+  }
+
+  /// Resolve object by type.
+  /// Can crash application, if can't found the type.
+  /// But if the type is optional, then the application will not crash, but it returns nil.
+  ///
+  /// - Parameter framework: Framework from which to resolve a object
+  /// - Parameter arguments: arguments for resolved object by type.
+  /// - Returns: Object for the specified type, or nil (see description).
+  public func resolve<T>(from framework: DIFramework.Type? = nil, args: Any?...) -> T {
+    return resolver.resolve(from: framework, arguments: AnyArguments(for: T.self, argsArray: args))
   }
   
   /// Resolve object by type with tag.
@@ -147,9 +161,10 @@ extension DIContainer {
   /// - Parameters:
   ///   - tag: Resolve tag.
   ///   - framework: Framework from which to resolve a object
+  ///   - arguments: Information about injection arguments. Used only if your registration objects with `arg` modificator.
   /// - Returns: Object for the specified type with tag, or nil (see description).
-  public func resolve<T, Tag>(tag: Tag.Type, from framework: DIFramework.Type? = nil) -> T {
-    return by(tag: tag, on: resolver.resolve(from: framework))
+  public func resolve<T, Tag>(tag: Tag.Type, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) -> T {
+    return by(tag: tag, on: resolver.resolve(from: framework, arguments: arguments))
   }
   
   /// Resolve object by type with name.
@@ -159,16 +174,18 @@ extension DIContainer {
   /// - Parameters:
   ///   - name: Resolve name.
   ///   - framework: Framework from which to resolve a object
+  ///   - arguments: Information about injection arguments. Used only if your registration objects with `arg` modificator.
   /// - Returns: Object for the specified type with name, or nil (see description).
-  public func resolve<T>(name: String, from framework: DIFramework.Type? = nil) -> T {
-    return resolver.resolve(name: name, from: framework)
+  public func resolve<T>(name: String, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) -> T {
+    return resolver.resolve(name: name, from: framework, arguments: arguments)
   }
   
   /// Resolve many objects by type.
   ///
+  /// - Parameter arguments: Information about injection arguments. Used only if your registration objects with `arg` modificator.
   /// - Returns: Objects for the specified type.
-  public func resolveMany<T>() -> [T] {
-    return many(resolver.resolve())
+  public func resolveMany<T>(arguments: AnyArguments? = nil) -> [T] {
+    return many(resolver.resolve(arguments: arguments))
   }
   
   /// Injected all dependencies into object.

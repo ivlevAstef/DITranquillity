@@ -20,6 +20,8 @@ public final class DIComponentBuilder<Impl> {
     #if os(iOS) || os(tvOS)
       useInjectIntoSubviewComponent()
     #endif
+
+    container.extensions.componentRegistration?(componentInfo)
   }
   
   deinit {

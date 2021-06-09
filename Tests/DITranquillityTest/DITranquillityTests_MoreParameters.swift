@@ -2,7 +2,7 @@
 //  DITranquillityTests_MoreParameters.swift
 //  DITranquillity-iOS
 //
-//  Created by Ивлев Александр Евгеньевич on 17/05/2018.
+//  Created by Alexander Ivlev on 17/05/2018.
 //  Copyright © 2018 Alexander Ivlev. All rights reserved.
 //
 

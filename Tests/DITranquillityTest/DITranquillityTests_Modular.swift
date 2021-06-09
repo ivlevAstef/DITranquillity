@@ -2,7 +2,7 @@
 //  DITranquillityTests_Modular.swift
 //  DITranquillityTests
 //
-//  Created by Ивлев А.Е. on 17/02/2020.
+//  Created by Alexander Ivlev on 17/02/2020.
 //  Copyright © 2020 Alexander Ivlev. All rights reserved.
 //
 

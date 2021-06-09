@@ -2,7 +2,7 @@
 //  ViewController+Children.swift
 //  DITranquillity
 //
-//  Created by Ивлев Александр Евгеньевич on 31/08/2018.
+//  Created by Alexander Ivlev on 31/08/2018.
 //  Copyright © 2018 Alexander Ivlev. All rights reserved.
 //
 

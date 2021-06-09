@@ -47,6 +47,10 @@
 		AB4F30F42503BD2100E74FB7 /* DIComponentPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */; };
 		AB4F30F52503BD2100E74FB7 /* DIComponentPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */; };
 		AB4F30F62503BD2100E74FB7 /* DIComponentPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */; };
+		AB4F47A72670C98700EB5BF4 /* AnyArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F47A62670C98700EB5BF4 /* AnyArguments.swift */; };
+		AB4F47A82670C98700EB5BF4 /* AnyArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F47A62670C98700EB5BF4 /* AnyArguments.swift */; };
+		AB4F47A92670C98700EB5BF4 /* AnyArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F47A62670C98700EB5BF4 /* AnyArguments.swift */; };
+		AB4F47AA2670C98700EB5BF4 /* AnyArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F47A62670C98700EB5BF4 /* AnyArguments.swift */; };
 		ABBE383D25FDE60F00DAFB62 /* ThreadDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBE383C25FDE60F00DAFB62 /* ThreadDictionary.swift */; };
 		ABBE383E25FDE60F00DAFB62 /* ThreadDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBE383C25FDE60F00DAFB62 /* ThreadDictionary.swift */; };
 		ABBE383F25FDE60F00DAFB62 /* ThreadDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBE383C25FDE60F00DAFB62 /* ThreadDictionary.swift */; };
@@ -65,7 +69,6 @@
 		ABDA28A723ABBECD00BEB63F /* DIComponentBuilder+EmptySubviewsInject.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBF23AA75AC00DEA34A /* DIComponentBuilder+EmptySubviewsInject.swift */; };
 		ABDA28A823ABBECD00BEB63F /* Modificators.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EC523AA75AC00DEA34A /* Modificators.swift */; };
 		ABDA28AA23ABBECD00BEB63F /* DIPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60ECD23AA75AC00DEA34A /* DIPart.swift */; };
-		ABDA28AB23ABBECD00BEB63F /* DIContainer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDD23AA75AC00DEA34A /* DIContainer+Extensions.swift */; };
 		ABDA28AC23ABBECD00BEB63F /* TypeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EBA23AA75AC00DEA34A /* TypeKey.swift */; };
 		ABDA28AD23ABBECD00BEB63F /* MethodMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EC323AA75AC00DEA34A /* MethodMaker.swift */; };
 		ABDA28AE23ABBECD00BEB63F /* FrameworksDependenciesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EC823AA75AC00DEA34A /* FrameworksDependenciesContainer.swift */; };
@@ -173,9 +176,6 @@
 		ABE60F3B23AA75AC00DEA34A /* DIStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDC23AA75AC00DEA34A /* DIStorage.swift */; };
 		ABE60F3C23AA75AC00DEA34A /* DIStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDC23AA75AC00DEA34A /* DIStorage.swift */; };
 		ABE60F3D23AA75AC00DEA34A /* DIStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDC23AA75AC00DEA34A /* DIStorage.swift */; };
-		ABE60F3E23AA75AC00DEA34A /* DIContainer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDD23AA75AC00DEA34A /* DIContainer+Extensions.swift */; };
-		ABE60F3F23AA75AC00DEA34A /* DIContainer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDD23AA75AC00DEA34A /* DIContainer+Extensions.swift */; };
-		ABE60F4023AA75AC00DEA34A /* DIContainer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDD23AA75AC00DEA34A /* DIContainer+Extensions.swift */; };
 		ABE60F5D23AA75B300DEA34A /* DIStoryboardBase.h in Headers */ = {isa = PBXBuildFile; fileRef = ABE60F4423AA75B300DEA34A /* DIStoryboardBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ABE60F6023AA75B300DEA34A /* DIStoryboardBase.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE60F4523AA75B300DEA34A /* DIStoryboardBase.m */; };
 		ABE60F6323AA75B300DEA34A /* NSStoryboard+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE60F4623AA75B300DEA34A /* NSStoryboard+Swizzling.m */; };
@@ -291,6 +291,7 @@
 		16FADF3F24A701F7007BF1C1 /* Documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Documentation; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIComponentPriority.swift; sourceTree = "<group>"; };
+		AB4F47A62670C98700EB5BF4 /* AnyArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyArguments.swift; sourceTree = "<group>"; };
 		ABBE383C25FDE60F00DAFB62 /* ThreadDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadDictionary.swift; sourceTree = "<group>"; };
 		ABDA28D323ABBECD00BEB63F /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABDA28EB23ABE13500BEB63F /* FastLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastLock.swift; sourceTree = "<group>"; };
@@ -325,7 +326,6 @@
 		ABE60EDA23AA75AC00DEA34A /* DITypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DITypes.swift; sourceTree = "<group>"; };
 		ABE60EDB23AA75AC00DEA34A /* DIContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		ABE60EDC23AA75AC00DEA34A /* DIStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIStorage.swift; sourceTree = "<group>"; };
-		ABE60EDD23AA75AC00DEA34A /* DIContainer+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DIContainer+Extensions.swift"; sourceTree = "<group>"; };
 		ABE60F4423AA75B300DEA34A /* DIStoryboardBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIStoryboardBase.h; sourceTree = "<group>"; };
 		ABE60F4523AA75B300DEA34A /* DIStoryboardBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIStoryboardBase.m; sourceTree = "<group>"; };
 		ABE60F4623AA75B300DEA34A /* NSStoryboard+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSStoryboard+Swizzling.m"; sourceTree = "<group>"; };
@@ -505,6 +505,7 @@
 				ABE60EC623AA75AC00DEA34A /* SpecificType.swift */,
 				ABE60EC723AA75AC00DEA34A /* Component.swift */,
 				ABE60EC823AA75AC00DEA34A /* FrameworksDependenciesContainer.swift */,
+				AB4F47A62670C98700EB5BF4 /* AnyArguments.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -524,7 +525,6 @@
 				ABE60EDA23AA75AC00DEA34A /* DITypes.swift */,
 				ABE60EDB23AA75AC00DEA34A /* DIContainer.swift */,
 				ABE60EDC23AA75AC00DEA34A /* DIStorage.swift */,
-				ABE60EDD23AA75AC00DEA34A /* DIContainer+Extensions.swift */,
 				16ABEC1124B37D1F007577CF /* ComponentAlternativeType.swift */,
 			);
 			path = API;
@@ -946,6 +946,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB4F47A82670C98700EB5BF4 /* AnyArguments.swift in Sources */,
 				ABE60F3C23AA75AC00DEA34A /* DIStorage.swift in Sources */,
 				160F0EB724AB06F400723F28 /* DIGraph.swift in Sources */,
 				16ABEC1D24B37F49007577CF /* DIEdge.swift in Sources */,
@@ -966,7 +967,6 @@
 				AB4F30F42503BD2100E74FB7 /* DIComponentPriority.swift in Sources */,
 				ABE60F6623AA75B300DEA34A /* DIStoryboard.swift in Sources */,
 				ABE60F1523AA75AC00DEA34A /* DIPart.swift in Sources */,
-				ABE60F3F23AA75AC00DEA34A /* DIContainer+Extensions.swift in Sources */,
 				ABE60EE223AA75AC00DEA34A /* TypeKey.swift in Sources */,
 				1661095724AF18DB009603BF /* DIGraph+ValidationErrors.swift in Sources */,
 				ABE60EFD23AA75AC00DEA34A /* MethodMaker.swift in Sources */,
@@ -1012,6 +1012,7 @@
 				ABE60F3723AA75AC00DEA34A /* DITypes.swift in Sources */,
 				ABE60EE923AA75AC00DEA34A /* ProtocolMagic.swift in Sources */,
 				16ABEC1E24B37F49007577CF /* DIEdge.swift in Sources */,
+				AB4F47A92670C98700EB5BF4 /* AnyArguments.swift in Sources */,
 				ABE60EEC23AA75AC00DEA34A /* Log.swift in Sources */,
 				ABE60EF523AA75AC00DEA34A /* Resolver.swift in Sources */,
 				ABE60F1923AA75AC00DEA34A /* DISettings.swift in Sources */,
@@ -1021,7 +1022,6 @@
 				ABE60F0423AA75AC00DEA34A /* Modificators.swift in Sources */,
 				ABE60F6723AA75B300DEA34A /* DIStoryboard.swift in Sources */,
 				ABE60F1623AA75AC00DEA34A /* DIPart.swift in Sources */,
-				ABE60F4023AA75AC00DEA34A /* DIContainer+Extensions.swift in Sources */,
 				ABE60EE323AA75AC00DEA34A /* TypeKey.swift in Sources */,
 				16ABEC1424B37D1F007577CF /* ComponentAlternativeType.swift in Sources */,
 				ABE60EFE23AA75AC00DEA34A /* MethodMaker.swift in Sources */,
@@ -1073,6 +1073,7 @@
 				ABE60F3523AA75AC00DEA34A /* DITypes.swift in Sources */,
 				ABE60EE723AA75AC00DEA34A /* ProtocolMagic.swift in Sources */,
 				16ABEC1C24B37F49007577CF /* DIEdge.swift in Sources */,
+				AB4F47A72670C98700EB5BF4 /* AnyArguments.swift in Sources */,
 				ABE60EEA23AA75AC00DEA34A /* Log.swift in Sources */,
 				ABE60EF323AA75AC00DEA34A /* Resolver.swift in Sources */,
 				ABE60F1723AA75AC00DEA34A /* DISettings.swift in Sources */,
@@ -1082,7 +1083,6 @@
 				ABE60F0223AA75AC00DEA34A /* Modificators.swift in Sources */,
 				ABE60F6523AA75B300DEA34A /* DIStoryboard.swift in Sources */,
 				ABE60F1423AA75AC00DEA34A /* DIPart.swift in Sources */,
-				ABE60F3E23AA75AC00DEA34A /* DIContainer+Extensions.swift in Sources */,
 				ABE60EE123AA75AC00DEA34A /* TypeKey.swift in Sources */,
 				16ABEC1224B37D1F007577CF /* ComponentAlternativeType.swift in Sources */,
 				ABE60EFC23AA75AC00DEA34A /* MethodMaker.swift in Sources */,
@@ -1134,6 +1134,7 @@
 				1661095924AF18DB009603BF /* DIGraph+ValidationErrors.swift in Sources */,
 				ABDA28A023ABBECD00BEB63F /* SpecificType.swift in Sources */,
 				ABDA28A123ABBECD00BEB63F /* DITypes.swift in Sources */,
+				AB4F47AA2670C98700EB5BF4 /* AnyArguments.swift in Sources */,
 				ABDA28A223ABBECD00BEB63F /* ProtocolMagic.swift in Sources */,
 				ABDA28A323ABBECD00BEB63F /* Log.swift in Sources */,
 				ABDA28A423ABBECD00BEB63F /* Resolver.swift in Sources */,
@@ -1143,7 +1144,6 @@
 				ABDA28A723ABBECD00BEB63F /* DIComponentBuilder+EmptySubviewsInject.swift in Sources */,
 				ABDA28A823ABBECD00BEB63F /* Modificators.swift in Sources */,
 				ABDA28AA23ABBECD00BEB63F /* DIPart.swift in Sources */,
-				ABDA28AB23ABBECD00BEB63F /* DIContainer+Extensions.swift in Sources */,
 				16ABEC1A24B37F22007577CF /* DIVertex.swift in Sources */,
 				ABBE384025FDE60F00DAFB62 /* ThreadDictionary.swift in Sources */,
 				ABDA28AC23ABBECD00BEB63F /* TypeKey.swift in Sources */,
@@ -1220,7 +1220,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 4.2.3;
+				MARKETING_VERSION = 4.3.0;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-OSX";
 				PRODUCT_NAME = DITranquillity;
@@ -1260,7 +1260,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 4.2.3;
+				MARKETING_VERSION = 4.3.0;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-OSX";
 				PRODUCT_NAME = DITranquillity;
@@ -1301,7 +1301,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 4.2.3;
+				MARKETING_VERSION = 4.3.0;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-tvOS";
 				PRODUCT_MODULE_NAME = DITranquillity;
@@ -1344,7 +1344,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 4.2.3;
+				MARKETING_VERSION = 4.3.0;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-tvOS";
 				PRODUCT_MODULE_NAME = DITranquillity;
@@ -1507,7 +1507,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 4.2.3;
+				MARKETING_VERSION = 4.3.0;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-iOS";
 				PRODUCT_NAME = DITranquillity;
@@ -1551,7 +1551,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 4.2.3;
+				MARKETING_VERSION = 4.3.0;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-iOS";
 				PRODUCT_NAME = DITranquillity;
@@ -1594,7 +1594,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 4.2.3;
+				MARKETING_VERSION = 4.3.0;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-WatchOS";
 				PRODUCT_MODULE_NAME = DITranquillity;
@@ -1640,7 +1640,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 4.2.3;
+				MARKETING_VERSION = 4.3.0;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-WatchOS";
 				PRODUCT_MODULE_NAME = DITranquillity;

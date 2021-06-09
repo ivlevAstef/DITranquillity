@@ -1,3 +1,7 @@
+# v4.3.0
+Warning! This version change public API!
+* Update arguments. Now inject arguments it's thread save operation. Also change syntax - remove extensions, and now inject arguments use resolve method in container. [see](Documentation/ru/core/modificated_injection.md#Аргумент) https://github.com/ivlevAstef/DITranquillity/issues/159
+
 # v4.2.3
 * Fix potential crash into FastLock. For more information saw: https://github.com/ivlevAstef/SwiftLazy/issues/6
 

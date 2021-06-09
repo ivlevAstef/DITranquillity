@@ -2,7 +2,7 @@
 //  DITranquillityTests_Parent.swift
 //  DITranquillityTests
 //
-//  Created by Ивлев Александр Евгеньевич on 26/09/2018.
+//  Created by Alexander Ivlev on 26/09/2018.
 //  Copyright © 2018 Alexander Ivlev. All rights reserved.
 //
 

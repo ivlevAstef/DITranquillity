@@ -2,7 +2,7 @@
 //  DIGraph.swift
 //  DITranquillity
 //
-//  Created by Ивлев А.Е. on 30.06.2020.
+//  Created by Alexander Ivlev on 30.06.2020.
 //  Copyright © 2020 Alexander Ivlev. All rights reserved.
 //
 

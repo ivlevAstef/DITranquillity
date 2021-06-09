@@ -2,7 +2,7 @@
 //  DILifetime.swift
 //  DITranquillity
 //
-//  Created by Ивлев Александр on 12/02/2019.
+//  Created by Alexander Ivlev on 12/02/2019.
 //  Copyright © 2019 Alexander Ivlev. All rights reserved.
 //
 

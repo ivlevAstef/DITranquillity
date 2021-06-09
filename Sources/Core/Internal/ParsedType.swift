@@ -2,7 +2,8 @@
 //  ParsedType.swift
 //  DITranquillity
 //
-//  Created by Ивлев Александр on 06/12/2018.
+//  Created by Alexander Ivlev on 06/12/2018.
+//  Copyright © 2018 Alexander Ivlev. All rights reserved.
 //
 
 final class ParsedType {
