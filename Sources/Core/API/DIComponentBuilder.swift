@@ -10,7 +10,10 @@
 /// To create a used function `register(_:)` in class `ContainerBuilder`.
 /// The class allows you to configure all the necessary properties for the component.
 public final class DIComponentBuilder<Impl> {
+  private weak var extensions: DIExtensions?
+
   init(container: DIContainer, componentInfo: DIComponentInfo) {
+    self.extensions = container.extensions
     self.component = Component(componentInfo: componentInfo,
                                in: container.frameworkStack.last, container.partStack.last)
     self.componentContainer = container.componentContainer
@@ -20,8 +23,6 @@ public final class DIComponentBuilder<Impl> {
     #if os(iOS) || os(tvOS)
       useInjectIntoSubviewComponent()
     #endif
-
-    container.extensions.componentRegistration?(componentInfo)
   }
   
   deinit {
@@ -35,6 +36,8 @@ public final class DIComponentBuilder<Impl> {
       msg += "\(DISetting.Log.tab)injections: \(component.injections.count)\n"
       return msg
     })
+
+    extensions?.componentRegistration?(DIComponentVertex(component: component))
   }
   
   let component: Component

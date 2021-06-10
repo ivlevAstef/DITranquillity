@@ -9,7 +9,7 @@
 /// сlass to extend possible actions related to object creation
 public class DIExtensions {
   /// Subscribe on type registration into your container
-  public var componentRegistration: ((_ component: DIComponentInfo) -> Void)?
+  public var componentRegistration: ((_ component: DIComponentVertex) -> Void)?
 
   /// Subscribe on object resolved into your container
   public var objectResolved: ((_ component: DIComponentInfo, _ obj: Any?) -> Void)?
