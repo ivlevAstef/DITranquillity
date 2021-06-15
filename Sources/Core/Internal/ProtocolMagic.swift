@@ -87,6 +87,14 @@ func unwrapType(_ type: DIAType) -> DIAType {
   return iter
 }
 
+func swiftType(_ type: DIAType) -> DIAType {
+    var iter = type
+    while let unwrap = iter as? SpecificType.Type {
+        iter = unwrap.type
+    }
+    return iter
+}
+
 /// For simple log
 
 func description(type parsedType: ParsedType) -> String {

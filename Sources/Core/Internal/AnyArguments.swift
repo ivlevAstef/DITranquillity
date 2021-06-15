@@ -33,17 +33,17 @@ public struct AnyArguments {
 
   /// If need inject arguments in one type, your can use this initialization
   public init(for type: DIAType, args: Any?...) {
-    typesWithArgs.append((ObjectIdentifier(type), Arguments(args: args)))
+    typesWithArgs.append((ObjectIdentifier(swiftType(type)), Arguments(args: args)))
   }
 
   internal init(for type: DIAType, argsArray: [Any?]) {
-    typesWithArgs.append((ObjectIdentifier(type), Arguments(args: argsArray)))
+    typesWithArgs.append((ObjectIdentifier(swiftType(type)), Arguments(args: argsArray)))
   }
 
   /// add arguments for specified type.
   @discardableResult
   public mutating func addArgs(for type: DIAType, args: Any?...) -> Self {
-    typesWithArgs.append((ObjectIdentifier(type), Arguments(args: args)))
+    typesWithArgs.append((ObjectIdentifier(swiftType(type)), Arguments(args: args)))
     return self
   }
 

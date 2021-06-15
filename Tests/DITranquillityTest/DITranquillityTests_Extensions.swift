@@ -135,5 +135,30 @@ class DITranquillityTests_Extensions: XCTestCase {
     XCTAssertEqual(obj.p2, "test")
     XCTAssertEqual(obj.p3, 15.0)
   }
+
+  func test06_OptionalClass() {
+    let container = DIContainer()
+
+    container.register{ OptionalClass(p1: arg($0), p2: $1, p3: arg($2)) }
+
+    let obj: OptionalClass? = container.resolve(args: nil, 22.2)
+
+    XCTAssertNil(obj?.p1)
+    XCTAssertNil(obj?.p2)
+    XCTAssertEqual(obj?.p3, 22.2)
+  }
+
+  func test06_ManyClass() {
+    let container = DIContainer()
+
+    container.register{ OptionalClass(p1: arg($0), p2: $1, p3: arg($2)) }
+
+    let obj: [OptionalClass] = many(container.resolve(args: nil, 22.2))
+
+    XCTAssertEqual(obj.count, 1)
+    XCTAssertNil(obj.first?.p1)
+    XCTAssertNil(obj.first?.p2)
+    XCTAssertEqual(obj.first?.p3, 22.2)
+  }
 }
 
