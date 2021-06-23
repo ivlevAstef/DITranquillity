@@ -48,11 +48,13 @@ public struct AnyArguments {
   }
 
   internal func getArguments(for component: Component) -> Arguments? {
-    let types = Set(([component.info.type] + component.alternativeTypes.compactMap {
-      if case .type(let type) = $0 {
+    let types = Set(([component.info.type] + component.alternativeTypes.map {
+      switch $0 {
+      case let .type(type),
+           let .name(_, type),
+           let .tag(_, type):
         return type
       }
-      return nil
     }).map { ObjectIdentifier($0) })
 
     let relevantTypesWithArgs = typesWithArgs.filter { types.contains($0.type) }
