@@ -9,6 +9,8 @@
 import XCTest
 import DITranquillity
 
+private protocol Tag { }
+
 private protocol MyProtocol {
   func empty()
 }
@@ -159,6 +161,36 @@ class DITranquillityTests_Extensions: XCTestCase {
     XCTAssertNil(obj.first?.p1)
     XCTAssertNil(obj.first?.p2)
     XCTAssertEqual(obj.first?.p3, 22.2)
+  }
+
+  func test06_TagClass() {
+    let container = DIContainer()
+
+    container.register{ Class(p1: arg($0), p2: arg($1), p3: arg($2)) }
+      .as(MyProtocol.self, tag: Tag.self)
+
+    var arguments = AnyArguments()
+    arguments.addArgs(for: MyProtocol.self, args: 11, "test", 15.0)
+    let obj: MyProtocol? = by(tag: Tag.self, on: container.resolve(arguments: arguments))
+
+    XCTAssertEqual((obj as? Class)?.p1, 11)
+    XCTAssertEqual((obj as? Class)?.p2, "test")
+    XCTAssertEqual((obj as? Class)?.p3, 15.0)
+  }
+
+  func test06_NameClass() {
+    let container = DIContainer()
+
+    container.register{ Class(p1: arg($0), p2: arg($1), p3: arg($2)) }
+      .as(MyProtocol.self, name: "name")
+
+    var arguments = AnyArguments()
+    arguments.addArgs(for: MyProtocol.self, args: 11, "test", 15.0)
+    let obj: MyProtocol? = container.resolve(name: "name", arguments: arguments)
+
+    XCTAssertEqual((obj as? Class)?.p1, 11)
+    XCTAssertEqual((obj as? Class)?.p2, "test")
+    XCTAssertEqual((obj as? Class)?.p3, 15.0)
   }
 }
 

@@ -1,3 +1,6 @@
+# 4.3.3
+* Fix argument injection for Tag and named resolve.
+
 # 4.3.2
 * Fix arguments resolve if for resolve used none base type. for example: `let a: T? = container.resolve(args: ...)`. In current example `T` is `Optional`. Also fix if `T` use many or tag. 
 
