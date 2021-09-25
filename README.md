@@ -207,7 +207,8 @@ Also your can read articles:
 ## Requirements
 iOS 9.0+,macOS 10.10+,tvOS 9.0+, watchOS, linux; ARC
 
-* Swift 5.0-5.3: Xcode 10.2-12.3; version >= 3.6.3
+* Swift 5.5: Xcode 13; version >= 3.6.3
+* Swift 5.0-5.3: Xcode 10.2-12.x; version >= 3.6.3
 * Swift 4.2: Xcode 10; version >= 3.4.3
 * Swift 4.1: Xcode 9.3; version >= 3.2.3
 * Swift 4.0: Xcode 9.0; version >= 3.0.5
@@ -220,9 +221,9 @@ See [CHANGELOG](CHANGELOG.md) file or [releases](https://github.com/ivlevAstef/D
 ## History and Plans
 - [x] v1.x.x - Started
 - [x] v2.x.x - Stabilization
-- [x]  v3.x.x - Evolution and Features
+- [x] v3.x.x - Evolution and Features
 - [ ] v4.x.x - Graph API and Optimization. Also Documentation and Marketing
-- [ ]  v5.x.x - Pre compile time validation
+- [ ] v5.x.x - Pre compile time validation
 
 ## Feedback
 
