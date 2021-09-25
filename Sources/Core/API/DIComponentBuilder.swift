@@ -239,7 +239,7 @@ extension DIComponentBuilder {
   ///   - name: The specified name, for get an object. or nil.
   ///   - cycle: true if the injection participates in a cycle. default false.
   ///   - method: Injection method. First input argument is the always created object.
-  ///   - modificator: Need for support set many / tag on property.
+  ///   - modificator: Need for support set many / tag / arg on property.
   /// - Returns: Self
   @discardableResult
   @available(swift 4.0)

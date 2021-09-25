@@ -43,6 +43,10 @@
 		16ABEC2324B37F8A007577CF /* DIGraph+Cycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC2024B37F8A007577CF /* DIGraph+Cycle.swift */; };
 		16ABEC2424B37F8A007577CF /* DIGraph+Cycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16ABEC2024B37F8A007577CF /* DIGraph+Cycle.swift */; };
 		16EA372E23FA7715004DA194 /* DITranquillityTests_Modular.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EA372D23FA7715004DA194 /* DITranquillityTests_Modular.swift */; };
+		AB36E28626FEE29F0057BEAA /* DIContainer.RegModify.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB36E28526FEE29F0057BEAA /* DIContainer.RegModify.swift */; };
+		AB36E28726FEE29F0057BEAA /* DIContainer.RegModify.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB36E28526FEE29F0057BEAA /* DIContainer.RegModify.swift */; };
+		AB36E28826FEE29F0057BEAA /* DIContainer.RegModify.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB36E28526FEE29F0057BEAA /* DIContainer.RegModify.swift */; };
+		AB36E28926FEE29F0057BEAA /* DIContainer.RegModify.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB36E28526FEE29F0057BEAA /* DIContainer.RegModify.swift */; };
 		AB4F30F32503BD2100E74FB7 /* DIComponentPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */; };
 		AB4F30F42503BD2100E74FB7 /* DIComponentPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */; };
 		AB4F30F52503BD2100E74FB7 /* DIComponentPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */; };
@@ -290,6 +294,8 @@
 		16EA372D23FA7715004DA194 /* DITranquillityTests_Modular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DITranquillityTests_Modular.swift; sourceTree = "<group>"; };
 		16FADF3F24A701F7007BF1C1 /* Documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Documentation; sourceTree = "<group>"; };
 		A58875541D0944AE00D6DE92 /* DITranquillity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DITranquillity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB36E28526FEE29F0057BEAA /* DIContainer.RegModify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.RegModify.swift; sourceTree = "<group>"; };
+		AB36E28A26FEE4990057BEAA /* init_modificator_autogenerate.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = init_modificator_autogenerate.sh; sourceTree = "<group>"; };
 		AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIComponentPriority.swift; sourceTree = "<group>"; };
 		AB4F47A62670C98700EB5BF4 /* AnyArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyArguments.swift; sourceTree = "<group>"; };
 		ABBE383C25FDE60F00DAFB62 /* ThreadDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadDictionary.swift; sourceTree = "<group>"; };
@@ -542,10 +548,12 @@
 		ABE60ED023AA75AC00DEA34A /* AutoResolve */ = {
 			isa = PBXGroup;
 			children = (
+				AB36E28A26FEE4990057BEAA /* init_modificator_autogenerate.sh */,
 				ABE60ED123AA75AC00DEA34A /* init_autogenerate.sh */,
 				ABE60ED223AA75AC00DEA34A /* DIComponentBuilder.Injection.swift */,
 				ABE60ED323AA75AC00DEA34A /* DIContainer.Reg.swift */,
 				ABE60ED423AA75AC00DEA34A /* inject_autogenerate.sh */,
+				AB36E28526FEE29F0057BEAA /* DIContainer.RegModify.swift */,
 			);
 			path = AutoResolve;
 			sourceTree = "<group>";
@@ -990,6 +998,7 @@
 				ABE60EEE23AA75AC00DEA34A /* MethodSignature.swift in Sources */,
 				ABE60F7823AA75B400DEA34A /* ViewController+Children.swift in Sources */,
 				16ABEC1324B37D1F007577CF /* ComponentAlternativeType.swift in Sources */,
+				AB36E28726FEE29F0057BEAA /* DIContainer.RegModify.swift in Sources */,
 				160F0EB224AB06D000723F28 /* DIContainer+makeGraph.swift in Sources */,
 				ABE60F3323AA75AC00DEA34A /* DIModificators.swift in Sources */,
 				ABE60EF723AA75AC00DEA34A /* ParsedType.swift in Sources */,
@@ -1006,6 +1015,7 @@
 				ABE60F3D23AA75AC00DEA34A /* DIStorage.swift in Sources */,
 				ABE60F3A23AA75AC00DEA34A /* DIContainer.swift in Sources */,
 				ABE60F6D23AA75B300DEA34A /* DIStoryboardBase.m in Sources */,
+				AB36E28826FEE29F0057BEAA /* DIContainer.RegModify.swift in Sources */,
 				ABE60EE023AA75AC00DEA34A /* Multithread.swift in Sources */,
 				ABE60F0A23AA75AC00DEA34A /* Component.swift in Sources */,
 				ABE60F0723AA75AC00DEA34A /* SpecificType.swift in Sources */,
@@ -1067,6 +1077,7 @@
 				ABE60F3B23AA75AC00DEA34A /* DIStorage.swift in Sources */,
 				ABE60F3823AA75AC00DEA34A /* DIContainer.swift in Sources */,
 				ABE60F6B23AA75B300DEA34A /* DIStoryboardBase.m in Sources */,
+				AB36E28626FEE29F0057BEAA /* DIContainer.RegModify.swift in Sources */,
 				ABE60EDE23AA75AC00DEA34A /* Multithread.swift in Sources */,
 				ABE60F0823AA75AC00DEA34A /* Component.swift in Sources */,
 				ABE60F0523AA75AC00DEA34A /* SpecificType.swift in Sources */,
@@ -1125,6 +1136,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABDA289B23ABBECD00BEB63F /* DIStorage.swift in Sources */,
+				AB36E28926FEE29F0057BEAA /* DIContainer.RegModify.swift in Sources */,
 				ABDA289C23ABBECD00BEB63F /* DIContainer.swift in Sources */,
 				16ABEC2424B37F8A007577CF /* DIGraph+Cycle.swift in Sources */,
 				160F0EB424AB06D000723F28 /* DIContainer+makeGraph.swift in Sources */,
@@ -1220,7 +1232,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 4.3.3;
+				MARKETING_VERSION = 4.3.4;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-OSX";
 				PRODUCT_NAME = DITranquillity;
@@ -1260,7 +1272,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 4.3.3;
+				MARKETING_VERSION = 4.3.4;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-OSX";
 				PRODUCT_NAME = DITranquillity;
@@ -1301,7 +1313,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 4.3.3;
+				MARKETING_VERSION = 4.3.4;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-tvOS";
 				PRODUCT_MODULE_NAME = DITranquillity;
@@ -1344,7 +1356,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 4.3.3;
+				MARKETING_VERSION = 4.3.4;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-tvOS";
 				PRODUCT_MODULE_NAME = DITranquillity;
@@ -1507,7 +1519,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 4.3.3;
+				MARKETING_VERSION = 4.3.4;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-iOS";
 				PRODUCT_NAME = DITranquillity;
@@ -1551,7 +1563,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 4.3.3;
+				MARKETING_VERSION = 4.3.4;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-iOS";
 				PRODUCT_NAME = DITranquillity;
@@ -1594,7 +1606,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 4.3.3;
+				MARKETING_VERSION = 4.3.4;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-WatchOS";
 				PRODUCT_MODULE_NAME = DITranquillity;
@@ -1640,7 +1652,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 4.3.3;
+				MARKETING_VERSION = 4.3.4;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-WatchOS";
 				PRODUCT_MODULE_NAME = DITranquillity;

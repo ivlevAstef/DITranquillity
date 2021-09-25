@@ -1,3 +1,8 @@
+# 4.3.4
+* Add simple one modificator injection into initialize method. For example:
+Old: `container.register { Cat(name: arg($0), owner: $1, home: $2) }`
+New: `container.register(Cat.init) { arg($0) }`
+
 # 4.3.3
 * Fix argument injection for Tag and named resolve.
 

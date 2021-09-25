@@ -17,26 +17,30 @@ replaceToArg() {
 
 registrationInitFunction() { #argcount file
 local numbers=($(seq 0 $1))
+local numbersWithoutZero=($(seq 1 $1))
 local n=$((1+$1))
 
 local PType=$(join ',' ${numbers[@]/#/P})
-local PSType=$(join ',' $(replaceToArg numbers[@] "P;I.self"))
-local PComment=$(join ',' $(replaceToArg numbers[@] "p;I:$;I"))
+local PSType=$(join ',' $(replaceToArg numbersWithoutZero[@] "P;I.self"))
+local cArgs=$(join ',' ${numbersWithoutZero[@]/#/$})
 local quote='```'
+local zeroComponent='$0'
 
 if [ "$n" != 1 ]; then
   echo "  /// Declaring a new component with initial.
   /// Using:
   /// $quote
-  /// container.register{ YourClass($PComment) }
+  /// container.register(YourClass.init) { arg($zeroComponent) }
   /// $quote
   ///
   /// - Parameter c: initial method. Must return type declared at registration.
+  /// - Parameter modificator: Need for support set arg / many / tag on first initial argument.
   /// - Returns: component builder, to configure the component." >> $2
 
   echo "  @discardableResult
-  public func register<Impl,$PType>(file: String = #file, line: Int = #line, _ c: @escaping (($PType)) -> Impl) -> DIComponentBuilder<Impl> {
-    return register(file, line, MM.make$n([$PSType], by: c))
+  public func register<Impl,$PType,M0>(file: String = #file, line: Int = #line,
+    _ c: @escaping (($PType)) -> Impl, modificator: @escaping (M0) -> P0) -> DIComponentBuilder<Impl> {
+      return register(file, line, MM.make$n([M0.self,$PSType], by: {c((modificator($zeroComponent),$cArgs))}))
   }
   " >> $2
 fi
@@ -45,11 +49,11 @@ fi
 
 registationInitFile() { #file
 echo "//
-//  DIContainer.Reg.swift
+//  DIContainer.RegModify.swift
 //  DITranquillity
 //
-//  Created by Alexander Ivlev on 27/01/2017.
-//  Copyright © 2017 Alexander Ivlev. All rights reserved.
+//  Created by Alexander Ivlev on 25.09.2021.
+//  Copyright © 2021 Alexander Ivlev. All rights reserved.
 //
 
 private typealias MM = MethodMaker
@@ -63,4 +67,4 @@ done
 echo "}" >> $1
 }
 
-registationInitFile "DIContainer.Reg.swift"
+registationInitFile "DIContainer.RegModify.swift"
