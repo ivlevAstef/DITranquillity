@@ -11,17 +11,17 @@ pod 'DITranquillity'
 ```
 
 #### SwiftPM
-Можно воспользоваться "Xcode/File/Swift Packages/Add Package Dependency..." и указать в качестве url:
+Можно воспользоваться "Project/Package Dependencies/Add Package Dependency" и указать в качестве url:
 ```
 https://github.com/ivlevAstef/DITranquillity
 ```
 Или прописать в `Package.swift` файле в секции `dependencies`:
 ```Swift
-.package(url: "https://github.com/ivlevAstef/DITranquillity.git", from: "3.8.4")
+.package(url: "https://github.com/ivlevAstef/DITranquillity", from: "4.3.4")
 ```
 И не забудьте указать в таргете в аргументе `dependencies` зависимость на библиотеку:
 ```Swift
-.product(name: "DITranquillity")
+.byName(name: "DITranquillity")
 ```
 > Важно! - SwiftPM не поддерживает возможности из секции UI.
 
@@ -30,7 +30,6 @@ https://github.com/ivlevAstef/DITranquillity
 ```
 github "ivlevAstef/DITranquillity"
 ```
-Carthage поддерживает работу со сторибоардами и прямое внедрение, без дополнительных действий.
 
 #### Ручками
 1. Скачайте или склонируйте репозиторий библиотеки к себе на компьютер
@@ -41,7 +40,7 @@ Carthage поддерживает работу со сторибоардами �
 5. Библиотека готова к использованию.
 
 ## Начало использования
-Библиотека является DI контейнером, поэтому для начала использования надо создать контейнер:
+Библиотека является DI контейнером, поэтому для начала использования надо объявить и создать контейнер:
 ```Swift
 let container = DIContainer()
 ```
@@ -64,7 +63,6 @@ print(dog.name) // Buddy
 Давайте представим один из стандартных архитектурных паттернов. Разбирать будем [MVC](https://developer.apple.com/library/content/documentation/General/Conceptual/CocoaEncyclopedia/Model-View-Controller/Model-View-Controller.html), и для лучшего понимания напишем пример кода:
 ```Swift
 class ViewController: UIViewController, ModelDelegate {
-
 	@IBOutlet private var view: View!
 	private(set) var model: Model!
 
@@ -78,26 +76,21 @@ class ViewController: UIViewController, ModelDelegate {
 		model.fetchOtherTitle()
 	}
 
-	func receivedNewTitle(title: String)
-	{
+	func receivedNewTitle(title: String) {
 		view.set(title: title)
 	}
 }
 
 class View: UIView {
-
 	@IBOutlet private var titleLbl: UILabel!
 	@IBOutlet private var nextBtn: UIButton!
 
 	func set(title: String) {
 		titleLbl.text = title
 	}
-
-	
 }
 
 protocol ModelDelegate {
-
 	func receivedNewTitle(title: String)
 }
 
@@ -110,7 +103,7 @@ class Model {
 
 	func fetchOtherTitle() {
 		DispatchQueue.main.async { [weak self] in
-			self?.delegate?.receivedNewTitle(title: "New title")
+			self?.delegate?.receivedNewTitle(title: "Новый заголовок")
 		}
 	}
 }
@@ -134,13 +127,13 @@ container.register(ViewController.self)
 
 // делаем проверку, что все корректно, чтобы дальше продолжать работу без опасений.
 // на самом деле все может работать и без проверки, но есть вероятность падения во время исполнения
-if !container.validate() {
-	fatalError("Граф зависимостей не валиден")
+if !container.makeGraph().checkIsValid(checkGraphCycles: true) {
+	fatalError("Граф зависимостей не валиден. Смотри логи")
 }
 
 
-// создаем сторибоард. '*' это сокращенный синтаксис функции '.resolve()'
-let storyboard: UIStoryboard = *container
+// создаем сторибоард.
+let storyboard: UIStoryboard = container.resolve()
 
 window!.rootViewController = storyboard.instantiateInitialViewController()
 window!.makeKeyAndVisible()
