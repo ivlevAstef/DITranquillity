@@ -47,6 +47,7 @@
 		AB36E28726FEE29F0057BEAA /* DIContainer.RegModify.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB36E28526FEE29F0057BEAA /* DIContainer.RegModify.swift */; };
 		AB36E28826FEE29F0057BEAA /* DIContainer.RegModify.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB36E28526FEE29F0057BEAA /* DIContainer.RegModify.swift */; };
 		AB36E28926FEE29F0057BEAA /* DIContainer.RegModify.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB36E28526FEE29F0057BEAA /* DIContainer.RegModify.swift */; };
+		AB393BAE28782717001DEFC7 /* SwiftLazy in Frameworks */ = {isa = PBXBuildFile; productRef = AB393BAD28782717001DEFC7 /* SwiftLazy */; };
 		AB4F30F32503BD2100E74FB7 /* DIComponentPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */; };
 		AB4F30F42503BD2100E74FB7 /* DIComponentPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */; };
 		AB4F30F52503BD2100E74FB7 /* DIComponentPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F30F22503BD2100E74FB7 /* DIComponentPriority.swift */; };
@@ -89,9 +90,6 @@
 		ABDA28C623ABBECD00BEB63F /* DIScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60ECA23AA75AC00DEA34A /* DIScope.swift */; };
 		ABDA28C823ABBECD00BEB63F /* SwiftLazy in Frameworks */ = {isa = PBXBuildFile; productRef = ABDA289823ABBECD00BEB63F /* SwiftLazy */; };
 		ABDA28CE23ABBECD00BEB63F /* DITranquillity.h in Headers */ = {isa = PBXBuildFile; fileRef = 16640A6B1D9E1E7B00707BFC /* DITranquillity.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ABDA28E623ABC7A600BEB63F /* SwiftLazy in Frameworks */ = {isa = PBXBuildFile; productRef = ABDA28E523ABC7A600BEB63F /* SwiftLazy */; };
-		ABDA28E823ABC7BA00BEB63F /* SwiftLazy in Frameworks */ = {isa = PBXBuildFile; productRef = ABDA28E723ABC7BA00BEB63F /* SwiftLazy */; };
-		ABDA28EA23ABC7BE00BEB63F /* SwiftLazy in Frameworks */ = {isa = PBXBuildFile; productRef = ABDA28E923ABC7BE00BEB63F /* SwiftLazy */; };
 		ABDA28EC23ABE13500BEB63F /* FastLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDA28EB23ABE13500BEB63F /* FastLock.swift */; };
 		ABDA28ED23ABE13500BEB63F /* FastLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDA28EB23ABE13500BEB63F /* FastLock.swift */; };
 		ABDA28EE23ABE13500BEB63F /* FastLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDA28EB23ABE13500BEB63F /* FastLock.swift */; };
@@ -383,7 +381,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABDA28E823ABC7BA00BEB63F /* SwiftLazy in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,7 +388,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABDA28EA23ABC7BE00BEB63F /* SwiftLazy in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,7 +395,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABDA28E623ABC7A600BEB63F /* SwiftLazy in Frameworks */,
+				AB393BAE28782717001DEFC7 /* SwiftLazy in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,7 +761,6 @@
 			);
 			name = "DITranquillity-OSX";
 			packageProductDependencies = (
-				ABDA28E723ABC7BA00BEB63F /* SwiftLazy */,
 			);
 			productName = DITranquillity;
 			productReference = 169C0DE51DA3501F001F0AD5 /* DITranquillity.framework */;
@@ -786,7 +781,6 @@
 			);
 			name = "DITranquillity-tvOS";
 			packageProductDependencies = (
-				ABDA28E923ABC7BE00BEB63F /* SwiftLazy */,
 			);
 			productName = DITranquillity;
 			productReference = 169C0E4B1DA35CBE001F0AD5 /* DITranquillity.framework */;
@@ -807,7 +801,7 @@
 			);
 			name = "DITranquillity-iOS";
 			packageProductDependencies = (
-				ABDA28E523ABC7A600BEB63F /* SwiftLazy */,
+				AB393BAD28782717001DEFC7 /* SwiftLazy */,
 			);
 			productName = DITranquillity;
 			productReference = A58875541D0944AE00D6DE92 /* DITranquillity.framework */;
@@ -892,7 +886,7 @@
 			);
 			mainGroup = A588754A1D0944AE00D6DE92;
 			packageReferences = (
-				ABDA28E423ABC7A600BEB63F /* XCRemoteSwiftPackageReference "SwiftLazy" */,
+				AB393BAC28782717001DEFC7 /* XCRemoteSwiftPackageReference "SwiftLazy" */,
 			);
 			productRefGroup = A58875551D0944AE00D6DE92 /* Products */;
 			projectDirPath = "";
@@ -1796,6 +1790,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		AB393BAC28782717001DEFC7 /* XCRemoteSwiftPackageReference "SwiftLazy" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ivlevAstef/SwiftLazy";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		ABDA289923ABBECD00BEB63F /* XCRemoteSwiftPackageReference "SwiftLazy" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ivlevAstef/SwiftLazy";
@@ -1804,35 +1806,17 @@
 				minimumVersion = 1.1.5;
 			};
 		};
-		ABDA28E423ABC7A600BEB63F /* XCRemoteSwiftPackageReference "SwiftLazy" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ivlevAstef/SwiftLazy";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.1.9;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		AB393BAD28782717001DEFC7 /* SwiftLazy */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AB393BAC28782717001DEFC7 /* XCRemoteSwiftPackageReference "SwiftLazy" */;
+			productName = SwiftLazy;
+		};
 		ABDA289823ABBECD00BEB63F /* SwiftLazy */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = ABDA289923ABBECD00BEB63F /* XCRemoteSwiftPackageReference "SwiftLazy" */;
-			productName = SwiftLazy;
-		};
-		ABDA28E523ABC7A600BEB63F /* SwiftLazy */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = ABDA28E423ABC7A600BEB63F /* XCRemoteSwiftPackageReference "SwiftLazy" */;
-			productName = SwiftLazy;
-		};
-		ABDA28E723ABC7BA00BEB63F /* SwiftLazy */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = ABDA28E423ABC7A600BEB63F /* XCRemoteSwiftPackageReference "SwiftLazy" */;
-			productName = SwiftLazy;
-		};
-		ABDA28E923ABC7BE00BEB63F /* SwiftLazy */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = ABDA28E423ABC7A600BEB63F /* XCRemoteSwiftPackageReference "SwiftLazy" */;
 			productName = SwiftLazy;
 		};
 /* End XCSwiftPackageProductDependency section */

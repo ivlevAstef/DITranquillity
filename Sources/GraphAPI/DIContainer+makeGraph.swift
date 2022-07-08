@@ -13,7 +13,7 @@ extension DIContainer {
   /// Or Your can use this graph for dependency analysis.
   /// - Returns: Dependency graph
   public func makeGraph() -> DIGraph {
-    let components = componentContainer.components
+    let components = anyComponents
 
     var edgeId: Int = 0
     var vertices: [DIVertex] = components.map { .component(DIComponentVertex(component: $0)) }
@@ -52,6 +52,15 @@ extension DIContainer {
     }
 
     return DIGraph(vertices: vertices, adjacencyList: adjacencyList)
+  }
+
+  private var anyComponents: [Component] {
+    if let parent = parent {
+      let containerComponentInfos = Set(componentContainer.components.map { $0.info })
+      let parentComponents = parent.anyComponents.filter { !containerComponentInfos.contains($0.info) }
+      return (componentContainer.components + parentComponents).sorted(by: { $0.order < $1.order })
+    }
+    return componentContainer.components
   }
 
   private func findIndex(for component: Component, in components: [Component]) -> Int? {
