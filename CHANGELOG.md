@@ -1,3 +1,6 @@
+# 4.3.5
+* fix makeGraph while use container hierarchy
+
 # 4.3.4
 * Add simple one modificator injection into initialize method. For example:
 Old: `container.register { Cat(name: arg($0), owner: $1, home: $2) }`
