@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'DITranquillity'
-  s.version      = '4.3.5'
+  s.version      = '4.4.0'
   s.summary      = 'DITranquillity - Dependency injection for iOS/macOS/tvOS (Swift) '
 
   s.description  = <<-DESC
@@ -18,12 +18,12 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.swift_version = '5.1'
 
-  s.dependency 'SwiftLazy', '>= 1.1.6'
+  s.dependency 'SwiftLazy', '>= 1.2.0'
 
-  s.ios.deployment_target = '8.0'
-  s.tvos.deployment_target = '9.0'
-  s.osx.deployment_target = '10.10'
-  s.watchos.deployment_target = '2.0'
+  s.ios.deployment_target = '11.0'
+  s.tvos.deployment_target = '11.0'
+  s.osx.deployment_target = '10.13'
+  s.watchos.deployment_target = '4.0'
 
   # subspecs is very long validation - 'pod lib lint' check all combination....
   core_h = 'Sources/DITranquillity.h'

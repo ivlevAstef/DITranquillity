@@ -1,3 +1,7 @@
+# 4.4.0
+* Increase minimal version iOS 11.0, tvOS 11.0, macOS 10.13, watchOS 4.0
+* Remove SpinLock
+
 # 4.3.5
 * fix makeGraph while use container hierarchy
 

@@ -60,6 +60,8 @@
 		ABBE383E25FDE60F00DAFB62 /* ThreadDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBE383C25FDE60F00DAFB62 /* ThreadDictionary.swift */; };
 		ABBE383F25FDE60F00DAFB62 /* ThreadDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBE383C25FDE60F00DAFB62 /* ThreadDictionary.swift */; };
 		ABBE384025FDE60F00DAFB62 /* ThreadDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBE383C25FDE60F00DAFB62 /* ThreadDictionary.swift */; };
+		ABC184872A2A675000C1DEB0 /* SwiftLazy in Frameworks */ = {isa = PBXBuildFile; productRef = ABC184862A2A675000C1DEB0 /* SwiftLazy */; };
+		ABC184892A2A675500C1DEB0 /* SwiftLazy in Frameworks */ = {isa = PBXBuildFile; productRef = ABC184882A2A675500C1DEB0 /* SwiftLazy */; };
 		ABDA289B23ABBECD00BEB63F /* DIStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDC23AA75AC00DEA34A /* DIStorage.swift */; };
 		ABDA289C23ABBECD00BEB63F /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EDB23AA75AC00DEA34A /* DIContainer.swift */; };
 		ABDA289E23ABBECD00BEB63F /* Multithread.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE60EB923AA75AC00DEA34A /* Multithread.swift */; };
@@ -381,6 +383,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABC184872A2A675000C1DEB0 /* SwiftLazy in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,6 +391,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABC184892A2A675500C1DEB0 /* SwiftLazy in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -761,6 +765,7 @@
 			);
 			name = "DITranquillity-OSX";
 			packageProductDependencies = (
+				ABC184862A2A675000C1DEB0 /* SwiftLazy */,
 			);
 			productName = DITranquillity;
 			productReference = 169C0DE51DA3501F001F0AD5 /* DITranquillity.framework */;
@@ -781,6 +786,7 @@
 			);
 			name = "DITranquillity-tvOS";
 			packageProductDependencies = (
+				ABC184882A2A675500C1DEB0 /* SwiftLazy */,
 			);
 			productName = DITranquillity;
 			productReference = 169C0E4B1DA35CBE001F0AD5 /* DITranquillity.framework */;
@@ -1225,7 +1231,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 4.3.4;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-OSX";
@@ -1265,7 +1271,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 4.3.4;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sia.DITranquillity-OSX";
@@ -1320,7 +1326,7 @@
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
@@ -1362,7 +1368,7 @@
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
@@ -1506,7 +1512,7 @@
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1550,7 +1556,7 @@
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1616,7 +1622,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
 			name = Debug;
 		};
@@ -1661,7 +1667,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
 			name = Release;
 		};
@@ -1810,6 +1816,16 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		AB393BAD28782717001DEFC7 /* SwiftLazy */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AB393BAC28782717001DEFC7 /* XCRemoteSwiftPackageReference "SwiftLazy" */;
+			productName = SwiftLazy;
+		};
+		ABC184862A2A675000C1DEB0 /* SwiftLazy */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AB393BAC28782717001DEFC7 /* XCRemoteSwiftPackageReference "SwiftLazy" */;
+			productName = SwiftLazy;
+		};
+		ABC184882A2A675500C1DEB0 /* SwiftLazy */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AB393BAC28782717001DEFC7 /* XCRemoteSwiftPackageReference "SwiftLazy" */;
 			productName = SwiftLazy;

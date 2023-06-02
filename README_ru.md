@@ -5,9 +5,8 @@
 <a href="http://cocoapods.org/pods/DITranquillity"><img src ="https://img.shields.io/cocoapods/v/DITranquillity.svg?style=flat"/></a>
 <a href="https://github.com/Carthage/Carthage"><img src ="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat"/></a>
 <a href="https://swift.org/package-manager"><img src ="https://img.shields.io/badge/SwiftPM-compatible-4BC51D.svg?style=flat"/></a>
-<a href="https://travis-ci.org/ivlevAstef/DITranquillity"><img src ="https://travis-ci.org/ivlevAstef/DITranquillity.svg?tag=v4.1.0"/></a>
 <a href="https://github.com/ivlevAstef/DITranquillity/blob/master/LICENSE"><img src ="https://img.shields.io/github/license/ivlevAstef/DITranquillity.svg?maxAge=2592000"/></a>
-<a href="https://developer.apple.com/swift"><img src ="https://img.shields.io/badge/Swift-3.0--5.3-F16D39.svg?style=flat"/></a>
+<a href="https://developer.apple.com/swift"><img src ="https://img.shields.io/badge/Swift-3.0--5.8-F16D39.svg?style=flat"/></a>
 <a href="http://cocoapods.org/pods/DITranquillity"><img src ="https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-lightgrey.svg"/></a>
 <a href="https://codecov.io/gh/ivlevAstef/DITranquillity"><img src ="https://codecov.io/gh/ivlevAstef/DITranquillity/branch/master/graph/badge.svg"/></a>
 </p>
@@ -65,7 +64,7 @@ https://github.com/ivlevAstef/DITranquillity
 ```
 Или прописать в вашем `Package.swift` файле в секции `dependencies`:
 ```Swift
-.package(url: "https://github.com/ivlevAstef/DITranquillity.git", from: "3.8.4")
+.package(url: "https://github.com/ivlevAstef/DITranquillity.git", from: "4.4.0")
 ```
 И не забудьте указать в таргете в аргументе `dependencies` зависимость на библиотеку:
 ```Swift
@@ -203,9 +202,9 @@ class AuthInteractorImpl: AuthInteractor {
 * Старая [https://habr.com/ru/post/311334/](https://habr.com/ru/post/311334/)
 
 ## Требования
-iOS 9.0+,macOS 10.10+,tvOS 9.0+, watchOS, linux; ARC
+iOS 11.0+,macOS 10.13+,tvOS 11.0+, watchOS 4.0+, Linux; ARC
 
-* Swift 5.5-5.7: Xcode 13,14; version >= 3.6.3
+* Swift 5.5-5.8: Xcode 13,14; version >= 3.6.3
 * Swift 5.0-5.3: Xcode 10.2-12.x; version >= 3.6.3
 * Swift 4.1: Xcode 9.3; version >= 3.2.3
 * Swift 4.0: Xcode 9.0; version >= 3.0.5
@@ -232,10 +231,6 @@ iOS 9.0+,macOS 10.10+,tvOS 9.0+, watchOS, linux; ARC
 
 ### Просьба
 Если вам понравилась моя библиотека, то поддержите библиотеку поставив звёздочку.
-
-Также вы можете поддержать развитие библиотеки небольшим денежным поощрением - ведь я пишу библиотеку длинными темными ночами.
-
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/ivlevAstef)
 
 ### Остались вопросы?
 Я могу ответить на ваши вопросы по почте: ivlev.stef@gmail.com  

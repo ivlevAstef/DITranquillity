@@ -12,25 +12,11 @@ internal protocol FastLock {
 }
 
 internal func makeFastLock() -> FastLock {
-  #if os(iOS)
-    if #available(iOS 10.0, *) {
-      return UnfairLock()
-    }
-  #elseif os(OSX)
-    if #available(OSX 10.12, *) {
-      return UnfairLock()
-    }
-  #elseif os(tvOS)
-    if #available(tvOS 10.0, *) {
-      return UnfairLock()
-    }
-  #elseif os(watchOS)
-    if #available(watchOS 3.0, *) {
-      return UnfairLock()
-    }
+  #if os(Linux)
+    return SpinLock()
+  #else
+    return UnfairLock()
   #endif
-
-  return SpinLock()
 }
 
 #if os(Linux)
@@ -63,10 +49,6 @@ private class SpinLock: FastLock {
 
 import Darwin
 
-@available(tvOS 10.0, *)
-@available(OSX 10.12, *)
-@available(iOS 10.0, *)
-@available(watchOS 3.0, *)
 private class UnfairLock: FastLock {
   private let monitor: os_unfair_lock_t
 
@@ -86,18 +68,6 @@ private class UnfairLock: FastLock {
 
   func unlock() {
     os_unfair_lock_unlock(monitor)
-  }
-}
-
-private class SpinLock: FastLock {
-  private var monitor: OSSpinLock = OSSpinLock()
-
-  func lock() {
-    OSSpinLockLock(&monitor)
-  }
-
-  func unlock() {
-    OSSpinLockUnlock(&monitor)
   }
 }
 
