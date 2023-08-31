@@ -56,6 +56,10 @@ extension DIGraph {
       log(.error, msg: "Invalid reference from \(fromVertex.description) because not found component for type: \(type)")
   }
 
+  func log_unusedComponent(vertex: DIVertex) {
+    log(.warning, msg: "Found unused component \(vertex.description)")
+  }
+
   // MARK: - cycle
   func log_cycleAnyInitEdges(vertices: [DIVertex], edges: [DIEdge]) {
     let cycleDescriptionMaker = { makeCycleDescription(vertices: vertices, edges: edges) }
@@ -70,6 +74,11 @@ extension DIGraph {
   func log_cycleAnyVerticesPrototype(vertices: [DIVertex], edges: [DIEdge]) {
     let cycleDescriptionMaker = { makeCycleDescription(vertices: vertices, edges: edges) }
     log(.error, msg: "Found a cycle where any components have lifetime `prototype`. This cycle will be created indefinitely. Please change lifetime on `objectGraph` or other. Cycle description: \(cycleDescriptionMaker())")
+  }
+
+  func log_cycleFirstPrototype(vertices: [DIVertex], edges: [DIEdge]) {
+    let cycleDescriptionMaker = { makeCycleDescription(vertices: vertices, edges: edges) }
+    log(.warning, msg: "Found a cycle where is first component have lifetime `prototype`. This cycle maked incorrect. You can change lifetime on `objectGraph` or other cached. Cycle description: \(cycleDescriptionMaker())")
   }
 
   func log_cycleHavePrototype(vertices: [DIVertex], edges: [DIEdge]) {

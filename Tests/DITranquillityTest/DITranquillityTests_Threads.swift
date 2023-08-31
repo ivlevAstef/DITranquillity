@@ -55,7 +55,7 @@ class DITranquillityTests_Threads: XCTestCase {
     DISetting.Defaults.multiThread = false
   }
   
-  func test02_ResolveLazySingle() {
+  func test02_ResolvePerRun() {
     DISetting.Defaults.multiThread = true
     let container = DIContainer()
     

@@ -9,6 +9,7 @@
 /// Component Builder.
 /// To create a used function `register(_:)` in class `ContainerBuilder`.
 /// The class allows you to configure all the necessary properties for the component.
+/// Don't retain this class objects, because component registration happens on deinit this object.
 public final class DIComponentBuilder<Impl> {
   private weak var extensions: DIExtensions?
 
@@ -18,7 +19,6 @@ public final class DIComponentBuilder<Impl> {
                                in: container.frameworkStack.last, container.partStack.last)
     self.componentContainer = container.componentContainer
     self.resolver = container.resolver
-    componentContainer.insert(TypeKey(by: unwrapType(Impl.self)), component)
 
     #if os(iOS) || os(tvOS)
       useInjectIntoSubviewComponent()
@@ -30,14 +30,13 @@ public final class DIComponentBuilder<Impl> {
       var msg = "\(component.priority)"
       msg += "registration: \(component.info)\n"
       msg += "\(DISetting.Log.tab)initial: \(nil != component.initial)\n"
-
       msg += "\(DISetting.Log.tab)lifetime: \(component.lifeTime)\n"
-
       msg += "\(DISetting.Log.tab)injections: \(component.injections.count)\n"
       return msg
     })
 
     extensions?.componentRegistration?(DIComponentVertex(component: component))
+    componentContainer.insert(TypeKey(by: unwrapType(Impl.self)), component)
   }
   
   let component: Component
@@ -347,6 +346,16 @@ extension DIComponentBuilder {
   @discardableResult
   public func test() -> Self {
     component.priority = .test
+    return self
+  }
+
+  /// Function declaring that this component is root.
+  /// Root components using only into graph validation `container.makeGraph().checkIsValid()`.
+  /// The root components accelerate graph validation, and allow you to check the graph more precisely.
+  /// Singleton components always is root components `.lifetime(.single)`
+  @discardableResult
+  public func root() -> Self {
+    component.isRoot = true
     return self
   }
 }

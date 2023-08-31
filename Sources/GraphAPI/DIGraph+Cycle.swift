@@ -21,6 +21,12 @@ extension DIGraph {
   public func findCycles() -> [DICycle] {
     return CycleFinder(in: self).findAllCycles()
   }
+
+  /// Function found cycles which may arise from root or single components in graph and safe this cycles in array.
+  /// - Returns: array of cycles
+  public func findRootCycles() -> [DICycle] {
+    return CycleFinder(in: self).findRootCycles()
+  }
 }
 
 /// Class need for optimization - he containts local properties.
@@ -38,11 +44,22 @@ fileprivate final class CycleFinder {
   }
 
   fileprivate func findAllCycles() -> [DICycle] {
+    findCycles(use: { _ in return true })
+  }
+
+  fileprivate func findRootCycles() -> [DICycle] {
+    findCycles(use: { $0.isRoot || $0.lifeTime == .single })
+  }
+
+  fileprivate func findCycles(use canUseComponent: (DIComponentVertex) -> Bool) -> [DICycle] {
     findAllReachableIndices()
 
     result = []
     for (index, vertex) in graph.vertices.enumerated() {
-      guard case .component = vertex else {
+      guard case .component(let component) = vertex else {
+        continue
+      }
+      if !canUseComponent(component) {
         continue
       }
 

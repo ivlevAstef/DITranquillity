@@ -10,6 +10,7 @@ typealias Injection = (signature: MethodSignature, cycle: Bool)
 
 // Reference
 final class ComponentContainer {
+  private(set) var hasRootComponents: Bool = false
   private var map = Dictionary<TypeKey, Set<Component>>()
   private var manyMap = Dictionary<ShortTypeKey, Set<Component>>()
   
@@ -23,6 +24,8 @@ final class ComponentContainer {
       if nil == manyMap[shortKey]?.insert(component) {
         manyMap[shortKey] = [component]
       }
+
+      hasRootComponents = hasRootComponents || component.isRoot
 
       otherOperation?()
     }
@@ -85,6 +88,7 @@ final class Component {
   
   var lifeTime = DILifeTime.default
   var priority: DIComponentPriority = .normal
+  var isRoot: Bool = false
 
   var alternativeTypes: [ComponentAlternativeType] = []
   

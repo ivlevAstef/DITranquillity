@@ -1,3 +1,6 @@
+# 4.5.0
+* Add `root` components. For more information see `registration_and_service.md`
+
 # 4.4.0
 * Increase minimal version iOS 11.0, tvOS 11.0, macOS 10.13, watchOS 4.0
 * Remove SpinLock

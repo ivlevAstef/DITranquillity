@@ -28,6 +28,8 @@ public final class DIComponentVertex: Hashable {
   public let canInitialize: Bool
   /// Alternative types. It's types setup in component used function `as(...`
   public let alternativeTypes: [ComponentAlternativeType]
+  /// Component is marked as root.
+  public let isRoot: Bool
 
   /// Framework where this component was register
   public let framework: DIFramework.Type?
@@ -40,6 +42,7 @@ public final class DIComponentVertex: Hashable {
     self.priority = component.priority
     self.canInitialize = component.initial != nil
     self.alternativeTypes = component.alternativeTypes
+    self.isRoot = component.isRoot
     self.framework = component.framework
     self.part = component.part
   }

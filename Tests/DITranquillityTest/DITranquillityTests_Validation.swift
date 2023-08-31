@@ -316,6 +316,34 @@ class DITranquillityTests_Build: XCTestCase {
     XCTAssert(!container.makeGraph().checkIsValid(checkGraphCycles: true))
   }
 
+  func test06_CycleWithoutInitRootIncorrect() {
+    let container = DIContainer()
+
+    container.register(RCycle.init)
+      .lifetime(.prototype)
+      .root()
+
+    container.register(RCycle2.self)
+      .injection{ $0.inject = $1 }
+      .lifetime(.objectGraph)
+
+    XCTAssert(!container.makeGraph().checkIsValid(checkGraphCycles: true))
+  }
+
+  func test06_CycleWithoutInitRootCorrect() {
+    let container = DIContainer()
+
+    container.register(RCycle.init)
+      .lifetime(.prototype)
+
+    container.register(RCycle2.self)
+      .injection{ $0.inject = $1 }
+      .lifetime(.objectGraph)
+      .root()
+
+    XCTAssert(container.makeGraph().checkIsValid(checkGraphCycles: true))
+  }
+
   func test07_args() {
     let container = DIContainer()
 

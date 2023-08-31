@@ -37,13 +37,15 @@ public final class DIContainer {
     
     register { [unowned self] in return self }.lifetime(.prototype)
   }
-  
+
   internal let componentContainer = ComponentContainer()
   internal let frameworksDependencies = FrameworksDependenciesContainer()
   internal let extensionsContainer = ExtensionsContainer()
   internal let parent: DIContainer?
   internal private(set) var resolver: Resolver!
-  
+
+  internal var hasRootComponents: Bool = false
+
   ///MARK: Hierarchy
   final class IncludedParts {
     private var parts: Set<ObjectIdentifier> = []

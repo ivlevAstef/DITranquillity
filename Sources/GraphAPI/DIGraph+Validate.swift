@@ -12,16 +12,25 @@ extension DIGraph {
   /// - Parameter checkGraphCycles: check cycles in the graph of heavy operation. So it can be disabled.
   /// - Returns: true if validation success.
   public func checkIsValid(checkGraphCycles: Bool = true) -> Bool {
+    let hasRoot = hasRootComponents()
     let canInitialize = checkGraphOnCanInitialize()
     let unambiguity = checkGraphForUnambiguity()
     let reachibility = checkGraphForReachability()
-    let notCycles = checkGraphCycles ? checkGraphForCycles() : true
+    let notCycles = checkGraphCycles ? checkGraphForCycles(onlyRoot: hasRoot) : true
+
+    if hasRoot {
+      findUnusedComponents()
+    }
     return canInitialize && unambiguity && reachibility && notCycles
   }
 }
 
 // MARK: - can initialize
 extension DIGraph {
+  private func hasRootComponents() -> Bool {
+    return vertices.contains(where: { $0.isRoot })
+  }
+
   /// a graph contains object which create - have initialized or can maked and safed in cache
   private func checkGraphOnCanInitialize() -> Bool {
     var successful: Bool = true
@@ -165,12 +174,38 @@ extension DIGraph {
 
     return successful
   }
+
+  private func findUnusedComponents() {
+    var visited: Set<Int> = []
+    var stack: [Int] = vertices.enumerated().filter { $0.element.isRootOrSingle }.map { $0.offset }
+
+    while let fromIndex = stack.first {
+      stack.removeFirst()
+
+      visited.insert(fromIndex)
+      for toIndex in adjacencyList[fromIndex].flatMap({ $0.toIndices }) {
+        if !visited.contains(toIndex) {
+          stack.append(toIndex)
+        }
+      }
+    }
+
+    if visited.count == vertices.count {
+      return
+    }
+
+    let unvisited = Set(vertices.indices).subtracting(visited)
+
+    for index in unvisited.sorted() {
+      log_unusedComponent(vertex: vertices[index])
+    }
+  }
 }
 
 // MARK: - cycle
 extension DIGraph {
-  private func checkGraphForCycles() -> Bool {
-    let cycles = findCycles()
+  private func checkGraphForCycles(onlyRoot: Bool) -> Bool {
+    let cycles = onlyRoot ? findRootCycles() : findCycles()
 
     func calculateAverageLength() -> Double {
       let summaryVerticesCount = cycles.map { $0.vertexIndices.count }.reduce(0, +)
@@ -178,14 +213,21 @@ extension DIGraph {
     }
     log(.verbose, msg: "Found \(cycles.count) cycles with average length: \(calculateAverageLength())")
 
-    let isValidVerticesCycles = checkGraphCyclesVertices(cycles: cycles)
+    let isValidVerticesCycles = checkGraphCyclesVertices(cycles: cycles, onlyRoot: onlyRoot)
     let isValidEdgesCycles = checkGraphCyclesEdges(cycles: cycles)
 
     return isValidVerticesCycles && isValidEdgesCycles
   }
 
 
-  private func checkGraphCyclesVertices(cycles: [DICycle]) -> Bool {
+  private func checkGraphCyclesVertices(cycles: [DICycle], onlyRoot: Bool) -> Bool {
+    func isCached(_ lifetime: DILifeTime) -> Bool {
+      switch lifetime {
+      case .perContainer, .perRun, .single: return true
+      default: return false
+      }
+    }
+
     var successful: Bool = true
     for cycle in cycles {
       assert(cycle.vertexIndices.count >= 1)
@@ -217,11 +259,22 @@ extension DIGraph {
       }
 
       if countPrototypeLifetime > 0 {
-        log_cycleHavePrototype(vertices: cycleVertices, edges: cycle.edges)
+        if onlyRoot {
+          if case .component(let componentVertex) = cycleVertices[0], componentVertex.lifeTime == .prototype {
+            log_cycleFirstPrototype(vertices: cycleVertices, edges: cycle.edges)
+            successful = false
+          }
+        } else {
+          log_cycleHavePrototype(vertices: cycleVertices, edges: cycle.edges)
+        }
       }
 
       if countCachedLifetime > 0 && countPrototypeLifetime + countObjectGraphLifetime > 0 {
-        log_cycleHaveInvariantLifetimes(vertices: cycleVertices, edges: cycle.edges)
+        if onlyRoot && countCachedLifetime == 1, case .component(let componentVertex) = cycleVertices[0], isCached(componentVertex.lifeTime) {
+          // nothing - only first component is cache, it's okay.
+        } else {
+          log_cycleHaveInvariantLifetimes(vertices: cycleVertices, edges: cycle.edges)
+        }
       }
     }
 
@@ -251,5 +304,21 @@ extension DIGraph {
     }
 
     return successful
+  }
+}
+
+extension DIVertex {
+  fileprivate var isRoot: Bool {
+    if case .component(let componentVertex) = self, componentVertex.isRoot {
+      return true
+    }
+    return false
+  }
+
+  fileprivate var isRootOrSingle: Bool {
+    if case .component(let componentVertex) = self, (componentVertex.isRoot || componentVertex.lifeTime == .single) {
+      return true
+    }
+    return false
   }
 }

@@ -18,15 +18,17 @@ class Resolver {
     let pType = ParsedType(type: type)
     log(.verbose, msg: "Begin resolve \(description(type: pType))", brace: .begin)
     defer { log(.verbose, msg: "End resolve \(description(type: pType))", brace: .end) }
-    
-    return gmake(by: make(by: pType, with: name, from: framework, use: nil, arguments: arguments))
+
+    let checkOnRoot = container.componentContainer.hasRootComponents
+    return gmake(by: make(by: pType, with: name, from: framework, use: nil, arguments: arguments, checkOnRoot: checkOnRoot))
   }
   
   func injection<T>(obj: T, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) {
     log(.verbose, msg: "Begin injection in obj: \(obj)", brace: .begin)
     defer { log(.verbose, msg: "End injection in obj: \(obj)", brace: .end) }
 
-    _ = make(by: ParsedType(obj: obj), with: nil, from: framework, use: obj, arguments: arguments)
+    let checkOnRoot = container.componentContainer.hasRootComponents
+    _ = make(by: ParsedType(obj: obj), with: nil, from: framework, use: obj, arguments: arguments, checkOnRoot: checkOnRoot)
   }
 
   
@@ -34,15 +36,17 @@ class Resolver {
     log(.verbose, msg: "Begin resolve cached object by component: \(component.info)", brace: .begin)
     defer { log(.verbose, msg: "End resolve cached object by component: \(component.info)", brace: .end) }
 
-    mutex.sync { _ = makeObject(by: component, use: nil, arguments: arguments) }
+    let checkOnRoot = container.componentContainer.hasRootComponents
+    mutex.sync { _ = makeObject(by: component, use: nil, arguments: arguments, checkOnRoot: checkOnRoot) }
   }
   
   func resolve<T>(type: T.Type = T.self, component: Component, arguments: AnyArguments? = nil) -> T {
     let pType = ParsedType(type: type)
     log(.verbose, msg: "Begin resolve \(description(type: pType)) by component: \(component.info)", brace: .begin)
     defer { log(.verbose, msg: "End resolve \(description(type: pType)) by component: \(component.info)", brace: .end) }
-    
-    return gmake(by: makeObject(by: component, use: nil, arguments: arguments))
+
+    let checkOnRoot = container.componentContainer.hasRootComponents
+    return gmake(by: makeObject(by: component, use: nil, arguments: arguments, checkOnRoot: checkOnRoot))
   }
 
   /// Finds the most suitable components that satisfy the types.
@@ -172,7 +176,12 @@ class Resolver {
     mutex.sync { cache.containerStorage.clean() }
   }
   
-  private func make(by parsedType: ParsedType, with name: String?, from framework: DIFramework.Type?, use object: Any?, arguments: AnyArguments?) -> Any? {
+  private func make(by parsedType: ParsedType,
+                    with name: String?,
+                    from framework: DIFramework.Type?,
+                    use object: Any?,
+                    arguments: AnyArguments?,
+                    checkOnRoot: Bool) -> Any? {
     log(.verbose, msg: "Begin make \(description(type: parsedType))", brace: .begin)
     defer { log(.verbose, msg: "End make \(description(type: parsedType))", brace: .end) }
 
@@ -192,12 +201,12 @@ class Resolver {
             return self.mutex.sync {
               // call `.value` into DI initialize.
               if saveGraph === self.cache.graph {
-                return self.make(by: parsedType, components: components, use: object, arguments: arguments)
+                return self.make(by: parsedType, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
               }
               // Call `.value` firstly.
               if self.stack.isEmpty {
                 self.cache.graph = saveGraph.toStrongCopy()
-                return self.make(by: parsedType, components: components, use: object, arguments: arguments)
+                return self.make(by: parsedType, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
               }
               // Call `.value` into DI initialize, and DI graph has lifetimes perContainer, perRun, single...
               // For this case need call provider on her Cache Graph.
@@ -208,7 +217,7 @@ class Resolver {
                 self.cache.graph.toWeak()
                 self.cache.graph = currentGraphCache
               }
-              return self.make(by: parsedType, components: components, use: object, arguments: arguments)
+              return self.make(by: parsedType, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
             }
           })
         }
@@ -223,19 +232,23 @@ class Resolver {
         }
       }
 
-      return make(by: parsedType, components: components, use: object, arguments: arguments)
+      return make(by: parsedType, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
     }
   }
 
   /// isMany for optimization
-  private func make(by parsedType: ParsedType, components: Components, use object: Any?, arguments: AnyArguments?) -> Any? {
+  private func make(by parsedType: ParsedType,
+                    components: Components,
+                    use object: Any?,
+                    arguments: AnyArguments?,
+                    checkOnRoot: Bool) -> Any? {
     if parsedType.hasMany {
       assert(nil == object, "Many injection not supported")
-      return components.sorted{ $0.order < $1.order }.compactMap{ makeObject(by: $0, use: nil, arguments: arguments) }
+      return components.sorted{ $0.order < $1.order }.compactMap{ makeObject(by: $0, use: nil, arguments: arguments, checkOnRoot: checkOnRoot) }
     }
 
     if let component = components.first, 1 == components.count {
-      return makeObject(by: component, use: object, arguments: arguments)
+      return makeObject(by: component, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
     }
 
     if components.isEmpty {
@@ -249,8 +262,12 @@ class Resolver {
   }
   
   /// Super function
-  private func makeObject(by component: Component, use usingObject: Any?, arguments: AnyArguments?) -> Any? {
+  private func makeObject(by component: Component, use usingObject: Any?, arguments: AnyArguments?, checkOnRoot: Bool) -> Any? {
     log(.verbose, msg: "Found component: \(component.info)")
+
+    if checkOnRoot && !(component.isRoot || component.lifeTime == .single) {
+      log(.error, msg: "Are you using root components, but a root component was found that was not marked as root: \(component.info)")
+    }
 
     let uniqueKey = component.info
     
@@ -355,7 +372,7 @@ class Resolver {
         } else if parameter.parsedType.arg {
           makedObject = getArgumentObject(parameter: parameter)
         } else {
-          makedObject = make(by: parameter.parsedType, with: parameter.name, from: component.framework, use: nil, arguments: arguments)
+          makedObject = make(by: parameter.parsedType, with: parameter.name, from: component.framework, use: nil, arguments: arguments, checkOnRoot: false)
         }
         
         if nil != makedObject || parameter.parsedType.optional {
