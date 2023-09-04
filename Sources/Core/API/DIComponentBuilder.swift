@@ -358,4 +358,12 @@ extension DIComponentBuilder {
     component.isRoot = true
     return self
   }
+
+  /// Function declaring that this component register but it may not be used.
+  /// Actual only if you using `root components` system, because check graph found unused components and log warnings.
+  @discardableResult
+  public func unused() -> Self {
+    component.unused = true
+    return self
+  }
 }

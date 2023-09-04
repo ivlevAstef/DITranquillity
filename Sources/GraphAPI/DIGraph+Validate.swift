@@ -197,7 +197,9 @@ extension DIGraph {
     let unvisited = Set(vertices.indices).subtracting(visited)
 
     for index in unvisited.sorted() {
-      log_unusedComponent(vertex: vertices[index])
+      if !vertices[index].unused {
+        log_unusedComponent(vertex: vertices[index])
+      }
     }
   }
 }
@@ -317,6 +319,13 @@ extension DIVertex {
 
   fileprivate var isRootOrSingle: Bool {
     if case .component(let componentVertex) = self, (componentVertex.isRoot || componentVertex.lifeTime == .single) {
+      return true
+    }
+    return false
+  }
+
+  fileprivate var unused: Bool {
+    if case .component(let componentVertex) = self, componentVertex.unused {
       return true
     }
     return false

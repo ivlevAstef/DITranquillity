@@ -30,6 +30,8 @@ public final class DIComponentVertex: Hashable {
   public let alternativeTypes: [ComponentAlternativeType]
   /// Component is marked as root.
   public let isRoot: Bool
+  /// Component is marked as unused.
+  public let unused: Bool
 
   /// Framework where this component was register
   public let framework: DIFramework.Type?
@@ -43,6 +45,7 @@ public final class DIComponentVertex: Hashable {
     self.canInitialize = component.initial != nil
     self.alternativeTypes = component.alternativeTypes
     self.isRoot = component.isRoot
+    self.unused = component.unused
     self.framework = component.framework
     self.part = component.part
   }

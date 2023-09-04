@@ -17,7 +17,7 @@ https://github.com/ivlevAstef/DITranquillity
 ```
 Или прописать в `Package.swift` файле в секции `dependencies`:
 ```Swift
-.package(url: "https://github.com/ivlevAstef/DITranquillity.git", from: "3.8.4")
+.package(url: "https://github.com/ivlevAstef/DITranquillity.git", from: "4.5.1")
 ```
 И не забудьте указать в таргете в аргументе `dependencies` зависимость на библиотеку:
 ```Swift

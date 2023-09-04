@@ -89,6 +89,7 @@ final class Component {
   var lifeTime = DILifeTime.default
   var priority: DIComponentPriority = .normal
   var isRoot: Bool = false
+  var unused: Bool = false
 
   var alternativeTypes: [ComponentAlternativeType] = []
   
