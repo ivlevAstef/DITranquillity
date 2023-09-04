@@ -35,7 +35,7 @@ public final class DIContainer {
     self.parent = parent
     resolver = Resolver(container: self)
     
-    register { [unowned self] in return self }.lifetime(.prototype)
+    register { [unowned self] in return self }.lifetime(.prototype).unused()
   }
 
   internal let componentContainer = ComponentContainer()

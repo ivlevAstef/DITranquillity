@@ -1,3 +1,6 @@
+# 4.5.1-4.5.2
+* Add `unused` for components. Need for disable warning for optional components.
+
 # 4.5.0
 * Add `root` components. For more information see `registration_and_service.md`
 
