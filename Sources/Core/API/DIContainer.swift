@@ -120,7 +120,11 @@ extension DIContainer {
     if P0.self is Void.Type {
       return register(file, line, MethodMaker.makeVoid(by: c))
     } else {
+      #if swift(>=5.9)
+      return register(file, line, MethodMaker.eachMake(by: c))
+      #else
       return register(file, line, MethodMaker.make1([P0.self], by: c))
+      #endif
     }
   }
   

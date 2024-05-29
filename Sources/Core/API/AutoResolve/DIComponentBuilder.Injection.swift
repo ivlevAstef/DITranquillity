@@ -6,8 +6,6 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-private typealias MM = MethodMaker
-
 extension DIComponentBuilder {
 
   private func append(injection signature: MethodSignature) -> Self {
@@ -15,7 +13,23 @@ extension DIComponentBuilder {
     return self
   }
 
-
+#if swift(>=5.9)
+  /// Function for appending an injection method
+  ///
+  /// Using:
+  /// ```
+  /// container.register(YourClass.self)
+  ///   .injection { yourClass, p0, p1,... in yourClass.yourMethod(p0, p1, ...) }
+  /// ```
+  ///
+  /// - Parameters:
+  ///   - method: Injection method. First input argument is the always created object.
+  /// - Returns: Self
+  @discardableResult
+  public func injection<each P>(_ method: @escaping (Impl, repeat each P) -> Void) -> Self {
+    return append(injection: MethodMaker.eachMake(useObject: true, by: method))
+  }
+#else
   /// Function for appending an injection method
   ///
   /// Using:
@@ -127,4 +141,5 @@ extension DIComponentBuilder {
   public func injection<P0,P1,P2,P3,P4,P5,P6,P7>(_ m: @escaping (Impl,P0,P1,P2,P3,P4,P5,P6,P7) -> ()) -> Self {
     return append(injection: MM.make9([UseObject.self,P0.self,P1.self,P2.self,P3.self,P4.self,P5.self,P6.self,P7.self], by: m))
   }
+#endif
 }
