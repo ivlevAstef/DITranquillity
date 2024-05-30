@@ -66,7 +66,7 @@ https://github.com/ivlevAstef/DITranquillity
 
 Also you can edit your `Package.swift` and the following line into section `dependencies`:
 ```Swift
-.package(url: "https://github.com/ivlevAstef/DITranquillity.git", from: "4.5.2")
+.package(url: "https://github.com/ivlevAstef/DITranquillity.git", from: "4.6.0")
 ```
 And don't forget to specify in your section `target` wrote dependency line:
 ```Swift
