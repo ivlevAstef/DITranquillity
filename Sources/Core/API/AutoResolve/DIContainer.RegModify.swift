@@ -6,10 +6,44 @@
 //  Copyright © 2021 Alexander Ivlev. All rights reserved.
 //
 
+#if swift(>=5.9)
+extension DIContainer {
+  /// Declaring a new component with initial.
+  /// Using:
+  /// ```
+  /// container.register(YourClass.init) { arg($0) }
+  /// ```
+  ///
+  /// - Parameter closure: initial method. Must return type declared at registration.
+  /// - Parameter modificator: Need for support set arg / many / tag on first initial argument.
+  /// - Returns: component builder, to configure the component.
+  @discardableResult
+  public func register<Impl,P0,each P,M0>(file: String = #file, line: Int = #line,
+                                          _ closure: @escaping (P0, repeat each P) -> Impl,
+                                          modificator: @escaping (M0) -> P0) -> DIComponentBuilder<Impl> {
+    return register(file, line, MethodMaker.eachMake(by: closure, modificator: modificator))
+  }
+
+  /// Declaring a new component with initial.
+  /// Using:
+  /// ```
+  /// container.register(YourClass.init) { (arg($0), many($1)) }
+  /// ```
+  ///
+  /// - Parameter closure: initial method. Must return type declared at registration.
+  /// - Parameter modificator: Need for support set arg / many / tag on first and second initial argument.
+  /// - Returns: component builder, to configure the component.
+  @discardableResult
+  public func register<Impl,P0,P1,each P,M0,M1>(file: String = #file, line: Int = #line,
+                                                _ closure: @escaping (P0, P1, repeat each P) -> Impl,
+                                                modificator: @escaping (M0, M1) -> (P0, P1)) -> DIComponentBuilder<Impl> {
+    return register(file, line, MethodMaker.eachMake(by: closure, modificator: modificator))
+  }
+}
+#else
 private typealias MM = MethodMaker
 
 extension DIContainer {
-
   /// Declaring a new component with initial.
   /// Using:
   /// ```
@@ -234,5 +268,5 @@ extension DIContainer {
     _ c: @escaping ((P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15)) -> Impl, modificator: @escaping (M0) -> P0) -> DIComponentBuilder<Impl> {
       return register(file, line, MM.make16([M0.self,P1.self,P2.self,P3.self,P4.self,P5.self,P6.self,P7.self,P8.self,P9.self,P10.self,P11.self,P12.self,P13.self,P14.self,P15.self], by: {c((modificator($0),$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15))}))
   }
-  
 }
+#endif

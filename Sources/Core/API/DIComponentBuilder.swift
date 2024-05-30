@@ -175,7 +175,11 @@ extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func injection(_ method: @escaping (Impl) -> ()) -> Self {
+    #if swift(>=5.9)
+    component.append(injection: MethodMaker.eachMake(useObject: true, by: method), cycle: false)
+    #else
     component.append(injection: MethodMaker.make1([UseObject.self], by: method), cycle: false)
+    #endif
     return self
   }
   
@@ -211,7 +215,11 @@ extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func injection<Property>(name: String? = nil, cycle: Bool = false, _ method: @escaping (Impl,Property) -> ()) -> Self {
+    #if swift(>=5.9)
+    component.append(injection: MethodMaker.eachMake(useObject: true, [nil, name], by: method), cycle: cycle)
+    #else
     component.append(injection: MethodMaker.make2([UseObject.self, Property.self], [nil, name], by: method), cycle: cycle)
+    #endif
     return self
   }
   
@@ -290,7 +298,11 @@ extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func postInit(_ method: @escaping (Impl) -> ()) -> Self {
+    #if swift(>=5.9)
+    component.postInit = MethodMaker.eachMake(useObject: true, by: method)
+    #else
     component.postInit = MethodMaker.make1([UseObject.self], by: method)
+    #endif
     return self
   }
 }

@@ -1,3 +1,10 @@
+# 4.6.0
+* Support Variadic types/generics: https://github.com/apple/swift-evolution/blob/main/proposals/0398-variadic-types.md
+Now register and injection have infinity paramaters.
+* Improve changes from 4.3.4 release. Now your can simplify use two modificators:
+Old: `container.register { Cat(name: arg($0), owner: many($1), home: $2) }`
+New: `container.register(Cat.init) { (arg($0), many($1)) }`
+
 # 4.5.1-4.5.2
 * Add `unused` for components. Need for disable warning for optional components.
 
