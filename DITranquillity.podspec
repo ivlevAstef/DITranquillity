@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'DITranquillity'
-  s.version      = '4.6.0'
+  s.version      = '4.7.0'
   s.summary      = 'DITranquillity - Dependency injection for iOS/macOS/tvOS (Swift) '
 
   s.description  = <<-DESC
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.swift_version = '5.1'
 
-  s.dependency 'SwiftLazy', '>= 1.2.0'
+  s.dependency 'SwiftLazy', '>= 1.3.0'
 
   s.ios.deployment_target = '12.0'
   s.tvos.deployment_target = '12.0'

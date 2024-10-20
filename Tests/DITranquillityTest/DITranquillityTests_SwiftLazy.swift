@@ -350,4 +350,105 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
     XCTAssertEqual(providerInitProvider1InitDeinitBalance, 0)
   }
 
+    func test13_provider_multithread() {
+        DISetting.Defaults.multiThread = true
+        let container = DIContainer()
+        DISetting.Log.fun = nil
+
+        container.register(FooService.init)
+        
+        let waiter = DispatchSemaphore(value: 0)
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
+            for _ in 0..<4096 {
+                let service: Provider<FooService> = *container
+                _ = service.value
+            }
+            waiter.signal()
+        }
+
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+            for _ in 0..<2048 {
+                let service: Provider<FooService> = *container
+                _ = service.value
+            }
+            waiter.signal()
+        }
+
+        waiter.wait()
+        waiter.wait()
+
+        DISetting.Defaults.multiThread = false
+    }
+
+    func test15_lazy_multithread() {
+        DISetting.Defaults.multiThread = true
+        let container = DIContainer()
+        DISetting.Log.fun = nil
+
+        container.register(FooService.init)
+
+        let waiter = DispatchSemaphore(value: 0)
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
+            for _ in 0..<4096 {
+                let service: Lazy<FooService> = *container
+                _ = service.value
+            }
+            waiter.signal()
+        }
+
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+            for _ in 0..<2048 {
+                let service: Lazy<FooService> = *container
+                _ = service.value
+            }
+            waiter.signal()
+        }
+
+        waiter.wait()
+        waiter.wait()
+
+        DISetting.Defaults.multiThread = false
+    }
+
+    func test16_lazy_one_and_clear_multithread() {
+        DISetting.Defaults.multiThread = true
+        let container = DIContainer()
+        DISetting.Log.fun = nil
+
+        container.register(FooService.init)
+        let service: Lazy<FooService> = *container
+
+        let waiter = DispatchSemaphore(value: 0)
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
+            for _ in 0..<4096 {
+                _ = service.value
+            }
+            waiter.signal()
+        }
+
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
+            for _ in 0..<4096 {
+                service.clear()
+            }
+            waiter.signal()
+        }
+
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+            for _ in 0..<2048 {
+                _ = service.value
+            }
+            waiter.signal()
+        }
+
+        let timeout = DispatchTime.now() + 5
+
+        let result1 = waiter.wait(timeout: timeout)
+        let result2 = waiter.wait(timeout: timeout)
+        let result3 = waiter.wait(timeout: timeout)
+
+        XCTAssert(result1 != .timedOut && result2 != .timedOut && result3 != .timedOut, "Deadlock")
+
+        DISetting.Defaults.multiThread = false
+    }
+
 }
