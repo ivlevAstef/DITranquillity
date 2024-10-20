@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '12.0'
   s.tvos.deployment_target = '12.0'
   s.osx.deployment_target = '10.13'
-  s.watchos.deployment_target = '4.0'
+  s.watchos.deployment_target = '5.0'
 
   # subspecs is very long validation - 'pod lib lint' check all combination....
   core_h = 'Sources/DITranquillity.h'
