@@ -7,7 +7,7 @@
 //
 
 /// Weak reference
-class Weak<T> {
+final class Weak<T> {
   private weak var _value: AnyObject?
   
   var value: T? { return _value as? T }
@@ -18,7 +18,7 @@ class Weak<T> {
 }
 
 /// fix bug on xcode 11.2.1, and small improve speed. Don't use Weak<T> for any
-class WeakAny {
+final class WeakAny {
   private(set) weak var value: AnyObject?
 
   init(value: Any) {
@@ -108,32 +108,6 @@ func description(type parsedType: ParsedType) -> String {
   return "type: \(parsedType.type)"
 }
 
-/// for get bundle by type
-
-#if swift(>=4.1)
-#else
-extension Sequence {
-  @inline(__always)
-  func compactMap<ElementOfResult>(_ transform: (Element) throws -> ElementOfResult?) rethrows -> [ElementOfResult] {
-    return try flatMap(transform)
-  }
-}
-#endif
-
-// MARK: Swift 4.2
-
-#if swift(>=4.1.5)
-#else
-  extension ImplicitlyUnwrappedOptional: SpecificType {
-    static var type: DIAType { return Wrapped.self }
-    static var isSwiftType: Bool { return true }
-
-    static func make(by obj: Any?) -> ImplicitlyUnwrappedOptional<Wrapped> {
-      return obj as? Wrapped
-    }
-  }
-#endif
-
 protocol GetRealOptional {
   func unwrapGet() -> Any?
 }
@@ -157,12 +131,7 @@ extension Optional: GetRealOptional {
 /// - Parameter optionalObject: Object for recursively value getting
 /// - Returns: *object* if value really exists. *nil* otherwise.
 func getReallyObject(_ optionalObject: Any?) -> Any? {
-  // Swift 4.2 bug...
-    #if swift(>=4.1.5)
-        return optionalObject.unwrapGet()
-    #else
-        return optionalObject
-    #endif
+  return optionalObject.unwrapGet()
 }
 
 

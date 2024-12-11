@@ -7,8 +7,8 @@
 //
 
 /// A object life time
-public enum DILifeTime: Equatable {
-  public enum ReferenceCounting {
+public enum DILifeTime: Equatable, Sendable {
+  public enum ReferenceCounting: Sendable {
     /// Initialization when first accessed, and the library doesn't hold it
     case weak
     /// Initialization when first accessed, and the library hold it

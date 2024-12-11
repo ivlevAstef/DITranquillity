@@ -9,6 +9,30 @@
 import XCTest
 import DITranquillity
 
+@globalActor actor MyGlobalActor {
+  static let shared = MyGlobalActor()
+}
+
+@MainActor
+private final class TestOtherMainActor {
+  let str: String = "foo"
+  init() {
+    assert(Thread.isMainThread)
+    MainActor.assertIsolated()
+  }
+}
+
+@MainActor
+private final class TestMainActor {
+  let str: String = "bar"
+  let other: TestOtherMainActor
+  init(other: TestOtherMainActor) {
+    self.other = other
+    assert(Thread.isMainThread)
+    MainActor.assertIsolated()
+  }
+}
+
 class DITranquillityTests_ResolveByInit: XCTestCase {
   override func setUp() {
     super.setUp()
@@ -60,7 +84,44 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
     
     let p1: Params = container.resolve()
     XCTAssert(p1.number == 15 && p1.str == "test" && p1.bool == true)
-  }  
+  }
+
+  func test05_ResolveMainActor() {
+    let container = DIContainer()
+
+    container.register { @MainActor in TestOtherMainActor() }
+    container.register { @MainActor in TestMainActor(other: $0) }
+
+    let m1: TestOtherMainActor = container.resolve()
+    let m2: TestMainActor = container.resolve()
+
+    XCTAssert(m1.str == "foo")
+    XCTAssert(m2.str == "bar")
+
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
+      let m1InThread: TestOtherMainActor = container.resolve()
+      let m2InThread: TestMainActor = container.resolve()
+
+      XCTAssert(m1InThread.str == "foo")
+      XCTAssert(m2InThread.str == "bar")
+    }
+
+    Task { @MainActor in
+      let m1: TestOtherMainActor = container.resolve()
+      let m2: TestMainActor = container.resolve()
+
+      XCTAssert(m1.str == "foo")
+      XCTAssert(m2.str == "bar")
+    }
+
+    Task { @MyGlobalActor in
+      let m1: TestOtherMainActor = container.resolve()
+      let m2: TestMainActor = container.resolve()
+
+      XCTAssert(m1.str == "foo")
+      XCTAssert(m2.str == "bar")
+    }
+  }
 }
 
 

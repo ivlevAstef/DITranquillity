@@ -6,7 +6,7 @@
 //  Copyright © 2018 Alexander Ivlev. All rights reserved.
 //
 
-internal class ExtensionsContainer {
+internal final class ExtensionsContainer: @unchecked Sendable {
   private var extensionsByType: [DIComponentInfo: DIExtensions] = [:]
   private let mutex: PThreadMutex = PThreadMutex(recursive: ())
 

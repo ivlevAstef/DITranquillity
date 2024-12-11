@@ -31,7 +31,7 @@ public protocol DIStorage {
 
 
 /// Contains objects in dictionary by keys.
-public class DICacheStorage: DIStorage {
+public final class DICacheStorage: DIStorage {
   public var any: [DIComponentInfo: Any] {
     lock.lock()
     defer { lock.unlock() }
@@ -64,7 +64,7 @@ public class DICacheStorage: DIStorage {
 }
 
 /// Unite few storages for fetch from first containing and save to all.
-public class DICompositeStorage: DIStorage {
+public final class DICompositeStorage: DIStorage {
   public var any: [DIComponentInfo: Any] {
     var result: [DIComponentInfo: Any] = [:]
     // reverse for first storage rewrite last storage if the same keys

@@ -8,7 +8,7 @@
 
 import SwiftLazy
 
-class Resolver {
+final class Resolver {
 
   init(container: DIContainer) {
     self.container = container // unowned
@@ -431,12 +431,12 @@ class Resolver {
   private var stack: ContiguousArray<Component.UniqueKey> = []
 
   private class Cache {
-    fileprivate static let singleStorage = DIUnsafeCacheStorage()
+    fileprivate nonisolated(unsafe) static let singleStorage = DIUnsafeCacheStorage()
     fileprivate let containerStorage = DIUnsafeCacheStorage()
 
-    fileprivate static var single = DIScope(name: "single", storage: singleStorage, policy: .strong)
-    fileprivate static var weakPerRun = DIScope(name: "per run", storage: singleStorage, policy: .weak)
-    fileprivate static var strongPerRun = DIScope(name: "per run", storage: singleStorage, policy: .strong)
+    fileprivate nonisolated(unsafe) static var single = DIScope(name: "single", storage: singleStorage, policy: .strong)
+    fileprivate nonisolated(unsafe) static var weakPerRun = DIScope(name: "per run", storage: singleStorage, policy: .weak)
+    fileprivate nonisolated(unsafe) static var strongPerRun = DIScope(name: "per run", storage: singleStorage, policy: .strong)
     fileprivate lazy var weakPerContainer = DIScope(name: "per container", storage: containerStorage, policy: .weak)
     fileprivate lazy var strongPerContainer = DIScope(name: "per container", storage: containerStorage, policy: .strong)
     fileprivate var graph = makeGraphScope()

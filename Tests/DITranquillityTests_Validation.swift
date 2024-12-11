@@ -69,7 +69,7 @@ private class RCycle2 {
 class DITranquillityTests_Build: XCTestCase {
   var file: String { return #file }
   
-  static var logs: [(level: DILogLevel, msg: String)] = []
+  nonisolated(unsafe) static var logs: [(level: DILogLevel, msg: String)] = []
   private static func logFunction(level: DILogLevel, msg: String) {
     logs.append((level, msg))
   }

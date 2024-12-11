@@ -6,7 +6,7 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-final class FrameworksDependenciesContainer {
+final class FrameworksDependenciesContainer: @unchecked Sendable {
   private var imports = [FrameworkWrapper: Set<FrameworkWrapper>]()
   private var mutex = PThreadMutex(normal: ())
   
@@ -30,7 +30,7 @@ final class FrameworksDependenciesContainer {
   }
 }
 
-private class FrameworkWrapper: Hashable {
+private final class FrameworkWrapper: Sendable, Hashable {
   let framework: DIFramework.Type
   private let identifier: ObjectIdentifier
 
@@ -39,15 +39,9 @@ private class FrameworkWrapper: Hashable {
     self.identifier = ObjectIdentifier(framework)
   }
 
-  #if swift(>=5.0)
   func hash(into hasher: inout Hasher) {
     hasher.combine(identifier)
   }
-  #else
-  var hashValue: Int {
-    return identifier.hashValue
-  }
-  #endif
 
   static func ==(lhs: FrameworkWrapper, rhs: FrameworkWrapper) -> Bool {
     return lhs.identifier == rhs.identifier

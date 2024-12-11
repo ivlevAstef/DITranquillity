@@ -7,7 +7,7 @@
 //
 
 /// Alternative type. It' types setup in component used function `as(...`
-public enum ComponentAlternativeType {
+public enum ComponentAlternativeType: Sendable {
   case type(DIAType)
   case tag(DITag, type: DIAType)
   case name(String, type: DIAType)

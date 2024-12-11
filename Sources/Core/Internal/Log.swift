@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum LogBrace {
+enum LogBrace: Sendable {
   case begin, neutral, end
 }
 

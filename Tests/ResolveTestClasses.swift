@@ -8,11 +8,11 @@
 
 import DITranquillity
 
-protocol ServiceProtocol {
+protocol ServiceProtocol: Sendable {
   func foo() -> String
 }
 
-class FooService: ServiceProtocol {
+final class FooService: ServiceProtocol, Sendable {
   init() {
     
   }
@@ -22,13 +22,13 @@ class FooService: ServiceProtocol {
   }
 }
 
-class BarService: ServiceProtocol {
-  func foo() -> String { 
+final class BarService: ServiceProtocol, Sendable {
+  func foo() -> String {
     return "bar"
   }
 }
 
-class Inject {
+final class Inject: Sendable {
   let service: ServiceProtocol
   
   init(service: ServiceProtocol) {
@@ -37,16 +37,16 @@ class Inject {
   
 }
 
-class InjectImplicitly {
+final class InjectImplicitly {
   var service: ServiceProtocol!
   init() {}
 }
 
-class InjectOpt {
+final class InjectOpt {
   var service: ServiceProtocol?
 }
 
-class Circular2A {
+final class Circular2A {
   let b: Circular2B
   
   init(b: Circular2B) {
@@ -54,11 +54,11 @@ class Circular2A {
   }
 }
 
-class Circular2B {
+final class Circular2B {
   var a: Circular2A!
 }
 
-class Circular3A {
+final class Circular3A {
   let b: Circular3B
   
   init(b: Circular3B) {
@@ -66,7 +66,7 @@ class Circular3A {
   }
 }
 
-class Circular3B {
+final class Circular3B {
   var c: Circular3C!
   
   init(c: Circular3C) {
@@ -74,11 +74,11 @@ class Circular3B {
   }
 }
 
-class Circular3C {
+final class Circular3C {
   var a: Circular3A!
 }
 
-class CircularDouble2A {
+final class CircularDouble2A {
   var b1: CircularDouble2B!
   var b2: CircularDouble2B!
   
@@ -88,7 +88,7 @@ class CircularDouble2A {
   }
 }
 
-class CircularDouble2B {
+final class CircularDouble2B {
   let a: CircularDouble2A
   
   init(a: CircularDouble2A) {
@@ -96,19 +96,19 @@ class CircularDouble2B {
   }
 }
 
-class DependencyA {
-  
+final class DependencyA {
+
 }
 
-class DependencyB {
+final class DependencyB {
   var a: DependencyA!
 }
 
-class DependencyC {
+final class DependencyC {
   var b: DependencyB!
 }
 
-class Params {
+final class Params: Sendable {
   let number: Int
   let str: String
   let bool: Bool
@@ -138,6 +138,6 @@ class Params {
   }
 }
 
-class ManyInject {
+final class ManyInject {
   var a: [ServiceProtocol]!
 }

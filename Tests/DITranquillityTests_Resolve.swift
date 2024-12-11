@@ -755,8 +755,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     let serviceNot: ServiceProtocol? = by(tags: FooService.self, BarService.self, Inject.self, on: *container)
     XCTAssertEqual(serviceNot?.foo() ?? "", "")
   }
-  
-  #if swift(>=4.0)
+
   func test24_ResolveUseKeyPath() {
     let container = DIContainer()
     
@@ -806,7 +805,6 @@ class DITranquillityTests_Resolve: XCTestCase {
     let inject: ManyInject = *container
     XCTAssertEqual(inject.a.count, 2)
   }
-  #endif
 
   func test25_PostInit() {
     let container = DIContainer()

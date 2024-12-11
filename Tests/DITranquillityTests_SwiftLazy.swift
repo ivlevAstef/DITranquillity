@@ -102,7 +102,7 @@ private class ProviderInitProviderStarter {
   }
 }
 
-var providerInitProvider1InitDeinitBalance: Int = 0
+private nonisolated(unsafe) var providerInitProvider1InitDeinitBalance: Int = 0
 private class ProviderInitProviderChecker0 {
   init() { providerInitProvider1InitDeinitBalance += 1 }
   deinit { providerInitProvider1InitDeinitBalance -= 1 }

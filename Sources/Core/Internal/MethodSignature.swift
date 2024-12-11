@@ -12,10 +12,10 @@ class UseObject: SpecificType {
     static var useObject: Bool { return true }
 }
 
-final class MethodSignature {
+final class MethodSignature: @unchecked Sendable {
   typealias Call = ([Any?])->Any?
-  
-  struct Parameter {
+
+  struct Parameter: Sendable {
     let parsedType: ParsedType
     let name: String?
   }

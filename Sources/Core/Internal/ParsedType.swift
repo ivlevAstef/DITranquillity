@@ -6,7 +6,7 @@
 //  Copyright © 2018 Alexander Ivlev. All rights reserved.
 //
 
-final class ParsedType {
+final class ParsedType: @unchecked Sendable {
 
   let type: DIAType
 

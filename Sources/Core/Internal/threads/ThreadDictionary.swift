@@ -9,7 +9,7 @@
 import Foundation
 
 final class ThreadDictionary {
-  private static var oneThreadDict: [String: Any] = [:]
+  private nonisolated(unsafe) static var oneThreadDict: [String: Any] = [:]
 
   static func insert(key: String, obj: Any) {
     if DISetting.Defaults.multiThread {

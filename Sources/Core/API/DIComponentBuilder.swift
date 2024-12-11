@@ -19,15 +19,11 @@ public final class DIComponentBuilder<Impl> {
                                in: container.frameworkStack.last, container.partStack.last)
     self.componentContainer = container.componentContainer
     self.resolver = container.resolver
-
-    #if os(iOS) || os(tvOS)
-      useInjectIntoSubviewComponent()
-    #endif
   }
   
   deinit {
     log(.verbose, msgc: {
-      var msg = "\(component.priority)"
+      var msg = "\(component.priority) "
       msg += "registration: \(component.info)\n"
       msg += "\(DISetting.Log.tab)initial: \(nil != component.initial)\n"
       msg += "\(DISetting.Log.tab)lifetime: \(component.lifeTime)\n"
@@ -175,11 +171,7 @@ extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func injection(_ method: @escaping (Impl) -> ()) -> Self {
-    #if swift(>=5.9)
     component.append(injection: MethodMaker.eachMake(useObject: true, by: method), cycle: false)
-    #else
-    component.append(injection: MethodMaker.make1([UseObject.self], by: method), cycle: false)
-    #endif
     return self
   }
   
@@ -215,11 +207,7 @@ extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func injection<Property>(name: String? = nil, cycle: Bool = false, _ method: @escaping (Impl,Property) -> ()) -> Self {
-    #if swift(>=5.9)
     component.append(injection: MethodMaker.eachMake(useObject: true, [nil, name], by: method), cycle: cycle)
-    #else
-    component.append(injection: MethodMaker.make2([UseObject.self, Property.self], [nil, name], by: method), cycle: cycle)
-    #endif
     return self
   }
   
@@ -249,7 +237,6 @@ extension DIComponentBuilder {
   ///   - modificator: Need for support set many / tag / arg on property.
   /// - Returns: Self
   @discardableResult
-  @available(swift 4.0)
   public func injection<P, Property>(name: String? = nil, cycle: Bool = false, _ keyPath: ReferenceWritableKeyPath<Impl, P>, _ modificator: @escaping (Property) -> P) -> Self {
     injection(name: name, cycle: cycle, { $0[keyPath: keyPath] = modificator($1) })
     return self
@@ -279,7 +266,6 @@ extension DIComponentBuilder {
   ///   - method: Injection method. First input argument is the always created object.
   /// - Returns: Self
   @discardableResult
-  @available(swift 4.0)
   public func injection<Property>(name: String? = nil, cycle: Bool = false, _ keyPath: ReferenceWritableKeyPath<Impl, Property>) -> Self {
     injection(name: name, cycle: cycle, { $0[keyPath: keyPath] = $1 })
     return self
@@ -298,11 +284,7 @@ extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func postInit(_ method: @escaping (Impl) -> ()) -> Self {
-    #if swift(>=5.9)
     component.postInit = MethodMaker.eachMake(useObject: true, by: method)
-    #else
-    component.postInit = MethodMaker.make1([UseObject.self], by: method)
-    #endif
     return self
   }
 }

@@ -24,9 +24,9 @@ public prefix func *<T>(container: DIContainer) -> T {
 /// A container holding all registered components,
 /// allows you to register new components, parts, frameworks and
 /// allows you to receive objects by type.
-public final class DIContainer {
+public final class DIContainer: Sendable {
   /// Extensions for container. Use this components, for subscribe on event from container about registration or resolve or make component.
-  public let extensions = DIExtensions()
+  nonisolated(unsafe) public let extensions = DIExtensions()
 
   /// Make entry point for library
   ///
@@ -42,12 +42,12 @@ public final class DIContainer {
   internal let frameworksDependencies = FrameworksDependenciesContainer()
   internal let extensionsContainer = ExtensionsContainer()
   internal let parent: DIContainer?
-  internal private(set) var resolver: Resolver!
+  nonisolated(unsafe) internal private(set) var resolver: Resolver!
 
-  internal var hasRootComponents: Bool = false
+  nonisolated(unsafe) internal var hasRootComponents: Bool = false
 
   ///MARK: Hierarchy
-  final class IncludedParts {
+  final class IncludedParts: @unchecked Sendable {
     private var parts: Set<ObjectIdentifier> = []
     private let mutex = PThreadMutex(recursive: ())
     
@@ -56,7 +56,7 @@ public final class DIContainer {
     }
   }
   
-  final class Stack<T> {
+  final class Stack<T>: @unchecked Sendable {
     private let key: String
     
     var last: T? { return stack?.last }
@@ -106,28 +106,6 @@ extension DIContainer {
   public func register<Impl>(_ type: Impl.Type, file: String = #file, line: Int = #line) -> DIComponentBuilder<Impl> {
     return DIComponentBuilder(container: self, componentInfo: DIComponentInfo(type: Impl.self, file: file, line: line))
   }
-  
-  /// Declaring a new component with initial.
-  /// Using:
-  /// ```
-  /// container.register{ YourClass(p0:$0) }
-  /// ```
-  ///
-  /// - Parameter c: initial method. Must return type declared at registration.
-  /// - Returns: component builder, to configure the component.
-  @discardableResult
-  public func register<Impl,P0>(file: String = #file, line: Int = #line, _ c: @escaping (P0) -> Impl) -> DIComponentBuilder<Impl> {
-    if P0.self is Void.Type {
-      return register(file, line, MethodMaker.makeVoid(by: c))
-    } else {
-      #if swift(>=5.9)
-      return register(file, line, MethodMaker.eachMake(by: c))
-      #else
-      return register(file, line, MethodMaker.make1([P0.self], by: c))
-      #endif
-    }
-  }
-  
   
   internal func register<Impl>(_ file: String, _ line: Int, _ signature: MethodSignature) -> DIComponentBuilder<Impl> {
     let builder = register(Impl.self, file: file, line: line)

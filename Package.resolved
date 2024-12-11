@@ -1,16 +1,15 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "SwiftLazy",
-        "repositoryURL": "https://github.com/ivlevAstef/SwiftLazy.git",
-        "state": {
-          "branch": null,
-          "revision": "49a47304bb06643fa22d981b6b8301acc5bcb366",
-          "version": "1.2.0"
-        }
+  "originHash" : "a78bd8ab13fd306cff7fbfcbc2df0f27eba3a0b7ca535404c66bbd8e5eeab251",
+  "pins" : [
+    {
+      "identity" : "swiftlazy",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ivlevAstef/SwiftLazy.git",
+      "state" : {
+        "branch" : "swift_concurrency",
+        "revision" : "33b14327d7395c1db90ab4ef634ecfd3ec2d1360"
       }
-    ]
-  },
-  "version": 1
+    }
+  ],
+  "version" : 3
 }

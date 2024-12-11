@@ -9,7 +9,7 @@
 typealias Injection = (signature: MethodSignature, cycle: Bool)
 
 // Reference
-final class ComponentContainer {
+final class ComponentContainer: @unchecked Sendable {
   private(set) var hasRootComponents: Bool = false
   private var map = Dictionary<TypeKey, Set<Component>>()
   private var manyMap = Dictionary<ShortTypeKey, Set<Component>>()
@@ -63,8 +63,8 @@ final class ComponentContainer {
   private let mutex = PThreadMutex(normal: ())
 }
 
-private var componentsCount: Int = 0
-private let componentsCountSynchronizer = makeFastLock()
+private nonisolated(unsafe) var componentsCount: Int = 0
+private nonisolated(unsafe) let componentsCountSynchronizer = makeFastLock()
 
 final class Component {
   typealias UniqueKey = DIComponentInfo
@@ -100,13 +100,9 @@ final class Component {
 }
 
 extension Component: Hashable {
-  #if swift(>=5.0)
   func hash(into hasher: inout Hasher) {
     hasher.combine(info)
   }
-  #else
-  var hashValue: Int { return info.hashValue }
-  #endif
   
   static func ==(lhs: Component, rhs: Component) -> Bool {
     return lhs.info == rhs.info

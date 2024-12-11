@@ -7,7 +7,7 @@
 //
 
 /// Scopes need for control lifetime of your objects
-public class DIScope {
+public final class DIScope: @unchecked Sendable {
   /// Scope name. Used in logging
   public let name: String
 

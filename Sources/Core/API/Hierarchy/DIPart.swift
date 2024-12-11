@@ -9,7 +9,7 @@
 /// Class to maintain code hierarchy.
 /// It's necessary for it to be convenient to combine some parts of the system into one common class, 
 /// and in future to include the part, rather than some list components.
-public protocol DIPart: AnyObject {
+public protocol DIPart: Sendable, AnyObject {
   /// Method inside of which you can registration a components.
   /// It's worth combining the components for some reason.
   /// And call a class implementing the protocol according to this characteristics.

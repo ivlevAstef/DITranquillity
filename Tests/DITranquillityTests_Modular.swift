@@ -10,7 +10,7 @@ import XCTest
 import DITranquillity
 
 private class C1 {}
-private class F1: DIFramework {
+private final class F1: DIFramework {
   static func load(container: DIContainer) {
     container.append(framework: F2.self)
     container.append(framework: F2_2.self)
@@ -19,7 +19,7 @@ private class F1: DIFramework {
 }
 
 private class C2 {}
-private class F2: DIFramework {
+private final class F2: DIFramework {
   static func load(container: DIContainer) {
     container.append(framework: F3.self)
     container.import(F2_2.self)
@@ -28,14 +28,14 @@ private class F2: DIFramework {
 }
 
 private class C2_2 {}
-private class F2_2: DIFramework {
+private final class F2_2: DIFramework {
   static func load(container: DIContainer) {
     container.register(C2_2.init)
   }
 }
 
 private class C3 {}
-private class F3: DIFramework {
+private final class F3: DIFramework {
   static func load(container: DIContainer) {
     container.append(part: P1.self)
     container.append(part: P2.self)
@@ -44,14 +44,14 @@ private class F3: DIFramework {
 }
 
 private class CP1 {}
-private class P1: DIPart {
+private final class P1: DIPart {
   static func load(container: DIContainer) {
     container.register(CP1.init)
   }
 }
 
 private class CP2 {}
-private class P2: DIPart {
+private final class P2: DIPart {
   static func load(container: DIContainer) {
     container.register(CP2.init)
   }
