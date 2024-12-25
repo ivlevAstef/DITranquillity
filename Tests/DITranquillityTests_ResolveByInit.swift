@@ -33,6 +33,22 @@ private final class TestMainActor {
   }
 }
 
+private final class TestActorClassInjected: Sendable {
+}
+
+private actor TestActorActorInjected {
+}
+
+private actor TestActor {
+  let str: String = "bar"
+  let otherClass: TestActorClassInjected
+  let otherActor: TestActorActorInjected
+  init(otherClass: TestActorClassInjected, otherActor: TestActorActorInjected) {
+    self.otherClass = otherClass
+    self.otherActor = otherActor
+  }
+}
+
 class DITranquillityTests_ResolveByInit: XCTestCase {
   override func setUp() {
     super.setUp()
@@ -89,6 +105,7 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
   func test05_ResolveMainActor() {
     let container = DIContainer()
 
+//    container.register(TestOtherMainActor.init)
     container.register { @MainActor in TestOtherMainActor() }
     container.register { @MainActor in TestMainActor(other: $0) }
 
@@ -122,6 +139,16 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
       XCTAssert(m2.str == "bar")
     }
   }
+
+  func test06_ResolveActor() {
+      let container = DIContainer()
+
+      container.register(TestActorClassInjected.init)
+      container.register(TestActorActorInjected.init)
+      container.register { TestActor(otherClass: $0, otherActor: $1) }
+
+      let m2: TestActor = container.resolve()
+
+      XCTAssert(m2.str == "bar")
+  }
 }
-
-

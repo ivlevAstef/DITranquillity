@@ -1,4 +1,4 @@
-// swift-tools-version:6.0
+// swift-tools-version:5.9
 import PackageDescription
 
 let package = Package(
@@ -8,16 +8,14 @@ let package = Package(
         .library(name: "DITranquillity", targets: ["DITranquillity"])
     ],
     dependencies: [
-//        .package(url: "https://github.com/ivlevAstef/SwiftLazy.git", from: "1.3.0")
-      .package(url: "https://github.com/ivlevAstef/SwiftLazy.git", branch: "swift_concurrency")
+        .package(url: "https://github.com/ivlevAstef/SwiftLazy.git", from: "1.5.0")
     ],
     targets: [
         .target(name: "DITranquillity", dependencies: [
             "SwiftLazy"
-        ], path: "./Sources", swiftSettings: [.swiftLanguageMode(.v6)]),
+        ], path: "./Sources"),
         .testTarget(name: "DITranquillity_Tests", dependencies: [
           "DITranquillity"
         ], path: "./Tests")
     ]
 )
-
