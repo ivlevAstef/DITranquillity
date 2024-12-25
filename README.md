@@ -52,6 +52,7 @@ Also I recommend you to read [Glossary](Documentation/en/glossary.md) which will
 
 ## Installing
 The library supports three popular package managers: Cocoapods, Carthage, SwiftPM.
+
 Cocoapods unsupport from 5.0.0 library version.
 
 #### SwiftPM
