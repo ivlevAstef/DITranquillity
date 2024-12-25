@@ -6,7 +6,7 @@
 <a href="https://github.com/Carthage/Carthage"><img src ="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat"/></a>
 <a href="https://swift.org/package-manager"><img src ="https://img.shields.io/badge/SwiftPM-compatible-4BC51D.svg?style=flat"/></a>
 <a href="https://github.com/ivlevAstef/DITranquillity/blob/master/LICENSE"><img src ="https://img.shields.io/github/license/ivlevAstef/DITranquillity.svg?maxAge=2592000"/></a>
-<a href="https://developer.apple.com/swift"><img src ="https://img.shields.io/badge/Swift-3.0--5.9-F16D39.svg?style=flat"/></a>
+<a href="https://developer.apple.com/swift"><img src ="https://img.shields.io/badge/Swift-3.0--6.0-F16D39.svg?style=flat"/></a>
 <a href="http://cocoapods.org/pods/DITranquillity"><img src ="https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-lightgrey.svg"/></a>
 <a href="https://codecov.io/gh/ivlevAstef/DITranquillity"><img src ="https://codecov.io/gh/ivlevAstef/DITranquillity/branch/master/graph/badge.svg"/></a>
 </p>
@@ -39,6 +39,7 @@
 - [x] [Поддержка модульности](Documentation/ru/core/modular.md)
 - [x] [Полное и подробное логирование](Documentation/ru/core/logs.md)
 - [x] Одновременная работа из нескольких потоков
+- [x] Swift Concurrency
 - [x] [Иерархичные контейнеры](Documentation/ru/core/container_hierarchy.md)
 #### UI
 - [x] [Поддержка сторибоардов](Documentation/ru/ui/storyboard.md)
@@ -50,12 +51,7 @@
 
 ## Установка
 Библиотека поддерживает три популярных пакетных менеджера: Cocoapods, Carthage, SwiftPM.
-
-#### CocoaPods
-Добавьте строчку в ваш `Podfile`: 
-```
-pod 'DITranquillity'
-``` 
+Начиная с версии 5.0.0 Cocoapods не поддерживается.
 
 #### SwiftPM
 Вы можете воспользуйтесь "Xcode/File/Swift Packages/Add Package Dependency..." и указать в качестве url:
@@ -70,14 +66,18 @@ https://github.com/ivlevAstef/DITranquillity
 ```Swift
 .product(name: "DITranquillity")
 ```
-> Важно! - SwiftPM не поддерживает фичи из секции UI.
+
+#### CocoaPods
+Добавьте строчку в ваш `Podfile`: 
+```
+pod 'DITranquillity'
+``` 
 
 #### Carthage
 Добавьте строчку в ваш `Cartfile`:
 ```
 github "ivlevAstef/DITranquillity"
 ```
-Carthage поддерживает работу со сторибоардами графом и прямое внедрение, без дополнительных действий.
 
 ## Использование
 Библиотека использует декларативный стиль описания зависимостей, и позволяет отделить ваш прикладной код от кода описания зависимостей.
@@ -202,8 +202,9 @@ class AuthInteractorImpl: AuthInteractor {
 * Старая [https://habr.com/ru/post/311334/](https://habr.com/ru/post/311334/)
 
 ## Требования
-iOS 11.0+,macOS 10.13+,tvOS 11.0+, watchOS 4.0+, Linux; ARC
+iOS 13.0+,macOS 10.15+,tvOS 13.0+, watchOS 8.0+, Linux; ARC
 
+* Swift 6.0-6.x: Xcode 16; version >= 5.0.0
 * Swift 5.5-5.9: Xcode 13,14,15; version >= 3.6.3
 * Swift 5.0-5.3: Xcode 10.2-12.x; version >= 3.6.3
 * Swift 4.1: Xcode 9.3; version >= 3.2.3
@@ -218,8 +219,8 @@ iOS 11.0+,macOS 10.13+,tvOS 11.0+, watchOS 4.0+, Linux; ARC
 - [x] v1.x.x - Начальная версия
 - [x] v2.x.x - Стабилизация [миграция с первой](Documentation/ru/migration1to2.md)
 - [x] v3.x.x - Эволюция и фичи [миграция со второй](Documentation/ru/migration2to3.md)
-- [ ] v4.x.x - API получения графа, оптимизация, Обновление документации и маркетинг [миграция с третьей](Documentation/ru/migration3to4.md)
-- [ ] v5.x.x - Перенос валидации графа, и других проверок на этап компиляции
+- [x] v4.x.x - Оптимизация [миграция с третьей](Documentation/ru/migration3to4.md)
+- [ ] v5.x.x - Swift Concurrency
 
 ## Обратная связь
 

@@ -6,7 +6,7 @@
 <a href="https://github.com/Carthage/Carthage"><img src ="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat"/></a>
 <a href="https://swift.org/package-manager"><img src ="https://img.shields.io/badge/SwiftPM-compatible-4BC51D.svg?style=flat"/></a>
 <a href="https://github.com/ivlevAstef/DITranquillity/blob/master/LICENSE"><img src ="https://img.shields.io/github/license/ivlevAstef/DITranquillity.svg?maxAge=2592000"/></a>
-<a href="https://developer.apple.com/swift"><img src ="https://img.shields.io/badge/Swift-3.0--5.9-F16D39.svg?style=flat"/></a>
+<a href="https://developer.apple.com/swift"><img src ="https://img.shields.io/badge/Swift-3.0--6.0-F16D39.svg?style=flat"/></a>
 <a href="http://cocoapods.org/pods/DITranquillity"><img src ="https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-lightgrey.svg"/></a>
 <a href="https://codecov.io/gh/ivlevAstef/DITranquillity"><img src ="https://codecov.io/gh/ivlevAstef/DITranquillity/branch/master/graph/badge.svg"/></a>
 </p>
@@ -40,6 +40,7 @@ Also I recommend you to read [Glossary](Documentation/en/glossary.md) which will
 - [x] [Modular](Documentation/en/core/modular.md)
 - [x] [Details logs](Documentation/en/core/logs.md)
 - [x] Thread safety
+- [x] Swift Concurrency
 - [x] [Container hierarchy](Documentation/en/core/container_hierarchy.md)
 #### UI
 - [x] [Storyboard and StoryboardReferences](Documentation/en/ui/storyboard.md)
@@ -51,12 +52,7 @@ Also I recommend you to read [Glossary](Documentation/en/glossary.md) which will
 
 ## Installing
 The library supports three popular package managers: Cocoapods, Carthage, SwiftPM.
-
-#### CocoaPods
-Add the following lines to your `Podfile`: 
-```
-pod 'DITranquillity'
-``` 
+Cocoapods unsupport from 5.0.0 library version.
 
 #### SwiftPM
 You can use "Xcode/File/Swift Packages/Add Package Dependency..." and write github url:
@@ -66,20 +62,24 @@ https://github.com/ivlevAstef/DITranquillity
 
 Also you can edit your `Package.swift` and the following line into section `dependencies`:
 ```Swift
-.package(url: "https://github.com/ivlevAstef/DITranquillity.git", from: "4.6.0")
+.package(url: "https://github.com/ivlevAstef/DITranquillity.git", from: "5.0.0")
 ```
 And don't forget to specify in your section `target` wrote dependency line:
 ```Swift
 .product(name: "DITranquillity")
 ```
-> Attention! - SwiftPM unsupport features from the "UI" section.
+
+#### CocoaPods
+Add the following lines to your `Podfile`: 
+```
+pod 'DITranquillity'
+``` 
 
 #### Carthage
 Add the following lines to your `Cartfile`:
 ```
 github "ivlevAstef/DITranquillity"
 ```
-Carthage support "UI" and "GraphAPI" section no additional actions.
 
 ## Usage
 The library uses a declarative style of dependency description, and allows you to separate your application code from dependency description code.
@@ -204,8 +204,9 @@ Also your can read articles:
 * Ru! Old! [https://habr.com/ru/post/311334/](https://habr.com/ru/post/311334/)
 
 ## Requirements
-iOS 11.0+,macOS 10.13+,tvOS 11.0+, watchOS 4.0+, Linux; ARC
+iOS 13.0+,macOS 10.15+,tvOS 13.0+, watchOS 8.0+, Linux; ARC
 
+* Swift 6.0-6.x: Xcode 16; version >= 5.0.0
 * Swift 5.5-5.9: Xcode 13,14,15; version >= 3.6.3
 * Swift 5.0-5.3: Xcode 10.2-12.x; version >= 3.6.3
 * Swift 4.2: Xcode 10; version >= 3.4.3
@@ -216,13 +217,6 @@ iOS 11.0+,macOS 10.13+,tvOS 11.0+, watchOS 4.0+, Linux; ARC
 
 ## Changelog
 See [CHANGELOG](CHANGELOG.md) file or [releases](https://github.com/ivlevAstef/DITranquillity/releases).
-
-## History and Plans
-- [x] v1.x.x - Started
-- [x] v2.x.x - Stabilization
-- [x] v3.x.x - Evolution and Features
-- [ ] v4.x.x - Graph API and Optimization. Also Documentation and Marketing
-- [ ] v5.x.x - Pre compile time validation
 
 ## Feedback
 

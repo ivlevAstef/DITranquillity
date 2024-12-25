@@ -1,3 +1,11 @@
+# 5.0.0
+* Beta Support Swift Concurrency for DITranquillity and SwiftLazy.
+* Update SwiftLazy - fix and optimize Lazy.
+* Update SwiftLazy - Lazy support @dynamicMemberLookup
+
+# 4.7.0
+* Update SwiftLazy for fix deadlock in Lazy. BUT this update can crash application if use Lazy.
+
 # 4.6.0
 * Support Variadic types/generics: https://github.com/apple/swift-evolution/blob/main/proposals/0398-variadic-types.md
 Now register and injection have infinity paramaters.
