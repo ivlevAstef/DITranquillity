@@ -1,3 +1,7 @@
+# 5.0.2
+* Improve support Swift Concurrency - fix support detect MainActor register with modificators. e.g.:
+`container.register(MyMainActorClass.init) { arg($0) }`
+
 # 5.0.1
 * Improve support Swift Concurrency - fix support detect MainActor classes for register methods initialize.
 

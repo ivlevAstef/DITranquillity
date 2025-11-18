@@ -115,4 +115,55 @@ extension MethodMaker {
       }
     }
   }
+
+  static func eachMakeMainActor<P0, each P, M0, R>(
+      by f: @escaping @MainActor (P0, repeat each P) -> R,
+      modificator: @escaping (M0) -> P0) -> MethodSignature where R: Sendable
+  {
+    let types = EachTypes()
+    types.append(M0.self)
+    repeat types.append((each P).self)
+
+    return MethodSignature(types.result, nil) { params in
+      let maker = EachMaker(params: params)
+      let modifyResult = modificator(maker.make())
+      if Thread.isMainThread {
+        return MainActor.assumeIsolated {
+          f(modifyResult, repeat maker.make() as each P)
+        }
+      } else {
+        return DispatchQueue.main.sync {
+          MainActor.assumeIsolated {
+            f(modifyResult, repeat maker.make() as each P)
+          }
+        }
+      }
+    }
+  }
+
+  static func eachMakeMainActor<P0, P1, each P, M0, M1, R>(
+      by f: @escaping @MainActor (P0, P1, repeat each P) -> R,
+      modificator: @escaping (M0, M1) -> (P0, P1)) -> MethodSignature where R: Sendable
+  {
+    let types = EachTypes()
+    types.append(M0.self)
+    types.append(M1.self)
+    repeat types.append((each P).self)
+
+    return MethodSignature(types.result, nil) { params in
+      let maker = EachMaker(params: params)
+      let modifyResult = modificator(maker.make(), maker.make())
+      if Thread.isMainThread {
+        return MainActor.assumeIsolated {
+          return f(modifyResult.0, modifyResult.1, repeat maker.make() as each P)
+        }
+      } else {
+        return DispatchQueue.main.sync {
+          MainActor.assumeIsolated {
+            return f(modifyResult.0, modifyResult.1, repeat maker.make() as each P)
+          }
+        }
+      }
+    }
+  }
 }

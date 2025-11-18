@@ -33,6 +33,34 @@ private final class TestMainActor {
   }
 }
 
+@MainActor
+private final class TestMainActorArgument {
+    let str: String = "bar"
+    let arg: Int
+    let other: TestOtherMainActor
+    init(arg: Int, other: TestOtherMainActor) {
+        self.arg = arg
+        self.other = other
+        assert(Thread.isMainThread)
+        MainActor.assertIsolated()
+    }
+}
+
+@MainActor
+private final class TestMainActorArgument2 {
+    let str: String = "bar"
+    let arg1: Int
+    let arg2: String
+    let other: TestOtherMainActor
+    init(arg1: Int, arg2: String, other: TestOtherMainActor) {
+        self.arg1 = arg1
+        self.arg2 = arg2
+        self.other = other
+        assert(Thread.isMainThread)
+        MainActor.assertIsolated()
+    }
+}
+
 private final class TestActorClassInjected: Sendable {
 }
 
@@ -107,35 +135,53 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
 
     container.register(TestOtherMainActor.init)
     container.register(TestMainActor.init)
+    container.register(TestMainActorArgument.init) { arg($0) }
+    container.register(TestMainActorArgument2.init) { (arg($0), arg($1)) }
 
     let m1: TestOtherMainActor = container.resolve()
     let m2: TestMainActor = container.resolve()
+    let m3: TestMainActorArgument = container.resolve(args: 10)
+    let m4: TestMainActorArgument2 = container.resolve(args: 100, "a100")
 
     XCTAssert(m1.str == "foo")
     XCTAssert(m2.str == "bar")
+    XCTAssert(m3.arg == 10)
+    XCTAssert(m4.arg1 == 100 && m4.arg2 == "a100")
 
     DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
-      let m1InThread: TestOtherMainActor = container.resolve()
-      let m2InThread: TestMainActor = container.resolve()
+      let m1: TestOtherMainActor = container.resolve()
+      let m2: TestMainActor = container.resolve()
+      let m3: TestMainActorArgument = container.resolve(args: 20)
+      let m4: TestMainActorArgument2 = container.resolve(args: 200, "a200")
 
-      XCTAssert(m1InThread.str == "foo")
-      XCTAssert(m2InThread.str == "bar")
+      XCTAssert(m1.str == "foo")
+      XCTAssert(m2.str == "bar")
+      XCTAssert(m3.arg == 20)
+      XCTAssert(m4.arg1 == 200 && m4.arg2 == "a200")
     }
 
     Task { @MainActor in
       let m1: TestOtherMainActor = container.resolve()
       let m2: TestMainActor = container.resolve()
+      let m3: TestMainActorArgument = container.resolve(args: 30)
+      let m4: TestMainActorArgument2 = container.resolve(args: 300, "a300")
 
       XCTAssert(m1.str == "foo")
       XCTAssert(m2.str == "bar")
+      XCTAssert(m3.arg == 30)
+      XCTAssert(m4.arg1 == 300 && m4.arg2 == "a300")
     }
 
     Task { @MyGlobalActor in
       let m1: TestOtherMainActor = container.resolve()
       let m2: TestMainActor = container.resolve()
+      let m3: TestMainActorArgument = container.resolve(args: 40)
+      let m4: TestMainActorArgument2 = container.resolve(args: 400, "a400")
 
       XCTAssert(m1.str == "foo")
       XCTAssert(m2.str == "bar")
+      XCTAssert(m3.arg == 40)
+      XCTAssert(m4.arg1 == 400 && m4.arg2 == "a400")
     }
   }
 
