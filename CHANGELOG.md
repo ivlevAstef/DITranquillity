@@ -1,3 +1,6 @@
+# 5.0.1
+* Improve support Swift Concurrency - fix support detect MainActor classes for register methods initialize.
+
 # 5.0.0
 * Beta Support Swift Concurrency for DITranquillity and SwiftLazy.
 * Update SwiftLazy - fix and optimize Lazy.
