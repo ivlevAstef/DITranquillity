@@ -89,10 +89,10 @@ extension MethodMaker {
 // MARK: Main Actor
 
 extension MethodMaker {
-  static func eachMake<each P, R>(
+  static func eachMakeMainActor<each P, R>(
     useObject: Bool = false,
     _ names: [String?]? = nil,
-    by f: @escaping @MainActor @Sendable (repeat each P) -> R) -> MethodSignature where R: Sendable
+    by f: @escaping @MainActor (repeat each P) -> R) -> MethodSignature where R: Sendable
   {
     let types = EachTypes()
     repeat types.append((each P).self)

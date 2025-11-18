@@ -50,8 +50,8 @@ extension DIContainer {
   public func register<Impl,each P>(
     file: String = #file,
     line: Int = #line,
-    _ closure: @escaping @MainActor @Sendable (repeat each P) -> Impl) -> DIComponentBuilder<Impl> where Impl: Sendable
+    _ closure: @escaping @MainActor (repeat each P) -> Impl) -> DIComponentBuilder<Impl> where Impl: Sendable
   {
-    return register(file, line, MethodMaker.eachMake(by: closure))
+    return register(file, line, MethodMaker.eachMakeMainActor(by: closure))
   }
 }

@@ -105,9 +105,8 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
   func test05_ResolveMainActor() {
     let container = DIContainer()
 
-//    container.register(TestOtherMainActor.init)
-    container.register { @MainActor in TestOtherMainActor() }
-    container.register { @MainActor in TestMainActor(other: $0) }
+    container.register(TestOtherMainActor.init)
+    container.register(TestMainActor.init)
 
     let m1: TestOtherMainActor = container.resolve()
     let m2: TestMainActor = container.resolve()

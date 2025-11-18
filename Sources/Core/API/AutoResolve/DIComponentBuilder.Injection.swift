@@ -41,7 +41,7 @@ extension DIComponentBuilder {
   ///   - method: Injection method. First input argument is the always created object.
   /// - Returns: Self
   @discardableResult
-  public func injection<each P>(_ method: @escaping @MainActor @Sendable (Impl, repeat each P) -> Void) -> Self {
-    return append(injection: MethodMaker.eachMake(useObject: true, by: method))
+  public func injection<each P>(_ method: @escaping @MainActor (Impl, repeat each P) -> Void) -> Self where Impl: Sendable {
+    return append(injection: MethodMaker.eachMakeMainActor(useObject: true, by: method))
   }
 }
