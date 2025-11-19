@@ -1,3 +1,6 @@
+# 5.0.4
+* Fix build frameworks from SPM - remove dublicate prefix operator
+
 # 5.0.3
 * Improve support Swift Concurrency - fix potencial deadlock for MainActor initialize
 * Improve support Swift Concurrency - fix no MainActor Sendable classes -  now classes resolved in current thread not main thread

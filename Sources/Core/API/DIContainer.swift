@@ -7,8 +7,8 @@
 //
 
 import class Foundation.Thread
+import SwiftLazy // prefix operator *
 
-prefix operator *
 /// Short syntax for resolve.
 /// Using:
 /// ```
