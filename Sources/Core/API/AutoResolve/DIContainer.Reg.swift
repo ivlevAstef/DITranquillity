@@ -23,8 +23,11 @@ extension DIContainer {
   public func register<Impl,each P>(
     file: String = #file,
     line: Int = #line,
-    _ closure: @escaping (repeat each P) -> Impl) -> DIComponentBuilder<Impl>
-  {
+    _ closure: @escaping @isolated(any) (repeat each P) -> Impl
+  ) -> DIComponentBuilder<Impl> {
+    if let actor = extractIsolation(closure), actor !== MainActor.shared {
+      return register(file, line, MethodMaker.eachMakeIsolated(actor: actor, by: closure, by: closure))
+    }
     return register(file, line, MethodMaker.eachMake(by: closure))
   }
 }
@@ -40,18 +43,18 @@ extension DIContainer {
   /// ```
   /// or short:
   /// ```
-  /// container.register(YourClass.init)
+  /// container.register(YourMainActorClass.init)
   /// ```
-  /// But in In current moment has bug: https://github.com/swiftlang/swift/issues/67581
   ///
   /// - Parameter closure: initial method for MainActor. Must return type declared at registration.
   /// - Returns: component builder, to configure the component.
   @discardableResult
-  public func register<Impl,each P>(
+  public func register<Impl, each P>(
+    isolation: isolated (any Actor)? = #isolation,
     file: String = #file,
     line: Int = #line,
-    _ closure: @escaping @MainActor (repeat each P) -> Impl) -> DIComponentBuilder<Impl> where Impl: Sendable
-  {
+    _ closure: @escaping @MainActor(repeat each P) -> Impl,
+  ) -> DIComponentBuilder<Impl> {
     return register(file, line, MethodMaker.eachMakeMainActor(by: closure))
   }
 }

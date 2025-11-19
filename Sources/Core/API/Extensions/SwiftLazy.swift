@@ -18,9 +18,9 @@ extension Lazy: SpecificType {
     }
   }
 
-  convenience init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?) {
+  convenience init(_ container: DIContainer, _ factory: @escaping (_ isolation: Actor?, _ arguments: AnyArguments?) -> Any?) {
     self.init { () -> Value in
-      return gmake(by: factory(nil))
+      return gmake(by: factory(nil, nil))
     }
   }
 }
@@ -30,14 +30,14 @@ extension Provider: SpecificType {
   static var type: DIAType { return Value.self }
 
   public convenience init(file: String = #file, line: UInt = #line) {
-    self.init { () -> Value in
+    self.init { (isolated: Actor?) -> Value in
       fatalError("Please inject this property from DI in file: \(file.fileName) on line: \(line). Provider type: \(Value.self) ")
     }
   }
 
-  convenience init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?) {
-    self.init { () -> Value in
-      return gmake(by: factory(nil))
+  convenience init(_ container: DIContainer, _ factory: @escaping (_ isolation: Actor?, _ arguments: AnyArguments?) -> Any?) {
+    self.init { (isolated: Actor?) -> Value in
+      return gmake(by: factory(isolated, nil))
     }
   }
 }
@@ -53,9 +53,9 @@ extension Provider1: SpecificType {
     }
   }
 
-  convenience init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?) {
+  convenience init(_ container: DIContainer, _ factory: @escaping (_ isolation: Actor?, _ arguments: AnyArguments?) -> Any?) {
     self.init { arg1 -> Value in
-      return gmake(by: factory(AnyArguments(for: Value.self, args: arg1)))
+      return gmake(by: factory(nil, AnyArguments(for: Value.self, args: arg1)))
     }
   }
 }
@@ -70,9 +70,9 @@ extension Provider2: SpecificType {
     }
   }
 
-  convenience init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?) {
+  convenience init(_ container: DIContainer, _ factory: @escaping (_ isolation: Actor?, _ arguments: AnyArguments?) -> Any?) {
     self.init { arg1, arg2 -> Value in
-      return gmake(by: factory(AnyArguments(for: Value.self, args: arg1, arg2)))
+      return gmake(by: factory(nil, AnyArguments(for: Value.self, args: arg1, arg2)))
     }
   }
 }
@@ -87,9 +87,9 @@ extension Provider3: SpecificType {
     }
   }
 
-  convenience init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?) {
+  convenience init(_ container: DIContainer, _ factory: @escaping (_ isolation: Actor?, _ arguments: AnyArguments?) -> Any?) {
     self.init { arg1, arg2, arg3 -> Value in
-      return gmake(by: factory(AnyArguments(for: Value.self, args: arg1, arg2, arg3)))
+      return gmake(by: factory(nil, AnyArguments(for: Value.self, args: arg1, arg2, arg3)))
     }
   }
 }
@@ -104,9 +104,9 @@ extension Provider4: SpecificType {
     }
   }
 
-  convenience init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?) {
+  convenience init(_ container: DIContainer, _ factory: @escaping (_ isolation: Actor?, _ arguments: AnyArguments?) -> Any?) {
     self.init { arg1, arg2, arg3, arg4 -> Value in
-      return gmake(by: factory(AnyArguments(for: Value.self, args: arg1, arg2, arg3, arg4)))
+      return gmake(by: factory(nil, AnyArguments(for: Value.self, args: arg1, arg2, arg3, arg4)))
     }
   }
 }
@@ -121,9 +121,9 @@ extension Provider5: SpecificType {
     }
   }
 
-  convenience init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?) {
+  convenience init(_ container: DIContainer, _ factory: @escaping (_ isolation: Actor?, _ arguments: AnyArguments?) -> Any?) {
     self.init { arg1, arg2, arg3, arg4, arg5 -> Value in
-      return gmake(by: factory(AnyArguments(for: Value.self, args: arg1, arg2, arg3, arg4, arg5)))
+      return gmake(by: factory(nil, AnyArguments(for: Value.self, args: arg1, arg2, arg3, arg4, arg5)))
     }
   }
 }

@@ -42,7 +42,7 @@ public final class DIScope: @unchecked Sendable {
       return
     }
 
-    let weakStorage = DIUnsafeCacheStorage()
+    let weakStorage = DICacheStorage()
     for (key, value) in storage.any {
       weakStorage.save(object: WeakAny(value: value), by: key)
     }
@@ -52,7 +52,7 @@ public final class DIScope: @unchecked Sendable {
   }
 
   internal func toStrongCopy() -> DIScope {
-    let strongStorage = DIUnsafeCacheStorage()
+    let strongStorage = DICacheStorage()
     for (key, value) in storage.any {
        if let weakRef = value as? WeakAny {
         if let value = weakRef.value {

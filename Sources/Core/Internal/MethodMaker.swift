@@ -49,7 +49,7 @@ extension MethodMaker {
       types.useObject()
     }
 
-    return MethodSignature(types.result, names) { params in
+    return MethodSignature(types.result, names) { _, params in
       let maker = EachMaker(params: params)
       return f(repeat maker.make() as each P)
     }
@@ -63,7 +63,7 @@ extension MethodMaker {
     types.append(M0.self)
     repeat types.append((each P).self)
 
-    return MethodSignature(types.result, nil) { params in
+    return MethodSignature(types.result, nil) { _, params in
       let maker = EachMaker(params: params)
       return f(modificator(maker.make()), repeat maker.make() as each P)
     }
@@ -78,7 +78,7 @@ extension MethodMaker {
     types.append(M1.self)
     repeat types.append((each P).self)
 
-    return MethodSignature(types.result, nil) { params in
+    return MethodSignature(types.result, nil) { _, params in
       let maker = EachMaker(params: params)
       let modifyResult = modificator(maker.make(), maker.make())
       return f(modifyResult.0, modifyResult.1, repeat maker.make() as each P)
@@ -89,10 +89,26 @@ extension MethodMaker {
 // MARK: Main Actor
 
 extension MethodMaker {
+  private static func mainIsolated<R>(closure: @escaping @MainActor () -> R) -> R {
+    if Thread.isMainThread {
+      return MainActor.assumeIsolated {
+        return closure()
+      }
+    } else {
+      let result: R = DispatchQueue.main.sync {
+        MainActor.assumeIsolated {
+          closure()
+        }
+      }
+
+      return result
+    }
+  }
+
   static func eachMakeMainActor<each P, R>(
     useObject: Bool = false,
     _ names: [String?]? = nil,
-    by f: @escaping @MainActor (repeat each P) -> R) -> MethodSignature where R: Sendable
+    by f: @escaping @MainActor (repeat each P) -> R) -> MethodSignature
   {
     let types = EachTypes()
     repeat types.append((each P).self)
@@ -100,18 +116,10 @@ extension MethodMaker {
       types.useObject()
     }
 
-    return MethodSignature(types.result, names) { params in
+    return MethodSignature(types.result, names) { _, params in
       let maker = EachMaker(params: params)
-      if Thread.isMainThread {
-        return MainActor.assumeIsolated {
-          f(repeat maker.make() as each P)
-        }
-      } else {
-        return DispatchQueue.main.sync {
-          MainActor.assumeIsolated {
-            f(repeat maker.make() as each P)
-          }
-        }
+      return mainIsolated {
+        f(repeat maker.make() as each P)
       }
     }
   }
@@ -124,19 +132,11 @@ extension MethodMaker {
     types.append(M0.self)
     repeat types.append((each P).self)
 
-    return MethodSignature(types.result, nil) { params in
+    return MethodSignature(types.result, nil) { _, params in
       let maker = EachMaker(params: params)
       let modifyResult = modificator(maker.make())
-      if Thread.isMainThread {
-        return MainActor.assumeIsolated {
-          f(modifyResult, repeat maker.make() as each P)
-        }
-      } else {
-        return DispatchQueue.main.sync {
-          MainActor.assumeIsolated {
-            f(modifyResult, repeat maker.make() as each P)
-          }
-        }
+      return mainIsolated {
+        f(modifyResult, repeat maker.make() as each P)
       }
     }
   }
@@ -150,19 +150,45 @@ extension MethodMaker {
     types.append(M1.self)
     repeat types.append((each P).self)
 
-    return MethodSignature(types.result, nil) { params in
+    return MethodSignature(types.result, nil) { _, params in
       let maker = EachMaker(params: params)
       let modifyResult = modificator(maker.make(), maker.make())
-      if Thread.isMainThread {
-        return MainActor.assumeIsolated {
-          return f(modifyResult.0, modifyResult.1, repeat maker.make() as each P)
-        }
+      return mainIsolated {
+        f(modifyResult.0, modifyResult.1, repeat maker.make() as each P)
+      }
+    }
+  }
+}
+
+// MARK: Global Actor
+
+extension MethodMaker {
+  static func eachMakeIsolated<each P, R>(
+    actor: (any Actor),
+    useObject: Bool = false,
+    _ names: [String?]? = nil,
+    by f: @escaping (repeat each P) -> R,
+    by isolatedF: @escaping @isolated(any) (repeat each P) -> R) -> MethodSignature
+  {
+    let types = EachTypes()
+    repeat types.append((each P).self)
+    if useObject {
+      types.useObject()
+    }
+
+    return MethodSignature(types.result, names) { isolation, params in
+      let maker = EachMaker(params: params)
+      if isolation === actor {
+        return f(repeat maker.make() as each P)
       } else {
-        return DispatchQueue.main.sync {
-          MainActor.assumeIsolated {
-            return f(modifyResult.0, modifyResult.1, repeat maker.make() as each P)
-          }
+        let semaphore = DispatchSemaphore(value: 0)
+        var result: R?
+        Task {
+          result = await isolatedF(repeat maker.make() as each P)
+          semaphore.signal()
         }
+        semaphore.wait()
+        return result!
       }
     }
   }

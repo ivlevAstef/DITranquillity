@@ -14,39 +14,39 @@ final class Resolver {
     self.container = container // unowned
   }
   
-  func resolve<T>(type: T.Type = T.self, name: String? = nil, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) -> T {
+  func resolve<T>(type: T.Type = T.self, isolation: Actor?, name: String? = nil, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) -> T {
     let pType = ParsedType(type: type)
     log(.verbose, msg: "Begin resolve \(description(type: pType))", brace: .begin)
     defer { log(.verbose, msg: "End resolve \(description(type: pType))", brace: .end) }
 
     let checkOnRoot = container.componentContainer.hasRootComponents
-    return gmake(by: make(by: pType, with: name, from: framework, use: nil, arguments: arguments, checkOnRoot: checkOnRoot))
+    return gmake(by: make(by: pType, isolation: isolation, with: name, from: framework, use: nil, arguments: arguments, checkOnRoot: checkOnRoot))
   }
   
-  func injection<T>(obj: T, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) {
+  func injection<T>(obj: T, isolation: Actor?, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) {
     log(.verbose, msg: "Begin injection in obj: \(obj)", brace: .begin)
     defer { log(.verbose, msg: "End injection in obj: \(obj)", brace: .end) }
 
     let checkOnRoot = container.componentContainer.hasRootComponents
-    _ = make(by: ParsedType(obj: obj), with: nil, from: framework, use: obj, arguments: arguments, checkOnRoot: checkOnRoot)
+    _ = make(by: ParsedType(obj: obj), isolation: isolation, with: nil, from: framework, use: obj, arguments: arguments, checkOnRoot: checkOnRoot)
   }
 
   
-  func resolveCached(component: Component, arguments: AnyArguments? = nil) {
+  func resolveCached(component: Component, isolation: Actor?, arguments: AnyArguments? = nil) {
     log(.verbose, msg: "Begin resolve cached object by component: \(component.info)", brace: .begin)
     defer { log(.verbose, msg: "End resolve cached object by component: \(component.info)", brace: .end) }
 
     let checkOnRoot = container.componentContainer.hasRootComponents
-    mutex.sync { _ = makeObject(by: component, use: nil, arguments: arguments, checkOnRoot: checkOnRoot) }
+    _ = makeObject(by: component, isolation: isolation, use: nil, arguments: arguments, checkOnRoot: checkOnRoot)
   }
   
-  func resolve<T>(type: T.Type = T.self, component: Component, arguments: AnyArguments? = nil) -> T {
+  func resolve<T>(type: T.Type = T.self, isolation: Actor?, component: Component, arguments: AnyArguments? = nil) -> T {
     let pType = ParsedType(type: type)
     log(.verbose, msg: "Begin resolve \(description(type: pType)) by component: \(component.info)", brace: .begin)
     defer { log(.verbose, msg: "End resolve \(description(type: pType)) by component: \(component.info)", brace: .end) }
 
     let checkOnRoot = container.componentContainer.hasRootComponents
-    return gmake(by: makeObject(by: component, use: nil, arguments: arguments, checkOnRoot: checkOnRoot))
+    return gmake(by: makeObject(by: component, isolation: isolation, use: nil, arguments: arguments, checkOnRoot: checkOnRoot))
   }
 
   /// Finds the most suitable components that satisfy the types.
@@ -173,10 +173,11 @@ final class Resolver {
   
   /// Remove all cache objects in container
   func clean() {
-    mutex.sync { cache.containerStorage.clean() }
+    cache.containerStorage.clean()
   }
   
   private func make(by parsedType: ParsedType,
+                    isolation: Actor?,
                     with name: String?,
                     from framework: DIFramework.Type?,
                     use object: Any?,
@@ -187,68 +188,65 @@ final class Resolver {
 
     var components: Components = findComponents(by: parsedType, with: name, from: framework)
 
-    return mutex.sync {
-      if parsedType.hasMany {
-          //isManyRemove objects contains in stack for exclude cycle initialization
-          components = components.filter{ !stack.contains($0.info) }
-      }
-
-      if let delayMaker = parsedType.delayMaker {
-        let saveGraph = cache.graph
-
-        func makeDelayMaker(by parsedType: ParsedType, components: Components) -> Any? {
-          return delayMaker.init(container, { arguments -> Any? in
-            return self.mutex.sync {
-              // call `.value` into DI initialize.
-              if saveGraph === self.cache.graph {
-                return self.make(by: parsedType, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
-              }
-              // Call `.value` firstly.
-              if self.stack.isEmpty {
-                self.cache.graph = saveGraph.toStrongCopy()
-                return self.make(by: parsedType, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
-              }
-              // Call `.value` into DI initialize, and DI graph has lifetimes perContainer, perRun, single...
-              // For this case need call provider on her Cache Graph.
-              // But need restore cache graph after make object.
-              let currentGraphCache = self.cache.graph
-              self.cache.graph = saveGraph.toStrongCopy()
-              defer {
-                self.cache.graph.toWeak()
-                self.cache.graph = currentGraphCache
-              }
-              return self.make(by: parsedType, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
-            }
-          })
-        }
-
-        if parsedType.hasMany, let subPType = parsedType.nextParsedTypeAfterManyOrBreakIfDelayed() {
-          // hard logic for support Many<Lazy<Type>> and Many<Provider<Type>> but Many<Many<Lazy<Type>>> not supported
-          return components.sorted{ $0.order < $1.order }.compactMap {
-            return makeDelayMaker(by: subPType, components: Components([$0]))
-          }
-        } else {
-          return makeDelayMaker(by: parsedType, components: components)
-        }
-      }
-
-      return make(by: parsedType, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
+    if parsedType.hasMany {
+        //isManyRemove objects contains in stack for exclude cycle initialization
+        components = components.filter{ !stack.contains($0.info) }
     }
+
+    if let delayMaker = parsedType.delayMaker {
+      let saveGraph = cache.graph
+
+      func makeDelayMaker(by parsedType: ParsedType, components: Components) -> Any? {
+        return delayMaker.init(container, { isolation, arguments -> Any? in
+          // call `.value` into DI initialize.
+          if saveGraph === self.cache.graph {
+            return self.make(by: parsedType, isolation: isolation, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
+          }
+          // Call `.value` firstly.
+          if self.stack.isEmpty {
+            self.cache.graph = saveGraph.toStrongCopy()
+            return self.make(by: parsedType, isolation: isolation, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
+          }
+          // Call `.value` into DI initialize, and DI graph has lifetimes perContainer, perRun, single...
+          // For this case need call provider on her Cache Graph.
+          // But need restore cache graph after make object.
+          let currentGraphCache = self.cache.graph
+          self.cache.graph = saveGraph.toStrongCopy()
+          defer {
+            self.cache.graph.toWeak()
+            self.cache.graph = currentGraphCache
+          }
+          return self.make(by: parsedType, isolation: isolation, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
+        })
+      }
+
+      if parsedType.hasMany, let subPType = parsedType.nextParsedTypeAfterManyOrBreakIfDelayed() {
+        // hard logic for support Many<Lazy<Type>> and Many<Provider<Type>> but Many<Many<Lazy<Type>>> not supported
+        return components.sorted{ $0.order < $1.order }.compactMap {
+          return makeDelayMaker(by: subPType, components: Components([$0]))
+        }
+      } else {
+        return makeDelayMaker(by: parsedType, components: components)
+      }
+    }
+
+    return make(by: parsedType, isolation: isolation, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
   }
 
   /// isMany for optimization
   private func make(by parsedType: ParsedType,
+                    isolation: Actor?,
                     components: Components,
                     use object: Any?,
                     arguments: AnyArguments?,
                     checkOnRoot: Bool) -> Any? {
     if parsedType.hasMany {
       assert(nil == object, "Many injection not supported")
-      return components.sorted{ $0.order < $1.order }.compactMap{ makeObject(by: $0, use: nil, arguments: arguments, checkOnRoot: checkOnRoot) }
+      return components.sorted{ $0.order < $1.order }.compactMap{ makeObject(by: $0, isolation: isolation, use: nil, arguments: arguments, checkOnRoot: checkOnRoot) }
     }
 
     if let component = components.first, 1 == components.count {
-      return makeObject(by: component, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
+      return makeObject(by: component, isolation: isolation, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
     }
 
     if components.isEmpty {
@@ -262,7 +260,7 @@ final class Resolver {
   }
   
   /// Super function
-  private func makeObject(by component: Component, use usingObject: Any?, arguments: AnyArguments?, checkOnRoot: Bool) -> Any? {
+  private func makeObject(by component: Component, isolation: Actor?, use usingObject: Any?, arguments: AnyArguments?, checkOnRoot: Bool) -> Any? {
     log(.verbose, msg: "Found component: \(component.info)")
 
     if checkOnRoot && !(component.isRoot || component.lifeTime == .single) {
@@ -372,7 +370,7 @@ final class Resolver {
         } else if parameter.parsedType.arg {
           makedObject = getArgumentObject(parameter: parameter)
         } else {
-          makedObject = make(by: parameter.parsedType, with: parameter.name, from: component.framework, use: nil, arguments: arguments, checkOnRoot: false)
+          makedObject = make(by: parameter.parsedType, isolation: isolation, with: parameter.name, from: component.framework, use: nil, arguments: arguments, checkOnRoot: false)
         }
         
         if nil != makedObject || parameter.parsedType.optional {
@@ -383,7 +381,8 @@ final class Resolver {
         return nil
       }
 
-      return signature.call(objParameters)
+
+      return signature.call(isolation, objParameters)
     }
 
 
@@ -424,22 +423,45 @@ final class Resolver {
   }
  
   private unowned let container: DIContainer
-  
-  private let mutex = PThreadMutex(recursive: ())
-  
+
   private let cache = Cache()
-  private var stack: ContiguousArray<Component.UniqueKey> = []
+  private var stack: ContiguousArray<Component.UniqueKey> {
+    get {
+      if let stack = ThreadDictionary.get(key: "DI_Resolver_Stack") as? ContiguousArray<Component.UniqueKey> {
+        return stack
+      }
+      let newStack = ContiguousArray<Component.UniqueKey>()
+      ThreadDictionary.insert(key: "DI_Resolver_Stack", obj: newStack)
+      return newStack
+    }
+    set {
+      ThreadDictionary.insert(key: "DI_Resolver_Stack", obj: newValue)
+    }
+  }
 
   private class Cache {
-    fileprivate nonisolated(unsafe) static let singleStorage = DIUnsafeCacheStorage()
-    fileprivate let containerStorage = DIUnsafeCacheStorage()
+    fileprivate nonisolated(unsafe) static let singleStorage = DICacheStorage()
+    fileprivate let containerStorage = DICacheStorage()
 
     fileprivate nonisolated(unsafe) static var single = DIScope(name: "single", storage: singleStorage, policy: .strong)
     fileprivate nonisolated(unsafe) static var weakPerRun = DIScope(name: "per run", storage: singleStorage, policy: .weak)
     fileprivate nonisolated(unsafe) static var strongPerRun = DIScope(name: "per run", storage: singleStorage, policy: .strong)
     fileprivate lazy var weakPerContainer = DIScope(name: "per container", storage: containerStorage, policy: .weak)
     fileprivate lazy var strongPerContainer = DIScope(name: "per container", storage: containerStorage, policy: .strong)
-    fileprivate var graph = makeGraphScope()
+
+    fileprivate var graph: DIScope {
+      get {
+        if let scope = ThreadDictionary.get(key: "DI_Resolver_Graph") as? DIScope {
+          return scope
+        }
+        let newScope = DIScope(name: "object graph", storage: DIUnsafeCacheStorage(), policy: .strong)
+        ThreadDictionary.insert(key: "DI_Resolver_Graph", obj: newScope)
+        return newScope
+      }
+      set {
+        ThreadDictionary.insert(key: "DI_Resolver_Graph", obj: newValue)
+      }
+    }
 
     fileprivate static func makeGraphScope() -> DIScope {
       return DIScope(name: "object graph", storage: DIUnsafeCacheStorage(), policy: .strong)

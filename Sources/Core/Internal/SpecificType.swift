@@ -7,25 +7,25 @@
 //
 
 protocol SpecificType {
-    static var recursive: Bool { get }
+  static var recursive: Bool { get }
 
-    static var type: DIAType { get }
-    static var tagType: DIAType { get }
-    static var isSwiftType: Bool { get }
+  static var type: DIAType { get }
+  static var tagType: DIAType { get }
+  static var isSwiftType: Bool { get }
 
-    static var many: Bool { get }
-    static var optional: Bool { get }
-    static var delayed: Bool { get }
-    static var inFramework: Bool { get }
+  static var many: Bool { get }
+  static var optional: Bool { get }
+  static var delayed: Bool { get }
+  static var inFramework: Bool { get }
 
-    static var tag: Bool { get }
-    static var arg: Bool { get }
+  static var tag: Bool { get }
+  static var arg: Bool { get }
 
-    static var useObject: Bool { get }
+  static var useObject: Bool { get }
 
-    static func make(by obj: Any?) -> Self
+  static func make(by obj: Any?) -> Self
 
-    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?)
+  init(_ container: DIContainer, _ factory: @escaping (_ isolation: Actor?, _ arguments: AnyArguments?) -> Any?)
 }
 
 extension SpecificType {
@@ -47,7 +47,7 @@ extension SpecificType {
 
   static func make(by obj: Any?) -> Self { return obj as! Self }
 
-  init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?) {
+  init(_ container: DIContainer, _ factory: @escaping (_ isolation: Actor?, _ arguments: AnyArguments?) -> Any?) {
     fatalError("Unsupport")
   }
 }
