@@ -1,3 +1,9 @@
+# 5.0.3
+* Improve support Swift Concurrency - fix potencial deadlock for MainActor initialize
+* Improve support Swift Concurrency - fix no MainActor Sendable classes -  now classes resolved in current thread not main thread
+* Improve thread save performance
+* Improve and Extend Test cases
+
 # 5.0.2
 * Improve support Swift Concurrency - fix support detect MainActor register with modificators. e.g.:
 `container.register(MyMainActorClass.init) { arg($0) }`
