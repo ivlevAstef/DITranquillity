@@ -12,8 +12,8 @@ class UseObject: SpecificType {
     static var useObject: Bool { return true }
 }
 
-final class MethodSignature: @unchecked Sendable {
-  typealias Call = ([Any?])->Any?
+final class MethodSignature: Sendable {
+  typealias Call = @Sendable ([Any?]) -> Any?
 
   struct Parameter: Sendable {
     let parsedType: ParsedType

@@ -89,10 +89,26 @@ extension MethodMaker {
 // MARK: Main Actor
 
 extension MethodMaker {
+  private static func mainIsolated<R>(closure: @escaping @MainActor () -> R) -> R {
+    if Thread.isMainThread {
+      return MainActor.assumeIsolated {
+        return closure()
+      }
+    } else {
+      let result: R = DispatchQueue.main.sync {
+        MainActor.assumeIsolated {
+          closure()
+        }
+      }
+
+      return result
+    }
+  }
+
   static func eachMakeMainActor<each P, R>(
     useObject: Bool = false,
     _ names: [String?]? = nil,
-    by f: @escaping @MainActor (repeat each P) -> R) -> MethodSignature where R: Sendable
+    by f: @escaping @MainActor (repeat each P) -> R) -> MethodSignature
   {
     let types = EachTypes()
     repeat types.append((each P).self)
@@ -102,16 +118,8 @@ extension MethodMaker {
 
     return MethodSignature(types.result, names) { params in
       let maker = EachMaker(params: params)
-      if Thread.isMainThread {
-        return MainActor.assumeIsolated {
-          f(repeat maker.make() as each P)
-        }
-      } else {
-        return DispatchQueue.main.sync {
-          MainActor.assumeIsolated {
-            f(repeat maker.make() as each P)
-          }
-        }
+      return mainIsolated {
+        f(repeat maker.make() as each P)
       }
     }
   }
@@ -127,16 +135,8 @@ extension MethodMaker {
     return MethodSignature(types.result, nil) { params in
       let maker = EachMaker(params: params)
       let modifyResult = modificator(maker.make())
-      if Thread.isMainThread {
-        return MainActor.assumeIsolated {
-          f(modifyResult, repeat maker.make() as each P)
-        }
-      } else {
-        return DispatchQueue.main.sync {
-          MainActor.assumeIsolated {
-            f(modifyResult, repeat maker.make() as each P)
-          }
-        }
+      return mainIsolated {
+        f(modifyResult, repeat maker.make() as each P)
       }
     }
   }
@@ -153,16 +153,8 @@ extension MethodMaker {
     return MethodSignature(types.result, nil) { params in
       let maker = EachMaker(params: params)
       let modifyResult = modificator(maker.make(), maker.make())
-      if Thread.isMainThread {
-        return MainActor.assumeIsolated {
-          return f(modifyResult.0, modifyResult.1, repeat maker.make() as each P)
-        }
-      } else {
-        return DispatchQueue.main.sync {
-          MainActor.assumeIsolated {
-            return f(modifyResult.0, modifyResult.1, repeat maker.make() as each P)
-          }
-        }
+      return mainIsolated {
+        f(modifyResult.0, modifyResult.1, repeat maker.make() as each P)
       }
     }
   }

@@ -37,7 +37,7 @@ final class Resolver {
     defer { log(.verbose, msg: "End resolve cached object by component: \(component.info)", brace: .end) }
 
     let checkOnRoot = container.componentContainer.hasRootComponents
-    mutex.sync { _ = makeObject(by: component, use: nil, arguments: arguments, checkOnRoot: checkOnRoot) }
+    _ = makeObject(by: component, use: nil, arguments: arguments, checkOnRoot: checkOnRoot)
   }
   
   func resolve<T>(type: T.Type = T.self, component: Component, arguments: AnyArguments? = nil) -> T {
@@ -173,7 +173,7 @@ final class Resolver {
   
   /// Remove all cache objects in container
   func clean() {
-    mutex.sync { cache.containerStorage.clean() }
+    cache.containerStorage.clean()
   }
   
   private func make(by parsedType: ParsedType,
@@ -187,53 +187,49 @@ final class Resolver {
 
     var components: Components = findComponents(by: parsedType, with: name, from: framework)
 
-    return mutex.sync {
-      if parsedType.hasMany {
-          //isManyRemove objects contains in stack for exclude cycle initialization
-          components = components.filter{ !stack.contains($0.info) }
-      }
-
-      if let delayMaker = parsedType.delayMaker {
-        let saveGraph = cache.graph
-
-        func makeDelayMaker(by parsedType: ParsedType, components: Components) -> Any? {
-          return delayMaker.init(container, { arguments -> Any? in
-            return self.mutex.sync {
-              // call `.value` into DI initialize.
-              if saveGraph === self.cache.graph {
-                return self.make(by: parsedType, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
-              }
-              // Call `.value` firstly.
-              if self.stack.isEmpty {
-                self.cache.graph = saveGraph.toStrongCopy()
-                return self.make(by: parsedType, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
-              }
-              // Call `.value` into DI initialize, and DI graph has lifetimes perContainer, perRun, single...
-              // For this case need call provider on her Cache Graph.
-              // But need restore cache graph after make object.
-              let currentGraphCache = self.cache.graph
-              self.cache.graph = saveGraph.toStrongCopy()
-              defer {
-                self.cache.graph.toWeak()
-                self.cache.graph = currentGraphCache
-              }
-              return self.make(by: parsedType, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
-            }
-          })
-        }
-
-        if parsedType.hasMany, let subPType = parsedType.nextParsedTypeAfterManyOrBreakIfDelayed() {
-          // hard logic for support Many<Lazy<Type>> and Many<Provider<Type>> but Many<Many<Lazy<Type>>> not supported
-          return components.sorted{ $0.order < $1.order }.compactMap {
-            return makeDelayMaker(by: subPType, components: Components([$0]))
-          }
-        } else {
-          return makeDelayMaker(by: parsedType, components: components)
-        }
-      }
-
-      return make(by: parsedType, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
+    if parsedType.hasMany {
+        //isManyRemove objects contains in stack for exclude cycle initialization
+        components = components.filter{ !stack.contains($0.info) }
     }
+
+    if let delayMaker = parsedType.delayMaker {
+      let saveGraph = cache.graph
+
+      func makeDelayMaker(by parsedType: ParsedType, components: Components) -> Any? {
+        return delayMaker.init(container, { arguments -> Any? in
+          // call `.value` into DI initialize.
+          if saveGraph === self.cache.graph {
+            return self.make(by: parsedType, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
+          }
+          // Call `.value` firstly.
+          if self.stack.isEmpty {
+            self.cache.graph = saveGraph.toStrongCopy()
+            return self.make(by: parsedType, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
+          }
+          // Call `.value` into DI initialize, and DI graph has lifetimes perContainer, perRun, single...
+          // For this case need call provider on her Cache Graph.
+          // But need restore cache graph after make object.
+          let currentGraphCache = self.cache.graph
+          self.cache.graph = saveGraph.toStrongCopy()
+          defer {
+            self.cache.graph.toWeak()
+            self.cache.graph = currentGraphCache
+          }
+          return self.make(by: parsedType, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
+        })
+      }
+
+      if parsedType.hasMany, let subPType = parsedType.nextParsedTypeAfterManyOrBreakIfDelayed() {
+        // hard logic for support Many<Lazy<Type>> and Many<Provider<Type>> but Many<Many<Lazy<Type>>> not supported
+        return components.sorted{ $0.order < $1.order }.compactMap {
+          return makeDelayMaker(by: subPType, components: Components([$0]))
+        }
+      } else {
+        return makeDelayMaker(by: parsedType, components: components)
+      }
+    }
+
+    return make(by: parsedType, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
   }
 
   /// isMany for optimization
@@ -383,6 +379,7 @@ final class Resolver {
         return nil
       }
 
+
       return signature.call(objParameters)
     }
 
@@ -424,22 +421,45 @@ final class Resolver {
   }
  
   private unowned let container: DIContainer
-  
-  private let mutex = PThreadMutex(recursive: ())
-  
+
   private let cache = Cache()
-  private var stack: ContiguousArray<Component.UniqueKey> = []
+  private var stack: ContiguousArray<Component.UniqueKey> {
+    get {
+      if let stack = ThreadDictionary.get(key: "DI_Resolver_Stack") as? ContiguousArray<Component.UniqueKey> {
+        return stack
+      }
+      let newStack = ContiguousArray<Component.UniqueKey>()
+      ThreadDictionary.insert(key: "DI_Resolver_Stack", obj: newStack)
+      return newStack
+    }
+    set {
+      ThreadDictionary.insert(key: "DI_Resolver_Stack", obj: newValue)
+    }
+  }
 
   private class Cache {
-    fileprivate nonisolated(unsafe) static let singleStorage = DIUnsafeCacheStorage()
-    fileprivate let containerStorage = DIUnsafeCacheStorage()
+    fileprivate nonisolated(unsafe) static let singleStorage = DICacheStorage()
+    fileprivate let containerStorage = DICacheStorage()
 
     fileprivate nonisolated(unsafe) static var single = DIScope(name: "single", storage: singleStorage, policy: .strong)
     fileprivate nonisolated(unsafe) static var weakPerRun = DIScope(name: "per run", storage: singleStorage, policy: .weak)
     fileprivate nonisolated(unsafe) static var strongPerRun = DIScope(name: "per run", storage: singleStorage, policy: .strong)
     fileprivate lazy var weakPerContainer = DIScope(name: "per container", storage: containerStorage, policy: .weak)
     fileprivate lazy var strongPerContainer = DIScope(name: "per container", storage: containerStorage, policy: .strong)
-    fileprivate var graph = makeGraphScope()
+
+    fileprivate var graph: DIScope {
+      get {
+        if let scope = ThreadDictionary.get(key: "DI_Resolver_Graph") as? DIScope {
+          return scope
+        }
+        let newScope = DIScope(name: "object graph", storage: DIUnsafeCacheStorage(), policy: .strong)
+        ThreadDictionary.insert(key: "DI_Resolver_Graph", obj: newScope)
+        return newScope
+      }
+      set {
+        ThreadDictionary.insert(key: "DI_Resolver_Graph", obj: newValue)
+      }
+    }
 
     fileprivate static func makeGraphScope() -> DIScope {
       return DIScope(name: "object graph", storage: DIUnsafeCacheStorage(), policy: .strong)
