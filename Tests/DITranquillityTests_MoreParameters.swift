@@ -227,184 +227,184 @@ class DITranquillityTests_MoreParameters: XCTestCase {
     container.register(A75.init)
   }
 
-  private func testRegisterUse(_ regClosure: (_: DIContainer) -> ()) {
+  private func testRegisterUse(_ regClosure: (_: DIContainer) -> ()) async {
     let container = DIContainer()
 
     registerAllClasses(in: container)
     regClosure(container)
 
-    let test: RegTest? = *container
+    let test: RegTest? = await container.resolve()
     XCTAssertNotNil(test)
   }
 
-  private func testMethodUse(_ methodClosure: (_: DIComponentBuilder<MethodTest>) -> ()) {
+  private func testMethodUse(_ methodClosure: (_: DIComponentBuilder<MethodTest>) -> ()) async {
     let container = DIContainer()
 
     registerAllClasses(in: container)
     methodClosure(container.register(MethodTest.init))
 
-    let test: MethodTest? = *container
+    let test: MethodTest? = await container.resolve()
     XCTAssertNotNil(test)
   }
 
-  private func testArgsRegisterUse(_ regClosure: (_: DIContainer) -> ()) {
+  private func testArgsRegisterUse(_ regClosure: (_: DIContainer) -> ()) async {
     let container = DIContainer()
 
     registerAllClasses(in: container)
     regClosure(container)
 
-    let testWithoutArg: RegArgTest? = container.resolve()
+    let testWithoutArg: RegArgTest? = await container.resolve()
     XCTAssertNil(testWithoutArg)
 
-    let test: RegArgTest? = container.resolve(args: 10)
+    let test: RegArgTest? = await container.resolve(args: 10)
     XCTAssertNotNil(test)
   }
 
-  func test01() {
-    testRegisterUse { $0.register(RegTest.init(a1:a2:)) }
+  func test01() async {
+    await testRegisterUse { $0.register(RegTest.init(a1:a2:)) }
   }
-  func test02() {
-    testRegisterUse { $0.register(RegTest.init(a1:a2:a3:)) }
+  func test02() async {
+    await testRegisterUse { $0.register(RegTest.init(a1:a2:a3:)) }
   }
-  func test03() {
-    testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:)) }
+  func test03() async {
+    await testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:)) }
   }
-  func test04() {
-    testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:)) }
+  func test04() async {
+    await testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:)) }
   }
-  func test05() {
-    testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:)) }
+  func test05() async {
+    await testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:)) }
   }
-  func test06() {
-    testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:)) }
+  func test06() async {
+    await testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:)) }
   }
-  func test07() {
-    testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:)) }
+  func test07() async {
+    await testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:)) }
   }
-  func test08() {
-    testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:)) }
+  func test08() async {
+    await testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:)) }
   }
-  func test09() {
-    testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:)) }
+  func test09() async {
+    await testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:)) }
   }
-  func test10() {
-    testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:)) }
+  func test10() async {
+    await testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:)) }
   }
-  func test11() {
-    testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:)) }
+  func test11() async {
+    await testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:)) }
   }
-  func test12() {
-    testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:)) }
+  func test12() async {
+    await testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:)) }
   }
-  func test13() {
-    testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:)) }
+  func test13() async {
+    await testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:)) }
   }
-  func test14() {
-    testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15:)) }
+  func test14() async {
+    await testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15:)) }
   }
-  func test15() {
-    testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15:a16:)) }
+  func test15() async {
+    await testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15:a16:)) }
   }
-  func test20() {
-    testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15:a16:a17:a18:a19:a20:)) }
+  func test20() async {
+    await testRegisterUse { $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15:a16:a17:a18:a19:a20:)) }
   }
-  func test30() {
-    testRegisterUse {
+  func test30() async {
+    await testRegisterUse {
       $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15:a16:a17:a18:a19:a20:a21:a22:a23:a24:a25:a26:a27:a28:a29:a30:))
     }
   }
-  func test40() {
-    testRegisterUse {
+  func test40() async {
+    await testRegisterUse {
       $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15:a16:a17:a18:a19:a20:a21:a22:a23:a24:a25:a26:a27:a28:a29:a30:a31:a32:a33:a34:a35:a36:a37:a38:a39:a40:))
     }
   }
-  func test50() {
-    testRegisterUse {
+  func test50() async {
+    await testRegisterUse {
       $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15:a16:a17:a18:a19:a20:a21:a22:a23:a24:a25:a26:a27:a28:a29:a30:a31:a32:a33:a34:a35:a36:a37:a38:a39:a40:a41:a42:a43:a44:a45:a46:a47:a48:a49:a50:))
     }
   }
-  func test75() {
-    testRegisterUse {
+  func test75() async {
+    await testRegisterUse {
       $0.register(RegTest.init(a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15:a16:a17:a18:a19:a20:a21:a22:a23:a24:a25:a26:a27:a28:a29:a30:a31:a32:a33:a34:a35:a36:a37:a38:a39:a40:a41:a42:a43:a44:a45:a46:a47:a48:a49:a50:a51:a52:a53:a54:a55:a56:a57:a58:a59:a60:a61:a62:a63:a64:a65:a66:a67:a68:a69:a70:a71:a72:a73:a74:a75:))
     }
   }
 
-  func testMethod01() {
-    testMethodUse { $0.injection { $0.method(a1: $1, a2: $2) } }
+  func testMethod01() async {
+    await testMethodUse { $0.injection { $0.method(a1: $1, a2: $2) } }
   }
-  func testMethod02() {
-    testMethodUse { $0.injection { $0.method(a1: $1, a2: $2, a3: $3) } }
+  func testMethod02() async {
+    await testMethodUse { $0.injection { $0.method(a1: $1, a2: $2, a3: $3) } }
   }
-  func testMethod03() {
-    testMethodUse { $0.injection { $0.method(a1: $1, a2: $2, a3: $3, a4: $4) } }
+  func testMethod03() async {
+    await testMethodUse { $0.injection { $0.method(a1: $1, a2: $2, a3: $3, a4: $4) } }
   }
-  func testMethod04() {
-    testMethodUse { $0.injection { $0.method(a1: $1, a2: $2, a3: $3, a4: $4, a5: $5) } }
+  func testMethod04() async {
+    await testMethodUse { $0.injection { $0.method(a1: $1, a2: $2, a3: $3, a4: $4, a5: $5) } }
   }
-  func testMethod05() {
-    testMethodUse { $0.injection { $0.method(a1: $1, a2: $2, a3: $3, a4: $4, a5: $5, a6: $6) } }
-  }
-
-  func testMethod06() {
-    testMethodUse { $0.injection { $0.method(a1: $1, a2: $2, a3: $3, a4: $4, a5: $5, a6: $6, a7: $7) } }
+  func testMethod05() async {
+    await testMethodUse { $0.injection { $0.method(a1: $1, a2: $2, a3: $3, a4: $4, a5: $5, a6: $6) } }
   }
 
-  func testMethod07() {
-    testMethodUse { $0.injection { $0.method(a1: $1, a2: $2, a3: $3, a4: $4, a5: $5, a6: $6, a7: $7, a8: $8) } }
+  func testMethod06() async {
+    await testMethodUse { $0.injection { $0.method(a1: $1, a2: $2, a3: $3, a4: $4, a5: $5, a6: $6, a7: $7) } }
   }
 
-  func testArg00() {
-    testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:)) { arg($0) } }
+  func testMethod07() async {
+    await testMethodUse { $0.injection { $0.method(a1: $1, a2: $2, a3: $3, a4: $4, a5: $5, a6: $6, a7: $7, a8: $8) } }
   }
-  func testArg01() {
-    testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:)) { arg($0) } }
+
+  func testArg00() async {
+    await testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:)) { arg($0) } }
   }
-  func testArg02() {
-    testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:)) { arg($0) } }
+  func testArg01() async {
+    await testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:)) { arg($0) } }
   }
-  func testArg03() {
-    testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:)) { arg($0) } }
+  func testArg02() async {
+    await testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:)) { arg($0) } }
   }
-  func testArg04() {
-    testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:)) { arg($0) } }
+  func testArg03() async {
+    await testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:)) { arg($0) } }
   }
-  func testArg05() {
-    testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:)) { arg($0) } }
+  func testArg04() async {
+    await testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:)) { arg($0) } }
   }
-  func testArg06() {
-    testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:)) { arg($0) } }
+  func testArg05() async {
+    await testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:)) { arg($0) } }
   }
-  func testArg07() {
-    testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:a8:)) { arg($0) } }
+  func testArg06() async {
+    await testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:)) { arg($0) } }
   }
-  func testArg08() {
-    testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:a8:a9:)) { arg($0) } }
+  func testArg07() async {
+    await testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:a8:)) { arg($0) } }
   }
-  func testArg09() {
-    testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:)) { arg($0) } }
+  func testArg08() async {
+    await testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:a8:a9:)) { arg($0) } }
   }
-  func testArg10() {
-    testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:)) { arg($0) } }
+  func testArg09() async {
+    await testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:)) { arg($0) } }
   }
-  func testArg11() {
-    testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:)) { arg($0) } }
+  func testArg10() async {
+    await testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:)) { arg($0) } }
   }
-  func testArg12() {
-    testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:)) { arg($0) } }
+  func testArg11() async {
+    await testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:)) { arg($0) } }
   }
-  func testArg13() {
-    testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:)) { arg($0) } }
+  func testArg12() async {
+    await testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:)) { arg($0) } }
   }
-  func testArg14() {
-    testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15:)) { arg($0) } }
+  func testArg13() async {
+    await testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:)) { arg($0) } }
   }
-  func testArg20() {
-    testArgsRegisterUse {
+  func testArg14() async {
+    await testArgsRegisterUse { $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15:)) { arg($0) } }
+  }
+  func testArg20() async {
+    await testArgsRegisterUse {
       $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15:a16:a17:a18:a19:a20:)) { arg($0) }
     }
   }
-  func testArg30() {
-    testArgsRegisterUse {
+  func testArg30() async {
+    await testArgsRegisterUse {
       $0.register(RegArgTest.init(arg1:a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15:a16:a17:a18:a19:a20:a21:a22:a23:a24:a25:a26:a27:a28:a29:a30:)) { arg($0) }
     }
   }

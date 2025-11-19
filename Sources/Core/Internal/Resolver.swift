@@ -6,47 +6,45 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-import SwiftLazy
-
 final class Resolver {
 
   init(container: DIContainer) {
     self.container = container // unowned
   }
   
-  func resolve<T>(type: T.Type = T.self, isolation: Actor?, name: String? = nil, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) -> T {
+  func resolve<T>(type: T.Type = T.self, isolation: Actor?, name: String? = nil, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) async -> T {
     let pType = ParsedType(type: type)
     log(.verbose, msg: "Begin resolve \(description(type: pType))", brace: .begin)
     defer { log(.verbose, msg: "End resolve \(description(type: pType))", brace: .end) }
 
     let checkOnRoot = container.componentContainer.hasRootComponents
-    return gmake(by: make(by: pType, isolation: isolation, with: name, from: framework, use: nil, arguments: arguments, checkOnRoot: checkOnRoot))
+    return await gmake(by: make(by: pType, stack: Stack(), with: name, from: framework, use: nil, arguments: arguments, checkOnRoot: checkOnRoot))
   }
   
-  func injection<T>(obj: T, isolation: Actor?, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) {
+  func injection<T>(obj: T, isolation: Actor?, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) async {
     log(.verbose, msg: "Begin injection in obj: \(obj)", brace: .begin)
     defer { log(.verbose, msg: "End injection in obj: \(obj)", brace: .end) }
 
     let checkOnRoot = container.componentContainer.hasRootComponents
-    _ = make(by: ParsedType(obj: obj), isolation: isolation, with: nil, from: framework, use: obj, arguments: arguments, checkOnRoot: checkOnRoot)
+    _ = await make(by: ParsedType(obj: obj), stack: Stack(), with: nil, from: framework, use: obj, arguments: arguments, checkOnRoot: checkOnRoot)
   }
 
   
-  func resolveCached(component: Component, isolation: Actor?, arguments: AnyArguments? = nil) {
+  func resolveCached(component: Component, arguments: AnyArguments? = nil) async {
     log(.verbose, msg: "Begin resolve cached object by component: \(component.info)", brace: .begin)
     defer { log(.verbose, msg: "End resolve cached object by component: \(component.info)", brace: .end) }
 
     let checkOnRoot = container.componentContainer.hasRootComponents
-    _ = makeObject(by: component, isolation: isolation, use: nil, arguments: arguments, checkOnRoot: checkOnRoot)
+    await _ = makeObject(by: component, stack: Stack(), use: nil, arguments: arguments, checkOnRoot: checkOnRoot)
   }
   
-  func resolve<T>(type: T.Type = T.self, isolation: Actor?, component: Component, arguments: AnyArguments? = nil) -> T {
+  func resolve<T>(type: T.Type = T.self, isolation: Actor?, component: Component, arguments: AnyArguments? = nil) async -> T {
     let pType = ParsedType(type: type)
     log(.verbose, msg: "Begin resolve \(description(type: pType)) by component: \(component.info)", brace: .begin)
     defer { log(.verbose, msg: "End resolve \(description(type: pType)) by component: \(component.info)", brace: .end) }
 
     let checkOnRoot = container.componentContainer.hasRootComponents
-    return gmake(by: makeObject(by: component, isolation: isolation, use: nil, arguments: arguments, checkOnRoot: checkOnRoot))
+    return await gmake(by: makeObject(by: component, stack: Stack(), use: nil, arguments: arguments, checkOnRoot: checkOnRoot))
   }
 
   /// Finds the most suitable components that satisfy the types.
@@ -177,12 +175,12 @@ final class Resolver {
   }
   
   private func make(by parsedType: ParsedType,
-                    isolation: Actor?,
+                    stack: Stack,
                     with name: String?,
                     from framework: DIFramework.Type?,
                     use object: Any?,
                     arguments: AnyArguments?,
-                    checkOnRoot: Bool) -> Any? {
+                    checkOnRoot: Bool) async -> Any? {
     log(.verbose, msg: "Begin make \(description(type: parsedType))", brace: .begin)
     defer { log(.verbose, msg: "End make \(description(type: parsedType))", brace: .end) }
 
@@ -190,33 +188,38 @@ final class Resolver {
 
     if parsedType.hasMany {
         //isManyRemove objects contains in stack for exclude cycle initialization
-        components = components.filter{ !stack.contains($0.info) }
+      var newComponents: Components = []
+      for component in components {
+        if await !stack.contains(component.info) {
+          newComponents.append(component)
+        }
+      }
+      components = newComponents
     }
 
     if let delayMaker = parsedType.delayMaker {
-      let saveGraph = cache.graph
+      let saveGraph = await stack.graph
 
       func makeDelayMaker(by parsedType: ParsedType, components: Components) -> Any? {
-        return delayMaker.init(container, { isolation, arguments -> Any? in
+        return delayMaker.init(container, { arguments async -> Any? in
           // call `.value` into DI initialize.
-          if saveGraph === self.cache.graph {
-            return self.make(by: parsedType, isolation: isolation, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
+          if await saveGraph === stack.graph {
+            return await self.make(by: parsedType, stack: stack, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
           }
           // Call `.value` firstly.
-          if self.stack.isEmpty {
-            self.cache.graph = saveGraph.toStrongCopy()
-            return self.make(by: parsedType, isolation: isolation, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
+          if await stack.isEmpty() {
+            await stack.restoreGraph(from: saveGraph)
+            return await self.make(by: parsedType, stack: stack, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
           }
           // Call `.value` into DI initialize, and DI graph has lifetimes perContainer, perRun, single...
           // For this case need call provider on her Cache Graph.
           // But need restore cache graph after make object.
-          let currentGraphCache = self.cache.graph
-          self.cache.graph = saveGraph.toStrongCopy()
-          defer {
-            self.cache.graph.toWeak()
-            self.cache.graph = currentGraphCache
-          }
-          return self.make(by: parsedType, isolation: isolation, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
+          let currentGraphCache = await stack.graph
+          await stack.restoreGraph(from: saveGraph)
+
+          let result = await self.make(by: parsedType, stack: stack, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
+          await stack.finishGraph(use: currentGraphCache)
+          return result
         })
       }
 
@@ -230,23 +233,28 @@ final class Resolver {
       }
     }
 
-    return make(by: parsedType, isolation: isolation, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
+    return await make(by: parsedType, stack: stack, components: components, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
   }
 
   /// isMany for optimization
   private func make(by parsedType: ParsedType,
-                    isolation: Actor?,
+                    stack: Stack,
                     components: Components,
                     use object: Any?,
                     arguments: AnyArguments?,
-                    checkOnRoot: Bool) -> Any? {
+                    checkOnRoot: Bool) async -> Any? {
     if parsedType.hasMany {
       assert(nil == object, "Many injection not supported")
-      return components.sorted{ $0.order < $1.order }.compactMap{ makeObject(by: $0, isolation: isolation, use: nil, arguments: arguments, checkOnRoot: checkOnRoot) }
+      var result: [Any?] = []
+      for component in components.sorted(by: { $0.order < $1.order }) {
+        result.append(await makeObject(by: component, stack: stack, use: nil, arguments: arguments, checkOnRoot: checkOnRoot))
+      }
+
+      return result
     }
 
     if let component = components.first, 1 == components.count {
-      return makeObject(by: component, isolation: isolation, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
+      return await makeObject(by: component, stack: stack, use: object, arguments: arguments, checkOnRoot: checkOnRoot)
     }
 
     if components.isEmpty {
@@ -260,7 +268,7 @@ final class Resolver {
   }
   
   /// Super function
-  private func makeObject(by component: Component, isolation: Actor?, use usingObject: Any?, arguments: AnyArguments?, checkOnRoot: Bool) -> Any? {
+  private func makeObject(by component: Component, stack: Stack, use usingObject: Any?, arguments: AnyArguments?, checkOnRoot: Bool) async -> Any? {
     log(.verbose, msg: "Found component: \(component.info)")
 
     if checkOnRoot && !(component.isRoot || component.lifeTime == .single) {
@@ -269,7 +277,7 @@ final class Resolver {
 
     let uniqueKey = component.info
     
-    func makeObject(scope: DIScope) -> Any? {
+    func makeObject(scope: DIScope) async -> Any? {
       var optCacheObject: Any? = scope.storage.fetch(key: uniqueKey)
       if let weakRef = optCacheObject as? WeakAny {
         optCacheObject = weakRef.value
@@ -289,7 +297,7 @@ final class Resolver {
         }
       }
       
-      if let makedObject = makeObject() {
+      if let makedObject = await makeObject() {
         let objectForSave = (.weak == scope.policy) ? WeakAny(value: makedObject) : makedObject
         scope.storage.save(object: objectForSave, by: uniqueKey)
         log(.verbose, msg: "Save object: \(makedObject) to scope \(scope.name)")
@@ -310,8 +318,8 @@ final class Resolver {
       return componentArguments?.getArgument(for: parameter.parsedType.base.type)
     }
     
-    func makeObject() -> Any? {
-      guard let initializedObject = initialObject() else {
+    func makeObject() async -> Any? {
+      guard let initializedObject = await initialObject() else {
         return nil
       }
 
@@ -319,7 +327,7 @@ final class Resolver {
         if injection.cycle {
           cache.cycleInjectionQueue.append((initializedObject, injection.signature))
         } else {
-          _ = use(signature: injection.signature, usingObject: initializedObject)
+          _ = await use(signature: injection.signature, usingObject: initializedObject)
         }
       }
       
@@ -327,7 +335,7 @@ final class Resolver {
         if component.injections.contains(where: { $0.cycle }) {
           cache.cycleInjectionQueue.append((initializedObject, signature))
         } else {
-          _ = use(signature: signature, usingObject: initializedObject)
+          _ = await use(signature: signature, usingObject: initializedObject)
         }
       }
 
@@ -335,14 +343,14 @@ final class Resolver {
       return initializedObject
     }
     
-    func initialObject() -> Any? {
+    func initialObject() async -> Any? {
       if let obj = usingObject {
         log(.verbose, msg: "Use object: \(obj)")
         return obj
       }
       
       if let signature = component.initial {
-        let obj = use(signature: signature, usingObject: nil)
+        let obj = await use(signature: signature, usingObject: nil)
         log(.verbose, msg: "Create object: \(String(describing: obj))")
         return obj
       }
@@ -351,17 +359,16 @@ final class Resolver {
       return nil
     }
     
-    func endResolving() {
+    func endResolving() async {
       while !cache.cycleInjectionQueue.isEmpty {
         let data = cache.cycleInjectionQueue.removeFirst()
-        _ = use(signature: data.signature, usingObject: data.obj)
+        _ = await use(signature: data.signature, usingObject: data.obj)
       }
 
-      cache.graph.toWeak() // Needs for delay maker - because DIScore is retained, but need objects removed if can
-      cache.graph = Cache.makeGraphScope()
+      await stack.finishGraph() // Needs for delay maker - because DIScore is retained, but need objects removed if can
     }
     
-    func use(signature: MethodSignature, usingObject: Any?) -> Any? {
+    func use(signature: MethodSignature, usingObject: Any?) async -> Any? {
       var objParameters = [Any?]()
       for parameter in signature.parameters {
         let makedObject: Any?
@@ -370,7 +377,7 @@ final class Resolver {
         } else if parameter.parsedType.arg {
           makedObject = getArgumentObject(parameter: parameter)
         } else {
-          makedObject = make(by: parameter.parsedType, isolation: isolation, with: parameter.name, from: component.framework, use: nil, arguments: arguments, checkOnRoot: false)
+          makedObject = await make(by: parameter.parsedType, stack: stack, with: parameter.name, from: component.framework, use: nil, arguments: arguments, checkOnRoot: false)
         }
         
         if nil != makedObject || parameter.parsedType.optional {
@@ -382,60 +389,86 @@ final class Resolver {
       }
 
 
-      return signature.call(isolation, objParameters)
+      return await signature.call(objParameters)
     }
 
 
-    stack.append(component.info)
-    defer {
-      if 1 == stack.count {
-        endResolving()
-      }
-      stack.removeLast()
-    }
+    await stack.push(component.info)
+    // defer -> in function end
 
-    func makeOrGetObject() -> Any? {
+    func makeOrGetObject() async -> Any? {
       switch component.lifeTime {
       case .single:
-        return makeObject(scope: Cache.single)
+        return await makeObject(scope: Cache.single)
       case .perRun(let referenceCounting):
         switch referenceCounting {
-        case .weak: return makeObject(scope: Cache.weakPerRun)
-        case .strong: return makeObject(scope: Cache.strongPerRun)
+        case .weak: return await makeObject(scope: Cache.weakPerRun)
+        case .strong: return await makeObject(scope: Cache.strongPerRun)
         }
       case .perContainer(let referenceCounting):
         switch referenceCounting {
-        case .weak: return makeObject(scope: cache.weakPerContainer)
-        case .strong: return makeObject(scope: cache.strongPerContainer)
+        case .weak: return await makeObject(scope: cache.weakPerContainer)
+        case .strong: return await makeObject(scope: cache.strongPerContainer)
         }
       case .objectGraph:
-        return makeObject(scope: cache.graph)
+        return await makeObject(scope: stack.graph)
       case .prototype:
-        return makeObject()
+        return await makeObject()
       case .custom(let scope):
-        return makeObject(scope: scope)
+        return await makeObject(scope: scope)
       }
     }
 
-    let obj = makeOrGetObject()
+    let obj = await makeOrGetObject()
     container.extensions.objectResolved?(uniqueKey, obj)
+
+    // defer
+    if await stack.isLast() {
+      await endResolving()
+    }
+    await stack.pop()
+
     return obj
   }
  
   private unowned let container: DIContainer
 
   private let cache = Cache()
-  private var stack: ContiguousArray<Component.UniqueKey> {
-    get {
-      if let stack = ThreadDictionary.get(key: "DI_Resolver_Stack") as? ContiguousArray<Component.UniqueKey> {
-        return stack
-      }
-      let newStack = ContiguousArray<Component.UniqueKey>()
-      ThreadDictionary.insert(key: "DI_Resolver_Stack", obj: newStack)
-      return newStack
+
+  private actor Stack {
+    var count: Int { stack.count }
+
+    private(set) var graph: DIScope = DIScope(name: "object graph", storage: DIUnsafeCacheStorage(), policy: .strong)
+
+    private var stack: ContiguousArray<Component.UniqueKey> = []
+
+    func push(_ componentInfo: DIComponentInfo) {
+      stack.append(componentInfo)
     }
-    set {
-      ThreadDictionary.insert(key: "DI_Resolver_Stack", obj: newValue)
+
+    func pop() {
+      stack.removeLast()
+    }
+
+    func isEmpty() -> Bool {
+      return stack.isEmpty
+    }
+
+    func isLast() -> Bool {
+      stack.count == 1
+    }
+
+    func contains(_ componentInfo: DIComponentInfo) -> Bool {
+      return stack.contains(componentInfo)
+    }
+
+    func finishGraph(use otherGraph: DIScope? = nil) {
+      graph.toWeak() // Needs for delay maker - because DIScore is retained, but need objects removed if can
+      graph = otherGraph ?? DIScope(name: "object graph", storage: DIUnsafeCacheStorage(), policy: .strong)
+    }
+
+    func restoreGraph(from otherGraph: DIScope) {
+      graph = otherGraph.toStrongCopy()
     }
   }
 
@@ -448,20 +481,6 @@ final class Resolver {
     fileprivate nonisolated(unsafe) static var strongPerRun = DIScope(name: "per run", storage: singleStorage, policy: .strong)
     fileprivate lazy var weakPerContainer = DIScope(name: "per container", storage: containerStorage, policy: .weak)
     fileprivate lazy var strongPerContainer = DIScope(name: "per container", storage: containerStorage, policy: .strong)
-
-    fileprivate var graph: DIScope {
-      get {
-        if let scope = ThreadDictionary.get(key: "DI_Resolver_Graph") as? DIScope {
-          return scope
-        }
-        let newScope = DIScope(name: "object graph", storage: DIUnsafeCacheStorage(), policy: .strong)
-        ThreadDictionary.insert(key: "DI_Resolver_Graph", obj: newScope)
-        return newScope
-      }
-      set {
-        ThreadDictionary.insert(key: "DI_Resolver_Graph", obj: newValue)
-      }
-    }
 
     fileprivate static func makeGraphScope() -> DIScope {
       return DIScope(name: "object graph", storage: DIUnsafeCacheStorage(), policy: .strong)

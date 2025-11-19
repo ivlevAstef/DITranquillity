@@ -13,7 +13,7 @@ class UseObject: SpecificType {
 }
 
 final class MethodSignature: Sendable {
-  typealias Call = @Sendable ((any Actor)?, [Any?]) -> Any?
+  typealias Call = @Sendable ([Any?]) async -> Any?
 
   struct Parameter: Sendable {
     let parsedType: ParsedType

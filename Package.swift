@@ -7,13 +7,9 @@ let package = Package(
     products: [
         .library(name: "DITranquillity", targets: ["DITranquillity"])
     ],
-    dependencies: [
-        .package(url: "https://github.com/ivlevAstef/SwiftLazy.git", from: "1.5.0")
-    ],
+    dependencies: [],
     targets: [
-        .target(name: "DITranquillity", dependencies: [
-            "SwiftLazy"
-        ], path: "./Sources"),
+        .target(name: "DITranquillity", dependencies: [], path: "./Sources"),
         .testTarget(name: "DITranquillity_Tests", dependencies: [
           "DITranquillity"
         ], path: "./Tests")

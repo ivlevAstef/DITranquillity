@@ -31,23 +31,4 @@ extension DIComponentBuilder {
     }
     return append(injection: MethodMaker.eachMake(useObject: true, by: method))
   }
-
-  /// Function for appending an injection method
-  ///
-  /// Using:
-  /// ```
-  /// container.register(YourClass.self)
-  ///   .injection { @MainActor yourClass, p0, p1,... in yourClass.yourMethod(p0, p1, ...) }
-  /// ```
-  ///
-  /// - Parameters:
-  ///   - method: Injection method. First input argument is the always created object.
-  /// - Returns: Self
-  @discardableResult
-  public func injection<each P>(
-    isolation: isolated (any Actor)? = #isolation,
-    _ method: @escaping @MainActor(Impl, repeat each P) -> Void
-  ) -> Self {
-    return append(injection: MethodMaker.eachMakeMainActor(useObject: true, by: method))
-  }
 }

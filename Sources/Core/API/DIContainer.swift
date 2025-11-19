@@ -8,19 +8,6 @@
 
 import class Foundation.Thread
 
-prefix operator *
-/// Short syntax for resolve.
-/// Using:
-/// ```
-/// let yourObj: YourClass = *container
-/// ```
-///
-/// - Parameter container: A container.
-/// - Returns: Created object.
-public prefix func *<T>(container: DIContainer) -> T {
-  return container.resolve()
-}
-
 /// A container holding all registered components,
 /// allows you to register new components, parts, frameworks and
 /// allows you to receive objects by type.
@@ -123,8 +110,8 @@ extension DIContainer {
   /// - Parameter framework: Framework from which to resolve a object
   /// - Parameter arguments: Information about injection arguments. Used only if your registration objects with `arg` modificator.
   /// - Returns: Object for the specified type, or nil (see description).
-  public func resolve<T>(isolation: (any Actor)? = #isolation, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) -> T {
-    return resolver.resolve(isolation: isolation, from: framework, arguments: arguments)
+  public func resolve<T>(isolation: (any Actor)? = #isolation, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) async -> T {
+    return await resolver.resolve(isolation: isolation, from: framework, arguments: arguments)
   }
 
   /// Resolve object by type.
@@ -134,10 +121,10 @@ extension DIContainer {
   /// - Parameter framework: Framework from which to resolve a object
   /// - Parameter arguments: arguments for resolved object by type.
   /// - Returns: Object for the specified type, or nil (see description).
-  public func resolve<T>(isolation: (any Actor)? = #isolation, from framework: DIFramework.Type? = nil, args: Any?...) -> T {
-    return resolver.resolve(isolation: isolation, from: framework, arguments: AnyArguments(for: T.self, argsArray: args))
+  public func resolve<T>(isolation: (any Actor)? = #isolation, from framework: DIFramework.Type? = nil, args: Any?...) async -> T {
+    return await resolver.resolve(isolation: isolation, from: framework, arguments: AnyArguments(for: T.self, argsArray: args))
   }
-  
+
   /// Resolve object by type with tag.
   /// Can crash application, if can't found the type with tag.
   /// But if the type is optional, then the application will not crash, but it returns nil.
@@ -147,10 +134,10 @@ extension DIContainer {
   ///   - framework: Framework from which to resolve a object
   ///   - arguments: Information about injection arguments. Used only if your registration objects with `arg` modificator.
   /// - Returns: Object for the specified type with tag, or nil (see description).
-  public func resolve<T, Tag>(isolation: (any Actor)? = #isolation, tag: Tag.Type, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) -> T {
-    return by(tag: tag, on: resolver.resolve(isolation: isolation, from: framework, arguments: arguments))
+  public func resolve<T, Tag>(isolation: (any Actor)? = #isolation, tag: Tag.Type, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) async -> T {
+    return await by(tag: tag, on: resolver.resolve(isolation: isolation, from: framework, arguments: arguments))
   }
-  
+
   /// Resolve object by type with name.
   /// Can crash application, if can't found the type with name.
   /// But if the type is optional, then the application will not crash, but it returns nil.
@@ -160,39 +147,39 @@ extension DIContainer {
   ///   - framework: Framework from which to resolve a object
   ///   - arguments: Information about injection arguments. Used only if your registration objects with `arg` modificator.
   /// - Returns: Object for the specified type with name, or nil (see description).
-  public func resolve<T>(isolation: (any Actor)? = #isolation, name: String, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) -> T {
-    return resolver.resolve(isolation: isolation, name: name, from: framework, arguments: arguments)
+  public func resolve<T>(isolation: (any Actor)? = #isolation, name: String, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) async -> T {
+    return await resolver.resolve(isolation: isolation, name: name, from: framework, arguments: arguments)
   }
-  
+
   /// Resolve many objects by type.
   ///
   /// - Parameter arguments: Information about injection arguments. Used only if your registration objects with `arg` modificator.
   /// - Returns: Objects for the specified type.
-  public func resolveMany<T>(isolation: (any Actor)? = #isolation, arguments: AnyArguments? = nil) -> [T] {
-    return many(resolver.resolve(isolation: isolation, arguments: arguments))
+  public func resolveMany<T>(isolation: (any Actor)? = #isolation, arguments: AnyArguments? = nil) async -> [T] {
+    return await many(resolver.resolve(isolation: isolation, arguments: arguments))
   }
-  
+
   /// Injected all dependencies into object.
   /// If the object type couldn't be found, then in logs there will be a warning, and nothing will happen.
   ///
   /// - Parameters:
   ///   - object: object in which injections will be introduced.
   ///   - framework: Framework from which to injection into object
-  public func inject<T>(isolation: (any Actor)? = #isolation, into object: T, from framework: DIFramework.Type? = nil) {
-    resolver.injection(obj: object, isolation: isolation, from: framework)
+  public func inject<T>(isolation: (any Actor)? = #isolation, into object: T, from framework: DIFramework.Type? = nil) async {
+    await resolver.injection(obj: object, isolation: isolation, from: framework)
   }
   
   /// Initialize registered object with lifetime `.single`
-  public func initializeSingletonObjects(isolation: (any Actor)? = #isolation) {
-    initializeObjectsWithLifetime(isolation: isolation, .single)
+  public func initializeSingletonObjects() async {
+    await initializeObjectsWithLifetime(.single)
   }
 
   /// Initialize registered object with specified scope. Please don't use this method if your scope don't cache objects.
-  public func initializeObjectsForScope(isolation: (any Actor)? = #isolation, _ scope: DIScope) {
-    initializeObjectsWithLifetime(isolation: isolation, .custom(scope))
+  public func initializeObjectsForScope(_ scope: DIScope) async {
+    await initializeObjectsWithLifetime(.custom(scope))
   }
 
-  private func initializeObjectsWithLifetime(isolation: (any Actor)?, _ lifetime: DILifeTime) {
+  private func initializeObjectsWithLifetime(_ lifetime: DILifeTime) async {
     let components = componentContainer.components.filter{ lifetime == $0.lifeTime }
     if components.isEmpty { // for ignore log
       return
@@ -202,7 +189,7 @@ extension DIContainer {
     defer { log(.verbose, msg: "End resolving components with lifetime: \(lifetime)", brace: .end) }
 
     for component in components {
-      resolver.resolveCached(component: component, isolation: isolation)
+      await resolver.resolveCached(component: component)
     }
   }
 }

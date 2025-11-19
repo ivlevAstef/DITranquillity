@@ -11,10 +11,6 @@ public struct DISetting: Sendable {
   public struct Defaults: Sendable {
     /// Default lifetime of a object. By default = .prototype
     nonisolated(unsafe) public static var lifeTime: DILifeTime = .prototype
-    /// Can resolve/register from more threads or always from one. By default = true
-    /// Setup to true small decrease performance but can use from more thread without crash.
-    /// If your use DI only from one thread, for small improve performance set false.
-    nonisolated(unsafe) public static var multiThread: Bool = true
 
     /// Global flag for configuring ViewController view and its subviews injection.
     ///

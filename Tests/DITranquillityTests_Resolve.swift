@@ -8,7 +8,6 @@
 
 import XCTest
 import DITranquillity
-import SwiftLazy
 
 private class ManyTest {
   var services: [ServiceProtocol] = []
@@ -30,53 +29,53 @@ class DITranquillityTests_Resolve: XCTestCase {
     super.setUp()
   }
   
-  func test01_ResolveOptional() {
+  func test01_ResolveOptional() async {
     let container = DIContainer()
     container.register(FooService.init)
     
-    let optionalValue: FooService? = container.resolve()
+    let optionalValue: FooService? = await container.resolve()
     XCTAssertNotNil(optionalValue)
   }
 
-  func test01_ResolveByClass() {
+  func test01_ResolveByClass() async {
     let container = DIContainer()
     
     container.register(FooService.init)
     
-    let service_auto: FooService = container.resolve()
+    let service_auto: FooService = await container.resolve()
     XCTAssertEqual(service_auto.foo(), "foo")
     
-    let service_fast: FooService = *container
+    let service_fast: FooService = await container.resolve()
     XCTAssertEqual(service_fast.foo(), "foo")
   }
   
-  func test02_ResolveByProtocol() {
+  func test02_ResolveByProtocol() async {
     let container = DIContainer()
     
     container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-    let service_auto: ServiceProtocol = container.resolve()
+    let service_auto: ServiceProtocol = await container.resolve()
     XCTAssertEqual(service_auto.foo(), "foo")
     
-    let service_fast: ServiceProtocol = *container
+    let service_fast: ServiceProtocol = await container.resolve()
     XCTAssertEqual(service_fast.foo(), "foo")
   }
   
-  func test03_ResolveByClassAndProtocol() {
+  func test03_ResolveByClassAndProtocol() async {
     let container = DIContainer()
     
     container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-    let service_protocol: ServiceProtocol = *container
+    let service_protocol: ServiceProtocol = await container.resolve()
     XCTAssertEqual(service_protocol.foo(), "foo")
     
-    let service_class: FooService = *container
+    let service_class: FooService = await container.resolve()
     XCTAssertEqual(service_class.foo(), "foo")
   }
   
-  func test04_ResolveWithInitializerResolve() {
+  func test04_ResolveWithInitializerResolve() async {
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -84,11 +83,11 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     container.register(Inject.init(service:))
     
-    let inject: Inject = *container
+    let inject: Inject = await container.resolve()
     XCTAssertEqual(inject.service.foo(), "foo")
   }
   
-  func test05_ResolveWithDependencyResolveOpt() {
+  func test05_ResolveWithDependencyResolveOpt() async {
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -97,22 +96,22 @@ class DITranquillityTests_Resolve: XCTestCase {
     container.register(InjectOpt.init)
       .injection { $0.service = $1 }
     
-    let inject: InjectOpt = *container
+    let inject: InjectOpt = await container.resolve()
     XCTAssertEqual(inject.service!.foo(), "foo")
   }
   
-  func test06_ResolveWithDependencyResolveOptNil() {
+  func test06_ResolveWithDependencyResolveOptNil() async {
     let container = DIContainer()
     
     container.register(InjectOpt.init)
       .injection { $0.service = $1 }
     
-    let inject: InjectOpt = *container
+    let inject: InjectOpt = await container.resolve()
     XCTAssert(nil == inject.service)
   }
   
   
-  func test07_ResolveWithDependencyResolveImplicitly() {
+  func test07_ResolveWithDependencyResolveImplicitly() async {
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -121,11 +120,11 @@ class DITranquillityTests_Resolve: XCTestCase {
     container.register(InjectImplicitly.init)
       .injection { $0.service = $1 }
     
-    let inject: InjectImplicitly = *container
+    let inject: InjectImplicitly = await container.resolve()
     XCTAssertEqual(inject.service.foo(), "foo")
   }
   
-  func test08_ResolveMultiplyWithDefault() {
+  func test08_ResolveMultiplyWithDefault() async {
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -135,11 +134,11 @@ class DITranquillityTests_Resolve: XCTestCase {
     container.register(BarService.init)
       .as(check: ServiceProtocol.self){$0}
     
-    let service: ServiceProtocol = *container
+    let service: ServiceProtocol = await container.resolve()
     XCTAssertEqual(service.foo(), "foo")
   }
   
-  func test09_ResolveMultiplyWithDefault_Reverse() {
+  func test09_ResolveMultiplyWithDefault_Reverse() async {
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -149,11 +148,11 @@ class DITranquillityTests_Resolve: XCTestCase {
       .as(check: ServiceProtocol.self){$0}
       .default()
     
-    let service: ServiceProtocol = *container
+    let service: ServiceProtocol = await container.resolve()
     XCTAssertEqual(service.foo(), "bar")
   }
   
-  func test10_ResolveMultiplyByName() {
+  func test10_ResolveMultiplyByName() async {
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -164,16 +163,16 @@ class DITranquillityTests_Resolve: XCTestCase {
       .as(check: ServiceProtocol.self, name: "bar"){$0}
       .lifetime(.single)
     
-    let serviceFoo: ServiceProtocol = container.resolve(name: "foo")
+    let serviceFoo: ServiceProtocol = await container.resolve(name: "foo")
     XCTAssertEqual(serviceFoo.foo(), "foo")
     
-    let serviceBar: ServiceProtocol = container.resolve(name: "bar")
+    let serviceBar: ServiceProtocol = await container.resolve(name: "bar")
     XCTAssertEqual(serviceBar.foo(), "bar")
     
     XCTAssertNotEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar as AnyObject).toOpaque())
   }
   
-  func test10_ResolveMultiplyByTag() {
+  func test10_ResolveMultiplyByTag() async {
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -184,16 +183,16 @@ class DITranquillityTests_Resolve: XCTestCase {
       .as(check: ServiceProtocol.self, tag: BarService.self){$0}
       .lifetime(.single)
     
-    let serviceFoo: ServiceProtocol = container.resolve(tag: FooService.self)
+    let serviceFoo: ServiceProtocol = await container.resolve(tag: FooService.self)
     XCTAssertEqual(serviceFoo.foo(), "foo")
     
-    let serviceBar: ServiceProtocol = container.resolve(tag: BarService.self)
+    let serviceBar: ServiceProtocol = await container.resolve(tag: BarService.self)
     XCTAssertEqual(serviceBar.foo(), "bar")
     
     XCTAssertNotEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar as AnyObject).toOpaque())
   }
 
-	func test10_ResolveMultiplyLazyProviderByTag() {
+	func test10_ResolveMultiplyLazyProviderByTag() async {
 		let container = DIContainer()
 
 		container.register(FooService.init)
@@ -204,16 +203,20 @@ class DITranquillityTests_Resolve: XCTestCase {
 			.as(check: ServiceProtocol.self, tag: BarService.self){$0}
 			.lifetime(.single)
 
-		let serviceFoo: Lazy<ServiceProtocol> = container.resolve(tag: FooService.self)
-		XCTAssertEqual(serviceFoo.value.foo(), "foo")
+		let serviceFoo: Lazy<ServiceProtocol> = await container.resolve(tag: FooService.self)
+    let valueFoo = await serviceFoo.value.foo()
+		XCTAssertEqual(valueFoo, "foo")
 
-		let serviceBar: Provider<ServiceProtocol> = container.resolve(tag: BarService.self)
-		XCTAssertEqual(serviceBar.value.foo(), "bar")
+		let serviceBar: Provider<ServiceProtocol> = await container.resolve(tag: BarService.self)
+    let valueBar = await serviceBar.value.foo()
+		XCTAssertEqual(valueBar, "bar")
 
-		XCTAssertNotEqual(Unmanaged.passUnretained(serviceFoo.value as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceBar.value as AnyObject).toOpaque())
+    let opaqueFoo = await Unmanaged.passUnretained(serviceFoo.value as AnyObject).toOpaque()
+    let opaqueBar = await Unmanaged.passUnretained(serviceBar.value as AnyObject).toOpaque()
+		XCTAssertNotEqual(opaqueFoo, opaqueBar)
 	}
   
-  func test11_ResolveMultiplySingleByName() {
+  func test11_ResolveMultiplySingleByName() async {
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -221,16 +224,16 @@ class DITranquillityTests_Resolve: XCTestCase {
       .as(check: ServiceProtocol.self, name: "bar"){$0}
       .lifetime(.single)
     
-    let serviceFoo: ServiceProtocol = container.resolve(name: "foo")
+    let serviceFoo: ServiceProtocol = await container.resolve(name: "foo")
     XCTAssertEqual(serviceFoo.foo(), "foo")
     
-    let serviceFoo2: ServiceProtocol = container.resolve(name: "bar")
+    let serviceFoo2: ServiceProtocol = await container.resolve(name: "bar")
     XCTAssertEqual(serviceFoo2.foo(), "foo")
     
     XCTAssertEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceFoo2 as AnyObject).toOpaque())
   }
   
-  func test11_ResolveMultiplySingleByTag() {
+  func test11_ResolveMultiplySingleByTag() async {
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -238,16 +241,16 @@ class DITranquillityTests_Resolve: XCTestCase {
       .as(check: ServiceProtocol.self, tag: BarService.self){$0}
       .lifetime(.single)
     
-    let serviceFoo: ServiceProtocol = by(tag: FooService.self, on: *container)
+    let serviceFoo: ServiceProtocol = await by(tag: FooService.self, on: container.resolve())
     XCTAssertEqual(serviceFoo.foo(), "foo")
     
-    let serviceFoo2: ServiceProtocol = container.resolve(tag: BarService.self)
+    let serviceFoo2: ServiceProtocol = await container.resolve(tag: BarService.self)
     XCTAssertEqual(serviceFoo2.foo(), "foo")
     
     XCTAssertEqual(Unmanaged.passUnretained(serviceFoo as AnyObject).toOpaque(), Unmanaged.passUnretained(serviceFoo2 as AnyObject).toOpaque())
   }
   
-  func test12_ResolveMultiplyMany() {
+  func test12_ResolveMultiplyMany() async {
     let container = DIContainer()
 
     container.register(FooService.init)
@@ -256,13 +259,13 @@ class DITranquillityTests_Resolve: XCTestCase {
     container.register(BarService.init)
       .as(check: ServiceProtocol.self){$0}
 
-    let services: [ServiceProtocol] = container.resolveMany()
+    let services: [ServiceProtocol] = await container.resolveMany()
 
     XCTAssertEqual(services.count, 2)
     XCTAssertNotEqual(services[0].foo(), services[1].foo())
   }
 
-  func test12_ResolveMultiplyLazyMany() {
+  func test12_ResolveMultiplyLazyMany() async {
     let container = DIContainer()
 
     container.register(FooService.init)
@@ -271,13 +274,14 @@ class DITranquillityTests_Resolve: XCTestCase {
     container.register(BarService.init)
       .as(check: ServiceProtocol.self){$0}
 
-    let services: [Lazy<ServiceProtocol>] = many(*container)
+    let services: [Lazy<ServiceProtocol>] = await many(container.resolve())
 
     XCTAssertEqual(services.count, 2)
-    XCTAssertNotEqual(services[0].value.foo(), services[1].value.foo())
+    let values = await (services[0].value.foo(), services[1].value.foo())
+    XCTAssertNotEqual(values.0, values.1)
   }
 
-  func test12_ResolveMultiplyProviderMany() {
+  func test12_ResolveMultiplyProviderMany() async {
     let container = DIContainer()
 
     container.register(FooService.init)
@@ -286,13 +290,14 @@ class DITranquillityTests_Resolve: XCTestCase {
     container.register(BarService.init)
       .as(check: ServiceProtocol.self){$0}
 
-    let services: [Provider<ServiceProtocol>] = many(*container)
+    let services: [Provider<ServiceProtocol>] = await many(container.resolve())
 
     XCTAssertEqual(services.count, 2)
-    XCTAssertNotEqual(services[0].value.foo(), services[1].value.foo())
+    let values = await (services[0].value.foo(), services[1].value.foo())
+    XCTAssertNotEqual(values.0, values.1)
   }
 
-  func test12_ResolveMultiplyManyOrder() {
+  func test12_ResolveMultiplyManyOrder() async {
     let container = DIContainer()
 
     container.register(FooService.init)
@@ -306,7 +311,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     container.register(BarService.init)
         .as(ServiceProtocol.self)
 
-    let services: [ServiceProtocol] = container.resolveMany()
+    let services: [ServiceProtocol] = await container.resolveMany()
     XCTAssertEqual(services.count, 5)
 
     XCTAssert(services[0] is FooService)
@@ -316,7 +321,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(services[4] is BarService)
   }
   
-  func test13_ResolveCircular2() {
+  func test13_ResolveCircular2() async {
     let container = DIContainer()
     
     container.register(Circular2A.init)
@@ -326,11 +331,11 @@ class DITranquillityTests_Resolve: XCTestCase {
       .lifetime(.objectGraph)
       .injection(cycle: true) { $0.a = $1 }
     
-    let a: Circular2A = *container
+    let a: Circular2A = await container.resolve()
     XCTAssert(a === a.b.a)
     XCTAssert(a.b === a.b.a.b)
     
-    let b: Circular2B = *container
+    let b: Circular2B = await container.resolve()
     XCTAssert(b === b.a.b)
     XCTAssert(b.a === b.a.b.a)
     
@@ -338,7 +343,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(a.b !== b)
   }
     
-  func test13_ResolveCircular2WithPerRun() {
+  func test13_ResolveCircular2WithPerRun() async {
     let container = DIContainer()
     
     container.register(Circular2A.init)
@@ -348,11 +353,11 @@ class DITranquillityTests_Resolve: XCTestCase {
       .lifetime(.perRun(.strong))
       .injection(cycle: true) { $0.a = $1 }
     
-    let a: Circular2A = *container
+    let a: Circular2A = await container.resolve()
     XCTAssert(a === a.b.a)
     XCTAssert(a.b === a.b.a.b)
     
-    let b: Circular2B = *container
+    let b: Circular2B = await container.resolve()
     XCTAssert(b === b.a.b)
     XCTAssert(b.a === b.a.b.a)
     
@@ -360,7 +365,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(a.b === b)
   }
   
-  func test14_ResolveCircular3() {
+  func test14_ResolveCircular3() async {
     let container = DIContainer()
     
     container.register(Circular3A.init)
@@ -373,17 +378,17 @@ class DITranquillityTests_Resolve: XCTestCase {
       .lifetime(.objectGraph)
       .injection(cycle: true) { c, a in c.a = a }
     
-    let a: Circular3A = *container
+    let a: Circular3A = await container.resolve()
     XCTAssert(a === a.b.c.a)
     XCTAssert(a.b === a.b.c.a.b)
     XCTAssert(a.b.c === a.b.c.a.b.c)
     
-    let b: Circular3B = *container
+    let b: Circular3B = await container.resolve()
     XCTAssert(b === b.c.a.b)
     XCTAssert(b.c === b.c.a.b.c)
     XCTAssert(b.c.a === b.c.a.b.c.a)
     
-    let c: Circular3C = *container
+    let c: Circular3C = await container.resolve()
     XCTAssert(c === c.a.b.c)
     XCTAssert(c.a === c.a.b.c.a)
     XCTAssert(c.a.b === c.a.b.c.a.b)
@@ -398,7 +403,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(c.a.b !== b)
   }
   
-  func test15_ResolveCircularDouble2A() {
+  func test15_ResolveCircularDouble2A() async {
     let container = DIContainer()
     
     container.register(CircularDouble2A.init)
@@ -411,7 +416,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     
     //b1 !== b2 because prototype
-    let a: CircularDouble2A = *container
+    let a: CircularDouble2A = await container.resolve()
     XCTAssert(a.b1 !== a.b2)
     XCTAssert(a === a.b1.a)
     XCTAssert(a.b1 === a.b1.a.b1)
@@ -419,7 +424,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(a.b2 === a.b2.a.b2)
   }
   
-  func test15_ResolveCircularDouble2B() {
+  func test15_ResolveCircularDouble2B() async {
     let container = DIContainer()
     
     container.register(CircularDouble2A.init)
@@ -431,14 +436,14 @@ class DITranquillityTests_Resolve: XCTestCase {
       .lifetime(.objectGraph)
     
     //!!! b1 === b2 === b because objectGraph
-    let b: CircularDouble2B = *container
+    let b: CircularDouble2B = await container.resolve()
     XCTAssert(b === b.a.b1)
     XCTAssert(b === b.a.b2)
     XCTAssert(b.a === b.a.b1.a)
     XCTAssert(b.a === b.a.b2.a)
   }
   
-  func test16_ResolveCircularDoubleOneDependency2_WithoutCycle() {
+  func test16_ResolveCircularDoubleOneDependency2_WithoutCycle() async {
     let container = DIContainer()
     
     container.register(CircularDouble2A.init)
@@ -451,7 +456,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(!container.makeGraph().checkIsValid(checkGraphCycles: true))
   }
   
-  func test17_DependencyIntoDependency() {
+  func test17_DependencyIntoDependency() async {
     let container = DIContainer()
     
     container.register(DependencyA.init)
@@ -462,13 +467,13 @@ class DITranquillityTests_Resolve: XCTestCase {
     container.register(DependencyC.init)
       .injection { $0.b = $1 }
     
-    let c: DependencyC = *container
-    
+    let c: DependencyC = await container.resolve()
+
     XCTAssert(c.b != nil)
     XCTAssert(c.b.a != nil)
   }
   
-  func test18_ResolveManyWithNamesTags() {
+  func test18_ResolveManyWithNamesTags() async {
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -486,12 +491,12 @@ class DITranquillityTests_Resolve: XCTestCase {
     container.register(BarService.init)
       .as(check: ServiceProtocol.self, name: "bar test"){$0}
     
-    let services: [ServiceProtocol] = many(*container)
+    let services: [ServiceProtocol] = await many(container.resolve())
     XCTAssertEqual(services.count, 5)
     
   }
   
-  func test19_resolvePerContainer() {
+  func test19_resolvePerContainer() async {
     let container1 = DIContainer()
     let container2 = DIContainer()
     
@@ -501,11 +506,11 @@ class DITranquillityTests_Resolve: XCTestCase {
       .lifetime(.perContainer(.strong))
     
     
-    let service1_1: FooService = *container1
-    let service1_2: FooService = *container2
-    let service2_1: FooService = *container1
-    let service2_2: FooService = *container2
-    
+    let service1_1: FooService = await container1.resolve()
+    let service1_2: FooService = await container2.resolve()
+    let service2_1: FooService = await container1.resolve()
+    let service2_2: FooService = await container2.resolve()
+
     XCTAssertEqual(service1_1.foo(), "foo")
     XCTAssertEqual(service1_2.foo(), "foo")
     XCTAssertEqual(service2_1.foo(), "foo")
@@ -518,7 +523,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(service2_1 !== service2_2)
   }
   
-  func test19_resolvePerContainerUseFunc() {
+  func test19_resolvePerContainerUseFunc() async {
     let container1 = DIContainer()
     let container2 = DIContainer()
     
@@ -530,11 +535,11 @@ class DITranquillityTests_Resolve: XCTestCase {
     register(use: container1)
     register(use: container2)
     
-    let service1_1: FooService = *container1
-    let service1_2: FooService = *container2
-    let service2_1: FooService = *container1
-    let service2_2: FooService = *container2
-    
+    let service1_1: FooService = await container1.resolve()
+    let service1_2: FooService = await container2.resolve()
+    let service2_1: FooService = await container1.resolve()
+    let service2_2: FooService = await container2.resolve()
+
     XCTAssertEqual(service1_1.foo(), "foo")
     XCTAssertEqual(service1_2.foo(), "foo")
     XCTAssertEqual(service2_1.foo(), "foo")
@@ -547,7 +552,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(service2_1 !== service2_2)
   }
 	
-	func test20_ResolveByTagAndTag() {
+	func test20_ResolveByTagAndTag() async {
 		let container1 = DIContainer()
 		
 		container1.register(FooService.init)
@@ -559,21 +564,21 @@ class DITranquillityTests_Resolve: XCTestCase {
 			.as(check: ServiceProtocol.self, tag: FooService.self){$0}
 		
 		
-		let serviceFoo1: ServiceProtocol? = container1.resolve(tag: FooService.self)
+		let serviceFoo1: ServiceProtocol? = await container1.resolve(tag: FooService.self)
 		XCTAssertEqual(serviceFoo1?.foo() ?? "", "foo")
 		
-		let serviceFoo2: ServiceProtocol? = container2.resolve(tag: FooService.self)
+		let serviceFoo2: ServiceProtocol? = await container2.resolve(tag: FooService.self)
 		XCTAssertEqual(serviceFoo2?.foo() ?? "", "foo")
 		
 		
-		let serviceFooTag1: ServiceProtocol? = by(tag: FooService.self, on: by(tag: BarService.self, on: *container1))
+    let serviceFooTag1: ServiceProtocol? = await by(tag: FooService.self, on: by(tag: BarService.self, on: container1.resolve()))
 		XCTAssertEqual(serviceFooTag1?.foo() ?? "", "foo")
 		
-		let serviceFooTag2: ServiceProtocol? = by(tag: FooService.self, on: by(tag: BarService.self, on: *container2))
+		let serviceFooTag2: ServiceProtocol? = await by(tag: FooService.self, on: by(tag: BarService.self, on: container2.resolve()))
 		XCTAssertEqual(serviceFooTag2?.foo() ?? "", "")
 	}
 
-	func test20_ResolveLazyByTagAndTag() {
+	func test20_ResolveLazyByTagAndTag() async {
 		let container1 = DIContainer()
 
 		container1.register(FooService.init)
@@ -585,21 +590,25 @@ class DITranquillityTests_Resolve: XCTestCase {
 			.as(check: ServiceProtocol.self, tag: FooService.self){$0}
 
 
-		let serviceFoo1: Lazy<ServiceProtocol?> = container1.resolve(tag: FooService.self)
-		XCTAssertEqual(serviceFoo1.value?.foo() ?? "", "foo")
+		let serviceFoo1: Lazy<ServiceProtocol?> = await container1.resolve(tag: FooService.self)
+    let value1 = await serviceFoo1.value?.foo() ?? ""
+		XCTAssertEqual(value1, "foo")
 
-		let serviceFoo2: Lazy<ServiceProtocol?> = container2.resolve(tag: FooService.self)
-		XCTAssertEqual(serviceFoo2.value?.foo() ?? "", "foo")
+		let serviceFoo2: Lazy<ServiceProtocol?> = await container2.resolve(tag: FooService.self)
+    let value2 = await serviceFoo2.value?.foo() ?? ""
+		XCTAssertEqual(value2, "foo")
 
 
-		let serviceFooTag1: Lazy<ServiceProtocol?> = by(tag: FooService.self, on: by(tag: BarService.self, on: *container1))
-		XCTAssertEqual(serviceFooTag1.value?.foo() ?? "", "foo")
+		let serviceFooTag1: Lazy<ServiceProtocol?> = await by(tag: FooService.self, on: by(tag: BarService.self, on: container1.resolve()))
+    let tagValue1 = await serviceFooTag1.value?.foo() ?? ""
+		XCTAssertEqual(tagValue1, "foo")
 
-		let serviceFooTag2: Lazy<ServiceProtocol?> = by(tag: FooService.self, on: by(tag: BarService.self, on: *container2))
-		XCTAssertEqual(serviceFooTag2.value?.foo() ?? "", "")
+		let serviceFooTag2: Lazy<ServiceProtocol?> = await by(tag: FooService.self, on: by(tag: BarService.self, on: container2.resolve()))
+    let tagValue2 = await serviceFooTag2.value?.foo() ?? ""
+		XCTAssertEqual(tagValue2, "")
 	}
   
-  func test20_ResolveByTagAndTagShort() {
+  func test20_ResolveByTagAndTagShort() async {
     let container1 = DIContainer()
     
     container1.register(FooService.init)
@@ -611,21 +620,21 @@ class DITranquillityTests_Resolve: XCTestCase {
       .as(check: ServiceProtocol.self, tag: FooService.self){$0}
     
     
-    let serviceFoo1: ServiceProtocol? = container1.resolve(tag: FooService.self)
+    let serviceFoo1: ServiceProtocol? = await container1.resolve(tag: FooService.self)
     XCTAssertEqual(serviceFoo1?.foo() ?? "", "foo")
     
-    let serviceFoo2: ServiceProtocol? = container2.resolve(tag: FooService.self)
+    let serviceFoo2: ServiceProtocol? = await container2.resolve(tag: FooService.self)
     XCTAssertEqual(serviceFoo2?.foo() ?? "", "foo")
     
     
-    let serviceFooTag1: ServiceProtocol? = by(tags: FooService.self, BarService.self, on: *container1)
+    let serviceFooTag1: ServiceProtocol? = await by(tags: FooService.self, BarService.self, on: container1.resolve())
     XCTAssertEqual(serviceFooTag1?.foo() ?? "", "foo")
     
-    let serviceFooTag2: ServiceProtocol? = by(tags: FooService.self, BarService.self, on: *container2)
+    let serviceFooTag2: ServiceProtocol? = await by(tags: FooService.self, BarService.self, on: container2.resolve())
     XCTAssertEqual(serviceFooTag2?.foo() ?? "", "")
   }
 	
-	func test21_ResolveByTagAndMany() {
+	func test21_ResolveByTagAndMany() async {
 		let container = DIContainer()
 		
 		container.register(FooService.init)
@@ -641,41 +650,43 @@ class DITranquillityTests_Resolve: XCTestCase {
 			.as(check: ServiceProtocol.self){$0}
 		
 		
-		let services: [ServiceProtocol] = container.resolveMany()
+		let services: [ServiceProtocol] = await container.resolveMany()
 		XCTAssertEqual(services.count, 4)
 		
-		let servicesByTag1: [ServiceProtocol] = many(by(tag: FooService.self, on: *container))
-		
-		XCTAssertEqual(servicesByTag1.count, 2)		
-	}
-
-	func test21_ResolveLazyByTagAndMany() {
-		let container = DIContainer()
-
-		container.register(FooService.init)
-			.as(check: ServiceProtocol.self, tag: FooService.self){$0}
-
-		container.register(BarService.init)
-			.as(check: ServiceProtocol.self, tag: FooService.self){$0}
-
-		container.register(FooService.init)
-			.as(check: ServiceProtocol.self){$0}
-
-		container.register(BarService.init)
-			.as(check: ServiceProtocol.self){$0}
-
-
-		let services: [Lazy<ServiceProtocol>] = container.resolveMany()
-		XCTAssertEqual(services.count, 4)
-		XCTAssertEqual(services.first?.value.foo() ?? "", "foo")
-
-		let servicesByTag1: [Lazy<ServiceProtocol>] = many(by(tag: FooService.self, on: *container))
+		let servicesByTag1: [ServiceProtocol] = await many(by(tag: FooService.self, on: container.resolve()))
 
 		XCTAssertEqual(servicesByTag1.count, 2)
-		XCTAssertEqual(servicesByTag1.last?.value.foo() ?? "", "bar")
+	}
+
+	func test21_ResolveLazyByTagAndMany() async {
+		let container = DIContainer()
+
+		container.register(FooService.init)
+			.as(check: ServiceProtocol.self, tag: FooService.self){$0}
+
+		container.register(BarService.init)
+			.as(check: ServiceProtocol.self, tag: FooService.self){$0}
+
+		container.register(FooService.init)
+			.as(check: ServiceProtocol.self){$0}
+
+		container.register(BarService.init)
+			.as(check: ServiceProtocol.self){$0}
+
+
+		let services: [Lazy<ServiceProtocol>] = await container.resolveMany()
+		XCTAssertEqual(services.count, 4)
+    let valueFirst = await services.first?.value.foo() ?? ""
+		XCTAssertEqual(valueFirst, "foo")
+
+		let servicesByTag1: [Lazy<ServiceProtocol>] = await many(by(tag: FooService.self, on: container.resolve()))
+
+		XCTAssertEqual(servicesByTag1.count, 2)
+    let valueLast = await servicesByTag1.last?.value.foo() ?? ""
+		XCTAssertEqual(valueLast, "bar")
 	}
 	
-	func test22_ResolveByTagTagAndMany() {
+	func test22_ResolveByTagTagAndMany() async {
 		let container = DIContainer()
 		
 		container.register(FooService.init)
@@ -695,20 +706,20 @@ class DITranquillityTests_Resolve: XCTestCase {
 			.as(check: ServiceProtocol.self, tag: BarService.self){$0}
 		
 		
-		let services: [ServiceProtocol] = container.resolveMany()
+		let services: [ServiceProtocol] = await container.resolveMany()
 		XCTAssertEqual(services.count, 5)
 		
-		let servicesByTag1: [ServiceProtocol] = many(by(tag: FooService.self, on: *container))
+		let servicesByTag1: [ServiceProtocol] = await many(by(tag: FooService.self, on: container.resolve()))
 		XCTAssertEqual(servicesByTag1.count, 3)
 		
-		let servicesByTag2: [ServiceProtocol] = many(by(tag: BarService.self, on: *container))
+		let servicesByTag2: [ServiceProtocol] = await many(by(tag: BarService.self, on: container.resolve()))
 		XCTAssertEqual(servicesByTag2.count, 2)
 		
-		let servicesByTag3: [ServiceProtocol] = many(by(tag: BarService.self, on: by(tag: FooService.self, on: *container)))
+		let servicesByTag3: [ServiceProtocol] = await many(by(tag: BarService.self, on: by(tag: FooService.self, on: container.resolve())))
 		XCTAssertEqual(servicesByTag3.count, 1)
 	}
   
-  func test22_ResolveByTagTagAndManyShort() {
+  func test22_ResolveByTagTagAndManyShort() async {
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -728,20 +739,20 @@ class DITranquillityTests_Resolve: XCTestCase {
       .as(check: ServiceProtocol.self, tag: BarService.self){$0}
     
     
-    let services: [ServiceProtocol] = container.resolveMany()
+    let services: [ServiceProtocol] = await container.resolveMany()
     XCTAssertEqual(services.count, 5)
     
-    let servicesByTag1: [ServiceProtocol] = many(by(tag: FooService.self, on: *container))
+    let servicesByTag1: [ServiceProtocol] = await many(by(tag: FooService.self, on: container.resolve()))
     XCTAssertEqual(servicesByTag1.count, 3)
     
-    let servicesByTag2: [ServiceProtocol] = many(by(tag: BarService.self, on: *container))
+    let servicesByTag2: [ServiceProtocol] = await many(by(tag: BarService.self, on: container.resolve()))
     XCTAssertEqual(servicesByTag2.count, 2)
     
-    let servicesByTag3: [ServiceProtocol] = many(by(tags: BarService.self, FooService.self, on: *container))
+    let servicesByTag3: [ServiceProtocol] = await many(by(tags: BarService.self, FooService.self, on: container.resolve()))
     XCTAssertEqual(servicesByTag3.count, 1)
   }
   
-  func test23_ResolveByTagTagTagShort() {
+  func test23_ResolveByTagTagTagShort() async {
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -749,14 +760,14 @@ class DITranquillityTests_Resolve: XCTestCase {
       .as(check: ServiceProtocol.self, tag: BarService.self){$0}
       .as(check: ServiceProtocol.self, tag: ServiceProtocol.self){$0}
     
-    let service: ServiceProtocol? = by(tags: FooService.self, BarService.self, ServiceProtocol.self, on: *container)
+    let service: ServiceProtocol? = await by(tags: FooService.self, BarService.self, ServiceProtocol.self, on: container.resolve())
     XCTAssertEqual(service?.foo() ?? "", "foo")
     
-    let serviceNot: ServiceProtocol? = by(tags: FooService.self, BarService.self, Inject.self, on: *container)
+    let serviceNot: ServiceProtocol? = await by(tags: FooService.self, BarService.self, Inject.self, on: container.resolve())
     XCTAssertEqual(serviceNot?.foo() ?? "", "")
   }
 
-  func test24_ResolveUseKeyPath() {
+  func test24_ResolveUseKeyPath() async {
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -765,11 +776,11 @@ class DITranquillityTests_Resolve: XCTestCase {
     container.register(InjectImplicitly.init)
       .injection(\.service)
     
-    let inject: InjectImplicitly = *container
+    let inject: InjectImplicitly = await container.resolve()
     XCTAssertEqual(inject.service.foo(), "foo")
   }
   
-  func test24_ResolveUseKeyPathWithCycle() {
+  func test24_ResolveUseKeyPathWithCycle() async {
     let container = DIContainer()
     
     container.register(CircularDouble2A.init)
@@ -782,7 +793,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     
     
     //b1 !== b2 because prototype
-    let a: CircularDouble2A = *container
+    let a: CircularDouble2A = await container.resolve()
     XCTAssert(a.b1 !== a.b2)
     XCTAssert(a === a.b1.a)
     XCTAssert(a.b1 === a.b1.a.b1)
@@ -790,7 +801,7 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssert(a.b2 === a.b2.a.b2)
   }
   
-  func test24_ResolveUseKeyPathAndModificators() {
+  func test24_ResolveUseKeyPathAndModificators() async {
     let container = DIContainer()
     
     container.register(ManyInject.init)
@@ -802,11 +813,11 @@ class DITranquillityTests_Resolve: XCTestCase {
     container.register(BarService.init)
       .as(check: ServiceProtocol.self){$0}
     
-    let inject: ManyInject = *container
+    let inject: ManyInject = await container.resolve()
     XCTAssertEqual(inject.a.count, 2)
   }
 
-  func test25_PostInit() {
+  func test25_PostInit() async {
     let container = DIContainer()
 
     container.register(FooService.init)
@@ -824,13 +835,13 @@ class DITranquillityTests_Resolve: XCTestCase {
         isPostInit = true
       }
 
-    let inject: InjectOpt = *container
+    let inject: InjectOpt = await container.resolve()
 
     XCTAssertEqual(inject.service?.foo(), "foo")
     XCTAssertEqual(isPostInit, true)
   }
 
-  func test25_PostInitCycle() {
+  func test25_PostInitCycle() async {
     let container = DIContainer()
 
     var isPostInit1: Bool = false
@@ -857,14 +868,13 @@ class DITranquillityTests_Resolve: XCTestCase {
         isPostInit2 = true
       }
 
-    _ = *container as Circular2B
+    _ = await container.resolve() as Circular2B
 
     XCTAssertEqual(isPostInit1, true)
     XCTAssertEqual(isPostInit2, true)
   }
 
-  func test26_many()
-  {
+  func test26_many() async {
     let container = DIContainer()
 
     container.register(FooService.init)
@@ -879,8 +889,8 @@ class DITranquillityTests_Resolve: XCTestCase {
 
     container.register { ManyInitTest(services: many($0)) }
 
-    let test1: ManyTest = *container
-    let test2: ManyInitTest = *container
+    let test1: ManyTest = await container.resolve()
+    let test2: ManyInitTest = await container.resolve()
 
     XCTAssertEqual(test1.services.count, 2)
     XCTAssertEqual(test1.optServices.count, 2)
@@ -890,19 +900,18 @@ class DITranquillityTests_Resolve: XCTestCase {
     XCTAssertEqual(test2.services.count, 2)
   }
   
-  func test27_crashLogNilRegister()
-  {
+  func test27_crashLogNilRegister() async {
     let container = DIContainer()
     
     // Yes it's incorrect for library syntax, but not?
     var obj: ServiceProtocol? = BarService()
     container.register { obj }
     
-    let resolve = container.resolve() as ServiceProtocol
+    let resolve = await container.resolve() as ServiceProtocol
     _ = resolve
     
     obj = nil
-    let resolveOpt = container.resolve() as ServiceProtocol?
+    let resolveOpt = await container.resolve() as ServiceProtocol?
     XCTAssertNil(resolveOpt)
     
 //    let resolveCrash = container.resolve() as ServiceProtocol

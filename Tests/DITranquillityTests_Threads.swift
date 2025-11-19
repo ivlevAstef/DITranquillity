@@ -15,8 +15,7 @@ class DITranquillityTests_Threads: XCTestCase {
   }
   /// Remove support threads, in next version return new improved thread safe.
   
-  func test01_ResolvePrototype() {
-    DISetting.Defaults.multiThread = true
+  func test01_ResolvePrototype() async {
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -28,41 +27,40 @@ class DITranquillityTests_Threads: XCTestCase {
         XCTestExpectation(description: "test01_ResolvePrototype_3")
     ]
 
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
+    Task.detached {
       for _ in 0..<32768 {
-        let service: FooService = *container
+        let service: FooService = await container.resolve()
         XCTAssertEqual(service.foo(), "foo")
       }
       expectations[0].fulfill()
     }
     
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
+    Task.detached {
       for _ in 0..<16384 {
-        let service: FooService = *container
+        let service: FooService = await container.resolve()
         XCTAssertEqual(service.foo(), "foo")
       }
       expectations[1].fulfill()
     }
     
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+    Task.detached {
       for _ in 0..<8192 {
-        let service: FooService = *container
+        let service: FooService = await container.resolve()
         XCTAssertEqual(service.foo(), "foo")
       }
       expectations[2].fulfill()
     }
 
-    wait(for: expectations, timeout: 15.0)
+    await fulfillment(of: expectations, timeout: 15.0)
   }
   
-  func test02_ResolvePerRun() {
-    DISetting.Defaults.multiThread = true
+  func test02_ResolvePerRun() async {
     let container = DIContainer()
     
     container.register(FooService.init)
       .lifetime(.perRun(.strong))
     
-    let singleService: FooService = *container
+    let singleService: FooService = await container.resolve()
     XCTAssertEqual(singleService.foo(), "foo")
 
     let expectations = [
@@ -71,43 +69,40 @@ class DITranquillityTests_Threads: XCTestCase {
       XCTestExpectation(description: "test02_ResolvePerRun_3")
     ]
 
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
+    Task.detached {
       for _ in 0..<32768 {
-        let service: FooService = *container
+        let service: FooService = await container.resolve()
         XCTAssert(service === singleService)
       }
       expectations[0].fulfill()
     }
     
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
+    Task.detached {
       for _ in 0..<16384 {
-        let service: FooService = *container
+        let service: FooService = await container.resolve()
         XCTAssert(service === singleService)
       }
       expectations[1].fulfill()
     }
     
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+    Task.detached {
       for _ in 0..<8192 {
-        let service: FooService = *container
+        let service: FooService = await container.resolve()
         XCTAssert(service === singleService)
       }
       expectations[2].fulfill()
     }
 
-    wait(for: expectations, timeout: 15.0)
-
-    DISetting.Defaults.multiThread = false
+    await fulfillment(of: expectations, timeout: 15.0)
   }
   
-  func test03_ResolveSingle() {
-    DISetting.Defaults.multiThread = true
+  func test03_ResolveSingle() async {
     let container = DIContainer()
     
     container.register(FooService.init)
       .lifetime(.single)
     
-    let singleService: FooService = *container
+    let singleService: FooService = await container.resolve()
     XCTAssertEqual(singleService.foo(), "foo")
 
     let expectations = [
@@ -116,35 +111,34 @@ class DITranquillityTests_Threads: XCTestCase {
       XCTestExpectation(description: "test03_ResolveSingle_3")
     ]
 
-    DispatchQueue.global(qos: .userInteractive).async {
+    Task.detached {
       for _ in 0..<32768 {
-        let service: FooService = *container
+        let service: FooService = await container.resolve()
         XCTAssert(service === singleService)
       }
       expectations[0].fulfill()
     }
     
-    DispatchQueue.global(qos: .utility).async {
+    Task.detached {
       for _ in 0..<16384 {
-        let service: FooService = *container
+        let service: FooService = await container.resolve()
         XCTAssert(service === singleService)
       }
       expectations[1].fulfill()
     }
     
-    DispatchQueue.global(qos: .background).async {
+    Task.detached {
       for _ in 0..<8192 {
-        let service: FooService = *container
+        let service: FooService = await container.resolve()
         XCTAssert(service === singleService)
       }
       expectations[2].fulfill()
     }
 
-    wait(for: expectations, timeout: 15.0)
+    await fulfillment(of: expectations, timeout: 15.0)
   }
   
-  func test04_ResolveRegister() {
-    DISetting.Defaults.multiThread = true
+  func test04_ResolveRegister() async {
     let container = DIContainer()
     
     DISetting.Log.fun = nil
@@ -155,7 +149,7 @@ class DITranquillityTests_Threads: XCTestCase {
       XCTestExpectation(description: "test04_ResolveRegister_3")
     ]
 
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
+    Task.detached {
       usleep(10)
       for i in 0..<1024 {
         container.register(line: i + 1000, FooService.init).lifetime(.prototype)
@@ -163,27 +157,26 @@ class DITranquillityTests_Threads: XCTestCase {
       expectations[0].fulfill()
     }
     
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
+    Task.detached {
       for _ in 0..<4096 {
-        let service: FooService? = *container
+        let service: FooService? = await container.resolve()
         _ = service
       }
       expectations[1].fulfill()
     }
     
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+    Task.detached {
       for _ in 0..<2048 {
-        let service: FooService? = *container
+        let service: FooService? = await container.resolve()
         _ = service
       }
       expectations[2].fulfill()
     }
 
-    wait(for: expectations, timeout: 15.0)
+    await fulfillment(of: expectations, timeout: 15.0)
   }
 
-  func test05_ResolveMainActorPrototype() {
-    DISetting.Defaults.multiThread = true
+  func test05_ResolveMainActorPrototype() async {
     let container = DIContainer()
 
     container.register(TestOtherMainActor.init)
@@ -199,35 +192,34 @@ class DITranquillityTests_Threads: XCTestCase {
       XCTestExpectation(description: "test05_ResolveMainActorPrototype_3")
     ]
 
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
+    Task.detached {
       for _ in 0..<8192 {
-        let service: TestActorClassInjected = container.resolve()
+        let service: TestActorClassInjected = await container.resolve()
         XCTAssertEqual(service.str, "inj")
       }
       expectations[0].fulfill()
     }
 
-    DispatchQueue.main.async {
+    Task.detached { @MainActor in
       for _ in 0..<4096 {
-        let service: TestMainActor = container.resolve()
+        let service: TestMainActor = await container.resolve()
         XCTAssertEqual(service.str, "bar")
       }
       expectations[1].fulfill()
     }
 
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+    Task.detached {
       for _ in 0..<1024 {
-        let service: TestMainActor = container.resolve()
+        let service: TestMainActor = await container.resolve()
         XCTAssertEqual(service.str, "bar")
       }
       expectations[2].fulfill()
     }
 
-    wait(for: expectations, timeout: 5.0)
+    await fulfillment(of: expectations, timeout: 15.0)
   }
 
-  func test06_ResolveMainActorObjectGraph() {
-    DISetting.Defaults.multiThread = true
+  func test06_ResolveMainActorObjectGraph() async {
     let container = DIContainer()
 
     container.register(TestOtherMainActor.init)
@@ -243,35 +235,34 @@ class DITranquillityTests_Threads: XCTestCase {
       XCTestExpectation(description: "test06_ResolveMainActorObjectGraph_3")
     ]
 
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
+    Task.detached {
       for _ in 0..<32768 {
-        let service: TestMainActor = container.resolve()
+        let service: TestMainActor = await container.resolve()
         XCTAssertEqual(service.str, "bar")
       }
       expectations[0].fulfill()
     }
 
-    DispatchQueue.main.async {
+    Task.detached { @MainActor in
       for _ in 0..<16384 {
-        let service: TestMainActor = container.resolve()
+        let service: TestMainActor = await container.resolve()
         XCTAssertEqual(service.str, "bar")
       }
       expectations[1].fulfill()
     }
 
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+    Task.detached {
       for _ in 0..<8192 {
-        let service: TestActorClassInjected = container.resolve()
+        let service: TestActorClassInjected = await container.resolve()
         XCTAssertEqual(service.str, "inj")
       }
       expectations[2].fulfill()
     }
 
-    wait(for: expectations, timeout: 5.0)
+    await fulfillment(of: expectations, timeout: 15.0)
   }
 
-  func test07_ResolvePerContainerAndClean() {
-    DISetting.Defaults.multiThread = true
+  func test07_ResolvePerContainerAndClean() async {
     let container = DIContainer()
 
     container.register(FooService.init)
@@ -284,42 +275,41 @@ class DITranquillityTests_Threads: XCTestCase {
       XCTestExpectation(description: "test07_ResolvePerContainerAndClean_4")
     ]
 
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
+    Task.detached {
       for _ in 0..<32768 {
-        let service: FooService = *container
+        let service: FooService = await container.resolve()
         XCTAssert(service.foo() == "foo")
       }
       expectations[0].fulfill()
     }
 
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
+    Task.detached {
       for _ in 0..<16384 {
-        let service: FooService = *container
+        let service: FooService = await container.resolve()
         XCTAssert(service.foo() == "foo")
       }
       expectations[1].fulfill()
     }
 
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+    Task.detached {
       for _ in 0..<8192 {
-        let service: FooService = *container
+        let service: FooService = await container.resolve()
         XCTAssert(service.foo() == "foo")
       }
       expectations[2].fulfill()
     }
 
-    DispatchQueue.global().async {
+    Task.detached {
       for _ in 0..<16384 {
         container.clean()
       }
       expectations[3].fulfill()
     }
 
-    wait(for: expectations, timeout: 15.0)
+    await fulfillment(of: expectations, timeout: 15.0)
   }
 
-  func test08_ResolvePerContainerMainActorAndClean() {
-    DISetting.Defaults.multiThread = true
+  func test08_ResolvePerContainerMainActorAndClean() async {
     let container = DIContainer()
 
     container.register(TestOtherMainActor.init)
@@ -335,9 +325,9 @@ class DITranquillityTests_Threads: XCTestCase {
       XCTestExpectation(description: "test08_ResolvePerContainerMainActorAndClean_3")
     ]
 
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
+    Task.detached {
       for i in 0..<32768 {
-        let service: TestMainActor = *container
+        let service: TestMainActor = await container.resolve()
         XCTAssert(service.str == "bar")
 
         if i % 13 == 0 {
@@ -347,9 +337,9 @@ class DITranquillityTests_Threads: XCTestCase {
       expectations[0].fulfill()
     }
 
-    DispatchQueue.main.async {
+    Task { @MainActor in
       for i in 0..<16384 {
-        let service: TestMainActor = *container
+        let service: TestMainActor = await container.resolve()
         XCTAssert(service.str == "bar")
 
         if i % 7 == 0 {
@@ -359,9 +349,9 @@ class DITranquillityTests_Threads: XCTestCase {
       expectations[1].fulfill()
     }
 
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+    Task.detached {
       for i in 0..<8192 {
-        let service: TestMainActor = *container
+        let service: TestMainActor = await container.resolve()
         XCTAssert(service.str == "bar")
 
         if i % 5 == 0 {
@@ -371,6 +361,6 @@ class DITranquillityTests_Threads: XCTestCase {
       expectations[2].fulfill()
     }
 
-    wait(for: expectations, timeout: 15.0)
+    await fulfillment(of: expectations, timeout: 15.0)
   }
 }

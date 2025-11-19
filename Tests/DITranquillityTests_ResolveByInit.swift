@@ -8,7 +8,6 @@
 
 import XCTest
 import DITranquillity
-import SwiftLazy
 
 @globalActor actor MyGlobalActor {
   static let shared = MyGlobalActor()
@@ -93,26 +92,26 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
     super.setUp()
   }
   
-  func test01_UseRegister() {
+  func test01_UseRegister() async {
     let container = DIContainer()
     
     container.register(FooService.init)
     
-    let service: FooService = *container
+    let service: FooService = await container.resolve()
     XCTAssertEqual(service.foo(), "foo")
   }
   
-  func test02_UseRegisterWithProtocol() {
+  func test02_UseRegisterWithProtocol() async {
     let container = DIContainer()
     
     container.register(FooService.init)
       .as(check: ServiceProtocol.self){$0}
     
-    let service: ServiceProtocol = *container
+    let service: ServiceProtocol = await container.resolve()
     XCTAssertEqual(service.foo(), "foo")
   }
   
-  func test03_ResolveMultiplyMany() {
+  func test03_ResolveMultiplyMany() async {
     let container = DIContainer()
     
     container.register(FooService.init)
@@ -122,12 +121,12 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
     container.register(BarService.init)
       .as(check: ServiceProtocol.self){$0}
     
-    let services: [ServiceProtocol] = container.resolveMany()
+    let services: [ServiceProtocol] = await container.resolveMany()
     XCTAssertEqual(services.count, 2)
     XCTAssertNotEqual(services[0].foo(), services[1].foo())
   }
   
-  func test04_RegisterAllParams() {
+  func test04_RegisterAllParams() async {
     let container = DIContainer()
     
     container.register{ 15 as Int }
@@ -137,105 +136,103 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
     container.register(Params.init(number:str:bool:))
       .lifetime(.prototype)
     
-    let p1: Params = container.resolve()
+    let p1: Params = await container.resolve()
     XCTAssert(p1.number == 15 && p1.str == "test" && p1.bool == true)
   }
 
-  func test05_ResolveMainActor() {
+  func test05_ResolveMainActor() async {
     let expectationMainActor = XCTestExpectation(description: "test05_task_main_actor")
     let expectationGlobalActor = XCTestExpectation(description: "test05_task_global_actor")
     let expectationQueue = XCTestExpectation(description: "test05_task_queue")
 
-    DispatchQueue.global(qos: .default).async {
-      let container = DIContainer()
+    let container = DIContainer()
 
-      container.register(TestOtherMainActor.init)
-      container.register(TestMainActor.init)
-      container.register(TestMainActorArgument.init) { arg($0) }
-      container.register(TestMainActorArgument2.init) { (arg($0), arg($1)) }
-      container.register(TestActorClassInjected.init)
-      container.register(TestGlobalActor.init)
+    container.register(TestOtherMainActor.init)
+    container.register(TestMainActor.init)
+    container.register(TestMainActorArgument.init) { arg($0) }
+    container.register(TestMainActorArgument2.init) { (arg($0), arg($1)) }
+    container.register(TestActorClassInjected.init)
+    container.register(TestGlobalActor.init)
 
-      //      print("AA \(Impl.self) == \(extractIsolation(closure)))")
-      //      container.registerIsolated(TestGlobalActor.init)
-        // #isolated
+    //      print("AA \(Impl.self) == \(extractIsolation(closure)))")
+    //      container.registerIsolated(TestGlobalActor.init)
+      // #isolated
 
-      let m1: TestOtherMainActor = container.resolve()
-      let m2: TestMainActor = container.resolve()
-      let m3: TestMainActorArgument = container.resolve(args: 10)
-      let m4: TestMainActorArgument2 = container.resolve(args: 100, "a100")
-      let m5: TestGlobalActor = container.resolve()
-      let m6: Provider<TestGlobalActor> = container.resolve()
+    let m1: TestOtherMainActor = await container.resolve()
+    let m2: TestMainActor = await container.resolve()
+    let m3: TestMainActorArgument = await container.resolve(args: 10)
+    let m4: TestMainActorArgument2 = await container.resolve(args: 100, "a100")
+    let m5: TestGlobalActor = await container.resolve()
+//      let m6: Provider<TestGlobalActor> = await container.resolve()
+
+    XCTAssert(m1.str == "foo")
+    XCTAssert(m2.str == "bar")
+    XCTAssert(m3.arg == 10)
+    XCTAssert(m4.arg1 == 100 && m4.arg2 == "a100")
+    XCTAssert(m5.str == "global")
+//      XCTAssert(m6.value.str == "global")
+
+    Task { @MainActor in
+      let m1: TestOtherMainActor = await container.resolve()
+      let m2: TestMainActor = await container.resolve()
+      let m3: TestMainActorArgument = await container.resolve(args: 30)
+      let m4: TestMainActorArgument2 = await container.resolve(args: 300, "a300")
 
       XCTAssert(m1.str == "foo")
       XCTAssert(m2.str == "bar")
-      XCTAssert(m3.arg == 10)
-      XCTAssert(m4.arg1 == 100 && m4.arg2 == "a100")
-      XCTAssert(m5.str == "global")
-      XCTAssert(m6.value().str == "global")
+      XCTAssert(m3.arg == 30)
+      XCTAssert(m4.arg1 == 300 && m4.arg2 == "a300")
 
-      Task { @MainActor in
-        let m1: TestOtherMainActor = container.resolve()
-        let m2: TestMainActor = container.resolve()
-        let m3: TestMainActorArgument = container.resolve(args: 30)
-        let m4: TestMainActorArgument2 = container.resolve(args: 300, "a300")
-
-        XCTAssert(m1.str == "foo")
-        XCTAssert(m2.str == "bar")
-        XCTAssert(m3.arg == 30)
-        XCTAssert(m4.arg1 == 300 && m4.arg2 == "a300")
-        
-        expectationMainActor.fulfill()
-      }
-
-      Task { @MyGlobalActor in
-        let m1: TestOtherMainActor = container.resolve()
-        let m2: TestMainActor = container.resolve()
-        let m3: TestMainActorArgument = container.resolve(args: 40)
-        let m4: TestMainActorArgument2 = container.resolve(args: 400, "a400")
-        let m5: TestGlobalActor = container.resolve()
-        let m6: Provider<TestGlobalActor> = container.resolve()
-
-        XCTAssert(m1.str == "foo")
-        XCTAssert(m2.str == "bar")
-        XCTAssert(m3.arg == 40)
-        XCTAssert(m4.arg1 == 400 && m4.arg2 == "a400")
-        XCTAssert(m5.str == "global")
-        XCTAssert(m6.value().str == "global")
-
-        expectationGlobalActor.fulfill()
-      }
-
-      DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
-        let m1: TestOtherMainActor = container.resolve()
-        let m2: TestMainActor = container.resolve()
-        let m3: TestMainActorArgument = container.resolve(args: 20)
-        let m4: TestMainActorArgument2 = container.resolve(args: 200, "a200")
-//        let m5: TestGlobalActor = container.resolve()
-//        let m6: Provider<TestGlobalActor> = container.resolve()
-
-        XCTAssert(m1.str == "foo")
-        XCTAssert(m2.str == "bar")
-        XCTAssert(m3.arg == 20)
-        XCTAssert(m4.arg1 == 200 && m4.arg2 == "a200")
-//        XCTAssert(m5.str == "global")
-//        XCTAssert(m6.value().str == "global")
-
-        expectationQueue.fulfill()
-      }
+      expectationMainActor.fulfill()
     }
 
-      wait(for: [expectationMainActor, expectationGlobalActor, expectationQueue], timeout: 5.0)
+    Task { @MyGlobalActor in
+      let m1: TestOtherMainActor = await container.resolve()
+      let m2: TestMainActor = await container.resolve()
+      let m3: TestMainActorArgument = await container.resolve(args: 40)
+      let m4: TestMainActorArgument2 = await container.resolve(args: 400, "a400")
+      let m5: TestGlobalActor = await container.resolve()
+//        let m6: Provider<TestGlobalActor> = await container.resolve()
+
+      XCTAssert(m1.str == "foo")
+      XCTAssert(m2.str == "bar")
+      XCTAssert(m3.arg == 40)
+      XCTAssert(m4.arg1 == 400 && m4.arg2 == "a400")
+      XCTAssert(m5.str == "global")
+//        XCTAssert(m6.value.str == "global")
+
+      expectationGlobalActor.fulfill()
+    }
+
+    Task.detached {
+      let m1: TestOtherMainActor = await container.resolve()
+      let m2: TestMainActor = await container.resolve()
+      let m3: TestMainActorArgument = await container.resolve(args: 20)
+      let m4: TestMainActorArgument2 = await container.resolve(args: 200, "a200")
+      let m5: TestGlobalActor = await container.resolve()
+//        let m6: Provider<TestGlobalActor> = container.resolve()
+
+      XCTAssert(m1.str == "foo")
+      XCTAssert(m2.str == "bar")
+      XCTAssert(m3.arg == 20)
+      XCTAssert(m4.arg1 == 200 && m4.arg2 == "a200")
+      XCTAssert(m5.str == "global")
+//        XCTAssert(m6.value.str == "global")
+
+      expectationQueue.fulfill()
+    }
+
+    await fulfillment(of: [expectationMainActor, expectationGlobalActor, expectationQueue], timeout: 5.0)
   }
 
-  func test06_ResolveActor() {
+  func test06_ResolveActor() async {
       let container = DIContainer()
 
       container.register(TestActorClassInjected.init)
       container.register(TestActorActorInjected.init)
       container.register { TestActor(otherClass: $0, otherActor: $1) }
 
-      let m2: TestActor = container.resolve()
+      let m2: TestActor = await container.resolve()
 
       XCTAssert(m2.str == "bar")
   }

@@ -116,8 +116,6 @@ router.start()
 .................................................
 /// Application Code
 
-import SwiftLazy
-
 class LoginRouter {
     let rootViewController = UINavigationController()
     private let loginPresenterProvider: Provider<LoginPresenter>

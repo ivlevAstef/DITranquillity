@@ -25,7 +25,7 @@ protocol SpecificType {
 
   static func make(by obj: Any?) -> Self
 
-  init(_ container: DIContainer, _ factory: @escaping (_ isolation: Actor?, _ arguments: AnyArguments?) -> Any?)
+  init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) async -> Any?)
 }
 
 extension SpecificType {
@@ -47,7 +47,7 @@ extension SpecificType {
 
   static func make(by obj: Any?) -> Self { return obj as! Self }
 
-  init(_ container: DIContainer, _ factory: @escaping (_ isolation: Actor?, _ arguments: AnyArguments?) -> Any?) {
+  init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) async -> Any?) {
     fatalError("Unsupport")
   }
 }

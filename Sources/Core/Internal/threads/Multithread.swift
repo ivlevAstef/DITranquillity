@@ -12,6 +12,9 @@ import Glibc
 import Darwin
 #endif
 
+import Foundation
+import class Dispatch.DispatchSemaphore
+
 /// taken from: https://github.com/mattgallagher/CwlUtils/blob/master/Sources/CwlUtils/CwlMutex.swift?ts=3
 final class PThreadMutex {
     private var unsafeMutex = pthread_mutex_t()
@@ -41,13 +44,9 @@ final class PThreadMutex {
     }
 
     func sync<R>(execute: () -> R) -> R {
-      if DISetting.Defaults.multiThread {
-        pthread_mutex_lock(&unsafeMutex)
-        let result = execute()
-        pthread_mutex_unlock(&unsafeMutex)
-        return result
-      } else {
-        return execute()
-      }
+      pthread_mutex_lock(&unsafeMutex)
+      let result = execute()
+      pthread_mutex_unlock(&unsafeMutex)
+      return result
     }
 }

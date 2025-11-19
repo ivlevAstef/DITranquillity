@@ -9,7 +9,6 @@
 
 import XCTest
 import DITranquillity
-import SwiftLazy
 
 private class LazyCycleA {
   let b: LazyCycleB
@@ -78,9 +77,9 @@ private class Provider3InjectA {
 private class ProviderInitProvider1 {
   private let provider: Provider<ProviderInitProvider2>
   private let value: ProviderInitProvider2
-  init(_ provider: Provider<ProviderInitProvider2>) {
+  init(_ provider: Provider<ProviderInitProvider2>) async {
     self.provider = provider
-    self.value = provider.value
+    self.value = await provider.value
   }
 }
 private class ProviderInitProvider2 {
@@ -118,54 +117,42 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
     super.setUp()
   }
 
-  func test01_Lazy() {
+  func test01_Lazy() async {
     let container = DIContainer()
 
     container.register(FooService.init)
 
-    let service: Lazy<FooService> = *container
+    let service: Lazy<FooService> = await container.resolve()
 
-    XCTAssert(service.description.contains("nil"))
+    let wasMade = await service.wasMade
+    XCTAssert(!wasMade)
 
-    XCTAssertEqual(service.value.foo(), "foo")
+    let value = await service.value
+    XCTAssertEqual(value.foo(), "foo")
 
-    XCTAssert(service.description.contains("FooService"))
+    let wasMade2 = await service.wasMade
+    XCTAssert(wasMade2)
 
-    XCTAssert(service.value === service.value)
+    let value2 = await service.value
+    XCTAssert(value === value2)
   }
   
 
-  func test02_Provide() {
+  func test02_Provide() async {
     let container = DIContainer()
 
     container.register(FooService.init)
 
-    let service: Provider<FooService> = *container
+    let service: Provider<FooService> = await container.resolve()
 
-    XCTAssertEqual(service.value.foo(), "foo")
+    let value = await service.value
+    XCTAssertEqual(value.foo(), "foo")
 
-    XCTAssert(service.description.contains("FooService"))
-
-    XCTAssert(service.value !== service.value)
+    let value2 = await service.value
+    XCTAssert(value !== value2)
   }
 
-  func test03_LazyMany() {
-    let container = DIContainer()
-
-    container.register(FooService.init)
-      .as(ServiceProtocol.self)
-
-    container.register(BarService.init)
-      .as(ServiceProtocol.self)
-
-    let service: Lazy<[ServiceProtocol]> = Lazy(many(*container))
-
-    XCTAssert(service.description.contains("nil"))
-
-    XCTAssertEqual(service.value.count, 2)
-  }
-
-  func test04_ProviderMany() {
+  func test03_LazyMany() async {
     let container = DIContainer()
 
     container.register(FooService.init)
@@ -174,12 +161,31 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
     container.register(BarService.init)
       .as(ServiceProtocol.self)
 
-    let service: Provider<[ServiceProtocol]> = Provider(many(*container))
+    let service: Lazy<[ServiceProtocol]> = Lazy { await many(container.resolve()) }
 
-    XCTAssertEqual(service.value.count, 2)
+    let wasMade = await service.wasMade
+    XCTAssert(!wasMade)
+
+    let value = await service.value
+    XCTAssertEqual(value.count, 2)
   }
 
-  func test05_CycleTest() {
+  func test04_ProviderMany() async {
+    let container = DIContainer()
+
+    container.register(FooService.init)
+      .as(ServiceProtocol.self)
+
+    container.register(BarService.init)
+      .as(ServiceProtocol.self)
+
+    let service: Provider<[ServiceProtocol]> = Provider { await many(container.resolve()) }
+
+    let value = await service.value
+    XCTAssertEqual(value.count, 2)
+  }
+
+  func test05_CycleTest() async {
     let container = DIContainer()
 
     container.register(LazyCycleA.init)
@@ -187,14 +193,16 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
     container.register(LazyCycleB.init)
       .lifetime(.objectGraph)
 
-    let lazyA: LazyCycleA = *container
+    let lazyA: LazyCycleA = await container.resolve()
 
-    XCTAssert(lazyA.b.a.description.contains("nil"))
+    let wasMade = await lazyA.b.a.wasMade
+    XCTAssert(!wasMade)
 
-    XCTAssert(lazyA.b.a.value === lazyA)
+    let value = await lazyA.b.a.value
+    XCTAssert(value === lazyA)
   }
 
-  func test06_LazyCycleTest() {
+  func test06_LazyCycleTest() async {
     let container = DIContainer()
 
     container.register(LazyCycleA.init)
@@ -204,14 +212,16 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
 
     XCTAssert(container.makeGraph().checkIsValid(checkGraphCycles: true))
 
-    let lazyA: LazyCycleA = *container
+    let lazyA: LazyCycleA = await container.resolve()
 
-    XCTAssert(lazyA.b.a.description.contains("nil"))
+    let wasMade = await lazyA.b.a.wasMade
+    XCTAssert(!wasMade)
 
-    XCTAssert(lazyA.b.a.value === lazyA)
+    let value = await lazyA.b.a.value
+    XCTAssert(value === lazyA)
   }
 
-  func test07_ProvideCycleTest() {
+  func test07_ProvideCycleTest() async {
     let container = DIContainer()
 
     container.register(ProviderCycleA.init)
@@ -221,41 +231,51 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
 
     XCTAssert(container.makeGraph().checkIsValid(checkGraphCycles: true))
 
-    let providerA: ProviderCycleA = *container
+    let providerA: ProviderCycleA = await container.resolve()
 
-    XCTAssert(providerA.b.a.value === providerA)
-    XCTAssert(providerA.b.a.value === providerA.b.a.value)
+    let value1 = await providerA.b.a.value
+    XCTAssert(value1 === providerA)
+    let value2 = await providerA.b.a.value
+    let value3 = await providerA.b.a.value
+    XCTAssert(value2 === value3)
   }
 
-  func test08_LazyOptional() {
+  func test08_LazyOptional() async {
     let container = DIContainer()
 
     container.register(FooService.init)
 
-    let service: Lazy<FooService?> = *container
+    let service: Lazy<FooService?> = await container.resolve()
 
-    XCTAssert(service.description.contains("nil"))
+    let wasMade = await service.wasMade
+    XCTAssert(!wasMade)
 
-    XCTAssertEqual(service.value?.foo(), "foo")
+    let value = await service.value
+    XCTAssertEqual(value?.foo(), "foo")
 
-    XCTAssert(service.description.contains("FooService"))
+    let wasMade2 = await service.wasMade
+    XCTAssert(wasMade2)
 
-    XCTAssert(service.value === service.value)
+    let value2 = await service.value
+    XCTAssert(value === value2)
   }
 
-  func test08_LazyOptionalNil() {
+  func test08_LazyOptionalNil() async {
     let container = DIContainer()
 
-    let service: Lazy<FooService?> = *container
+    let service: Lazy<FooService?> = await container.resolve()
 
-    XCTAssert(service.description.contains("nil"))
+    let wasMade = await service.wasMade
+    XCTAssert(!wasMade)
 
-    XCTAssertEqual(service.value?.foo(), nil)
+    let value = await service.value
+    XCTAssertEqual(value?.foo(), nil)
 
-    XCTAssert(service.description.contains("nil"))
+    let wasMade2 = await service.wasMade
+    XCTAssert(wasMade2)
   }
 
-  func test09_LazyInject() {
+  func test09_LazyInject() async {
     let container = DIContainer()
 
     container.register(FooService.init)
@@ -264,12 +284,13 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
     container.register(LazyInjectA.init)
       .injection { $0.inject = $1 }
 
-    let test: LazyInjectA = *container
+    let test: LazyInjectA = await container.resolve()
 
-    XCTAssertEqual(test.inject.value.foo(), "foo")
+    let value = await test.inject.value
+    XCTAssertEqual(value.foo(), "foo")
   }
 
-  func test10_ProviderInject() {
+  func test10_ProviderInject() async {
     let container = DIContainer()
 
     container.register(FooService.init)
@@ -278,12 +299,13 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
     container.register(ProviderInjectA.init)
       .injection { $0.inject = $1 }
 
-    let test: ProviderInjectA = *container
+    let test: ProviderInjectA = await container.resolve()
 
-    XCTAssertEqual(test.inject.value.foo(), "foo")
+    let value = await test.inject.value
+    XCTAssertEqual(value.foo(), "foo")
   }
 
-  func test11_Provider1() {
+  func test11_Provider1() async {
     let container = DIContainer()
 
     container.register{ A1(arg($0)) }
@@ -291,14 +313,15 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
     container.register(Provider1InjectA.init)
       .injection(\.inject)
 
-    let test: Provider1InjectA = *container
+    let test: Provider1InjectA = await container.resolve()
 
-
-    XCTAssertEqual(test.inject.value(10).value1, 10)
-    XCTAssertEqual(test.inject.value(12).value1, 12)
+    let value1 = await test.inject.value(10).value1
+    let value2 = await test.inject.value(12).value1
+    XCTAssertEqual(value1, 10)
+    XCTAssertEqual(value2, 12)
   }
 
-  func test11_Provider2() {
+  func test11_Provider2() async {
     let container = DIContainer()
 
     container.register{ A2(arg($0), arg($1)) }
@@ -306,14 +329,14 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
     container.register(Provider2InjectA.init)
       .injection(\.inject)
 
-    let test: Provider2InjectA = *container
+    let test: Provider2InjectA = await container.resolve()
 
-    let a = test.inject.value(10, 15.0)
+    let a = await test.inject.value(10, 15.0)
     XCTAssertEqual(a.value1, 10)
     XCTAssertEqual(a.value2, 15.0)
   }
 
-  func test11_Provider3() {
+  func test11_Provider3() async {
     let container = DIContainer()
 
     container.register{ A3(arg($0), arg($1), arg($2)) }
@@ -321,16 +344,15 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
     container.register(Provider3InjectA.init)
       .injection(\.inject)
 
-    let test: Provider3InjectA = *container
+    let test: Provider3InjectA = await container.resolve()
 
-
-    let a = test.inject.value(11, 12.0, "a")
+    let a = await test.inject.value(11, 12.0, "a")
     XCTAssertEqual(a.value1, 11)
     XCTAssertEqual(a.value2, 12.0)
     XCTAssertEqual(a.value3, "a")
   }
 
-  func test12_provider_init() {
+  func test12_provider_init() async {
     let container = DIContainer()
 
     container.register(ProviderInitProvider1.init)
@@ -344,111 +366,104 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
     container.register(ProviderInitProviderStarter.init)
       .lifetime(.objectGraph)
 
-    let test: ProviderInitProviderStarter = *container
+    let test: ProviderInitProviderStarter = await container.resolve()
     test.clean()
 
     XCTAssertEqual(providerInitProvider1InitDeinitBalance, 0)
   }
 
-    func test13_provider_multithread() {
-        DISetting.Defaults.multiThread = true
-        let container = DIContainer()
-        DISetting.Log.fun = nil
+  func test13_provider_multithread() async {
+    let container = DIContainer()
+    DISetting.Log.fun = nil
 
-        container.register(FooService.init)
-        
-        let waiter = DispatchSemaphore(value: 0)
-        DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
-            for _ in 0..<4096 {
-                let service: Provider<FooService> = *container
-                _ = service.value
-            }
-            waiter.signal()
-        }
+    container.register(FooService.init)
 
-        DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
-            for _ in 0..<2048 {
-                let service: Provider<FooService> = *container
-                _ = service.value
-            }
-            waiter.signal()
-        }
-
-        waiter.wait()
-        waiter.wait()
-
-        DISetting.Defaults.multiThread = false
+    let expectations = [
+      XCTestExpectation(description: "test13_provider_multithread_1"),
+      XCTestExpectation(description: "test13_provider_multithread_2")
+    ]
+    Task.detached {
+      for _ in 0..<4096 {
+        let service: Provider<FooService> = await container.resolve()
+        _ = await service.value
+      }
+      expectations[0].fulfill()
     }
 
-    func test15_lazy_multithread() {
-        DISetting.Defaults.multiThread = true
-        let container = DIContainer()
-        DISetting.Log.fun = nil
-
-        container.register(FooService.init)
-
-        let waiter = DispatchSemaphore(value: 0)
-        DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
-            for _ in 0..<4096 {
-                let service: Lazy<FooService> = *container
-                _ = service.value
-            }
-            waiter.signal()
-        }
-
-        DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
-            for _ in 0..<2048 {
-                let service: Lazy<FooService> = *container
-                _ = service.value
-            }
-            waiter.signal()
-        }
-
-        waiter.wait()
-        waiter.wait()
-
-        DISetting.Defaults.multiThread = false
+    Task.detached {
+      for _ in 0..<2048 {
+        let service: Provider<FooService> = await container.resolve()
+        _ = await service.value
+      }
+      expectations[1].fulfill()
     }
 
-    func test16_lazy_one_and_clear_multithread() {
-        DISetting.Defaults.multiThread = true
-        let container = DIContainer()
-        DISetting.Log.fun = nil
+    await fulfillment(of: expectations, timeout: 1.0)
+  }
 
-        container.register(FooService.init)
-        let service: Lazy<FooService> = *container
+  func test15_lazy_multithread() async {
+    let container = DIContainer()
+    DISetting.Log.fun = nil
 
-        let waiter = DispatchSemaphore(value: 0)
-        DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
-            for _ in 0..<4096 {
-                _ = service.value
-            }
-            waiter.signal()
-        }
+    container.register(FooService.init)
 
-        DispatchQueue.global(qos: DispatchQoS.QoSClass.utility).async {
-            for _ in 0..<4096 {
-                service.clear()
-            }
-            waiter.signal()
-        }
-
-        DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
-            for _ in 0..<2048 {
-                _ = service.value
-            }
-            waiter.signal()
-        }
-
-        let timeout = DispatchTime.now() + 5
-
-        let result1 = waiter.wait(timeout: timeout)
-        let result2 = waiter.wait(timeout: timeout)
-        let result3 = waiter.wait(timeout: timeout)
-
-        XCTAssert(result1 != .timedOut && result2 != .timedOut && result3 != .timedOut, "Deadlock")
-
-        DISetting.Defaults.multiThread = false
+    let expectations = [
+      XCTestExpectation(description: "test15_lazy_multithread_1"),
+      XCTestExpectation(description: "test15_lazy_multithread_2")
+    ]
+    Task.detached {
+      for _ in 0..<4096 {
+        let service: Lazy<FooService> = await container.resolve()
+        _ = await service.value
+      }
+      expectations[0].fulfill()
     }
+
+    Task.detached {
+      for _ in 0..<2048 {
+        let service: Lazy<FooService> = await container.resolve()
+        _ = await service.value
+      }
+      expectations[1].fulfill()
+    }
+
+    await fulfillment(of: expectations, timeout: 1)
+  }
+
+  func test16_lazy_one_and_clear_multithread() async {
+    let container = DIContainer()
+    DISetting.Log.fun = nil
+
+    container.register(FooService.init)
+    let service: Lazy<FooService> = await container.resolve()
+
+    let expectations = [
+      XCTestExpectation(description: "test16_lazy_one_and_clear_multithread_1"),
+      XCTestExpectation(description: "test16_lazy_one_and_clear_multithread_2"),
+      XCTestExpectation(description: "test16_lazy_one_and_clear_multithread_3")
+    ]
+    Task.detached {
+      for _ in 0..<4096 {
+        _ = await service.value
+      }
+      expectations[0].fulfill()
+    }
+
+    Task.detached {
+      for _ in 0..<4096 {
+        await service.clear()
+      }
+      expectations[1].fulfill()
+    }
+
+    Task.detached {
+      for _ in 0..<2048 {
+        _ = await service.value
+      }
+      expectations[2].fulfill()
+    }
+
+    await fulfillment(of: expectations, timeout: 5.0)
+  }
 
 }

@@ -25,36 +25,15 @@ extension DIContainer {
     line: Int = #line,
     _ closure: @escaping @isolated(any) (repeat each P) -> Impl
   ) -> DIComponentBuilder<Impl> {
-    if let actor = extractIsolation(closure), actor !== MainActor.shared {
-      return register(file, line, MethodMaker.eachMakeIsolated(actor: actor, by: closure, by: closure))
-    }
     return register(file, line, MethodMaker.eachMake(by: closure))
   }
-}
 
-// MARK: Main Actor
-
-extension DIContainer {
-  ///
-  /// Declaring a new component with initial method for MainActor class.
-  /// Using:
-  /// ```
-  /// container.register{ @MainActor in YourMainActorClass(p0:$0,p1:$1, ...) }
-  /// ```
-  /// or short:
-  /// ```
-  /// container.register(YourMainActorClass.init)
-  /// ```
-  ///
-  /// - Parameter closure: initial method for MainActor. Must return type declared at registration.
-  /// - Returns: component builder, to configure the component.
   @discardableResult
-  public func register<Impl, each P>(
-    isolation: isolated (any Actor)? = #isolation,
+  public func register<Impl,each P>(
     file: String = #file,
     line: Int = #line,
-    _ closure: @escaping @MainActor(repeat each P) -> Impl,
+    _ closure: @escaping @isolated(any) (repeat each P) async -> Impl
   ) -> DIComponentBuilder<Impl> {
-    return register(file, line, MethodMaker.eachMakeMainActor(by: closure))
+    return register(file, line, MethodMaker.eachMake(by: closure))
   }
 }

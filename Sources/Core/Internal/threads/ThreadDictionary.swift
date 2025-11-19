@@ -12,18 +12,10 @@ final class ThreadDictionary {
   private nonisolated(unsafe) static var oneThreadDict: [String: Any] = [:]
 
   static func insert(key: String, obj: Any) {
-    if DISetting.Defaults.multiThread {
-      Thread.current.threadDictionary[key] = obj
-    } else {
-      oneThreadDict[key] = obj
-    }
+    Thread.current.threadDictionary[key] = obj
   }
 
   static func get(key: String) -> Any? {
-    if DISetting.Defaults.multiThread {
-      return Thread.current.threadDictionary[key]
-    } else {
-      return oneThreadDict[key]
-    }
+    return Thread.current.threadDictionary[key]
   }
 }
