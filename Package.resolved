@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ivlevAstef/SwiftLazy.git",
       "state" : {
-        "revision" : "a2f1838fb7afe3a9b78624adb416cbc8ec303388",
-        "version" : "1.6.0"
+        "revision" : "1d1cfb4c8552fa2d2bf83cabc99ac9e60171d874",
+        "version" : "1.6.1"
       }
     }
   ],
