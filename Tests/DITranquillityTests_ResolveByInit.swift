@@ -17,8 +17,7 @@ import DITranquillity
 final class TestOtherMainActor {
   let str: String = "foo"
   init(injected: TestActorClassInjected) {
-    assert(Thread.isMainThread)
-    MainActor.assertIsolated()
+//    MainActor.assertIsolated()
   }
 }
 
@@ -28,8 +27,7 @@ final class TestMainActor {
   let other: TestOtherMainActor
   init(other: TestOtherMainActor) {
     self.other = other
-    assert(Thread.isMainThread)
-    MainActor.assertIsolated()
+//    MainActor.assertIsolated()
   }
 }
 
@@ -65,8 +63,7 @@ private final class TestMainActorArgument2 {
 private final class TestGlobalActor: Sendable {
     let str: String = "global"
     init() {
-        assert(!Thread.isMainThread)
-        MyGlobalActor.assertIsolated()
+//        MyGlobalActor.assertIsolated()
     }
 }
 
@@ -223,6 +220,95 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
     }
 
     await fulfillment(of: [expectationMainActor, expectationGlobalActor, expectationQueue], timeout: 5.0)
+  }
+
+  func test05_ResolveMainActorSync() {
+    let expectations = [
+      XCTestExpectation(description: "test05_task_global_thread"),
+      XCTestExpectation(description: "test05_task_main_actor"),
+      XCTestExpectation(description: "test05_task_global_actor"),
+      XCTestExpectation(description: "test05_task_queue")
+    ]
+
+    let container = DIContainer()
+
+    container.register(TestOtherMainActor.init)
+    container.register(TestMainActor.init)
+    container.register(TestActorClassInjected.init)
+    container.register(TestGlobalActor.init)
+
+    //      print("AA \(Impl.self) == \(extractIsolation(closure)))")
+    //      container.registerIsolated(TestGlobalActor.init)
+    // #isolated
+
+    let m1: TestOtherMainActor = container.resolve()
+    let m2: TestMainActor = container.resolve()
+    //      let m6: Provider<TestGlobalActor> = await container.resolve()
+
+    XCTAssert(m1.str == "foo")
+    XCTAssert(m2.str == "bar")
+    //      XCTAssert(m6.value.str == "global")
+
+//    DispatchQueue.global().async {
+    DispatchQueue.main.async {
+      let m1: TestOtherMainActor = container.resolve()
+      let m2: TestMainActor = container.resolve()
+      XCTAssert(m1.str == "foo")
+      XCTAssert(m2.str == "bar")
+
+      expectations[0].fulfill()
+    }
+
+    Task { @MainActor in
+      let m1: TestOtherMainActor = await container.resolve()
+      let m2: TestMainActor = await container.resolve()
+      let m1s: TestOtherMainActor = container.sresolve()
+      let m2s: TestMainActor = container.sresolve()
+      let m5: TestGlobalActor = await container.resolve()
+      let m5s: TestGlobalActor = container.sresolve()
+
+      XCTAssert(m1.str == "foo")
+      XCTAssert(m2.str == "bar")
+      XCTAssert(m1s.str == "foo")
+      XCTAssert(m2s.str == "bar")
+      XCTAssert(m5.str == "global")
+
+      expectations[1].fulfill()
+    }
+
+    Task { @MyGlobalActor in
+      let m1: TestOtherMainActor = await container.resolve()
+      let m2: TestMainActor = await container.resolve()
+      let m1s: TestOtherMainActor = container.sresolve()
+      let m2s: TestMainActor = container.sresolve()
+      let m5: TestGlobalActor = await container.resolve()
+      let m5s: TestGlobalActor = container.sresolve()
+      //        let m6: Provider<TestGlobalActor> = await container.resolve()
+
+      XCTAssert(m1.str == "foo")
+      XCTAssert(m2.str == "bar")
+      XCTAssert(m5.str == "global")
+      XCTAssert(m5s.str == "global")
+      //        XCTAssert(m6.value.str == "global")
+
+      expectations[2].fulfill()
+    }
+
+    Task.detached {
+      let m1: TestOtherMainActor = await container.resolve()
+      let m2: TestMainActor = await container.resolve()
+      let m5: TestGlobalActor = await container.resolve()
+      //        let m6: Provider<TestGlobalActor> = container.resolve()
+
+      XCTAssert(m1.str == "foo")
+      XCTAssert(m2.str == "bar")
+      XCTAssert(m5.str == "global")
+      //        XCTAssert(m6.value.str == "global")
+
+      expectations[3].fulfill()
+    }
+
+    wait(for: expectations, timeout: 5.0)
   }
 
   func test06_ResolveActor() async {

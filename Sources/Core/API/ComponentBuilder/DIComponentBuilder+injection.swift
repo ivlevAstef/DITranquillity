@@ -21,7 +21,7 @@ extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func injection(_ method: @escaping (Impl) -> ()) -> Self {
-    component.append(injection: MethodMaker.eachMake(useObject: true, by: method), cycle: false)
+    component.append(injection: MethodMaker.asyncEachMake(useObject: true, by: method), cycle: false)
     return self
   }
 
@@ -57,7 +57,7 @@ extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func injection<Property>(name: String? = nil, cycle: Bool = false, _ method: @escaping (Impl,Property) -> ()) -> Self {
-    component.append(injection: MethodMaker.eachMake(useObject: true, [nil, name], by: method), cycle: cycle)
+    component.append(injection: MethodMaker.asyncEachMake(useObject: true, [nil, name], by: method), cycle: cycle)
     return self
   }
 
@@ -121,6 +121,24 @@ extension DIComponentBuilder {
     return self
   }
 
+  /// Function for appending an injection method
+  ///
+  /// Using:
+  /// ```
+  /// container.register(YourClass.self)
+  ///   .injection { yourClass, p0, p1,... in yourClass.yourMethod(p0, p1, ...) }
+  /// ```
+  ///
+  /// - Parameters:
+  ///   - method: Injection method. First input argument is the always created object.
+  /// - Returns: Self
+  @discardableResult
+  public func injection<each P>(_ method: @escaping @isolated(any) (Impl, repeat each P) -> Void) -> Self {
+    if let isolation = extractIsolation(method), isolation !== MainActor.shared {
+      log(.warning, msg: "Library unsupport correct resolve @globalActor injection methods. use resolve carefully.")
+    }
+    return append(injection: MethodMaker.asyncEachMake(useObject: true, by: method))
+  }
 
   /// Function for appending an injection method which is always executed at end of a object creation.
   /// Using:
@@ -134,7 +152,12 @@ extension DIComponentBuilder {
   /// - Returns: Self
   @discardableResult
   public func postInit(_ method: @escaping (Impl) -> ()) -> Self {
-    component.postInit = MethodMaker.eachMake(useObject: true, by: method)
+    component.postInit = MethodMaker.asyncEachMake(useObject: true, by: method)
+    return self
+  }
+
+  private func append(injection signature: MethodSignature) -> Self {
+    component.append(injection: signature, cycle: false)
     return self
   }
 }

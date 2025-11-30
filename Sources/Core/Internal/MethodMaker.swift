@@ -37,8 +37,61 @@ private final class EachMaker: @unchecked Sendable {
   }
 }
 
+// MARK: Sync
+
 extension MethodMaker {
-  static func eachMake<each P, R>(
+  static func syncEachMake<each P, R>(
+    useObject: Bool = false,
+    _ names: [String?]? = nil,
+    by f: @escaping (repeat each P) -> R) -> MethodSignature
+  {
+    let types = EachTypes()
+    repeat types.append((each P).self)
+    if useObject {
+      types.useObject()
+    }
+
+    return MethodSignature(types.result, names) { params in
+      let maker = EachMaker(params: params)
+      return f(repeat maker.make() as each P)
+    }
+  }
+
+  static func syncEachMake<P0, each P, M0, R>(
+    by f: @escaping (P0, repeat each P) -> R,
+    modificator: @escaping (M0) -> P0) -> MethodSignature
+  {
+    let types = EachTypes()
+    types.append(M0.self)
+    repeat types.append((each P).self)
+
+    return MethodSignature(types.result, nil) { params in
+      let maker = EachMaker(params: params)
+      return f(modificator(maker.make()), repeat maker.make() as each P)
+    }
+  }
+
+  static func syncEachMake<P0, P1, each P, M0, M1, R>(
+    by f: @escaping (P0, P1, repeat each P) -> R,
+    modificator: @escaping (M0, M1) -> (P0, P1)) -> MethodSignature
+  {
+    let types = EachTypes()
+    types.append(M0.self)
+    types.append(M1.self)
+    repeat types.append((each P).self)
+
+    return MethodSignature(types.result, nil) { params in
+      let maker = EachMaker(params: params)
+      let modifyResult = modificator(maker.make(), maker.make())
+      return f(modifyResult.0, modifyResult.1, repeat maker.make() as each P)
+    }
+  }
+}
+
+// MARK: Async
+
+extension MethodMaker {
+  static func asyncEachMake<each P, R>(
     useObject: Bool = false,
     _ names: [String?]? = nil,
     by f: @escaping @isolated(any) (repeat each P) -> R) -> MethodSignature
@@ -55,7 +108,7 @@ extension MethodMaker {
     }
   }
 
-  static func eachMake<each P, R>(
+  static func asyncEachMake<each P, R>(
     useObject: Bool = false,
     _ names: [String?]? = nil,
     by f: @escaping @isolated(any) (repeat each P) async -> R) -> MethodSignature
@@ -72,7 +125,7 @@ extension MethodMaker {
     }
   }
 
-  static func eachMake<P0, each P, M0, R>(
+  static func asyncEachMake<P0, each P, M0, R>(
     by f: @escaping @isolated(any) (P0, repeat each P) -> R,
     modificator: @escaping (M0) -> P0) -> MethodSignature
   {
@@ -86,7 +139,7 @@ extension MethodMaker {
     }
   }
 
-  static func eachMake<P0, P1, each P, M0, M1, R>(
+  static func asyncEachMake<P0, P1, each P, M0, M1, R>(
     by f: @escaping @isolated(any) (P0, P1, repeat each P) -> R,
     modificator: @escaping (M0, M1) -> (P0, P1)) -> MethodSignature
   {
@@ -99,6 +152,104 @@ extension MethodMaker {
       let maker = EachMaker(params: params)
       let modifyResult = modificator(maker.make(), maker.make())
       return await f(modifyResult.0, modifyResult.1, repeat maker.make() as each P)
+    }
+  }
+}
+
+// MARK: Combo
+extension MethodMaker {
+  static func comboEachMake<each P, R>(
+    useObject: Bool = false,
+    _ names: [String?]? = nil,
+    sF: @escaping (repeat each P) -> R,
+    aF: @escaping @isolated(any) (repeat each P) -> R) -> MethodSignature
+  {
+    let types = EachTypes()
+    repeat types.append((each P).self)
+    if useObject {
+      types.useObject()
+    }
+
+    return MethodSignature(types.result, names, { params in
+      let maker = EachMaker(params: params)
+      return sF(repeat maker.make() as each P)
+    }, { params in
+      let maker = EachMaker(params: params)
+      return await aF(repeat maker.make() as each P)
+    })
+  }
+}
+
+// MARK: Main Actor
+
+extension MethodMaker {
+  private static func mainIsolated<R>(closure: @escaping @MainActor () -> R) -> R {
+    if Thread.isMainThread {
+      return MainActor.assumeIsolated {
+        return closure()
+      }
+    } else {
+      let result: R = DispatchQueue.main.sync {
+        MainActor.assumeIsolated {
+          closure()
+        }
+      }
+
+      return result
+    }
+  }
+
+  static func mainEachMake<each P, R>(
+    useObject: Bool = false,
+    _ names: [String?]? = nil,
+    by f: @escaping @MainActor (repeat each P) -> R) -> MethodSignature
+  {
+    let types = EachTypes()
+    repeat types.append((each P).self)
+    if useObject {
+      types.useObject()
+    }
+
+    return MethodSignature(types.result, names) { params in
+      let maker = EachMaker(params: params)
+      return mainIsolated {
+        f(repeat maker.make() as each P)
+      }
+    }
+  }
+
+  static func mainEachMake<P0, each P, M0, R>(
+    by f: @escaping @MainActor (P0, repeat each P) -> R,
+    modificator: @escaping (M0) -> P0) -> MethodSignature where R: Sendable
+  {
+    let types = EachTypes()
+    types.append(M0.self)
+    repeat types.append((each P).self)
+
+    return MethodSignature(types.result, nil) { params in
+      let maker = EachMaker(params: params)
+      let modifyResult = modificator(maker.make())
+      return mainIsolated {
+        f(modifyResult, repeat maker.make() as each P)
+      }
+    }
+  }
+
+  static func mainEachMake<P0, P1, each P, M0, M1, R>(
+    by f: @escaping @MainActor (P0, P1, repeat each P) -> R,
+    modificator: @escaping (M0, M1) -> (P0, P1)) -> MethodSignature where R: Sendable
+  {
+    let types = EachTypes()
+    types.append(M0.self)
+    types.append(M1.self)
+    repeat types.append((each P).self)
+
+    return MethodSignature(types.result, nil) { params in
+      let maker = EachMaker(params: params)
+      let modifyResult = modificator(maker.make(), maker.make())
+      return mainIsolated {
+        f(modifyResult.0, modifyResult.1, repeat maker.make() as each P)
+      }
     }
   }
 }

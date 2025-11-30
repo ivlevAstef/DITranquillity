@@ -13,23 +13,26 @@ class UseObject: SpecificType {
 }
 
 final class MethodSignature: Sendable {
-  typealias Call = @Sendable ([Any?]) async -> Any?
+  typealias Call = @Sendable ([Any?]) -> Any?
+  typealias AsyncCall = @Sendable ([Any?]) async -> Any?
 
   struct Parameter: Sendable {
     let parsedType: ParsedType
     let name: String?
   }
-  
+
   let parameters: [Parameter]
-  let call: Call
-  
-  init(_ types: [DIAType], _ names: [String?]? = nil, _ call: @escaping Call) {
+  let sCall: Call
+  let aCall: AsyncCall
+
+  init(_ types: [DIAType], _ names: [String?]? = nil, _ sCall: @escaping Call = { _ in fatalError() }, _ aCall: @escaping AsyncCall) {
     let initializatedNames = names ?? [String?](repeating: nil, count: types.count)
     assert(initializatedNames.count == types.count)
     
     self.parameters = zip(types, initializatedNames).map {
       Parameter(parsedType: ParsedType(type: $0), name: $1)
     }
-    self.call = call
+    self.sCall = sCall
+    self.aCall = aCall
   }
 }
