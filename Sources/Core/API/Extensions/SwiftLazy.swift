@@ -206,8 +206,6 @@ extension Provider4: SpecificType {
   static var type: DIAType { return Value.self }
 }
 
-
-
 public actor Provider5<Value, Arg1, Arg2, Arg3, Arg4, Arg5> {
   /// The value for `self`.
   ///

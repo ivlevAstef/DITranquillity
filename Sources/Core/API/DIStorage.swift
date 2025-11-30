@@ -31,7 +31,7 @@ public protocol DIStorage {
 
 
 /// Contains objects in dictionary by keys.
-public final class DICacheStorage: DIStorage {
+public final class DICacheStorage: @unchecked Sendable, DIStorage {
   public var any: [DIComponentInfo: Any] {
     lock.lock()
     defer { lock.unlock() }

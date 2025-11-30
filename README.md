@@ -42,9 +42,6 @@ Also I recommend you to read [Glossary](Documentation/en/glossary.md) which will
 - [x] Thread safety
 - [x] Swift Concurrency
 - [x] [Container hierarchy](Documentation/en/core/container_hierarchy.md)
-#### UI
-- [x] [Storyboard and StoryboardReferences](Documentation/en/ui/storyboard.md)
-- [x] [Simple subviews and Cells Injection](Documentation/en/ui/view_injection.md)
 #### Graph API
 - [x] [Get dependency graph](Documentation/en/graph/get_graph.md)
 - [x] [Graph Validation](Documentation/en/graph/graph_validation.md)

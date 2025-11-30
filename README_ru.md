@@ -41,9 +41,6 @@
 - [x] Одновременная работа из нескольких потоков
 - [x] Swift Concurrency
 - [x] [Иерархичные контейнеры](Documentation/ru/core/container_hierarchy.md)
-#### UI
-- [x] [Поддержка сторибоардов](Documentation/ru/ui/storyboard.md)
-- [x] [Внедрение в subviews и ячейки](Documentation/ru/ui/view_injection.md)
 #### Graph API
 - [x] [Получение графа зависимостей](Documentation/ru/graph/get_graph.md)
 - [x] [Валидация графа зависимостей](Documentation/ru/graph/graph_validation.md)

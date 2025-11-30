@@ -115,12 +115,9 @@ class Model {
 	}
 }
 ```
-Видно, что часть зависимостей и связей за нас сделает сторибоард или xib файл, но, даже не смотря на это останутся две зависимости, которые не будут связаны. Для большего интереса предположим, что мы используем сторибоард, и попробуем написать, как эти зависимости будут выглядеть с точки зрения библиотеки:
+Попробуем написать, как эти зависимости будут выглядеть с точки зрения библиотеки:
 ```Swift
 let container = DIContainer()
-
-/// регистрируем сторибоард
-container.registerStoryboard(name: "Main")
 
 /// регистрируем модель, с указанием внедрения в нее объекта с типом ModelDelegate 
 container.register { Model(delegate: $0) }
@@ -138,11 +135,7 @@ if !container.validate() {
 	fatalError("Граф зависимостей не валиден")
 }
 
-
-// создаем сторибоард. '*' это сокращенный синтаксис функции '.resolve()'
-let storyboard: UIStoryboard = *container
-
-window!.rootViewController = storyboard.instantiateInitialViewController()
+window!.rootViewController = container.resolve() as ViewController
 window!.makeKeyAndVisible()
 ```
 
