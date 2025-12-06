@@ -17,38 +17,38 @@ public typealias DILogFunc = (DILogLevel, String)->()
 
 /// Short information about component. Needed for good log
 public struct DIComponentInfo: Sendable, Hashable, CustomStringConvertible {
-  /// Any type announced at registration the component
-  public let type: DIAType
-  /// File where the component is registration
-  public let file: String
-  /// Line where the component is registration
-  public let line: Int
-
-  public func hash(into hasher: inout Hasher) {
-    hasher.combine(line)
-    hasher.combine(file)
-    hasher.combine(ObjectIdentifier(type))
-  }
-  
-  public static func ==(lhs: DIComponentInfo, rhs: DIComponentInfo) -> Bool {
-    return lhs.type == rhs.type && lhs.line == rhs.line && lhs.file == rhs.file
-  }
-  
-  public var description: String {
-    return "<Component. type: \(type); path: \(file.fileName):\(line)>"
-  }
+    /// Any type announced at registration the component
+    public let type: DIAType
+    /// File where the component is registration
+    public let file: String
+    /// Line where the component is registration
+    public let line: Int
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(line)
+        hasher.combine(file)
+        hasher.combine(ObjectIdentifier(type))
+    }
+    
+    public static func ==(lhs: DIComponentInfo, rhs: DIComponentInfo) -> Bool {
+        return lhs.type == rhs.type && lhs.line == rhs.line && lhs.file == rhs.file
+    }
+    
+    public var description: String {
+        return "<Component. type: \(type); path: \(file.fileName):\(line)>"
+    }
 }
-  
+
 /// Log levels. Needed for a better understanding of logs, and clipping
 public enum DILogLevel: Sendable, Equatable {
-  /// disable all logs
-  case none
-  /// After an error, a application can not be executable
-  case error
-  /// Warning should pe paid attention and analyzed
-  case warning
-  /// Information contains possible errors
-  case info
-  /// Verbose is needed to understand what is happening
-  case verbose
+    /// disable all logs
+    case none
+    /// After an error, a application can not be executable
+    case error
+    /// Warning should pe paid attention and analyzed
+    case warning
+    /// Information contains possible errors
+    case info
+    /// Verbose is needed to understand what is happening
+    case verbose
 }

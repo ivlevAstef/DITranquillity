@@ -8,276 +8,282 @@
 
 /// Async extension for Resolver
 extension Resolver {
-  func resolve<T>(type: T.Type = T.self, name: String? = nil, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) async -> T {
-    let pType = ParsedType(type: type)
-    log(.verbose, msg: "Begin resolve \(description(type: pType))", brace: .begin)
-    defer { log(.verbose, msg: "End resolve \(description(type: pType))", brace: .end) }
+    func resolve<T>(type: T.Type = T.self, name: String? = nil, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) async -> T {
+        let pType = ParsedType(type: type)
+        log(.verbose, msg: "Begin resolve \(description(type: pType))", brace: .begin)
+        defer { log(.verbose, msg: "End resolve \(description(type: pType))", brace: .end) }
 
-    let checkOnRoot = container.componentContainer.hasRootComponents
-    return await gmake(by: make(by: pType, stack: RAIIStack(), with: name, from: framework, use: nil, arguments: arguments, isRoot: checkOnRoot))
-  }
-  
-  func injection<T>(obj: T, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) async {
-    log(.verbose, msg: "Begin injection in obj: \(obj)", brace: .begin)
-    defer { log(.verbose, msg: "End injection in obj: \(obj)", brace: .end) }
+        let checkOnRoot = container.componentContainer.hasRootComponents
+        return await gmake(by: make(by: pType, stack: RAIIStack(), with: name, from: framework, use: nil, arguments: arguments, isRoot: checkOnRoot))
+    }
 
-    let checkOnRoot = container.componentContainer.hasRootComponents
-    _ = await make(by: ParsedType(obj: obj), stack: RAIIStack(), with: nil, from: framework, use: obj, arguments: arguments, isRoot: checkOnRoot)
-  }
+    func injection<T>(obj: T, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) async {
+        log(.verbose, msg: "Begin injection in obj: \(obj)", brace: .begin)
+        defer { log(.verbose, msg: "End injection in obj: \(obj)", brace: .end) }
 
-  func resolveCached(component: Component, arguments: AnyArguments? = nil) async {
-    log(.verbose, msg: "Begin resolve cached object by component: \(component.info)", brace: .begin)
-    defer { log(.verbose, msg: "End resolve cached object by component: \(component.info)", brace: .end) }
+        let checkOnRoot = container.componentContainer.hasRootComponents
+        _ = await make(by: ParsedType(obj: obj), stack: RAIIStack(), with: nil, from: framework, use: obj, arguments: arguments, isRoot: checkOnRoot)
+    }
 
-    let checkOnRoot = container.componentContainer.hasRootComponents
-    await _ = makeObject(by: component, stack: RAIIStack(), use: nil, arguments: arguments, isRoot: checkOnRoot)
-  }
-  
-  func resolve<T>(type: T.Type = T.self, component: Component, arguments: AnyArguments? = nil) async -> T {
-    let pType = ParsedType(type: type)
-    log(.verbose, msg: "Begin resolve \(description(type: pType)) by component: \(component.info)", brace: .begin)
-    defer { log(.verbose, msg: "End resolve \(description(type: pType)) by component: \(component.info)", brace: .end) }
+    func resolveCached(component: Component, arguments: AnyArguments? = nil) async {
+        log(.verbose, msg: "Begin resolve cached object by component: \(component.info)", brace: .begin)
+        defer { log(.verbose, msg: "End resolve cached object by component: \(component.info)", brace: .end) }
 
-    let checkOnRoot = container.componentContainer.hasRootComponents
-    return await gmake(by: makeObject(by: component, stack: RAIIStack(), use: nil, arguments: arguments, isRoot: checkOnRoot))
-  }
+        let checkOnRoot = container.componentContainer.hasRootComponents
+        await _ = makeObject(by: component, stack: RAIIStack(), use: nil, arguments: arguments, isRoot: checkOnRoot)
+    }
 
-  private func make(by parsedType: ParsedType,
-                    stack: RAIIStack,
-                    with name: String?,
-                    from framework: DIFramework.Type?,
-                    use object: Any?,
-                    arguments: AnyArguments?,
-                    isRoot: Bool) async -> Any? {
-    log(.verbose, msg: "Begin make \(description(type: parsedType))", brace: .begin)
-    defer { log(.verbose, msg: "End make \(description(type: parsedType))", brace: .end) }
+    func resolve<T>(type: T.Type = T.self, component: Component, arguments: AnyArguments? = nil) async -> T {
+        let pType = ParsedType(type: type)
+        log(.verbose, msg: "Begin resolve \(description(type: pType)) by component: \(component.info)", brace: .begin)
+        defer { log(.verbose, msg: "End resolve \(description(type: pType)) by component: \(component.info)", brace: .end) }
 
-    let components = filterComponents(findComponents(by: parsedType, with: name, from: framework), by: parsedType, use: stack.data)
+        let checkOnRoot = container.componentContainer.hasRootComponents
+        return await gmake(by: makeObject(by: component, stack: RAIIStack(), use: nil, arguments: arguments, isRoot: checkOnRoot))
+    }
 
-    if let delayMaker = parsedType.delayMaker {
-      weak var saveRAIIStack = stack
-      let data = stack.data
-      let saveGraph = stack.data.graph
+    private func make(by parsedType: ParsedType,
+                      stack: RAIIStack,
+                      with name: String?,
+                      from framework: DIFramework.Type?,
+                      use object: Any?,
+                      arguments: AnyArguments?,
+                      isRoot: Bool) async -> Any? {
+        log(.verbose, msg: "Begin make \(description(type: parsedType))", brace: .begin)
+        defer { log(.verbose, msg: "End make \(description(type: parsedType))", brace: .end) }
 
-      func makeDelayMaker(by parsedType: ParsedType, components: Components) -> Any? {
-        return delayMaker.init(container, { arguments async -> Any? in
-          // call `.value` into DI initialize.
-          if let saveRAIIStack {
-            return await self.make(by: parsedType, stack: saveRAIIStack, components: components, use: object, arguments: arguments, isRoot: isRoot)
-          }
-          // Call `.value` firstly.
-          if data.isEmpty() {
-            return await self.make(by: parsedType, stack: RAIIStack(restore: data), components: components, use: object, arguments: arguments, isRoot: isRoot)
-          }
-          // Call `.value` into DI initialize, and DI graph has lifetimes perContainer, perRun, single...
-          // For this case need call provider on her Cache Graph.
-          // But need restore cache graph after make object.
-          return await self.make(by: parsedType, stack: RAIIStack(restore: data, graph: saveGraph), components: components, use: object, arguments: arguments, isRoot: isRoot)
-        })
-      }
+        let components = filterComponents(findComponents(by: parsedType, with: name, from: framework), by: parsedType, use: stack.data)
 
-      if parsedType.hasMany, let subPType = parsedType.nextParsedTypeAfterManyOrBreakIfDelayed() {
-        // hard logic for support Many<Lazy<Type>> and Many<Provider<Type>> but Many<Many<Lazy<Type>>> not supported
-        return components.sorted{ $0.order < $1.order }.compactMap {
-          return makeDelayMaker(by: subPType, components: Components([$0]))
+        if let delayMaker = parsedType.delayMaker {
+            weak var saveRAIIStack = stack
+            let data = stack.data
+            let saveGraph = stack.data.graph
+
+            func makeDelayMaker(by parsedType: ParsedType, components: Components) -> Any? {
+                return delayMaker.init(container, { arguments async -> Any? in
+                    // call `.value` into DI initialize.
+                    if let saveRAIIStack {
+                        return await self.make(by: parsedType, stack: saveRAIIStack, components: components, use: object, arguments: arguments, isRoot: isRoot)
+                    }
+                    // Call `.value` firstly.
+                    if data.isEmpty() {
+                        return await self.make(by: parsedType, stack: RAIIStack(restore: data), components: components, use: object, arguments: arguments, isRoot: isRoot)
+                    }
+                    // Call `.value` into DI initialize, and DI graph has lifetimes perContainer, perRun, single...
+                    // For this case need call provider on her Cache Graph.
+                    // But need restore cache graph after make object.
+                    return await self.make(by: parsedType, stack: RAIIStack(restore: data, graph: saveGraph), components: components, use: object, arguments: arguments, isRoot: isRoot)
+                })
+            }
+
+            if parsedType.hasMany, let subPType = parsedType.nextParsedTypeAfterManyOrBreakIfDelayed() {
+                // hard logic for support Many<Lazy<Type>> and Many<Provider<Type>> but Many<Many<Lazy<Type>>> not supported
+                return components.sorted{ $0.order < $1.order }.compactMap {
+                    return makeDelayMaker(by: subPType, components: Components([$0]))
+                }
+            } else {
+                return makeDelayMaker(by: parsedType, components: components)
+            }
         }
-      } else {
-        return makeDelayMaker(by: parsedType, components: components)
-      }
+
+        return await make(by: parsedType, stack: stack, components: components, use: object, arguments: arguments, isRoot: isRoot)
     }
 
-    return await make(by: parsedType, stack: stack, components: components, use: object, arguments: arguments, isRoot: isRoot)
-  }
+    /// isMany for optimization
+    private func make(by parsedType: ParsedType,
+                      stack: RAIIStack,
+                      components: Components,
+                      use object: Any?,
+                      arguments: AnyArguments?,
+                      isRoot: Bool) async -> Any? {
+        if parsedType.hasMany {
+            assert(nil == object, "Many injection not supported")
+            var result: [Any?] = []
+            for component in components.sorted(by: { $0.order < $1.order }) {
+                result.append(await makeObject(by: component, stack: stack, use: nil, arguments: arguments, isRoot: isRoot))
+            }
 
-  /// isMany for optimization
-  private func make(by parsedType: ParsedType,
-                    stack: RAIIStack,
-                    components: Components,
-                    use object: Any?,
-                    arguments: AnyArguments?,
-                    isRoot: Bool) async -> Any? {
-    if parsedType.hasMany {
-      assert(nil == object, "Many injection not supported")
-      var result: [Any?] = []
-      for component in components.sorted(by: { $0.order < $1.order }) {
-        result.append(await makeObject(by: component, stack: stack, use: nil, arguments: arguments, isRoot: isRoot))
-      }
-
-      return result
-    }
-
-    if let component = components.first, 1 == components.count {
-      return await makeObject(by: component, stack: stack, use: object, arguments: arguments, isRoot: isRoot)
-    }
-
-    if components.isEmpty {
-      log(.info, msg: "Not found \(description(type: parsedType))")
-    } else {
-      let infos = components.map{ $0.info }
-      log(.warning, msg: "Ambiguous \(description(type: parsedType)) contains in: \(infos)")
-    }
-
-    return nil
-  }
-  
-  /// Super function
-  private func makeObject(by component: Component, stack: RAIIStack, use usingObject: Any?, arguments: AnyArguments?, isRoot: Bool) async -> Any? {
-    log(.verbose, msg: "Found component: \(component.info)")
-
-    if isRoot && !(component.isRoot || component.lifeTime == .single) {
-      log(.error, msg: "Are you using root components, but a root component was found that was not marked as root: \(component.info)")
-    }
-
-    let uniqueKey = component.info
-    
-    func makeObject(scope: DIScope) async -> Any? {
-      var optCacheObject: Any? = scope.storage.fetch(key: uniqueKey)
-      if let weakRef = optCacheObject as? WeakAny {
-        optCacheObject = weakRef.value
-      }
-      
-      if let cacheObject = getReallyObject(optCacheObject) {
-        /// suspending ignore injection for new object
-        guard let usingObject = usingObject else {
-          log(.verbose, msg: "Resolve object: \(cacheObject) use scope: \(scope.name)")
-          return cacheObject
+            return result
         }
-        
-        /// suspending double injection
-        if cacheObject as AnyObject === usingObject as AnyObject {
-          log(.verbose, msg: "Resolve object: \(cacheObject) use scope: \(scope.name)")
-          return cacheObject
+
+        if let component = components.first, 1 == components.count {
+            return await makeObject(by: component, stack: stack, use: object, arguments: arguments, isRoot: isRoot)
         }
-      }
-      
-      if let makedObject = await makeObject() {
-        let objectForSave = (.weak == scope.policy) ? WeakAny(value: makedObject) : makedObject
-        scope.storage.save(object: objectForSave, by: uniqueKey)
-        log(.verbose, msg: "Save object: \(makedObject) to scope \(scope.name)")
-        return makedObject
-      }
-      
-      return nil
-    }
 
-    var componentArguments: Arguments?
-    func getArgumentObject(parameter: MethodSignature.Parameter) -> Any? {
-      componentArguments = componentArguments ?? arguments?.getArguments(for: component)
-
-      if componentArguments == nil {
-        log(.error, msg: "Get arguments for \(component.info) failed. Please specify arguments or remove dublicates for this type")
-        return nil
-      }
-      return componentArguments?.getArgument(for: parameter.parsedType.base.type)
-    }
-    
-    func makeObject() async -> Any? {
-      guard let initializedObject = await initialObject() else {
-        return nil
-      }
-
-      for injection in component.injections {
-        if injection.cycle {
-          cache.cycleInjectionQueue.append((initializedObject, injection.signature))
+        if components.isEmpty {
+            log(.info, msg: "Not found \(description(type: parsedType))")
         } else {
-          _ = await use(signature: injection.signature, usingObject: initializedObject)
+            let infos = components.map{ $0.info }
+            log(.warning, msg: "Ambiguous \(description(type: parsedType)) contains in: \(infos)")
         }
-      }
-      
-      if let signature = component.postInit {
-        if component.injections.contains(where: { $0.cycle }) {
-          cache.cycleInjectionQueue.append((initializedObject, signature))
-        } else {
-          _ = await use(signature: signature, usingObject: initializedObject)
-        }
-      }
 
-      container.extensions.objectMaked?(uniqueKey, initializedObject)
-      return initializedObject
+        return nil
     }
-    
-    func initialObject() async -> Any? {
-      if let obj = usingObject {
-        log(.verbose, msg: "Use object: \(obj)")
+
+    /// Super function
+    private func makeObject(by component: Component, stack: RAIIStack, use usingObject: Any?, arguments: AnyArguments?, isRoot: Bool) async -> Any? {
+        log(.verbose, msg: "Found component: \(component.info)")
+
+        if isRoot && !(component.isRoot || component.lifeTime == .single) {
+            log(.error, msg: "Are you using root components, but a root component was found that was not marked as root: \(component.info)")
+        }
+
+        let uniqueKey = component.info
+
+        func makeObject(scope: DIScope) async -> Any? {
+            var optCacheObject: Any? = scope.storage.fetch(key: uniqueKey)
+            if let weakRef = optCacheObject as? WeakAny {
+                optCacheObject = weakRef.value
+            }
+
+            if let cacheObject = getReallyObject(optCacheObject) {
+                /// suspending ignore injection for new object
+                guard let usingObject = usingObject else {
+                    log(.verbose, msg: "Resolve object: \(cacheObject) use scope: \(scope.name)")
+                    return cacheObject
+                }
+
+                /// suspending double injection
+                if cacheObject as AnyObject === usingObject as AnyObject {
+                    log(.verbose, msg: "Resolve object: \(cacheObject) use scope: \(scope.name)")
+                    return cacheObject
+                }
+            }
+
+            if let makedObject = await makeObject() {
+                let objectForSave = (.weak == scope.policy) ? WeakAny(value: makedObject) : makedObject
+                scope.storage.save(object: objectForSave, by: uniqueKey)
+                log(.verbose, msg: "Save object: \(makedObject) to scope \(scope.name)")
+                return makedObject
+            }
+
+            return nil
+        }
+
+        var componentArguments: Arguments?
+        func getArgumentObject(parameter: MethodSignature.Parameter) -> Any? {
+            componentArguments = componentArguments ?? arguments?.getArguments(for: component)
+
+            if componentArguments == nil {
+                log(.error, msg: "Get arguments for \(component.info) failed. Please specify arguments or remove dublicates for this type")
+                return nil
+            }
+            return componentArguments?.getArgument(for: parameter.parsedType.base.type)
+        }
+
+        func makeObject() async -> Any? {
+            guard let initializedObject = await initialObject() else {
+                return nil
+            }
+
+            for injection in component.injections {
+                if injection.cycle {
+                    cache.cycleInjectionQueue.append((initializedObject, injection.signature))
+                } else {
+                    _ = await use(signature: injection.signature, usingObject: initializedObject)
+                }
+            }
+
+            if let signature = component.postInit {
+                if component.injections.contains(where: { $0.cycle }) {
+                    cache.cycleInjectionQueue.append((initializedObject, signature))
+                } else {
+                    _ = await use(signature: signature, usingObject: initializedObject)
+                }
+            }
+
+            container.extensions.objectMaked?(uniqueKey, initializedObject)
+            return initializedObject
+        }
+
+        func initialObject() async -> Any? {
+            if let obj = usingObject {
+                log(.verbose, msg: "Use object: \(obj)")
+                return obj
+            }
+
+            if let signature = component.initial {
+                let obj = await use(signature: signature, usingObject: nil)
+                log(.verbose, msg: "Create object: \(String(describing: obj))")
+                return obj
+            }
+
+            log(.warning, msg: "Can't found initial method in \(component.info)")
+            return nil
+        }
+
+        func endResolving() async {
+            while !cache.cycleInjectionQueue.isEmpty {
+                let data = cache.cycleInjectionQueue.removeFirst()
+                _ = await use(signature: data.signature, usingObject: data.obj)
+            }
+        }
+
+        func use(signature: MethodSignature, usingObject: Any?) async -> Any? {
+            var objParameters = [Any?]()
+            for parameter in signature.parameters {
+                let makedObject: Any?
+                if parameter.parsedType.useObject {
+                    makedObject = usingObject
+                } else if parameter.parsedType.arg {
+                    makedObject = getArgumentObject(parameter: parameter)
+                } else {
+                    makedObject = await make(by: parameter.parsedType,
+                                             stack: stack,
+                                             with: parameter.name,
+                                             from: component.framework,
+                                             use: nil,
+                                             arguments: arguments,
+                                             isRoot: false)
+                }
+
+                if nil != makedObject || parameter.parsedType.optional {
+                    objParameters.append(makedObject)
+                    continue
+                }
+
+                return nil
+            }
+
+            return await signature.aCall(objParameters)
+        }
+
+
+        stack.data.push(component.info)
+        // defer -> in function end
+
+        func makeOrGetObject() async -> Any? {
+            switch component.lifeTime {
+            case .single:
+                return await makeObject(scope: Cache.single)
+            case .perRun(let referenceCounting):
+                switch referenceCounting {
+                case .weak: return await makeObject(scope: Cache.weakPerRun)
+                case .strong: return await makeObject(scope: Cache.strongPerRun)
+                }
+            case .perContainer(let referenceCounting):
+                switch referenceCounting {
+                case .weak: return await makeObject(scope: cache.weakPerContainer)
+                case .strong: return await makeObject(scope: cache.strongPerContainer)
+                }
+            case .objectGraph:
+                return await makeObject(scope: stack.data.graph)
+            case .prototype:
+                return await makeObject()
+            case .custom(let scope):
+                return await makeObject(scope: scope)
+            }
+        }
+
+        let obj = await makeOrGetObject()
+        container.extensions.objectResolved?(uniqueKey, obj)
+
+        // defer
+        if stack.data.isLast() {
+            await endResolving()
+        }
+        stack.data.pop()
+
         return obj
-      }
-      
-      if let signature = component.initial {
-        let obj = await use(signature: signature, usingObject: nil)
-        log(.verbose, msg: "Create object: \(String(describing: obj))")
-        return obj
-      }
-      
-      log(.warning, msg: "Can't found initial method in \(component.info)")
-      return nil
     }
-    
-    func endResolving() async {
-      while !cache.cycleInjectionQueue.isEmpty {
-        let data = cache.cycleInjectionQueue.removeFirst()
-        _ = await use(signature: data.signature, usingObject: data.obj)
-      }
-    }
-    
-    func use(signature: MethodSignature, usingObject: Any?) async -> Any? {
-      var objParameters = [Any?]()
-      for parameter in signature.parameters {
-        let makedObject: Any?
-        if parameter.parsedType.useObject {
-          makedObject = usingObject
-        } else if parameter.parsedType.arg {
-          makedObject = getArgumentObject(parameter: parameter)
-        } else {
-          makedObject = await make(by: parameter.parsedType, stack: stack, with: parameter.name, from: component.framework, use: nil, arguments: arguments, isRoot: false)
-        }
-        
-        if nil != makedObject || parameter.parsedType.optional {
-          objParameters.append(makedObject)
-          continue
-        }
-        
-        return nil
-      }
-
-      return await signature.aCall(objParameters)
-    }
-
-
-    stack.data.push(component.info)
-    // defer -> in function end
-
-    func makeOrGetObject() async -> Any? {
-      switch component.lifeTime {
-      case .single:
-        return await makeObject(scope: Cache.single)
-      case .perRun(let referenceCounting):
-        switch referenceCounting {
-        case .weak: return await makeObject(scope: Cache.weakPerRun)
-        case .strong: return await makeObject(scope: Cache.strongPerRun)
-        }
-      case .perContainer(let referenceCounting):
-        switch referenceCounting {
-        case .weak: return await makeObject(scope: cache.weakPerContainer)
-        case .strong: return await makeObject(scope: cache.strongPerContainer)
-        }
-      case .objectGraph:
-        return await makeObject(scope: stack.data.graph)
-      case .prototype:
-        return await makeObject()
-      case .custom(let scope):
-        return await makeObject(scope: scope)
-      }
-    }
-
-    let obj = await makeOrGetObject()
-    container.extensions.objectResolved?(uniqueKey, obj)
-
-    // defer
-    if stack.data.isLast() {
-      await endResolving()
-    }
-    stack.data.pop()
-
-    return obj
-  }
 }

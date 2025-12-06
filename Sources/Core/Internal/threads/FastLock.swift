@@ -7,16 +7,16 @@
 //
 
 internal protocol FastLock {
-  func lock()
-  func unlock()
+    func lock()
+    func unlock()
 }
 
 internal func makeFastLock() -> FastLock {
-  #if os(Linux)
+#if os(Linux)
     return SpinLock()
-  #else
+#else
     return UnfairLock()
-  #endif
+#endif
 }
 
 #if os(Linux)
@@ -24,25 +24,25 @@ internal func makeFastLock() -> FastLock {
 import Glibc
 
 private class SpinLock: FastLock {
-  private var monitor: pthread_spinlock_t = 0
+    private var monitor: pthread_spinlock_t = 0
 
-  init() {
-    if pthread_spin_init(&monitor, 0) != 0 {
-      fatalError("Spin lock initialization failed")
+    init() {
+        if pthread_spin_init(&monitor, 0) != 0 {
+            fatalError("Spin lock initialization failed")
+        }
     }
-  }
 
-  deinit {
-    pthread_spin_destroy(&monitor)
-  }
+    deinit {
+        pthread_spin_destroy(&monitor)
+    }
 
-  func lock() {
-    pthread_spin_lock(&monitor)
-  }
+    func lock() {
+        pthread_spin_lock(&monitor)
+    }
 
-  func unlock() {
-    pthread_spin_unlock(&monitor)
-  }
+    func unlock() {
+        pthread_spin_unlock(&monitor)
+    }
 }
 
 #else
@@ -50,25 +50,25 @@ private class SpinLock: FastLock {
 import Darwin
 
 private class UnfairLock: FastLock {
-  private let monitor: os_unfair_lock_t
+    private let monitor: os_unfair_lock_t
 
-  init() {
-    monitor = .allocate(capacity: 1)
-    monitor.initialize(to: os_unfair_lock())
-  }
+    init() {
+        monitor = .allocate(capacity: 1)
+        monitor.initialize(to: os_unfair_lock())
+    }
 
-  deinit {
-    monitor.deinitialize(count: 1)
-    monitor.deallocate()
-  }
+    deinit {
+        monitor.deinitialize(count: 1)
+        monitor.deallocate()
+    }
 
-  func lock() {
-    os_unfair_lock_lock(monitor)
-  }
+    func lock() {
+        os_unfair_lock_lock(monitor)
+    }
 
-  func unlock() {
-    os_unfair_lock_unlock(monitor)
-  }
+    func unlock() {
+        os_unfair_lock_unlock(monitor)
+    }
 }
 
 #endif

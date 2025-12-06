@@ -7,26 +7,26 @@
 //
 
 internal final class ExtensionsContainer: @unchecked Sendable {
-  private var extensionsByType: [DIComponentInfo: DIExtensions] = [:]
-  private let mutex: PThreadMutex = PThreadMutex(recursive: ())
-
-  internal func get(by type: DIComponentInfo) -> DIExtensions
-  {
-    return mutex.sync {
-      if let extensions = extensionsByType[type] {
-        return extensions
-      }
-      let extensions = DIExtensions()
-      extensionsByType[type] = extensions
-      return extensions
+    private var extensionsByType: [DIComponentInfo: DIExtensions] = [:]
+    private let mutex: PThreadMutex = PThreadMutex(recursive: ())
+    
+    internal func get(by type: DIComponentInfo) -> DIExtensions
+    {
+        return mutex.sync {
+            if let extensions = extensionsByType[type] {
+                return extensions
+            }
+            let extensions = DIExtensions()
+            extensionsByType[type] = extensions
+            return extensions
+        }
     }
-  }
-
-  internal func optionalGet(by type: DIComponentInfo) -> DIExtensions?
-  {
-    return mutex.sync {
-      return extensionsByType[type]
+    
+    internal func optionalGet(by type: DIComponentInfo) -> DIExtensions?
+    {
+        return mutex.sync {
+            return extensionsByType[type]
+        }
     }
-  }
-
+    
 }

@@ -7,43 +7,43 @@
 //
 
 final class FrameworksDependenciesContainer: @unchecked Sendable {
-  private var imports = [FrameworkWrapper: Set<FrameworkWrapper>]()
-  private var mutex = PThreadMutex(normal: ())
-  
-  final func dependency(framework: DIFramework.Type, import importFramework: DIFramework.Type) {
-    let frameworkWrapper = FrameworkWrapper(framework: framework)
-    let importFrameworkWrapper = FrameworkWrapper(framework: importFramework)
-    mutex.sync {
-      if nil == imports[frameworkWrapper]?.insert(importFrameworkWrapper) {
-        imports[frameworkWrapper] = [importFrameworkWrapper]
-      }
-    }
-  }
+    private var imports = [FrameworkWrapper: Set<FrameworkWrapper>]()
+    private var mutex = PThreadMutex(normal: ())
 
-  func filterByChilds(for framework: DIFramework.Type, components: Components) -> Components {
-    let frameworkWrapper = FrameworkWrapper(framework: framework)
-    let childs = mutex.sync {
-      return imports[frameworkWrapper] ?? []
+    final func dependency(framework: DIFramework.Type, import importFramework: DIFramework.Type) {
+        let frameworkWrapper = FrameworkWrapper(framework: framework)
+        let importFrameworkWrapper = FrameworkWrapper(framework: importFramework)
+        mutex.sync {
+            if nil == imports[frameworkWrapper]?.insert(importFrameworkWrapper) {
+                imports[frameworkWrapper] = [importFrameworkWrapper]
+            }
+        }
     }
 
-    return components.filter { $0.framework.map { childs.contains(FrameworkWrapper(framework: $0)) } ?? false }
-  }
+    func filterByChilds(for framework: DIFramework.Type, components: Components) -> Components {
+        let frameworkWrapper = FrameworkWrapper(framework: framework)
+        let childs = mutex.sync {
+            return imports[frameworkWrapper] ?? []
+        }
+
+        return components.filter { $0.framework.map { childs.contains(FrameworkWrapper(framework: $0)) } ?? false }
+    }
 }
 
 private final class FrameworkWrapper: Sendable, Hashable {
-  let framework: DIFramework.Type
-  private let identifier: ObjectIdentifier
+    let framework: DIFramework.Type
+    private let identifier: ObjectIdentifier
+    
+    init(framework: DIFramework.Type) {
+        self.framework = framework
+        self.identifier = ObjectIdentifier(framework)
+    }
 
-  init(framework: DIFramework.Type) {
-    self.framework = framework
-    self.identifier = ObjectIdentifier(framework)
-  }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(identifier)
+    }
 
-  func hash(into hasher: inout Hasher) {
-    hasher.combine(identifier)
-  }
-
-  static func ==(lhs: FrameworkWrapper, rhs: FrameworkWrapper) -> Bool {
-    return lhs.identifier == rhs.identifier
-  }
+    static func ==(lhs: FrameworkWrapper, rhs: FrameworkWrapper) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
 }

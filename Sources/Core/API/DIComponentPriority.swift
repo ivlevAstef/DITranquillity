@@ -8,7 +8,7 @@
 
 /// priority need for select object if found more
 public enum DIComponentPriority: Sendable {
-  case normal
-  case `default`
-  case test
+    case normal
+    case `default`
+    case test
 }
