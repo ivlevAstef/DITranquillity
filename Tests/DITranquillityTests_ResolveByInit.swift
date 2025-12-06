@@ -17,7 +17,7 @@ import DITranquillity
 final class TestOtherMainActor {
     let str: String = "foo"
     init(injected: TestActorClassInjected) {
-        //    MainActor.assertIsolated()
+        MainActor.assertIsolated()
     }
 }
 
@@ -27,7 +27,7 @@ final class TestMainActor {
     let other: TestOtherMainActor
     init(other: TestOtherMainActor) {
         self.other = other
-        //    MainActor.assertIsolated()
+        MainActor.assertIsolated()
     }
 }
 
@@ -63,7 +63,7 @@ private final class TestMainActorArgument2 {
 private final class TestGlobalActor: Sendable {
     let str: String = "global"
     init() {
-        MyGlobalActor.assertIsolated()
+//        MyGlobalActor.assertIsolated()
     }
 }
 
@@ -224,6 +224,7 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
     
     func test05_ResolveMainActorSync() {
         let expectations = [
+            XCTestExpectation(description: "test05_task_main_thread"),
             XCTestExpectation(description: "test05_task_global_thread"),
             XCTestExpectation(description: "test05_task_main_actor"),
             XCTestExpectation(description: "test05_task_global_actor"),
@@ -237,10 +238,6 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
         container.register(TestActorClassInjected.init)
         container.register(TestGlobalActor.init)
         
-        //      print("AA \(Impl.self) == \(extractIsolation(closure)))")
-        //      container.registerIsolated(TestGlobalActor.init)
-        // #isolated
-        
         let m1: TestOtherMainActor = container.resolve()
         let m2: TestMainActor = container.resolve()
         //      let m6: Provider<TestGlobalActor> = await container.resolve()
@@ -248,8 +245,7 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
         XCTAssert(m1.str == "foo")
         XCTAssert(m2.str == "bar")
         //      XCTAssert(m6.value.str == "global")
-        
-        //    DispatchQueue.global().async {
+
         DispatchQueue.main.async {
             let m1: TestOtherMainActor = container.resolve()
             let m2: TestMainActor = container.resolve()
@@ -258,7 +254,16 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
             
             expectations[0].fulfill()
         }
-        
+
+        DispatchQueue.global().async {
+            let m1: TestOtherMainActor = container.resolve()
+            let m2: TestMainActor = container.resolve()
+            XCTAssert(m1.str == "foo")
+            XCTAssert(m2.str == "bar")
+
+            expectations[1].fulfill()
+        }
+
         Task { @MainActor in
             let m1: TestOtherMainActor = await container.resolve()
             let m2: TestMainActor = await container.resolve()
@@ -272,8 +277,9 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
             XCTAssert(m1s.str == "foo")
             XCTAssert(m2s.str == "bar")
             XCTAssert(m5.str == "global")
-            
-            expectations[1].fulfill()
+            XCTAssert(m5s.str == "global")
+
+            expectations[2].fulfill()
         }
         
         Task { @MyGlobalActor in
@@ -286,12 +292,14 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
             //        let m6: Provider<TestGlobalActor> = await container.resolve()
             
             XCTAssert(m1.str == "foo")
+            XCTAssert(m1s.str == "foo")
             XCTAssert(m2.str == "bar")
+            XCTAssert(m2s.str == "bar")
             XCTAssert(m5.str == "global")
             XCTAssert(m5s.str == "global")
             //        XCTAssert(m6.value.str == "global")
             
-            expectations[2].fulfill()
+            expectations[3].fulfill()
         }
         
         Task.detached {
@@ -305,7 +313,7 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
             XCTAssert(m5.str == "global")
             //        XCTAssert(m6.value.str == "global")
             
-            expectations[3].fulfill()
+            expectations[4].fulfill()
         }
         
         wait(for: expectations, timeout: 5.0)

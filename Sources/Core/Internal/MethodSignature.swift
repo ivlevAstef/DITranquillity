@@ -22,16 +22,22 @@ final class MethodSignature: Sendable {
     }
     
     let parameters: [Parameter]
+    let isolation: (any Actor)?
     let sCall: Call
     let aCall: AsyncCall
 
-    init(_ types: [DIAType], _ names: [String?]? = nil, _ sCall: @escaping Call = { _ in fatalError() }, _ aCall: @escaping AsyncCall) {
+    init(_ types: [DIAType],
+         _ names: [String?]? = nil,
+         _ isolation: (any Actor)?,
+         _ sCall: @escaping Call,
+         _ aCall: @escaping AsyncCall) {
         let initializatedNames = names ?? [String?](repeating: nil, count: types.count)
         assert(initializatedNames.count == types.count)
 
         self.parameters = zip(types, initializatedNames).map {
             Parameter(parsedType: ParsedType(type: $0), name: $1)
         }
+        self.isolation = isolation
         self.sCall = sCall
         self.aCall = aCall
     }

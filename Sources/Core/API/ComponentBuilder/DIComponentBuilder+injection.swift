@@ -20,8 +20,8 @@ extension DIComponentBuilder {
     /// - Parameter method: Injection method. First input argument is the always created object.
     /// - Returns: Self
     @discardableResult
-    public func injection(_ method: @escaping (Impl) -> ()) -> Self {
-        component.append(injection: MethodMaker.asyncEachMake(useObject: true, by: method), cycle: false)
+    public func injection(_ method: @escaping @isolated(any) (Impl) -> Void) -> Self {
+        component.append(injection: MethodMaker.comboEachMake(useObject: true, sF: method, aF: method), cycle: false)
         return self
     }
     
@@ -56,8 +56,8 @@ extension DIComponentBuilder {
     ///   - method: Injection method. First input argument is the always created object.
     /// - Returns: Self
     @discardableResult
-    public func injection<Property>(name: String? = nil, cycle: Bool = false, _ method: @escaping (Impl,Property) -> ()) -> Self {
-        component.append(injection: MethodMaker.asyncEachMake(useObject: true, [nil, name], by: method), cycle: cycle)
+    public func injection<Property>(name: String? = nil, cycle: Bool = false, _ method: @escaping @isolated(any) (Impl,Property) -> Void) -> Self {
+        component.append(injection: MethodMaker.comboEachMake(useObject: true, [nil, name], sF: method, aF: method), cycle: cycle)
         return self
     }
     
@@ -134,10 +134,7 @@ extension DIComponentBuilder {
     /// - Returns: Self
     @discardableResult
     public func injection<each P>(_ method: @escaping @isolated(any) (Impl, repeat each P) -> Void) -> Self {
-        if let isolation = extractIsolation(method), isolation !== MainActor.shared {
-            log(.warning, msg: "Library unsupport correct resolve @globalActor injection methods. use resolve carefully.")
-        }
-        return append(injection: MethodMaker.asyncEachMake(useObject: true, by: method))
+        return append(injection: MethodMaker.comboEachMake(useObject: true, sF: method, aF: method))
     }
     
     /// Function for appending an injection method which is always executed at end of a object creation.
@@ -152,7 +149,7 @@ extension DIComponentBuilder {
     /// - Returns: Self
     @discardableResult
     public func postInit(_ method: @escaping (Impl) -> ()) -> Self {
-        component.postInit = MethodMaker.asyncEachMake(useObject: true, by: method)
+        component.postInit = MethodMaker.comboEachMake(useObject: true, sF: method, aF: method)
         return self
     }
     

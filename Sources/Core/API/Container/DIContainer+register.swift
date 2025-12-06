@@ -80,7 +80,7 @@ extension DIContainer {
     public func register<Impl,P0,each P,M0>(file: String = #file, line: Int = #line,
                                             _ closure: @escaping @isolated(any) (P0, repeat each P) -> Impl,
                                             modificator: @escaping (M0) -> P0) -> DIComponentBuilder<Impl> {
-        return register(file, line, MethodMaker.asyncEachMake(by: closure, modificator: modificator))
+        return register(file, line, MethodMaker.comboEachMake(sF: closure, aF: closure, modificator: modificator))
     }
     
     /// Declaring a new component with initial and modificator one argument.
@@ -96,7 +96,7 @@ extension DIContainer {
     public func register<Impl,P0,P1,each P,M0,M1>(file: String = #file, line: Int = #line,
                                                   _ closure: @escaping @isolated(any) (P0, P1, repeat each P) -> Impl,
                                                   modificator: @escaping (M0, M1) -> (P0, P1)) -> DIComponentBuilder<Impl> {
-        return register(file, line, MethodMaker.asyncEachMake(by: closure, modificator: modificator))
+        return register(file, line, MethodMaker.comboEachMake(sF: closure, aF: closure, modificator: modificator))
     }
     
     internal func register<Impl>(_ file: String, _ line: Int, _ signature: MethodSignature) -> DIComponentBuilder<Impl> {
