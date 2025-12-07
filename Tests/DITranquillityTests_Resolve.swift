@@ -211,11 +211,11 @@ class DITranquillityTests_Resolve: XCTestCase {
             .as(check: ServiceProtocol.self, tag: BarService.self){$0}
             .lifetime(.single)
         
-        let serviceFoo: Lazy<ServiceProtocol> = await container.resolve(tag: FooService.self)
+        let serviceFoo: AsyncLazy<ServiceProtocol> = await container.resolve(tag: FooService.self)
         let valueFoo = await serviceFoo.value.foo()
         XCTAssertEqual(valueFoo, "foo")
         
-        let serviceBar: Provider<ServiceProtocol> = await container.resolve(tag: BarService.self)
+        let serviceBar: AsyncProvider<ServiceProtocol> = await container.resolve(tag: BarService.self)
         let valueBar = await serviceBar.value.foo()
         XCTAssertEqual(valueBar, "bar")
         
@@ -282,8 +282,8 @@ class DITranquillityTests_Resolve: XCTestCase {
         container.register(BarService.init)
             .as(check: ServiceProtocol.self){$0}
         
-        let services: [Lazy<ServiceProtocol>] = await many(container.resolve())
-        
+        let services: [AsyncLazy<ServiceProtocol>] = await many(container.resolve())
+
         XCTAssertEqual(services.count, 2)
         let values = await (services[0].value.foo(), services[1].value.foo())
         XCTAssertNotEqual(values.0, values.1)
@@ -598,20 +598,20 @@ class DITranquillityTests_Resolve: XCTestCase {
             .as(check: ServiceProtocol.self, tag: FooService.self){$0}
         
         
-        let serviceFoo1: Lazy<ServiceProtocol?> = await container1.resolve(tag: FooService.self)
+        let serviceFoo1: AsyncLazy<ServiceProtocol?> = await container1.resolve(tag: FooService.self)
         let value1 = await serviceFoo1.value?.foo() ?? ""
         XCTAssertEqual(value1, "foo")
         
-        let serviceFoo2: Lazy<ServiceProtocol?> = await container2.resolve(tag: FooService.self)
+        let serviceFoo2: AsyncLazy<ServiceProtocol?> = await container2.resolve(tag: FooService.self)
         let value2 = await serviceFoo2.value?.foo() ?? ""
         XCTAssertEqual(value2, "foo")
         
         
-        let serviceFooTag1: Lazy<ServiceProtocol?> = await by(tag: FooService.self, on: by(tag: BarService.self, on: container1.resolve()))
+        let serviceFooTag1: AsyncLazy<ServiceProtocol?> = await by(tag: FooService.self, on: by(tag: BarService.self, on: container1.resolve()))
         let tagValue1 = await serviceFooTag1.value?.foo() ?? ""
         XCTAssertEqual(tagValue1, "foo")
         
-        let serviceFooTag2: Lazy<ServiceProtocol?> = await by(tag: FooService.self, on: by(tag: BarService.self, on: container2.resolve()))
+        let serviceFooTag2: AsyncLazy<ServiceProtocol?> = await by(tag: FooService.self, on: by(tag: BarService.self, on: container2.resolve()))
         let tagValue2 = await serviceFooTag2.value?.foo() ?? ""
         XCTAssertEqual(tagValue2, "")
     }
@@ -682,12 +682,12 @@ class DITranquillityTests_Resolve: XCTestCase {
             .as(check: ServiceProtocol.self){$0}
         
         
-        let services: [Lazy<ServiceProtocol>] = await container.resolveMany()
+        let services: [AsyncLazy<ServiceProtocol>] = await container.resolveMany()
         XCTAssertEqual(services.count, 4)
         let valueFirst = await services.first?.value.foo() ?? ""
         XCTAssertEqual(valueFirst, "foo")
         
-        let servicesByTag1: [Lazy<ServiceProtocol>] = await many(by(tag: FooService.self, on: container.resolve()))
+        let servicesByTag1: [AsyncLazy<ServiceProtocol>] = await many(by(tag: FooService.self, on: container.resolve()))
         
         XCTAssertEqual(servicesByTag1.count, 2)
         let valueLast = await servicesByTag1.last?.value.foo() ?? ""

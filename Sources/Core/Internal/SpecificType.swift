@@ -15,7 +15,8 @@ protocol SpecificType {
 
     static var many: Bool { get }
     static var optional: Bool { get }
-    static var delayed: Bool { get }
+    static var syncDelayed: Bool { get }
+    static var asyncDelayed: Bool { get }
     static var inFramework: Bool { get }
 
     static var tag: Bool { get }
@@ -26,6 +27,7 @@ protocol SpecificType {
     static func make(by obj: Any?) -> Self
 
     init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) async -> Any?)
+    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?)
 }
 
 extension SpecificType {
@@ -37,7 +39,8 @@ extension SpecificType {
 
     static var many: Bool { return false }
     static var optional: Bool { return false }
-    static var delayed: Bool { return false }
+    static var syncDelayed: Bool { return false }
+    static var asyncDelayed: Bool { return false }
     static var inFramework: Bool { return false }
 
     static var tag: Bool { return false }
@@ -48,6 +51,9 @@ extension SpecificType {
     static func make(by obj: Any?) -> Self { return obj as! Self }
 
     init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) async -> Any?) {
+        fatalError("Unsupport")
+    }
+    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?) {
         fatalError("Unsupport")
     }
 }

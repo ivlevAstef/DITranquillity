@@ -35,30 +35,31 @@ final class ParsedType: @unchecked Sendable {
         return iter
     }
 
-    private(set) lazy var many: Bool = { return sType?.many ?? false }()
+    private(set) lazy var many: Bool = { sType?.many ?? false }()
     private(set) lazy var optional: Bool = {
-        guard let sType = sType else {
+        guard let sType else {
             return false
         }
         if sType.optional {
             return true
         }
         // `many` not need - because it's inner type
-        if sType.delayed || sType.tag || sType.arg {
+        if sType.asyncDelayed || sType.syncDelayed || sType.tag || sType.arg {
             return parent?.optional ?? false
         }
         return false
     }()
-    private(set) lazy var delayed: Bool = { return sType?.delayed ?? false }()
-    private(set) lazy var arg: Bool = { return sType?.arg ?? false }()
+    private(set) lazy var asyncDelayed: Bool = { sType?.asyncDelayed ?? false }()
+    private(set) lazy var syncDelayed: Bool = { sType?.syncDelayed ?? false }()
+    private(set) lazy var arg: Bool = { sType?.arg ?? false }()
 
-    private(set) lazy var useObject: Bool = { return sType?.useObject ?? false }()
+    private(set) lazy var useObject: Bool = { sType?.useObject ?? false }()
 
-    private(set) lazy var delayMaker: SpecificType.Type? = {
+    private(set) lazy var delayMaker: (type: SpecificType.Type, sync: Bool)? = {
         var iter: ParsedType? = self
         while let sType = iter?.sType {
-            if sType.delayed {
-                return sType
+            if sType.syncDelayed || sType.asyncDelayed {
+                return (sType, sType.syncDelayed)
             }
             iter = iter?.parent
         }
@@ -66,7 +67,7 @@ final class ParsedType: @unchecked Sendable {
     }()
 
     var hasMany: Bool { return oGet(sType?.many, parent?.hasMany) }
-    var hasDelayed: Bool { return oGet(sType?.delayed, parent?.hasDelayed) }
+    var hasDelayed: Bool { return oGet(sType.map { $0.syncDelayed || $0.asyncDelayed }, parent?.hasDelayed) }
 
     init(type: DIAType) {
         self.type = type
@@ -87,7 +88,7 @@ final class ParsedType: @unchecked Sendable {
     func nextParsedTypeAfterManyOrBreakIfDelayed() -> ParsedType? {
         var pType: ParsedType = self
         repeat {
-            if pType.delayed {
+            if pType.syncDelayed || pType.asyncDelayed {
                 return nil
             }
             if pType.many {

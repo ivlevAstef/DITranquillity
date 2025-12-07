@@ -122,8 +122,8 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
         
         container.register(FooService.init)
         
-        let service: Lazy<FooService> = await container.resolve()
-        
+        let service: AsyncLazy<FooService> = await container.resolve()
+
         let wasMade = await service.wasMade
         XCTAssert(!wasMade)
         
@@ -161,8 +161,8 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
         container.register(BarService.init)
             .as(ServiceProtocol.self)
         
-        let service: Lazy<[ServiceProtocol]> = Lazy { await many(container.resolve()) }
-        
+        let service: AsyncLazy<[ServiceProtocol]> = AsyncLazy { await many(container.resolve()) }
+
         let wasMade = await service.wasMade
         XCTAssert(!wasMade)
         
@@ -179,8 +179,8 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
         container.register(BarService.init)
             .as(ServiceProtocol.self)
         
-        let service: Provider<[ServiceProtocol]> = Provider { await many(container.resolve()) }
-        
+        let service: AsyncProvider<[ServiceProtocol]> = AsyncProvider { await many(container.resolve()) }
+
         let value = await service.value
         XCTAssertEqual(value.count, 2)
     }
@@ -245,8 +245,8 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
         
         container.register(FooService.init)
         
-        let service: Lazy<FooService?> = await container.resolve()
-        
+        let service: AsyncLazy<FooService?> = await container.resolve()
+
         let wasMade = await service.wasMade
         XCTAssert(!wasMade)
         
@@ -263,8 +263,8 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
     func test08_LazyOptionalNil() async {
         let container = DIContainer()
         
-        let service: Lazy<FooService?> = await container.resolve()
-        
+        let service: AsyncLazy<FooService?> = await container.resolve()
+
         let wasMade = await service.wasMade
         XCTAssert(!wasMade)
         

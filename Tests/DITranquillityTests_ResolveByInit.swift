@@ -160,15 +160,24 @@ class DITranquillityTests_ResolveByInit: XCTestCase {
         let m3: TestMainActorArgument = await container.resolve(args: 10)
         let m4: TestMainActorArgument2 = await container.resolve(args: 100, "a100")
         let m5: TestGlobalActor = await container.resolve()
-        //      let m6: Provider<TestGlobalActor> = await container.resolve()
-        
+        let m6: Provider<TestGlobalActor> = await container.resolve()
+        let m6a: AsyncProvider<TestGlobalActor> = await container.resolve()
+        let m6s: Provider<TestGlobalActor> = container.sresolve()
+        let m6sa: AsyncProvider<TestGlobalActor> = container.sresolve()
+
         XCTAssert(m1.str == "foo")
         XCTAssert(m2.str == "bar")
         XCTAssert(m3.arg == 10)
         XCTAssert(m4.arg1 == 100 && m4.arg2 == "a100")
         XCTAssert(m5.str == "global")
-        //      XCTAssert(m6.value.str == "global")
-        
+        XCTAssert(m6.value.str == "global")
+        let m6astr = await m6a.value.str
+        XCTAssert(m6astr == "global")
+
+        XCTAssert(m6s.value.str == "global")
+        let m6sastr = await m6sa.value.str
+        XCTAssert(m6sastr == "global")
+
         Task { @MainActor in
             let m1: TestOtherMainActor = await container.resolve()
             let m2: TestMainActor = await container.resolve()

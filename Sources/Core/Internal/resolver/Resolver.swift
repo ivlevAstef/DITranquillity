@@ -51,6 +51,65 @@ final class Resolver {
         return components
     }
 
+    func makeDelayMakerIfCan(by parsedType: ParsedType,
+                             stack: RAIIStack,
+                             components: Components,
+                             use object: Any?,
+                             arguments: AnyArguments?,
+                             isRoot: Bool) -> Any? {
+        guard let (delayMaker, sync) = parsedType.delayMaker else {
+            return nil
+        }
+        
+        weak var saveRAIIStack = stack
+        let data = stack.data
+        let saveGraph = stack.data.graph
+
+        // TODO: delayMaker add flag is Async and add if to this code for make sync and make async delay makers
+        func makeDelayMaker(by parsedType: ParsedType, components: Components) -> Any? {
+            if sync {
+                return delayMaker.init(container, { arguments -> Any? in
+                    // call `.value` into DI initialize.
+                    if let saveRAIIStack {
+                        return self.make(by: parsedType, stack: saveRAIIStack, components: components, use: object, arguments: arguments, isRoot: isRoot)
+                    }
+                    // Call `.value` firstly.
+                    if data.isEmpty() {
+                        return self.make(by: parsedType, stack: RAIIStack(restore: data), components: components, use: object, arguments: arguments, isRoot: isRoot)
+                    }
+                    // Call `.value` into DI initialize, and DI graph has lifetimes perContainer, perRun, single...
+                    // For this case need call provider on her Cache Graph.
+                    // But need restore cache graph after make object.
+                    return self.make(by: parsedType, stack: RAIIStack(restore: data, graph: saveGraph), components: components, use: object, arguments: arguments, isRoot: isRoot)
+                })
+            }
+
+            return delayMaker.init(container, { arguments async -> Any? in
+                // call `.value` into DI initialize.
+                if let saveRAIIStack {
+                    return await self.make(by: parsedType, stack: saveRAIIStack, components: components, use: object, arguments: arguments, isRoot: isRoot)
+                }
+                // Call `.value` firstly.
+                if data.isEmpty() {
+                    return await self.make(by: parsedType, stack: RAIIStack(restore: data), components: components, use: object, arguments: arguments, isRoot: isRoot)
+                }
+                // Call `.value` into DI initialize, and DI graph has lifetimes perContainer, perRun, single...
+                // For this case need call provider on her Cache Graph.
+                // But need restore cache graph after make object.
+                return await self.make(by: parsedType, stack: RAIIStack(restore: data, graph: saveGraph), components: components, use: object, arguments: arguments, isRoot: isRoot)
+            })
+        }
+
+        if parsedType.hasMany, let subPType = parsedType.nextParsedTypeAfterManyOrBreakIfDelayed() {
+            // hard logic for support Many<Lazy<Type>> and Many<Provider<Type>> but Many<Many<Lazy<Type>>> not supported
+            return components.sorted{ $0.order < $1.order }.compactMap {
+                return makeDelayMaker(by: subPType, components: Components([$0]))
+            }
+        } else {
+            return makeDelayMaker(by: parsedType, components: components)
+        }
+    }
+
     @inline(__always) func filterComponents(_ components: Components, by parsedType: ParsedType, use data: Data) -> Components {
         if !parsedType.hasMany {
             return components
@@ -117,7 +176,7 @@ final class Resolver {
                     filterByFramework = filterByFramework && sType.inFramework /// filter
                 } else if sType.tag {
                     currentComponents = container.componentContainer[TypeKey(by: simpleType.type, tag: sType.tagType)]
-                } else if sType.delayed {
+                } else if sType.syncDelayed || sType.asyncDelayed {
                     // ignore - delayed type don't change components list
                     type = parent.firstNotSwiftType
                     continue
