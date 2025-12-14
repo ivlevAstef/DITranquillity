@@ -18,6 +18,11 @@ public enum DIVertex: Hashable {
 
 /// Component vertex. For all components maked one to one component vertex
 public final class DIComponentVertex: Hashable {
+    /// Information about swift concurrency isolation - MainActor or globalActor
+    public enum Isolated {
+        case main
+        case global(any Actor)
+    }
     /// Information about registration component - type, file, line
     public let componentInfo: DIComponentInfo
     /// Component lifetime
@@ -28,6 +33,10 @@ public final class DIComponentVertex: Hashable {
     public let canInitialize: Bool
     /// Alternative types. It's types setup in component used function `as(...`
     public let alternativeTypes: [ComponentAlternativeType]
+
+    /// Information about swift concurrency isolation - has isolation, and type - MainActor or globalActor
+    public let isolation: Isolated?
+
     /// Component is marked as root.
     public let isRoot: Bool
     /// Component is marked as unused.
@@ -44,6 +53,12 @@ public final class DIComponentVertex: Hashable {
         self.priority = component.priority
         self.canInitialize = component.initial != nil
         self.alternativeTypes = component.alternativeTypes
+
+        if let isolationActor = component.initial?.isolation {
+            self.isolation = isolationActor === MainActor.shared ? .main : .global(isolationActor)
+        } else {
+            self.isolation = nil
+        }
         self.isRoot = component.isRoot
         self.unused = component.unused
         self.framework = component.framework

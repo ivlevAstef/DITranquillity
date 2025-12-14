@@ -17,8 +17,10 @@ public final class DIEdge: Hashable {
     public let optional: Bool
     /// Is it dependency many. See more information about `many` in modificators.
     public let many: Bool
-    /// Is it dependency delayed. Is it or `Lazy` or `Provider` from SwiftLazy library
+    /// Is it dependency delayed. Is it or `Lazy` or `Provider` or `AsyncLazy` or `AsyncProvider`.
     public let delayed: Bool
+    /// Is it dependency async delayed. Is it or `AsyncLazy` or `AsyncProvider`.
+    public let async: Bool
     /// Dependency all tags. Can be empty.
     public let tags: [DITag]
     /// Dependency name. Can be nil.
@@ -42,6 +44,7 @@ public final class DIEdge: Hashable {
         self.optional = parameter.parsedType.optional
         self.many = parameter.parsedType.hasMany
         self.delayed = parameter.parsedType.hasDelayed
+        self.async = parameter.parsedType.asyncDelayed
         self.tags = tags
         self.name = parameter.name
         self.type = parameter.parsedType.base.type
