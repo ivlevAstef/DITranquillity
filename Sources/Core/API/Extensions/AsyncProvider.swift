@@ -39,6 +39,36 @@ extension AsyncProvider: SpecificType {
     static var type: DIAType { return Value.self }
 }
 
+// MARK: - Providers with any args
+
+public final class AsyncProviderArgs<Value>: Sendable {
+    /// The value for `self`.
+    ///
+    /// Made the value and return.
+    public func value(args: AnyArguments) async -> Value {
+        return await initializer(args)
+    }
+
+    public init(file: String = #file, line: UInt = #line) {
+        self.initializer = { _ in
+            fatalError("Please inject this property from DI in file: \(file.fileName) on line: \(line). Provider type: \(Value.self) ")
+        }
+    }
+
+    private let initializer: @Sendable (AnyArguments) async -> Value
+    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) async -> Any?) {
+        self.initializer = { args in
+            return gmake(by: await factory(args))
+        }
+    }
+}
+
+extension AsyncProviderArgs: SpecificType {
+    static var asyncDelayed: Bool { return true }
+    static var type: DIAType { return Value.self }
+}
+
+
 // MARK: - Providers with args
 
 public actor AsyncProvider1<Value, Arg1> {

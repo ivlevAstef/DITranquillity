@@ -38,6 +38,36 @@ extension Provider: SpecificType {
     static var type: DIAType { return Value.self }
 }
 
+// MARK: - Providers with any args
+
+
+public final class ProviderArgs<Value>: Sendable {
+    /// The value for `self`.
+    ///
+    /// Made the value and return.
+    public func value(args: AnyArguments) -> Value {
+        return initializer(args)
+    }
+
+    public init(file: String = #file, line: UInt = #line) {
+        self.initializer = { _ in
+            fatalError("Please inject this property from DI in file: \(file.fileName) on line: \(line). Provider type: \(Value.self) ")
+        }
+    }
+
+    private let initializer: @Sendable (AnyArguments) -> Value
+    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?) {
+        self.initializer = { args in
+            return gmake(by: factory(args))
+        }
+    }
+}
+
+extension ProviderArgs: SpecificType {
+    static var syncDelayed: Bool { return true }
+    static var type: DIAType { return Value.self }
+}
+
 // MARK: - Providers with args
 
 public final class Provider1<Value, Arg1>: Sendable {
