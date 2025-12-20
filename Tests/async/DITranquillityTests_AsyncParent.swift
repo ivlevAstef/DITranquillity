@@ -1,5 +1,5 @@
 //
-//  DITranquillityTests_Parent.swift
+//  DITranquillityTests_AsyncParent.swift
 //  DITranquillityTests
 //
 //  Created by Alexander Ivlev on 26/09/2018.
@@ -21,7 +21,7 @@ private class C {
     var inject: B?
 }
 
-class DITranquillityTests_Parent: XCTestCase {
+class DITranquillityTests_AsyncParent: XCTestCase {
     override func setUp() {
         super.setUp()
     }

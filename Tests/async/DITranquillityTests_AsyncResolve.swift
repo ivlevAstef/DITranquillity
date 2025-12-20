@@ -1,5 +1,5 @@
 //
-//  DITranquillityTests_Resolve.swift
+//  DITranquillityTests_AsyncResolve.swift
 //  DITranquillityTest
 //
 //  Created by Alexander Ivlev on 15/07/16.
@@ -24,16 +24,16 @@ private class ManyInitTest {
 }
 
 
-class DITranquillityTests_Resolve: XCTestCase {
+class DITranquillityTests_AsyncResolve: XCTestCase {
     override func setUp() {
         super.setUp()
     }
     
-    func test01_ResolveSyncOptional() {
+    func test01_ResolveSyncOptional() async {
         let container = DIContainer()
         container.register(FooService.init)
         
-        let optionalValue: FooService? = container.resolve()
+        let optionalValue: FooService? = await container.resolve()
         XCTAssertNotNil(optionalValue)
     }
     
@@ -298,8 +298,8 @@ class DITranquillityTests_Resolve: XCTestCase {
         container.register(BarService.init)
             .as(check: ServiceProtocol.self){$0}
         
-        let services: [Provider<ServiceProtocol>] = await many(container.resolve())
-        
+        let services: [AsyncProvider<ServiceProtocol>] = await many(container.resolve())
+
         XCTAssertEqual(services.count, 2)
         let values = await (services[0].value.foo(), services[1].value.foo())
         XCTAssertNotEqual(values.0, values.1)

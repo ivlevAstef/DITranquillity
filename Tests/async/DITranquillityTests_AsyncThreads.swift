@@ -1,5 +1,5 @@
 //
-//  DITranquillityTests_Threads.swift
+//  DITranquillityTests_AsyncThreads.swift
 //  DITranquillityTest
 //
 //  Created by Alexander Ivlev on 18/07/16.
@@ -9,7 +9,29 @@
 import XCTest
 import DITranquillity
 
-class DITranquillityTests_Threads: XCTestCase {
+@MainActor
+private final class TestOtherMainActor {
+    let str: String = "foo"
+    init(injected: TestActorClassInjected) {
+        MainActor.assertIsolated()
+    }
+}
+
+@MainActor
+private final class TestMainActor {
+    let str: String = "bar"
+    let other: TestOtherMainActor
+    init(other: TestOtherMainActor) {
+        self.other = other
+        MainActor.assertIsolated()
+    }
+}
+
+private final class TestActorClassInjected: Sendable {
+    let str: String = "inj"
+}
+
+class DITranquillityTests_AsyncThreads: XCTestCase {
     override func setUp() {
         super.setUp()
     }

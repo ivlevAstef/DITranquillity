@@ -77,32 +77,6 @@ public final class DIContainer: Sendable {
     internal let frameworkStack = Stack<DIFramework.Type>(key: "DIContainer_Stack_Framework")
 }
 
-extension DIContainer {
-    /// Initialize registered object with lifetime `.single`
-    public func initializeSingletonObjects() async {
-        await initializeObjectsWithLifetime(.single)
-    }
-    
-    /// Initialize registered object with specified scope. Please don't use this method if your scope don't cache objects.
-    public func initializeObjectsForScope(_ scope: DIScope) async {
-        await initializeObjectsWithLifetime(.custom(scope))
-    }
-    
-    private func initializeObjectsWithLifetime(_ lifetime: DILifeTime) async {
-        let components = componentContainer.components.filter{ lifetime == $0.lifeTime }
-        if components.isEmpty { // for ignore log
-            return
-        }
-        
-        log(.verbose, msg: "Begin resolving \(components.count) components with lifetime: \(lifetime)", brace: .begin)
-        defer { log(.verbose, msg: "End resolving components with lifetime: \(lifetime)", brace: .end) }
-        
-        for component in components {
-            await resolver.resolveCached(component: component)
-        }
-    }
-}
-
 // MARK: - Clean
 extension DIContainer {
     /// Remove all cached object in container with lifetime `perContainer(_)`

@@ -57,19 +57,15 @@ private final class P2: DIPart {
     }
 }
 
-class DITranquillityTests_Modular: XCTestCase {
-    override func setUp() {
-        super.setUp()
-    }
-    
-    func test01_only_check_code() async {
+final class DITranquillityTests_Modular: XCTestCase {    
+    func test01_only_check_code() {
         // Only for validate code works, and add codecoverage... not check hard cases
         let container = DIContainer()
         
         container.append(framework: F1.self)
         
-        let p1: CP1? = await container.resolve()
-        let p2: CP2? = await container.resolve()
+        let p1: CP1? = container.resolve()
+        let p2: CP2? = container.resolve()
         
         XCTAssertNotNil(p1)
         XCTAssertNotNil(p2)

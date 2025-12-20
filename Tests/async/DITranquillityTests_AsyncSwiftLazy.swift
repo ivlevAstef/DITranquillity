@@ -1,5 +1,5 @@
 //
-//  DITranquillityTests_SwiftLazy.swift
+//  DITranquillityTests_AsyncSwiftLazy.swift
 //  DITranquillityTest
 //
 //  Created by Alexander Ivlev on 09.04.2018.
@@ -18,8 +18,8 @@ private class LazyCycleA {
 }
 
 private class LazyCycleB {
-    let a: Lazy<LazyCycleA>
-    init(_ a: Lazy<LazyCycleA>) {
+    let a: AsyncLazy<LazyCycleA>
+    init(_ a: AsyncLazy<LazyCycleA>) {
         self.a = a
     }
 }
@@ -32,18 +32,18 @@ private class ProviderCycleA {
 }
 
 private class ProviderCycleB {
-    let a: Provider<ProviderCycleA>
-    init(_ a: Provider<ProviderCycleA>) {
+    let a: AsyncProvider<ProviderCycleA>
+    init(_ a: AsyncProvider<ProviderCycleA>) {
         self.a = a
     }
 }
 
 private class LazyInjectA {
-    var inject: Lazy<ServiceProtocol>!
+    var inject: AsyncLazy<ServiceProtocol>!
 }
 
 private class ProviderInjectA {
-    var inject: Provider<ServiceProtocol>!
+    var inject: AsyncProvider<ServiceProtocol>!
 }
 
 private class A1 {
@@ -51,7 +51,7 @@ private class A1 {
     init(_ value1: Int) { self.value1 = value1 }
 }
 private class Provider1InjectA {
-    var inject: Provider1<A1, Int> = Provider1()
+    var inject: AsyncProvider1<A1, Int> = AsyncProvider1()
 }
 
 private class A2 {
@@ -60,7 +60,7 @@ private class A2 {
     init(_ value1: Int, _ value2: Double) { self.value1 = value1; self.value2 = value2 }
 }
 private class Provider2InjectA {
-    var inject: Provider2<A2, Int, Double> = Provider2()
+    var inject: AsyncProvider2<A2, Int, Double> = AsyncProvider2()
 }
 
 private class A3 {
@@ -70,14 +70,14 @@ private class A3 {
     init(_ value1: Int, _ value2: Double, _ value3: String) { self.value1 = value1; self.value2 = value2; self.value3 = value3 }
 }
 private class Provider3InjectA {
-    var inject: Provider3<A3, Int, Double, String> = Provider3()
+    var inject: AsyncProvider3<A3, Int, Double, String> = AsyncProvider3()
 }
 
 
 private class ProviderInitProvider1 {
-    private let provider: Provider<ProviderInitProvider2>
+    private let provider: AsyncProvider<ProviderInitProvider2>
     private let value: ProviderInitProvider2
-    init(_ provider: Provider<ProviderInitProvider2>) async {
+    init(_ provider: AsyncProvider<ProviderInitProvider2>) async {
         self.provider = provider
         self.value = await provider.value
     }
@@ -112,7 +112,7 @@ private class ProviderInitProviderChecker1 {
 }
 
 
-class DITranquillityTests_SwiftLazy: XCTestCase {
+class DITranquillityTests_AsyncSwiftLazy: XCTestCase {
     override func setUp() {
         super.setUp()
     }
@@ -143,8 +143,8 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
         
         container.register(FooService.init)
         
-        let service: Provider<FooService> = await container.resolve()
-        
+        let service: AsyncProvider<FooService> = await container.resolve()
+
         let value = await service.value
         XCTAssertEqual(value.foo(), "foo")
         
@@ -384,7 +384,7 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
         ]
         Task.detached {
             for _ in 0..<4096 {
-                let service: Provider<FooService> = await container.resolve()
+                let service: AsyncProvider<FooService> = await container.resolve()
                 _ = await service.value
             }
             expectations[0].fulfill()
@@ -392,7 +392,7 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
         
         Task.detached {
             for _ in 0..<2048 {
-                let service: Provider<FooService> = await container.resolve()
+                let service: AsyncProvider<FooService> = await container.resolve()
                 _ = await service.value
             }
             expectations[1].fulfill()
@@ -413,7 +413,7 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
         ]
         Task.detached {
             for _ in 0..<4096 {
-                let service: Lazy<FooService> = await container.resolve()
+                let service: AsyncLazy<FooService> = await container.resolve()
                 _ = await service.value
             }
             expectations[0].fulfill()
@@ -421,7 +421,7 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
         
         Task.detached {
             for _ in 0..<2048 {
-                let service: Lazy<FooService> = await container.resolve()
+                let service: AsyncLazy<FooService> = await container.resolve()
                 _ = await service.value
             }
             expectations[1].fulfill()
@@ -435,7 +435,7 @@ class DITranquillityTests_SwiftLazy: XCTestCase {
         DISetting.Log.fun = nil
         
         container.register(FooService.init)
-        let service: Lazy<FooService> = await container.resolve()
+        let service: AsyncLazy<FooService> = await container.resolve()
         
         let expectations = [
             XCTestExpectation(description: "test16_lazy_one_and_clear_multithread_1"),

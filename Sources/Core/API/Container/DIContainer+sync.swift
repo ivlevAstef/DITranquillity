@@ -1,10 +1,11 @@
 //
-//  DIContainer+resolve.swift
+//  DIContainer+syncResolve.swift
 //  DITranquillity
 //
-//  Created by Alexander Ivlev on 10/06/16.
+//  Created by Alexander Ivlev on 30.11.2025.
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
+
 
 // MARK: - resolve
 extension DIContainer {
@@ -15,8 +16,8 @@ extension DIContainer {
     /// - Parameter framework: Framework from which to resolve a object
     /// - Parameter arguments: Information about injection arguments. Used only if your registration objects with `arg` modificator.
     /// - Returns: Object for the specified type, or nil (see description).
-    public func resolve<T>(from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) async -> T {
-        return await resolver.resolve(from: framework, arguments: arguments)
+    public func resolve<T>(sync: Void = (), from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) -> T {
+        return resolver.resolve(from: framework, arguments: arguments)
     }
     
     /// Resolve object by type.
@@ -26,10 +27,10 @@ extension DIContainer {
     /// - Parameter framework: Framework from which to resolve a object
     /// - Parameter arguments: arguments for resolved object by type.
     /// - Returns: Object for the specified type, or nil (see description).
-    public func resolve<T>(from framework: DIFramework.Type? = nil, args: Any?...) async -> T {
-        return await resolver.resolve(from: framework, arguments: AnyArguments(for: T.self, argsArray: args))
+    public func resolve<T>(sync: Void = (), from framework: DIFramework.Type? = nil, args: Any?...) -> T {
+        return resolver.resolve(from: framework, arguments: AnyArguments(for: T.self, argsArray: args))
     }
-    
+
     /// Resolve object by type with tag.
     /// Can crash application, if can't found the type with tag.
     /// But if the type is optional, then the application will not crash, but it returns nil.
@@ -39,8 +40,8 @@ extension DIContainer {
     ///   - framework: Framework from which to resolve a object
     ///   - arguments: Information about injection arguments. Used only if your registration objects with `arg` modificator.
     /// - Returns: Object for the specified type with tag, or nil (see description).
-    public func resolve<T, Tag>(tag: Tag.Type, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) async -> T {
-        return await by(tag: tag, on: resolver.resolve(from: framework, arguments: arguments))
+    public func resolve<T, Tag>(sync: Void = (), tag: Tag.Type, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) -> T {
+        return by(tag: tag, on: resolver.resolve(from: framework, arguments: arguments))
     }
     
     /// Resolve object by type with name.
@@ -52,16 +53,16 @@ extension DIContainer {
     ///   - framework: Framework from which to resolve a object
     ///   - arguments: Information about injection arguments. Used only if your registration objects with `arg` modificator.
     /// - Returns: Object for the specified type with name, or nil (see description).
-    public func resolve<T>(name: String, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) async -> T {
-        return await resolver.resolve(name: name, from: framework, arguments: arguments)
+    public func resolve<T>(sync: Void = (), name: String, from framework: DIFramework.Type? = nil, arguments: AnyArguments? = nil) -> T {
+        return resolver.resolve(name: name, from: framework, arguments: arguments)
     }
     
     /// Resolve many objects by type.
     ///
     /// - Parameter arguments: Information about injection arguments. Used only if your registration objects with `arg` modificator.
     /// - Returns: Objects for the specified type.
-    public func resolveMany<T>(arguments: AnyArguments? = nil) async -> [T] {
-        return await many(resolver.resolve(arguments: arguments))
+    public func resolveMany<T>(sync: Void = (), arguments: AnyArguments? = nil) -> [T] {
+        return many(resolver.resolve(arguments: arguments))
     }
     
     /// Injected all dependencies into object.
@@ -70,7 +71,33 @@ extension DIContainer {
     /// - Parameters:
     ///   - object: object in which injections will be introduced.
     ///   - framework: Framework from which to injection into object
-    public func inject<T>(into object: T, from framework: DIFramework.Type? = nil) async {
-        await resolver.injection(obj: object, from: framework)
+    public func inject<T>(sync: Void = (), into object: T, from framework: DIFramework.Type? = nil) {
+        resolver.injection(obj: object, from: framework)
+    }
+}
+
+extension DIContainer {
+    /// Initialize registered object with lifetime `.single`
+    public func initializeSingletonObjects() {
+        initializeObjectsWithLifetime(.single)
+    }
+
+    /// Initialize registered object with specified scope. Please don't use this method if your scope don't cache objects.
+    public func initializeObjectsForScope(_ scope: DIScope) {
+        initializeObjectsWithLifetime(.custom(scope))
+    }
+
+    private func initializeObjectsWithLifetime(_ lifetime: DILifeTime) {
+        let components = componentContainer.components.filter{ lifetime == $0.lifeTime }
+        if components.isEmpty { // for ignore log
+            return
+        }
+
+        log(.verbose, msg: "Begin resolving \(components.count) components with lifetime: \(lifetime)", brace: .begin)
+        defer { log(.verbose, msg: "End resolving components with lifetime: \(lifetime)", brace: .end) }
+
+        for component in components {
+            resolver.resolveCached(component: component)
+        }
     }
 }

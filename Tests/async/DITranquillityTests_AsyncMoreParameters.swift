@@ -1,5 +1,5 @@
 //
-//  DITranquillityTests_MoreParameters.swift
+//  DITranquillityTests_AsyncMoreParameters.swift
 //  DITranquillity-iOS
 //
 //  Created by Alexander Ivlev on 17/05/2018.
@@ -144,7 +144,7 @@ private class RegArgTest {
 }
 
 
-class DITranquillityTests_MoreParameters: XCTestCase {
+class DITranquillityTests_AsyncMoreParameters: XCTestCase {
     override func setUp() {
         super.setUp()
     }
