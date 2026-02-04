@@ -6,45 +6,79 @@
 //  Copyright © 2020 Alexander Ivlev. All rights reserved.
 //
 
-/// Information about vertex in graph. Vertex is it component/argument or unknown type.
+/// Represents a vertex in the dependency graph.
+///
+/// Each vertex can be one of three types:
+/// - **Component**: A registered DI component
+/// - **Argument**: A runtime argument (used with `arg()` modificator)
+/// - **Unknown**: A dependency that couldn't be resolved (indicates configuration error)
 public enum DIVertex: Hashable {
-    /// Component. Is it description about registration in di container.
+    /// A registered component vertex.
+    ///
+    /// Represents a component that was registered in the DI container.
     case component(DIComponentVertex)
-    /// Argument. Is it injection information but injection not component - injection runtime argument. For more information see modificators.
+
+    /// A runtime argument vertex.
+    ///
+    /// Created when a component dependency uses the `arg()` modificator instead of
+    /// resolving from the container.
     case argument(DIArgumentVertex)
-    /// Unknown. Is it invalid injection because not found component for dependency.
+
+    /// An unknown dependency vertex.
+    ///
+    /// Created when a component has a dependency on a type that has no matching
+    /// registration. This indicates a configuration error.
     case unknown(DIUnknownVertex)
 }
 
-/// Component vertex. For all components maked one to one component vertex
+/// Detailed information about a registered component.
+///
+/// `DIComponentVertex` contains all metadata about a component registration,
+/// including its type, lifetime, priority, isolation context, and registration location.
 public final class DIComponentVertex: Hashable {
-    /// Information about swift concurrency isolation - MainActor or globalActor
+    /// Swift concurrency isolation context for the component.
     public enum Isolated {
+        /// Component is isolated to the main actor.
         case main
+        /// Component is isolated to a custom global actor.
         case global(any Actor)
     }
-    /// Information about registration component - type, file, line
+
+    /// Registration metadata including type, file, and line number.
     public let componentInfo: DIComponentInfo
-    /// Component lifetime
+
+    /// The component's lifetime policy.
     public let lifeTime: DILifeTime
-    /// Component set to `default` or `test`
+
+    /// The component's resolution priority (normal, default, or test).
     public let priority: DIComponentPriority
-    /// Component have `init` method or not
+
+    /// Whether the component has an initializer method.
+    ///
+    /// `false` if the component was registered without an init closure
+    /// (e.g., `container.register(Type.self)` without a factory).
     public let canInitialize: Bool
-    /// Alternative types. It's types setup in component used function `as(...`
+
+    /// Alternative types registered with `as(_:)`, `as(_:tag:)`, or `as(_:name:)`.
     public let alternativeTypes: [ComponentAlternativeType]
 
-    /// Information about swift concurrency isolation - has isolation, and type - MainActor or globalActor
+    /// Swift concurrency isolation information.
+    ///
+    /// `nil` if the component has no actor isolation,
+    /// `.main` for MainActor isolation,
+    /// `.global(actor)` for custom global actor isolation.
     public let isolation: Isolated?
 
-    /// Component is marked as root.
+    /// Whether the component is marked as a root entry point.
     public let isRoot: Bool
-    /// Component is marked as unused.
+
+    /// Whether the component is marked as potentially unused.
     public let unused: Bool
 
-    /// Framework where this component was register
+    /// The framework where this component was registered, if any.
     public let framework: DIFramework.Type?
-    /// Part where this component was register
+
+    /// The part where this component was registered, if any.
     public let part: DIPart.Type?
 
     init(component: Component) {
@@ -73,11 +107,21 @@ public final class DIComponentVertex: Hashable {
     }
 }
 
-/// This vertex maked if component have dependency using `arg`.
+/// Vertex representing a runtime argument dependency.
+///
+/// Created when a component uses the `arg()` modificator to receive
+/// a value at resolution time instead of resolving from the container.
+///
+/// ## Example Registration
+///
+/// ```swift
+/// container.register { MyService(config: $0, userId: arg($1)) }
+/// // The userId parameter creates a DIArgumentVertex in the graph
+/// ```
 public final class DIArgumentVertex: Hashable {
     let id: Int
 
-    /// Argument type in component dependency
+    /// The expected type of the runtime argument.
     public let type: DIAType
 
     init(id: Int, type: DIAType) {
@@ -94,11 +138,17 @@ public final class DIArgumentVertex: Hashable {
     }
 }
 
-/// This vertex maked if component have dependency on unknown type
+/// Vertex representing an unresolved dependency.
+///
+/// Created when a component has a dependency on a type that has no matching
+/// registration in the container. This typically indicates a configuration error.
+///
+/// - Important: The presence of `DIUnknownVertex` in a graph usually means
+///   the DI configuration is incomplete. Use `graph.checkIsValid()` to detect these issues.
 public final class DIUnknownVertex: Hashable {
     let id: Int
 
-    /// Unknown type - for this type DI didn't find component in graph
+    /// The type that could not be resolved.
     public let type: DIAType
 
     init(id: Int, type: DIAType) {
@@ -115,7 +165,7 @@ public final class DIUnknownVertex: Hashable {
 }
 
 extension DIVertex: CustomStringConvertible {
-    /// Vertex description
+    /// A textual representation of the vertex.
     public var description: String {
         switch self {
         case .component(let componentVertex):

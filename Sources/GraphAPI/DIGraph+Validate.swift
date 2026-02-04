@@ -7,17 +7,48 @@
 //
 
 extension DIGraph {
-    /// Validate the graph by checking various conditions.
+    /// Validates the dependency graph for common configuration errors.
     ///
-    /// - Parameter checkGraphCycles: check cycles in the graph of heavy operation. So it can be disabled.
-    /// - Returns: true if validation success.
+    /// This method performs comprehensive validation including:
+    /// - **Initialization**: All non-cached components can be created
+    /// - **Unambiguity**: Each dependency resolves to exactly one component
+    /// - **Reachability**: All required dependencies have registrations
+    /// - **Cycles**: No unbreakable dependency cycles exist
+    ///
+    /// - Parameter checkGraphCycles: Whether to check for cycles (heavy operation). Default is `true`.
+    ///
+    /// - Returns: `true` if all validation checks pass, `false` otherwise.
+    ///
+    /// ## Usage
+    ///
+    /// ```swift
+    /// let container = DIContainer()
+    /// // ... register components ...
+    ///
+    /// #if DEBUG
+    /// let graph = container.makeGraph()
+    ///
+    /// // Full validation (recommended for development/testing)
+    /// if graph.checkIsValid() {
+    ///     print("DI configuration is valid")
+    /// }
+    ///
+    /// // Skip cycle detection (faster, for production)
+    /// if graph.checkIsValid(checkGraphCycles: false) {
+    ///     print("Basic validation passed")
+    /// }
+    /// #endif
+    /// ```
+    ///
+    /// - Note: for improve application performance on run make and check graph only in DEBUG, and disable in release versions.
+    /// - Note: Validation results are logged. Check the console for detailed error messages.
     public func checkIsValid(checkGraphCycles: Bool = true) -> Bool {
         let hasRoot = hasRootComponents()
         let canInitialize = checkGraphOnCanInitialize()
         let unambiguity = checkGraphForUnambiguity()
         let reachibility = checkGraphForReachability()
         let notCycles = checkGraphCycles ? checkGraphForCycles(onlyRoot: hasRoot) : true
-        
+
         if hasRoot {
             findUnusedComponents()
         }
@@ -30,13 +61,13 @@ extension DIGraph {
     private func hasRootComponents() -> Bool {
         return vertices.contains(where: { $0.isRoot })
     }
-    
+
     /// a graph contains object which create - have initialized or can maked and safed in cache
     private func checkGraphOnCanInitialize() -> Bool {
         var successful: Bool = true
-        
+
         var visitedVertices: Set<DIVertex> = []
-        
+
         for fromIndex in adjacencyList.indices {
             for (edge, toIndices) in adjacencyList[fromIndex] {
                 for toIndex in toIndices {
@@ -47,7 +78,7 @@ extension DIGraph {
                         continue
                     }
                     visitedVertices.insert(vertices[toIndex])
-                    
+
                     if componentVertex.lifeTime == .prototype {
                         successful = successful && edge.optional
                         log_canNotInitializePrototype(vertices[toIndex], from: vertices[fromIndex], optional: edge.optional)
@@ -67,7 +98,7 @@ extension DIGraph {
                 }
             }
         }
-        
+
         // Also add logs from components if not found reference on this.
         for vertex in vertices {
             guard case .component(let componentVertex) = vertex else {
@@ -76,27 +107,27 @@ extension DIGraph {
             if componentVertex.canInitialize || visitedVertices.contains(vertex) {
                 continue
             }
-            
+
             if componentVertex.lifeTime == .prototype || componentVertex.lifeTime == .objectGraph {
                 log_canNotInitialize(vertex)
             } else {
                 log_canNotInitializeCached(vertex)
             }
         }
-        
+
         return successful
     }
-    
+
     private func hasPath(from startFromIndex: Int, to requiredIndex: Int) -> Bool {
         var visited: Set<Int> = []
         var stack: [Int] = [startFromIndex]
         while let fromIndex = stack.first {
             stack.removeFirst()
-            
+
             if fromIndex == requiredIndex {
                 return true
             }
-            
+
             visited.insert(fromIndex)
             for toIndex in adjacencyList[fromIndex].flatMap({ $0.toIndices }) {
                 if !visited.contains(toIndex) {
@@ -104,7 +135,7 @@ extension DIGraph {
                 }
             }
         }
-        
+
         return false
     }
 }
@@ -114,7 +145,7 @@ extension DIGraph {
     /// a graph is unambiguous if any dependency can always be passed unambiguously to another one
     private func checkGraphForUnambiguity() -> Bool {
         var successful: Bool = true
-        
+
         for fromIndex in adjacencyList.indices {
             for (edge, toIndices) in adjacencyList[fromIndex] {
                 if edge.many { // ignore many
@@ -124,12 +155,12 @@ extension DIGraph {
                     continue
                 }
                 successful = successful && edge.optional
-                
+
                 let candidates = toIndices.map { vertices[$0] }
                 log_ambiguityReference(from: vertices[fromIndex], for: edge.type, candidates: candidates, optional: edge.optional)
             }
         }
-        
+
         return successful
     }
 }
@@ -139,49 +170,49 @@ extension DIGraph {
     /// a graph is reachability if any dependency have edge on component, or optional.
     private func checkGraphForReachability() -> Bool {
         var successful: Bool = true
-        
+
         /// Yes it's N^3 but unknown vertices it shouldn't be too much
         for (toIndex, vertex) in vertices.enumerated() {
             guard case .unknown(let unknownVertex) = vertex else {
                 continue
             }
-            
+
             // By make algorith for unknown vertex can only one from vertex.
             guard let fromIndex = adjacencyList.firstIndex(where: { $0.contains { $0.toIndices.contains(toIndex) }}) else {
                 assertionFailure("Can't found from vertices for unknown vertex? it's bug in code")
                 continue
             }
-            
+
             guard let (edge, _) = adjacencyList[fromIndex].first(where: { $0.toIndices.contains(toIndex) }) else {
                 assertionFailure("But in top code checked on contains")
                 continue
             }
-            
+
             if edge.optional {
                 log_invalidReferenceOptional(from: vertices[fromIndex], on: unknownVertex.type)
                 continue
             }
-            
+
             if edge.many {
                 log_invalidReferenceMany(from: vertices[fromIndex], on: unknownVertex.type)
                 continue
             }
-            
+
             successful = false
-            
+
             log_invalidReference(from: vertices[fromIndex], on: unknownVertex.type)
         }
-        
+
         return successful
     }
-    
+
     private func findUnusedComponents() {
         var visited: Set<Int> = []
         var stack: [Int] = vertices.enumerated().filter { $0.element.isRootOrSingle }.map { $0.offset }
-        
+
         while let fromIndex = stack.first {
             stack.removeFirst()
-            
+
             visited.insert(fromIndex)
             for toIndex in adjacencyList[fromIndex].flatMap({ $0.toIndices }) {
                 if !visited.contains(toIndex) {
@@ -189,13 +220,13 @@ extension DIGraph {
                 }
             }
         }
-        
+
         if visited.count == vertices.count {
             return
         }
-        
+
         let unvisited = Set(vertices.indices).subtracting(visited)
-        
+
         for index in unvisited.sorted() {
             if !vertices[index].unused {
                 log_unusedComponent(vertex: vertices[index])
@@ -208,20 +239,20 @@ extension DIGraph {
 extension DIGraph {
     private func checkGraphForCycles(onlyRoot: Bool) -> Bool {
         let cycles = onlyRoot ? findRootCycles() : findCycles()
-        
+
         func calculateAverageLength() -> Double {
             let summaryVerticesCount = cycles.map { $0.vertexIndices.count }.reduce(0, +)
             return Double(summaryVerticesCount) / Double(cycles.count)
         }
         log(.verbose, msg: "Found \(cycles.count) cycles with average length: \(calculateAverageLength())")
-        
+
         let isValidVerticesCycles = checkGraphCyclesVertices(cycles: cycles, onlyRoot: onlyRoot)
         let isValidEdgesCycles = checkGraphCyclesEdges(cycles: cycles)
-        
+
         return isValidVerticesCycles && isValidEdgesCycles
     }
-    
-    
+
+
     private func checkGraphCyclesVertices(cycles: [DICycle], onlyRoot: Bool) -> Bool {
         func isCached(_ lifetime: DILifeTime) -> Bool {
             switch lifetime {
@@ -229,12 +260,12 @@ extension DIGraph {
             default: return false
             }
         }
-        
+
         var successful: Bool = true
         for cycle in cycles {
             assert(cycle.vertexIndices.count >= 1)
             let cycleVertices = cycle.vertexIndices.map { vertices[$0] }
-            
+
             var anyVerticesPrototype: Bool = true
             var countPrototypeLifetime: Int = 0
             var countObjectGraphLifetime: Int = 0
@@ -254,12 +285,12 @@ extension DIGraph {
                 case .custom: countCustomLifetime += 1
                 }
             }
-            
+
             if anyVerticesPrototype {
                 successful = false
                 log_cycleAnyVerticesPrototype(vertices: cycleVertices, edges: cycle.edges)
             }
-            
+
             if countPrototypeLifetime > 0 {
                 if onlyRoot {
                     if case .component(let componentVertex) = cycleVertices[0], componentVertex.lifeTime == .prototype {
@@ -270,7 +301,7 @@ extension DIGraph {
                     log_cycleHavePrototype(vertices: cycleVertices, edges: cycle.edges)
                 }
             }
-            
+
             if countCachedLifetime > 0 && countPrototypeLifetime + countObjectGraphLifetime > 0 {
                 if onlyRoot && countCachedLifetime == 1, case .component(let componentVertex) = cycleVertices[0], isCached(componentVertex.lifeTime) {
                     // nothing - only first component is cache, it's okay.
@@ -279,23 +310,23 @@ extension DIGraph {
                 }
             }
         }
-        
+
         return successful
     }
-    
+
     private func checkGraphCyclesEdges(cycles: [DICycle]) -> Bool {
         var successful: Bool = true
         for cycle in cycles {
             assert(cycle.edges.count >= 1)
             let cycleVertices = cycle.vertexIndices.map { vertices[$0] }
-            
+
             var anyInitialEdge: Bool = true
             var hasBreakPointEdge: Bool = false
             for edge in cycle.edges {
                 hasBreakPointEdge = hasBreakPointEdge || (edge.cycle || edge.delayed || (edge.initial && edge.many))
                 anyInitialEdge = anyInitialEdge && (edge.initial && !edge.many && !edge.delayed)
             }
-            
+
             if anyInitialEdge {
                 successful = false
                 log_cycleAnyInitEdges(vertices: cycleVertices, edges: cycle.edges)
@@ -304,7 +335,7 @@ extension DIGraph {
                 log_cycleNoHaveBreakPoint(vertices: cycleVertices, edges: cycle.edges)
             }
         }
-        
+
         return successful
     }
 }
@@ -316,14 +347,14 @@ extension DIVertex {
         }
         return false
     }
-    
+
     fileprivate var isRootOrSingle: Bool {
         if case .component(let componentVertex) = self, (componentVertex.isRoot || componentVertex.lifeTime == .single) {
             return true
         }
         return false
     }
-    
+
     fileprivate var unused: Bool {
         if case .component(let componentVertex) = self, componentVertex.unused {
             return true
