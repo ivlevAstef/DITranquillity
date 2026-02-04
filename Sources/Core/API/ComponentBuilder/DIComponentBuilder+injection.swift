@@ -6,153 +6,186 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-// MARK: - contains `injection`, `postInit` functions
+// MARK: - Dependency Injection (`injection`, `postInit` functions)
 extension DIComponentBuilder {
-    /// Function for appending an injection method.
-    /// In addition, container has a set of functions with a different number of parameters.
-    /// Using:
-    /// ```
-    /// container.register(YourClass.self)
-    ///   .injection{ $0.yourClassProperty = YourValue }
-    /// ```
-    /// Also see: `injection<Property>(cycle:_:)`
+    /// Appends a basic injection method without dependencies.
     ///
-    /// - Parameter method: Injection method. First input argument is the always created object.
-    /// - Returns: Self
+    /// Use this method when you need to perform custom configuration on the created object
+    /// without injecting additional dependencies.
+    ///
+    /// - Parameter method: Injection closure. The first argument is the created object.
+    ///
+    /// - Returns: Self for method chaining.
+    ///
+    /// - SeeAlso: `injection(_:)` with parameters for injecting dependencies.
+    ///
+    /// ## Example
+    ///
+    /// ```swift
+    /// container.register(YourClass.init)
+    ///     .injection { $0.configure() }
+    /// ```
     @discardableResult
     public func injection(_ method: @escaping @isolated(any) (Impl) -> Void) -> Self {
-        component.append(injection: MethodMaker.comboEachMake(useObject: true, sF: method, aF: method), cycle: false)
+        component.append(injection: MethodMaker.comboEachMake(useObject: true, fn: method), cycle: false)
         return self
     }
-    
-    /// Function for appending an injection method.
-    /// Your Can use specified name for get an object.
+
+    /// Appends an injection method that injects a single dependency.
     ///
-    /// Using:
-    /// ```
-    /// container.register(YourClass.self)
-    ///   .injection { $0.yourClassProperty = $1 }
-    /// container.register(YourClass.self)
-    ///   .injection(name: "key") { $0.yourClassProperty = $1 }
-    /// ```
-    /// OR
-    /// ```
-    /// container.register(YourClass.self)
-    ///   .injection { yourClass, property in yourClass.property = property }
-    /// container.register(YourClass.self)
-    ///   .injection(name: "key") { yourClass, property in yourClass.property = property }
-    /// ```
-    /// OR if the injection participates in a cycle
-    /// ```
-    /// container.register(YourClass.self)
-    ///   .injection(name: "key", cycle: true) { $0.yourClassProperty = $1 }
-    /// container.register(YourClass.self)
-    ///   .injection(cycle: true) { $0.yourClassProperty = $1 }
-    /// ```
+    /// The second parameter of the closure is automatically resolved from the container.
+    /// Supports named resolution and cyclic dependency handling.
     ///
     /// - Parameters:
-    ///   - name: The specified name, for get an object. or nil.
-    ///   - cycle: true if the injection participates in a cycle. default false.
-    ///   - method: Injection method. First input argument is the always created object.
-    /// - Returns: Self
+    ///   - name: Optional name for named resolution of the dependency. If nil, resolves by type only.
+    ///   - cycle: Set to `true` if this injection participates in a dependency cycle.
+    ///     This allows the container to break the cycle by deferring injection. Default is `false`.
+    ///   - method: Injection closure. First argument is the created object, second is the resolved dependency.
+    ///
+    /// - Returns: Self for method chaining.
+    ///
+    /// ## Examples
+    ///
+    /// ```swift
+    /// // Basic injection
+    /// container.register(YourClass.init)
+    ///     .injection { $0.property = $1 }
+    ///
+    /// // Named parameter style
+    /// container.register(YourClass.init)
+    ///     .injection { yourClass, property in yourClass.property = property }
+    ///
+    /// // Named resolution
+    /// container.register(YourClass.init)
+    ///     .injection(name: "primary") { $0.database = $1 }
+    ///
+    /// // Cyclic dependency
+    /// container.register(YourClass.init)
+    ///     .injection(cycle: true) { $0.parent = $1 }
+    /// ```
     @discardableResult
-    public func injection<Property>(name: String? = nil, cycle: Bool = false, _ method: @escaping @isolated(any) (Impl,Property) -> Void) -> Self {
-        component.append(injection: MethodMaker.comboEachMake(useObject: true, [nil, name], sF: method, aF: method), cycle: cycle)
+    public func injection<Property>(name: String? = nil, cycle: Bool = false, _ method: @escaping @isolated(any) (Impl, Property) -> Void) -> Self {
+        component.append(injection: MethodMaker.comboEachMake(useObject: true, [nil, name], fn: method), cycle: cycle)
         return self
     }
-    
-    
-    /// Function for appending an injection method.
-    /// Your Can use specified name for get an object.
+
+    /// Appends an injection method with multiple dependencies.
     ///
-    /// Using:
-    /// ```
-    /// container.register(YourClass.self)
-    ///   .injection(\YourClass.yourClassProperty) { many($0) }
-    /// container.register(YourClass.self)
-    ///   .injection(name: "key", \.yourClassProperty) { by(tag: YourTag.self, on: $0) }
-    /// ```
-    /// OR if the injection participates in a cycle
-    /// ```
-    /// container.register(YourClass.self)
-    ///   .injection(name: "key", cycle: true, \.yourClassProperty) { by(tag: YourTag.self, on: $0) }
-    /// container.register(YourClass.self)
-    ///   .injection(cycle: true, \YourClass.yourClassProperty) { many($0) }
-    /// ```
+    /// Use this method when you need to inject multiple dependencies at once,
+    /// such as calling a configuration method with several parameters.
     ///
-    /// - Parameters:
-    ///   - name: The specified name, for get an object. or nil.
-    ///   - cycle: true if the injection participates in a cycle. default false.
-    ///   - method: Injection method. First input argument is the always created object.
-    ///   - modificator: Need for support set many / tag / arg on property.
-    /// - Returns: Self
+    /// - Parameter method: Injection closure. First argument is the created object,
+    ///   subsequent arguments are resolved dependencies.
+    ///
+    /// - Returns: Self for method chaining.
+    ///
+    /// ## Example
+    ///
+    /// ```swift
+    /// container.register(YourClass.init)
+    ///     .injection { yourClass, database, logger, config in
+    ///         yourClass.configure(database: database, logger: logger, config: config)
+    ///     }
+    /// ```
     @discardableResult
-    public func injection<P, Property>(name: String? = nil, cycle: Bool = false, _ keyPath: ReferenceWritableKeyPath<Impl, P>, _ modificator: @escaping (Property) -> P) -> Self {
-        injection(name: name, cycle: cycle, { $0[keyPath: keyPath] = modificator($1) })
-        return self
+    public func injection<each P>(_ method: @escaping @isolated(any) (Impl, repeat each P) -> Void) -> Self {
+        return append(injection: MethodMaker.comboEachMake(useObject: true, fn: method))
     }
-    
-    /// Function for appending an injection method.
-    /// Your Can use specified name for get an object.
+
+    /// Appends an injection using a key path for direct property assignment.
     ///
-    /// Using:
-    /// ```
-    /// container.register(YourClass.self)
-    ///   .injection(\.yourClassProperty)
-    /// container.register(YourClass.self)
-    ///   .injection(name: "key", \YourClass.yourClassProperty)
-    /// ```
-    /// OR if the injection participates in a cycle
-    /// ```
-    /// container.register(YourClass.self)
-    ///   .injection(name: "key", cycle: true, \YourClass.yourClassProperty)
-    /// container.register(YourClass.self)
-    ///   .injection(cycle: true, \.yourClassProperty)
-    /// ```
+    /// This is the simplest form of property injection. The dependency type is inferred
+    /// from the property type.
     ///
     /// - Parameters:
-    ///   - name: The specified name, for get an object. or nil.
-    ///   - cycle: true if the injection participates in a cycle. default false.
-    ///   - method: Injection method. First input argument is the always created object.
-    /// - Returns: Self
+    ///   - name: Optional name for named resolution.
+    ///   - cycle: Set to `true` if this injection participates in a dependency cycle.
+    ///   - keyPath: Key path to the property being injected.
+    ///
+    /// - Returns: Self for method chaining.
+    ///
+    /// ## Examples
+    ///
+    /// ```swift
+    /// // Simple property injection
+    /// container.register(YourClass.init)
+    ///     .injection(\.logger)
+    ///
+    /// // With full key path syntax
+    /// container.register(YourClass.init)
+    ///     .injection(\YourClass.database)
+    ///
+    /// // Named injection
+    /// container.register(YourClass.init)
+    ///     .injection(name: "primary", \.database)
+    ///
+    /// // Cyclic injection
+    /// container.register(YourClass.init)
+    ///     .injection(cycle: true, \.parent)
+    /// ```
     @discardableResult
     public func injection<Property>(name: String? = nil, cycle: Bool = false, _ keyPath: ReferenceWritableKeyPath<Impl, Property>) -> Self {
         injection(name: name, cycle: cycle, { $0[keyPath: keyPath] = $1 })
         return self
     }
-    
-    /// Function for appending an injection method
+
+    /// Appends an injection using a key path with a modificator.
     ///
-    /// Using:
-    /// ```
-    /// container.register(YourClass.self)
-    ///   .injection { yourClass, p0, p1,... in yourClass.yourMethod(p0, p1, ...) }
-    /// ```
+    /// Use this method when you need to apply modificators like `many()`, `by(tag:on:)`,
+    /// or `arg()` to the injected value.
     ///
     /// - Parameters:
-    ///   - method: Injection method. First input argument is the always created object.
-    /// - Returns: Self
-    @discardableResult
-    public func injection<each P>(_ method: @escaping @isolated(any) (Impl, repeat each P) -> Void) -> Self {
-        return append(injection: MethodMaker.comboEachMake(useObject: true, sF: method, aF: method))
-    }
-    
-    /// Function for appending an injection method which is always executed at end of a object creation.
-    /// Using:
-    /// ```
-    /// container.register(YourClass.self)
-    ///   . ...
-    ///   .postInit{ $0.postInitActions() }
-    /// ```
+    ///   - name: Optional name for named resolution.
+    ///   - cycle: Set to `true` if this injection participates in a dependency cycle.
+    ///   - keyPath: Key path to the property being injected.
+    ///   - modificator: Transformation function for the resolved value. Use `many()`, `by(tag:on:)`, etc.
     ///
-    /// - Parameter method: Injection method. First input argument is the created object.
-    /// - Returns: Self
+    /// - Returns: Self for method chaining.
+    ///
+    /// ## Examples
+    ///
+    /// ```swift
+    /// // Inject array of all implementations
+    /// container.register(YourClass.init)
+    ///     .injection(\.handlers) { many($0) }
+    ///
+    /// // Inject with tag
+    /// container.register(YourClass.init)
+    ///     .injection(\.database) { by(tag: Production.self, on: $0) }
+    ///
+    /// // Inject with cycle handling
+    /// container.register(YourClass.init)
+    ///     .injection(cycle: true, \.parent) { by(tag: Root.self, on: $0) }
+    /// ```
     @discardableResult
-    public func postInit(_ method: @escaping (Impl) -> ()) -> Self {
-        component.postInit = MethodMaker.comboEachMake(useObject: true, sF: method, aF: method)
+    public func injection<P, Property>(name: String? = nil, cycle: Bool = false, _ keyPath: ReferenceWritableKeyPath<Impl, P>, _ modificator: @escaping (Property) -> P) -> Self {
+        injection(name: name, cycle: cycle, { $0[keyPath: keyPath] = modificator($1) })
         return self
     }
-    
+
+    /// Appends a post-initialization callback executed after all injections complete.
+    ///
+    /// Use this method to perform final setup after the object and all its dependencies
+    /// have been fully initialized. This is the last step in the object creation process.
+    ///
+    /// - Parameter method: Callback closure. The argument is the fully initialized object.
+    ///
+    /// - Returns: Self for method chaining.
+    ///
+    /// ## Example
+    ///
+    /// ```swift
+    /// container.register(YourClass.init)
+    ///     .injection(\.logger)
+    ///     .injection(\.database)
+    ///     .postInit { $0.start() }  // Called after all injections
+    /// ```
+    @discardableResult
+    public func postInit(_ method: @escaping (Impl) -> Void) -> Self {
+        component.postInit = MethodMaker.comboEachMake(useObject: true, fn: method)
+        return self
+    }
+
     private func append(injection signature: MethodSignature) -> Self {
         component.append(injection: signature, cycle: false)
         return self

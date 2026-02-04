@@ -6,25 +6,79 @@
 //  Copyright © 2025 Alexander Ivlev. All rights reserved.
 //
 
+/// Thread-safe lazy-initialized wrapper for synchronous dependency resolution.
+///
+/// `Lazy` delays the creation of an object until it's first accessed. Once created,
+/// the value is cached and returned on subsequent accesses. This is useful for:
+/// - Breaking circular dependencies
+/// - Deferring expensive initialization
+/// - Optional dependencies that may not be needed
+///
+/// ## Usage with DI Container
+///
+/// ```swift
+/// class MyService {
+///     // DI will inject a Lazy wrapper
+///     var heavyDependency: Lazy<HeavyService> = Lazy()
+///
+///     func doWork() {
+///         // HeavyService is created only when accessed
+///         heavyDependency.value.performTask()
+///     }
+/// }
+///
+/// container.register(MyService.init)
+///     .injection(\.heavyDependency)
+/// ```
+///
+/// ## Manual Usage
+///
+/// ```swift
+/// let lazy = Lazy {
+///     ExpensiveObject()
+/// }
+///
+/// // Object not created yet
+/// print(lazy.wasMade)  // false
+///
+/// // Object created on first access
+/// let obj = lazy.value
+/// print(lazy.wasMade)  // true
+///
+/// // Same object returned
+/// let sameObj = lazy.value
+/// ```
 public final class Lazy<Value>: @unchecked Sendable {
-    /// `true` if `self` was previously made.
+    /// Returns `true` if the value has been created.
+    ///
+    /// Use this to check if accessing `value` will trigger initialization.
     public var wasMade: Bool {
         cache != nil
     }
 
-    /// The value for `self`.
+    /// The lazily-initialized value.
     ///
-    /// Getting the value or made and return.
+    /// On first access, the initializer is called and the result is cached.
+    /// Subsequent accesses return the cached value.
+    ///
+    /// - Note: This property is thread-safe.
     public var value: Value {
         return getValue(initializer)
     }
 
+    /// Creates a Lazy wrapper that will crash if accessed without DI injection.
+    ///
+    /// Use this initializer when declaring properties that will be injected by the DI container.
+    /// If accessed before injection, a fatal error provides debugging information.
     public init(file: String = #file, line: UInt = #line) {
         self.initializer = {
             fatalError("Please inject this property from DI in file: \(file.fileName) on line: \(line). Lazy type: \(Value.self) ")
         }
     }
 
+    /// Creates a Lazy wrapper with a custom initializer.
+    ///
+    /// - Parameter initializer: Closure that creates the value on first access.
     public init(initializer: @Sendable @escaping () -> Value) {
         self.initializer = initializer
     }
@@ -38,7 +92,12 @@ public final class Lazy<Value>: @unchecked Sendable {
         }
     }
 
-    /// clears the stored value.
+    /// Clears the cached value, allowing re-initialization on next access.
+    ///
+    /// After calling `clear()`, the next access to `value` will trigger
+    /// the initializer again.
+    ///
+    /// - Note: This method is thread-safe.
     public func clear() {
         monitor.lock()
         defer { monitor.unlock() }
@@ -63,62 +122,5 @@ public final class Lazy<Value>: @unchecked Sendable {
 
 extension Lazy: SpecificType {
     static var syncDelayed: Bool { return true }
-    static var type: DIAType { return Value.self }
-}
-
-
-public actor AsyncLazy<Value> {
-    /// `true` if `self` was previously made.
-    public var wasMade: Bool {
-        cache != nil
-    }
-
-    /// The value for `self`.
-    ///
-    /// Getting the value or made and return.
-    public var value: Value {
-        get async {
-            return await getValue(initializer)
-        }
-    }
-
-    public init(file: String = #file, line: UInt = #line) {
-        self.initializer = {
-            fatalError("Please inject this property from DI in file: \(file.fileName) on line: \(line). Lazy type: \(Value.self) ")
-        }
-    }
-
-    public init(initializer: @escaping () async -> Value) {
-        self.initializer = initializer
-    }
-
-    private var cache: Value?
-    private let initializer: () async -> Value
-
-    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) async -> Any?) {
-        self.initializer = {
-            return gmake(by: await factory(nil))
-        }
-    }
-
-    /// clears the stored value.
-    public func clear() {
-        cache = nil
-    }
-
-    private func getValue(_ initializer: () async -> Value) async -> Value {
-        if let cache {
-            return cache
-        }
-
-        let result = await initializer()
-        cache = result
-
-        return result
-    }
-}
-
-extension AsyncLazy: SpecificType {
-    static var asyncDelayed: Bool { return true }
     static var type: DIAType { return Value.self }
 }

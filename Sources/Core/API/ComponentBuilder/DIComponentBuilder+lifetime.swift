@@ -6,71 +6,143 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-// MARK: - contains `lifetime` and `default` functions
+// MARK: - Lifetime and Priority (`lifetime`, `default`, `test`, `root`, `unused` functions)
 extension DIComponentBuilder {
-    /// Function to set lifetime of an object.
-    /// The lifetime of an object determines when it is created and destroyed.
-    /// Using:
-    /// ```
-    /// container.register(YourClass.self)
-    ///   .lifetime(.prototype)
+    /// Sets the lifetime of the component's instances.
+    ///
+    /// The lifetime determines when objects are created, cached, and destroyed.
+    /// Different lifetimes are appropriate for different use cases.
+    ///
+    /// - Parameter lifetime: The lifetime policy for instances of this component.
+    ///   See `DILifeTime` for available options.
+    ///
+    /// - Returns: Self for method chaining.
+    ///
+    /// ## Lifetime Options
+    ///
+    /// - `.prototype` - New instance every time (default)
+    /// - `.objectGraph` - One instance per resolution graph
+    /// - `.perContainer(.strong/.weak)` - One instance per container
+    /// - `.perRun(.strong/.weak)` - One instance per application run
+    /// - `.single` - One instance for entire application
+    /// - `.custom(scope)` - Custom scope for fine-grained control
+    ///
+    /// ## Examples
+    ///
+    /// ```swift
+    /// // Singleton - one instance for entire app
+    /// container.register(AppConfiguration.init)
+    ///     .lifetime(.single)
+    ///
+    /// // Per container with strong reference
+    /// container.register(UserSession.init)
+    ///     .lifetime(.perContainer(.strong))
+    ///
+    /// // Prototype - new instance each time
+    /// container.register(RequestHandler.init)
+    ///     .lifetime(.prototype)
     /// ```
     ///
-    /// - Parameter lifetime: LifeTime. for more information seeing enum `DILifeTime`.
-    /// - Returns: Self
+    /// - SeeAlso: `DILifeTime` for more information.
     @discardableResult
     public func lifetime(_ lifetime: DILifeTime) -> Self {
         component.lifeTime = lifetime
         return self
     }
-    
-    /// Function declaring that this component will use the default.
-    /// It's necessary to resolve uncertainties if several components are available on one type.
-    /// Component declared as "default" will be given in the case if there were clarifications that you need.
-    /// But the components belonging to the framework have higher priority than the default components from other frameworks.
-    /// Using:
-    /// ```
-    /// container.register(YourClass.self)
-    ///   .default()
-    /// ```
+
+    /// Marks this component as the default implementation for its type.
     ///
-    /// - Returns: Self
+    /// When multiple components are registered for the same type, the container normally
+    /// cannot determine which one to use. Marking a component as default resolves this ambiguity.
+    ///
+    /// - Returns: Self for method chaining.
+    ///
+    /// - Note: Components within the same framework have higher priority than default
+    ///   components from other frameworks.
+    ///
+    /// ## Example
+    ///
+    /// ```swift
+    /// // Register multiple implementations
+    /// container.register(ProductionLogger.init)
+    ///     .as(Logger.self)
+    ///     .default()  // This will be used when resolving Logger
+    ///
+    /// container.register(DebugLogger.init)
+    ///     .as(Logger.self)
+    ///     // Not default - only used when explicitly requested
+    /// ```
     @discardableResult
     public func `default`() -> Self {
         component.priority = .default
         return self
     }
-    
-    /// Function declaring that this component will use the default.
-    /// It's necessary to resolve uncertainties if several components are available on one type.
-    /// Component declared as "test" will be given in the case if there were clarifications that you need.
-    /// But the components belonging to the framework have higher priority than the default components from other frameworks.
-    /// Has the greatest power "default"
-    /// Using:
-    /// ```
-    /// container.register(YourClass.self)
-    ///   .test()
-    /// ```
+
+    /// Marks this component as a test implementation with highest priority.
     ///
-    /// - Returns: Self
+    /// Test components have the highest priority when resolving, even higher than
+    /// default components. Use this for mock implementations in tests.
+    ///
+    /// - Returns: Self for method chaining.
+    ///
+    /// - Note: Components within the same framework have higher priority than test
+    ///   components from other frameworks.
+    ///
+    /// ## Example
+    ///
+    /// ```swift
+    /// // In test setup
+    /// container.register(MockNetworkService.init)
+    ///     .as(NetworkService.self)
+    ///     .test()  // Will override production and default implementations
+    /// ```
     @discardableResult
     public func test() -> Self {
         component.priority = .test
         return self
     }
-    
-    /// Function declaring that this component is root.
-    /// Root components using only into graph validation `container.makeGraph().checkIsValid()`.
-    /// The root components accelerate graph validation, and allow you to check the graph more precisely.
-    /// Singleton components always is root components `.lifetime(.single)`
+
+    /// Marks this component as a root entry point for graph validation.
+    ///
+    /// Root components are starting points for dependency graph validation.
+    /// Marking key entry points as root accelerates validation and provides
+    /// more precise error reporting.
+    ///
+    /// - Returns: Self for method chaining.
+    ///
+    /// - Note: Components with `.lifetime(.single)` are automatically considered root components.
+    ///
+    /// ## Example
+    ///
+    /// ```swift
+    /// // Mark entry points as root
+    /// container.register(MainViewController.init)
+    ///     .root()
+    ///
+    /// // Validate the graph
+    /// let isValid = container.makeGraph().checkIsValid()
+    /// ```
     @discardableResult
     public func root() -> Self {
         component.isRoot = true
         return self
     }
-    
-    /// Function declaring that this component register but it may not be used.
-    /// Actual only if you using `root components` system, because check graph found unused components and log warnings.
+
+    /// Marks this component as potentially unused to suppress warnings.
+    ///
+    /// When using the root components system, graph validation reports warnings for
+    /// components that are not reachable from any root. Use this to suppress warnings
+    /// for intentionally unused components.
+    ///
+    /// - Returns: Self for method chaining.
+    ///
+    /// ## Example
+    ///
+    /// ```swift
+    /// // Register a component that might not be used in all configurations
+    /// container.register(DebugHelper.init)
+    ///     .unused()  // Won't trigger "unused component" warning
+    /// ```
     @discardableResult
     public func unused() -> Self {
         component.unused = true

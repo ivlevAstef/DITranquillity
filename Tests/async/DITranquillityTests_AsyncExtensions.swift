@@ -9,7 +9,7 @@
 import XCTest
 import DITranquillity
 
-private protocol Tag { }
+private enum Tag { }
 
 private protocol MyProtocol {
     func empty()

@@ -6,34 +6,90 @@
 //  Copyright © 2017 Alexander Ivlev. All rights reserved.
 //
 
-/// Class to maintain code hierarchy.
-/// It's necessary for it to be convenient to combine some parts of the system into one common class, 
-/// and in future to include the part, rather than some list components.
+/// Protocol for organizing components into reusable parts.
+///
+/// `DIPart` provides a way to group related component registrations together.
+/// Unlike `DIFramework`, parts don't manage dependencies between modules -
+/// they're simply a way to organize code.
+///
+/// ## Overview
+///
+/// Use parts to:
+/// - Group related components together
+/// - Create reusable registration modules
+/// - Keep registration code organized and maintainable
+/// - Compose larger frameworks from smaller parts
+///
+/// ## Creating a Part
+///
+/// ```swift
+/// final class RepositoryPart: DIPart {
+///     static func load(container: DIContainer) {
+///         container.register(UserRepository.init)
+///             .as(UserRepositoryProtocol.self)
+///
+///         container.register(ProductRepository.init)
+///             .as(ProductRepositoryProtocol.self)
+///     }
+/// }
+/// ```
+///
+/// ## Using Parts
+///
+/// ```swift
+/// // Standalone usage
+/// let container = DIContainer()
+/// container.append(part: RepositoryPart.self)
+/// container.append(part: ServicePart.self)
+///
+/// // Inside a framework
+/// final class DataFramework: DIFramework {
+///     static func load(container: DIContainer) {
+///         container.append(part: RepositoryPart.self)
+///         container.append(part: CachePart.self)
+///     }
+/// }
+/// ```
+///
+/// - Note: Each part is loaded only once, even if appended multiple times.
 public protocol DIPart: Sendable, AnyObject {
-    /// Method inside of which you can registration a components.
-    /// It's worth combining the components for some reason.
-    /// And call a class implementing the protocol according to this characteristics.
+    /// Registers components belonging to this part.
     ///
-    /// - Parameter container: A container. Don't call the method yourself, but leave it to the method `append(...)` into container.
+    /// Implement this method to register all components that belong to this part.
+    ///
+    /// - Parameter container: The DI container for registration.
+    ///
+    /// - Important: Do not call this method directly. Use `container.append(part:)` instead.
     static func load(container: DIContainer)
 }
 
 extension DIContainer {
     /// Registers a part in the container.
-    /// Registration means inclusion of all components indicated within.
     ///
-    /// - Parameters:
-    ///   - path: the part type
-    /// - Returns: self
+    /// This method loads all components defined in the part. Each part
+    /// is loaded only once, even if `append(part:)` is called multiple times.
+    ///
+    /// - Parameter part: The part type to register.
+    ///
+    /// - Returns: Self for method chaining.
+    ///
+    /// ## Example
+    ///
+    /// ```swift
+    /// let container = DIContainer()
+    /// container.append(part: RepositoryPart.self)
+    /// container.append(part: ServicePart.self)
+    /// container.append(part: ViewModelPart.self)
+    /// ```
     @discardableResult
     public func append(part: DIPart.Type) -> DIContainer {
         if includedParts.checkAndInsert(ObjectIdentifier(part)) {
             partStack.push(part)
             defer { partStack.pop() }
-            
+
             part.load(container: self)
         }
-        
+
         return self
     }
 }
