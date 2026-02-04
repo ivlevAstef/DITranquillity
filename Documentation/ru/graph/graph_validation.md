@@ -1,52 +1,368 @@
-# Валидация графа
-Одной из особенностей библиотеки является возможность построения графа зависимостей после регистрации компонентов. 
+# Валидация графа зависимостей
 
-На основе этой возможности библиотека предлагает проверить этот граф, до начала использования. То есть регистрируем все зависимости, [получаем граф](get_graph.md), вызываем функцию проверки - а она проверяет, что все зарегистрировано верно. 
+Одной из ключевых особенностей библиотеки является возможность построения и валидации графа зависимостей после регистрации компонентов.
 
-Эта функция называется `checkIsValid` и находится в созданном графе:
-```Swift
-container.register(...)
-container.register(...)
-...
+## Зачем нужна валидация?
+
+Валидация позволяет обнаружить ошибки конфигурации **на старте запуска приложения**:
+- Отсутствующие зависимости
+- Неоднозначные внедрения (несколько кандидатов)
+- Проблемные циклические зависимости
+- Компоненты без методов инициализации
+- Неиспользуемые регистрации
+
+## Использование валидации
+
+### Базовый пример
+
+```swift
+let container = DIContainer()
+
+container.register(UserService.init)
+container.register(AuthManager.init)
+// ... другие регистрации ...
 
 #if DEBUG
-if !container.makeGraph().checkIsValid(checkGraphCycles: true) {
-    fatalError("invalid graph")
+let graph = container.makeGraph()
+if !graph.checkIsValid() {
+    fatalError("Граф зависимостей невалиден! Проверьте логи.")
 }
 #endif
 ```
-Подобная проверка не имеет смысла в релиз версии, так как граф зависимостей не меняется от запуска к запуску. Поэтому для экономии времени запуска советую функцию проверки заносить в predefine секцию.
 
-Функция проверяет граф на: достижимость вершин, однозначность переходов, возможность создать объект. Булева переменная `checkGraphCycles` позволяет отключить проверку циклов. 
+### С отключением проверки циклов
 
-Все возникшие проблемы пишутся в лог, и если возникла критическая проблема, то функция проверки вернет `false`. О том, что такое логирование можно почитать [тут](logs.md) А ниже описаны все возможные ошибки, которые могут возникнуть во время проверки графа.
+Проверка циклов — ресурсоёмкая операция. Для ускорения запуска её можно отключить:
 
-## Описание логов
-### Логи связанные с инициализацией компонента
-* `No initialization method for {Component}. And found reference on this component from {FromComponent}.` - подобная ошибка возникает в случае если нет метода инициализации у указанного компонента. Но при этом по графу зависимостей этот метод обязан быть, так как на объект есть переход, и он точно не может появиться из неоткуда. В случае если зависимость опциональная, то это будет не ошибкой, а предупреждением.
-* `No initialization method for {Component}. This component can be created using 'inject(into:...' or if created from storyboard. Otherwise it's incorrect. And found refrence on this component from {FromComponent}.` - предупреждение похоже на предыдущую ошибку, но в отличии от прошлой тут объект может быть создан, если это VC на storyboard или же вызывается функция `inject(into:`.
-* `No initialization method for {Component}. This component can be created using 'inject(into:...' or if created from storyboard. After first created component can be taken from cache. And found refrence on this component from {FromComponent}.` - инфо сообщение о том, что могут быть проблемы при создании компонента, но существует много случаев когда он создастся нормально, из-за того, что объект будет закэширован.
-* `No initialization method for {Component}. This component can be created using 'inject(into:...' or if created from storyboard. Otherwise it's incorrect.` - инфо сообщение о том что нет метода инициализации. Но при этом на этот компонент никто не ссылает. Такой компонент нельзя создавать функцией `resolve` но он создастся в случае если это VC, или с помощью метода `inject(into:`
-* `No initialization method for {Component}. This component can be created using 'inject(into:...' or if created from storyboard. After first created component can be taken from cache.` - инфо сообщение аналог предыдущему, но помимо этого после первого создания компонент будет закэширован. Его можно будет в дальнейшем получать обычным образом.
+```swift
+// Полная валидация (рекомендуется для тестов)
+graph.checkIsValid(checkGraphCycles: true)
 
-### Логи связанные с неоднозначным внедрением
-* `Ambiguity create object for type: {Type} into {Component}. Candidates: {Candidates}` - ошибка или предупреждение в зависимости от того является ли тип опционалом. Ошибка говорит о том, что в указанном компоненте есть зависимость, требующая указанного типа, но эту зависимость создать не удастся, так как есть несколько компонентов подходящих для внедрения. В случае подобной ошибки надо или убрать лишний компонент, или с помощью тэгов, имени, модульности добиться однозначности.  
+// Быстрая валидация (без проверки циклов)
+graph.checkIsValid(checkGraphCycles: false)
+```
 
-### Логи связанные с неверным внедрением
-* `Invalid reference from {FromComponent} because not found component for type: {Type}` - Ошибка, если тип не опционал или не множественное внедрение, иначе предупреждение. Говорит о том, что из указанного компонент есть внедрение, которое не удастся внедрить, так как для него не зарегистрирован компонент. Чаще всего данная ошибка возникает из-за невнимательности, когда пишешь новый код - забываешь дописать регистрацию для чего либо.
+### Интеграция с тестами
 
-### Логи связанные с лишней регистрацией
-* `Found unused component {Component}` - Ошибка возникает только если используются `root` компоненты. Оповещает о том, что некоторый компонент никогда не будет создан, если изначально могут создаваться только рутовые или single объекты. Подобная ошибка говорит или о устравшем и не нужном больше коде, или о том, что забыли внедрить данный компонент. Также возможной причиной может оказаться потерянный модификатор `root` у какого-то компонента. 
+```swift
+import XCTest
 
-### Логи связанные с циклами
-* `Found a cycle used only init methods. Please tear cycle: {CycleDescription}` - ошибка. Указанный цикл состоит только из методов инициализации. Подобный цикл будет создаваться бесконечно. Для решения проблемы надо разорвать цикл хотя бы в одном месте - перенести внедрение из метода инициализации в свойства.
+class DIValidationTests: XCTestCase {
+    func testDependencyGraphIsValid() {
+        let container = AppDIContainer.shared
+        let graph = container.makeGraph()
 
-* `Found a cycle without tears. Please tear cycle use '.injection(cycle: true...': {CycleDescription}` - ошибка. Указанный цикл не имеет указаний точек разрыва. Для устранению проблемы стоит исправить хотя бы одно внедрение, указав `cycle: true`. Тем самым дав понять библиотеке, что вы согласны с этим циклом и контролируете ситуацию.
+        XCTAssertTrue(
+            graph.checkIsValid(),
+            "Граф зависимостей содержит ошибки"
+        )
+    }
 
-* `Found a cycle where any components have lifetime 'prototype'. This cycle will be created indefinitely. Please change lifetime on 'objectGraph' or other. Cycle description: {CycleDescription}` - ошибка. Указанный цикл состоит только из компонентов с временем жизни `prototype`. Обычно для всех объектов в цикле нужно использовать время жизни `objectGraph` или время жизни с кэшом, но обязательно хотя бы для одного. В случае же с `prototype` объекты будут создаваться бесконечно. Для решения проблемы поменяйте время жизни хотя бы у одного компонента из цикла, а лучше у всех.
+    func testNoCycles() {
+        let container = AppDIContainer.shared
+        let graph = container.makeGraph()
+        let cycles = graph.findCycles()
 
-* `Found a cycle where is first component have lifetime 'prototype'. This cycle maked incorrect. You can change lifetime on `objectGraph` or other cached. Cycle description: {CycleDescription}` - ошибка. Может возникать только при использовании root компонент. Аналог предыдущей проблемы, но в данном случае объект с которого начинается цикл имеет время жизни `prototype`, что однозначно приведет к двойному и более экземпляру этого объекта, и скорей всего к некорректному исполнению программы. Для решения проблемы, надо у первого (а возможно и у других) компонента из цикла заменить время жизни с `prototype` на `objectGraph` или у другое время жизни отличное от prototype
+        XCTAssertTrue(
+            cycles.isEmpty,
+            "Найдено \(cycles.count) циклов в графе зависимостей"
+        )
+    }
+}
+```
 
-* `Found a cycle where is it components have lifetime 'prototype'. This cycle can maked incorrect, if call resolve from 'prototype' component. You can change lifetime on 'objectGraph' or ignore warning. Cycle description: {CycleDescription}` - предупреждение. Аналог предыдущей проблемы, но для ситуаций когда нельзя однозначно понять будет ли создан объект единожды или нет. Для того чтобы понять есть ли ошибка, нужно осознать с какого объекта начинается создание объектов - если с `prototype` то это приведет к не желаемому результату. 
+## Что проверяет валидация
 
-* `Found a cycle where is it components have different lifetimes. This cycle can make incorrect. If start resolve from 'prototype'/'objectGraph' you can reference from 'perContainer'/'perRun'/'single' on other object because there is an old resolve in cache. Cycle description: {CycleDescription}` - предупреждение. В указанном цикле используются разные время жизни, в том числе и кэширующие. Такой цикл может приводить к не желаемому поведению в случае если создание объекта начинается не с кэширующего времени жизни. Проблема в том, что после первого создания ссылки из закэшируемых объектов уже будут созданы и не обновятся, если вы повторно запросите объект не из кэша.
+Метод `checkIsValid()` выполняет четыре типа проверок:
+
+### 1. Возможность инициализации (Can Initialize)
+
+Проверяет, что все не-кэшированные компоненты могут быть созданы.
+
+### 2. Однозначность (Unambiguity)
+
+Проверяет, что каждая зависимость разрешается ровно в один компонент.
+
+### 3. Достижимость (Reachability)
+
+Проверяет, что для каждой требуемой зависимости есть регистрация.
+
+### 4. Циклы (Cycles)
+
+Проверяет, что все циклические зависимости корректно настроены.
+
+## Описание сообщений об ошибках
+
+### Ошибки инициализации
+
+#### `No initialization method for {Component}. And found reference on this component from {FromComponent}.`
+
+**Уровень:** Ошибка (или предупреждение для опциональных зависимостей)
+
+**Причина:** Компонент не имеет метода инициализации, но на него есть ссылка из другого компонента.
+
+**Решение:**
+```swift
+// Неправильно
+container.register(MyService.self)
+
+// Правильно - добавьте инициализатор
+container.register(MyService.init)
+// или
+container.register { MyService() }
+```
+
+#### `No initialization method for {Component}. This component can be created using 'inject(into:...' or if created from storyboard.`
+
+**Уровень:** Предупреждение
+
+**Причина:** Компонент без инициализатора, но может быть создан внешним способом.
+
+**Когда это нормально:**
+- ViewController из Storyboard
+- Использование `container.inject(into: existingObject)`
+
+```swift
+// Для ViewController из Storyboard
+container.register(MyViewController.self)
+    .injection(\.presenter)
+    .lifetime(.objectGraph)
+```
+
+#### `No initialization method for {Component}. ... After first created component can be taken from cache.`
+
+**Уровень:** Информация
+
+**Причина:** Компонент без инициализатора, но с кэширующим временем жизни.
+
+**Когда это нормально:** После первого создания (например, из Storyboard) объект будет в кэше.
+
+### Ошибки неоднозначности
+
+#### `Ambiguity create object for type: {Type} into {Component}. Candidates: {Candidates}`
+
+**Уровень:** Ошибка (или предупреждение для опциональных)
+
+**Причина:** Для зависимости найдено несколько подходящих компонентов.
+
+**Решение:**
+```swift
+// Проблема: два компонента реализуют один протокол
+container.register(EmailNotifier.init)
+    .as(Notifier.self)
+container.register(PushNotifier.init)
+    .as(Notifier.self)
+
+// Решение 1: Используйте тэги
+container.register(EmailNotifier.init)
+    .as(Notifier.self, tag: EmailTag.self)
+container.register(PushNotifier.init)
+    .as(Notifier.self, tag: PushTag.self)
+
+// Решение 2: Используйте default/test
+container.register(EmailNotifier.init)
+    .as(Notifier.self)
+    .default()
+container.register(PushNotifier.init)
+    .as(Notifier.self)
+    .test()
+
+// Решение 3: Используйте many() для получения всех
+container.register { NotificationCenter(notifiers: many($0)) }
+```
+
+### Ошибки достижимости
+
+#### `Invalid reference from {FromComponent} because not found component for type: {Type}`
+
+**Уровень:** Ошибка (или предупреждение для опциональных/many)
+
+**Причина:** Требуется зависимость, для которой нет регистрации.
+
+**Решение:**
+```swift
+// Проблема: UserService требует Logger, но он не зарегистрирован
+container.register(UserService.init)  // init(logger: Logger)
+
+// Решение: зарегистрируйте Logger
+container.register(ConsoleLogger.init)
+    .as(Logger.self)
+```
+
+### Предупреждения о неиспользуемых компонентах
+
+#### `Found unused component {Component}`
+
+**Уровень:** Предупреждение (только при наличии root-компонентов)
+
+**Причина:** Компонент зарегистрирован, но недостижим из root-компонентов.
+
+**Возможные причины:**
+- Устаревший, больше не нужный код
+- Забыли внедрить зависимость в другом классе
+- Забыли пометить иной компонент как `.root()
+- Зависимость регистрируется в модуле который используется в нескольких приложений, но в части приложениях она не нужна, и не помечена `.unused()``
+
+**Решение:**
+```swift
+// Если компонент нужен из другого root компонента - добавьте root 
+container.register(AppCoordinator.init)
+    .root()
+
+// Если компонент используется как inject(into:) или в других приложениях
+container.register(MyViewController.self)
+    .injection(\.presenter)
+    .unused()  // Подавляет предупреждение
+```
+
+### Ошибки циклов
+
+#### `Found a cycle used only init methods. Please tear cycle: {CycleDescription}`
+
+**Уровень:** Ошибка
+
+**Причина:** Цикл состоит только из зависимостей в инициализаторах.
+
+```
+A.init(b: B) -> B.init(a: A) -> A.init(b: B) -> ...
+```
+
+**Решение:** Перенесите хотя бы одну зависимость из init в injection:
+```swift
+container.register(ServiceA.init)
+    .injection(cycle: true, \.serviceB)
+    .lifetime(.objectGraph)
+
+container.register(ServiceB.init)  // init(serviceA: ServiceA)
+    .lifetime(.objectGraph)
+```
+
+#### `Found a cycle without tears. Please tear cycle use '.injection(cycle: true...': {CycleDescription}`
+
+**Уровень:** Ошибка
+
+**Причина:** В цикле нет явного указания точки разрыва.
+
+**Решение:**
+```swift
+// Добавьте cycle: true хотя бы в одном месте
+container.register(PresenterImpl.init)
+    .as(Presenter.self)
+    .injection(cycle: true, \.view)  // <-- Указание разрыва
+    .lifetime(.objectGraph)
+```
+
+#### `Found a cycle where any components have lifetime 'prototype'.`
+
+**Уровень:** Ошибка
+
+**Причина:** Все компоненты в цикле имеют время жизни `prototype`.
+
+```swift
+// Проблема: бесконечное создание объектов
+container.register(A.init)
+    .lifetime(.prototype)  // По умолчанию
+container.register(B.init)
+    .lifetime(.prototype)
+```
+
+**Решение:**
+```swift
+// Измените время жизни хотя бы у одного компонента
+container.register(A.init)
+    .lifetime(.objectGraph)
+container.register(B.init)
+    .lifetime(.objectGraph)
+```
+
+#### `Found a cycle where is first component have lifetime 'prototype'.`
+
+**Уровень:** Ошибка (при наличии root-компонентов)
+
+**Причина:** Начальный компонент цикла имеет `prototype`, что приведёт к множественным экземплярам.
+
+**Решение:** Измените время жизни первого компонента цикла на `objectGraph` или другое кэширующее.
+
+#### `Found a cycle where is it components have lifetime 'prototype'.`
+
+**Уровень:** Предупреждение
+
+**Причина:** В цикле есть компоненты с `prototype`, но нельзя определить точку входа.
+
+**Рекомендация:** Проанализируйте, с какого компонента начинается resolve. Если с `prototype` — возможны проблемы.
+
+#### `Found a cycle where is it components have different lifetimes.`
+
+**Уровень:** Предупреждение
+
+**Причина:** В цикле смешаны разные времена жизни, включая кэширующие.
+
+**Проблема:** После первого создания кэшированные объекты будут хранить ссылки на конкретные экземпляры. При повторном resolve не из кэша ссылки не обновятся.
+
+**Рекомендация:** Используйте одинаковое время жизни для всех компонентов цикла.
+
+## Рекомендации по использованию
+
+### 1. Валидируйте в Debug-сборках
+
+```swift
+#if DEBUG
+let graph = container.makeGraph()
+assert(graph.checkIsValid(), "DI configuration is invalid")
+#endif
+```
+
+### 2. Интегрируйте в CI/CD
+
+```swift
+// В unit-тестах
+func testDIConfiguration() {
+    XCTAssertTrue(container.makeGraph().checkIsValid())
+}
+```
+
+### 3. Используйте root-компоненты
+
+Root-компоненты позволяют:
+- Найти неиспользуемые регистрации
+- Оптимизировать проверку циклов (только достижимые)
+
+```swift
+container.register(AppCoordinator.init)
+    .root()
+```
+
+### 4. Подавляйте ложные предупреждения
+
+```swift
+// Для компонентов, создаваемых внешним способом
+container.register(MyViewController.self)
+    .unused()
+    
+// Для компонентов регистрируемых в модулях используемых из разных приложений, но компонент нужен не во всех приложениях
+container.register(MyService.init)
+    .unused()
+```
+
+### 5. Используйте логирование
+
+```swift
+// Включите подробное логирование
+DISetting.Log.fun = { level, message, file, line in
+    if level == .error || level == .warning {
+        print("[\(level)] \(file):\(line) - \(message)")
+    }
+}
+```
+
+## Производительность валидации
+
+| Операция | Сложность | Рекомендация |
+|----------|-----------|--------------|
+| Базовая валидация | O(V + E) | Всегда в Debug |
+| Поиск циклов | O(V * E) | В тестах |
+| Полная валидация | O(V * E) | В CI/CD |
+
+Где V — количество вершин (компонентов), E — количество рёбер (зависимостей).
+
+> **Совет:** В production валидация не нужна — граф не меняется между запусками. Выполняйте её только в debug-сборках и тестах.

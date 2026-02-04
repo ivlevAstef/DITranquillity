@@ -1,135 +1,326 @@
-# Получение графа
-Получение графа одна из важных особенностей этой библиотеки. Так как возможность получать граф, позволяет его проверить на корректность. Тема проверки графа раскрыта в отдельной [главе](graph_validation.md), а в этой маленькой главе остановимся на том, как получить граф, и какую информацию он хранит.
+# Получение графа зависимостей
 
-Для получения графа зависимостей у контейнера нужно вызвать функцию `makeGraph()` которая быстро сконвертирует внутренний формат хранения данных в удобный для использования. Функция возвращает тип `DIGraph`:
-```Swift
+Получение графа — одна из важных особенностей этой библиотеки. Возможность получить граф позволяет проверить его на корректность, найти циклы и проанализировать структуру зависимостей. Тема проверки графа раскрыта в отдельной [главе](graph_validation.md), а в этой главе рассмотрим, как получить граф и какую информацию он хранит.
+
+## Создание графа
+
+Для получения графа зависимостей вызовите метод `makeGraph()` у контейнера:
+
+```swift
+let container = DIContainer()
+// ... регистрация компонентов ...
+
 let graph: DIGraph = container.makeGraph()
 ```
 
-> Граф создается для текущего состояния, и автоматически не меняется в случае регистрации дополнительных зависимостей.
+> **Важно:** Граф создается для текущего состояния контейнера и автоматически не обновляется при регистрации новых зависимостей. Если вы добавите новые компоненты после создания графа, потребуется создать новый граф.
 
 ## DIGraph
+
 Граф представлен [списком смежности](https://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA_%D1%81%D0%BC%D0%B5%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D0%B8) и имеет следующую структуру:
-```Swift
-typealias AdjacencyList = [[(edge: DIEdge, toIndices: [Int])]]
-let vertices: [DIVertex]
-let adjacencyList: AdjacencyList
-```
-При этом гарантируется, что количество вершин равно количествую элементов списка смежности.
 
-Вершины представлены в виде массива, и к ним можно и нужно обращаться по индексу.
+```swift
+public final class DIGraph: @unchecked Sendable {
+    /// Тип списка смежности: массив пар (ребро, индексы целевых вершин)
+    public typealias AdjacencyList = [[(edge: DIEdge, toIndices: [Int])]]
 
-Список смежности представлен как массив, где каждый элемент соответствует вершине. Для каждого элемента в массиве содержится еще один массив - список ребер. При этом видно, что ребра представлены не в типичном виде - есть само ребро, и отдельно массив индексов куда возможен переход. Оно описано как картёж для удобства использования. Да по одному ребру возможен переход в несколько вершин. Это сделано специально ради возможности правильно описать модификатор [many](../Core/modificated_injection.md#Множественное-внедрение). 
+    /// Все вершины графа
+    public let vertices: [DIVertex]
 
-> если вы не используете many и ваш граф корректен, то в массиве всегда будет один элемент.
-
-Если нужно обойти весь граф, начиная с некоторой вершины, то достаточно воспользоваться `adjacencyList` и использовать `toIndices`. 
-
-Например, если мы хотим с помощью обхода в ширину обойти все достижимые вершины, начиная с некоторой, то можно написать следующую функцию:
-```Swift
-let graph: DIGraph = container.makeGraph()
-
-func bfs(from startIndex: Int) {
-  var visited: Set<Int> = []
-  var stack: [Int] = [startIndex]
-  while let fromIndex = stack.first {
-    stack.removeFirst()
-    visited.insert(fromIndex)
-    
-    for toIndex in graph.adjacencyList[fromIndex].flatMap({ $0.toIndices }) {
-      if !visited.contains(toIndex) {
-        stack.append(toIndex)
-      }
-    }
-  }
-  
-  return visited
+    /// Список смежности для навигации по графу
+    public let adjacencyList: AdjacencyList
 }
 ```
-Функция при этом возвращает все достижимые вершины из заданной.
 
-Но просто бегать по графу не интересно - давайте разбираться какие данные хранятся в нем помимо списка смежности.
+Гарантируется, что количество вершин (`vertices.count`) равно количеству элементов списка смежности (`adjacencyList.count`).
+
+### Структура данных
+
+- **Вершины** (`vertices`) — массив всех узлов графа. К ним можно обращаться по индексу.
+- **Список смежности** (`adjacencyList`) — для каждой вершины содержит список исходящих рёбер с информацией о целевых вершинах.
+
+Особенность: по одному ребру возможен переход в несколько вершин. Это необходимо для корректного описания модификатора [many](../core/modificated_injection.md#Множественное-внедрение).
+
+> Если вы не используете `many()` и граф корректен, то в `toIndices` всегда будет один элемент.
+
+### Обход графа
+
+Пример обхода в ширину (BFS) для нахождения всех достижимых вершин:
+
+```swift
+let graph = container.makeGraph()
+
+func findReachableVertices(from startIndex: Int) -> Set<Int> {
+    var visited: Set<Int> = []
+    var queue: [Int] = [startIndex]
+
+    while let currentIndex = queue.first {
+        queue.removeFirst()
+
+        guard !visited.contains(currentIndex) else { continue }
+        visited.insert(currentIndex)
+
+        // Получаем все целевые индексы для текущей вершины (объединив все массивы toIndices из указанных ребер)
+        let nextIndices = graph.adjacencyList[currentIndex].flatMap { $0.toIndices }
+        for nextIndex in nextIndices where !visited.contains(nextIndex) {
+            queue.append(nextIndex)
+        }
+    }
+
+    return visited
+}
+
+// Использование
+let reachable = findReachableVertices(from: 0)
+print("Достижимые вершины: \(reachable.count)")
+```
+
+### Анализ графа
+
+```swift
+let graph = container.makeGraph()
+
+// Подсчёт компонентов
+let componentCount = graph.vertices.filter {
+    if case .component = $0 { return true }
+    return false
+}.count
+
+// Поиск отсутствующих зависимостей
+let missingDependencies = graph.vertices.compactMap { vertex -> DIAType? in
+    if case .unknown(let unknown) = vertex {
+        return unknown.type
+    }
+    return nil
+}
+
+if !missingDependencies.isEmpty {
+    print("⚠️ Не найдены зависимости для типов:")
+    for type in missingDependencies {
+        print("  - \(type)")
+    }
+}
+```
 
 ## DIVertex
-Вершина графа. Вершина графа может быть трех видов: компонент, аргумент, неизвестный тип:
-```Swift
-enum DIVertex: Hashable {
-  case component(DIComponentVertex)
-  case argument(DIArgumentVertex)
-  case unknown(DIUnknownVertex)
+
+Вершина графа может быть трёх видов:
+
+```swift
+public enum DIVertex: Hashable, Sendable {
+    /// Зарегистрированный компонент
+    case component(DIComponentVertex)
+
+    /// Аргумент, передаваемый при resolve
+    case argument(DIArgumentVertex)
+
+    /// Неизвестный (незарегистрированный) тип
+    case unknown(DIUnknownVertex)
 }
 ```
-Компоненты берутся из container-а и находятся вначале списка вершин. Аргументы и неизвестный тип находятся дальше, но между ними порядка нет. 
 
-Аргумент создается каждый раз, когда в компоненте встречается [внедрение аргумента](../Core/modificated_injection.md#Аргумент). Даже если типы у аргументов совпадают, то это будет две разных вершины.
+### Порядок вершин
 
-Неизвестный тип создается каждый раз, когда для внедрения не удалось найти подходящий компонент. Даже если типы у неизвестного типа совпадают, то это будет две разных вершины.
+- **Компоненты** находятся в начале списка вершин
+- **Аргументы** и **неизвестные типы** располагаются после компонентов
 
-Аргумент и неизвестный тип имеют одинаковую структуру:
-```Swift
-struct DIArgumentVertex/DIUnknownVertex: Hashable {
-  let type: DIAType
+> **Важно:** Для каждого использования `arg()` или отсутствующей зависимости создаётся отдельная вершина, даже если типы совпадают.
+
+### DIArgumentVertex
+
+Создается при использовании [внедрения аргумента](../core/modificated_injection.md#Аргумент):
+
+```swift
+public struct DIArgumentVertex: Hashable, Sendable {
+    /// Уникальный идентификатор в графе
+    public let id: Int
+
+    /// Тип аргумента
+    public let type: DIAType
 }
 ```
-И просто хранят в себе обычный Swift тип.
+
+### DIUnknownVertex
+
+Создается когда для зависимости не найден зарегистрированный компонент:
+
+```swift
+public struct DIUnknownVertex: Hashable, Sendable {
+    /// Уникальный идентификатор в графе
+    public let id: Int
+
+    /// Тип, для которого не найдена регистрация
+    public let type: DIAType
+}
+```
 
 ### DIComponentVertex
-Вершина графа представленная компонентом. Содержит описание регистрации компонента. Уникальность обеспечивается компонентом - на каждую регистрацию в коде приходится один компонент и одна вершина. Их можно скопировать, но они будут равны.
 
-Структура:
-```Swift
-let componentInfo: DIComponentInfo
-let lifeTime: DILifeTime
-let priority: DIComponentPriority
-let canInitialize: Bool
+Вершина, представляющая зарегистрированный компонент:
 
-let alternativeTypes: [ComponentAlternativeType]
+```swift
+public struct DIComponentVertex: Hashable, Sendable {
+    /// Информация о компоненте (тип, файл, строка регистрации)
+    public let componentInfo: DIComponentInfo
 
-let framework: DIFramework.Type?
-let part: DIPart.Type?
+    /// Время жизни компонента
+    public let lifeTime: DILifeTime
+
+    /// Приоритет (default, test)
+    public let priority: DIComponentPriority
+
+    /// Может ли компонент быть инициализирован
+    public let canInitialize: Bool
+
+    /// Помечен ли как root
+    public let isRoot: Bool
+
+    /// Помечен ли как unused (игнорируется при проверке)
+    public let unused: Bool
+
+    /// Альтернативные типы (через .as())
+    public let alternativeTypes: [ComponentAlternativeType]
+
+    /// Framework, в котором зарегистрирован
+    public let framework: DIFramework.Type?
+
+    /// Part, в которой зарегистрирован
+    public let part: DIPart.Type?
+}
 ```
 
-По порядку:
-* Описание компонента с точки зрения уникальности и расположения - это регистрируемый тип, файл в котором происходит регистрация и строчка кода. 
-* Время жизни - тоже самое что было указано при регистрации. и также приоритет который меняется в случае если при регистрации была вызвана функция `default()` или `test()`
-* Флаг, говорящий о том можно ли компонент инициализировать, или можно только внедрять в него зависимости по средствам функции `container.inject(into:...`. Компонент нельзя инициализировать, если не был передан метод инициализации, то есть было написано так: `container.register(Type.self)` где самое важное это `.self`
-* Альтернативные типы. Это типы, которые были записаны с помощью функции `as`. Так как альтернативные  типы позволяют указать не только тип, но и тэг или имя в паре с типом, то тут альтернативные типы являются перечислением: просто тип, тип+тэг, тип+имя.
-* Фреймворк и часть, в которых происходила регистрация. Эта информация очень полезная, если у вас модульное приложение.
+#### Свойства компонента
 
-На этом описание вершины закончилось, но в дальнейшем возможны изменения/дополнения информации о компоненте.
+| Свойство | Описание |
+|----------|----------|
+| `componentInfo` | Информация для идентификации: тип, файл и строка регистрации |
+| `lifeTime` | Время жизни: `prototype`, `objectGraph`, `perContainer`, `perRun`, `single`, `custom` |
+| `priority` | Приоритет: `default` или `test` (установленный через `.default()` или `.test()`) |
+| `canInitialize` | `true` если передан метод инициализации, `false` для `register(Type.self)` |
+| `isRoot` | `true` если компонент помечен как `.root()` |
+| `alternativeTypes` | Типы, добавленные через `.as()`: просто тип, тип+тэг или тип+имя |
+| `framework` / `part` | Модуль и часть, где произошла регистрация |
 
 ## DIEdge
-Информация о ребре графа, или по другому о зависимости. Имеет следующую структуру:
-```Swift
-let initial: Bool
-let cycle: Bool
-let optional: Bool
-let many: Bool
-let delayed: Bool
-let tags: [DITag]
-let name: String? 
-let type: DIAType
+
+Информация о ребре (зависимости) между вершинами:
+
+```swift
+public final class DIEdge: Hashable {
+    /// Зависимость из метода инициализации
+    public let initial: Bool
+
+    /// Помечена как разрыв цикла (.injection(cycle: true, ...))
+    public let cycle: Bool
+
+    /// Опциональная зависимость (Optional<T>)
+    public let optional: Bool
+
+    /// Множественное внедрение (many())
+    public let many: Bool
+
+    /// Отложенное внедрение (Lazy, Provider, AsyncLazy, AsyncProvider)
+    public let delayed: Bool
+
+    /// Асинхронное отложенное внедрение (AsyncLazy, AsyncProvider)
+    public let async: Bool
+
+    /// Тэги для фильтрации
+    public let tags: [DITag]
+
+    /// Имя для именованного внедрения
+    public let name: String?
+
+    /// Базовый тип зависимости
+    public let type: DIAType
+}
 ```
 
-По порядку:
-* initial - говорит о том, что данная зависимость идет из метода инициализации, а не отдельным внедрением. 
-* cycle - говорит о том, что есть указание разрыва цикла. Ну или по другому в коде было написано: `.injection(cycle: true...`.  Если initial истина, то cycle точно лож.
-* optional - является ли данная зависимость опциональной. Это возможно если внедряемый тип имеет обычный опционал с точки зрения языка.
-* many - является ли данная зависимость [множественным внедрением](../core/modificated_injection.md#Множественное-внедрение).
-* delayed - является ли данная зависимость [отложенной](../core/delayed_injection.md). То есть используется или Lazy или Provider.
-* tags - массив тэгов, по которым производился поиск компонента. [Подробней про тэги](../core/modificated_injection.md#Тэги).
-* name - использовалось ли указание дополнительного имени. В отличие от тэгов имя может быть только одно, и не рекомендуемо к использованию.
-* type - базовый! тип используемый при поиске куда указывает ребро. Этот тип не содержит информации об опциональности, тэгах и т.п. типах - только база.
+### Описание свойств рёбер
+
+| Свойство | Описание |
+|----------|----------|
+| `initial` | `true` — из инициализатора, `false` — из `.injection()` |
+| `cycle` | `true` только для `.injection(cycle: true, ...)`. Если `initial == true`, то `cycle` всегда `false` |
+| `optional` | `true` если тип зависимости `Optional<T>` |
+| `many` | `true` для [множественного внедрения](../core/modificated_injection.md#Множественное-внедрение) |
+| `delayed` | `true` для [отложенного внедрения](../core/delayed_injection.md) (`Lazy`, `Provider`, `AsyncLazy`, `AsyncProvider`) |
+| `async` | `true` для асинхронного отложенного внедрения (`AsyncLazy`, `AsyncProvider`) |
+| `tags` | Массив [тэгов](../core/modificated_injection.md#Тэги) для поиска компонента |
+| `name` | Имя для [именованного внедрения](../core/modificated_injection.md#Именованное-внедрение) |
+| `type` | Базовый тип без обёрток (Optional, Lazy, etc.) |
 
 ## DICycle и поиск циклов
-Помимо просмотра графа можно также найти все циклы в графе и получить их.
 
-Для этого у созданного графа надо вызвать функцию `findCycles()`, которая найдет все циклы и вернет их в виде массива содержащего `DICycle` который имеет следующую структуру:
-```Swift
-let vertexIndices: [Int]
-let edges: [DIEdge]
+Граф позволяет найти все циклические зависимости:
+
+```swift
+let graph = container.makeGraph()
+
+// Найти все циклы
+let cycles = graph.findCycles()
+
+// Или найти только циклы, достижимые из root-компонентов
+let rootCycles = graph.findRootCycles()
+
+for cycle in cycles {
+    print("Найден цикл из \(cycle.vertexIndices.count) вершин")
+}
 ```
-Длина массива индексов вершин и длина массива ребер всегда равные. Для каждой вершины есть соответствующее ребро которое хранит информацию о переходе из этого ребра в другое. Схематично это выглядит так: `vertexIndices[i] -> edges[i] -> vertexIndices[( i + 1) % count]` Что означает, что по i ребру происходит переход из i вершины в i+1 вершину или начало.
 
-> Библиотека, в свою очередь, используя всю эту информацию, предлагает такую возможность как [проверка графа зависимостей](graph_validation.md). С этой возможностью я настоятельно рекомендую ознакомиться, так как она может сэкономить уйму времени при разработке, и уменьшить количество ошибок во время исполнения.
+### Структура DICycle
 
+```swift
+public struct DICycle: Sendable {
+    /// Индексы вершин, образующих цикл
+    public let vertexIndices: [Int]
+
+    /// Рёбра между вершинами цикла
+    public let edges: [DIEdge]
+}
+```
+
+Длина `vertexIndices` и `edges` всегда одинакова. Схема перехода:
+
+```
+vertexIndices[i] --edges[i]--> vertexIndices[(i + 1) % count]
+```
+
+То есть i-е ребро соединяет i-ю вершину с (i+1)-й, а последнее ребро замыкает цикл на первую вершину.
+
+### Пример анализа циклов
+
+```swift
+let graph = container.makeGraph()
+let cycles = graph.findCycles()
+
+for (index, cycle) in cycles.enumerated() {
+    print("Цикл #\(index + 1):")
+
+    for i in 0..<cycle.vertexIndices.count {
+        let vertex = graph.vertices[cycle.vertexIndices[i]]
+        let edge = cycle.edges[i]
+
+        if case .component(let component) = vertex {
+            let edgeInfo = edge.initial ? "init" : (edge.cycle ? "cycle injection" : "injection")
+            print("  \(component.componentInfo) [\(edgeInfo)]")
+        }
+    }
+}
+```
+
+## Валидация графа
+
+На основе полученного графа библиотека предлагает комплексную [проверку графа зависимостей](graph_validation.md):
+
+```swift
+let graph = container.makeGraph()
+
+if graph.checkIsValid() {
+    print("✅ Граф зависимостей корректен")
+} else {
+    print("❌ Обнаружены проблемы в графе")
+}
+```
+
+> **Рекомендация:** Используйте валидацию в debug-сборках для раннего обнаружения ошибок конфигурации. Это значительно сэкономит время при разработке и уменьшит количество runtime-ошибок.

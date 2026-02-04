@@ -1,117 +1,355 @@
 # Поддержка модульности
 
-Для удобства использования библиотеки в модульных приложениях существует два дополнительных уровня по мимо основного контейнера. Это "часть" и "фреймворк".
-Эти абстракции позволят более удобно и одинаково структурировать код, и добавят возможностей.
+Для удобства использования библиотеки в модульных приложениях существуют два уровня абстракции: **Part** (часть) и **Framework** (фреймворк).
 
-## Часть
-"Часть" позволяет некоторый функционал объединить в одном месте. Основное предназначение - структурирование кода. "Части" не имеют, какой либо логики, за исключением регистрации всего, что написано внутри.
+Эти абстракции позволяют:
+- Структурировать код регистраций
+- Разделять зависимости по модулям
+- Управлять областью видимости зависимостей
 
-Объявление:
-```Swift
+## Часть (DIPart)
+
+`DIPart` — базовый уровень для группировки связанных регистраций.
+
+### Объявление
+
+```swift
 import DITranquillity
 
-final class YourPart: DIPart {
+final class UserPart: DIPart {
     static func load(container: DIContainer) {
-        container.register(...)
-        container.register(...)
-        container.register(...)
-        container.register(...)
+        container.register(UserRepository.init)
+            .as(UserRepositoryProtocol.self)
+
+        container.register(UserService.init)
+
+        container.register(UserViewModel.init)
     }
 }
 ```
-Для включения части в ваш контейнер не стоит ручками вызывать функцию `load`. Для этого есть специальный синтаксис:
-```Swift
-container.append(part: YourPart.self)
+
+### Подключение
+
+```swift
+let container = DIContainer()
+container.append(part: UserPart.self)
 ```
 
-> не советую внутри "части" подключать "фреймворки"
+### Когда использовать Part
 
-## Фреймворк
-"Фреймворк" это "часть" с наворотами. Он также служит для структурирования, и является более высокоуровневым. Его объявление и использование сильно похожи.
+- Группировка регистраций одной фичи
+- Разделение большого файла регистраций
+- Переиспользуемые наборы зависимостей
 
-Объявление:
-```Swift
+## Фреймворк (DIFramework)
+
+`DIFramework` — более высокий уровень абстракции с дополнительными возможностями:
+- Ограничение области поиска зависимостей
+- Импорт зависимостей из других фреймворков
+- Изоляция модулей
+
+### Объявление
+
+```swift
 import DITranquillity
 
-final class YourFramework: DIFramework {
+final class AuthFramework: DIFramework {
     static func load(container: DIContainer) {
-        container.append(part: YourPart.self)
-        container.append(part: YourPart2.self)
-        container.register(...)
+        container.append(part: AuthPart.self)
+        container.append(part: LoginPart.self)
+        container.append(part: RegistrationPart.self)
+
+        // Можно регистрировать напрямую
+        container.register(AuthCoordinator.init)
+            .root()
     }
 }
 ```
-Включение в контейнер:
-```Swift
-container.append(framework: YourFramework.self)
+
+### Подключение
+
+```swift
+let container = DIContainer()
+container.append(framework: AuthFramework.self)
+container.append(framework: ProfileFramework.self)
+container.append(framework: SettingsFramework.self)
 ```
 
-### Возможности фреймворков
-Фреймворк ограничивает область поиска, позволяя использовать одинаковые имена, в разных модулях. Но это не значит, что он не позволяет получать зависимости из соседних модулей - он лишь устанавливает предпочтения, на подобии того как это делает [`.default()`](registration_and_service.md#По-Умолчанию).
-Давайте рассмотрим пример:
+## Область видимости фреймворка
 
-#### Пример
-У вас есть два модуля, в каждом модуле есть свой Storyboard:
-```Swift
-/// Module1
-container.registerStoryboard(name: "Module1Storyboard")
-/// Module2
-container.registerStoryboard(name: "Module2Storyboard")
-```
-Если в коде написать получение сторибоарда, то, компилятор будет ругаться что не может однозначно понять какой сторибоард вы от него хотите - ведь их два. И тогда придется получать его по имени. Это не приятно, но не очень большая проблема, если вы получаете его сразу из контейнера.
+Фреймворк создаёт область видимости, аналогичную [.default()](registration_and_service.md#приоритет-default-и-test).
 
-А что если вы его внедряете? Например в класс роутер? тогда синтаксис усложняется, да и еще в метод инициализации не получится внедрить. Не удобно. Но давайте расширим наш пример:
-```Swift
-final class Module1Framework: DIFramework {
+### Пример: Два модуля с одинаковым протоколом
+
+```swift
+// Модуль новостей
+final class NewsFramework: DIFramework {
     static func load(container: DIContainer) {
-        container.registerStoryboard(name: "Module1Storyboard")
-        container.register(Module1Router.init(storyboard:))
+        container.register(NewsAPIClient.init)
+            .as(APIClient.self)
+
+        container.register(NewsRepository.init)  // Использует NewsAPIClient
     }
 }
-/////
-final class Module2Framework: DIFramework {
+
+// Модуль профиля
+final class ProfileFramework: DIFramework {
     static func load(container: DIContainer) {
-        container.registerStoryboard(name: "Module2Storyboard")
-        container.register(Module2Router.init(storyboard:))
+        container.register(ProfileAPIClient.init)
+            .as(APIClient.self)
+
+        container.register(ProfileRepository.init)  // Использует ProfileAPIClient
     }
 }
-```
-В таком примере если мы попробуем получить сторибоард на прямую из контейнера, то библиотека снова напишет о неопределенности, но это можно решить не только указав имя, но и указав фреймворк:
-```Swift
-let storyboard: UIStoryboard = container.resolve(from: Module2Framework.self)
-```
-Тем самым мы убрали зависимость от имени, и скрыли внутренние потроха реализации - более того имена сторибоардов могут быть одинаковые, и это будет работать.
 
-Но помимо этого теперь можно создать оба роутера, не прикладывая никаких дополнительных усилий:
-```Swift
-let router1: Module1Router = container.resolve()
-// router1.storyboard.name == "Module1Storyboard"
-let router2: Module2Router = container.resolve()
-// router2.storyboard.name == "Module2Storyboard"
-```
-Это работает так, из-за того что каждый класс привязан к фреймворку внутри которого он был создан. Тем самым при получении роутера библиотека знает, к какому фреймворку он относится, и использует эту информацию для получения сторибоарда.
+// Использование
+let container = DIContainer()
+container.append(framework: NewsFramework.self)
+container.append(framework: ProfileFramework.self)
 
-Этот пример спокойно переносится на протоколы - бывают ситуации, что реализация одного протокола находится в нескольких модулях, и тогда подобная возможность очень сильно спасёт.
+// Каждый репозиторий получит свой APIClient
+let newsRepo: NewsRepository = container.resolve()
+let profileRepo: ProfileRepository = container.resolve()
+```
+
+### Явное указание фреймворка
+
+При неоднозначности можно указать фреймворк:
+
+```swift
+// Получить APIClient из конкретного фреймворка
+let newsClient: APIClient = container.resolve(from: NewsFramework.self)
+let profileClient: APIClient = container.resolve(from: ProfileFramework.self)
+```
 
 ## Импорт фреймворка
-Теперь представим, что фреймворков стало три. И третий фреймворк использует второй:
-```Swift
-final class Module3Framework: DIFramework {
-    static func load(container: DIContainer) {
-        // хочется получить storyboard из Module2
-        container.register(Module3Router.init(storyboard:))
-    }
-}
-```
-Что же делать? В таких крайне редких ситуациях на помощь приходит `import`:
-```Swift
-final class Module3Framework: DIFramework {
-    static func load(container: DIContainer) {
-        container.import(Module2Framework.self)
-        container.register(Module3Router.init(storyboard:))
-    }
-}
-```
-Тем самым если в третьем модуле не будет сторибоардов, или их будет слишком много для однозначного выбора, то будет взят сторибоард из второго модуля.
 
-> Важно - импортирование не работает вложено. Каждый отдельный модуль просматривает связи только на один уровень вложенности. Это сделано намеренно, чтобы не усугублять и так относительно сложную логику получения зависимости.
+Когда один фреймворк использует зависимости другого:
+
+```swift
+final class CheckoutFramework: DIFramework {
+    static func load(container: DIContainer) {
+        // Импортируем зависимости из ProfileFramework
+        container.import(ProfileFramework.self)
+
+        container.register(CheckoutService.init)
+        // CheckoutService может использовать ProfileAPIClient
+    }
+}
+```
+
+> **Важно:** Импорт работает только на один уровень вложенности. Это сделано намеренно для упрощения логики поиска зависимостей.
+
+## Рекомендуемая структура
+
+### Простое приложение
+
+```
+AppDI/
+├── AppFramework.swift
+├── Parts/
+│   ├── NetworkPart.swift
+│   ├── DatabasePart.swift
+│   └── ServicesPart.swift
+```
+
+### Модульное приложение
+
+```
+Core/
+├── CoreFramework.swift
+├── NetworkPart.swift
+└── StoragePart.swift
+
+Feature/Auth/
+├── AuthFramework.swift
+├── LoginPart.swift
+└── RegistrationPart.swift
+
+Feature/Profile/
+├── ProfileFramework.swift
+├── ProfilePart.swift
+└── SettingsPart.swift
+
+App/
+├── AppFramework.swift
+└── AppCoordinatorPart.swift
+```
+
+## Полный пример
+
+```swift
+// MARK: - Core Layer
+
+final class CoreFramework: DIFramework {
+    static func load(container: DIContainer) {
+        container.append(part: NetworkPart.self)
+        container.append(part: StoragePart.self)
+    }
+}
+
+final class NetworkPart: DIPart {
+    static func load(container: DIContainer) {
+        container.register(URLSessionAPIClient.init)
+            .as(APIClient.self)
+            .lifetime(.single)
+
+        container.register(AuthInterceptor.init)
+            .lifetime(.perContainer(.strong))
+    }
+}
+
+final class StoragePart: DIPart {
+    static func load(container: DIContainer) {
+        container.register(KeychainStorage.init)
+            .as(SecureStorage.self)
+            .lifetime(.single)
+
+        container.register(UserDefaultsStorage.init)
+            .as(LocalStorage.self)
+            .lifetime(.single)
+    }
+}
+
+// MARK: - Auth Feature
+
+final class AuthFramework: DIFramework {
+    static func load(container: DIContainer) {
+        container.import(CoreFramework.self)
+
+        container.register(AuthRepository.init)
+            .as(AuthRepositoryProtocol.self)
+            .lifetime(.perContainer(.strong))
+
+        container.register(AuthService.init)
+            .lifetime(.perContainer(.strong))
+
+        container.register(LoginViewModel.init)
+
+        container.register(AuthCoordinator.init)
+            .root()
+    }
+}
+
+// MARK: - Profile Feature
+
+final class ProfileFramework: DIFramework {
+    static func load(container: DIContainer) {
+        container.import(CoreFramework.self)
+
+        container.register(ProfileRepository.init)
+            .lifetime(.perContainer(.strong))
+
+        container.register(ProfileViewModel.init)
+
+        container.register(ProfileCoordinator.init)
+    }
+}
+
+// MARK: - App Layer
+
+final class AppFramework: DIFramework {
+    static func load(container: DIContainer) {
+        container.append(framework: CoreFramework.self)
+        container.append(framework: AuthFramework.self)
+        container.append(framework: ProfileFramework.self)
+
+        container.register(AppCoordinator.init)
+            .root()
+    }
+}
+
+// MARK: - Usage
+
+let container = DIContainer()
+container.append(framework: AppFramework.self)
+
+#if DEBUG
+assert(container.makeGraph().checkIsValid())
+#endif
+
+let appCoordinator: AppCoordinator = container.resolve()
+appCoordinator.start()
+```
+
+## Swift Concurrency в модулях
+
+При использовании `@MainActor` классов в модулях:
+
+```swift
+final class ProfileFramework: DIFramework {
+    static func load(container: DIContainer) {
+        // @MainActor ViewModel
+        container.register(ProfileViewModel.init)
+
+        // Coordinator с AsyncProvider
+        container.register(ProfileCoordinator.init)
+    }
+}
+
+// Coordinator
+final class ProfileCoordinator {
+    private let viewModelProvider: AsyncProvider<ProfileViewModel>
+
+    init(viewModelProvider: AsyncProvider<ProfileViewModel>) {
+        self.viewModelProvider = viewModelProvider
+    }
+
+    func start() async {
+        let viewModel = await viewModelProvider.value
+        // ...
+    }
+}
+```
+
+## Тестирование модулей
+
+```swift
+// Тестовый фреймворк с моками
+final class TestAuthFramework: DIFramework {
+    static func load(container: DIContainer) {
+        container.register(MockAuthRepository.init)
+            .as(AuthRepositoryProtocol.self)
+            .test()
+
+        container.register(MockAuthService.init)
+            .as(AuthService.self)
+            .test()
+    }
+}
+
+// В тестах
+func testAuthFlow() {
+    let container = DIContainer()
+    container.append(framework: AuthFramework.self)
+    container.append(framework: TestAuthFramework.self)  // Моки перекроют реальные
+
+    let coordinator: AuthCoordinator = container.resolve()
+    // coordinator использует MockAuthRepository
+}
+```
+
+## Рекомендации
+
+### Используйте Part для
+
+- Группировки связанных регистраций
+- Разделения большого файла
+- Простых случаев без изоляции
+
+### Используйте Framework для
+
+- Модульных приложений
+- Изоляции зависимостей между модулями
+- Когда нужна область видимости
+
+### Избегайте
+
+- Подключения Framework внутри Part
+- Слишком глубокой вложенности импортов
+- Циклических импортов между фреймворками
+
+## Дополнительные ссылки
+
+- [Регистрация компонентов](registration_and_service.md)
+- [Валидация графа](../graph/graph_validation.md)

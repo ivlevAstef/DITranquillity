@@ -1,149 +1,343 @@
 # Модификаторы внедрения
 
-Одна из отличительных возможностей DITranquillity по сравнению со Swinject это модификаторы внедрения.
-Они позволяют достаточно красиво изменить способ внедрения/получения объекта, прям по месту, а, не указывая его как-то отдельно от самого внедрения/получения.
-Но зачем много слов? давайте посмотрим на них в деле:
+Модификаторы внедрения — одна из отличительных возможностей DITranquillity. Они позволяют изменить способ внедрения объекта прямо по месту использования.
+
+## Обзор модификаторов
+
+| Модификатор | Описание |
+|-------------|----------|
+| `by(tag:on:)` | Фильтрация по тэгу |
+| `many()` | Получение всех реализаций |
+| `manyInFramework()` | Получение всех реализаций но только внутри одного фреймворка |
+| `arg()` | Передача аргумента при resolve |
 
 ## Тэги
-Самый первый модификатор, это тэгирование. Тут ничего необычного нет - тэги поддерживают большая часть библиотек, но синтаксис для указания тега при внедрении достаточно специфичный.
 
-Но прежде чем внедрять по тэгу, давайте разберемся, что есть тэг в моей библиотеке:
-```Swift
-protocol Tag1 {}
-enum Tag2 {}
-class Tag3 {}
-struct Tag4 {}
-typealias Tag5 = Tag1 & Tag3
-```
-Все описанные здесь варианты могут являться тэгами для библиотеки. Ну а если словами - то любой Уникальный тип, это тэг. При этом `typealias` на один тип, не порождает новый тип, а создает лишь синоним, этому типу.
-Я рекомендую для объявления тэгов использовать протоколы - так проще безопасней, и они могут объединяться.
+Тэги позволяют различать несколько реализаций одного протокола.
 
-Что такое тэг определились - теперь надо его привязать к объекту/компоненту. Это делается с помощью операции [указания сервисов](registration_and_service.md#Указание-сервисов):
-```Swift
-container.register(Cat.init)
-    .as(Cat.self, tag: Felix.self)
-    .as(Animal.self, tag: Felix.self)
-container.register(Dog.init)
-    .as(Dog.self, tag: Rex.self)
-    .as(Animal.self, tag: Rex.self)
-```
-Обращаю внимание, что даже для того чтобы просто добавить тэг, придётся указать сервис, но в качестве сервиса указать самого себя. Это небольшое неудобство вызвано тем, что ситуации когда нужно указать тэг не привязанный к сервису встречаются редко, и не стоят того, чтобы ради них создавать специализированный синтаксис.
+### Что такое тэг?
 
-И после таких вот подготовок переходим к самому важному - как же теперь внедрить тип с использованием тэга.
-Это сделать достаточно просто:
-```Swift
-container.register(Home.init)
-    .injection { $0.animal1 = by(tag: Felix.self, on: $1) }
-    .injection(\.animal2) { by(tag: Rex.self, on: $0) }
+Тэг — это любой уникальный тип Swift:
+
+```swift
+// Рекомендуемый способ — протоколы
+protocol PrimaryDatabase {}
+protocol SecondaryDatabase {}
+
+// Также работают
+enum ProductionAPI {}
+class DebugAPI {}
+struct LocalAPI {}
 ```
-Или даже так:
-```Swift
-container.register { 
-    Home(animal1: by(tag: Felix.self, on: $0),
-         animal2: by(tag: Rex.self, on: $1))
+
+> **Рекомендация:** Используйте протоколы — они типобезопасны и могут объединяться.
+
+### Регистрация с тэгом
+
+```swift
+container.register(PostgreSQLDatabase.init)
+    .as(Database.self, tag: PrimaryDatabase.self)
+
+container.register(SQLiteDatabase.init)
+    .as(Database.self, tag: SecondaryDatabase.self)
+```
+
+> **Примечание:** Для добавления тэга необходимо указать сервис через `.as()`.
+
+### Внедрение с тэгом
+
+#### В инициализаторе
+
+```swift
+container.register {
+    DataService(
+        primary: by(tag: PrimaryDatabase.self, on: $0),
+        backup: by(tag: SecondaryDatabase.self, on: $1)
+    )
 }
 ```
-Или так:
-```Swift
-let animal1: Animal = by(tag: Felix.self, on: container.resolve())
-let animal2: Animal = by(tag: Rex.self, on: container.resolve())
-```
-Как видим, модификатор внедрения универсален, и может быть использован с любым другим синтаксисом. Правда к нему нужно привыкать, так как выглядит такая конструкция больше как магия, как нечто реальное.
 
-Во всех трех случаях, в animal1 будет лежать экземпляр класса Cat, а в animal2 будет лежать экземпляр класса Dog.
+#### Через свойства
 
-## Множественное внедрение
-Более простой, и понятный модификатор внедрения - это множественное внедрение. Он позволяет внедрить массив объектов соответствующих некоему сервису. Пример, когда подобное может понадобиться: Есть протокол который позволяет получить количество новых уведомлений/новостей/сообщений/задач - ну или просто количество чего-то нового.
-Для получения подобной информации каждый раздел, будет иметь свою собственную реализацию, и лазить по разным методам на сервер, а возможно брать из БД. Соответственно удобно если каждый раздел реализует этот один протокол. Но как собрать в этом случае все эти цифры вместе, чтобы показать на badge общее количество нового?
-
-При использовании различных библиотек, вам бы пришлось или указывать явно типы всех разделов, или добавлять тэги, но не удалось бы получить все объекты соответствующие одному протоколу. В DITranquillity это делает очень легко:
-```Swift
-container.register(EventsService.self)
-    .as(NewCounter.self)
-container.register(NewsService.self)
-    .as(NewCounter.self)
-container.register(MessagesService.self)
-    .as(NewCounter.self)
-container.register(TasksService.self)
-    .as(NewCounter.self)
-...
-
-let anyCounters: [NewCounter] = many(container.resolve())
-```
-или, как и в случае с тэгами модификатор можно использовать во всех ситуациях:
-```Swift
-container.register { BadgeUpdater(anyCounters: many($0)) }
-// или
-container.register(BadgeUpdater.init)
-.injection(\.anyCounters) { many($0) }
+```swift
+container.register(DataService.init)
+    .injection(\.primary) { by(tag: PrimaryDatabase.self, on: $0) }
+    .injection(\.backup) { by(tag: SecondaryDatabase.self, on: $0) }
 ```
 
-Таким не хитрым способом, можно получать все объекты соответствующие некоему сервису.
+#### При resolve
 
-## Аргумент
-Последний модификатор внедрения, это внедрение аргумента. Но прежде чем рассказать о нем, обращаю внимание - это не безопасное API, и если тип аргумента внедряемого, не совпадет с типом аргумента желаемым, то библиотека может упасть  во время исполнения, с информацией, какой тип не удалось получить.
-Но если вы уверены в своих силах, то давайте разбираться, как этим пользоваться. Для того чтобы в компонент можно было внедрять аргументы, как и в прошлых случаях достаточно указать модификатор внедрения:
-```Swift
-container.register { Cat(name: arg($0)) }
-  .as(Animal.self)
-  .injection { $0.owner = arg($1) }
-  .injection(\.age) { arg($0) }
-```
-При необходимость передать аргумент, только в качестве первого параметра функции инициализации класса, а остальные внедрить обычным образом, есть сокращенный синтаксис:
-```Swift
-container.register(Cat.init) { arg($0) }
-```
-Сокращение позволяет применить модификатор только к первому параметру функции инициализации, а все остальные оставить как есть - внедрять обычным образом.
-
-Да аргументы можно передавать в любое место, а не только непосредственно в метод инициализации. Дальше обращаю внимание, что их количество может быть любым. В данном примере мы будем передавать три аргумента. При передаче важен порядок - он интуитивен - в каком порядке встречается `arg` в таком порядке надо будет и передавать аргументы.
-
-Следующая важная особенность. В отличии от наверное всех библиотек для внедрения зависимостей, в DITranquillity аргументы могут передаваться не только на первый получаемый объект, но и на любой объект который создается в ходе создания целевого. Это было сделано для того чтобы при получении ViewController-а можно было передать аргументы сразу в Presenter. Удобно? - Да. Безопасно? - Не очень, так как зависимости являются внутренней информацией объекта.
-Как же это сделать? Для этого при получении объекта нужно передать специальный объект, с указанием аргументов. В коде это выглядит так:
-```Swift
-var arguments = AnyArguments()
-arguments.addArgs(for: Cat.self, args: "Felix", "Peter", 2)
-let cat: Cat = container.resolve(arguments: arguments)
-```
-Такая запись позволяет передать аргументы не в один создаваемый объект, а сразу в несколько, в случае если при получении объекта создаются еще и другие объекты:
-```Swift
-var arguments = AnyArguments()
-arguments.addArgs(for: Cat.self, args: "Felix", "Peter", 2)
-arguments.addArgs(for: Dog.self, args: "Rex", "Peter", 4)
-let home: Home = container.resolve(arguments: arguments)
-// home.cat.name == "Fefix"
-// home.dog.name == "Rex"
-```
-Если вам нужно внедрить аргументы всего в один тип, то можно воспользоваться более короткой записью:
-```Swift
-let arguments = AnyArguments(for: Cat.self, args: "Felix", "Peter", 2)
-let cat: Cat = container.resolve(arguments: arguments)
-```
-И есть еще более короткая и привычная запись, в случае если аргументы нужно передать только в получаемый тип:
-```Swift
-let cat: Cat = container.resolve(args: "Felix", "Peter", 2)
+```swift
+let primary: Database = by(tag: PrimaryDatabase.self, on: container.resolve())
+let backup: Database = by(tag: SecondaryDatabase.self, on: container.resolve())
 ```
 
-При использовании этих возможностей стоит учитывать важные моменты:
-* Порядок аргументов важен - внутри нет проверки на совпадение типов, и если тип не совпадет, то библиотека не создаст объект
-* Если во время получения зависимости, нужно будет создать несколько объектов, то каждому объекту передастся список аргументов по отдельности.
-* Библиотеке не обязательно указывать тип имплементации. Если у вашего типа [при регистрации были указаны сервисы](registration_and_service.md) то указать аргументы можно и для типов сервисов:
-```Swift
-let arguments = AnyArguments(for: Animal.self, args: "Felix", "Peter", 2)
-let cat: Cat = container.resolve(arguments: arguments)
+### Объединение тэгов
+
+Протоколы можно объединять:
+
+```swift
+protocol Premium {}
+protocol European {}
+
+container.register(BMWEngine.init)
+    .as(Engine.self, tag: (Premium & European).self)
+
+// Получение
+let engine: Engine = by(tag: (Premium & European).self, on: container.resolve())
 ```
 
+## Множественное внедрение (many)
 
-Существует более безопасный, и более красивый способ передачи аргументов - воспользоваться [отложенным внедрением](delayed_injection.md). Подробно про него написано на [странице](delayed_injection.md), тут будет лишь небольшой пример:
-```Swift
-class Home {
-    let catMaker: Provider3<Cat, String, String, Int>
-    init(catMaker: Provider3<Cat, String, String, Int>) {
-        self.catMaker = catMaker
+Позволяет получить все реализации протокола как массив.
+
+### Пример: Сбор счётчиков
+
+```swift
+protocol NotificationCounter {
+    var count: Int { get }
+}
+
+// Регистрация нескольких реализаций
+container.register(EmailNotificationCounter.init)
+    .as(NotificationCounter.self)
+
+container.register(PushNotificationCounter.init)
+    .as(NotificationCounter.self)
+
+container.register(SMSNotificationCounter.init)
+    .as(NotificationCounter.self)
+
+// Сбор всех счётчиков
+container.register { BadgeService(counters: many($0)) }
+
+// Или при resolve
+let allCounters: [NotificationCounter] = many(container.resolve())
+let totalCount = allCounters.reduce(0) { $0 + $1.count }
+```
+
+### Пример: Плагины
+
+```swift
+protocol Plugin {
+    func initialize()
+}
+
+container.register(AnalyticsPlugin.init).as(Plugin.self)
+container.register(LoggingPlugin.init).as(Plugin.self)
+container.register(CrashReportingPlugin.init).as(Plugin.self)
+
+container.register { PluginManager(plugins: many($0)) }
+
+class PluginManager {
+    private let plugins: [Plugin]
+
+    init(plugins: [Plugin]) {
+        self.plugins = plugins
     }
-    ...
-    func makeCat(name: String, owner: String, age: Int) -> Cat {
-        return catMaker.value(name, owner, age)
+
+    func initializeAll() {
+        plugins.forEach { $0.initialize() }
     }
 }
 ```
-В этом примере используется тесная интеграция с отложенными внедрениями. В класс дома внедряется специальный объект, который позволяет создавать кошку отложено. Такой способ чуть более безопасней, чем использование контейнера на прямую, но и менее гибкий.
+
+### Использование many в разных контекстах
+
+```swift
+// В инициализаторе
+container.register { NotificationCenter(handlers: many($0)) }
+
+// Через injection
+container.register(NotificationCenter.init)
+    .injection(\.handlers) { many($0) }
+
+// При resolve
+let handlers: [NotificationHandler] = many(container.resolve())
+```
+
+## Множественное внедрение в фреймворке (manyInFramework)
+
+Аналогично множественному внедрению `many` - `manyInFramework` возвращает несколько реализаций одного протокола, но в рамках одного `DIFramework`.
+Если по указанному протоколу/типу есть еще регистрации в других фреймворках, они не будут внедрены.
+
+## Аргументы (arg)
+
+Позволяет передавать параметры при создании объекта.
+
+> **Внимание:** Это менее безопасное API — несовпадение типов приведёт к runtime-ошибке.
+
+### Базовое использование
+
+```swift
+// Регистрация с аргументом
+container.register { UserDetailViewController(userId: arg($0), userService: $1) }
+
+// Получение с передачей аргумента
+let viewController: UserDetailViewController = container.resolve(arg: 42)
+```
+
+### Сокращённый синтаксис для первого аргумента
+
+```swift
+// Только первый аргумент — arg, остальные из контейнера
+container.register(UserDetailViewController.init) { arg($0) }
+
+let viewController: UserDetailViewController = container.resolve(arg: 42)
+```
+
+### Несколько аргументов
+
+```swift
+container.register {
+    ArticleViewController(
+        articleId: arg($0),
+        isPremium: arg($1),
+        analyticsService: $2
+    )
+}
+
+// Порядок аргументов важен!
+let viewController: ArticleViewController = container.resolve(args: "article-123", true)
+```
+
+### Аргументы в разные объекты
+
+Можно передавать аргументы не только в создаваемый объект, но и в его зависимости:
+
+```swift
+var arguments = AnyArguments()
+arguments.addArgs(for: UserPresenter.self, args: 42)
+arguments.addArgs(for: UserViewModel.self, args: "John")
+
+let viewController: UserViewController = container.resolve(arguments: arguments)
+```
+
+### Аргументы с сервисами
+
+Можно указывать сервис вместо конкретного типа:
+
+```swift
+container.register { UserPresenter(userId: arg($0)) }
+    .as(Presenter.self)
+
+// Работает и так
+let arguments = AnyArguments(for: Presenter.self, args: 42)
+let presenter: Presenter = container.resolve(arguments: arguments)
+```
+
+## Безопасные аргументы через Provider
+
+Более безопасный способ — использовать [Provider с аргументами](delayed_injection.md#provider-и-lazy-с-аргументами):
+
+```swift
+class UserCoordinator {
+    private let presenterFactory: Provider1<UserPresenter, Int>
+
+    init(presenterFactory: Provider1<UserPresenter, Int>) {
+        self.presenterFactory = presenterFactory
+    }
+
+    func showUser(id: Int) {
+        let presenter = presenterFactory.value(id)  // Типизировано!
+        // ...
+    }
+}
+
+// Регистрация
+container.register { UserPresenter(userId: arg($0), service: $1) }
+container.register(UserCoordinator.init)
+```
+
+**Преимущества:**
+- Типобезопасность на этапе компиляции
+- Явная зависимость от фабрики
+- Отложенное создание
+
+## Комбинирование модификаторов
+
+Модификаторы можно комбинировать:
+
+```swift
+// Все European двигатели
+container.register {
+    CarFactory(engines: many(by(tag: European.self, on: $0)))
+}
+
+// Lazy с тэгом
+container.register {
+    ServiceManager(
+        primary: by(tag: Primary.self, on: $0) as Lazy<Service>,
+        backup: by(tag: Backup.self, on: $1) as Lazy<Service>
+    )
+}
+```
+
+## Примеры из реальных проектов
+
+### Feature toggles
+
+```swift
+protocol Feature {
+    var isEnabled: Bool { get }
+    func run()
+}
+
+container.register(DarkModeFeature.init).as(Feature.self)
+container.register(NewCheckoutFeature.init).as(Feature.self)
+container.register(BetaSearchFeature.init).as(Feature.self)
+
+container.register { FeatureManager(features: many($0)) }
+```
+
+### A/B тестирование
+
+```swift
+protocol Experiment {}
+protocol VariantA: Experiment {}
+protocol VariantB: Experiment {}
+
+container.register(OldCheckoutFlow.init)
+    .as(CheckoutFlow.self, tag: VariantA.self)
+
+container.register(NewCheckoutFlow.init)
+    .as(CheckoutFlow.self, tag: VariantB.self)
+
+// В зависимости от настроек A/B
+let variant: any Experiment.Type = abService.isVariantB ? VariantB.self : VariantA.self
+let flow: CheckoutFlow = by(tag: variant, on: container.resolve())
+```
+
+### Среды выполнения
+
+```swift
+protocol Production {}
+protocol Staging {}
+protocol Development {}
+
+container.register(ProductionAPIClient.init)
+    .as(APIClient.self, tag: Production.self)
+
+container.register(StagingAPIClient.init)
+    .as(APIClient.self, tag: Staging.self)
+
+container.register(MockAPIClient.init)
+    .as(APIClient.self, tag: Development.self)
+
+// Выбор в зависимости от конфигурации
+#if DEBUG
+let apiTag = Development.self
+#else
+let apiTag = Production.self
+#endif
+
+container.register {
+    NetworkService(client: by(tag: apiTag, on: $0))
+}
+```
+
+## Дополнительные ссылки
+
+- [Регистрация компонентов](registration_and_service.md)
+- [Внедрение зависимостей](injection.md)
+- [Отложенное внедрение](delayed_injection.md)

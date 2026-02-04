@@ -1,175 +1,385 @@
-# Внедрение
+# Внедрение зависимостей
 
-Внедрение зависимостей бывает трех типов: через метод инициализации, через свойства и через любой другой метод. Библиотека поддерживает все 3 варианта внедрения зависимостей.
-Хорошим стилем считается внедрение зависимостей через метод инициализации. Другим способом стоит пользоваться в редких случаях, таких как - циклические зависимости или отсутствие возможности создавать объект самим.
+Внедрение зависимостей бывает трёх типов:
+- Через метод инициализации (рекомендуется)
+- Через свойства
+- Через методы
+
+Хорошим стилем считается внедрение через метод инициализации. Другие способы используются в особых случаях:
+- Циклические зависимости
+- ViewController из Storyboard/XIB
+- Легаси-код, который сложно рефакторить
 
 ## Внедрение через метод инициализации
 
-Объявление внедрения через метод инициализации происходит при регистрации нового компонента.
-Рассмотрим пример:
-```Swift
-/// объявляем классы и протоколы
+Самый распространённый и рекомендуемый способ. Объявляется при регистрации компонента.
+
+### Пример
+
+```swift
+// Протоколы
 protocol Engine {}
 protocol Wheel {}
 protocol Body {}
 
+// Класс с зависимостями
 class Car {
-	private let engine: Engine
-	private let wheel: Wheel
-	private let body: Body
-	init(engine: Engine, wheel: Wheel, body: Body) {
-		self.engine = engine
-		self.wheel = wheel
-		self.body = body
-	}
-}
+    private let engine: Engine
+    private let wheel: Wheel
+    private let body: Body
 
-/// регистрация в контейнер.
+    init(engine: Engine, wheel: Wheel, body: Body) {
+        self.engine = engine
+        self.wheel = wheel
+        self.body = body
+    }
+}
+```
+
+### Способы регистрации
+
+#### 1. Краткая запись
+
+```swift
 container.register(Car.init)
+```
+
+**Когда использовать:**
+- У класса один метод инициализации
+- Класс активно меняется, и не хочется обновлять регистрацию
+
+**Недостатки:**
+- Труднее читать код — нужно переходить в класс для просмотра зависимостей
+
+#### 2. Полная запись
+
+```swift
 container.register(Car.init(engine:wheel:body:))
-container.register { 
-	return Car(engine: $0, wheel: $1, body: $2)
-}
 ```
-Все три записи регистрации компонента равносильны, но стоит рассмотреть отличия между ними:
 
-#### `container.register(Car.init)`
-Простой способ регистрации. Работает если у класса есть единственный метод инициализации. Таким способом стоит пользоваться в двух случаях:
-* Класс активно меняется, и обновлять регистрацию на каждое изменение метода инициализации не хочется.
-* Хочется упросить написание кода. Но это усложняет чтение кода, так как придется переходить в класс для просмотра зависимостей.
+**Когда использовать:**
+- Когда важна читаемость кода регистрации
 
-#### `container.register(Car.init(engine:wheel:body:))`
-Предпочтительный способ регистрации. Работает в большинстве ситуаций, и не усложняет чтение кода. 
-Такой способ регистрации не поддерживает [модификаторы](modificators.md). Для этого есть третий.
+**Недостатки:**
+- Не поддерживает [модификаторы](modificated_injection.md)
 
-#### `container.register { Car(engine: $0, wheel: $1, body: $2) }`
-Универсальный способ регистрации. Работает во всех ситуациях, легко читаем, и хорошо поддерживает auto completion. Но имеет недостаток, в виде необходимости писать цифры, что не всегда может быть удобным.
-Основное достоинство - поддерживает работу с [модификаторами](modificated_injection.md), а также позволяет внедрять объекты, не зарегистрированные в контейнере.
-Пример использования, с многими возможностями:
-```Swift
+#### 3. Замыкание с позиционными аргументами
+
+```swift
 container.register {
-	/// Внедряем:
-	/// двигатель не зарегистрированный в DI контейнере
-	/// все колеса зарегистрированные в контейнере и соответствующие типу: Wheel
-	/// каркас, соответствующий тегу BMWBody
-	Car(engine: BMWEngine(), wheels: many($0), body: by(tag: BMWBody.self, $1))
+    Car(engine: $0, wheel: $1, body: $2)
 }
 ```
 
-#### `container.register(Car.init, modificator: { arg($0) })`
-Способ регистрации, на случай если вам нужно в качестве первого аргумента внедрить не просто зависимость, а зависимость с модификатором.
-Такое способ предполагается в первую очередь для использования для внедрения аргумента, но может быть использован и для других целей.
-Служит для упрощения и сокращения кода, если нужно внедрение с одной модификацией. 
-Пример использования:
-```Swift
-/// Внедряем:
-/// двигатель не зарегистрированный в DI контейнере, и который нужно передать снаружи.
-/// колеса и каркас, которые до этого где-то были зарегистрированы в DI контейнере.
-container.register(Car.init) { arg($0) }
+**Когда использовать:**
+- Нужны [модификаторы](modificated_injection.md)
+- Нужно внедрить объекты, не зарегистрированные в контейнере
+- Сложная логика создания объекта
 
-// Теперь можно создать машину, указав один аргумент, и он автоматически подставится при создании
-let car: Car = container.resolve(args: BMWEngine())
+**Пример с модификаторами:**
+
+```swift
+container.register {
+    Car(
+        engine: BMWEngine(),              // Не из контейнера
+        wheels: many($0),                 // Все реализации Wheel
+        body: by(tag: BMWBody.self, $1)   // С фильтрацией по тэгу
+    )
 }
+```
+
+#### 4. С модификатором первого аргумента
+
+```swift
+container.register(Car.init) { arg($0) }
+```
+
+**Когда использовать:**
+- Первый аргумент передаётся при resolve
+- Остальные зависимости берутся из контейнера
+
+**Пример:**
+
+```swift
+// Регистрация
+container.register(Car.init(engine:wheel:body:)) { arg($0) }
+
+// Использование — engine передаётся снаружи
+let car: Car = container.resolve(arg: BMWEngine())
 ```
 
 ## Внедрение через свойства
 
-Если внедрение через метод инициализации не подходит, то стоит использовать внедрение через свойства. Такое может быть по следующим причинам:
-* Идеологическим - на проекте не принято внедрять через метод инициализации
-* Историческим - уже написано много кода, который долго править
-* Синтаксическим - наличие циклических зависимостей, или ViewController-ов создаваемых из xib/storyboard не дает возможности делать все с использованием методов инициализации.
-* Временным - написать конструктор и прописать присвоении переменных занимает больше времени, чем написать свойство.
+Используется когда внедрение через инициализатор невозможно или нецелесообразно.
 
-При этом внедрение через свойство достаточно богато на синтаксис. Давайте рассмотрим все варианты:
-```Swift
+### Когда использовать
+
+- **Циклические зависимости** — Swift не позволяет создать объект с циклом в init
+- **ViewController из Storyboard/XIB** — объект создаётся системой
+- **Легаси-код** — постепенная миграция на DI
+- **Опциональные зависимости** — не все зависимости нужны всегда
+
+### Синтаксис
+
+```swift
 class Car {
-	var engine: Engine!
-	var wheels: [Wheel] = []
-}
-
-container.register(Car.init)
-	/// При создании зависимостей ручками
-	.injection { car in car.engine = BMWEngine() }
-	.injection { $0.engine = BMWEngine() }
-	/// При получении из DI контейнера
-	.injection { car, engine in car.engine = engine }
-	.injection { $0.engine = $1 }
-	.injection(\Car.engine)
-	.injection(\.engine)
-	/// с модификаторами
-	.injection { car wheel in car.wheels = many(wheel) }
-	.injection { $0.wheels = many($1) }
-	.injection(\Car.wheels) { wheel in many(wheel) }
-	.injection(\.wheels) { many($0) }
-	/// При необходимости указать другой тип
-	.injection { $0.engine = $1 as OtherEngine }
-	.injection(\Car.engine) { $0 as OtherEngine }
-	/// При наличии цикла все те же варианты, но с добавлением `cycle: true`
-	.injection(cycle: true) { $0.engine = $1 }
-	/// С указанием имени, все те же варианты, но с добавлением `name: "..."`
-	.injection(name: "BMW") { $0.engine = $1 } /// deprecated(Лучше использовать модификаторы)
-```
-Скорей всего можно придумать еще комбинации, но все они вытекают из этих вариантов, которые на самом деле распадаются на 3:
-1. `.injection(_ closure: @escaping (Impl) -> ())`
-Вариант, когда внедряемый объект создается на месте. Наиболее простой вариант, и редко используемый. Основное его использование или проставление общих констант (казалось бы, при чем тут DI?), или добавление в уже существующих проект DI. Второй вариант более интересен, так как если проект большой, а на нем нет DI, то скорей всего есть какой-то аналог. И данное внедрение хорошо подходит, для переписывания проекта частями.
-2. `.injection(name: String? = nil, cycle: Bool = false, _ closure: @escaping (Impl, Property) -> ())`
-Старый вариант внедрения зависимостей, до swift4.0. Позволяет внедрить любой объект зарегистрированный в DI контейнере. Для чего нужен каждый параметр:
-* `name` - является устаревшим способом, замененным на модификаторы. Нужно в случае если для одного и того же типа, надо иметь несколько вариантов компонента. Например:
-```Swift
-container.register(Car.init)
-	.as(Car.self, name: "BMW")
-	.injection { $0.engine = BMWEngine() }
-container.register(Car.init)
-	.as(Car.self, name: "Eclipse")
-	.injection { $0.engine = EclipseEngine() }
-```
-В этом случае при внедрении, можно указать одно из указанных имен, и получить интересуемый экземпляр машины, но с разными двигателями.
-
-!!! Причины отказа: строковые литералы не являются типо-безопасными, более того они подвержены опечаткам. На смену пришли тэги. Да в отличие от имени они требуют чуть больше действий, но они имеет намного больше возможностей: можно пользоваться при инициализации, типо-безопасны, проверка валидности на стадии валидации, наличие области видимости. Все эти плюсы, в моем понимании, перевешивают их единственный минус - очевидность использования.
-
-* `cycle` - является указанием, что данный граф зависимостей имеет цикл, и его нужно разорвать. На один цикл достаточно одного указания данного факта - это будет точкой разрыва, чтобы инициализации не ушла в бесконечный цикл. Наличие циклов проверяется при валидации, и если вы забудете указать, то библиотека сообщит об этом и предложит в определенном цикле указать данный факт.
-
-!!! Стоит учесть: Если при регистрации указывается много внедрений через свойства, то все они будут внедряться строго в указанном порядке, за исключением циклических внедрений - их момент внедрения сложно пред угадать. Единственное что можно сказать наверняка - циклические внедрения будут внедряться после всех не циклических и также по порядку.
-
-* `closure` - метод описывающий способ внедрения. На вход принимает объект в который внедряемся и объект, который будет внедрен. Ваша задача присвоить объект, так как swift до 4 версии не умел это делать каким либо способом.
-
-!!! Lifehack: Не рекомендуется, но на самом деле в `closure` можно делать любые другие действия. Но лучше для этих целей использовать отдельный метод `postInit`, который исполняется после всех внедрений.
-
-3. `injection(name: String? = nil, cycle: Bool = false, _ keyPath: ReferenceWritableKeyPath<Impl, P>, _ modificator: @escaping (Property) -> P)`
-Улучшенный вариант предыдущего доступный со swift4.0. улучшение касается как синтаксиса - он становится короче и понятней, так и возможностей: при таком внедрении свойство может иметь область видимости меньше, чем в прошлом случае:
-```Swift
-class Car {
-	/// Прошлое способ не имеет возможности изменить свойство при таком модификаторе доступа
-	/// Начиная со swift4.0 благодаря keyPath достаточно только знать о свойстве, без возможности модифицировать
-	private(set) var engine: Engine!
+    var engine: Engine?
+    var wheels: [Wheel] = []
 }
 ```
-Во всех остальных отношениях этот способ эквивалентен предыдущему. Стоит только уточнить про наличие еще одного параметра `modificator`:
-`modificator` нужен для добавления модификаторов. В случае если нам нужно получить объект с использованием модификатора, к примеру `many`, то это можно легко дописать в конце, например как это было сделано тут:
-```Swift
-.injection(\.wheels) { many($0) }
+
+#### Базовое внедрение
+
+```swift
+container.register(Car.init)
+    .injection(\.engine)  // KeyPath — рекомендуемый способ
 ```
+
+#### С модификаторами
+
+```swift
+container.register(Car.init)
+    .injection(\.wheels) { many($0) }  // Все реализации Wheel
+```
+
+#### С приведением типа
+
+```swift
+container.register(Car.init)
+    .injection(\.engine) { $0 as OtherEngine }
+```
+
+#### Циклические зависимости
+
+```swift
+container.register(Presenter.init)
+    .injection(cycle: true, \.view)  // cycle: true разрывает цикл
+    .lifetime(.objectGraph)
+
+container.register(ViewController.self)
+    .as(View.self)
+    .injection(\.presenter) // View имеет ссылку на Presenter
+    .lifetime(.objectGraph)
+```
+
+> **Важно:** Для циклов необходимо время жизни `.objectGraph` или более длительное. `.prototype` приведёт к бесконечному циклу создания.
+
+### Варианты синтаксиса
+
+```swift
+container.register(Car.init)
+    // KeyPath (рекомендуется)
+    .injection(\.engine)
+
+    // KeyPath с модификатором
+    .injection(\.wheels) { many($0) }
+
+    // Замыкание с двумя параметрами
+    .injection { car, engine in car.engine = engine }
+
+    // Сокращённое замыкание
+    .injection { $0.engine = $1 }
+
+    // Ручное создание объекта
+    .injection { $0.engine = BMWEngine() }
+
+    // С разрывом цикла
+    .injection(cycle: true, \.delegate)
+```
+
+### Порядок внедрения
+
+1. Все обычные injection выполняются по порядку объявления
+2. Циклические injection (с `cycle: true`) выполняются после всех обычных
+3. `postInit` вызывается последним
 
 ## Внедрение через метод
 
-Последний способ внедрения. Мало популярный, и мало отличающийся от внедрения через свойства, кроме как того что происходит внедрение нескольких зависимостей одновременно. Более того такой способ имеет меньший функционал.
-```Swift
+Менее популярный способ для внедрения нескольких зависимостей одновременно.
+
+```swift
+class Car {
+    private var engine: Engine!
+    private var wheels: [Wheel]!
+    private var body: Body!
+
+    func setup(engine: Engine, wheels: [Wheel], body: Body) {
+        self.engine = engine
+        self.wheels = wheels
+        self.body = body
+    }
+}
+
 container.register(Car.init)
-	.injection { $0.setup(engine: $1, wheels: many($2), body: $3) }
-```
-Как и с методом инициализации, такой способ не умеет внедрять по имени, и не поддерживает разрыв циклов.
-
-## После инициализации
-
-После полной инициализации объекта, с внедрением всех зависимостей, в том числе и циклических, вызывается еще один метод `postInit`. По умолчанию он отсутствует, но если вам нужно сделать какие-нибудь дополнительные методы после полной инициализации метода, вы можете его определить:
-```Swift
-container.register(Car.init)
-	.injection(\.engine)
-	.injection(\.wheels) { many($0) }
-	.injection(\.body)
-	.postInit { car in
-		car.move(to: Moscow.location)
-	}
+    .injection { $0.setup(engine: $1, wheels: many($2), body: $3) }
 ```
 
+> **Ограничение:** Не поддерживает `cycle: true` для разрыва циклов.
 
+## После инициализации (postInit)
+
+Вызывается после полной инициализации объекта и внедрения всех зависимостей, включая циклические.
+
+```swift
+container.register(Presenter.init)
+    .injection(\.view)
+    .injection(\.interactor)
+    .postInit { presenter in
+        // Все зависимости уже внедрены
+        presenter.interactor.delegate = presenter
+        presenter.view.presenter = presenter
+    }
+```
+
+### Типичные применения
+
+- Установка делегатов
+- Подписка на события
+- Начальная настройка объекта
+
+## Swift Concurrency и внедрение
+
+### @MainActor классы
+
+Для классов с `@MainActor` или `@globalActor` используйте асинхронный resolve:
+
+```swift
+@MainActor
+final class UserViewModel: ObservableObject {
+    private let userService: UserService
+
+    init(userService: UserService) {
+        self.userService = userService
+    }
+}
+
+// Регистрация — как обычно
+container.register(UserViewModel.init)
+
+// Получение — асинхронно
+let viewModel: UserViewModel = await container.resolve()
+```
+
+> **Примечание:** синхронное получение `@MainActor` класса также возможно и обрабатывается библиотекой. Если синхронно создавать с главного потока, то никаких проблем не будет. Если синхронно создавать с другого потока, то потенциально возможен дедлок, но добиться его можно только при использовании нескольких синхронных переключений потоков.
+
+### AsyncProvider для отложенного создания
+
+Если нужно создать `@MainActor` или `@globalActor` объект позже:
+
+```swift
+class Coordinator {
+    private let viewModelProvider: AsyncProvider<UserViewModel>
+
+    init(viewModelProvider: AsyncProvider<UserViewModel>) {
+        self.viewModelProvider = viewModelProvider
+    }
+
+    func start() async {
+        let viewModel = await viewModelProvider.value
+        // ...
+    }
+}
+
+// Регистрация
+container.register(Coordinator.init)
+container.register(UserViewModel.init)
+```
+
+## Полный пример
+
+```swift
+// Протоколы
+protocol Logger: Sendable {
+    func log(_ message: String)
+}
+
+protocol UserRepository {
+    func getUser(id: Int) async throws -> User
+}
+
+protocol UserView: AnyObject {
+    func display(user: User)
+    func showError(_ error: Error)
+}
+
+// Реализации
+final class ConsoleLogger: Logger, Sendable {
+    func log(_ message: String) {
+        print("[\(Date())] \(message)")
+    }
+}
+
+final class RemoteUserRepository: UserRepository {
+    private let logger: Logger
+
+    init(logger: Logger) {
+        self.logger = logger
+    }
+
+    func getUser(id: Int) async throws -> User {
+        logger.log("Fetching user \(id)")
+        // ...
+    }
+}
+
+@MainActor
+final class UserPresenter {
+    weak var view: UserView?
+    private let repository: UserRepository
+    private let logger: Logger
+
+    init(repository: UserRepository, logger: Logger) {
+        self.repository = repository
+        self.logger = logger
+    }
+
+    func loadUser(id: Int) {
+        Task {
+            do {
+                let user = try await repository.getUser(id: id)
+                view?.display(user: user)
+            } catch {
+                logger.log("Error: \(error)")
+                view?.showError(error)
+            }
+        }
+    }
+}
+
+final class UserViewController: UIViewController, UserView {
+    var presenter: UserPresenter!
+
+    func display(user: User) { /* ... */ }
+    func showError(_ error: Error) { /* ... */ }
+}
+
+// Регистрация
+let container = DIContainer()
+
+container.register(ConsoleLogger.init)
+    .as(Logger.self)
+    .lifetime(.single)
+
+container.register(RemoteUserRepository.init)
+    .as(UserRepository.self)
+    .lifetime(.perContainer)
+
+container.register(UserPresenter.init)
+    .injection(cycle: true, \.view)
+    .lifetime(.objectGraph)
+
+container.register(UserViewController.self)
+    .as(UserView.self)
+    .injection(\.presenter)
+    .lifetime(.objectGraph)
+
+// Использование
+let viewController: UserViewController = await container.resolve()
+```
+
+## Дополнительные ссылки
+
+- [Регистрация компонентов](registration_and_service.md)
+- [Модификаторы внедрения](modificated_injection.md)
+- [Время жизни](scope_and_lifetime.md)
+- [Отложенное внедрение](delayed_injection.md)

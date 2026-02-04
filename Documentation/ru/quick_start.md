@@ -1,142 +1,268 @@
 # Быстрый старт
 
-## Добавление DITranquillity в ваш проект
-DITranquillity - проект с открытым исходным кодом.
-Установить библиотеку можно с помощью cocoapods, carthage, swiftPM или ручками.
+## Установка
 
-#### [CocoaPods](https://guides.cocoapods.org/using/getting-started.html)
-Добавьте строчку в `Podfile`: 
-```
-pod 'DITranquillity'
-```
+DITranquillity — это проект с открытым исходным кодом. Установить библиотеку можно с помощью SwiftPM или Carthage.
 
-#### SwiftPM
-Можно воспользоваться "Xcode/File/Swift Packages/Add Package Dependency..." и указать в качестве url:
+> **Примечание:** Начиная с версии 5.0.0, Cocoapods не поддерживается.
+
+### SwiftPM (рекомендуется)
+
+Используйте "Xcode → File → Swift Packages → Add Package Dependency..." и укажите URL:
 ```
 https://github.com/ivlevAstef/DITranquillity
 ```
-Или прописать в `Package.swift` файле в секции `dependencies`:
-```Swift
-.package(url: "https://github.com/ivlevAstef/DITranquillity.git", from: "4.6.0")
+
+Или добавьте в `Package.swift` в секцию `dependencies`:
+```swift
+.package(url: "https://github.com/ivlevAstef/DITranquillity.git", from: "5.0.0")
 ```
-И не забудьте указать в таргете в аргументе `dependencies` зависимость на библиотеку:
-```Swift
+
+И укажите зависимость в таргете:
+```swift
 .product(name: "DITranquillity")
 ```
-> Важно! - SwiftPM не поддерживает возможности из секции UI.
 
-#### [Carthage](https://github.com/Carthage/Carthage)
-Добавьте строчку в ваш `Cartfile`:
+### Carthage
+
+Добавьте в `Cartfile`:
 ```
 github "ivlevAstef/DITranquillity"
 ```
-Carthage поддерживает работу со сторибоардами и прямое внедрение, без дополнительных действий.
 
-#### Ручками
-1. Скачайте или склонируйте репозиторий библиотеки к себе на компьютер
-2. Скачайте или склонируйте [SwiftLazy](https://github.com/ivlevAstef/SwiftLazy). Она нужна для части функционала. Если вы не хотите использовать данный функционал, то можно удалить в библиотеке из папки и проекта `Sources/Core/API/Extensions` файл `SwiftLazy.swift`
-3. Включите библиотеку (или библиотеки) в ваш рабочий workspace.
-4. Удалить из проекта в секции Swift Packages строчку с SwiftLazy, чтобы Xcode не качал библиотеку сам. 
-4. Установить зависимости из проекта на DITranquillity, а из DITranquillity на SwiftLazy, если нужно.
-5. Библиотека готова к использованию.
+## Первые шаги
 
-## Начало использования
-Библиотека является DI контейнером, поэтому для начала использования надо создать контейнер:
-```Swift
+### Создание контейнера
+
+Библиотека является DI-контейнером, поэтому для начала создайте контейнер:
+
+```swift
 let container = DIContainer()
 ```
-Далее в контейнере можно регистрировать компоненты  (можно также сказать: "объявлять ваши классы") которые можно создать позже:
-```Swift
-container.register { Cat(name: "Felix") }
-container.register { Dog(name: "Buddy") }
-```
-Ну и завершающий этап получение объект из контейнера:
-```Swift
-let cat: Cat = container.resolve()
-let dog: Dog = container.resolve()
-print(cat.name) // Felix
-print(dog.name) // Buddy
+
+### Регистрация компонентов
+
+Зарегистрируйте классы, которые хотите создавать через контейнер:
+
+```swift
+container.register(UserService.init)
+container.register(AuthManager.init)
 ```
 
-Это все хорошо, но можно что-нибудь посложнее?
+### Получение объектов
 
-## Пример по сложнее
-Давайте представим один из стандартных архитектурных паттернов. Разбирать будем [MVC](https://developer.apple.com/library/content/documentation/General/Conceptual/CocoaEncyclopedia/Model-View-Controller/Model-View-Controller.html), и для лучшего понимания напишем пример кода:
-```Swift
-class ViewController: UIViewController, ModelDelegate {
+Получите объекты из контейнера с помощью `resolve`:
 
-	@IBOutlet private var view: View!
-	private(set) var model: Model!
+```swift
+// Синхронное получение
+let userService: UserService = container.resolve()
 
-	func viewDidLoad() {
-		super.viewDidLoad()
-
-		view.set(title: "Нажмите кнопку")
-	}
-
-	@objc @IBAction private func nextBtnTouched() {
-		model.fetchOtherTitle()
-	}
-
-	func receivedNewTitle(title: String)
-	{
-		view.set(title: title)
-	}
-}
-
-class View: UIView {
-
-	@IBOutlet private var titleLbl: UILabel!
-	@IBOutlet private var nextBtn: UIButton!
-
-	func set(title: String) {
-		titleLbl.text = title
-	}
-
-	
-}
-
-protocol ModelDelegate {
-
-	func receivedNewTitle(title: String)
-}
-
-class Model {
-	private weak var delegate: ModelDelegate?
-
-	init(delegate: ModelDelegate) {
-		self.delegate = delegate
-	}
-
-	func fetchOtherTitle() {
-		DispatchQueue.main.async { [weak self] in
-			self?.delegate?.receivedNewTitle(title: "New title")
-		}
-	}
-}
+// Асинхронное получение (Swift Concurrency)
+let authManager: AuthManager = await container.resolve()
 ```
-Попробуем написать, как эти зависимости будут выглядеть с точки зрения библиотеки:
-```Swift
+
+## Простой пример
+
+```swift
+import DITranquillity
+
+// Определяем классы
+class Logger {
+    func log(_ message: String) {
+        print("[\(Date())] \(message)")
+    }
+}
+
+class UserService {
+    private let logger: Logger
+
+    init(logger: Logger) {
+        self.logger = logger
+    }
+
+    func fetchUser(id: Int) -> String {
+        logger.log("Fetching user \(id)")
+        return "User \(id)"
+    }
+}
+
+// Настраиваем контейнер
 let container = DIContainer()
 
-/// регистрируем модель, с указанием внедрения в нее объекта с типом ModelDelegate 
-container.register { Model(delegate: $0) }
-	.lifetime(.objectGraph)
+container.register(Logger.init)
+container.register(UserService.init)
 
-// регистрируем контроллер, указываем, что он доступен по типу ModelDelegate. 
-container.register(ViewController.self)
-	.as(ModelDelegate.self)
-	.inject(cycle: true, \.model) // Объявляем о внедрении в него модели и говорим что связь циклическая
-	.lifetime(.objectGraph)
-
-// делаем проверку, что все корректно, чтобы дальше продолжать работу без опасений.
-// на самом деле все может работать и без проверки, но есть вероятность падения во время исполнения
-if !container.validate() {
-	fatalError("Граф зависимостей не валиден")
-}
-
-window!.rootViewController = container.resolve() as ViewController
-window!.makeKeyAndVisible()
+// Получаем объект с автоматическим внедрением зависимостей
+let userService: UserService = container.resolve()
+print(userService.fetchUser(id: 42))
 ```
 
-Данного кода достаточно для полного описания модели. Обращу внимание еще на одну строчку: `.lifetime(.objectGraph)`. У библиотеки есть несколько [времен жизни](core/scope_and_lifetime.md), но в случае появления циклических зависимостей, или если в дереве зависимостей один и тот же объект должен создаваться единожды нужно использовать время жизни длиннее или равное `objectGraph`. По умолчанию используется `prototype` и такое время жизни не совместимо с циклами. В принципе можете проверить, что будет если убрать указание времени жизни у обоих классов - функция [валидации](graph_validation.md) выдаст ошибку с советом изменить время жизни.
+## Пример с протоколами
+
+Часто в приложениях используются протоколы для абстракции:
+
+```swift
+// Протокол
+protocol DataRepository {
+    func fetchData() async -> [String]
+}
+
+// Реализация
+class RemoteDataRepository: DataRepository {
+    func fetchData() async -> [String] {
+        // Загрузка данных с сервера
+        return ["Item 1", "Item 2", "Item 3"]
+    }
+}
+
+// ViewModel использует протокол
+class DataViewModel {
+    private let repository: DataRepository
+
+    init(repository: DataRepository) {
+        self.repository = repository
+    }
+
+    func loadData() async -> [String] {
+        await repository.fetchData()
+    }
+}
+
+// Регистрация
+let container = DIContainer()
+
+container.register(RemoteDataRepository.init)
+    .as(DataRepository.self)  // Регистрируем как протокол
+
+container.register(DataViewModel.init)
+
+// Использование
+let viewModel: DataViewModel = container.resolve()
+
+_ = await viewModel.loadData()
+```
+
+## Современный пример со Swift Concurrency
+
+```swift
+import DITranquillity
+
+// Протоколы
+protocol APIClient: Sendable {
+    func fetch<T: Decodable>(endpoint: String) async throws -> T
+}
+
+protocol UserRepository: Sendable {
+    func getUser(id: Int) async throws -> User
+}
+
+// Реализации
+final class URLSessionAPIClient: APIClient, Sendable {
+    func fetch<T: Decodable>(endpoint: String) async throws -> T {
+        let url = URL(string: "https://api.example.com/\(endpoint)")!
+        let (data, _) = try await URLSession.shared.data(from: url)
+        return try JSONDecoder().decode(T.self, from: data)
+    }
+}
+
+final class DefaultUserRepository: UserRepository, Sendable {
+    private let apiClient: APIClient
+
+    init(apiClient: APIClient) {
+        self.apiClient = apiClient
+    }
+
+    func getUser(id: Int) async throws -> User {
+        try await apiClient.fetch(endpoint: "users/\(id)")
+    }
+}
+
+// ViewModel с @MainActor
+@MainActor
+final class UserViewModel: ObservableObject {
+    @Published var user: User?
+    @Published var error: Error?
+    @Published var isLoading = false
+
+    private let repository: UserRepository
+
+    init(repository: UserRepository) {
+        self.repository = repository
+    }
+
+    func loadUser(id: Int) {
+        isLoading = true
+        Task {
+            do {
+                user = try await repository.getUser(id: id)
+            } catch {
+                self.error = error
+            }
+            isLoading = false
+        }
+    }
+}
+
+// Настройка контейнера
+let container = DIContainer()
+
+container.register(URLSessionAPIClient.init)
+    .as(APIClient.self)
+    .lifetime(.single)  // Один экземпляр на всё приложение
+
+container.register(DefaultUserRepository.init)
+    .as(UserRepository.self)
+    .lifetime(.perContainer(.strong))
+
+container.register(UserViewModel.init)
+
+// Асинхронное получение ViewModel
+let viewModel: UserViewModel = await container.resolve()
+```
+
+## Отложенное создание объектов
+
+Используйте `Lazy` и `Provider` для контроля момента создания:
+
+```swift
+class FeatureCoordinator {
+    // Lazy - создаётся один раз при первом обращении
+    private let settingsScreen: Lazy<SettingsViewController>
+
+    // Provider - создаёт новый экземпляр при каждом вызове
+    private let detailScreenProvider: Provider<DetailViewController>
+
+    init(
+        settingsScreen: Lazy<SettingsViewController>,
+        detailScreenProvider: Provider<DetailViewController>
+    ) {
+        self.settingsScreen = settingsScreen
+        self.detailScreenProvider = detailScreenProvider
+    }
+
+    func showSettings() {
+        let settings = settingsScreen.value  // Создаётся здесь
+        navigationController.push(settings)
+    }
+
+    func showDetail(for item: Item) {
+        let detail = detailScreenProvider.value  // Новый экземпляр
+        detail.configure(with: item)
+        navigationController.push(detail)
+    }
+}
+
+// Регистрация - Lazy и Provider создаются автоматически
+container.register(SettingsViewController.init)
+container.register(DetailViewController.init)
+container.register(FeatureCoordinator.init)
+```
+
+## Что дальше?
+
+- [Регистрация компонентов](core/registration_and_service.md) — подробности о способах регистрации
+- [Внедрение зависимостей](core/injection.md) — различные способы внедрения
+- [Время жизни](core/scope_and_lifetime.md) — управление жизненным циклом объектов
+- [Отложенное внедрение](core/delayed_injection.md) — Lazy, Provider и асинхронные версии
+- [Модульность](core/modular.md) — организация кода с помощью Framework и Part
+- [Валидация графа](graph/graph_validation.md) — проверка конфигурации
