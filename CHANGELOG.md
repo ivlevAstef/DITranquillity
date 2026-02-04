@@ -1,3 +1,7 @@
+# 6.0.0
+
+* Fully support Swift Concurrency - async/await, @MainActor, @globalActor and other.
+
 # 5.0.3
 * Improve support Swift Concurrency - fix potencial deadlock for MainActor initialize
 * Improve support Swift Concurrency - fix no MainActor Sendable classes -  now classes resolved in current thread not main thread
