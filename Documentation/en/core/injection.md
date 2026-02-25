@@ -285,6 +285,50 @@ container.register(Coordinator.init)
 container.register(UserViewModel.init)
 ```
 
+## Async methods for actor and class
+If you need to create an object asynchronously or inject a property into it asynchronously, most of the capabilities described for synchronous injection also work with asynchronous APIs.
+
+Example:
+```swift
+actor Engine {
+    private var oil: Double = 0.0
+    private var isRunning: Bool = false
+
+
+    func setOil(_ oil: Double) {
+        self.oil = max(0, oil)
+    }
+
+    func run() {
+        isRunning = true
+    }
+}
+
+class Car {
+    private let engine: Engine
+    private let wheels: [Wheel]
+    private var body: Body?
+
+    init(engine: Engine, wheels: [Wheel]) async {
+        self.engine = engine
+        self.wheels = wheels
+    }
+
+    func setup(body: Body) async {
+        self.body = body
+    }
+}
+
+container.register(Engine.init)
+    .postInit {
+        await $0.setOil(4.0)
+        await $0.run()
+    }
+
+container.register { await Car(engine: $0, wheels: many($1)) }
+    .injection { await $0.setup(body: $1) }
+```
+
 ## Complete Example
 
 ```swift

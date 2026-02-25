@@ -89,7 +89,7 @@ extension DIContainer {
         line: Int = #line,
         _ closure: @escaping @isolated(any) (repeat each P) async -> Impl
     ) -> DIComponentBuilder<Impl> {
-        return register(file, line, MethodMaker.asyncEachMake(by: closure))
+        return register(file, line, MethodMaker.asyncEachMake(fn: closure))
     }
 
 

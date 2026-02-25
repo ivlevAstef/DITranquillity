@@ -79,9 +79,22 @@ private actor TestActor {
     let str: String = "bar"
     let otherClass: TestActorClassInjected
     let otherActor: TestActorActorInjected
-    init(otherClass: TestActorClassInjected, otherActor: TestActorActorInjected) {
+
+    private(set) var isRunning: Bool = false
+
+    private(set) var methodMainActor: TestMainActor?
+
+    init(otherClass: TestActorClassInjected, otherActor: TestActorActorInjected) async {
         self.otherClass = otherClass
         self.otherActor = otherActor
+    }
+
+    func inject(mainActor: TestMainActor) {
+        self.methodMainActor = mainActor
+    }
+
+    func run() {
+        isRunning = true
     }
 }
 
@@ -290,10 +303,15 @@ class DITranquillityTests_ResolveAsyncAndSync: XCTestCase {
 
         container.register(TestActorClassInjected.init)
         container.register(TestActorActorInjected.init)
-        container.register { TestActor(otherClass: $0, otherActor: $1) }
+        container.register { await TestActor(otherClass: $0, otherActor: $1) }
+            .injection { await $0.inject(mainActor: $1) }
+            .postInit { await $0.run() }
 
         let m2: TestActor = await container.resolve()
 
         XCTAssert(m2.str == "bar")
+
+        let isRunning = await m2.isRunning
+        XCTAssert(isRunning)
     }
 }

@@ -16,7 +16,7 @@ extension MethodMaker {
     static func asyncEachMake<each P, R>(
         useObject: Bool = false,
         _ names: [String?]? = nil,
-        by f: @escaping @isolated(any) (repeat each P) async -> R) -> MethodSignature
+        fn f: @escaping @isolated(any) (repeat each P) async -> R) -> MethodSignature
     {
         let types = EachTypes()
         repeat types.append((each P).self)

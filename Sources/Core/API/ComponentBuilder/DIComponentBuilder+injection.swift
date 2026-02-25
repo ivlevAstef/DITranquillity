@@ -31,6 +31,29 @@ extension DIComponentBuilder {
         return self
     }
 
+    /// Appends a basic injection asynchronous method without dependencies.
+    ///
+    /// Use this method when you need to asynchronous perform custom configuration on the created object
+    /// without injecting additional dependencies.
+    ///
+    /// - Parameter method: Injection asynchronous closure. The first argument is the created object.
+    ///
+    /// - Returns: Self for method chaining.
+    ///
+    /// - SeeAlso: `injection(_:)` with parameters for injecting dependencies.
+    ///
+    /// ## Example
+    ///
+    /// ```swift
+    /// container.register(YourClass.init)
+    ///     .injection { await $0.configure() }
+    /// ```
+    @discardableResult
+    public func injection(_ method: @escaping @isolated(any) (Impl) async -> Void) -> Self {
+        component.append(injection: MethodMaker.asyncEachMake(useObject: true, fn: method), cycle: false)
+        return self
+    }
+
     /// Appends an injection method that injects a single dependency.
     ///
     /// The second parameter of the closure is automatically resolved from the container.
@@ -69,6 +92,44 @@ extension DIComponentBuilder {
         return self
     }
 
+    /// Appends an injection asynchronous method that injects a single dependency.
+    ///
+    /// The second parameter of the closure is automatically resolved from the container.
+    /// Supports named resolution and cyclic dependency handling.
+    ///
+    /// - Parameters:
+    ///   - name: Optional name for named resolution of the dependency. If nil, resolves by type only.
+    ///   - cycle: Set to `true` if this injection participates in a dependency cycle.
+    ///     This allows the container to break the cycle by deferring injection. Default is `false`.
+    ///   - method: Injection asynchronous closure. First argument is the created object, second is the resolved dependency.
+    ///
+    /// - Returns: Self for method chaining.
+    ///
+    /// ## Examples
+    ///
+    /// ```swift
+    /// // Basic injection
+    /// container.register(YourClass.init)
+    ///     .injection { await $0.setProperty($1) }
+    ///
+    /// // Named parameter style
+    /// container.register(YourClass.init)
+    ///     .injection { yourClass, property in await yourClass.setProperty(property) }
+    ///
+    /// // Named resolution
+    /// container.register(YourClass.init)
+    ///     .injection(name: "primary") { await $0.setDatabase($1) }
+    ///
+    /// // Cyclic dependency
+    /// container.register(YourClass.init)
+    ///     .injection(cycle: true) { await $0.setParent($1) }
+    /// ```
+    @discardableResult
+    public func injection<Property>(name: String? = nil, cycle: Bool = false, _ method: @escaping @isolated(any) (Impl, Property) async -> Void) -> Self {
+        component.append(injection: MethodMaker.asyncEachMake(useObject: true, [nil, name], fn: method), cycle: cycle)
+        return self
+    }
+
     /// Appends an injection method with multiple dependencies.
     ///
     /// Use this method when you need to inject multiple dependencies at once,
@@ -90,6 +151,29 @@ extension DIComponentBuilder {
     @discardableResult
     public func injection<each P>(_ method: @escaping @isolated(any) (Impl, repeat each P) -> Void) -> Self {
         return append(injection: MethodMaker.comboEachMake(useObject: true, fn: method))
+    }
+
+    /// Appends an injection asynchronous method with multiple dependencies.
+    ///
+    /// Use this method when you need to inject multiple dependencies at once,
+    /// such as calling a configuration asynchronous method with several parameters.
+    ///
+    /// - Parameter method: Injection asynchronous closure. First argument is the created object,
+    ///   subsequent arguments are resolved dependencies.
+    ///
+    /// - Returns: Self for method chaining.
+    ///
+    /// ## Example
+    ///
+    /// ```swift
+    /// container.register(YourClass.init)
+    ///     .injection { yourClass, database, logger, config in
+    ///         await yourClass.configure(database: database, logger: logger, config: config)
+    ///     }
+    /// ```
+    @discardableResult
+    public func injection<each P>(_ method: @escaping @isolated(any) (Impl, repeat each P) async -> Void) -> Self {
+        return append(injection: MethodMaker.asyncEachMake(useObject: true, fn: method))
     }
 
     /// Appends an injection using a key path for direct property assignment.
@@ -181,8 +265,31 @@ extension DIComponentBuilder {
     ///     .postInit { $0.start() }  // Called after all injections
     /// ```
     @discardableResult
-    public func postInit(_ method: @escaping (Impl) -> Void) -> Self {
+    public func postInit(_ method: @escaping @isolated(any) (Impl) -> Void) -> Self {
         component.postInit = MethodMaker.comboEachMake(useObject: true, fn: method)
+        return self
+    }
+
+    /// Appends a post-initialization asynchronous callback executed after all injections complete.
+    ///
+    /// Use this asynchronous method to perform final setup after the object and all its dependencies
+    /// have been fully initialized. This is the last step in the object creation process.
+    ///
+    /// - Parameter method: Callback asynchronous closure. The argument is the fully initialized object.
+    ///
+    /// - Returns: Self for method chaining.
+    ///
+    /// ## Example
+    ///
+    /// ```swift
+    /// container.register(YourClass.init)
+    ///     .injection(\.logger)
+    ///     .injection(\.database)
+    ///     .postInit { await $0.start() }  // Called after all injections
+    /// ```
+    @discardableResult
+    public func postInit(_ method: @escaping @isolated(any) (Impl) async -> Void) -> Self {
+        component.postInit = MethodMaker.asyncEachMake(useObject: true, fn: method)
         return self
     }
 
