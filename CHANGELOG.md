@@ -1,6 +1,5 @@
-# 6.0.0
-
-* Fully support Swift Concurrency - async/await, @MainActor, @globalActor and other.
+# 5.0.4
+* Fix build frameworks from SPM - remove dublicate prefix operator
 
 # 5.0.3
 * Improve support Swift Concurrency - fix potencial deadlock for MainActor initialize
