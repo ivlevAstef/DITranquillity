@@ -10,43 +10,43 @@
 import XCTest
 import DITranquillity
 
-private class LazyCycleA {
+private final class LazyCycleA: Sendable {
     let b: LazyCycleB
     init(_ b: LazyCycleB) {
         self.b = b
     }
 }
 
-private class LazyCycleB {
+private final class LazyCycleB: Sendable {
     let a: AsyncLazy<LazyCycleA>
     init(_ a: AsyncLazy<LazyCycleA>) {
         self.a = a
     }
 }
 
-private class ProviderCycleA {
+private final class ProviderCycleA: Sendable {
     let b: ProviderCycleB
     init(_ b: ProviderCycleB) {
         self.b = b
     }
 }
 
-private class ProviderCycleB {
+private final class ProviderCycleB: Sendable {
     let a: AsyncProvider<ProviderCycleA>
     init(_ a: AsyncProvider<ProviderCycleA>) {
         self.a = a
     }
 }
 
-private class LazyInjectA {
+private final class LazyInjectA: @unchecked Sendable {
     var inject: AsyncLazy<ServiceProtocol>!
 }
 
-private class ProviderInjectA {
+private final class ProviderInjectA: @unchecked Sendable {
     var inject: AsyncProvider<ServiceProtocol>!
 }
 
-private class A1 {
+private final class A1: Sendable {
     fileprivate let value1: Int
     init(_ value1: Int) { self.value1 = value1 }
 }
@@ -54,7 +54,7 @@ private class Provider1InjectA {
     var inject: AsyncProvider1<A1, Int> = AsyncProvider1()
 }
 
-private class A2 {
+private final class A2: Sendable {
     fileprivate let value1: Int
     fileprivate let value2: Double
     init(_ value1: Int, _ value2: Double) { self.value1 = value1; self.value2 = value2 }
@@ -63,7 +63,7 @@ private class Provider2InjectA {
     var inject: AsyncProvider2<A2, Int, Double> = AsyncProvider2()
 }
 
-private class A3 {
+private final class A3: Sendable {
     fileprivate let value1: Int
     fileprivate let value2: Double
     fileprivate let value3: String
@@ -74,7 +74,7 @@ private class Provider3InjectA {
 }
 
 
-private class ProviderInitProvider1 {
+private final class ProviderInitProvider1: Sendable {
     private let provider: AsyncProvider<ProviderInitProvider2>
     private let value: ProviderInitProvider2
     init(_ provider: AsyncProvider<ProviderInitProvider2>) async {
@@ -82,7 +82,7 @@ private class ProviderInitProvider1 {
         self.value = await provider.value
     }
 }
-private class ProviderInitProvider2 {
+private final class ProviderInitProvider2: Sendable {
     init() {
     }
 }

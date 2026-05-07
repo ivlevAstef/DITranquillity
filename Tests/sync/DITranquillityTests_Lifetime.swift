@@ -47,7 +47,7 @@ class DITranquillityTests_Lifetime: XCTestCase {
     func test01_single() {
         let container = DIContainer()
         
-        var initCount = 0
+        nonisolated(unsafe) var initCount = 0
         container.register { () -> FooService in
             initCount += 1
             return FooService()
@@ -85,7 +85,7 @@ class DITranquillityTests_Lifetime: XCTestCase {
     func test02_perApplicationSingle() {
         let container = DIContainer()
         
-        var initCount = 0
+        nonisolated(unsafe) var initCount = 0
         container.register { () -> FooService in
             initCount += 1
             return FooService()
@@ -108,7 +108,7 @@ class DITranquillityTests_Lifetime: XCTestCase {
     func test02_perApplicationWeakRelease() {
         let container = DIContainer()
         
-        var initCount = 0
+        nonisolated(unsafe) var initCount = 0
         container.register { () -> FooService in
             initCount += 1
             return FooService()
@@ -131,7 +131,7 @@ class DITranquillityTests_Lifetime: XCTestCase {
     func test02_perApplicationWeakRetain() {
         let container = DIContainer()
         
-        var initCount = 0
+        nonisolated(unsafe) var initCount = 0
         container.register { () -> FooService in
             initCount += 1
             return FooService()
@@ -178,7 +178,7 @@ class DITranquillityTests_Lifetime: XCTestCase {
     func test03_perContainerSingle() {
         let container = DIContainer()
         
-        var initCount = 0
+        nonisolated(unsafe) var initCount = 0
         container.register { () -> FooService in
             initCount += 1
             return FooService()
@@ -199,7 +199,7 @@ class DITranquillityTests_Lifetime: XCTestCase {
     func test03_perContainerWeakRelease() {
         let container = DIContainer()
         
-        var initCount = 0
+        nonisolated(unsafe) var initCount = 0
         container.register { () -> FooService in
             initCount += 1
             return FooService()
@@ -220,7 +220,7 @@ class DITranquillityTests_Lifetime: XCTestCase {
     func test03_perContainerWeakRetain() {
         let container = DIContainer()
         
-        var initCount = 0
+        nonisolated(unsafe) var initCount = 0
         container.register { () -> FooService in
             initCount += 1
             return FooService()
@@ -241,7 +241,7 @@ class DITranquillityTests_Lifetime: XCTestCase {
     func test03_perContainerClean() {
         let container = DIContainer()
         
-        var initCount = 0
+        nonisolated(unsafe) var initCount = 0
         container.register { () -> FooService in
             initCount += 1
             return FooService()

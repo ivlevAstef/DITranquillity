@@ -49,7 +49,7 @@ public actor AsyncProvider<Value> {
     }
 
     private let initializer: () async -> Value
-    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) async -> Any?) {
+    init(_ container: DIContainer, _ factory: @escaping @Sendable (_ arguments: AnyArguments?) async -> Any?) {
         self.initializer = {
             return gmake(by: await factory(nil))
         }
@@ -85,6 +85,7 @@ public actor AsyncProviderArgs<Value>: Sendable {
     ///
     /// - Returns: A new instance created with the arguments.
     public func value(args: AnyArguments) async -> Value {
+        nonisolated(unsafe) let args = args
         return await initializer(args)
     }
 
@@ -96,7 +97,7 @@ public actor AsyncProviderArgs<Value>: Sendable {
     }
 
     private let initializer: @Sendable (AnyArguments) async -> Value
-    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) async -> Any?) {
+    init(_ container: DIContainer, _ factory: @escaping @Sendable (_ arguments: AnyArguments?) async -> Any?) {
         self.initializer = { args in
             return gmake(by: await factory(args))
         }
@@ -119,6 +120,7 @@ public actor AsyncProvider1<Value, Arg1> {
     ///
     /// - Returns: A new instance.
     public func value(_ arg1: Arg1) async -> Value {
+        nonisolated(unsafe) let arg1 = arg1
         return await initializer(arg1)
     }
 
@@ -130,7 +132,7 @@ public actor AsyncProvider1<Value, Arg1> {
     }
 
     private let initializer: (Arg1) async -> Value
-    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) async -> Any?) {
+    init(_ container: DIContainer, _ factory: @escaping @Sendable (_ arguments: AnyArguments?) async -> Any?) {
         self.initializer = { arg1 in
             return gmake(by: await factory(AnyArguments(for: Value.self, args: arg1)))
         }
@@ -151,6 +153,8 @@ public actor AsyncProvider2<Value, Arg1, Arg2> {
     ///
     /// - Returns: A new instance.
     public func value(_ arg1: Arg1, _ arg2: Arg2) async -> Value {
+        nonisolated(unsafe) let arg1 = arg1
+        nonisolated(unsafe) let arg2 = arg2
         return await initializer(arg1, arg2)
     }
 
@@ -162,7 +166,7 @@ public actor AsyncProvider2<Value, Arg1, Arg2> {
     }
 
     private let initializer: (Arg1, Arg2) async -> Value
-    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) async -> Any?) {
+    init(_ container: DIContainer, _ factory: @escaping @Sendable (_ arguments: AnyArguments?) async -> Any?) {
         self.initializer = { arg1, arg2 in
             return gmake(by: await factory(AnyArguments(for: Value.self, args: arg1, arg2)))
         }
@@ -184,6 +188,9 @@ public actor AsyncProvider3<Value, Arg1, Arg2, Arg3> {
     ///
     /// - Returns: A new instance.
     public func value(_ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3) async -> Value {
+        nonisolated(unsafe) let arg1 = arg1
+        nonisolated(unsafe) let arg2 = arg2
+        nonisolated(unsafe) let arg3 = arg3
         return await initializer(arg1, arg2, arg3)
     }
 
@@ -195,7 +202,7 @@ public actor AsyncProvider3<Value, Arg1, Arg2, Arg3> {
     }
 
     private let initializer: (Arg1, Arg2, Arg3) async -> Value
-    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) async -> Any?) {
+    init(_ container: DIContainer, _ factory: @escaping @Sendable (_ arguments: AnyArguments?) async -> Any?) {
         self.initializer = { arg1, arg2, arg3 in
             return gmake(by: await factory(AnyArguments(for: Value.self, args: arg1, arg2, arg3)))
         }
@@ -218,6 +225,10 @@ public actor AsyncProvider4<Value, Arg1, Arg2, Arg3, Arg4> {
     ///
     /// - Returns: A new instance.
     public func value(_ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4) async -> Value {
+        nonisolated(unsafe) let arg1 = arg1
+        nonisolated(unsafe) let arg2 = arg2
+        nonisolated(unsafe) let arg3 = arg3
+        nonisolated(unsafe) let arg4 = arg4
         return await initializer(arg1, arg2, arg3, arg4)
     }
 
@@ -229,7 +240,7 @@ public actor AsyncProvider4<Value, Arg1, Arg2, Arg3, Arg4> {
     }
 
     private let initializer: (Arg1, Arg2, Arg3, Arg4) async -> Value
-    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) async -> Any?) {
+    init(_ container: DIContainer, _ factory: @escaping @Sendable (_ arguments: AnyArguments?) async -> Any?) {
         self.initializer = { arg1, arg2, arg3, arg4 in
             return gmake(by: await factory(AnyArguments(for: Value.self, args: arg1, arg2, arg3, arg4)))
         }
@@ -253,6 +264,11 @@ public actor AsyncProvider5<Value, Arg1, Arg2, Arg3, Arg4, Arg5> {
     ///
     /// - Returns: A new instance.
     public func value(_ arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4, _ arg5: Arg5) async -> Value {
+        nonisolated(unsafe) let arg1 = arg1
+        nonisolated(unsafe) let arg2 = arg2
+        nonisolated(unsafe) let arg3 = arg3
+        nonisolated(unsafe) let arg4 = arg4
+        nonisolated(unsafe) let arg5 = arg5
         return await initializer(arg1, arg2, arg3, arg4, arg5)
     }
 
@@ -264,7 +280,7 @@ public actor AsyncProvider5<Value, Arg1, Arg2, Arg3, Arg4, Arg5> {
     }
 
     private let initializer: (Arg1, Arg2, Arg3, Arg4, Arg5) async -> Value
-    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) async -> Any?) {
+    init(_ container: DIContainer, _ factory: @escaping @Sendable (_ arguments: AnyArguments?) async -> Any?) {
         self.initializer = { arg1, arg2, arg3, arg4, arg5 in
             return gmake(by: await factory(AnyArguments(for: Value.self, args: arg1, arg2, arg3, arg4, arg5)))
         }

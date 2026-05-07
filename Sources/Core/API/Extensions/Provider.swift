@@ -56,12 +56,12 @@ public final class Provider<Value>: Sendable {
     /// Creates a Provider with a custom initializer.
     ///
     /// - Parameter initializer: Closure that creates a new value on each access.
-    public init(initializer: @Sendable @escaping () -> Value) {
+    public init(_ initializer: @Sendable @escaping () -> Value) {
         self.initializer = initializer
     }
 
     private let initializer: @Sendable () -> Value
-    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?) {
+    init(_ container: DIContainer, _ factory: @escaping @Sendable (_ arguments: AnyArguments?) -> Any?) {
         self.initializer = {
             return gmake(by: factory(nil))
         }
@@ -110,7 +110,7 @@ public final class ProviderArgs<Value>: Sendable {
     }
 
     private let initializer: @Sendable (AnyArguments) -> Value
-    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?) {
+    init(_ container: DIContainer, _ factory: @escaping @Sendable (_ arguments: AnyArguments?) -> Any?) {
         self.initializer = { args in
             return gmake(by: factory(args))
         }
@@ -155,7 +155,7 @@ public final class Provider1<Value, Arg1>: Sendable {
     }
 
     private let initializer: @Sendable (Arg1) -> Value
-    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?) {
+    init(_ container: DIContainer, _ factory: @escaping @Sendable (_ arguments: AnyArguments?) -> Any?) {
         self.initializer = { arg1 in
             return gmake(by: factory(AnyArguments(for: Value.self, args: arg1)))
         }
@@ -187,7 +187,7 @@ public final class Provider2<Value, Arg1, Arg2>: Sendable {
     }
 
     private let initializer: @Sendable (Arg1, Arg2) -> Value
-    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?) {
+    init(_ container: DIContainer, _ factory: @escaping @Sendable (_ arguments: AnyArguments?) -> Any?) {
         self.initializer = { arg1, arg2 in
             return gmake(by: factory(AnyArguments(for: Value.self, args: arg1, arg2)))
         }
@@ -220,7 +220,7 @@ public final class Provider3<Value, Arg1, Arg2, Arg3>: Sendable {
     }
 
     private let initializer: @Sendable (Arg1, Arg2, Arg3) -> Value
-    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?) {
+    init(_ container: DIContainer, _ factory: @escaping @Sendable (_ arguments: AnyArguments?) -> Any?) {
         self.initializer = { arg1, arg2, arg3 in
             return gmake(by: factory(AnyArguments(for: Value.self, args: arg1, arg2, arg3)))
         }
@@ -254,7 +254,7 @@ public final class Provider4<Value, Arg1, Arg2, Arg3, Arg4>: Sendable {
     }
 
     private let initializer: @Sendable (Arg1, Arg2, Arg3, Arg4) -> Value
-    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?) {
+    init(_ container: DIContainer, _ factory: @escaping @Sendable (_ arguments: AnyArguments?) -> Any?) {
         self.initializer = { arg1, arg2, arg3, arg4 in
             return gmake(by: factory(AnyArguments(for: Value.self, args: arg1, arg2, arg3, arg4)))
         }
@@ -289,7 +289,7 @@ public final class Provider5<Value, Arg1, Arg2, Arg3, Arg4, Arg5>: Sendable {
     }
 
     private let initializer: @Sendable (Arg1, Arg2, Arg3, Arg4, Arg5) -> Value
-    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?) {
+    init(_ container: DIContainer, _ factory: @escaping @Sendable (_ arguments: AnyArguments?) -> Any?) {
         self.initializer = { arg1, arg2, arg3, arg4, arg5 in
             return gmake(by: factory(AnyArguments(for: Value.self, args: arg1, arg2, arg3, arg4, arg5)))
         }

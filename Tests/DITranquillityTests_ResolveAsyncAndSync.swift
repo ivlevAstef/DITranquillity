@@ -103,6 +103,7 @@ class DITranquillityTests_ResolveAsyncAndSync: XCTestCase {
         super.setUp()
     }
 
+    @available(tvOS 17.0, watchOS 10.0, macOS 14.0, iOS 17.0, *)
     func test05_ResolveMainActor() async {
         let expectationMainActor = XCTestExpectation(description: "test05_task_main_actor")
         let expectationGlobalActor = XCTestExpectation(description: "test05_task_global_actor")
@@ -188,7 +189,8 @@ class DITranquillityTests_ResolveAsyncAndSync: XCTestCase {
         
         await fulfillment(of: [expectationMainActor, expectationGlobalActor, expectationQueue], timeout: 5.0)
     }
-    
+
+    @available(tvOS 17.0, watchOS 10.0, macOS 14.0, iOS 17.0, *)
     func test05_ResolveMainActorSync() {
         let expectations = [
             XCTestExpectation(description: "test05_task_main_thread"),

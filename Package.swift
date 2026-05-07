@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version:6.0
 import PackageDescription
 
 let package = Package(
@@ -9,7 +9,7 @@ let package = Package(
     ],
     dependencies: [],
     targets: [
-        .target(name: "DITranquillity", dependencies: [], path: "./Sources"),
+        .target(name: "DITranquillity", dependencies: [], path: "./Sources", swiftSettings: [.swiftLanguageMode(.v6)]),
         .testTarget(name: "DITranquillity_Tests", dependencies: [
           "DITranquillity"
         ], path: "./Tests")

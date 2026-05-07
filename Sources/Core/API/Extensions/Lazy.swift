@@ -79,14 +79,14 @@ public final class Lazy<Value>: @unchecked Sendable {
     /// Creates a Lazy wrapper with a custom initializer.
     ///
     /// - Parameter initializer: Closure that creates the value on first access.
-    public init(initializer: @Sendable @escaping () -> Value) {
+    public init(_ initializer: @Sendable @escaping () -> Value) {
         self.initializer = initializer
     }
 
     private let monitor: FastLock = makeFastLock()
     private var cache: Value?
     private let initializer: @Sendable () -> Value
-    init(_ container: DIContainer, _ factory: @escaping (_ arguments: AnyArguments?) -> Any?) {
+    init(_ container: DIContainer, _ factory: @escaping @Sendable (_ arguments: AnyArguments?) -> Any?) {
         self.initializer = {
             return gmake(by: factory(nil))
         }

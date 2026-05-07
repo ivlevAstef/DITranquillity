@@ -201,9 +201,9 @@ class DITranquillityTests_AsyncThreads: XCTestCase {
     func test05_ResolveMainActorPrototype() async {
         let container = DIContainer()
         
-        container.register(TestOtherMainActor.init)
+        container.register(main: TestOtherMainActor.init)
             .lifetime(.prototype)
-        container.register(TestMainActor.init)
+        container.register(main: TestMainActor.init)
             .lifetime(.prototype)
         container.register(TestActorClassInjected.init)
             .lifetime(.prototype)
@@ -221,15 +221,17 @@ class DITranquillityTests_AsyncThreads: XCTestCase {
             }
             expectations[0].fulfill()
         }
-        
-        Task.detached { @MainActor in
-            for _ in 0..<4096 {
-                let service: TestMainActor = await container.resolve()
-                XCTAssertEqual(service.str, "bar")
+
+        DispatchQueue.main.async {
+            Task {
+                for _ in 0..<4096 {
+                    let service: TestMainActor = await container.resolve()
+                    XCTAssertEqual(service.str, "bar")
+                }
+                expectations[1].fulfill()
             }
-            expectations[1].fulfill()
         }
-        
+
         Task.detached {
             for _ in 0..<1024 {
                 let service: TestMainActor = await container.resolve()
@@ -244,9 +246,9 @@ class DITranquillityTests_AsyncThreads: XCTestCase {
     func test06_ResolveMainActorObjectGraph() async {
         let container = DIContainer()
         
-        container.register(TestOtherMainActor.init)
+        container.register(main: TestOtherMainActor.init)
             .lifetime(.objectGraph)
-        container.register(TestMainActor.init)
+        container.register(main: TestMainActor.init)
             .lifetime(.objectGraph)
         container.register(TestActorClassInjected.init)
             .lifetime(.objectGraph)
@@ -264,15 +266,17 @@ class DITranquillityTests_AsyncThreads: XCTestCase {
             }
             expectations[0].fulfill()
         }
-        
-        Task.detached { @MainActor in
-            for _ in 0..<16384 {
-                let service: TestMainActor = await container.resolve()
-                XCTAssertEqual(service.str, "bar")
+
+        DispatchQueue.main.async {
+            Task {
+                for _ in 0..<16384 {
+                    let service: TestMainActor = await container.resolve()
+                    XCTAssertEqual(service.str, "bar")
+                }
+                expectations[1].fulfill()
             }
-            expectations[1].fulfill()
         }
-        
+
         Task.detached {
             for _ in 0..<8192 {
                 let service: TestActorClassInjected = await container.resolve()
@@ -334,9 +338,9 @@ class DITranquillityTests_AsyncThreads: XCTestCase {
     func test08_ResolvePerContainerMainActorAndClean() async {
         let container = DIContainer()
         
-        container.register(TestOtherMainActor.init)
+        container.register(main: TestOtherMainActor.init)
             .lifetime(.perContainer(.weak))
-        container.register(TestMainActor.init)
+        container.register(main: TestMainActor.init)
             .lifetime(.perContainer(.strong))
         container.register(TestActorClassInjected.init)
             .lifetime(.objectGraph)

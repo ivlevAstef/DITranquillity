@@ -61,42 +61,45 @@ final class Resolver {
             return nil
         }
         
-        weak var saveRAIIStack = stack
+        nonisolated(unsafe) weak var saveRAIIStack = stack
         let data = stack.data
         let saveGraph = stack.data.graph
 
         // TODO: delayMaker add flag is Async and add if to this code for make sync and make async delay makers
         func makeDelayMaker(by parsedType: ParsedType, components: Components) -> Any? {
+            nonisolated(unsafe) let components = components
+            nonisolated(unsafe) let object = object
+            nonisolated(unsafe) let nself = self
             if sync {
                 return delayMaker.init(container, { arguments -> Any? in
                     // call `.value` into DI initialize.
                     if let saveRAIIStack {
-                        return self.make(by: parsedType, stack: saveRAIIStack, components: components, use: object, arguments: arguments, isRoot: isRoot)
+                        return nself.make(by: parsedType, stack: saveRAIIStack, components: components, use: object, arguments: arguments, isRoot: isRoot)
                     }
                     // Call `.value` firstly.
                     if data.isEmpty() {
-                        return self.make(by: parsedType, stack: RAIIStack(restore: data), components: components, use: object, arguments: arguments, isRoot: isRoot)
+                        return nself.make(by: parsedType, stack: RAIIStack(restore: data), components: components, use: object, arguments: arguments, isRoot: isRoot)
                     }
                     // Call `.value` into DI initialize, and DI graph has lifetimes perContainer, perRun, single...
                     // For this case need call provider on her Cache Graph.
                     // But need restore cache graph after make object.
-                    return self.make(by: parsedType, stack: RAIIStack(restore: data, graph: saveGraph), components: components, use: object, arguments: arguments, isRoot: isRoot)
+                    return nself.make(by: parsedType, stack: RAIIStack(restore: data, graph: saveGraph), components: components, use: object, arguments: arguments, isRoot: isRoot)
                 })
             }
 
             return delayMaker.init(container, { arguments async -> Any? in
                 // call `.value` into DI initialize.
                 if let saveRAIIStack {
-                    return await self.make(by: parsedType, stack: saveRAIIStack, components: components, use: object, arguments: arguments, isRoot: isRoot)
+                    return await nself.make(by: parsedType, stack: saveRAIIStack, components: components, use: object, arguments: arguments, isRoot: isRoot)
                 }
                 // Call `.value` firstly.
                 if data.isEmpty() {
-                    return await self.make(by: parsedType, stack: RAIIStack(restore: data), components: components, use: object, arguments: arguments, isRoot: isRoot)
+                    return await nself.make(by: parsedType, stack: RAIIStack(restore: data), components: components, use: object, arguments: arguments, isRoot: isRoot)
                 }
                 // Call `.value` into DI initialize, and DI graph has lifetimes perContainer, perRun, single...
                 // For this case need call provider on her Cache Graph.
                 // But need restore cache graph after make object.
-                return await self.make(by: parsedType, stack: RAIIStack(restore: data, graph: saveGraph), components: components, use: object, arguments: arguments, isRoot: isRoot)
+                return await nself.make(by: parsedType, stack: RAIIStack(restore: data, graph: saveGraph), components: components, use: object, arguments: arguments, isRoot: isRoot)
             })
         }
 
@@ -279,9 +282,9 @@ extension Resolver {
         static let singleStorage = DICacheStorage()
         let containerStorage = DICacheStorage()
 
-        static var single = DIScope(name: "single", storage: singleStorage, policy: .strong)
-        static var weakPerRun = DIScope(name: "per run", storage: singleStorage, policy: .weak)
-        static var strongPerRun = DIScope(name: "per run", storage: singleStorage, policy: .strong)
+        static let single = DIScope(name: "single", storage: singleStorage, policy: .strong)
+        static let weakPerRun = DIScope(name: "per run", storage: singleStorage, policy: .weak)
+        static let strongPerRun = DIScope(name: "per run", storage: singleStorage, policy: .strong)
         lazy var weakPerContainer = DIScope(name: "per container", storage: containerStorage, policy: .weak)
         lazy var strongPerContainer = DIScope(name: "per container", storage: containerStorage, policy: .strong)
 

@@ -831,7 +831,7 @@ class DITranquillityTests_Resolve: XCTestCase {
         container.register(FooService.init)
             .as(check: ServiceProtocol.self){$0}
         
-        var isPostInit: Bool = false
+        nonisolated(unsafe) var isPostInit: Bool = false
         container.register(InjectOpt.init)
             .injection { (obj: InjectOpt, property: ServiceProtocol?) in
                 obj.service = property
@@ -852,9 +852,9 @@ class DITranquillityTests_Resolve: XCTestCase {
     func test25_PostInitCycle() {
         let container = DIContainer()
         
-        var isPostInit1: Bool = false
-        var isPostInit2: Bool = false
-        
+        nonisolated(unsafe) var isPostInit1: Bool = false
+        nonisolated(unsafe) var isPostInit2: Bool = false
+
         container.register(Circular2A.init)
             .lifetime(.objectGraph)
             .postInit { (obj: Circular2A) in
@@ -912,7 +912,7 @@ class DITranquillityTests_Resolve: XCTestCase {
         let container = DIContainer()
         
         // Yes it's incorrect for library syntax, but not?
-        var obj: ServiceProtocol? = BarService()
+        nonisolated(unsafe) var obj: ServiceProtocol? = BarService()
         container.register { obj }
         
         let resolve = container.resolve() as ServiceProtocol

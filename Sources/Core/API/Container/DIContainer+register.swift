@@ -55,12 +55,77 @@ extension DIContainer {
     /// container.register { YourClass(service: $0, logger: $1, config: $2) }
     /// ```
     @discardableResult
+    @available(tvOS 17.0, watchOS 10.0, macOS 14.0, iOS 17.0, *)
+    public func register<Impl: Sendable,each P>(
+        file: String = #file,
+        line: Int = #line,
+        _ closure: @escaping @isolated(any) @Sendable (repeat each P) -> Impl
+    ) -> DIComponentBuilder<Impl> {
+        return register(file, line, MethodMaker.comboEachMake(fn: closure))
+    }
+
+    /// Registers a new component with a synchronous initializer closure.
+    ///
+    /// This is the primary registration method. The closure parameters are automatically resolved
+    /// from the container when the component is created.
+    ///
+    /// - Parameters:
+    ///   - closure: Initializer method. Parameters are resolved from the container.
+    ///     Must return the type being registered.
+    ///
+    /// - Returns: A component builder to configure the component.
+    ///
+    /// ## Examples
+    ///
+    /// ```swift
+    /// // Using closure syntax
+    /// container.register { YourClass(dependency: $0) }
+    ///
+    /// // Using init reference (shorter form)
+    /// container.register(YourClass.init)
+    ///
+    /// // Multiple dependencies
+    /// container.register { YourClass(service: $0, logger: $1, config: $2) }
+    /// ```
+    @discardableResult
     public func register<Impl,each P>(
         file: String = #file,
         line: Int = #line,
-        _ closure: @escaping @isolated(any) (repeat each P) -> Impl
+        _ closure: @escaping (repeat each P) -> Impl
     ) -> DIComponentBuilder<Impl> {
         return register(file, line, MethodMaker.comboEachMake(fn: closure))
+    }
+
+    /// Registers a new component with a synchronous initializer closure and isolated on @MainActor.
+    ///
+    /// This is the primary registration method. The closure parameters are automatically resolved
+    /// from the container when the component is created.
+    ///
+    /// - Parameters:
+    ///   - closure: Initializer method. Parameters are resolved from the container.
+    ///     Must return the type being registered.
+    ///
+    /// - Returns: A component builder to configure the component.
+    ///
+    /// ## Examples
+    ///
+    /// ```swift
+    /// // Using closure syntax
+    /// container.register(main: { YourClass(dependency: $0) })
+    ///
+    /// // Using init reference (shorter form)
+    /// container.register(main: YourClass.init)
+    ///
+    /// // Multiple dependencies
+    /// container.register(main: { YourClass(service: $0, logger: $1, config: $2) })
+    /// ```
+    @discardableResult
+    public func register<Impl: Sendable, each P>(
+        file: String = #file,
+        line: Int = #line,
+        main closure: @escaping @MainActor @Sendable (repeat each P) -> Impl
+    ) -> DIComponentBuilder<Impl> {
+        return register(file, line, MethodMaker.comboMainEachMake(fn: closure))
     }
 
     /// Registers a new component with an asynchronous initializer closure.
@@ -84,10 +149,10 @@ extension DIContainer {
     /// container.register(YourClass.init)  // if init is async
     /// ```
     @discardableResult
-    public func register<Impl,each P>(
+    public func register<Impl: Sendable,each P>(
         file: String = #file,
         line: Int = #line,
-        _ closure: @escaping @isolated(any) (repeat each P) async -> Impl
+        _ closure: @escaping @isolated(any) @Sendable (repeat each P) async -> Impl
     ) -> DIComponentBuilder<Impl> {
         return register(file, line, MethodMaker.asyncEachMake(fn: closure))
     }
@@ -114,8 +179,36 @@ extension DIContainer {
     /// container.register(YourClass.init) { by(tag: ProductionDB.self, on: $0) }
     /// ```
     @discardableResult
+    @available(tvOS 17.0, watchOS 10.0, macOS 14.0, iOS 17.0, *)
+    public func register<Impl: Sendable,P0,each P,M0>(file: String = #file, line: Int = #line,
+                                                      _ closure: @escaping @isolated(any) @Sendable (P0, repeat each P) -> Impl,
+                                                      modificator: @escaping @Sendable (M0) -> P0) -> DIComponentBuilder<Impl> {
+        return register(file, line, MethodMaker.comboEachMake(fn: closure, modificator: modificator))
+    }
+
+    /// Registers a component with an initializer and a modificator for the first argument.
+    ///
+    /// Use modificators when you need to apply special resolution behavior to arguments,
+    /// such as `arg()` for runtime arguments, `many()` for arrays, or `by(tag:on:)` for tagged resolution.
+    ///
+    /// - Parameters:
+    ///   - closure: Initializer method. Must return the type being registered.
+    ///   - modificator: Transformation function for the first argument supporting `arg`, `many`, or `tag`.
+    ///
+    /// - Returns: A component builder to configure the component.
+    ///
+    /// ## Example
+    ///
+    /// ```swift
+    /// // Using runtime argument for first parameter
+    /// container.register(YourClass.init) { arg($0) }
+    ///
+    /// // Using tagged resolution for first parameter
+    /// container.register(YourClass.init) { by(tag: ProductionDB.self, on: $0) }
+    /// ```
+    @discardableResult
     public func register<Impl,P0,each P,M0>(file: String = #file, line: Int = #line,
-                                            _ closure: @escaping @isolated(any) (P0, repeat each P) -> Impl,
+                                            _ closure: @escaping (P0, repeat each P) -> Impl,
                                             modificator: @escaping (M0) -> P0) -> DIComponentBuilder<Impl> {
         return register(file, line, MethodMaker.comboEachMake(fn: closure, modificator: modificator))
     }
@@ -142,8 +235,37 @@ extension DIContainer {
     /// }
     /// ```
     @discardableResult
+    @available(tvOS 17.0, watchOS 10.0, macOS 14.0, iOS 17.0, *)
+    public func register<Impl: Sendable,P0,P1,each P,M0,M1>(file: String = #file, line: Int = #line,
+                                                            _ closure: @escaping @isolated(any) @Sendable (P0, P1, repeat each P) -> Impl,
+                                                            modificator: @escaping @Sendable (M0, M1) -> (P0, P1)) -> DIComponentBuilder<Impl> {
+        return register(file, line, MethodMaker.comboEachMake(fn: closure, modificator: modificator))
+    }
+
+    /// Registers a component with an initializer and modificators for the first two arguments.
+    ///
+    /// Use this when you need to apply special resolution behavior to multiple arguments.
+    ///
+    /// - Parameters:
+    ///   - closure: Initializer method. Must return the type being registered.
+    ///   - modificator: Transformation function for the first and second arguments.
+    ///
+    /// - Returns: A component builder to configure the component.
+    ///
+    /// ## Example
+    ///
+    /// ```swift
+    /// // Using runtime argument and many resolution
+    /// container.register(YourClass.init) { (arg($0), many($1)) }
+    ///
+    /// // Using two different tags
+    /// container.register(YourClass.init) {
+    ///     (by(tag: Primary.self, on: $0), by(tag: Secondary.self, on: $1))
+    /// }
+    /// ```
+    @discardableResult
     public func register<Impl,P0,P1,each P,M0,M1>(file: String = #file, line: Int = #line,
-                                                  _ closure: @escaping @isolated(any) (P0, P1, repeat each P) -> Impl,
+                                                  _ closure: @escaping (P0, P1, repeat each P) -> Impl,
                                                   modificator: @escaping (M0, M1) -> (P0, P1)) -> DIComponentBuilder<Impl> {
         return register(file, line, MethodMaker.comboEachMake(fn: closure, modificator: modificator))
     }
