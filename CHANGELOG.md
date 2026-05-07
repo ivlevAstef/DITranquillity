@@ -1,3 +1,14 @@
+# 6.0.0
+* Full Swift Concurrency support: `async/await`, `@MainActor`, `actor` classes, and arbitrary `@globalActor` isolation.
+* New `container.register(main:)` overload — registers `@MainActor` initializers correctly on every supported iOS (13+), no need to raise the deployment target.
+* Async registration: `container.register { await Service(dep: $0) }`. Async injections: `.injection { await ... }`, `.postInit { await ... }`. Recommended on iOS 17+ — on older versions complex multi-actor scenarios are not guaranteed.
+* Sync vs async resolve: from an async context use `await container.resolve()` for the async path or `container.resolve(sync: ())` for an explicit synchronous path.
+* `Lazy` and `Provider` are now built into the library — the external `SwiftLazy` dependency is removed. New actor-based async wrappers added: `AsyncLazy`, `AsyncProvider`, `AsyncProvider1…5`, `AsyncProviderArgs`.
+* Codebase moved to Swift 6 (`.swiftLanguageMode(.v6)`).
+* Thread-safety is always on — `DISetting.Defaults.multiThread` is removed.
+* Removed: `DISetting.Defaults.injectToSubviews` and the auto-injection into `UIView` subviews.
+* Migration guide: [English](Documentation/en/migration5to6.md) · [Russian](Documentation/ru/migration5to6.md). For most projects the migration requires no code changes (only `@MainActor` registrations switch to `register(main:)`). 5.x.x remains available by tag but receives no new releases.
+
 # 5.0.4
 * Fix build frameworks from SPM - remove dublicate prefix operator
 
