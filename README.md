@@ -66,13 +66,15 @@ https://github.com/ivlevAstef/DITranquillity
 
 Or add to `Package.swift` in the `dependencies` section:
 ```swift
-.package(url: "https://github.com/ivlevAstef/DITranquillity.git", from: "5.0.0")
+.package(url: "https://github.com/ivlevAstef/DITranquillity.git", from: "6.0.0")
 ```
 
 And specify the dependency in the target:
 ```swift
 .product(name: "DITranquillity")
 ```
+
+> If you have a project on 5.x.x, see the [5 → 6 migration guide](Documentation/en/migration5to6.md). 5.x.x is still available by tags, but no new releases will be published. For most projects the migration requires no code changes.
 
 ### Carthage
 
@@ -498,7 +500,7 @@ iOS 13.0+, macOS 10.15+, tvOS 13.0+, watchOS 8.0+, Linux; ARC
 | 5.5-5.9 | 13-15     | >= 3.6.3       |
 | 5.0-5.3 | 10.2-12.x | >= 3.6.3       |
 
-> For version 6.0.0 and above, it's recommended to use iOS 17.0+, macOS 15.0+, tvOS 17.0+, watchOS 10.0+. The reason is the use of one Swift Concurrency feature — currently it's just a warning, but there's a possibility it will become an error with a new Swift version. The correct fix for this issue is only possible starting from the specified versions.
+> Version 6.0.0 and above can use async/await, but it's then recommended to raise the deployment target to iOS 17.0+, macOS 15.0+, tvOS 17.0+, watchOS 10.0+. See the [5 → 6 migration guide](Documentation/en/migration5to6.md) for details.
 
 ## Changelog
 
@@ -511,7 +513,7 @@ See [CHANGELOG](CHANGELOG.md) or the [releases](https://github.com/ivlevAstef/DI
 - [x] v3.x.x — Evolution and features ([migration](Documentation/ru/migration2to3.md))
 - [x] v4.x.x — Optimization ([migration](Documentation/ru/migration3to4.md))
 - [x] v5.x.x — preconcurrency Swift Concurrency (@MainActor, Sendable)
-- [x] v6.x.x — **Swift Concurrency (async/await, @MainActor, Sendable)**
+- [x] v6.x.x — **Swift Concurrency (async/await, @MainActor, Sendable)** ([migration](Documentation/en/migration5to6.md))
 
 ## Feedback
 
