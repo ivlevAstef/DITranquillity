@@ -123,7 +123,7 @@ extension DIContainer {
     public func register<Impl: Sendable, each P>(
         file: String = #file,
         line: Int = #line,
-        main closure: @escaping @MainActor @Sendable (repeat each P) -> Impl
+        main closure: @escaping @Sendable @MainActor (repeat each P) -> Impl
     ) -> DIComponentBuilder<Impl> {
         return register(file, line, MethodMaker.comboMainEachMake(fn: closure))
     }
@@ -213,6 +213,33 @@ extension DIContainer {
         return register(file, line, MethodMaker.comboEachMake(fn: closure, modificator: modificator))
     }
 
+    /// Registers a component with an initializer on main actor isolation and a modificator for the first argument.
+    ///
+    /// Use modificators when you need to apply special resolution behavior to arguments,
+    /// such as `arg()` for runtime arguments, `many()` for arrays, or `by(tag:on:)` for tagged resolution.
+    ///
+    /// - Parameters:
+    ///   - closure: Initializer method. Must return the type being registered.
+    ///   - modificator: Transformation function for the first argument supporting `arg`, `many`, or `tag`.
+    ///
+    /// - Returns: A component builder to configure the component.
+    ///
+    /// ## Example
+    ///
+    /// ```swift
+    /// // Using runtime argument for first parameter
+    /// container.register(main: YourClass.init) { arg($0) }
+    ///
+    /// // Using tagged resolution for first parameter
+    /// container.register(main: YourClass.init) { by(tag: ProductionDB.self, on: $0) }
+    /// ```
+    @discardableResult
+    public func register<Impl: Sendable,P0,each P,M0>(file: String = #file, line: Int = #line,
+                                            main closure: @escaping @Sendable @MainActor (P0, repeat each P) -> Impl,
+                                            modificator: @escaping @Sendable (M0) -> P0) -> DIComponentBuilder<Impl> {
+        return register(file, line, MethodMaker.comboMainEachMake(fn: closure, modificator: modificator))
+    }
+
     /// Registers a component with an initializer and modificators for the first two arguments.
     ///
     /// Use this when you need to apply special resolution behavior to multiple arguments.
@@ -268,6 +295,34 @@ extension DIContainer {
                                                   _ closure: @escaping (P0, P1, repeat each P) -> Impl,
                                                   modificator: @escaping (M0, M1) -> (P0, P1)) -> DIComponentBuilder<Impl> {
         return register(file, line, MethodMaker.comboEachMake(fn: closure, modificator: modificator))
+    }
+
+    /// Registers a component with an initializer on main actor isolation and modificators for the first two arguments.
+    ///
+    /// Use this when you need to apply special resolution behavior to multiple arguments.
+    ///
+    /// - Parameters:
+    ///   - closure: Initializer method. Must return the type being registered.
+    ///   - modificator: Transformation function for the first and second arguments.
+    ///
+    /// - Returns: A component builder to configure the component.
+    ///
+    /// ## Example
+    ///
+    /// ```swift
+    /// // Using runtime argument and many resolution
+    /// container.register(YourClass.init) { (arg($0), many($1)) }
+    ///
+    /// // Using two different tags
+    /// container.register(YourClass.init) {
+    ///     (by(tag: Primary.self, on: $0), by(tag: Secondary.self, on: $1))
+    /// }
+    /// ```
+    @discardableResult
+    public func register<Impl: Sendable,P0,P1,each P,M0,M1>(file: String = #file, line: Int = #line,
+                                                  main closure: @escaping @Sendable @MainActor (P0, P1, repeat each P) -> Impl,
+                                                  modificator: @escaping @Sendable (M0, M1) -> (P0, P1)) -> DIComponentBuilder<Impl> {
+        return register(file, line, MethodMaker.comboMainEachMake(fn: closure, modificator: modificator))
     }
 
     internal func register<Impl>(_ file: String, _ line: Int, _ signature: MethodSignature) -> DIComponentBuilder<Impl> {

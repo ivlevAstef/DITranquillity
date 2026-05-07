@@ -156,6 +156,25 @@ extension MethodMaker {
         })
     }
 
+    static func comboMainEachMake<P0, each P, M0, R: Sendable>(
+        fn: @escaping @Sendable @MainActor (P0, repeat each P) -> R,
+        modificator: @escaping @Sendable (M0) -> P0) -> MethodSignature
+    {
+        let types = EachTypes()
+        types.append(M0.self)
+        repeat types.append((each P).self)
+
+        return MethodSignature(types.result, nil, nil, { params in
+            let maker = EachMaker(params: params)
+            return mainIsolated {
+                return fn(modificator(maker.make()), repeat maker.make() as each P)
+            }
+        }, { params in
+            let maker = EachMaker(params: params)
+            return await fn(modificator(maker.make()), repeat maker.make() as each P)
+        })
+    }
+
     @available(tvOS 17.0, watchOS 10.0, macOS 14.0, iOS 17.0, *)
     private struct IsoWrapperM0<P0, each P, R> {
         let fn: @isolated(any) @Sendable (P0, repeat each P) -> R
@@ -212,6 +231,28 @@ extension MethodMaker {
             let maker = EachMaker(params: params)
             let modifyResult = modificator(maker.make(), maker.make())
             return fn(modifyResult.0, modifyResult.1, repeat maker.make() as each P)
+        })
+    }
+
+    static func comboMainEachMake<P0, P1, each P, M0, M1, R: Sendable>(
+        fn: @escaping @Sendable @MainActor (P0, P1, repeat each P) -> R,
+        modificator: @escaping @Sendable (M0, M1) -> (P0, P1)) -> MethodSignature
+    {
+        let types = EachTypes()
+        types.append(M0.self)
+        types.append(M1.self)
+        repeat types.append((each P).self)
+
+        return MethodSignature(types.result, nil, nil, { params in
+            let maker = EachMaker(params: params)
+            return mainIsolated {
+                let modifyResult = modificator(maker.make(), maker.make())
+                return fn(modifyResult.0, modifyResult.1, repeat maker.make() as each P)
+            }
+        }, { params in
+            let maker = EachMaker(params: params)
+            let modifyResult = modificator(maker.make(), maker.make())
+            return await fn(modifyResult.0, modifyResult.1, repeat maker.make() as each P)
         })
     }
 
